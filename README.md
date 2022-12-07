@@ -32,3 +32,25 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+How It's Made:
+
+Optimizations:
+
+Potential Future Optimizations:
+
+########### Lessons Learned
+
+1. Problem: 	
+
+When trying to install npm install -D @tailwindcss/forms I kept Getting an error code: 
+
+npm ERR! code EWORKSPACESCONFIG npm ERR! workspaces config expects an Array
+
+Result: Tried a few things after googling, but what ended up fixing it was deleting the workspaces in my package.json and redoing the npm install -D @tailwindcss/forms"
+
+2. Problem: Needed to install multiple packages for a tailwind component
+
+I kept getting "module not found errors" but after installing the modules with npm they worked. 
+
+
