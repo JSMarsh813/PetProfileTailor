@@ -125,6 +125,8 @@ export default function Example() {
                         {({ open }) => (
                           <>
                             <h3 className="-mx-2 -my-3 flow-root">
+
+
                               <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
                                 <span className="font-medium text-gray-900">{section.name}</span>
                                 <span className="ml-6 flex items-center">
@@ -135,7 +137,11 @@ export default function Example() {
                                   )}
                                 </span>
                               </Disclosure.Button>
+
+
                             </h3>
+
+
                             <Disclosure.Panel className="pt-6">
                               <div className="space-y-6">
                                 {section.options.map((option, optionIdx) => (
@@ -158,6 +164,8 @@ export default function Example() {
                                 ))}
                               </div>
                             </Disclosure.Panel>
+
+                            
                           </>
                         )}
                       </Disclosure>
@@ -222,6 +230,7 @@ export default function Example() {
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
               </button>
+
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
@@ -230,6 +239,7 @@ export default function Example() {
                 <span className="sr-only">Filters</span>
                 <FunnelIcon className="h-5 w-5" aria-hidden="true" />
               </button>
+
             </div>
           </div>
 
@@ -260,6 +270,7 @@ export default function Example() {
                         </h3>
                         <Disclosure.Panel className="pt-6">
                           <div className="space-y-4">
+
                             {section.options.map((option, optionIdx) => (
                               <div key={option.value} className="flex items-center">
                                 <input
@@ -289,10 +300,14 @@ export default function Example() {
               {/* Product grid */}
               <div className="lg:col-span-3">
                 {/* Replace with your content */}
+                
                 <div className="h-96 rounded-lg border-4 border-dashed border-gray-200 lg:h-full" />
+                                  <p className="text-black"> Test test test</p>
                 {/* /End replace */}
               </div>
             </div>
+
+            
           </section>
         </main>
       </div>

@@ -4,6 +4,8 @@ import NavBarNames from "./NavBarPieces/NavBarNames"
 import SettingsNav from "./NavBarPieces/SettingsNav"
 import SearchBar from "./NavBarPieces/SearchBar"
 
+//needed to link pages, quicker loading between pages
+
 const NavBar= () =>{
 
 return (
