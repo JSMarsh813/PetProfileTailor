@@ -2,8 +2,6 @@ import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon, FaceSmileIcon } from '@heroicons/react/20/solid'
 import React, {useState} from 'react'
 
-
-// 'http://localhost:3000/api/individualNames'
 export const getStaticProps = async () => {
 
     let response = await fetch('http://localhost:3000/api/name-categories');
@@ -150,25 +148,25 @@ export default function Example({category,nameList}) {
 
   {/* ex 
                 Bean : male*/}
-        <table class="min-w-full divide-y divide-gray-100 text-md">
+        <table className="min-w-full divide-y divide-gray-100 text-md">
 
           
-    <thead class="bg-purple-100">
+    <thead className="bg-purple-100">
       <tr>
         <th
-          class="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900 "
+          className="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900 "
         >
           Name
         </th>
 
         <th
-          class="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900"
+          className="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900"
         >
           Meaning
         </th>
 
         <th
-          class="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900"
+          className="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900"
         >
           tags
         </th>
