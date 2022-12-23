@@ -5,6 +5,10 @@ individualTag: {
     type: String,
     required: true,
   },
+  categories: {
+    type: Array,
+    required: true,
+  }
 })
 
-module.exports = mongoose.models['individualTags'] || mongoose.model("individualTags", IndividualTagSchema);
+module.exports = mongoose.models['individualtags'] || mongoose.model("individualtags", IndividualTagSchema);

@@ -5,7 +5,7 @@ import React, {useState} from 'react'
 export const getStaticProps = async () => {
 
     let response = await fetch('http://localhost:3000/api/name-categories');
-    let nameResponse= await fetch('http://localhost:3000/api/individualNames');
+    let nameResponse= await fetch('http://localhost:3000/api/individualnames');
   
     let data = await response.json()
     let nameData = await nameResponse.json()
@@ -182,7 +182,7 @@ export default function Example({category,nameList}) {
                                          // does the name have all of these tags?
                                               //ex: beans has male, but not christmas. so it'd return false
                                              //while santa would return true so it's rendered
-
+                       
                        tagFilters.every((tag)=>
                        name.tags.includes(tag))&&
                       <tr key={name.name} >
@@ -192,6 +192,7 @@ export default function Example({category,nameList}) {
                         <td className="border-b-2 border-amber-200 px-4 py-2 text-left font-medium">{name.description}</td>
 
                         <td className="border-b-2 border-amber-100 px-4 py-2 text-left font-medium">{name.tags}</td>
+                        
                       </tr>)
 
           

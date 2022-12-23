@@ -26,6 +26,25 @@ export default async function handler(req, res) {
 
     }
 
+  //   if(method === "PUT") {
+  //     try {
+  //         const category = await Category.find();
+  //         res.status(200).json(category);
+          
+  //       } catch (err) {
+  //         res.status(500).json(err);
+  //       }
+      
+  //       // try {
+  //       //   const names = await individualNames.find();
+  //       //   res.status(200).json(individualNames);
+          
+  //       // } catch (err) {
+  //       //   res.status(500).json(err);
+  //       // }
+
+  // }
+
 
     if(method ==="POST"){    
         try {

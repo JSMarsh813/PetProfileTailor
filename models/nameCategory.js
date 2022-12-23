@@ -4,6 +4,7 @@ const CategoryCollectionSchema= new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   links: {
     type: Array,
