@@ -14,12 +14,14 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
+    "@next-auth/mongodb-adapter": "^1.1.1",
     "axios": "^1.2.1",
+    "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "daisyui": "^2.42.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
-    "mongodb": "^4.12.1",
+    "mongodb": "^4.13.0",
     "mongoose": "^6.8.0",
     "mongoose-unique-validator": "^3.1.0",
     "next": "12.3.1",
@@ -29,7 +31,9 @@
     "passport-local": "^1.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-select": "^5.7.0"
+    "react-hook-form": "^7.41.0",
+    "react-select": "^5.7.0",
+    "react-toastify": "^9.1.1"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",

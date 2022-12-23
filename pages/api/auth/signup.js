@@ -1,50 +1,52 @@
-import { hashPassword } from '../../../lib/auth';
-import { connectToDatabase } from '../../../lib/db'; 
-// !!!! fix
+import bcryptjs from 'bcryptjs'
+import User from '../../../models/usermodel'
+import db from '../../../utils/db'
 
 async function handler(req, res) {
   if (req.method !== 'POST') {
     return;
   }
-
-  const data = req.body;
-
-  const { email, password } = data;
-
+  const { name, email, password } = req.body;
   if (
+    !name ||
     !email ||
     !email.includes('@') ||
     !password ||
-    password.trim().length < 7
+    password.trim().length < 5
   ) {
     res.status(422).json({
-      message:
-        'Invalid input - password should also be at least 7 characters long.',
+      message: 'Validation error',
     });
     return;
   }
 
-  const client = await connectToDatabase();
+  await db.connect();
 
-  const db = client.db();
-
-  const existingUser = await db.collection('users').findOne({ email: email });
-
+   //search database for user with this email
+  const existingUser = await User.findOne({ email: email });
   if (existingUser) {
     res.status(422).json({ message: 'User exists already!' });
-    client.close();
+    await db.disconnect();
     return;
   }
 
-  const hashedPassword = await hashPassword(password);
-
-  const result = await db.collection('users').insertOne({
-    email: email,
-    password: hashedPassword,
+   //otherwise if there is no user, create a new user
+  const newUser = new User({
+    name,
+    email,
+    password: bcryptjs.hashSync(password),
+    isAdmin: false,
   });
 
-  res.status(201).json({ message: 'Created user!' });
-  client.close();
+  const user = await newUser.save();
+  await db.disconnect();
+  res.status(201).send({
+    message: 'Created user!',
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  });
 }
 
 export default handler;
