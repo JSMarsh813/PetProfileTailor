@@ -1,22 +1,22 @@
-import Link from 'next/link';
+import Link from 'next/Link'
 import React, { useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import { getError } from "../utils/error"
+import Layout from '../components/layout';
+import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-//https://www.youtube.com/watch?v=_IBlyR5mRzA&ab_channel=CodingwithBasir 4:11:00
 export default function LoginScreen() {
-
   const { data: session } = useSession();
+
   const router = useRouter();
   const { redirect } = router.query;
 
   useEffect(() => {
     if (session?.user) {
-      router.push(redirect || '/');
+      router.push('/');
     }
   }, [router, session, redirect]);
 
@@ -26,7 +26,6 @@ export default function LoginScreen() {
     getValues,
     formState: { errors },
   } = useForm();
-
   const submitHandler = async ({ name, email, password }) => {
     try {
       await axios.post('/api/auth/signup', {
@@ -40,20 +39,26 @@ export default function LoginScreen() {
         email,
         password,
       });
-
       if (result.error) {
         toast.error(result.error);
       }
-      return router.push("/")
-    } 
-    
-    catch (err) {
+      else {
+        
+        toast.success("Successfully signed up! Sending to profile page")
+        console.log(result)
+        // Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
+        console.log(`email: ${email} pass:${password}`)
+        //email: kyunyu@gmail.com pass:testtest
+        //and appears in mongodb users collection
+        router.push("/")
+      }
+    } catch (err) {
       toast.error(getError(err));
     }
   };
   return (
-    <div>
-         <form
+    <Layout title="Create Account">
+      <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
@@ -137,9 +142,11 @@ export default function LoginScreen() {
         <div className="mb-4 ">
           <button className="primary-button">Register</button>
         </div>
-    
+        <div className="mb-4 ">
+          Don&apos;t have an account? &nbsp;
+          <Link href={`/register?redirect=${redirect || '/'}`}>Register</Link>
+        </div>
       </form>
-    </div>
-  )
-            }
-
+    </Layout>
+  );
+}
