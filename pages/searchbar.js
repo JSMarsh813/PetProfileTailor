@@ -31,7 +31,7 @@ function AddNewNameWithTags({tagList,categoryList}) {
       <div style={{width:"700px"}} className="mx-auto mt-4">
 
         <NewNameWithTagsData tagList={tagList}/>
-        <AddNewTag categoryList={categoryList}/>
+        {/* <AddNewTag categoryList={categoryList}/> */}
         
    
    

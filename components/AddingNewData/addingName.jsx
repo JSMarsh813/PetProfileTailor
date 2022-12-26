@@ -1,6 +1,7 @@
 import Select from 'react-select';
 import React, { useState } from 'react';
 import axios from 'axios'
+// import User from '../../models/User';
 
 //another serverSide props from  let categoryList = await fetch('http://localhost:3000/api/name-categories);
 
@@ -12,6 +13,7 @@ function NewNameWithTagsData({tagList}) {
     const [tags,setTags]=useState([]);
     const [isPending,setIsPending]=useState(false);
     const [nameAlreadyExists,setNameExists]=useState(false);
+    // const [userId,setUserId]=useState("")
 
    function handleNameSubmission (e){
     
@@ -22,7 +24,9 @@ function NewNameWithTagsData({tagList}) {
 
     const nameSubmission= {
      name: newName, 
-     tags: tags}
+     tags: tags,
+   }
+    //  addedBy: userId,
           //from state
 
         // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
@@ -100,6 +104,8 @@ function NewNameWithTagsData({tagList}) {
                 {!isPending&&<button className="btn" onClick={handleNameSubmission}> Add name </button>}
                 {isPending&&<button className="btn" disabled> Adding name ... </button>}
             
+
+                {/* <input type="hidden" id="userId" name="userId" value={session} /> */}
                 </form>
          </section>
 

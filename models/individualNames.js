@@ -14,10 +14,17 @@ const IndividualNameSchema= new mongoose.Schema({
   tags:{
     type: Array,
     required: true,
-  }
+  },
+
 })
 
 // Apply the uniqueValidator plugin to userSchema.
 IndividualNameSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.models['names'] || mongoose.model("names", IndividualNameSchema);
+
+  // addedBy:{
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  // }
