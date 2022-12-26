@@ -1,27 +1,22 @@
-import Link from 'next/Link'
+import Link from 'next/link';
 import React, { useEffect } from 'react';
-import { SessionProvider, signIn, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
 export default function LoginScreen() {
-  const session = useSession();
-      //grab data from useSession and rename data to session
-{console.log(`session on login.js:${session}`)}
-{console.log(session)}
+  const { data: session } = useSession();
+  
   const router = useRouter();
   const { redirect } = router.query;
-  //extract redirect from router.query
 
-  //import this from line 2/react
   useEffect(() => {
     if (session?.user) {
-      //if the session exists, then the user is already signed in. So if this is true, push back to the homepage if there is no redirect in the string
-      //we need to use router (line 8) to redirect user
-      router.push('/');
+      router.push(redirect || '/')
+      console.log(session)
     }
   }, [router, session, redirect]);
 
@@ -30,34 +25,26 @@ export default function LoginScreen() {
     register,
     formState: { errors },
   } = useForm();
-
   const submitHandler = async ({ email, password }) => {
     try {
-      //import signIn on line 3 from nextAuth, which will be handled in the nextauth.js handler
       const result = await signIn('credentials', {
         redirect: false,
-         //gets rid of callback url @10:20 https://www.youtube.com/watch?v=EFucgPdjeNg&t=594s&ab_channel=FullStackNiraj
         email,
         password,
       });
       if (result.error) {
-        //if error when signing in
-            //layout.js is where toast container is called/shown
         toast.error(result.error);
-        
       }
       else {
         
         toast.success("Successfully signed in! Sending to profile page")
-        console.log(result)
+        console.log(`login.js submitHandler else block ${JSON.stringify(result)}`)
         // Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
         console.log(`email: ${email} pass:${password}`)
         //email: kyunyu@gmail.com pass:testtest
-        router.push("/")
+        // router.push("/")
       }
-      
     } catch (err) {
-      //error.js file in utils, this is for if there is an error in the api
       toast.error(getError(err));
     }
   };

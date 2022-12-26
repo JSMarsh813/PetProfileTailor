@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const dotenv = require('dotenv')
+
 const source = process.env.MONGODB_URI;
 
 
