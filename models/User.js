@@ -14,6 +14,14 @@ const UserSchema= new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  }, 
+  favnames: {
+    type: Array,
+    required: false,
+  },
+  favbehaviors: {
+    type: Array,
+    required: false,
   },
 
 }, {timestamps:true})

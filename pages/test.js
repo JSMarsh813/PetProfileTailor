@@ -153,6 +153,13 @@ export default function Example({category,nameList}) {
           
     <thead className="bg-purple-100">
       <tr>
+
+      <th
+          className="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900 "
+        >
+          Like
+        </th>
+
         <th
           className="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900 "
         >
@@ -186,6 +193,8 @@ export default function Example({category,nameList}) {
                        tagFilters.every((tag)=>
                        name.tags.includes(tag))&&
                       <tr key={name.name} >
+
+                        <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">like </td>
 
                         <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">{name.name}</td>
 

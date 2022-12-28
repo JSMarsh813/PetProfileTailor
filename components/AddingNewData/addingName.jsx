@@ -7,8 +7,7 @@ import axios from 'axios'
 
   
 function NewNameWithTagsData({tagList}) {
-  
-    
+      
     const [newName,setNewName] =useState("");
     const [tags,setTags]=useState([]);
     const [isPending,setIsPending]=useState(false);
