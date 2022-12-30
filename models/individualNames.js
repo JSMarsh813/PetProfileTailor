@@ -15,7 +15,12 @@ const IndividualNameSchema= new mongoose.Schema({
     type: Array,
     required: true,
   },
-
+  likedby: {
+    type:Array,
+    required:true,
+    default: [],
+    unique:false,
+  }
 })
 
 // Apply the uniqueValidator plugin to userSchema.

@@ -1,6 +1,16 @@
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon, FaceSmileIcon } from '@heroicons/react/20/solid'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
+import { useSession, getSession } from "next-auth/react"
+
+import { toast } from 'react-toastify';
+import Layout from '../components/Layout'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faFaceGrinWink, faUserTie } from '@fortawesome/free-solid-svg-icons'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+import usersId from './api/auth/updateLikes'
+import { useForm } from 'react-hook-form';
 
 export const getStaticProps = async () => {
 
@@ -26,18 +36,82 @@ export const getStaticProps = async () => {
   }
 
 
-export default function Example({category,nameList}) {
 
+export default function Example({category,nameList, pageProps}) {
+
+  const { data: session, status } = useSession()
+
+  let [userId,setUserId]=useState()
+
+    // useEffect(() => {
+    //     const userId = localStorage.getItem("session") 
+    //     console.log(userId);
+    //     setUserId(userId)
+    // }, [])
     // if clicked add to state, then find names with those tags who are true
 
     // const name=target.name
 
- 
+  
       //  const [checkedState, setCheckedState] = useState([new Array(category.length).fill([])]);
+      // console.log(`namelist ${JSON.stringify(nameList)}`)
           const[tagFilters,setFiltersState] = useState([])
                     //array above is filled with tags
+                    // ex ["christmas", "male"]
+          const[filterednames,setFilteredNames]=useState([...nameList])
+                   //filled with all names, not actually filtered yet
+                        //  namelist console.log result: 
+                        //  [
 
+                        //   {"_id":"63abc7d5650d1659f0dd305e","name":"donner","description":[],"tags":["christmas","male"],"likedby":["63a90c2e83e6366b179ffc40","63ac0eb87795b89caaf760fe"],"__v":0},
 
+                        //  {"_id":"63ae1671f202c8bf5752544f","name":"santa","description":[],"tags":["christmas","male"],"likedby":[],"__v":0},
+
+                        //  {"_id":"63ae16a9f202c8bf57525455","name":"tataru","description":[],"tags":["female"],"likedby":[],"__v":0}
+                        // ]
+                  //  console.log(`filterednames ${JSON.stringify(filterednames)}`)
+                   
+                
+                  //  (setFilteredNames(
+                  //        filterednames.map((name)=>(tagFilters.every((tag)=>
+                  //        name.tags.includes(tag))))
+                  //      ))         
+               
+                  //  console.log(`filterednames later ${JSON.stringify(filterednames)}`)
+      //############################ LIKES FEATURE ###########################################     
+                          //grab user's email from session 
+   let userEmail=""
+
+      {status === 'loading' ? (
+        'Loading'
+      ) : session?.user ? (userEmail=session.user.email) : console.log("no email found for current user please login")}
+// console.log(`What is ${userEmail}`)
+
+          const[nameLiked,setNameLiked] = useState(false)
+          let likesColor= nameLiked? "red":"grey"
+                       // grab user's id by using the email address
+              // ?????????????????????????????????????????
+
+              
+        
+                           //name'id 1: 
+                        //nameLiked?: false
+                  //name id 2:
+                        //nameLiked? true 
+
+          const handlelikes = (e) => {
+          
+            // grabbing the name's unique id = input's id 
+         {console.log(({target: e.target.id}))}
+            {(status === "authenticated")?
+            setNameLiked(!nameLiked):
+           
+            toast.error("you must be signed in to use this feature")
+          }
+          };
+        
+
+      //############################## END OF LIKES FEATURE ############################
           // const[checkedStatusOfTags,setCheckedTagsState] =useState([
           //   new Array(category[0].links.length).fill(false)
           // ])
@@ -46,15 +120,57 @@ export default function Example({category,nameList}) {
                   //how do I added checked state for nested array
           const handleChange = (e) => {
 
+       
+
                 const { value, checked } = e.target;
+
+                //copy filteredNames then set it to an empty array, so we "delete" the previous names in the state
+                
+               
+            
+                setFilteredNames(nameList);
+
+                    //every time we click, lets reset filteredNames to nameList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
+                         // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
+                        //      round: 2, we unclick male
+                                  //we need to reset the nameList, so that it will give us ALL christmas names
+                                       // so reset the list with all the names
+                                       // then the filter function in useEffect runs since the filteredtag array was changed
+
+              
+                // name.tags.includes(tag))))
+ //We want ONE result for each name, so map through names
+                  //names ex: beans, santa
+                  //then we want to look through EVERY tag filter ONCE
+                          //ex filters: Male and christmas
+                              // does the name have all of these tags?
+                                   //ex: beans has male, but not christmas. so it'd return false
+                                  //while santa would return true so it's rendered
+            
           
-          //  console.log(`${value} is ${checked}`);
+          // console.log(`${value} is ${checked}`);
 
           //if checked, it will add the new tag to the state/list. If not checked, it will filter it out and replace the state with the new tagfilter array
-                (checked)? setFiltersState([...tagFilters,value],):( 
-                setFiltersState(tagFilters.filter((tag) => tag!=value)))             
-          }
+                
+                (checked)?   setFiltersState([...tagFilters,value],):( 
+                setFiltersState(tagFilters.filter((tag) => tag!=value)))
+              console.log(tagFilters)
+                         
+          }      
+         
+            // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed 
+          useEffect(()=>{
+            let currenttags=tagFilters
+            
+            setFilteredNames( filterednames.filter((name)=>
+                      (currenttags.every((tag)=>
+                                 name.tags.includes(tag)))))
 
+            console.log((`useEffect filterednames ${JSON.stringify(filterednames)}`))
+        },[tagFilters]
+          ) 
+           
+           
              //when checked, add name of checked checkbox to filters state array
       //  category.map((category,index)=>)
 
@@ -82,12 +198,17 @@ export default function Example({category,nameList}) {
   //   meaning:["Lion in greek, ","A famous dominos fanatic and 100devs founder"],
   //   tags:["celebrities","greek","Male"] }
   // ]  
+ 
+
 
   return (
-   
-    <div className="flex w-full ">
-     
+   <Layout>
+{    JSON.stringify(filterednames)}
 
+  
+    <div className="flex w-full ">
+       
+           {/* {console.log(`session in return ${pageProps}`)} */}
         {/* <span>{console.log(category.map((eachCategory,index)=>eachCategory.links.length))}</span>  */}
         <div className="w-80 h-screen bg-violet-900  rounded-box place-items-center ">
  {/* mapping through categories ex: gender, holidays */}
@@ -153,12 +274,13 @@ export default function Example({category,nameList}) {
           
     <thead className="bg-purple-100">
       <tr>
-
+     
       <th
           className="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900 "
         >
-          Like
+          Like 
         </th>
+
 
         <th
           className="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900 "
@@ -180,6 +302,7 @@ export default function Example({category,nameList}) {
        </tr>
     </thead>
      <tbody className=" text-violet-100 ">
+    
                 {nameList.map((name)=>( 
                     
                        //We want ONE result for each name, so map through names
@@ -191,10 +314,37 @@ export default function Example({category,nameList}) {
                                              //while santa would return true so it's rendered
                        
                        tagFilters.every((tag)=>
-                       name.tags.includes(tag))&&
-                      <tr key={name.name} >
 
-                        <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">like </td>
+                            name.tags.includes(tag))&&
+                             <tr key={name._id} >
+                                         {/* start of likes checkbox section*/}
+                                          <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">
+                                              <label>
+                                             
+                                                  <input
+                                                        style={{display:"none"}}
+                                                          type="checkbox"
+                                                         checked={nameLiked}
+                                                          onChange={handlelikes}
+                                                         id={name._id}
+                                                        //  data-amount-of-likes={name.likedby.length}
+                                                  
+                                                  />
+                                                   <FontAwesomeIcon icon={faHeart} className="text-4xl" color={likesColor} />
+
+                                                
+                                                   {/* {console.log(name.likedby.filter(e=>e=="63"))} */}
+
+                                                 {name.likedby}
+                                               {/* { console.log(name.likedby)}
+                                               {console.log(typeof (userId))} */}
+                                                {/* {userId} */}
+                                                 
+                                             </label>
+                                                  
+                                          </td> 
+                                       {/* end of likes checkbox section*/}
+                              
 
                         <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">{name.name}</td>
 
@@ -216,6 +366,7 @@ export default function Example({category,nameList}) {
       </div>
 
     </div>
+    </Layout>
   )
 }
 

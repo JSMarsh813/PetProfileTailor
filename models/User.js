@@ -16,12 +16,12 @@ const UserSchema= new mongoose.Schema({
     required: true,
   }, 
   favnames: {
-    type: Array,
-    required: false,
+    type: Array,  
+    default: [],
   },
   favbehaviors: {
-    type: Array,
-    required: false,
+    type: Array, 
+    default: [],
   },
 
 }, {timestamps:true})

@@ -20,8 +20,8 @@ export default function LoginScreen() {
  //import this from line 2/react
   useEffect(() => {
    if (session?.user) {
- console.log(session)
- console.log(session.user._id)
+    localStorage.setItem("session",JSON.stringify(session.user._id))
+//  console.log(session.user._id),
  router.push(redirect || '/');
  }
  }, [router, session, redirect]);
@@ -53,7 +53,7 @@ export default function LoginScreen() {
  else {
 
  toast.success("Successfully signed in! Sending to profile page")
- console.log(`login.js submitHandler else block ${JSON.stringify(result)}`)
+//  console.log(`login.js submitHandler else block ${JSON.stringify(result)}`)
 // Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
  console.log(`email: ${email} pass:${password}`)
  //email: testtest@gmail.com pass:testtest
@@ -62,7 +62,7 @@ export default function LoginScreen() {
 
  } catch (err) {
 //error.js file in utils, this is for if there is an error in the api
- console.log(`login.js catch block error: ${JSON.stringify(err)}`)
+//  console.log(`login.js catch block error: ${JSON.stringify(err)}`)
  toast.error(getError(err));
  } };
  return (
