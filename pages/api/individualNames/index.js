@@ -29,6 +29,19 @@ export default async function handler(req, res) {
     }
 
 
+    if(method ==="PUT"){    
+      try {
+             const test= await IndividualNames.find()
+             res.status(201).json(test)
+      } 
+      catch(err){
+          res.status(500).json(err)
+          console.log(err)
+      }
+  }
+
+
+
     if(method ==="POST"){    
         try {
                const test= await IndividualNames.create(req.body)
@@ -36,6 +49,7 @@ export default async function handler(req, res) {
         } 
         catch(err){
             res.status(500).json(err)
+           
         }
     }
   }

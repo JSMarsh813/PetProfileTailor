@@ -10,7 +10,7 @@ import Profile from '../public/profile.png'
 import Layout from '../components/layout'
 function HomePage() {
   return <div className="w-fit">
-   <Layout title="home page"> Home Page </Layout>
+   <Layout title="home page"> </Layout>
 
    <HeroTop/>
    

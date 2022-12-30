@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import DropdownLink from './DropdownLink';
 import { useRouter } from 'next/router';
 import { SearchIcon } from '@heroicons/react/outline';
+import NavBarNames from '../components/NavBarPieces/NavBarNames'
 
 export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
@@ -38,37 +39,23 @@ export default function Layout({ title, children }) {
   return (
     <>
       <Head>
-        <title>{title ? title + ' - Amazona' : 'Amazona'}</title>
-        <meta name="description" content="Ecommerce Website" />
+        <title>{title ? title + ' - PetProfileTailor' : 'PetProfileTailor'}</title>
+        <meta name="description" content="site to assist with making pet profiles for adoptions" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <ToastContainer position="bottom-center" limit={1} />
 
-      <div className="flex min-h-screen flex-col justify-between ">
+      <div className="flex flex-col justify-between bg-violet-900">
         <header>
-          <nav className="flex h-12 items-center px-4 justify-between shadow-md">
+          <nav className="flex h-12 items-center px-4 justify-between shadow-md bg-violet-600 ">
             <Link href="/">
               <a className="text-lg font-bold">PetProfileTailor</a>
             </Link>
-            <form
-              onSubmit={submitHandler}
-              className="mx-auto  hidden w-full justify-center md:flex"
-            >
-              <input
-                onChange={(e) => setQuery(e.target.value)}
-                type="text"
-                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0"
-                placeholder="Search products"
-              />
-              <button
-                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
-                type="submit"
-                id="button-addon2"
-              >
-                {/* <SearchIcon className="h-5 w-5"></SearchIcon> */}
-              </button>
-            </form>
+
+              <NavBarNames/>
+              
+         
             
             <div>
               {/* <Link href="/cart">
@@ -132,7 +119,7 @@ export default function Layout({ title, children }) {
             </div>
           </nav>
         </header>
-        <main className="container m-auto mt-4 px-4">{children}</main>
+        <main className="container m-auto mt-4 px-4 ">{children}</main>
     
       </div>
     </>

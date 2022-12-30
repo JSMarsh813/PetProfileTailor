@@ -12,6 +12,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import usersId from './api/auth/updateLikes'
 import { useForm } from 'react-hook-form';
 
+import NameListing from "../components/Namelisting"
+
 export const getStaticProps = async () => {
 
     let response = await fetch('http://localhost:3000/api/name-categories');
@@ -78,40 +80,11 @@ export default function Example({category,nameList, pageProps}) {
                   //      ))         
                
                   //  console.log(`filterednames later ${JSON.stringify(filterednames)}`)
-      //############################ LIKES FEATURE ###########################################     
-                          //grab user's email from session 
-   let userEmail=""
+   
 
-      {status === 'loading' ? (
-        'Loading'
-      ) : session?.user ? (userEmail=session.user.email) : console.log("no email found for current user please login")}
-// console.log(`What is ${userEmail}`)
 
-          const[nameLiked,setNameLiked] = useState(false)
-          let likesColor= nameLiked? "red":"grey"
-                       // grab user's id by using the email address
-              // ?????????????????????????????????????????
 
-              
-        
-                           //name'id 1: 
-                        //nameLiked?: false
-                  //name id 2:
-                        //nameLiked? true 
 
-          const handlelikes = (e) => {
-          
-            // grabbing the name's unique id = input's id 
-         {console.log(({target: e.target.id}))}
-            {(status === "authenticated")?
-            setNameLiked(!nameLiked):
-           
-            toast.error("you must be signed in to use this feature")
-          }
-          };
-        
-
-      //############################## END OF LIKES FEATURE ############################
           // const[checkedStatusOfTags,setCheckedTagsState] =useState([
           //   new Array(category[0].links.length).fill(false)
           // ])
@@ -203,7 +176,7 @@ export default function Example({category,nameList, pageProps}) {
 
   return (
    <Layout>
-{    JSON.stringify(filterednames)}
+{/* {    JSON.stringify(filterednames)} */}
 
   
     <div className="flex w-full ">
@@ -303,62 +276,15 @@ export default function Example({category,nameList, pageProps}) {
     </thead>
      <tbody className=" text-violet-100 ">
     
-                {nameList.map((name)=>( 
-                    
-                       //We want ONE result for each name, so map through names
-                             //names ex: beans, santa
-                             //then we want to look through EVERY tag filter ONCE
-                                     //ex filters: Male and christmas
-                                         // does the name have all of these tags?
-                                              //ex: beans has male, but not christmas. so it'd return false
-                                             //while santa would return true so it's rendered
-                       
-                       tagFilters.every((tag)=>
+        {filterednames.map((name)=>{
+         
+                  return <NameListing key={name.id} name={name}/>
+                }   
 
-                            name.tags.includes(tag))&&
-                             <tr key={name._id} >
-                                         {/* start of likes checkbox section*/}
-                                          <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">
-                                              <label>
-                                             
-                                                  <input
-                                                        style={{display:"none"}}
-                                                          type="checkbox"
-                                                         checked={nameLiked}
-                                                          onChange={handlelikes}
-                                                         id={name._id}
-                                                        //  data-amount-of-likes={name.likedby.length}
-                                                  
-                                                  />
-                                                   <FontAwesomeIcon icon={faHeart} className="text-4xl" color={likesColor} />
-
-                                                
-                                                   {/* {console.log(name.likedby.filter(e=>e=="63"))} */}
-
-                                                 {name.likedby}
-                                               {/* { console.log(name.likedby)}
-                                               {console.log(typeof (userId))} */}
-                                                {/* {userId} */}
-                                                 
-                                             </label>
-                                                  
-                                          </td> 
-                                       {/* end of likes checkbox section*/}
-                              
-
-                        <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">{name.name}</td>
-
-                        <td className="border-b-2 border-amber-200 px-4 py-2 text-left font-medium">{name.description}</td>
-
-                        <td className="border-b-2 border-amber-100 px-4 py-2 text-left font-medium">{name.tags}</td>
-                        
-                      </tr>)
+            )
+            }
 
           
-
-
-                   
-              )}
              </tbody>
         </table>
 
