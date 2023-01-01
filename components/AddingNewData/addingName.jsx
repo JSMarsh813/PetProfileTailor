@@ -32,8 +32,11 @@ function NewNameWithTagsData({tagList}) {
           axios.post("http://localhost:3000/api/individualnames", nameSubmission).then(response => {
             console.log(response)
             setIsPending(false);
+            
           }).catch(error => {
             console.log("this is error", error);
+            setNameExists(true)
+            setIsPending(false)
           });
 
 

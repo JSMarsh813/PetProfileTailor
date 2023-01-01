@@ -2,10 +2,11 @@ import Link from 'next/Link'
 import React, { useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import Layout from '../components/layout';
+import Layout from '../components/NavBar/NavLayoutwithSettingsMenu';
 import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+
 
 export default function LoginScreen() {
  //grab data from useSession and rename data to session
@@ -66,8 +67,8 @@ export default function LoginScreen() {
  toast.error(getError(err));
  } };
  return (
-  
-  <Layout title="Login">
+  <div>
+  <Layout title="Login"></Layout>
   <div>
    <section className="h-screen">
    <div className="px-6 h-full text-gray-100"> 
@@ -241,6 +242,6 @@ onSubmit={handleSubmit(submitHandler)}
   </div>
     </section>
 </div>
-</Layout>
+</div>
 )
 }

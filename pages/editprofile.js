@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { getError } from '../utils/error';
 import axios from 'axios';
-import Layout from '../components/layout';
+import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
 
 export default function ProfileScreen() {
   const { data: session } = useSession();

@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react'
 import { useSession, getSession } from "next-auth/react"
 
 import { toast } from 'react-toastify';
-import Layout from '../components/Layout'
+import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faFaceGrinWink, faUserTie } from '@fortawesome/free-solid-svg-icons'

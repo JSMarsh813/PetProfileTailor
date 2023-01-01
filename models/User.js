@@ -23,6 +23,10 @@ const UserSchema= new mongoose.Schema({
     type: Array, 
     default: [],
   },
+  profileImage:{
+    type:String,
+    default:"http://placekitten.com/50/50"
+  }
 
 }, {timestamps:true})
 

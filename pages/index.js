@@ -7,10 +7,10 @@ import MediaObjectLeft from '../components/MediaObjectLeft'
 import MediaObjectRight from '../components/MediaObjectRight'
 import PawPrintIcon from '../components/PawPrintIcon'
 import Profile from '../public/profile.png'
-import Layout from '../components/layout'
+import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
 function HomePage() {
-  return <div className="w-fit">
-   <Layout title="home page"> </Layout>
+  return <div className="w-fit bg-violet-900">
+   <Layout> </Layout>
 
    <HeroTop/>
    
@@ -25,17 +25,17 @@ function HomePage() {
           
    </section>
 
-  <section className="landingNamesSection">
+  <section className="landingNamesSection bg-violet-900">
 
-       <h3 className="text-3xl font-medium py-4 text-center bg-slate-900 text-amber-300">Find the Purrfect Name</h3>
+       <h3 className="text-3xl font-medium py-4 text-center bg-darkPurple text-amber-300">Find the Purrfect Name</h3>
 
       <MediaObjectLeft/>
 
   </section>
 
-     <section className="landingDescriptionsSection">
+     <section className="landingDescriptionsSection bg-violet-900">
 
-        <h3 className="text-3xl font-medium py-4 text-center bg-slate-900 text-amber-300">Find Tailor-fit Descriptions</h3>
+        <h3 className="text-3xl font-medium py-4 text-center bg-darkPurple text-amber-300">Find Tailor-fit Descriptions</h3>
 
         <MediaObjectRight/>
 
