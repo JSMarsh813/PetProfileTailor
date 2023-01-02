@@ -7,12 +7,47 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 
 import axios from 'axios'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
+import UserSessionContext from "../src/context/UserSessionContext"
 
-function dashboard() {
+import NameListing from "../components/Namelisting"
+import MainChartComponent from "../components/MainChartComponent"
+import GeneralButton from '../components/GeneralButton';
+
+export const getStaticProps = async () => {
+
+  let response = await fetch('http://localhost:3000/api/name-categories');
+  let nameResponse= await fetch('http://localhost:3000/api/individualnames');
+
+  let data = await response.json()
+  let nameData = await nameResponse.json()
+
+
+
+  // console.log(data);
+//getServerSideProps allows us to fetch data from an api
+//runs only on server side, will never run clicent side
+//can run server-side code directly in getStaticProps
+  return {
+    props: {
+      category: data,
+      nameList: nameData,
+         },
+    }
+
+
+  //and provide the data as props to the page by returning an object from the function
+}
+
+
+
+function dashboard({category,nameList}) {
+
 
   const { status, data: session } = useSession();
   const [userInfo,setUserInfo] =useState()
   const [treatBreakdownMenuOpen,settreatBreakdownMenuOpen]=useState(false)
+
+  const valuetest = useContext(UserSessionContext); 
 
   let [userId,setUserId]=useState("")
   // get users data from the server
@@ -55,11 +90,14 @@ useEffect(() => {
 
 
   return (
-    <div className="bg-violet-900">
+    <div className="bg-violet-900 h-fit">
      
         <Layout></Layout>
         <section>
-     
+
+     <p> {(valuetest)}</p>
+
+
      <div className="relative overflow-hidden bg-no-repeat bg-cover" 
       style={{backgroundPosition: "80%",
        backgroundImage: `url("https://www.freewebheaders.com/wp-content/gallery/dogs/dogs-header-2121-800x200.jpg")`, 
@@ -201,8 +239,51 @@ useEffect(() => {
      </section>
   
 
+  <section className="favoritesSection">
+
+       <h3 className="text-center mt-5 text-yellow-400  font-bold mb-2 text-2xl 
+       pb-2
+       border-b-2
+       border-yellow-300"> Your Favorites </h3>
+
+       <div className="favoriteSubsections mt-5 text-yellow-400  font-bold mb-2 text-2xl 
+       pb-2
+       border-b-2
+       border-yellow-300">
+
+              <section className="favoriteNames">
+
+              
+
+               <div classname="flex w-screen justify-between">
+       
+                   <h4 className=" inline-block"> Your Favorite Names </h4>
+
+                  <div className="inline-block">
+                        <GeneralButton text="Click here to Sort Names by category"></GeneralButton>
+                  </div>
+                 
+                </div>
+
+
+                 <MainChartComponent nameList={nameList}/>
+                
+
+              </section>
+
+              <section className="favoriteNames">
+
+               <h4> Your Favorite Descriptions </h4>
+
+              </section>
+
+       </div>
+
+  </section>
+
         <p>{userId}</p>
-        {console.log(userInfo)}
+       
+       
       
     </div>
   )

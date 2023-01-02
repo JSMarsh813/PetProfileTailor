@@ -12,7 +12,7 @@ import { useState, createContext, useContext } from 'react';
 //allows us to repeat the layout on every page, versus manually adding the footer header ect to every page
 
 // import { UserSessionContext, UserContextProvider } from "../src/context/UserState"
-
+import UserSessionContext from '../src/context/UserSessionContext';
 
 
 function MyApp({ 
@@ -20,17 +20,31 @@ function MyApp({
   Component, 
   pageProps: { session, ...pageProps }
 
+ 
+})
+{
+ 
+  let testingContext="if context works I'll show up! :)"
+  //setting up the prop for UserSessionContext, grabbing session information
+            //???????
 
-
-}) {
   return (
     
 
-  
+ 
     <SessionProvider session={session}>
-     <Component {...pageProps} />
+
+          <UserSessionContext.Provider value={testingContext}> 
+
+              {/* Every Context object comes with a Provider React component
+
+              The Provider component accepts a value prop to be passed to consuming components that are descendants of this Provider,
+              
+              in this case ALL components */}
+                <Component {...pageProps} />
+        </UserSessionContext.Provider>
     </SessionProvider>
-    
+
     
   ); 
 }

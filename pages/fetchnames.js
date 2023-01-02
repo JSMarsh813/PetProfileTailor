@@ -179,7 +179,7 @@ export default function Example({category,nameList, pageProps}) {
 {/* {    JSON.stringify(filterednames)} */}
 
   
-    <div className="flex w-full ">
+    <div className="flex w-full h-screen">
        
            {/* {console.log(`session in return ${pageProps}`)} */}
         {/* <span>{console.log(category.map((eachCategory,index)=>eachCategory.links.length))}</span>  */}

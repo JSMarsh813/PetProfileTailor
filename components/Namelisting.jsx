@@ -167,7 +167,13 @@ const handlelikes =  (e) => {
 
 <td className="border-b-2 border-amber-200 px-4 py-2 text-left font-medium">{name.description}</td>
 
-<td className="border-b-2 border-amber-100 px-4 py-2 text-left font-medium">{name.tags}</td>
+<td className="border-b-2 border-amber-100 px-4 py-2 text-left font-medium">{
+        (name.tags)
+            .map(names=>names)
+            .join(", ")}
+        </td>
+{console.log((name.tags))}
+{console.log(Array.isArray(name.tags))}
 
 </tr>
 )

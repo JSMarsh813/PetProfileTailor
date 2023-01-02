@@ -1,9 +1,30 @@
-// import React, { useContext, createContext, useState, useEffect } from 'react'
+import React, { useContext, createContext, useState, useEffect } from 'react'
 
 // // create context
-// const UserSessionContext = createContext(null)
-// // https://www.youtube.com/watch?v=t9WmZFnE6Hg&ab_channel=PedroTech
-// // 6:53 null is good for testing
+const UserSessionContext = createContext("null")
+
+
+
+
+
+
+// https://www.youtube.com/watch?v=t9WmZFnE6Hg&ab_channel=PedroTech
+// 6:53 null is good for testing
+
+//The defaultValue argument is only used when a component does not have a matching Provider above it in the tree. https://reactjs.org/docs/context.html
+
+
+//We then create the prop that we're going to insert into UserSessionContext
+// function UserSessionContext() {
+//     const [user, setUser] = useState({})
+  
+//     return (
+//       <ThemeContext.Provider value={{ theme, setTheme }}>
+//         <ChildComponent />
+//       </ThemeContext.Provider>
+//     )
+//   }
+
 
 
 // const UserContextProvider = ({ children }) => {
@@ -34,6 +55,8 @@
 //     </UserSessionContext.Provider>
 //   );
 // };
+
+export default UserSessionContext
 
 // export { UserSessionContext , UserContextProvider };
 

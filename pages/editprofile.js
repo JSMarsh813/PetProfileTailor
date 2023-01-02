@@ -46,7 +46,7 @@ export default function ProfileScreen() {
   return (
     <Layout title="Profile">
       <form
-        className="mx-auto max-w-screen-md"
+        className="mx-auto max-w-screen-md h-screen"
         onSubmit={handleSubmit(submitHandler)}
       >
         <h1 className="mb-4 text-xl">Update Profile</h1>

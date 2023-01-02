@@ -1,5 +1,5 @@
 import Link from 'next/Link'
-import React, { useEffect } from 'react';
+import React, { useContext, createContext, useState, useEffect } from 'react'
 import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import Layout from '../components/NavBar/NavLayoutwithSettingsMenu';
@@ -22,6 +22,7 @@ export default function LoginScreen() {
   useEffect(() => {
    if (session?.user) {
     localStorage.setItem("session",JSON.stringify(session.user._id))
+    
 //  console.log(session.user._id),
  router.push(redirect || '/');
  }

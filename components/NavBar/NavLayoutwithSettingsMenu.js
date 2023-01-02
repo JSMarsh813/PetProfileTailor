@@ -142,9 +142,11 @@ export default function NavLayoutwithSettingsMenu({ title, children }) {
                    
                  <span className="text-lg font-bold"> {session.user.name} </span>
 
-                 {session.user.profileImage?"True": <img className="ml-3 h-8 rounded-full inline"src="https://preview.redd.it/mretq5qte3451.png?auto=webp&s=6040f7d829d09479fd3f44a0546d19653f35219c"/> }
+                 {session.user.profileImage?
+                      "True": 
+                      <img className="ml-3 h-8 rounded-full inline"src="https://preview.redd.it/mretq5qte3451.png?auto=webp&s=6040f7d829d09479fd3f44a0546d19653f35219c"/> }
                
-
+     {console.log(session)}
                     <ChevronDownIcon
               className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
               aria-hidden="true"

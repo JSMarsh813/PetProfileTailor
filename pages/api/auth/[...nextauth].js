@@ -41,7 +41,7 @@ export default NextAuth({
             _id: user._id,
             name: user.name,
             email: user.email,
-            image: 'f',            
+            profileimage: user.profileimage,            
           };
         }
         throw new Error('Invalid email or password');
