@@ -25,6 +25,8 @@ function HomePage() {
           
    </section>
 
+
+
   <section className="landingNamesSection bg-violet-900">
 
        <h3 className="text-3xl font-medium py-4 text-center bg-darkPurple text-amber-300">Find the Purrfect Name</h3>
@@ -40,6 +42,14 @@ function HomePage() {
         <MediaObjectRight/>
 
     </section>
+
+    <section>
+       Psst feeling stumped? Don't be afraid to use the batsignal to summon the community for ideas!
+
+       Just remember to give .....cookie
+
+       <img src="batsignal.png"/>
+   </section>
 
     <section className="landingSignUpSection">
         <h3 className="text-3xl font-medium py-4 text-center bg-slate-900 text-amber-300">Create a free profile to access extra features</h3>

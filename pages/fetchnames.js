@@ -127,7 +127,7 @@ export default function Example({category,nameList, pageProps}) {
                 
                 (checked)?   setFiltersState([...tagFilters,value],):( 
                 setFiltersState(tagFilters.filter((tag) => tag!=value)))
-              console.log(tagFilters)
+              // console.log(tagFilters)
                          
           }      
          
@@ -139,7 +139,7 @@ export default function Example({category,nameList, pageProps}) {
                       (currenttags.every((tag)=>
                                  name.tags.includes(tag)))))
 
-            console.log((`useEffect filterednames ${JSON.stringify(filterednames)}`))
+            // console.log((`useEffect filterednames ${JSON.stringify(filterednames)}`))
         },[tagFilters]
           ) 
            
@@ -277,8 +277,8 @@ export default function Example({category,nameList, pageProps}) {
      <tbody className=" text-violet-100 ">
     
         {filterednames.map((name)=>{
-         
-                  return <NameListing key={name.id} name={name}/>
+                 
+                  return <NameListing key={name._id} name={name}/>
                 }   
 
             )

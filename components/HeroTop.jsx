@@ -12,8 +12,8 @@ fontFamily:'Comfortaa'}}>
   <div className="hero-content text-center text-neutral-content mb-10">
     <div className="max-w-xl text-white">
       <h1 className="mb-5 text-5xl text-yellow-300 font-black"> Welcome to <br/> Pet Profile Tailor!</h1>
-           <p className="mb-5 text-xl"> Creating engaging pet profiles to increase adoptions can feel ruff! We've been there! And we’re here to help.</p>
-           <p className="mb-5 text-xl"> Pet profile tailor is a community powered assistant which assists you with creating pet profiles which are:</p>
+           <p className="mb-5 text-xl"> Naming your new pet or creating engaging pet profiles for adoptable pets can feel ruff! We've been there! And we’re here to help.</p>
+           <p className="mb-5 text-xl"> Pet profile tailor is a community powered assistant which assists you finding that perfect name or  creating pet profiles which are:</p>
      
 
         <section className="w-full flex justify-center gap-3">

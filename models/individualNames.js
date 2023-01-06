@@ -31,7 +31,7 @@ const IndividualNameSchema= new mongoose.Schema({
 // Apply the uniqueValidator plugin to userSchema.
 IndividualNameSchema.plugin(uniqueValidator);
 
-module.exports = mongoose.models['names'] || mongoose.model("names", IndividualNameSchema);
+module.exports = mongoose.models?.names || mongoose.model("names", IndividualNameSchema);
 
   // addedBy:{
   //   type: String,

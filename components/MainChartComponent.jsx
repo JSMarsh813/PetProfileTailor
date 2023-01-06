@@ -4,7 +4,7 @@ import NameListing from "../components/Namelisting"
 function ChartComponent({nameList}) {
   return (
    
-    <table className="min-w-full divide-y divide-gray-100 text-md">
+    <table className="min-w-full divide-y divide-gray-100 text-base">
  {console.log(nameList)}
                         
     <thead className="bg-purple-100">
@@ -36,7 +36,7 @@ function ChartComponent({nameList}) {
         </th>
        </tr>
     </thead>
-     <tbody className=" text-violet-100 ">
+     <tbody className=" text-violet-100">
 
         {nameList.map((name)=>{
          

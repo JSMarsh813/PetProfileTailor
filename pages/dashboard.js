@@ -44,22 +44,71 @@ function dashboard({category,nameList}) {
 
 
   const { status, data: session } = useSession();
-  const [userInfo,setUserInfo] =useState()
+  const [userId,setUserId] =useState()
   const [treatBreakdownMenuOpen,settreatBreakdownMenuOpen]=useState(false)
 
   const valuetest = useContext(UserSessionContext); 
 
-  let [userId,setUserId]=useState("")
+  // let [userId,setUserId]=useState("")
   // get users data from the server
 
         //need userId, from getStorage or maybe request params somehow?
 
 
-//grab userID from localStorage
+//put session id into state
+
 useEffect(() => {
-  let data= (!localStorage.getItem("session"))?
-      data="0":      
-      data=JSON.parse(localStorage.getItem("session")).toString()
+  if (session?.user) {
+   setUserId(session.user._id)
+   console.log(userId=="63a90c2e83e6366b179ffc40")
+  }
+
+  
+}, [session]);
+
+
+
+// const currentUserInfo = async ({ name, email, password }) => {
+//   try {
+//     await axios.post('/api/auth/signup', {
+//       name,
+//       email,
+//       password,
+//     });
+
+//     const result = await signIn('credentials', {
+//       redirect: false,
+//       email,
+//       password,
+//     });
+//     if (result.error) {
+//       toast.error(result.error);
+//     }
+//     else {
+      
+//       toast.success("Successfully signed up! Sending to profile page")
+//       console.log(result)
+//       // Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
+//       console.log(`email: ${email} pass:${password}`)
+//       //email: kyunyu@gmail.com pass:testtest
+//       //and appears in mongodb users collection
+//       router.push("/")
+//     }
+//   } catch (err) {
+//     toast.error(getError(err));
+//   }
+// };
+
+
+
+
+
+//grab userID from localStorage
+
+// useEffect(() => {
+//   let data= (!localStorage.getItem("session"))?
+//       data="0":      
+//       data=JSON.parse(localStorage.getItem("session")).toString()
   
 
   //we had to convert mongo's object ID to a JSON object, JSON.stringify to store in local storage when we logged in at login.js
@@ -68,10 +117,10 @@ useEffect(() => {
       //so we need to use JSON.parse to make it a useable string
       
   // console.log(data);
-  setUserId(data)   
+  // setUserId(data)   
   // getUser()            
   
-}, [])
+// }, [])
 
             // get request to api/user/???
        
@@ -95,7 +144,7 @@ useEffect(() => {
         <Layout></Layout>
         <section>
 
-     <p> {(valuetest)}</p>
+     {/* <p> {(valuetest)}</p> */}
 
 
      <div className="relative overflow-hidden bg-no-repeat bg-cover" 
@@ -239,7 +288,7 @@ useEffect(() => {
      </section>
   
 
-  <section className="favoritesSection">
+  <section className="favoritesSection px-4">
 
        <h3 className="text-center mt-5 text-yellow-400  font-bold mb-2 text-2xl 
        pb-2
@@ -255,12 +304,12 @@ useEffect(() => {
 
               
 
-               <div classname="flex w-screen justify-between">
+               <div classname="flow-root w-screen">
        
-                   <h4 className=" inline-block"> Your Favorite Names </h4>
+                   <h4 className="float-left"> Your Favorite Names </h4>
 
-                  <div className="inline-block">
-                        <GeneralButton text="Click here to Sort Names by category"></GeneralButton>
+                  <div className="float-right mb-4">
+                        <GeneralButton text="Sort Names by Categories"></GeneralButton>
                   </div>
                  
                 </div>
@@ -281,9 +330,15 @@ useEffect(() => {
 
   </section>
 
-        <p>{userId}</p>
+        {/* <p>{userId}</p> */}
        
-       
+       <section>
+          
+          <h4> Recent batsignals </h4>
+
+          <p> Offer your help and creativty to your community members who are struggling to find the perfect name, description or more! </p>
+
+       </section>
       
     </div>
   )

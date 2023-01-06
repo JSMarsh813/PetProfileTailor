@@ -1,5 +1,6 @@
 import '../styles/globals.css'
-import { SessionProvider, useSession } from 'next-auth/react';
+import { SessionProvider, useSession, getSession } from 'next-auth/react';
+
 import { useState, createContext, useContext } from 'react';
 // import { UserSession } from '@context/user';
 
@@ -13,7 +14,16 @@ import { useState, createContext, useContext } from 'react';
 
 // import { UserSessionContext, UserContextProvider } from "../src/context/UserState"
 import UserSessionContext from '../src/context/UserSessionContext';
+import { useCookies } from "react-cookie";
 
+
+export async function getServerSideProps(ctx) {
+  return {
+    props: {
+      session: await getSession(ctx)
+    }
+  }
+}
 
 function MyApp({ 
 
@@ -23,6 +33,9 @@ function MyApp({
  
 })
 {
+
+  const [userCookies, setCookie] = useCookies(["user"]);
+  console.log(`this is a cookie: ${JSON.stringify(userCookies)}`)
  
   let testingContext="if context works I'll show up! :)"
   //setting up the prop for UserSessionContext, grabbing session information
@@ -34,7 +47,7 @@ function MyApp({
  
     <SessionProvider session={session}>
 
-          <UserSessionContext.Provider value={testingContext}> 
+          <UserSessionContext.Provider value={JSON.stringify(userCookies)}> 
 
               {/* Every Context object comes with a Provider React component
 

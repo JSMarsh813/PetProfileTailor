@@ -13,9 +13,13 @@ async function handler(req, res) {
     return res.status(401).send({ message: 'signin required' });
   }
 
+  //session info
   const { user } = session;
+  // the three things we're sending to update
   const { name, email, password } = req.body;
+ 
 
+  //validation shouldn't be necessary since we're sending the session_id to attach to the selected object
   if (
     !name ||
     !email ||
@@ -29,6 +33,19 @@ async function handler(req, res) {
   }
 
   await db.connect();
+  // use the model we're updating. Look through it to find the one document we're looking for with the name
+
+  // so toUpdateName = await IndividualNames.findById(names._id);
+
+  // now that we have the right name, lets check if it has the current id
+  // if (toUpdateName.likedby.includes(user._id))
+
+ //if true, lets filter it out
+  // toUpdateName.likedby= toUpdateName.likedby.filter(user=> 
+          //user.id!=user._id)
+
+  // if false, lets add it to the database
+  //toUpdateName.likedby=toUpdateName.likedby.concat(user._id)
   const toUpdateUser = await User.findById(user._id);
   toUpdateUser.name = name;
   toUpdateUser.email = email;

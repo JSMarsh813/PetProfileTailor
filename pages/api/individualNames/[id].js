@@ -4,22 +4,33 @@ import db from '../../../utils/db'
 const handler = async (req, res) => {
 
     if (req.method === 'GET') {
-        return getHandler(req, res, user);
+        return getHandler(req, res);
+
       } else if (req.method === 'PUT') {
-        return putHandler(req, res, user);
+        return putHandler(req, res);
+
       } else if (req.method === 'DELETE') {
-        return deleteHandler(req, res, user);
+        return deleteHandler(req, res);
+        
       } else {
         return res.status(400).send({ message: 'Method not allowed' });
       }
     };
     const getHandler = async (req, res) => {
       await db.connect();
-      const individualname = await Individualname.findById(req.query.id);
+      console.log(req.params)
+      const individualname = await Individualname.findOne({"id":req.query._id});
+      
       await db.disconnect();
-      res.send(individualname);
+      console.log(individualname)
+      res.status(200).json(individualname);
+     
     };
 
+    //
+
+// I also had the same problem. It was simply solved by using findOne method instead of findById method of mongoose.
+// https://stackoverflow.com/questions/52147649/mongoose-findbyid-return-null
     const putHandler = async (req, res) => {
       await db.connect();
       const individualname = await Individualname.findById(req.query.id);
