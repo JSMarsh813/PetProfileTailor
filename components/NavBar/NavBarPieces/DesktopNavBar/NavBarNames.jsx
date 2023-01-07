@@ -23,12 +23,13 @@ const NavBarNames = ({}) => {
 
 {/* DESKTOP MENU */}
 
-<section className="hidden lg:flex desktop-menu ">
+<section className="hidden md:flex desktop-menu ">
 
 
 
 <Menu as="div" className="inline-block text-left">
 <Link href="/">
+  
 <Menu.Button className="inline-flex px-4 py-2 text-sm font-medium text-white 
 
 border-4 border-transparent border-r-violet-400 
@@ -42,10 +43,9 @@ focus-visible:ring-2
 focus-visible:ring-white 
 focus-visible:ring-opacity-75">
 
-<FontAwesomeIcon icon={faIgloo} className="text-xl mr-1 text-violet-100"/>
-
-    
-
+<FontAwesomeIcon icon={faIgloo} 
+        className="text-xl mr-1 text-violet-100"/>
+   
          <a>Home</a>
       
   </Menu.Button>

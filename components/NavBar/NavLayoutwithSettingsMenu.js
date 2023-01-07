@@ -48,6 +48,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 
 export default function NavLayoutwithSettingsMenu({ title, children }) {
   const { status, data: session } = useSession();
+  
 
   // const { state, dispatch } = useContext(Store);
   // const { cart } = state;
@@ -57,6 +58,7 @@ export default function NavLayoutwithSettingsMenu({ title, children }) {
   // }, [cart.cartItems]);
 
   const [isHamBurgNavOpen, setisHamBurgNavOpen] = useState(false);
+
 
   const logoutClickHandler = () => {
     // Cookies.remove('cart');
@@ -76,6 +78,8 @@ export default function NavLayoutwithSettingsMenu({ title, children }) {
 
   return (
     <>
+
+    {console.log(isHamBurgNavOpen)}
       {/* <Head>
         <title>{title ? title + ' - PetProfileTailor' : 'PetProfileTailor'}</title>
         <meta name="description" content="site to assist with making pet profiles for adoptions" />
@@ -90,14 +94,19 @@ export default function NavLayoutwithSettingsMenu({ title, children }) {
 
   {/* HAMBURGER MENU BUTTON */}
 
-          <button className="absolute lg:hidden"
-                  onClick={() => setisHamBurgNavOpen((prev) => !prev)}>
+  <Menu as="div" 
+      className="relative inline-block text-white bg-violet-700 z-10 md:hidden">
+    
+    {/* md:hidden makes it so the dropdown will be hidden if the screen is enlarged from a small screen. Important because the hamburger button disappears on medium screens */}
+  <Menu.Button className="inline-flex justify-center md:hidden"
+                  onClick={() => setisHamBurgNavOpen(!isHamBurgNavOpen)}>
           <FontAwesomeIcon icon={faBars} className="text-xl text-violet-100 "/>
-          </button>
-        
+   </Menu.Button>
+       
 
         {isHamBurgNavOpen&&<MobileNavBar/>}
-      
+        
+      </Menu>
 
    {/* Name disappears at smaller screen sizes */}
 
