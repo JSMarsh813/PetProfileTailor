@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useSession } from "next-auth/react"
 import axios from 'axios'
 // import User from '../../models/User';
@@ -10,7 +10,7 @@ import { toast, ToastContainer } from 'react-toastify';
 //another serverSide props from  let categoryList = await fetch('http://localhost:3000/api/name-categories);
 
   
-function NewNameWithTagsData({tagList}) {
+function NewNameWithTagsData({tagList,userId}) {
   const { data: session, status } = useSession()
   
   
@@ -19,10 +19,17 @@ function NewNameWithTagsData({tagList}) {
     // const [description,setDescription]=useState([]);
     const [isPending,setIsPending]=useState(false);
     const [nameAlreadyExists,setNameExists]=useState(false);
-    // const [userId,setUserId]=useState("")
+    const [description, setDescription] =useState("")
+   
 
 
+    // useEffect(() => {
+    //   if (session?.user) 
+    //       {setUserId(session.user._id.toString(""))}
+      
+    // }, [session]);
 
+    // console.log(`This is session${userId}`)
    function handleNameSubmission (e){
     
         e.preventDefault();
@@ -32,9 +39,9 @@ function NewNameWithTagsData({tagList}) {
 
     const nameSubmission= {
      name: newName, 
-    //  description: newDescription,
+     description: description,
      tags: tags,
-    //  createdby: userId,
+     createdby: userId.toString(),
    }
     //  addedBy: userId,
           //from state
@@ -86,6 +93,7 @@ function NewNameWithTagsData({tagList}) {
         {/* {console.log(tagList[0].individualTag)} */}
      
     
+    
        <section className="mt-10 mb-16">
                 <h1 className="text-3xl text-white"> Add a Name! </h1> 
               
@@ -103,12 +111,19 @@ function NewNameWithTagsData({tagList}) {
                     onClick={(e)=>setNameExists(false)}
                                        
                     ></input>
-                    {nameAlreadyExists==true &&
-                    
-                  <p 
+                    {nameAlreadyExists==true &&      
+                 <p 
                     className="text-red-500 font-bold"> 
                     Name already exists 
                     </p>}
+
+                    {/* setDescription */}
+                    <textarea type="text" className="text-darkPurple block w-full mt-4" 
+                    placeholder="optional description: please add anything that would be useful to know. Examples: the name's meaning, popular fictional or historical figures with this name, ect" 
+                    onChange={(e)=>setDescription(e.target.value.trim())}>
+                    </textarea>
+
+
                   <p className="mt-4">If you type in the tags field, it will filter the tags.</p>
 
 

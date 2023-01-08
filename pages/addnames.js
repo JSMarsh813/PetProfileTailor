@@ -45,8 +45,14 @@ function AddNewNameWithTags({tagList,categoryList}) {
         {/* if not signed in, allow them to add names */}
       
        {(status === "authenticated") &&
-      <p>Signed in as {session.user.name}</p>}
-            <NewNameWithTagsData tagList={tagList}/>
+      <p>Signed in as {session.user.name}</p>
+       }
+
+        {(session) &&
+     <NewNameWithTagsData tagList={tagList} userId={session.user._id} />
+    }
+           
+        
         {/* <AddNewTag categoryList={categoryList}/> */}
         
    

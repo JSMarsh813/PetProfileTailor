@@ -17,13 +17,13 @@ import UserSessionContext from '../src/context/UserSessionContext';
 import { useCookies } from "react-cookie";
 
 
-export async function getServerSideProps(ctx) {
-  return {
-    props: {
-      session: await getSession(ctx)
-    }
-  }
-}
+// export async function getServerSideProps(ctx) {
+//   return {
+//     props: {
+//       session: await getSession(ctx)
+//     }
+//   }
+// }
 
 function MyApp({ 
 
