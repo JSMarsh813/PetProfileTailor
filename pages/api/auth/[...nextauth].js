@@ -18,15 +18,15 @@ import db from '../../../utils/db';
     //https://github.com/nextauthjs/next-auth/issues/3970
   },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user?._id) token._id = user._id;
-      return token;
+    jwt({ token, user }) {
+        if (user) token = user
+        return token
     },
-    async session({ session, token }) {
-      if (token?._id) session.user._id = token._id;
-      return session;
+    session({ session, user, token }) {
+        session.user = token
+        return session
     },
-  },
+},
   providers: [
     CredentialsProvider({
       async authorize(credentials) {

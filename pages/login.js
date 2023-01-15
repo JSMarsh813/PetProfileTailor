@@ -9,7 +9,24 @@ import { useRouter } from 'next/router';
 
 import { useCookies } from "react-cookie"
 
-export default function LoginScreen() {
+import { authOptions } from "../pages/api/auth/[...nextauth]"
+import { unstable_getServerSession } from "next-auth/next"
+
+
+
+export const getServerSideProps = async (context) => {
+
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+ 
+   
+  return {
+    props: {    
+      sessionFromServer: session,
+         },
+    }
+}
+
+export default function LoginScreen({sessionFromServer}) {
  //grab data from useSession and rename data to session
 
  const { data: session } = useSession();
@@ -18,6 +35,16 @@ export default function LoginScreen() {
  const router = useRouter();
  const { redirect } = router.query;
  //extract redirect from router.query
+
+ let userName=""
+ let profileImage=""
+
+ console.log(sessionFromServer)
+
+ if (sessionFromServer){
+     userName=sessionFromServer.user.name
+  profileImage=sessionFromServer.user.profileimage
+}
 
  //import this from line 2/react
   useEffect(() => {
@@ -30,11 +57,12 @@ export default function LoginScreen() {
       }),
     
 //  console.log(session.user._id),
- router.push(redirect || '/');
+ router.push(redirect || '/dashboard');
  }
  }, [router, session, redirect]);
  //if the session exists, then the user is already signed in. So if this is true, push back to the homepage
  //we need to use router (line 8) to redirect user
+
 
  const {
  handleSubmit,
@@ -74,12 +102,21 @@ export default function LoginScreen() {
 //error.js file in utils, this is for if there is an error in the api
 //  console.log(`login.js catch block error: ${JSON.stringify(err)}`)
  toast.error(getError(err));
- } };
+ } 
+
+
+//when button clicked, look for the user by their email, and grab their profile picture
+//put profile picture in local storage
+
+};
 
  
  return (
   <div>
-  <Layout title="Login"></Layout>
+  <Layout
+       title="Login"  
+       profileImage={profileImage} 
+       userName={userName} />
   <div>
    <section className="h-screen">
    <div className="px-6 h-full text-gray-100"> 
@@ -91,7 +128,8 @@ className="flex xl:justify-center lg:justify-between justify-center items-center
   className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0"
 >
   <img
-    src="https://images.pexels.com/photos/160846/french-bulldog-summer-smile-joy-160846.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg    
+  "
     className="w-full"
     alt="Sample image"
   />
@@ -167,6 +205,7 @@ onSubmit={handleSubmit(submitHandler)}
      <label htmlFor="email">Email</label>
          <input
                 type="email"
+               
                 {...register('email', {
                 required: 'Please enter email',
                 pattern: {
@@ -175,7 +214,7 @@ onSubmit={handleSubmit(submitHandler)}
                       },
                 })}
 
-          className="w-full"
+          className="w-full text-darkPurple"
           id="email"
           autoFocus
          ></input>
@@ -196,7 +235,7 @@ onSubmit={handleSubmit(submitHandler)}
                     required: 'Please enter password',
                     minLength: { value: 6, message: 'password is more than 5 chars' },
                     })}
-                    className="w-full"
+                    className="w-full text-darkPurple"
                     id="password"
                     autoFocus
               ></input>
@@ -221,7 +260,7 @@ onSubmit={handleSubmit(submitHandler)}
       </div>
 
         {/* <!-- Forgot Password Link --> */}
-      <a href="#!" className="text-gray-800">Forgot password?</a>
+      <a href="#!" className="text-white">Forgot password?</a>
     </div>
 
               {/* <!-- Login Button --> */}

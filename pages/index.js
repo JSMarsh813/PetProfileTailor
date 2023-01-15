@@ -8,9 +8,39 @@ import MediaObjectRight from '../components/MediaObjectRight'
 import PawPrintIcon from '../components/PawPrintIcon'
 import Profile from '../public/profile.png'
 import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
-function HomePage() {
+
+import { authOptions } from "../pages/api/auth/[...nextauth]"
+import { unstable_getServerSession } from "next-auth/next"
+
+export const getServerSideProps = async (context) => {
+
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+ 
+   
+  return {
+    props: {    
+      sessionFromServer: session,
+         },
+    }
+}
+
+
+
+function HomePage({sessionFromServer}) {
+
+  let userName=""
+  let profileImage=""
+
+  if (sessionFromServer){
+      userName=sessionFromServer.user.name
+   profileImage=sessionFromServer.user.profileimage
+ }
+
+
+
+
   return <div className="w-fit bg-violet-900">
-   <Layout> </Layout>
+   <Layout profileImage={profileImage} userName={userName} /> 
 
    <HeroTop/>
    

@@ -7,21 +7,28 @@ import AddNewTag from '../components/AddingNewData/AddingNewTag'
 import { useSession } from "next-auth/react"
 import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
 
+import { authOptions } from "../pages/api/auth/[...nextauth]"
+import { unstable_getServerSession } from "next-auth/next"
 
 
-export const getServerSideProps = async () => {
+
+
+export const getServerSideProps = async (context) => {
 
     let tagList = await fetch('http://localhost:3000/api/individualtags');
     let categoryList = await fetch('http://localhost:3000/api/name-categories');
   
         let tagData = await tagList.json()
         let categoryData = await categoryList.json()
+    
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
 
 
     return {
       props: {
         tagList: tagData,
-        categoryList: categoryData
+        categoryList: categoryData,
+        sessionFromServer:session,
                    },
       }
     //and provide the data as props to the page by returning an object from the function
@@ -29,29 +36,45 @@ export const getServerSideProps = async () => {
 
 
   
-function AddNewNameWithTags({tagList,categoryList}) {
+function AddNewNameWithTags({tagList,categoryList,sessionFromServer}) {
+
+  
   const { data: session, status } = useSession()
 
-  console.log(status)
-  console.log(session)
+//needed to avoid error if sessionFromServer is null aka not signed in
+  let userName=""
+  let profileImage=""
+  let userId=""
+ 
+  if (sessionFromServer){
+      userName=sessionFromServer.user.name
+      profileImage=sessionFromServer.user.profileimage
+      userId=sessionFromServer.user._id
+     }
 
      return (     
 <div className="bg-violet-900 h-screen text-white">
-  <Layout></Layout>
+<Layout 
+        profileImage={profileImage} 
+        userName={userName} 
+         /> 
+
+      <img
+        className="mx-auto h-52"
+        src="https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/Z5QQMNJZGJDSVJFNHHR3QYNMCE.jpg"/>
 
       <div style={{width:"700px"}} className="mx-auto mt-4 ">
         {/* if not signed in, do not allow them to add names */}
-      {(status !="authenticated")&&<div> To avoid spam, we ask users to sign in to add names </div>}
+      {(status !="authenticated")&&<div className="bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 text-center"> To avoid spam, users must sign in to add names </div>}
         {/* if not signed in, allow them to add names */}
-      
-       {(status === "authenticated") &&
-      <p>Signed in as {session.user.name}</p>
-       }
-
-        {(session) &&
-     <NewNameWithTagsData tagList={tagList} userId={session.user._id} />
-    }
-           
+      {console.log(`this is session ${sessionFromServer}`)}
+        
+     <NewNameWithTagsData 
+        tagList={tagList} 
+        userId={userId} 
+        sessionFromServer={sessionFromServer}
+       />
+        
         
         {/* <AddNewTag categoryList={categoryList}/> */}
         

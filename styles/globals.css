@@ -5,5 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700;900&family=Edu+TAS+Beginner:wght@500&display=swap');
 
 
-
-
+/* needed for when text overflows, the background doesn't turn gray */
+:root {
+    background-color:rgba(76,29,149) 
+}

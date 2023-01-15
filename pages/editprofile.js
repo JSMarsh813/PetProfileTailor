@@ -5,8 +5,37 @@ import { toast } from 'react-toastify';
 import { getError } from '../utils/error';
 import axios from 'axios';
 import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
+import GeneralButton from '../components/GeneralButton'
 
-export default function ProfileScreen() {
+import { authOptions } from "./api/auth/[...nextauth]"
+import { unstable_getServerSession } from "next-auth/next"
+
+export const getServerSideProps = async (context) => {
+
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+ 
+   
+  return {
+    props: {    
+      sessionFromServer: session,
+         },
+    }
+}
+
+
+
+export default function ProfileScreen({sessionFromServer}) {
+
+  
+
+  let userName=""
+  let profileImage=""
+
+  if (sessionFromServer){
+      userName=sessionFromServer.user.name
+   profileImage=sessionFromServer.user.profileimage
+ }
+ 
   const { data: session } = useSession();
 
   const {
@@ -18,9 +47,10 @@ export default function ProfileScreen() {
   } = useForm();
 
   useEffect(() => {
-    setValue('name', session.user.name);
-    setValue('email', session.user.email);
-  }, [session.user, setValue]);
+    setValue('name', sessionFromServer.user.name);
+    setValue('email', sessionFromServer.user.email);
+  }, [sessionFromServer.user, setValue]);
+  // }, [session.user, setValue]);
 
   const submitHandler = async ({ name, email, password }) => {
     try {
@@ -44,7 +74,8 @@ export default function ProfileScreen() {
   };
 
   return (
-    <Layout title="Profile">
+    <div>
+    <Layout title="Profile" profileImage={profileImage} userName={userName}/>
       <form
         className="mx-auto max-w-screen-md h-screen"
         onSubmit={handleSubmit(submitHandler)}
@@ -126,10 +157,11 @@ export default function ProfileScreen() {
             )}
         </div>
         <div className="mb-4">
-          <button className="primary-button">Update Profile</button>
+        <GeneralButton text="Update Profile"/>
         </div>
       </form>
-    </Layout>
+   
+    </div>
   );
 }
 

@@ -6,10 +6,11 @@ async function handler(req, res) {
   if (req.method !== 'POST') {
     return;
   }
-  const { name, email, password } = req.body;
+  const { name, email, password, profilename } = req.body;
   if (
     !name ||
     !email ||
+    !profilename||
     !email.includes('@') ||
     !password ||
     password.trim().length < 5
@@ -22,9 +23,16 @@ async function handler(req, res) {
 
   await db.connect();
              //tests for existing user
-  const existingUser = await User.findOne({ email: email });
-  if (existingUser) {
-    res.status(422).json({ message: 'User exists already!' });
+  const existingEmail = await User.findOne({ email: email });
+  if (existingEmail) {
+    res.status(422).json({ message: 'Email is already used!' });
+    await db.disconnect();
+    return;
+  }
+
+  const existingUserProfile = await User.findOne({ profilename: profilename});
+  if (existingUserProfile) {
+    res.status(422).json({ message: 'That profile name is already used!' });
     await db.disconnect();
     return;
   }
@@ -32,6 +40,7 @@ async function handler(req, res) {
   const newUser = new User({
     name,
     email,
+    profilename,
     password: bcryptjs.hashSync(password),
       });
 
@@ -43,6 +52,7 @@ async function handler(req, res) {
   res.status(201).send({
     message: 'Created user!',
     _id: user._id,
+    profilename: user.profilename,
     name: user.name,
     email: user.email,
     

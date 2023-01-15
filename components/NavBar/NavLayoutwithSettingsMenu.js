@@ -21,32 +21,8 @@ import { faBullseye, faFaceGrinWink, faUserTie, faTags, faIgloo, faLightbulb, fa
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 
-// import { authOptions } from '../pages/api/auth/[...nextauth]'
-// import { unstable_getServerSession } from "next-auth/next"
-  //next header error
 
-
-// export async function getServerSideProps(context) {
-//   const session = await unstable_getServerSession(context.req, context.res, authOptions)
-
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: '/',
-//         permanent: false,
-//       },
-//     }
-//   }
-
-//   return {
-//     props: {
-//       session,
-//     },
-//   }
-// }
-
-
-export default function NavLayoutwithSettingsMenu({ title, children }) {
+export default function NavLayoutwithSettingsMenu({ title, children, userName, profileImage}) {
   const { status, data: session } = useSession();
   
 
@@ -56,7 +32,7 @@ export default function NavLayoutwithSettingsMenu({ title, children }) {
   // useEffect(() => {
   //   setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   // }, [cart.cartItems]);
-
+  console.log(`this is username ${userName}`)
   const [isHamBurgNavOpen, setisHamBurgNavOpen] = useState(false);
 
 
@@ -129,10 +105,8 @@ export default function NavLayoutwithSettingsMenu({ title, children }) {
                   )}
                 </a>
               </Link> */}
-
-              {status === 'loading' ? (
-                'Loading'
-              ) : session?.user ? (
+        
+              { userName!="" ? (
                 <Menu as="div" className="relative inline-block text-left z-10">
                   
                   <Menu.Button className="inline-flex justify-center px-4 
@@ -149,13 +123,10 @@ export default function NavLayoutwithSettingsMenu({ title, children }) {
                   focus-visible:ring-white 
                   focus-visible:ring-opacity-75">
                    
-                 <span className="text-lg font-bold"> {session.user.name} </span>
+                 <span className="text-lg font-bold"> {userName} </span>
 
-                 {session.user.profileImage?
-                      "True": 
-                      <img className="ml-3 h-8 rounded-full inline"src="https://preview.redd.it/mretq5qte3451.png?auto=webp&s=6040f7d829d09479fd3f44a0546d19653f35219c"/> }
-               
-     {console.log(session)}
+                   <img className="ml-3 h-8 rounded-full inline"src={profileImage}/> 
+                    
                     <ChevronDownIcon
               className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
               aria-hidden="true"
