@@ -26,17 +26,17 @@ export default function DropDownMenu() {
           focus-visible:ring-opacity-75">
 
 
-<FontAwesomeIcon icon={faCirclePlus} className="text-xl mr-2 text-violet-200"/>
+<FontAwesomeIcon icon={faCirclePlus} className="text-xl mr-2 font-bold text-white "/>
 
-            Add
+           <span className="font-bold  text-white "> Add </span>
             <ChevronDownIcon
-              className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
+              className="ml-2 -mr-1 h-5 w-5 text-white  hover:text-violet-100"
               aria-hidden="true"
             />
           </Menu.Button>
         </div>
       
-          <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-violet-800 shadow-lg ring-1 ring-black ring-opacity-5 
+          <Menu.Items className="absolute font-bold  text-white  right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-violet-800 shadow-lg ring-1 ring-black ring-opacity-5 
           
           focus:outline-none">
             <div className="px-1 py-1 ">

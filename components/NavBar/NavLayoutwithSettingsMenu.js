@@ -62,7 +62,7 @@ export default function NavLayoutwithSettingsMenu({ title, children, userName, p
         <link rel="icon" href="/favicon.ico" />
       </Head> */}
 
-      <ToastContainer position="bottom-center" limit={1} />
+      {/* <ToastContainer position="bottom-center" limit={1} /> */}
 
       <div className="flex flex-col justify-between bg-violet-900">
         <header>

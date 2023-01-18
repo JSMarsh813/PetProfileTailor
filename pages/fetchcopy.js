@@ -15,8 +15,9 @@ import { useForm } from 'react-hook-form';
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 
-import GeneralButton from "../components/GeneralButton"
+
 import NameListing from "../components/Namelisting"
+import FilteringSidebar from '../components/Filtering/FilteringSidebar';
 
 export const getServerSideProps = async (context) => {
 
@@ -65,11 +66,8 @@ export default function Example({category,nameList, pageProps, sessionFromServer
     // }, [])
     // if clicked add to state, then find names with those tags who are true
 
-          //  ################ sets up the toggle for the filter div #############################
-    const[IsOpen,SetIsOpen] = useState(true)
-         //if true, the className for the filter div will be "" (visible)
-         //if false, the className for the filter div will be hidden
-    
+    // const name=target.name
+
   
       //  const [checkedState, setCheckedState] = useState([new Array(category.length).fill([])]);
       // console.log(`namelist ${JSON.stringify(nameList)}`)
@@ -77,77 +75,22 @@ export default function Example({category,nameList, pageProps, sessionFromServer
                     //array above is filled with tags
                     // ex ["christmas", "male"]
           const[filterednames,setFilteredNames]=useState([...nameList])
-                   //filled with all names, not actually filtered yet
-                        //  namelist console.log result: 
-                        //  [
+                 
+         
 
-                        //   {"_id":"63abc7d5650d1659f0dd305e","name":"donner","description":[],"tags":["christmas","male"],"likedby":["63a90c2e83e6366b179ffc40","63ac0eb87795b89caaf760fe"],"__v":0},
-
-                        //  {"_id":"63ae1671f202c8bf5752544f","name":"santa","description":[],"tags":["christmas","male"],"likedby":[],"__v":0},
-
-                        //  {"_id":"63ae16a9f202c8bf57525455","name":"tataru","description":[],"tags":["female"],"likedby":[],"__v":0}
-                        // ]
-                  //  console.log(`filterednames ${JSON.stringify(filterednames)}`)
-                   
-                
-                  //  (setFilteredNames(
-                  //        filterednames.map((name)=>(tagFilters.every((tag)=>
-                  //        name.tags.includes(tag))))
-                  //      ))         
-               
-                  //  console.log(`filterednames later ${JSON.stringify(filterednames)}`)
-   
-
-
-
-
-          // const[checkedStatusOfTags,setCheckedTagsState] =useState([
-          //   new Array(category[0].links.length).fill(false)
-          // ])
-
-          
-                  //how do I added checked state for nested array
-          const handleChange = (e) => {
+          const handleFilterChange = (e) => {
 
        
-
                 const { value, checked } = e.target;
 
-                //copy filteredNames then set it to an empty array, so we "delete" the previous names in the state
-                
-               
-            
-                setFilteredNames(nameList);
-
-                    //every time we click, lets reset filteredNames to nameList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
-                         // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
-                        //      round: 2, we unclick male
-                                  //we need to reset the nameList, so that it will give us ALL christmas names
-                                       // so reset the list with all the names
-                                       // then the filter function in useEffect runs since the filteredtag array was changed
-
-              
-                // name.tags.includes(tag))))
- //We want ONE result for each name, so map through names
-                  //names ex: beans, santa
-                  //then we want to look through EVERY tag filter ONCE
-                          //ex filters: Male and christmas
-                              // does the name have all of these tags?
-                                   //ex: beans has male, but not christmas. so it'd return false
-                                  //while santa would return true so it's rendered
-            
-          
-          // console.log(`${value} is ${checked}`);
-
-          //if checked, it will add the new tag to the state/list. If not checked, it will filter it out and replace the state with the new tagfilter array
+                //setFilteredNames is needed in here, so every time a change happens, we reload the list. So we can go back in time if we remove some of the tags we chose.
+                setFilteredNames(nameList);     
                 
                 (checked)?   setFiltersState([...tagFilters,value],):( 
                 setFiltersState(tagFilters.filter((tag) => tag!=value)))
-              // console.log(tagFilters)
                          
           }      
-         
-            // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed 
+        
           useEffect(()=>{
             let currenttags=tagFilters
             
@@ -197,7 +140,7 @@ export default function Example({category,nameList, pageProps, sessionFromServer
         profileImage={profileImage} 
         userName={userName}  /> 
 
-  <section className="px-4 bg-violet-900">
+<section className="px-4 bg-violet-900">
 
   <div
     className="h-32 mb-4 bg-[url('https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1084&q=80')] bg-repeat-x bg-contain">
@@ -211,73 +154,13 @@ export default function Example({category,nameList, pageProps, sessionFromServer
   
     <div className="flex w-full h-screen ">
        
-        
-        {/* ###################### FILTER DIV ############################ */}
-     
-        <div className={`w-80 h-screen bg-violet-900  rounded-box place-items-center ${IsOpen?"":"hidden"}`}>
- {/* mapping through categories ex: gender, holidays */}
-         {category.map((category,index)=>{return (
-        <Disclosure key={category._id}>
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-base font-medium text-purple-900 
-              hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 ">
-                <span>{category.name} </span>
-                <ChevronUpIcon
-                  className={`${
-                    open ? 'rotate-180 transform' : ''
-                  } h-5 w-5 text-purple-500`}
-                />
-              </Disclosure.Button>
-              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  <div className="space-y-6 ">
-
-{/* mapping through links array (so ex: male, female, unisex)*/}
-
-                  {category.links.map((option,index)=>
-                  ( <div key={option} className="flex items-center hover:bg-violet-700">
-            {/* adds a checkbox*/}
-                  <input
-                                      id={`filter-mobile-${index}`}
-                                      name={`${option}[]`}
-                                      value={option}
-                                      type="checkbox"
-                                      // checked={checkedStatusOfTags} 
-                                      onChange={handleChange}
-                                      // onChange={() => handleOnChange(index)}
-                                      className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600 "
-                                    />
-           {/* shows the actual description (male, female, unisex ect for gender) */}
-                   <label
-                                      htmlFor={`filter-mobile-${option}-${option}`}
-                                      className="ml-3 min-w-0 flex-1 text-base text-violet-100 "
-                                    >
-                                      {option}
-                                    </label>
-                  
-                  </div>)
-                  )} 
-
-
-
-                  </div>
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-         )
-})}
-             
-      </div>
-      
-                  {/*################# CONTENT DIV ################### */}
+           {/* {console.log(`session in return ${pageProps}`)} */}
+        {/* <span>{console.log(category.map((eachCategory,index)=>eachCategory.links.length))}</span>  */}
+        <FilteringSidebar
+                 category={category} 
+                 handleFilterChange={handleFilterChange}/>
 
       <div className="h-screen grow bg-darkPurple rounded-box place-items-center">
-
-                  {/* Button that toggles the filter div */}
-        <GeneralButton 
-            text="Toggle Filter Menu" 
-            onClick={()=>SetIsOpen(!IsOpen)}/>
 
   {/* ex 
                 Bean : male*/}

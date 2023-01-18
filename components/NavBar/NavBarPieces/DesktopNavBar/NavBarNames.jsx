@@ -30,7 +30,7 @@ const NavBarNames = ({}) => {
 <Menu as="div" className="inline-block text-left">
 <Link href="/">
   
-<Menu.Button className="inline-flex px-4 py-2 text-sm font-medium text-white 
+<Menu.Button className="inline-flex px-4 py-2 text-sm font-bold text-white 
 
 border-4 border-transparent border-r-violet-400 
 
@@ -44,7 +44,7 @@ focus-visible:ring-white
 focus-visible:ring-opacity-75">
 
 <FontAwesomeIcon icon={faIgloo} 
-        className="text-xl mr-1 text-violet-100"/>
+        className="text-xl mr-1 text-white"/>
    
          <a>Home</a>
       
@@ -56,7 +56,8 @@ focus-visible:ring-opacity-75">
   <Menu as="div" className="relative inline-block text-left">
 
   <Link href="/fetchnames">
-<Menu.Button className="inline-flex px-4 py-2 text-sm font-medium text-white 
+
+<Menu.Button className="inline-flex px-4 py-2 text-sm font-bold  text-white 
 
 border-4 border-transparent border-r-violet-400 
 
@@ -68,7 +69,7 @@ focus:outline-none
 focus-visible:ring-2 
 focus-visible:ring-white 
 focus-visible:ring-opacity-75">
-      <FontAwesomeIcon icon={faTags} className="text-xl mr-2 text-violet-100"/>
+      <FontAwesomeIcon icon={faTags} className="text-xl mr-2 text-white"/>
 
         
          <a>Fetch Names</a>
@@ -81,7 +82,7 @@ focus-visible:ring-opacity-75">
   <Menu as="div" className="relative inline-block text-left">
  
   <Link href="/fetchdescriptions">
-<Menu.Button className="inline-flex px-4 py-2 text-sm font-medium text-white 
+<Menu.Button className="inline-flex px-4 py-2 text-sm font-bold text-white 
 
 border-4 border-transparent border-r-violet-400 
 
@@ -93,7 +94,7 @@ focus:outline-none
 focus-visible:ring-2 
 focus-visible:ring-white 
 focus-visible:ring-opacity-75">
-<FontAwesomeIcon icon={faIdCard} className="text-xl mr-1 text-violet-100"/>
+<FontAwesomeIcon icon={faIdCard} className="text-xl mr-1 text-white"/>
         <a> Fetch Descriptions</a>
   </Menu.Button>
   </Link>
