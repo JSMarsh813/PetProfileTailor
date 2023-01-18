@@ -16,8 +16,9 @@ import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 
 import GeneralButton from "../components/GeneralButton"
-import NameListing from "../components/Namelisting"
-
+import NameListing from "../components/ShowingListOfContent/Namelisting"
+import FilteringSidebar from '../components/Filtering/FilteringSidebar';
+      
 export const getServerSideProps = async (context) => {
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
@@ -107,7 +108,7 @@ export default function Example({category,nameList, pageProps, sessionFromServer
 
           
                   //how do I added checked state for nested array
-          const handleChange = (e) => {
+          const handleFilterChange = (e) => {
 
        
 
@@ -214,61 +215,11 @@ export default function Example({category,nameList, pageProps, sessionFromServer
         
         {/* ###################### FILTER DIV ############################ */}
      
-        <div className={`w-80 h-screen bg-violet-900  rounded-box place-items-center ${IsOpen?"":"hidden"}`}>
- {/* mapping through categories ex: gender, holidays */}
-         {category.map((category,index)=>{return (
-        <Disclosure key={category._id}>
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-base font-medium text-purple-900 
-              hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 ">
-                <span>{category.name} </span>
-                <ChevronUpIcon
-                  className={`${
-                    open ? 'rotate-180 transform' : ''
-                  } h-5 w-5 text-purple-500`}
-                />
-              </Disclosure.Button>
-              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  <div className="space-y-6 ">
-
-{/* mapping through links array (so ex: male, female, unisex)*/}
-
-                  {category.links.map((option,index)=>
-                  ( <div key={option} className="flex items-center hover:bg-violet-700">
-            {/* adds a checkbox*/}
-                  <input
-                                      id={`filter-mobile-${index}`}
-                                      name={`${option}[]`}
-                                      value={option}
-                                      type="checkbox"
-                                      // checked={checkedStatusOfTags} 
-                                      onChange={handleChange}
-                                      // onChange={() => handleOnChange(index)}
-                                      className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600 "
-                                    />
-           {/* shows the actual description (male, female, unisex ect for gender) */}
-                   <label
-                                      htmlFor={`filter-mobile-${option}-${option}`}
-                                      className="ml-3 min-w-0 flex-1 text-base text-violet-100 "
-                                    >
-                                      {option}
-                                    </label>
-                  
-                  </div>)
-                  )} 
-
-
-
-                  </div>
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-         )
-})}
-             
-      </div>
+        <FilteringSidebar
+                 category={category} 
+                 handleFilterChange={handleFilterChange}
+                 IsOpen={IsOpen}
+                 />
       
                   {/*################# CONTENT DIV ################### */}
 

@@ -79,6 +79,8 @@ focus-visible:ring-opacity-75">
 
   </Menu>
  
+
+
   <Menu as="div" className="relative inline-block text-left">
  
   <Link href="/fetchdescriptions">
@@ -100,6 +102,30 @@ focus-visible:ring-opacity-75">
   </Link>
 
   </Menu>
+
+
+
+  <Menu as="div" className="relative inline-block text-left">
+ 
+ <Link href="/batsignal">
+<Menu.Button className="inline-flex px-4 py-2 text-sm font-bold text-white 
+
+border-4 border-transparent border-r-violet-400 
+
+hover:bg-opacity-30 
+hover:border-b-4
+hover:border-b-yellow-400 
+
+focus:outline-none 
+focus-visible:ring-2 
+focus-visible:ring-white 
+focus-visible:ring-opacity-75">
+<FontAwesomeIcon icon={faIdCard} className="text-xl mr-1 text-white"/>
+       <a> BatSignal/ PlayYard</a>
+ </Menu.Button>
+ </Link>
+
+ </Menu>
 
   <AddItemsDropDownMenu/>
 </section>

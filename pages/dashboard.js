@@ -9,7 +9,7 @@ import axios from 'axios'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import UserSessionContext from "../src/context/UserSessionContext"
 
-import NameListing from "../components/Namelisting"
+import NameListing from "../components/ShowingListOfContent/Namelisting"
 import MainChartComponent from "../components/MainChartComponent"
 import GeneralButton from '../components/GeneralButton';
 import GeneralOpenCloseButton from "../components/buttons/generalOpenCloseButton"
@@ -414,7 +414,7 @@ function dashboard({category,nameList,sessionFromServer,favNames}) {
        
        <section>
           
-          <h4> Recent batsignals </h4>
+          <h4> Recent batsignals .... </h4>
 
           <p> Offer your help and creativty to your community members who are struggling to find the perfect name, description or more! </p>
 

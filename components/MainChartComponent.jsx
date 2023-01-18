@@ -1,5 +1,5 @@
 import React from 'react'
-import NameListing from "../components/Namelisting"
+import NameListing from "../components/ShowingListOfContent/Namelisting"
 
 function ChartComponent({nameList}) {
   return (

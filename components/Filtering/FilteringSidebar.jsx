@@ -4,10 +4,10 @@ import React, {useEffect, useState} from 'react'
 
 
 
-function FilteringSidebar({category, handleFilterChange}) {
+function FilteringSidebar({category, handleFilterChange,IsOpen}) {
 
   return (
-    <div className="w-80 h-screen bg-violet-900  rounded-box place-items-center ">
+    <div className={`w-80 h-fit bg-violet-900 border-b-2 border-dotted border-violet-400 rounded-box place-items-center ${IsOpen?"":"hidden"}`}>
     {/* mapping through categories ex: gender, holidays */}
             {category.map((category,index)=>{return (
            <Disclosure 
