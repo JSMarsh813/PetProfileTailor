@@ -7,17 +7,19 @@ import React, {useEffect, useState} from 'react'
 function FilteringSidebar({category, handleFilterChange,IsOpen}) {
 
   return (
-    <div className={`w-80 h-fit bg-violet-900 border-b-2 border-dotted border-violet-400 rounded-box place-items-center ${IsOpen?"":"hidden"}`}>
+    <div className={`w-80 h-fit bg-violet-900 border-b-2 border-solid border-violet-400 rounded-box place-items-center ${IsOpen?"":"hidden"}`}>
     {/* mapping through categories ex: gender, holidays */}
             {category.map((category,index)=>{return (
            <Disclosure 
                 key={category._id} 
-                defaultOpen>
+                >
+
+{/* defaultOpen will have the disclosure stay open*/}
              {({ open }) => (
                <>
 
         {/* Category Name shows here ("species", "food") */}
-                 <Disclosure.Button className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-base font-medium text-purple-900 
+                 <Disclosure.Button className="flex w-full justify-between rounded-lg rounded-r-none border-t-2 border-violet-300 bg-purple-100 px-4 py-2 text-left text-base font-medium text-purple-900 
                  hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 ">
                    <span>{category.name} </span>
                    <ChevronUpIcon
@@ -35,7 +37,7 @@ function FilteringSidebar({category, handleFilterChange,IsOpen}) {
    
    {/* mapping through category options and assigning them a button (ex: male, female, unisex)*/}
    
-                     {category.links.map((option,index)=>
+                     {category.tags.map((option,index)=>
                      ( <div key={option} className="flex items-center hover:bg-violet-700">
                {/* adds a checkbox*/}
                      <input

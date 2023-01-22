@@ -100,7 +100,7 @@ export const getServerSideProps = async (context) => {
 
 
 
-function dashboard({category,nameList,sessionFromServer,favNames}) {
+export default function Dashboard({category,nameList,sessionFromServer,favNames}) {
 
 
    const [treatBreakdownMenuOpen,settreatBreakdownMenuOpen]=useState(false)
@@ -414,7 +414,7 @@ function dashboard({category,nameList,sessionFromServer,favNames}) {
        
        <section>
           
-          <h4> Recent batsignals .... </h4>
+          <h4> Recent batsignals </h4>
 
           <p> Offer your help and creativty to your community members who are struggling to find the perfect name, description or more! </p>
 
@@ -423,6 +423,3 @@ function dashboard({category,nameList,sessionFromServer,favNames}) {
     </div>
   )
 }
-
-
-export default dashboard

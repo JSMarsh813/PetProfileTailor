@@ -17,14 +17,16 @@ import AddPost from '../components/AddingNewData/AddPost'
 export const getServerSideProps = async (context) => {
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
-  // let response = await fetch('http://localhost:3000/api/name-categories');
-   
-  // let data = await response.json()
+
+  //  let postResponse= await fetch('http://localhost:3000/api/individualposts');
+  //  let postData = await postResponse.json()
+
 
 
   return {
     props: {    
       sessionFromServer: session,
+      // postList: nameData,
       // category: data,
          },
     }
@@ -32,27 +34,27 @@ export const getServerSideProps = async (context) => {
 
 
 
-export default function batsignal({nameList, sessionFromServer, pageProps}) {
-
+export default function BatSignal({sessionFromServer, pageProps,}) {
+  // postList
           // ##################### Category Objects List for Batsignal ###########################
    const category=[
     {
       name:"BatSignal!",
       _id:"1",
-      links: ["name suggestions", "description suggestions","fundraising ideas","social media ideas","photography ideas", "other ideas"]
+      tags: ["name suggestions", "description suggestions","fundraising ideas","social media ideas","photography ideas", "other ideas"]
     },
     {
       name:"PlayYard & Community",
       _id:"2",
-      links: ["General ChitChat","showoff your pets!"]
+      tags: ["General ChitChat","showoff your pets!"]
     },
     { name:"Bugs & Feedback",
       _id:"3",
-      links: ["bugs","feedback"]
+      tags: ["bugs","feedback"]
     }
    ]
   
-
+   let tagListProp=category.map(category=>category.tags).reduce((sum,value)=>sum.concat(value),[])
   //                             
 
   //  [PlayYard&Community]: 
@@ -78,36 +80,96 @@ export default function batsignal({nameList, sessionFromServer, pageProps}) {
     profileImage=sessionFromServer.user.profileimage
   }
 
-    // let [userId,setUserId]=useState()
-
-    // useEffect(() => {
-    //     const data = localStorage.getItem("session") 
-    //     // console.log(data);
-    //     setUserId(data)
-    // }, [])
-
-    //  ###################   State for filter menu ##########################
 
     const[IsOpen,SetIsOpen] = useState(true)
     //if true, the className for the filter div will be "" (visible)
     //if false, the className for the filter div will be hidden
+
     const[addingPost,setAddingPost]=useState(false)
 
-    let tagList=["names","photography"]
+    let tagListForPost=["names","photography"]
 
-    const handleFilterChange = (e) => {
-    }
+    
+  
+          // const[tagFilters,setTagFilters] = useState([])
+          //           //array above is filled with tags
+          //           // ex ["name suggestions", "description suggestions"]
+          // const[filteredposts,setFilteredPosts]=useState([...postList])
+          //          //filled with all names on default aka, not actually filtered yet
+
+   const handleFilterChange = (e) => {
+
+       
+
+                // const { value, checked } = e.target;
+
+                // //copy filteredNames then set it to an empty array, so we "delete" the previous names in the state
+                
+               
+            
+                // setFilteredPosts(postList);
+
+                    //every time we click, lets reset filteredNames to nameList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
+                         // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
+                        //      round: 2, we unclick male
+                                  //we need to reset the nameList, so that it will give us ALL christmas names
+                                       // so reset the list with all the names
+                                       // then the filter function in useEffect runs since the filteredtag array was changed
+
+              
+                // name.tags.includes(tag))))
+ //We want ONE result for each name, so map through names
+                  //names ex: beans, santa
+                  //then we want to look through EVERY tag filter ONCE
+                          //ex filters: Male and christmas
+                              // does the name have all of these tags?
+                                   //ex: beans has male, but not christmas. so it'd return false
+                                  //while santa would return true so it's rendered
+            
+          
+          // console.log(`${value} is ${checked}`);
+
+          //if checked, it will add the new tag to the state/list. If not checked, it will filter it out and replace the state with the new tagfilter array
+                
+              //   (checked)?   
+              //   setTagFilters([...tagFilters,value],):( 
+              //   setTagFilters(tagFilters.filter((tag) => tag!=value)))
+              // // console.log(tagFilters)
+                         
+          }      
+         
+            // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed 
+        //   useEffect(()=>{
+        //     let currenttags=tagFilters
+            
+        //     setFilteredPosts( filteredposts.filter((post)=>
+        //               (currenttags.every((tag)=>
+        //                          post.tags.includes(tag)))))
+
+        //     // console.log((`useEffect filterednames ${JSON.stringify(filterednames)}`))
+        // },[tagFilters]
+          // ) 
+           
+
+
+
+
+
+
+
     
   return (
     <div className="pb-8 w-screen " >
-        <Layout profileImage={profileImage} userName={userName}  /> 
+        <Layout 
+            profileImage={profileImage} 
+            userName={userName}  /> 
         
         <img className="h-32 mx-auto" 
                    src="https://images.wagwalkingweb.com/media/daily_wag/blog_articles/hero/1602871850.792525/best-dog-halloween-costumes-of-2018.jpg"/>
 
 {/* https://images.unsplash.com/photo-1560160922-6019c26a2523 */}
 
-        <h1 className="text-center text-white font-semibold text-3xl mt-4 mb-4">  BatSignal and PlayYard </h1>
+        <h1 className="text-center text-white font-semibold text-3xl mt-4 mb-4"> BatSignal and Playyard </h1>
 
      {/* posts section */}
         <section className="flex w-full h-fit bg-darkPurple  rounded-box">
@@ -118,10 +180,11 @@ export default function batsignal({nameList, sessionFromServer, pageProps}) {
                  IsOpen={IsOpen}
                  />
     
-             <section className="mb-0 w-max flex-1 border-2 border-violet-400 ">
+             <section className="mb-0 w-full flex-1 border-2 border-violet-400 ">
       
                     {/* Button that toggles the filter div */}
                      <GeneralButton 
+                            className="rounded-l-none"
                             text={`${IsOpen?"Close Filters":"Open Filters"}`}
                             onClick={()=>SetIsOpen(!IsOpen)}/>
 
@@ -134,8 +197,8 @@ export default function batsignal({nameList, sessionFromServer, pageProps}) {
                                       className="max-h-32 mx-auto rounded-full"src="https://images.unsplash.com/photo-1602067340370-bdcebe8d1930?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"/>
                                   
                                    <p 
-                                        className="w-max text-white text-xl mx-auto mt-2"> 
-                                        Come join us in playyard! Ask for advice, share ideas, or just chitchat! </p>
+                                        className="w-full text-white text-xl mx-auto mt-2"> 
+                                        Come join us in the play yard! Ask for advice, share ideas, or just chat! </p>
                                       
                                         <GeneralButton 
                                             text="Add a Post"
@@ -143,7 +206,11 @@ export default function batsignal({nameList, sessionFromServer, pageProps}) {
                                             onClick={()=>{setAddingPost(!addingPost)}}/>
                                   </div>
 
-                                  {addingPost&& <AddPost/> }
+                                  {addingPost&& 
+                                  
+                    <AddPost 
+                           tagListProp={tagListProp}
+                            sessionFromServer={sessionFromServer}/> }
                             
                             <BatsignalPost 
                                 image="https://media.tenor.com/1wU92N1rXhwAAAAM/cute-cute-dog.gif"
@@ -153,21 +220,9 @@ export default function batsignal({nameList, sessionFromServer, pageProps}) {
                                 postersName="Bob"
                                 postDate="friday the 13th"
                                 amountOfComments="2"
-                                tagList={tagList.map(tag=>"#"+tag).join(", ")}
+                                tagList={tagListForPost.map(tag=>"#"+tag).join(", ")}
                                 className="mx-auto"
                                 />
-
-<BatsignalPost 
-        image="https://media.tenor.com/1wU92N1rXhwAAAAM/cute-cute-dog.gif"
-        title="Names ideas for this cool dude? 😎"
-        paragraphText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora reiciendis ad architecto at aut placeat quia, minus dolor praesentium officia maxime deserunt porro amet ab debitis deleniti modi soluta similique..."
-        postersProfileImage="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=731&q=80"
-        postersName="Bob"
-        postDate="friday the 13th"
-        amountOfComments="2"
-        tagList={tagList.map(tag=>"#"+tag).join(", ")}
-        />
-             
 
         
               <div className="text-center mb-4">

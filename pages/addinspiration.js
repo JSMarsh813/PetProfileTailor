@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu"
 
-function addinspiration() {
+function AddInspiration() {
   return (
     <div>
         <Layout></Layout>
@@ -9,4 +9,4 @@ function addinspiration() {
   )
 }
 
-export default addinspiration
+export default AddInspiration

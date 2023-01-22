@@ -58,7 +58,12 @@ function MyApp({
               in this case ALL components */}
                 <Component {...pageProps} />
         {/* </UserSessionContext.Provider> */}
+        <footer className="text-white py-4 px-4 bg-darkPurple border-t-2 border-violet-400 mt-4">
+          <h6> Credits: </h6>
+              <span className="ml-6"> “Bat” icon by Megan Mitchell, from thenounproject.com.</span>
+                  </footer>
     </SessionProvider>
+    
 
     
   ); 

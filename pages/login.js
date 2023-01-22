@@ -49,7 +49,7 @@ export default function LoginScreen({sessionFromServer}) {
  //import this from line 2/react
   useEffect(() => {
    if (session?.user) {
-    localStorage.setItem("session",JSON.stringify(session.user._id)), 
+    // localStorage.setItem("session",JSON.stringify(session.user._id)), 
 
     setCookie("user", JSON.stringify(session), {
      

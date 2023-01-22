@@ -17,7 +17,7 @@ const [newProfileImage,setNewProfileImage] =useState("")
  console.log(selectedImage)
 }
 
-// upload image to cloudinary
+// ########## upload image to cloudinary #############
 const handleImageUpload = async () => {
     if (!selectedImage) return
 
@@ -41,6 +41,9 @@ const handleImageUpload = async () => {
   }
   console.log(`This is ${newProfileImage}`)
   //Works! Result: This is https://res.cloudinary.com/dujellms1/image/upload/v1673928335/profileimage/acpzgzskf3vaxjhpcesj.jpg
+
+
+                          // ########## upload image to current users mongoDB user document  #############
 
   const updateUserProfileImage = async (newProfileImage) => {
        console.log(`in function${newProfileImage}`)

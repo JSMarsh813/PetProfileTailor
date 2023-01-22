@@ -48,7 +48,7 @@ export const getServerSideProps = async (context) => {
 
 
 
-export default function Example({category,nameList, pageProps, sessionFromServer}) {
+export default function FetchNames({category,nameList, pageProps, sessionFromServer}) {
   
   let userName=""
   let profileImage=""
@@ -142,7 +142,8 @@ export default function Example({category,nameList, pageProps, sessionFromServer
 
           //if checked, it will add the new tag to the state/list. If not checked, it will filter it out and replace the state with the new tagfilter array
                 
-                (checked)?   setFiltersState([...tagFilters,value],):( 
+                (checked)?   
+                setFiltersState([...tagFilters,value],):( 
                 setFiltersState(tagFilters.filter((tag) => tag!=value)))
               // console.log(tagFilters)
                          
@@ -192,7 +193,7 @@ export default function Example({category,nameList, pageProps, sessionFromServer
 
 
   return (
-  <div className="bg-violet-900 h-screen">
+  <div className="bg-violet-900">
 
     <Layout 
         profileImage={profileImage} 
@@ -203,14 +204,14 @@ export default function Example({category,nameList, pageProps, sessionFromServer
   <div
     className="h-32 mb-4 bg-[url('https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1084&q=80')] bg-repeat-x bg-contain">
 
-    <h3 className="text-center pt-2 w-screen text-5xl text-white"> Fetch Names </h3>
+    <h3 className="text-center pt-2 w-screen text-5xl text-white"> Fetch Names  </h3>
      
 
   </div>
 {/* {    JSON.stringify(filterednames)} */}
 
   
-    <div className="flex w-full h-screen ">
+    <div className="flex w-full">
        
         
         {/* ###################### FILTER DIV ############################ */}
@@ -223,12 +224,12 @@ export default function Example({category,nameList, pageProps, sessionFromServer
       
                   {/*################# CONTENT DIV ################### */}
 
-      <div className="h-screen grow bg-darkPurple rounded-box place-items-center">
+      <div className="grow bg-darkPurple rounded-box place-items-center">
 
                   {/* Button that toggles the filter div */}
-        <GeneralButton 
-            text="Toggle Filter Menu" 
-            onClick={()=>SetIsOpen(!IsOpen)}/>
+        <GeneralButton                
+               text={`${IsOpen?"Close Filters":"Open Filters"}`}
+               onClick={()=>SetIsOpen(!IsOpen)}/>
 
   {/* ex 
                 Bean : male*/}

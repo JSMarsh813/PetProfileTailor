@@ -3,11 +3,11 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import AddItemsDropDownMenu from './AddItemsDropDownMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBullseye, faFaceGrinWink, faUserTie, faTags, faIgloo, faLightbulb, faIdCard, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBullseye, faFaceGrinWink, faUserTie, faTags, faIgloo, faLightbulb, faIdCard, faBars, faHandHoldingHand } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import Link from 'next/Link'
 
-
+//onclick wrapped in spans due to this error https://github.com/vercel/next.js/discussions/39212
 // https://headlessui.com/react/menu
 
 const NavBarNames = ({}) => {
@@ -28,7 +28,7 @@ const NavBarNames = ({}) => {
 
 
 <Menu as="div" className="inline-block text-left">
-<Link href="/">
+<span><Link href="/">
   
 <Menu.Button className="inline-flex px-4 py-2 text-sm font-bold text-white 
 
@@ -50,11 +50,12 @@ focus-visible:ring-opacity-75">
       
   </Menu.Button>
   </Link>
+  </span>
 
   </Menu>
 
   <Menu as="div" className="relative inline-block text-left">
-
+  <span>
   <Link href="/fetchnames">
 
 <Menu.Button className="inline-flex px-4 py-2 text-sm font-bold  text-white 
@@ -76,13 +77,14 @@ focus-visible:ring-opacity-75">
         
   </Menu.Button>
   </Link>
+  </span>
 
   </Menu>
  
 
 
   <Menu as="div" className="relative inline-block text-left">
- 
+  <span>
   <Link href="/fetchdescriptions">
 <Menu.Button className="inline-flex px-4 py-2 text-sm font-bold text-white 
 
@@ -100,15 +102,17 @@ focus-visible:ring-opacity-75">
         <a> Fetch Descriptions</a>
   </Menu.Button>
   </Link>
-
+  </span>
+  
   </Menu>
 
 
 
   <Menu as="div" className="relative inline-block text-left">
  
+ <span>
  <Link href="/batsignal">
-<Menu.Button className="inline-flex px-4 py-2 text-sm font-bold text-white 
+<Menu.Button className="inline-flex px-4 py-2 text-sm font-bold text-white ml-8
 
 border-4 border-transparent border-r-violet-400 
 
@@ -120,10 +124,16 @@ focus:outline-none
 focus-visible:ring-2 
 focus-visible:ring-white 
 focus-visible:ring-opacity-75">
-<FontAwesomeIcon icon={faIdCard} className="text-xl mr-1 text-white"/>
+{/* <FontAwesomeIcon icon={faHandHoldingHand} className="text-xl mr-1 text-white"/> */}
+
+<img
+    className="h-16 inline-block absolute -bottom-3 -left-1 invert"
+     src="/batsignal.png" alt="bat logo, created by Megan Mitchell from Noun Project"/>
        <a> BatSignal/ PlayYard</a>
+   
  </Menu.Button>
  </Link>
+ </span>
 
  </Menu>
 

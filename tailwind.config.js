@@ -14,7 +14,8 @@ module.exports = {
         "5xl": '3.052rem',
       },
       colors:{
-        "darkPurple": "#300553",
+        "darkPurple": "#140223",
+        //22043b 
       }
     },
     

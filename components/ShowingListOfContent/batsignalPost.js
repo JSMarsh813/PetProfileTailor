@@ -6,7 +6,7 @@ import AddComment from "../AddingNewData/AddComment"
 import GeneralButton from '../GeneralButton';
 import CommentListing from './CommentListing';
 
-function batsignalPost({
+function BatsignalPost({
     image,title,paragraphText,postersProfileImage,postersName,postDate,amountOfComments,amountOfShares,amountOfLikes,tagList,className}) {
   
     const [commentsShowing,SetCommentsShowing]=useState(false)
@@ -87,4 +87,4 @@ function batsignalPost({
   )
 }
 
-export default batsignalPost
+export default BatsignalPost

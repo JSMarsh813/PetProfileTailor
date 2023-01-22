@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu"
 
-function fetchdescriptions() {
+function FetchDescriptions() {
   return (
     <div>
         <Layout></Layout>
@@ -10,4 +10,4 @@ function fetchdescriptions() {
   )
 }
 
-export default fetchdescriptions
+export default FetchDescriptions

@@ -1,69 +1,213 @@
-import React from 'react'
-import GeneralButton from '../GeneralButton'
+import React,{useEffect, useState} from 'react'
+import GeneralButton from '../GeneralButton';
+import DisabledButton from '../DisabledButton';
+
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faCommentDots, faImage,faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faCommentDots, faImage,faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faTrashCan, faX, faCircleXmark, faTowerBroadcast } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
-function AddPost() {
+import { toast, ToastContainer } from 'react-toastify';
 
-    //image
-    //title
-    //paragraphText
+function AddPost({tagListProp,userId, sessionFromServer}) {
+
+  const [image,setImage]=useState([])
+  const [title,setTitle]=useState("");
+  const [description,setDescription]=useState("");
+  const [tagList,setTags]=useState([]);
+  const [posteruserid,setPosterUserId]=useState()
+ 
+           //image we attached, waiting to upload to cloudinary
+  const[imageToCloudinary,setImageToCloudinary]=useState("")
+  const[imagePreview,setImagePreview]=useState()
+
+  useEffect(()=>{
+    setPosterUserId(sessionFromServer?
+                        sessionFromServer.user._id:
+                         "")
+},[sessionFromServer]
+  )
+
+             // ######Attaching Image ############
+  const handleImageAttachment = (e) => {
+    e.preventDefault();             
+   setImageToCloudinary(e.target.files[0])
+   setImagePreview(URL.createObjectURL(e.target.files[0]))
+  
+  }
+
+  
+                // ########## upload image to cloudinary #############
+
+const handleImageUpload = async () => {
+
+  if (imageToCloudinary!="") {
+
+   const formData = new FormData();
+   formData.append('file', imageToCloudinary);
+   // formData.append('userId', sessionFromServer.user._id);
+   formData.append('upload_preset', "db0l5fmb");
+  //  console.log(formData)
+
+  const data = await fetch("https://api.cloudinary.com/v1_1/dujellms1/image/upload", {
+      method: 'POST',
+      body: formData,
+    }).then(r=>r.json())
+
+    let imageFromCloudinary = data.secure_url         
+       
+    setImage(imageFromCloudinary)
+    setImageToCloudinary("")
+    //  console.log(imageFromCloudinary)
+    
+                    
+  }
+    // toast('Image uploaded Successfully!', { type: 'success' });        
+}
+
+// After the handleImageUpload finishes, run the createNewPost function
+const handlePostCreate = async ()=>{
+  if(!description) {toast.error(`Ruh Roh! A description is required`)   
+  return} 
+
+  if(tagList.length==0) {toast.error(`Ruh Roh! At least one tag is required`)
+return}
+ 
+ await handleImageUpload().then(()=> console.log(`hello from callback ${JSON.stringify(image)}`)
+ 
+
+ )
+
+//  await handleImageUpload();
+ 
+//  console.log(`hello from callback ${JSON.stringify(image)}`
+//  )
+ 
+//  .then(setImage([]))
+  // console.log(imageToCloudinary)
+
+}
+
+
+
+// handleImageUpload.then(createNewPost=>{
+//   console.log("hello from callback")
+// })
+
+        // ####################### UPLOAD NEW POST TO MONGODB ####################
+        // let createNewPost = function(){
+        
+        //      console.log("hi")
+        
+        // }
+
   return (
     <div>
-
+ <ToastContainer
+    position="top-center"/>
 
   <div 
         className="mx-auto flex flex-col font-semibold text-darkPurple bg-violet-900
                  border-2 border-violet-400 border-dotted 
                  p-4 shadow-lg max-w-3xl">
+
+                    {/* ##### TITLE AREA ######*/}
     <input 
                 className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"                  
-                placeholder="Type a title here" 
+                placeholder="Type a title here (optional)" 
+                onChange={(e)=>setTitle(e.target.value)}
                 type="text"/>
 
+                {/* ##### DESCRIPTION AREA ######*/}
+
     <textarea 
-            className="description bg-violet-50 sec p-3 h-30 border border-violet-500 outline-none placeholder-darkPurple"           
-            placeholder="Describe everything about this post here">
+            className={`border ${description? 'border-violet-200': 'border-rose-500 border-2'} bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
+
+            onChange={(e)=>setDescription(e.target.value)}  
+            required
+            placeholder="Describe everything about this post here (required)">
     </textarea>       
 
     <div>
-    <FontAwesomeIcon icon={faImage} 
-                        className="text-3xl text-yellow-300 mr-2 align-middle inline-block"/>
+  
+                   {/* ##### IMAGE ATTACH  ######*/}
+      <label htmlFor="attachImage" >
+            <FontAwesomeIcon icon={faImage} 
+                className="text-3xl text-yellow-300 mr-2 mt-2 align-middle inline-block
+                                   hover-text-white"/>
+             <span
+                    className="text-white"> Attach an Image (optional)
+             </span>
+     </label>
      <input
-        // onChange={}
+        onChange={handleImageAttachment}
         accept=".jpg, .png, .jpeg, .gif"
-        className="fileInput mt-4 text-white align-bottom"
+        id="attachImage"
+        className="fileInput hidden"
         type="file">
       </input>
+                           {/* ##### IMAGE UPLOAD  ######*/}
+
+
+
       </div>
 
+                 {/* ##### ATTACHING TAGS  ######*/}
       <label 
                     className="font-bold block mt-4 text-white"
                     htmlFor="nameTags">Tags</label>
 
-        <Select className="text-darkPurple mb-4"
+        <Select 
+                  className={`text-darkPurple mb-4 border ${description? 'border-violet-200': 'border-rose-500 border-2'}`}
                   id="nameTags"
-                //   options={tagList.map((opt,index) => ({
-                //      label: opt.individualTag, value: opt.individualTag,
-                //    }))}
+                  options={tagListProp.map((opt,index) => ({
+                    label: opt,
+                    value: opt}))
+                   }
                  
                   isMulti
                   isSearchable
-                  placeholder="If you type in the tags field, it will filter the tags"
-                //   onChange={() => setTags(opt.map(=>tag.label))              
-
-               
+                  placeholder="If you type in the tags field, it will filter the tags (required)"
+                  onChange={(opt) => setTags(opt.map(tag=>tag.label))}
+                   
                 />
       {/* <ToastContainer 
           position="top-center"
-           limit={1} /> */}
-  
+           limit={1} /> */}      
+        
     <div className="buttons flex">
-      <div className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-white ml-auto">Cancel</div>
-      <div className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">Post</div>
+
+    <button 
+            className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-white ml-auto">
+              Cancel</button>
+      <button 
+           className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
+           onClick={handlePostCreate}>
+               Post</button>
     </div>
+
+    <p
+        className="text-white text-center py-4"> 
+        Preview uploaded image(s) below before posting </p>
+
+                 {/* ##### IMAGE PREVIEW AREA  ######*/}
+   {imagePreview &&
+    <div
+            className="flex justify-center">
+              <div className="relative w-content"> 
+
+        <img
+        className="max-h-96 object-scale-down mx-auto block"      
+        src={imagePreview}/>
+            <FontAwesomeIcon 
+            icon={faCircleXmark} 
+            onClick={()=>setImagePreview("")}
+            className="text-3xl text-yellow-300 mr-2 absolute top-1 right-1 justify-center drop-shadow-md"/>
+                 </div>
+        </div>}
+          
+
+
   </div>
 
   </div>

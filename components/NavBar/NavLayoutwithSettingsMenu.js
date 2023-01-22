@@ -23,7 +23,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 
 
 export default function NavLayoutwithSettingsMenu({ title, children, userName, profileImage}) {
-  const { status, data: session } = useSession();
+  // const { status, data: session } = useSession();
   
 
   // const { state, dispatch } = useContext(Store);
@@ -32,7 +32,7 @@ export default function NavLayoutwithSettingsMenu({ title, children, userName, p
   // useEffect(() => {
   //   setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   // }, [cart.cartItems]);
-  console.log(`this is username ${userName}`)
+  // console.log(`this is username ${userName}`)
   const [isHamBurgNavOpen, setisHamBurgNavOpen] = useState(false);
 
 

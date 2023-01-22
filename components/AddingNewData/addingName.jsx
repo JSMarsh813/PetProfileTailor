@@ -111,6 +111,7 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
                 <input 
                     type="text" 
                     id="nameInput"
+                    classname="text-violet-900"
                     // className={`${(!sessionFromServer)&&"bg-slate-400"}`} 
                     placeholder="enter a name to add" 
                     onChange={(e)=>setNewName(e.target.value.toLowerCase())}

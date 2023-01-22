@@ -34,7 +34,7 @@ export const getServerSideProps = async (context) => {
   };
 
   //placing profile image in local storage
-function grabOneUser(currentProfileImage) {
+function GrabOneUser(currentProfileImage) {
 
   const [UserprofileImage,setUserProfileImage]=useState("")
 
@@ -58,7 +58,7 @@ function grabOneUser(currentProfileImage) {
   )
 }
 
-export default grabOneUser
+export default GrabOneUser
 
 
 // try {

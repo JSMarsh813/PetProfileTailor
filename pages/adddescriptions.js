@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu"
 
-function adddescriptions() {
+function AddDescriptions() {
   return (
     <div>
         <Layout></Layout>
@@ -9,4 +9,4 @@ function adddescriptions() {
   )
 }
 
-export default adddescriptions
+export default AddDescriptions

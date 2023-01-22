@@ -3,7 +3,7 @@ import axios from "axios";
 import NewCategory from "../components/NewCategory"
 
 //works
-function testingdatabase({category}) {
+function TestingDatabase({category}) {
   return (
     <div>testingdatabase
     {
@@ -25,7 +25,7 @@ function testingdatabase({category}) {
   )
 }
 
-export default testingdatabase
+export default TestingDatabase
 
 
 export const getStaticProps = async () => {

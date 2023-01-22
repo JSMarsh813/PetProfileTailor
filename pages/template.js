@@ -22,7 +22,7 @@ export const getServerSideProps = async (context) => {
 }
 
 
-export default function plain({category,nameList, sessionFromServer, pageProps}) {
+export default function NavLayoutwithSettingsMenu({category,nameList, sessionFromServer, pageProps}) {
 
   
 //  const router = useRouter();
@@ -55,7 +55,7 @@ export default function plain({category,nameList, sessionFromServer, pageProps})
   return (
     <Layout profileImage={profileImage} userName={userName}  > 
   
-    <p> {userName}</p>
+    <p> {userName} lets test this again</p>
  
     
     </Layout>
