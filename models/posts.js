@@ -14,9 +14,9 @@ const PostSchema= new mongoose.Schema({
   description: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
   },
-  posteruserid: {
+  createdby: {
     type: String,
     required: true,
   }, 

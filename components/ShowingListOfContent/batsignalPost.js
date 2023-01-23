@@ -26,9 +26,10 @@ function BatsignalPost({
                     {title}
                 </h2>
 
+                {image.length!=0 &&
                 <div className="md:flex-shrink-0 pt-4">
-                <img src={image} alt="mountains" className="max-w-full mx-auto h-96 rounded-lg rounded-b-none"/>
-            </div>
+                           <img src={image} alt="" className="max-w-full mx-auto h-96 rounded-lg rounded-b-none"/>
+            </div>}
 
                     <p className="text-sm  px-2 mr-1">
                         {paragraphText}

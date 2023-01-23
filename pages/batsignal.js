@@ -18,15 +18,15 @@ export const getServerSideProps = async (context) => {
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
 
-  //  let postResponse= await fetch('http://localhost:3000/api/individualposts');
-  //  let postData = await postResponse.json()
+   let postResponse= await fetch('http://localhost:3000/api/individualposts');
+   let postData = await postResponse.json()
 
 
 
   return {
     props: {    
       sessionFromServer: session,
-      // postList: nameData,
+      postList: postData,
       // category: data,
          },
     }
@@ -34,9 +34,10 @@ export const getServerSideProps = async (context) => {
 
 
 
-export default function BatSignal({sessionFromServer, pageProps,}) {
-  // postList
+export default function BatSignal({sessionFromServer, pageProps,postList}) {
           // ##################### Category Objects List for Batsignal ###########################
+
+          console.log(postList)
    const category=[
     {
       name:"BatSignal!",
@@ -54,15 +55,15 @@ export default function BatSignal({sessionFromServer, pageProps,}) {
     }
    ]
   
+
    let tagListProp=category.map(category=>category.tags).reduce((sum,value)=>sum.concat(value),[])
-  //                             
 
-  //  [PlayYard&Community]: 
+   const[tagFilters,setFiltersState] = useState([])
+                    //array above is filled with tags
+                    // ex ["christmas", "male"]
 
-  //  Bugs&Feedback ["bugs","site feedback"]
+   const[filteredPosts,setFilteredPosts]=useState([...postList])
 
-
-//  const router = useRouter();
 
 //  useEffect(() => {
 
@@ -87,7 +88,7 @@ export default function BatSignal({sessionFromServer, pageProps,}) {
 
     const[addingPost,setAddingPost]=useState(false)
 
-    let tagListForPost=["names","photography"]
+    // let tagListForPost=["names","photography"]
 
     
   
@@ -101,13 +102,13 @@ export default function BatSignal({sessionFromServer, pageProps,}) {
 
        
 
-                // const { value, checked } = e.target;
+                const { value, checked } = e.target;
 
                 // //copy filteredNames then set it to an empty array, so we "delete" the previous names in the state
                 
                
             
-                // setFilteredPosts(postList);
+                setFilteredPosts(postList);
 
                     //every time we click, lets reset filteredNames to nameList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
                          // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
@@ -131,24 +132,24 @@ export default function BatSignal({sessionFromServer, pageProps,}) {
 
           //if checked, it will add the new tag to the state/list. If not checked, it will filter it out and replace the state with the new tagfilter array
                 
-              //   (checked)?   
-              //   setTagFilters([...tagFilters,value],):( 
-              //   setTagFilters(tagFilters.filter((tag) => tag!=value)))
-              // // console.log(tagFilters)
+                (checked)?   
+                setFiltersState([...tagFilters,value],):( 
+                setFiltersState(tagFilters.filter((tag) => tag!=value)))
+              // console.log(tagFilters)
                          
           }      
          
             // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed 
-        //   useEffect(()=>{
-        //     let currenttags=tagFilters
+          useEffect(()=>{
+            let currenttags=tagFilters
             
-        //     setFilteredPosts( filteredposts.filter((post)=>
-        //               (currenttags.every((tag)=>
-        //                          post.tags.includes(tag)))))
+            setFilteredPosts( filteredPosts.filter((post)=>
+                      (currenttags.every((tag)=>
+                                 post.taglist.includes(tag)))))
 
-        //     // console.log((`useEffect filterednames ${JSON.stringify(filterednames)}`))
-        // },[tagFilters]
-          // ) 
+            // console.log((`useEffect filterednames ${JSON.stringify(filterednames)}`))
+        },[tagFilters]
+          ) 
            
 
 
@@ -211,19 +212,21 @@ export default function BatSignal({sessionFromServer, pageProps,}) {
                     <AddPost 
                            tagListProp={tagListProp}
                             sessionFromServer={sessionFromServer}/> }
-                            
-                            <BatsignalPost 
-                                image="https://media.tenor.com/1wU92N1rXhwAAAAM/cute-cute-dog.gif"
-                                title="Names ideas for this cool dude? 😎"
-                                paragraphText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora reiciendis ad architecto at aut placeat quia, minus dolor praesentium officia maxime deserunt porro amet ab debitis deleniti modi soluta similique..."
+             {filteredPosts.map((post)=>{ 
+              
+                    return <BatsignalPost 
+                                key={post._id}
+                                image={post.image}
+                                title={post.title}
+                                paragraphText={post.description}
                                 postersProfileImage="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=731&q=80"
-                                postersName="Bob"
-                                postDate="friday the 13th"
-                                amountOfComments="2"
-                                tagList={tagListForPost.map(tag=>"#"+tag).join(", ")}
+                                postersName={post.createdby}
+                                postDate={post.createdAt}
+                                amountOfComments={post.comments.length}
+                                tagList={post.taglist.map(tag=>"#"+tag).join(", ")}
                                 className="mx-auto"
                                 />
-
+                 } ) }  
         
               <div className="text-center mb-4">
                     <Pagination rounded total={20} initialPage={1}/>

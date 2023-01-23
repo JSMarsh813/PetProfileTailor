@@ -78,7 +78,7 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
                     //array above is filled with tags
                     // ex ["christmas", "male"]
           const[filterednames,setFilteredNames]=useState([...nameList])
-                   //filled with all names, not actually filtered yet
+                   //to begin with its filled with all names, not actually filtered yet
                         //  namelist console.log result: 
                         //  [
 

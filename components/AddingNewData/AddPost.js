@@ -8,23 +8,25 @@ import { faHeart, faCommentDots, faImage,faShareFromSquare, faFaceGrinWink, faUs
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
 
 function AddPost({tagListProp,userId, sessionFromServer}) {
-
+            //data for posts in mongoDB
   const [image,setImage]=useState([])
   const [title,setTitle]=useState("");
   const [description,setDescription]=useState("");
   const [tagList,setTags]=useState([]);
-  const [posteruserid,setPosterUserId]=useState()
+  const [createdby,setCreatedBy]=useState()
  
            //image we attached, waiting to upload to cloudinary
   const[imageToCloudinary,setImageToCloudinary]=useState("")
   const[imagePreview,setImagePreview]=useState()
 
   useEffect(()=>{
-    setPosterUserId(sessionFromServer?
+    setCreatedBy(sessionFromServer?
                         sessionFromServer.user._id:
                          "")
+
 },[sessionFromServer]
   )
 
@@ -38,34 +40,36 @@ function AddPost({tagListProp,userId, sessionFromServer}) {
 
   
                 // ########## upload image to cloudinary #############
-
+                
 const handleImageUpload = async () => {
 
   if (imageToCloudinary!="") {
 
    const formData = new FormData();
    formData.append('file', imageToCloudinary);
-   // formData.append('userId', sessionFromServer.user._id);
    formData.append('upload_preset', "db0l5fmb");
   //  console.log(formData)
 
-  const data = await fetch("https://api.cloudinary.com/v1_1/dujellms1/image/upload", {
+  const response = await fetch("https://api.cloudinary.com/v1_1/dujellms1/image/upload", {
       method: 'POST',
       body: formData,
-    }).then(r=>r.json())
+    })
+    const data = await response.json();
 
     let imageFromCloudinary = data.secure_url         
        
     setImage(imageFromCloudinary)
-    setImageToCloudinary("")
-    //  console.log(imageFromCloudinary)
-    
-                    
+    setImageToCloudinary("")     
+    return imageFromCloudinary     
+    console.log(imageFromCloudinary)              
   }
-    // toast('Image uploaded Successfully!', { type: 'success' });        
+   
 }
 
-// After the handleImageUpload finishes, run the createNewPost function
+
+// After the handleImageUpload finishes, run the handlePostCreate function
+
+
 const handlePostCreate = async ()=>{
   if(!description) {toast.error(`Ruh Roh! A description is required`)   
   return} 
@@ -73,26 +77,39 @@ const handlePostCreate = async ()=>{
   if(tagList.length==0) {toast.error(`Ruh Roh! At least one tag is required`)
 return}
  
- await handleImageUpload().then(()=> console.log(`hello from callback ${JSON.stringify(image)}`)
- 
-
- )
-
-//  await handleImageUpload();
- 
-//  console.log(`hello from callback ${JSON.stringify(image)}`
-//  )
- 
-//  .then(setImage([]))
-  // console.log(imageToCloudinary)
+ await handleImageUpload().then((image)=>postSubmission(image))     
+//  necessary to pass image directly to next function as an object, postSubmission({image})
+//  otherwise postSubmission grabs the state's image variable's value before it was updated, aka when it was ""
 
 }
 
+const postSubmission = async (image) => {
+            //need to pass image directly into this function, otherwise it'll try to grab from state to early and thus you'll get "" for the image
+            console.log((`hi from image ${image}`))
 
+            const postSubmission= {
+              image:image,
+              title: title, 
+              description: description,
+              createdby: createdby.toString(),
+              taglist: tagList, 
+   
+ }
+ console.log(postSubmission)
+ 
+      // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
+        axios.post("http://localhost:3000/api/apinewpost", postSubmission).then(response => {
+          console.log(response)        
+          toast.success(`Successfully added new post. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`)
+          // setImage([])
+        }).catch(error => {
+          console.log("this is error", error);
+         
+          toast.error(`Ruh Roh! Post not added`)
+          
+        });
+}
 
-// handleImageUpload.then(createNewPost=>{
-//   console.log("hello from callback")
-// })
 
         // ####################### UPLOAD NEW POST TO MONGODB ####################
         // let createNewPost = function(){
@@ -145,10 +162,7 @@ return}
         id="attachImage"
         className="fileInput hidden"
         type="file">
-      </input>
-                           {/* ##### IMAGE UPLOAD  ######*/}
-
-
+      </input>             
 
       </div>
 
@@ -201,7 +215,9 @@ return}
         src={imagePreview}/>
             <FontAwesomeIcon 
             icon={faCircleXmark} 
-            onClick={()=>setImagePreview("")}
+            onClick={()=>{
+                    setImagePreview(""); 
+                    setImageToCloudinary("")}}
             className="text-3xl text-yellow-300 mr-2 absolute top-1 right-1 justify-center drop-shadow-md"/>
                  </div>
         </div>}
