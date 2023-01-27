@@ -21,8 +21,6 @@ export const getServerSideProps = async (context) => {
    let postResponse= await fetch('http://localhost:3000/api/individualposts');
    let postData = await postResponse.json()
 
-
-
   return {
     props: {    
       sessionFromServer: session,
@@ -36,8 +34,12 @@ export const getServerSideProps = async (context) => {
 
 export default function BatSignal({sessionFromServer, pageProps,postList}) {
           // ##################### Category Objects List for Batsignal ###########################
-
-          console.log(postList)
+          
+          let newestPostsFirstList=postList.slice().sort((a,b)=>{
+            if (a.createdAt>b.createdAt){
+              return 0
+            }})
+            console.log(`this is post list ${JSON.stringify(newestPostsFirstList)}`)
    const category=[
     {
       name:"BatSignal!",
@@ -220,7 +222,8 @@ export default function BatSignal({sessionFromServer, pageProps,postList}) {
                                 title={post.title}
                                 paragraphText={post.description}
                                 postersProfileImage="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=731&q=80"
-                                postersName={post.createdby}
+                                postId={post._id}
+                                postersId={post.createdby}
                                 postDate={post.createdAt}
                                 amountOfComments={post.comments.length}
                                 tagList={post.taglist.map(tag=>"#"+tag).join(", ")}

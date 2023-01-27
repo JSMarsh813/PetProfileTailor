@@ -11,7 +11,8 @@ export default async function handler(req, res) {
 
     if(method === "GET") {
         try {
-            const individualPosts = await IndividualPosts.find();
+            const individualPosts = await IndividualPosts.find().sort({_id:-1});
+            //this way we get the most recent posts first, we us id since mongoDB's objectID has a 4 byte timestamp naturally built in 
             res.status(200).json(individualPosts);
             
           } catch (err) {

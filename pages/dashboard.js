@@ -17,8 +17,10 @@ import GeneralOpenCloseButton from "../components/buttons/generalOpenCloseButton
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 
-import dbConnect from "../utils/db"
+import db from '../utils/db'
+// import { connectToDatabase } from '../pages/api/auth/lib/db'
 import IndividualNames from "../models/individualNames"
+import User from "../models/User"
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 import { useRouter } from 'next/router';
 
@@ -30,14 +32,22 @@ import RankNames from '../components/RankNames';
 
 export const getServerSideProps = async (context) => {
 
-  let response = await fetch('http://localhost:3000/api/name-categories');
-  let data = await response.json()
+  // let response = await fetch('http://localhost:3000/api/name-categories');
+  // let data = await response.json()
 
 
   let nameResponse= await fetch('http://localhost:3000/api/individualnames');  
   let nameData = await nameResponse.json()
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
+
+  const UserId = session.user._id
+
+ 
+  // const client =  await connectDatabase();
+  // const user = await client.db.collection('users').findOne({ _id: UserId }) 
+
+  // console.log(user)
   // const userEmail = await session.user.email;
 
 
@@ -52,8 +62,8 @@ export const getServerSideProps = async (context) => {
 
                              //NAMES ADDED BY USER //
  
-  // let currentUser= await fetch('http://localhost:3000/api/getCurrentUser');
- 
+//   let currentUser= await fetch('http://localhost:3000/api/getCurrentUser');
+//  console.log(`hello from user api ${currentUser}`)
 
 
   // let currentProfilePicture = currentUser
@@ -63,6 +73,9 @@ export const getServerSideProps = async (context) => {
   // look at user, find their current profile image
 
 
+  await db.connect()
+
+  const result = await User.find({_id:UserId})
 
 
 
@@ -86,10 +99,11 @@ export const getServerSideProps = async (context) => {
 //can run server-side code directly in getStaticProps
   return {
     props: {
-      category: data,
+      // category: data,
       nameList: nameData,
       favNames:filterednames,
       sessionFromServer: session,
+      user: JSON.parse(JSON.stringify(result)),
          },
     }
 //kept getting an error that it couldn't parse due to Error serializing `.userIdFromServer.user.image` but there was no image property....adding an image property and making it null also didn't work. JSON.parse(JSON.stringify((session)) used as a workaround)
@@ -100,9 +114,9 @@ export const getServerSideProps = async (context) => {
 
 
 
-export default function Dashboard({category,nameList,sessionFromServer,favNames}) {
+export default function Dashboard({category,nameList,sessionFromServer,favNames,user}) {
 
-
+  console.log(user)
    const [treatBreakdownMenuOpen,settreatBreakdownMenuOpen]=useState(false)
   const [favoritesListOpen,setFavoritesListOpen]=useState(false)
   const valuetest = useContext(UserSessionContext); 
@@ -386,7 +400,7 @@ export default function Dashboard({category,nameList,sessionFromServer,favNames}
                 </div>
 
 
-                {favoritesListOpen==true&&  <MainChartComponent nameList={favNames}/>}
+                {favoritesListOpen==true&&  <MainChartComponent nameList={favNames} session={sessionFromServer}/>}
                 
 
               </section>
@@ -402,7 +416,7 @@ export default function Dashboard({category,nameList,sessionFromServer,favNames}
        styling=""
         status={favoritesListOpen}/>
 
-{favoritesListOpen==true&&<MainChartComponent nameList={nameList}/>}                
+{favoritesListOpen==true&&<MainChartComponent nameList={nameList} session={sessionFromServer}/>}                
 
               </section>
 

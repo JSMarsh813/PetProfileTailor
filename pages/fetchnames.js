@@ -269,7 +269,7 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
     
         {filterednames.map((name)=>{
                  
-                  return <NameListing key={name._id} name={name}/>
+                  return <NameListing key={name._id} name={name} session={sessionFromServer}/>
                     
             //         <tr key={`${name._id}Comments`} name={name} className="w-full"> 
             //         {name.description.slice(1).map((description)=>

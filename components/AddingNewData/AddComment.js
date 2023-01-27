@@ -1,22 +1,27 @@
 import React, {useState} from 'react'
 import GeneralButton from '../GeneralButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faClock } from '@fortawesome/free-solid-svg-icons'
 
-function AddComment() {
+function AddComment({postId,commentParentId}) {
 
    const [showCommentForm,setShowCommentForm]=useState(false)
-  
-  return (
-  <div className="flex items-center border-b-2 border-violet-100 justify-center shadow-lg mb-4">
+   //what post its attached to: console.log(postId)
+   // parent? has parent 
+
+   //commentParentId => send null, or send a comment
+     return (
+  <div className="border-b-2 border-violet-100 justify-center shadow-lg mb-4 w-full">
 
    
-   <form className="w-full bg-violet-900 rounded-lg px-4 pt-2 mb-4">
+   <form className="w-full bg-violet-900 rounded-lg px-4 pt-2 mb-4 pb-2">
 
    <GeneralButton
                   text="Add a new comment"
                   onClick={()=>setShowCommentForm(!showCommentForm)}
                   className=""/>
 
-      <div className={`flex flex-wrap -mx-3 mb-6 ${showCommentForm?"":"hidden"}`}>
+      <div className={`-mx-3 mb-6 ${showCommentForm?"":"hidden"}`}>
         
                   
 
@@ -28,10 +33,10 @@ function AddComment() {
             placeholder='Type Your Comment' required>
                             </textarea>
                               {/* Post comment area */}
-                              <div className="w-full md:w-full flex items-start md:w-full px-3">
+                              <div className="w-full md:w-full md:w-full px-3">
 
 
-<div className="flex items-start w-1/2 text-gray-700 px-2 mr-auto">
+<div className="w-1/2 text-gray-700 px-2 mr-auto">
 
  
 </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import NameListing from "../components/ShowingListOfContent/Namelisting"
 
-function ChartComponent({nameList}) {
+function ChartComponent({nameList,session}) {
   return (
    
     <table className="min-w-full divide-y divide-gray-100 text-base">
@@ -15,7 +15,6 @@ function ChartComponent({nameList}) {
         >
           Like 
         </th>
-
 
         <th
           className="whitespace-nowrap px-4 py-2 text-left font-medium text-purple-900 "
@@ -40,7 +39,7 @@ function ChartComponent({nameList}) {
 
         {nameList.map((name)=>{
          
-         return <NameListing key={name._id} name={name}/>
+         return <NameListing key={name._id} name={name} session={session}/>
        }   
    )
 

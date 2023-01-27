@@ -9,34 +9,35 @@ import axios from 'axios'
 
 import { toast } from 'react-toastify';
 
-function Namelisting({name}) {
+function Namelisting({name,session}) {
   console.log(`this is name ${JSON.stringify(name)}`)
 
   //this is name {"_id":"63b299904e8ed0889ddaad41","name":"alfred","description":[],"tags":["male"],"likedby":[],"__v":0}
 
-    const { data: session, status } = useSession()
+    // const { data: session, status } = useSession()
     //grab current user's id
-    let [userId,setUserId]=useState()
-    let [currentTargetedNameId,setCurrentTargetedNameId]=useState("")
+    // console.log(session)
+    let [userId,setUserId]=useState(session.user._id)
+    let [currentTargetedNameId,setCurrentTargetedNameId]=useState(name._id)
     let [openComment, SetOpenComments]=useState(false)
 
-    useEffect(() => {
-        let data= (!localStorage.getItem("session"))?
-            data="0":
-            data=JSON.parse(localStorage.getItem("session")).toString()
+    // useEffect(() => {
+    //     // let data= (!localStorage.getItem("session"))?
+    //     //     data="0":
+    //     //     data=JSON.parse(localStorage.getItem("session")).toString()
         
     
-        //we had to convert mongo's object ID to a JSON object, JSON.stringify to store in local storage when we logged in at login.js
-            //however JSON's objects are stored with two "", so it stored as ""145555ect""
-            // so data=="145555ect" would always be false since ""145555ect""!= "145555ect" (see the "")
-            //so we need to use JSON.parse to make it a useable string
+    //     //we had to convert mongo's object ID to a JSON object, JSON.stringify to store in local storage when we logged in at login.js
+    //         //however JSON's objects are stored with two "", so it stored as ""145555ect""
+    //         // so data=="145555ect" would always be false since ""145555ect""!= "145555ect" (see the "")
+    //         //so we need to use JSON.parse to make it a useable string
             
-        // console.log(data);
-        setUserId(data)          
-        setCurrentTargetedNameId(name._id)
+    //     // console.log(data);
+    //     // setUserId(data)          
+    //     setCurrentTargetedNameId(session.user._id)
         
         
-    }, [])
+    // }, [])
 
    
 
@@ -84,7 +85,7 @@ const handlelikes =  (e) => {
 //result: this is currentTargetedNameId 63abc7d5650d1659f0dd305e
        
       //if user is not logged in, tell them to log in to like names
-    {(status != "authenticated")&&                  
+    { (!session)&&                  
                 toast.error("Please sign in to like names")}
 
             //axios put request

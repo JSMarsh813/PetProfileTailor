@@ -7,7 +7,8 @@
 
 /* needed for when text overflows, the background doesn't turn gray */
 :root {
-    background-color:rgba(76,29,149) 
+    background-color:rgba(76,29,149);
+    font-size: 18px;
 }
 
 input::file-selector-button {
