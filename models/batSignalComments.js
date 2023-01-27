@@ -1,18 +1,17 @@
 const mongoose = require("mongoose");
-import { Schema } from 'mongoose'
 
-const PostSchema= new mongoose.Schema({
+const batSignalCommentSchema= new mongoose.Schema({
   image: {
     type: Array,
     required: false,
     unique: false,     
-  },
-  title: {
-    type: String,
-    required: false,
-    unique: false,     
-  },
+  },  
   description: {
+    type: String,
+    required: true,
+    unique: false,
+  },
+  postid: {
     type: String,
     required: true,
     unique: false,
@@ -22,28 +21,24 @@ const PostSchema= new mongoose.Schema({
     required: true,
     ref: 'User',
   }, 
-   comments: [{
-    type: Schema.Types.ObjectId,
-    ref: 'BatSignalComment',
-  }
-], 
   shares: {
     type: Array,  
     default: [],
+  }, 
+  parentcommentid: {
+    type: String,  
+    default: null,
   }, 
   likes: {
     type: Array,  
     default: [],
   }, 
-  taglist:{
-    type:Array,
-    required: true,
-  }
+
 
 }, {timestamps:true})
 
-const Post = mongoose.models.Posts || mongoose.model('Posts', PostSchema);
-export default Post;
+const BatSignalComment= mongoose.models.BatSignalComment|| mongoose.model('BatSignalComment', batSignalCommentSchema);
+export default BatSignalComment;
 
  // favnames: {
   //   type: Array,  

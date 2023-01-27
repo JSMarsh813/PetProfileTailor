@@ -8,27 +8,35 @@ import CommentListing from './CommentListing';
 import axios from 'axios';
 
 function BatsignalPost({
-    image,title,paragraphText,postersId,postDate,amountOfComments,amountOfShares,amountOfLikes,tagList,className,postId}) {
+    image,title,paragraphText,postersName,profileName,postersProfileImage,postDate,comments,amountOfShares,amountOfLikes,tagList,className,postId,sessionFromServer}) {
         //postersProfileImage,
   
     const [commentsShowing,SetCommentsShowing]=useState(false)
-    const [postersName,setPostersName]=useState("posters name test")
-    const [postersProfileImage,setPostersProfileImage]=useState("")
-    const [  profileName, setProfileName]=useState("")
- 
-     const fetchUserData = async () =>{
+  const rootComments = comments.filter      
+            (comment=>comment.parentcommentid=== null)
 
-        await axios.get(`api/user/${postersId}`)
-        .then((res)=>{
-                     console.log(res.data.data)
-            setPostersName(res.data.data.name)
-            setPostersProfileImage(res.data.data.profileimage)
-            setProfileName(res.data.data.profilename)
+  const replyComments = comments.filter(comment=>comment.parentcommentid!=null)
+
+  console.log(`this is root ${JSON.stringify(replyComments)}`)
+    // console.log({rootComments})
+ 
+        //  ###########  GETTING POSTERS DATA ########
+    //  const fetchUserData = async () =>{
+
+    //     await axios.get(`api/user/${postersId}`)
+    //     .then((res)=>{
+    //          console.log(res.data.data)
+    //         setPostersName(res.data.data.name)
+    //         setPostersProfileImage(res.data.data.profileimage)
+    //         setProfileName(res.data.data.profilename)
           
-            return postersProfileImage, postersName
-            //i'm not sure if the return here is needed
-        })
-           }
+    //         return postersProfileImage, postersName
+    //         //i'm not sure if the return here is needed
+    //     })
+    //        }
+           
+        //  ###########  GRABBING COMMENTS ########
+
 
             //  #########   FORMATTING DATE  #################
   const dateFormatter= new Intl.DateTimeFormat(undefined,
@@ -43,10 +51,10 @@ function BatsignalPost({
  
   
 
-    useEffect(()=>{
+    // useEffect(()=>{
         
-        fetchUserData()
-    },[])
+    //     fetchUserData()
+    // },[])
    
     //console,console.log(Date.parse(postDate).toLocaleDateString(en-DE', options));
     // let date= new Date(postDate)
@@ -66,11 +74,11 @@ function BatsignalPost({
                 // const result = await User.find({_id:UserId})
 
   return (
-    <div className="mx-auto px-6 py-8 
+    <div className="mx-auto px-6 py-8
              ">
                 {/* above is the background of posts
                 below is the start of the posts actually squares */}
-        <div className={`bg-violet-900 text-white rounded-lg tracking-wide max-w-3xl text-center mx-auto shadow-lg shadow-slate-900/70 border-2 border-violet-400 ${className}`} >
+        <div className={`bg-violet-900 text-white rounded-lg tracking-wide max-w-3xl text-center mx-auto shadow-lg shadow-slate-900/70 border-2 border-violet-400 ${className} pb-4`}>
           
 
 
@@ -94,7 +102,8 @@ function BatsignalPost({
                         <img className="w-12 h-12  object-cover rounded-full mx-4  shadow" src={postersProfileImage} alt="avatar"/>
                     </div>
                     <h2 className="text-sm tracking-tighter">
-                        <a className="font-bold block text-left" href="#">By {postersName}</a> 
+                        <a className="font-bold block text-left" href="#">By {postersName}
+                        </a> 
                         <a className="" href="#">@{profileName}</a> 
                         <span >
                              <FontAwesomeIcon 
@@ -116,35 +125,41 @@ function BatsignalPost({
                         onClick={()=>SetCommentsShowing(!commentsShowing)}    
                         className="text-3xl mr-2"/>
                             <span
-                            className="text-xl">{amountOfComments} </span> 
+                            className="text-xl">{comments.length} </span> 
                     </span>
 
                     <span className="flex-1 inline">
                            <FontAwesomeIcon icon={faHeart} 
                            className="text-3xl mr-2 inline flex-1"/>
                             <span
-                            className="text-xl">{amountOfLikes} </span>
+                            className="text-xl">{amountOfLikes||0} </span>
                     </span>
 
                     <span className="flex-1 inline">
                            <FontAwesomeIcon icon={faShareFromSquare} 
                            className="text-3xl mr-2 inline flex-1"/>
                             <span
-                            className="text-xl">{amountOfShares} </span>
+                            className="text-xl">{amountOfShares||0} </span>
                     </span>
             </div>
            
-            <AddComment postId={postId} hasParent={null}/>
+            <AddComment 
+            postid={postId} 
+            hasParent={null}
+            sessionFromServer={sessionFromServer}/>
                   
 
             </div>
 
-       {commentsShowing&&
+       {commentsShowing&&rootComments.map(comment=>
             <section>
-                    <CommentListing/>
+                    <CommentListing 
+                    rootComment={comment} 
+                    replies={replyComments}
+                    key={comment._id}
+                    sessionFromServer={sessionFromServer}/>
             
-                    <CommentListing/>
-             </section>
+                         </section>)
              }
         </div>
     </div>

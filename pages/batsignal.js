@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useMemo} from 'react'
 import { useSession, getSession } from "next-auth/react"
 import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
 
@@ -21,6 +21,9 @@ export const getServerSideProps = async (context) => {
    let postResponse= await fetch('http://localhost:3000/api/individualposts');
    let postData = await postResponse.json()
 
+
+
+
   return {
     props: {    
       sessionFromServer: session,
@@ -33,13 +36,14 @@ export const getServerSideProps = async (context) => {
 
 
 export default function BatSignal({sessionFromServer, pageProps,postList}) {
+  
           // ##################### Category Objects List for Batsignal ###########################
           
           let newestPostsFirstList=postList.slice().sort((a,b)=>{
             if (a.createdAt>b.createdAt){
               return 0
             }})
-            console.log(`this is post list ${JSON.stringify(newestPostsFirstList)}`)
+
    const category=[
     {
       name:"BatSignal!",
@@ -58,13 +62,14 @@ export default function BatSignal({sessionFromServer, pageProps,postList}) {
    ]
   
 
+
    let tagListProp=category.map(category=>category.tags).reduce((sum,value)=>sum.concat(value),[])
 
    const[tagFilters,setFiltersState] = useState([])
                     //array above is filled with tags
                     // ex ["christmas", "male"]
 
-   const[filteredPosts,setFilteredPosts]=useState([...postList])
+   const[filteredPosts,setFilteredPosts]=useState([...newestPostsFirstList])
 
 
 //  useEffect(() => {
@@ -221,18 +226,23 @@ export default function BatSignal({sessionFromServer, pageProps,postList}) {
                                 image={post.image}
                                 title={post.title}
                                 paragraphText={post.description}
-                                postersProfileImage="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=731&q=80"
+                                postersProfileImage={post.createdby.profileimage}
+                                profileName={post.createdby.name}
                                 postId={post._id}
-                                postersId={post.createdby}
+                                postersName={post.createdby.name}
                                 postDate={post.createdAt}
-                                amountOfComments={post.comments.length}
+                                comments={post.comments}
                                 tagList={post.taglist.map(tag=>"#"+tag).join(", ")}
                                 className="mx-auto"
+                                sessionFromServer={sessionFromServer}
                                 />
                  } ) }  
         
               <div className="text-center mb-4">
-                    <Pagination rounded total={20} initialPage={1}/>
+                    <Pagination 
+                      rounded total={20} 
+                      // page={}
+                      initialPage={1}/>
              </div>
         </section>
 

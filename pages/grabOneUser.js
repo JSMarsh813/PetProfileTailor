@@ -60,13 +60,3 @@ function GrabOneUser(currentProfileImage) {
 
 export default GrabOneUser
 
-
-// try {
-//     let currentUser = await axios.get('/api/user/getCurrentUser');
-//     if (session?.user) {
-//       localStorage.setItem("profileImage",JSON.stringify(currentUser))
-//   } 
-  
-//   } catch (err) {
-//   toast.error(getError(err));
-//   }
