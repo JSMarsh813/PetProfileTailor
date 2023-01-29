@@ -53,15 +53,33 @@ function AddNewNameWithTags({tagList,categoryList,sessionFromServer}) {
      }
 
      return (     
-<div className="bg-violet-900 h-screen text-white">
+<div className="bg-violet-900 h-full text-white">
 <Layout 
         profileImage={profileImage} 
         userName={userName} 
          /> 
+  <div
+    className="h-32 mb-4 
+    
+     bg-[url('https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/Z5QQMNJZGJDSVJFNHHR3QYNMCE.jpg')] bg-repeat-x bg-contain"
+    >
 
-      <img
-        className="mx-auto h-52"
-        src="https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/Z5QQMNJZGJDSVJFNHHR3QYNMCE.jpg"/>
+    <div className="text-center
+    w-96 mx-auto  h-32
+    text-4xl text-yellow-300   bg-darkPurple
+    font-semibold
+    border-y-4 border-amber-300"
+     style={{background: "hsla(260, 90%, 60%, 0.6)", backdropFilter: "blur(20px)"}}
+     > 
+      <span>Add a</span>
+      <span 
+      className="block"> Name </span>
+
+    </div>
+     
+
+  </div>
+ 
 
       <div style={{width:"700px"}} className="mx-auto mt-4 ">
         {/* if not signed in, do not allow them to add names */}

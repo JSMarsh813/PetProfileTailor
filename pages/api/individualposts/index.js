@@ -14,12 +14,15 @@ export default async function handler(req, res) {
         try {
             const individualPosts = await IndividualPosts.find()
             .populate({path:"createdby", select:["name","profilename","profileimage"]})
-            .populate({path:"comments"})
+            // .populate({path:"comments"})
+        
+       
             .sort({_id:-1});
             //this way we get the most recent posts first, we use id since mongoDB's objectID has a 4 byte timestamp naturally built in 
             res.status(200).json(individualPosts);
 
-          
+           
+
           } catch (err) {
             res.status(500).json(err);
           }

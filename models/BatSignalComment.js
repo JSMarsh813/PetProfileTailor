@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const batSignalCommentSchema= new mongoose.Schema({
+const BatSignalCommentSchema= new mongoose.Schema({
   image: {
     type: Array,
     required: false,
@@ -19,7 +19,7 @@ const batSignalCommentSchema= new mongoose.Schema({
   createdby: {
     type: String,
     required: true,
-    ref: 'User',
+    // ref: 'User',
   }, 
   shares: {
     type: Array,  
@@ -37,7 +37,7 @@ const batSignalCommentSchema= new mongoose.Schema({
 
 }, {timestamps:true})
 
-const BatSignalComment= mongoose.models.BatSignalComment|| mongoose.model('BatSignalComment', batSignalCommentSchema);
+const BatSignalComment= mongoose.models.BatSignalComment|| mongoose.model('BatSignalComment', BatSignalCommentSchema);
 export default BatSignalComment;
 
  // favnames: {

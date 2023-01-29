@@ -95,12 +95,16 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
     
     
        <section className="my-6">
-                <h1 className="text-3xl text-white text-center my-6"> Add a Name! </h1> 
-              
+                       
                 <p> Add a name with one or more tags. </p>
-                <h6 className="mt-4"> Example: A dog named batman </h6>
-                <img className="w-52 mb-4"src="https://i.pinimg.com/originals/19/44/92/194492b23b8f04d3e624eb7b6148c1be.jpg" alt="React Image" />
-                <p>Batman could have the tags: comics, superheroes, batman, male, edgy</p>
+               
+                <h6 
+                className="mt-4 ml-4"> Example: A dog named batman </h6>
+                <img 
+                className="w-52 ml-6
+                mb-4"src="https://i.pinimg.com/originals/19/44/92/194492b23b8f04d3e624eb7b6148c1be.jpg" alt="React Image" />
+                <p
+                className="ml-6">Batman could have the tags: comics, superheroes, batman, male, edgy</p>
 
 
               <form onSubmit={handleNameSubmission}>
@@ -111,7 +115,7 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
                 <input 
                     type="text" 
                     id="nameInput"
-                    classname="text-violet-900"
+                    className="text-darkPurple"
                     // className={`${(!sessionFromServer)&&"bg-slate-400"}`} 
                     placeholder="enter a name to add" 
                     onChange={(e)=>setNewName(e.target.value.toLowerCase())}
@@ -133,7 +137,7 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
                     <textarea 
                       type="text" 
                       id="nameDescription"
-                      className="text-red-500 block w-full" 
+                      className="text-darkPurple block w-full" 
                      placeholder="optional description: please add anything that would be useful to know. Examples: the name's meaning, popular fictional or historical figures with this name, ect" 
                     onChange={(e)=>setDescription(e.target.value.trim())}>
                     </textarea>

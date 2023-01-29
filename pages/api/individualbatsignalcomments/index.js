@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import db from '../../../utils/db'
 
-import BatSignalComment from "../../../models/batSignalComments"
+import BatSignalComment from "../../../models/BatSignalComment"
 //wasn't working when everything was lowercase, had to be IndividualPosts not individualNames for it to work
 
 export default async function handler(req, res) {
@@ -12,9 +12,9 @@ export default async function handler(req, res) {
     if(method === "GET") {
         try {
             const batSignalComment = await BatSignalComment.find()
-            .populate({path:"createdby", select:["name","profilename","profileimage"]})
+            // .populate({path:"createdby", select:["name","profilename","profileimage"]})
           
-            .sort({_id:-1});
+            // .sort({_id:-1});
             //this way we get the most recent posts first, we use id since mongoDB's objectID has a 4 byte timestamp naturally built in 
             res.status(200).json(batSignalComment);
 

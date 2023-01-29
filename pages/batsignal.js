@@ -37,12 +37,72 @@ export const getServerSideProps = async (context) => {
 
 export default function BatSignal({sessionFromServer, pageProps,postList}) {
   
+  console.log(`this is postlist2 ${JSON.stringify(postList)}`)
+
+// let postList=[
+//   {
+//     _id: '63d42a6066fe90a742f8edbc',
+//     image: [],
+//     title: '',
+//     description: 'comment',
+//     createdby: {
+//       _id: '63a90c2e83e6366b179ffc40',
+//       name: 'GhibliM',
+//       profileimage: 'https://res.cloudinary.com/dujellms1/image/upload/v1674006701/profileimage/gxxcmwg0lrwdwsmqodng.jpg',
+//       profilename: 'ghiblimagic'
+//     },
+//     comments: [
+//       '63d42a8866fe90a742f8edc0',
+//       '63d42b4366fe90a742f8edc9',
+//       '63d43a9566fe90a742f8ee14',
+//       '63d4482666fe90a742f8ef4c',
+//       '63d448b766fe90a742f8ef70',
+//       '63d44bbc66fe90a742f8efc8'
+//     ],
+//     shares: [],
+//     likes: [],
+//     taglist: [ 'photography ideas' ],
+//     createdAt: '2023-01-27T19:47:44.426Z',
+//     updatedAt: '2023-01-27T22:10:04.827Z',
+//     __v: 6
+//   },
+//   {
+//     _id: '63d423e252c89332d426b061',
+//     image: [
+//       'https://res.cloudinary.com/dujellms1/image/upload/v1674847201/posts/khgbk3ufwzieuzocxxcp.jpg'
+//     ],
+//     title: 'test',
+//     description: 'test',
+//     createdby: {
+//       _id: '63a90c2e83e6366b179ffc40',
+//       name: 'GhibliM',
+//       profileimage: 'https://res.cloudinary.com/dujellms1/image/upload/v1674006701/profileimage/gxxcmwg0lrwdwsmqodng.jpg',
+//       profilename: 'ghiblimagic'
+//     },
+//     comments: [
+//       '63d4242352c89332d426b067',
+//       '63d4493d66fe90a742f8ef8a',
+//       '63d4494e66fe90a742f8ef95'
+//     ],
+//     shares: [],
+//     likes: [],
+//     taglist: [ 'name suggestions' ],
+//     createdAt: '2023-01-27T19:20:02.866Z',
+//     updatedAt: '2023-01-27T21:59:43.049Z',
+//     __v: 3
+//   }
+// ]
+ 
+
+
           // ##################### Category Objects List for Batsignal ###########################
           
-          let newestPostsFirstList=postList.slice().sort((a,b)=>{
-            if (a.createdAt>b.createdAt){
-              return 0
-            }})
+          // let newestPostsFirstList=postList
+          
+          // .slice().sort((a,b)=>{
+          //   if (a.createdAt>b.createdAt){
+          //     return 0
+          //   }})
 
    const category=[
     {
@@ -69,7 +129,7 @@ export default function BatSignal({sessionFromServer, pageProps,postList}) {
                     //array above is filled with tags
                     // ex ["christmas", "male"]
 
-   const[filteredPosts,setFilteredPosts]=useState([...newestPostsFirstList])
+   const[filteredPosts,setFilteredPosts]=useState([...postList])
 
 
 //  useEffect(() => {
@@ -172,13 +232,23 @@ export default function BatSignal({sessionFromServer, pageProps,postList}) {
             profileImage={profileImage} 
             userName={userName}  /> 
         
-        <img className="h-32 mx-auto" 
-                   src="https://images.wagwalkingweb.com/media/daily_wag/blog_articles/hero/1602871850.792525/best-dog-halloween-costumes-of-2018.jpg"/>
+        <div
+        className="h-32 
+        bg-[url('https://images.wagwalkingweb.com/media/daily_wag/blog_articles/hero/1602871850.792525/best-dog-halloween-costumes-of-2018.jpg')] bg-repeat-x bg-contain 
+        ">
+       
 
 {/* https://images.unsplash.com/photo-1560160922-6019c26a2523 */}
 
-        <h1 className="text-center text-white font-semibold text-3xl mt-4 mb-4"> BatSignal and Playyard </h1>
+        <h1 className="text-center 
+    w-96 mx-auto  h-32
+    text-4xl text-yellow-300   bg-darkPurple font-semibold
+    border-y-4 border-amber-300"
 
+         style={{marginBottom: "-90px", background: "hsla(260, 90%, 60%, 0.6)", backdropFilter: "blur(20px)"}}
+        > 
+        BatSignal and Playyard </h1>
+        </div>
      {/* posts section */}
         <section className="flex w-full h-fit bg-darkPurple  rounded-box">
       
@@ -232,7 +302,9 @@ export default function BatSignal({sessionFromServer, pageProps,postList}) {
                                 postersName={post.createdby.name}
                                 postDate={post.createdAt}
                                 comments={post.comments}
+                                shares={post.shares}
                                 tagList={post.taglist.map(tag=>"#"+tag).join(", ")}
+                                likes={post.likes}
                                 className="mx-auto"
                                 sessionFromServer={sessionFromServer}
                                 />

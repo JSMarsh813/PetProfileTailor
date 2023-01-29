@@ -8,26 +8,85 @@ import axios from 'axios'
 function CommentListing({rootComment,replies,sessionFromServer}) {
   //  { comment,replies}
  
-
+ 
   const [replying, setReplying]=useState(false)
   const [commentParentId, setCommentParentId]=useState(null)
   const [postersName,setPostersName]=useState("")
   const [postersProfileImage,setPostersProfileImage]=useState("")
   const [postersProfileName,setProfileName]=useState("")
   const [adjustedParentId,setAdjustedParentId]=useState("")
+                    //for likes
+   const likes=rootComment.likes
+   const [currentTargetedNameId,setCurrentTargetedNameId]=useState(postId)
+   const[nameLiked,setNameLiked] = useState(false) 
+   const [likesCount, setLikesCount ]=useState(likes.length) 
+   let likesColor= nameLiked? "red":"white"
+              
+const handlelikes =  (e) => {
 
-      //We only go one level deep. If the comment already has a parent id then we're already one level deep. So we want to set the id of this new comment as the same as this comment's parentcommendid
+  // grabbing the name's unique id when we click on it
+  // we can just look at the name props id property      
+  // console.log(`this is target ${name._id}`)
+  //this is target 63ae16a9f202c8bf57525455
+ 
+  console.log(`this is currentTargetedNameId ${currentTargetedNameId}`)
+//result: this is currentTargetedNameId 63abc7d5650d1659f0dd305e
+   
+  //if user is not logged in, tell them to log in to like names
+{ (!sessionFromServer)&&                  
+            toast.error("Please sign in to like names")}
 
-      //otherwise we are not one level deep/this is the first reply. So we can grab this comments id as the parentcommentid
+        //axios put request
+  const putLikes = async () => {
+                try {
+                    const response = await axios.put(
+                        `http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`,
+                               { currentTargetedNameId }
+                           
+
+                    );
+//                            //Object { currentTargetedNameId: "63ae16a9f202c8bf57525455" }
+                    console.log(response.status);
+
+                    console.log(response.data);
+                    nameLiked==true?setLikesCount(likesCount-=1):setLikesCount(likesCount+=1)
+                    setNameLiked(!nameLiked)
+
+
+
+                } catch (err) {
+                    console.log('something went wrong :(', err);
+                }
+            };
+    putLikes();
+
+  (console.log(`in handlelikes ${nameLiked}`)) 
+
+   }         
+
+  // ############ FOR LIKES COLOR ON APP LOAD ##########
+
+  useEffect(()=>{      
+            
+    likes.includes(sessionFromServer.user._id)?
+             setNameLiked(true):setNameLiked(false)
+
+  //checks server to see if the client liked the name, if so, set it true so the heart is red. Otherwise, set to false               
+  
+},[sessionFromServer])
+           //Logic to avoid comments becoming too deeply nested
   useEffect(()=>{
     {rootComment.parentcommentid?
       setAdjustedParentId(rootComment.parentcommentid):
       setAdjustedParentId(rootComment._id)}
+       //We only go one level deep. If the comment already has a parent id then we're already one level deep. So we want to set the id of this new comment as the same as this comment's parentcommendid
+
+      //otherwise we are not one level deep/this is the first reply. So we can grab this comments id as the parentcommentid
       
   },[])
 
   console.log(`this is replies ${JSON.stringify(replies)}`)
-            //  #########   FORMATTING DATE  #################
+         //  #########   FORMATTING DATE  #################
             const dateFormatter= new Intl.DateTimeFormat(undefined,
               {dateStyle: "medium",
               timeStyle: "short",
@@ -35,7 +94,7 @@ function CommentListing({rootComment,replies,sessionFromServer}) {
    
        let formattedPostDate= dateFormatter.format(Date.parse(rootComment.createdAt))
 
-               //  ###########  GETTING POSTERS DATA ########
+           //  ###########  GETTING POSTERS DATA ########
      const fetchUserData = async () =>{
 
         await axios.get(`api/user/${rootComment.createdby}`)
@@ -55,13 +114,10 @@ function CommentListing({rootComment,replies,sessionFromServer}) {
     },[])
   return (
 <div
-    className="flex-col mx-auto py-2 px-2
-                rounded-lg px-4">
+    className={`flex-col mx-auto py-2 pr-4
+                rounded-lg ${rootComment.parentcommentid?"pl-6 pr-0":""}`}>
+                  {console.log(rootComment)}
 
-{/*  w-full my-2 
-    border-b-2 border-r-2 border-gray-200 
-    sm:px-4 sm:py-4 md:px-4  sm:shadow-sm md:w-2/3 
-    pb-10 */}
 
         <div className="flex flex-row bg-violet-50 p-2 ml-6">
                  <img className="w-12 h-12 border-2 border-gray-300 rounded-full" alt="poster's avatar"
@@ -92,14 +148,25 @@ function CommentListing({rootComment,replies,sessionFromServer}) {
                                    onClick={()=>
                                   {setReplying(!replying)}} >
                             </FontAwesomeIcon> 
-
+<label>
+        
+        <input
+              style={{display:"none"}}
+                type="checkbox"
+               checked={nameLiked}
+                onChange={handlelikes}
+              
+              //  data-amount-of-likes={name.likedby.length}
+        
+        />
                             <FontAwesomeIcon 
                                 icon={ faHeart}
                                 className="mx-2 text-darkPurple text-xl" 
+                                color={likesColor}
                                                          >
-                                {rootComment.likes.length||0}
+                                {likes.length}
                             </FontAwesomeIcon> 
-
+ </label>
                         </div>
 
 
