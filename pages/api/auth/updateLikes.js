@@ -19,9 +19,9 @@ async function handler(req, res) {
   const { user } = session;
 
   // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.  
-  const nameId = req.body.currentTargetedNameId;  //!!!!
+  const nameId = req.body.currentTargetedId;  //!!!!
   console.log(req.body)
-  //{ currentTargetedNameId: '63abc7d5650d1659f0dd305e' }
+  //{ currentTargetedId: '63abc7d5650d1659f0dd305e' }
 
 console.log(`this is nameId ${nameId}`)
 // this is nameId 63abc7d5650d1659f0dd305e
@@ -34,7 +34,7 @@ console.log(`this is nameId ${nameId}`)
       //  CHANGE TO MONGODB ID  https://stackoverflow.com/questions/56592063/how-to-convert-a-string-to-a-mongodb-objectid
 
 // "63ae16a9f202c8bf57525455", is stored in nameId
-           //Object { currentTargetedNameId: "63ae16a9f202c8bf57525455" } 
+           //Object { currentTargetedId: "63ae16a9f202c8bf57525455" } 
 
   await db.connect();
 

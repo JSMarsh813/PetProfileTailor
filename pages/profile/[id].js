@@ -5,7 +5,10 @@ import { authOptions } from "../../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 import NameListingAsSections from '../../components/ShowingListOfContent/NameListingAsSections'
 
-import {useRouter} from 'next/router'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faCommentDots, faFaceGrinWink, faUserTie, faCircleChevronDown, faLocationDot, faRankingStar, faUserPlus, faEnvelopeOpenText, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
 
 export const getServerSideProps = async (context) => {
 
@@ -26,7 +29,7 @@ export const getServerSideProps = async (context) => {
      let userResponse= await fetch('http://localhost:3000/api/user/getASpecificUser/'+id)
      let userData = await userResponse.json()
 
-     console.log(userData)
+     console.log(`this is ${userData}`)
 
     
 
@@ -59,7 +62,7 @@ export const getServerSideProps = async (context) => {
  
       nameList: nameData,
       id: id,
-      // favNames:filterednames,
+      userData: userData,
       sessionFromServer: session,
    
          },
@@ -67,55 +70,61 @@ export const getServerSideProps = async (context) => {
 
 }
 
-function ProfilePage({sessionFromServer, nameList,id,nameList2 }) {
+function ProfilePage({sessionFromServer, nameList,userData,nameList2 }) {
 
 
-console.log(nameList2 )
+console.log(userData )
 
 
   return (
     <div >
  
        <Layout></Layout>     
-
-   
+ 
 
 <div className="flex flex-col md:flex-row">
                           {/* ############## BIO ############## */}
-<section className="bg-blueGray-50 w-96 ">
+<section className="w-96 text-darkPurple ">
 <div className="px-4 ">
-  <div className="relative flex flex-col min-w-0 break-words bg-white mb-6 shadow-xl rounded-lg mt-16">
+  <div className="relative flex flex-col min-w-0 break-words bg-purple-50 mb-6 shadow-xl rounded-lg mt-16
+   border-4 border-darkPurple border-double shadow-slate-900/70">
     <div className="px-6">
       <div className="flex flex-wrap justify-center">
         <div className="w-full px-4 flex justify-center">
           <div className="relative">
-            <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full align-middle -mt-16 h-60"/>
+            <img alt="..." src={userData.profileimage}
+            className="shadow-xl rounded-full border-4 border-amber-300 align-middle -mt-16 h-60 shadow-slate-800/50"/>
 
           </div>
         </div>
-        <div className="w-full px-4 text-center mt-2">
+        <div className="w-full text-center mt-2">
+
+        <span className="text-xl font-bold leading-normal ">  {userData.name} </span> 
+        <span>    @{userData.profilename}    </span>
+
           <div className="flex justify-center py-4">
             
+        
             <div className="mr-4 text-center">
-              <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+              <span className="text-xl font-bold block tracking-wide">
                 22
               </span>
               <span className="text-sm text-blueGray-400">Treats</span>
             </div>
 
             <div className="mr-4 text-center">
-              <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+              <span className="text-xl font-bold block tracking-wide">
                 10
               </span>
-              <span className="mr-4 text-sm text-blueGray-400">Photos</span>
+              <span className="text-sm">Following</span>
             </div>
 
 
             <div className="text-center">
-              <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                89
+              <span className="text-xl font-bold block tracking-wide">
+                 {userData.followers.length}
               </span>
-              <span className="text-sm text-blueGray-400">Comments</span>
+              <span className="text-sm">Followers</span>
             </div>
           </div>
         </div>
@@ -124,37 +133,54 @@ console.log(nameList2 )
 
       <div className="text-center">
 
-        <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-          Jenna Stones
-        </h3>
+       
+   
 
-        <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-          <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-          Los Angeles, California
+        <div className=" w-full pb-4">
+      <a href="#" className=" mr-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 
+      hover:border-yellow-500 text-center py-2 px-4 rounded">
+        <FontAwesomeIcon
+             icon={faUserPlus}
+             className="mr-2"/>
+  Follow
+</a>
+<a href="#" className="ml-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 hover:border-yellow-500 text-center py-2 px-4 rounded">
+<FontAwesomeIcon
+             icon={faEnvelope}
+             className="mr-2"/>
+  Message
+</a>
+
+</div>
+        <div className="text-sm leading-normal mt-0 mb-2 font-bold ">
+        <FontAwesomeIcon 
+              icon={faLocationDot}
+              className="mr-2 text-lg "/>
+
+        <span className="mr-2 text-lg"> 
+      
+          {userData.location}
+          </span>
         </div>
 
-        <div className="mb-2 text-blueGray-600">
-          <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
-          Current Rank Title
-        </div>
-
-        <div className="mb-6 text-blueGray-600">
-          <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-          University of Computer Science
+        <div className="mb-2 font-bold">
+        <FontAwesomeIcon 
+              icon={faRankingStar}
+              className="mr-2 text-lg "
+              />
+          <span className="mr-2 text-lg">
+          Rank: {"mystery"}
+          </span>
         </div>
       </div>
 
 
       
-      <div className="py-10 border-t border-blueGray-200 text-center">
+      <div className="py-2 border-t border-darkPurple text-center">
         <div className="flex flex-wrap justify-center">
-          <div className="w-full lg:w-9/12 px-4">
-            <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-              An artist of considerable range, Jenna the name taken
-              by Melbourne-raised, Brooklyn-based Nick Murphy
-              writes, performs and records all of his own music,
-              giving it a warm, intimate feel with a solid groove
-              structure. An artist of considerable range.
+          <div className="w-full px-4">
+            <p className="mb-4 leading-relaxed">
+            {userData.bioblurb}
             </p>
        
           </div>
@@ -170,7 +196,7 @@ console.log(nameList2 )
     <div className="flex flex-wrap items-center md:justify-between justify-center">
       <div className="w-full md:w-6/12 px-4 mx-auto text-center">
         <div className="text-sm text-blueGray-500 font-semibold py-1">
-          Made with <a href="https://www.creative-tim.com/product/notus-js" className="text-blueGray-500 hover:text-gray-800" target="_blank">Notus JS</a> by <a href="https://www.creative-tim.com" className="text-blueGray-500 hover:text-blueGray-800" target="_blank"> Creative Tim</a>.
+        Extra
         </div>
       </div>
     </div>
@@ -181,7 +207,7 @@ console.log(nameList2 )
 
 
       <div
-            className=" flex-1 grid grid-cols-1 gap-4 mr-2">
+            className=" flex-1 grid grid-cols-1 gap-4 mr-2 h-fit">
         
           {(!nameList.length)?
 
@@ -207,14 +233,20 @@ console.log(nameList2 )
                         <span> Description</span>
                         <span> Tags </span>
                      </section>
+
+                     <section
+                        className="max-h-96 overflow-scroll">
                      {nameList.map((name)=>{
                     return <NameListingAsSections
                     name={name}
+                    key={name._id}
                     sessionFromServer={sessionFromServer}/>
                    
                   }
                 
                     )}
+                    </section>
+
                     </section>
             }
                     

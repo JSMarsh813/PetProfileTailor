@@ -19,7 +19,7 @@ const BatSignalCommentSchema= new mongoose.Schema({
   createdby: {
     type: String,
     required: true,
-    // ref: 'User',
+    ref: 'User',
   }, 
   shares: {
     type: Array,  
@@ -29,7 +29,7 @@ const BatSignalCommentSchema= new mongoose.Schema({
     type: String,  
     default: null,
   }, 
-  likes: {
+  likedby: {
     type: Array,  
     default: [],
   }, 

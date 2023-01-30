@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     if(method === "GET") {
         try {
             const batSignalComment = await BatSignalComment.find()
-            // .populate({path:"createdby", select:["name","profilename","profileimage"]})
+            .populate({path:"createdby", select:["name","profilename","profileimage"]})
           
             // .sort({_id:-1});
             //this way we get the most recent posts first, we use id since mongoDB's objectID has a 4 byte timestamp naturally built in 

@@ -4,22 +4,24 @@ import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, f
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import AddComment from '../AddingNewData/AddComment'
 import axios from 'axios'
+import LikesButtonAndLikesLogic from '../ReusableMediumComponents/LikesButtonAndLikesLogic'
 
-function CommentListing({rootComment,replies,sessionFromServer}) {
+function CommentListing({postid,rootComment,replies,sessionFromServer}) {
   //  { comment,replies}
  
  
   const [replying, setReplying]=useState(false)
   const [commentParentId, setCommentParentId]=useState(null)
-  const [postersName,setPostersName]=useState("")
-  const [postersProfileImage,setPostersProfileImage]=useState("")
-  const [postersProfileName,setProfileName]=useState("")
+  const [postersName,setPostersName]=useState(rootComment.createdby.name)
+  const [postersProfileImage,setPostersProfileImage]=useState(rootComment.createdby.profileimage)
+  const [postersProfileName,setProfileName]=useState(rootComment.createdby.profilename)
+ { console.log(`this is profilename ${JSON.stringify(rootComment)}`)}
   const [adjustedParentId,setAdjustedParentId]=useState("")
                     //for likes
-   const likes=rootComment.likes
-   const [currentTargetedNameId,setCurrentTargetedNameId]=useState(postId)
+   const likes=rootComment.likedby
+   const [currentTargetedId,setCurrentTargetedNameId]=useState(rootComment._id)
    const[nameLiked,setNameLiked] = useState(false) 
-   const [likesCount, setLikesCount ]=useState(likes.length) 
+   const [likesCount, setLikesCount ]=useState(rootComment.likedby.length) 
    let likesColor= nameLiked? "red":"white"
               
 const handlelikes =  (e) => {
@@ -29,8 +31,8 @@ const handlelikes =  (e) => {
   // console.log(`this is target ${name._id}`)
   //this is target 63ae16a9f202c8bf57525455
  
-  console.log(`this is currentTargetedNameId ${currentTargetedNameId}`)
-//result: this is currentTargetedNameId 63abc7d5650d1659f0dd305e
+  console.log(`this is currentTargetedId ${currentTargetedId}`)
+//result: this is currentTargetedId 63abc7d5650d1659f0dd305e
    
   //if user is not logged in, tell them to log in to like names
 { (!sessionFromServer)&&                  
@@ -41,11 +43,11 @@ const handlelikes =  (e) => {
                 try {
                     const response = await axios.put(
                         `http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`,
-                               { currentTargetedNameId }
+                               { currentTargetedId }
                            
 
                     );
-//                            //Object { currentTargetedNameId: "63ae16a9f202c8bf57525455" }
+//                            //Object { currentTargetedId: "63ae16a9f202c8bf57525455" }
                     console.log(response.status);
 
                     console.log(response.data);
@@ -68,7 +70,7 @@ const handlelikes =  (e) => {
 
   useEffect(()=>{      
             
-    likes.includes(sessionFromServer.user._id)?
+    rootComment.likedby.includes(sessionFromServer.user._id)?
              setNameLiked(true):setNameLiked(false)
 
   //checks server to see if the client liked the name, if so, set it true so the heart is red. Otherwise, set to false               
@@ -94,24 +96,24 @@ const handlelikes =  (e) => {
    
        let formattedPostDate= dateFormatter.format(Date.parse(rootComment.createdAt))
 
-           //  ###########  GETTING POSTERS DATA ########
-     const fetchUserData = async () =>{
+    //        //  ###########  GETTING POSTERS DATA ########
+    //  const fetchUserData = async () =>{
 
-        await axios.get(`api/user/${rootComment.createdby}`)
-        .then((res)=>{
-             console.log(res.data.data)
-            setPostersName(res.data.data.name)
-            setPostersProfileImage(res.data.data.profileimage)
-            setProfileName(res.data.data.profilename)
+    //     await axios.get(`api/user/${rootComment.createdby}`)
+    //     .then((res)=>{
+    //          console.log(res.data.data)
+    //         setPostersName(res.data.data.name)
+    //         setPostersProfileImage(res.data.data.profileimage)
+    //         setProfileName(res.data.data.profilename)
           
-            return postersProfileImage, postersName
-            //i'm not sure if the return here is needed
-        })
-           }
-        useEffect(()=>{
+    //         return postersProfileImage, postersName
+    //         //i'm not sure if the return here is needed
+    //     })
+    //        }
+    //     useEffect(()=>{
         
-        fetchUserData()
-    },[])
+    //     fetchUserData()
+    // },[])
   return (
 <div
     className={`flex-col mx-auto py-2 pr-4
@@ -148,25 +150,16 @@ const handlelikes =  (e) => {
                                    onClick={()=>
                                   {setReplying(!replying)}} >
                             </FontAwesomeIcon> 
-<label>
-        
-        <input
-              style={{display:"none"}}
-                type="checkbox"
-               checked={nameLiked}
-                onChange={handlelikes}
-              
-              //  data-amount-of-likes={name.likedby.length}
-        
-        />
-                            <FontAwesomeIcon 
-                                icon={ faHeart}
-                                className="mx-2 text-darkPurple text-xl" 
-                                color={likesColor}
-                                                         >
-                                {likes.length}
-                            </FontAwesomeIcon> 
- </label>
+<LikesButtonAndLikesLogic
+              data={rootComment}  
+                
+              currentTargetedId={currentTargetedId}
+              HeartIconStyling="text-xl"
+              HeartIconTextStyling="text-darkPurple ml-2"
+               session={sessionFromServer}
+               apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}  
+
+            />
                         </div>
 
 
@@ -195,12 +188,11 @@ const handlelikes =  (e) => {
                 replies.map(reply=> {
                   if (reply.parentcommentid==rootComment._id) {
 
-                    console.log(reply)
-                    console.log(rootComment._id)
                     return <div>
                  <CommentListing
                         rootComment={reply}
                         replies={null}
+                        key={reply._id}
                         sessionFromServer={sessionFromServer}
                      
                         /> 

@@ -13,13 +13,8 @@ import LikesButtonAndLikesLogic from '../ReusableMediumComponents/LikesButtonAnd
 function Namelisting({name,session}) {
   console.log(`this is name ${JSON.stringify(name)}`)
 
-  //this is name {"_id":"63b299904e8ed0889ddaad41","name":"alfred","description":[],"tags":["male"],"likedby":[],"__v":0}
-
-    // const { data: session, status } = useSession()
-    //grab current user's id
-    // console.log(session)
     let [userId,setUserId]=useState(session.user._id)
-    let [currentTargetedNameId,setCurrentTargetedNameId]=useState(name._id)
+    let [currentTargetedId,setCurrentTargetedNameId]=useState(name._id)
     let [openComment, SetOpenComments]=useState(false)
 
     // useEffect(() => {
@@ -48,10 +43,12 @@ function Namelisting({name,session}) {
      <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">
 
        <LikesButtonAndLikesLogic 
-         name={name}         
-         currentTargetedNameId={currentTargetedNameId}
-          session={session}/>
-             
+         data={name}         
+         currentTargetedId={currentTargetedId}
+          session={session}
+          apiLink={`http://localhost:3000/api/auth/updateLikes`}  
+          />
+           
      </td> 
   {/* end of likes checkbox section*/}
 

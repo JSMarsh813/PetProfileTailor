@@ -3,6 +3,7 @@ import IndividualComments from '../../../models/BatSignalComment'
 import db from '../../../utils/db';
 const mongoose = require('mongoose');
 
+
 async function handler(req, res) {
   // console.log(`this is request body ${(JSON.stringify(req))}`)
   //nothing appearing ...
@@ -19,14 +20,14 @@ async function handler(req, res) {
   const { user } = session;
 
   // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.  
-  const nameId = req.body.currentTargetedNameId;  //!!!!
+  const commentId = req.body.currentTargetedId;  //!!!!
   console.log(req.body)
   //{ currentTargetedNameId: '63abc7d5650d1659f0dd305e' }
 
-console.log(`this is nameId ${nameId}`)
+console.log(`this is nameId ${commentId}`)
 // this is nameId 63abc7d5650d1659f0dd305e
 
-  let idToObjectId = mongoose.Types.ObjectId(nameId)
+  let idToObjectId = mongoose.Types.ObjectId(commentId)
   console.log(idToObjectId )
   //result: new ObjectId("63b7fe4362bf243a197c505d")
   
@@ -41,7 +42,7 @@ console.log(`this is nameId ${nameId}`)
     // use the model we're updating,IndividualNames. Look through it to find the one document we're looking for with the name's id. 
   const toUpdateComment = await IndividualComments.findById(idToObjectId);
  
-  console.log(`this is toupdatename ${toUpdateComment}`)
+  console.log(`this is toupdatepost ${toUpdateComment}`)
 // result: this is toupdatename {
 //   _id: new ObjectId("63abc7d5650d1659f0dd305e"),
 //   name: 'donner',
@@ -59,18 +60,18 @@ console.log(`this is user._id ${user._id}`)
    //if true, lets filter the user out
   //  if false, lets add the user to the name object's likedby property
 
-  toUpdateComment.likes.includes(user._id)? 
+  toUpdateComment.likedby.includes(user._id)? 
 
-        (toUpdateComment.likes= toUpdateComment.likes.filter(userinlikedby=> 
+        (toUpdateComment.likedby= toUpdateComment.likedby.filter(userinlikedby=> 
           userinlikedby!=user._id)):
 
-        (toUpdateComment.likes=toUpdateComment.likes.concat(user._id))
+        (toUpdateComment.likedby=toUpdateComment.likedby.concat(user._id))
       
 
   await toUpdateComment.save();
   await db.disconnect();
   res.send({
-    message: 'Names likes updated',
+    message: 'Comments likes updated',
   });
       
   //if statement 

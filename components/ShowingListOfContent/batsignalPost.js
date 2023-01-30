@@ -6,23 +6,37 @@ import AddComment from "../AddingNewData/AddComment"
 import GeneralButton from '../GeneralButton';
 import CommentListing from './CommentListing';
 import axios from 'axios';
+import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAndLikesLogic"
 
 function BatsignalPost({
-    image,title,paragraphText,postersName,profileName,postersProfileImage,postDate,comments,shares,likes,tagList,className,postId,sessionFromServer}) {
+   className,sessionFromServer,post,commentList}) {
+
+        console.log(`this is post ${JSON.stringify(post)}`)
+   const image=post.image
+   const title=post.title
+   const paragraphText=post.description
+   const postersName=post.createdby.name
+   const profileName= post.createdby.profilename
+   const postersProfileImage=post.createdby.profileimage
+   const postDate= post.createdAt
+   const comments = post.comments 
+     //comments to change
+   const shares =post.shares
+   const likes = post.likes
+   const tagList= post.taglist.map(tag=>"#"+tag).join(", ")
+   const postId =post._id
+
         
                      //for comments
     const [commentsShowing,SetCommentsShowing]=useState(false)
-  const rootComments = comments.filter      
-            (comment=>comment.parentcommentid=== null)
+  const rootComments = commentList.filter      
+            (comment=>comment.postid===post._id&&comment.parentcommentid=== null)
 
-  const replyComments = comments.filter(comment=>comment.parentcommentid!=null)
+  const replyComments = commentList.filter(comment=>comment.parentcommentid!=null)
   console.log(`this is root ${JSON.stringify(replyComments)}`)
                       //for likes
-  const [currentTargetedNameId,setCurrentTargetedNameId]=useState(postId)
-  const[nameLiked,setNameLiked] = useState(false) 
-  const [likesCount, setLikesCount ]=useState(likes.length) 
-  let likesColor= nameLiked? "red":"white"
-                      //for shares
+  const [currentTargetedId,setCurrentTargetedId]=useState(postId)
+ 
   const [sharesCount, setSharesCount ]=useState(shares.length)
     // console.log({rootComments})
  
@@ -40,17 +54,6 @@ function BatsignalPost({
     //         //i'm not sure if the return here is needed
     //     })
     //        }
-        // ############ FOR LIKES COLOR ON APP LOAD ##########
-
-        useEffect(()=>{
-      
-            
-              likes.includes(sessionFromServer.user._id)?
-                       setNameLiked(true):setNameLiked(false)
-    
-            //checks server to see if the client liked the name, if so, set it true so the heart is red. Otherwise, set to false               
-            
-        },[sessionFromServer])
 
         //  ###########  GRABBING COMMENTS ########
 
@@ -90,48 +93,6 @@ function BatsignalPost({
                 // await db.connect()
                 // const result = await User.find({_id:UserId})
 
-                
-const handlelikes =  (e) => {
-
-    // grabbing the name's unique id when we click on it
-    // we can just look at the name props id property      
-    // console.log(`this is target ${name._id}`)
-    //this is target 63ae16a9f202c8bf57525455
-   
-    console.log(`this is currentTargetedNameId ${currentTargetedNameId}`)
-//result: this is currentTargetedNameId 63abc7d5650d1659f0dd305e
-     
-    //if user is not logged in, tell them to log in to like names
-  { (!sessionFromServer)&&                  
-              toast.error("Please sign in to like names")}
-
-          //axios put request
-    const putLikes = async () => {
-                  try {
-                      const response = await axios.put(
-                          `http://localhost:3000/api/individualposts/updatepostlikes`,
-                                 { currentTargetedNameId }
-                             
-
-                      );
-//                            //Object { currentTargetedNameId: "63ae16a9f202c8bf57525455" }
-                      console.log(response.status);
-
-                      console.log(response.data);
-                      nameLiked==true?setLikesCount(likesCount-=1):setLikesCount(likesCount+=1)
-                      setNameLiked(!nameLiked)
-
-
-
-                  } catch (err) {
-                      console.log('something went wrong :(', err);
-                  }
-              };
-      putLikes();
-
-    (console.log(`in handlelikes ${nameLiked}`)) 
-  
-     }         
 
 
   return (
@@ -188,26 +149,16 @@ const handlelikes =  (e) => {
                             <span
                             className="text-xl">{comments.length} </span> 
                     </span>
-   <label>
-        
-        <input
-              style={{display:"none"}}
-                type="checkbox"
-               checked={nameLiked}
-                onChange={handlelikes}
-              
-              //  data-amount-of-likes={name.likedby.length}
-        
-        />
-                    <span className="flex-1 inline">
-                           <FontAwesomeIcon icon={faHeart} 
-                           className="text-3xl mr-2 inline flex-1"
-                           color={likesColor}
-                           />
-                            <span
-                            className="text-xl">{likesCount} </span>
-                    </span>
-    </label>
+
+       <LikesButtonAndLikesLogic 
+             data={post}         
+            currentTargetedId={currentTargetedId}
+            HeartIconStyling="text-3xl"
+             session={sessionFromServer}
+             apiLink={`http://localhost:3000/api/individualposts/updatepostlikes`}  
+             
+          />
+
                     <span className="flex-1 inline">
                            <FontAwesomeIcon icon={faShareFromSquare} 
                            className="text-3xl mr-2 inline flex-1"/>
@@ -229,6 +180,7 @@ const handlelikes =  (e) => {
                     <CommentListing 
                     rootComment={comment} 
                     replies={replyComments}
+                    postid={postId} 
                     key={comment._id}
                     sessionFromServer={sessionFromServer}/>
             

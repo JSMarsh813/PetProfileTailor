@@ -32,6 +32,11 @@ const UserSchema= new mongoose.Schema({
     type: String,  
     default: "",
   }, 
+  location:{
+    type:String,
+    required: false,
+    default: "",
+  },
   profileimage:{
     type:String,
     default:"http://placekitten.com/50/50"

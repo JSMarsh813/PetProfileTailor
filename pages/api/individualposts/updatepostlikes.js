@@ -19,7 +19,7 @@ async function handler(req, res) {
   const { user } = session;
 
   // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.  
-  const nameId = req.body.currentTargetedNameId;  //!!!!
+  const nameId = req.body.currentTargetedId;  //!!!!
   console.log(req.body)
   //{ currentTargetedNameId: '63abc7d5650d1659f0dd305e' }
 
@@ -41,7 +41,7 @@ console.log(`this is nameId ${nameId}`)
     // use the model we're updating,IndividualNames. Look through it to find the one document we're looking for with the name's id. 
   const toUpdatePost = await IndividualPosts.findById(idToObjectId);
  
-  console.log(`this is toupdatename ${toUpdatePost}`)
+  console.log(`this is toupdatepost ${toUpdatePost}`)
 // result: this is toupdatename {
 //   _id: new ObjectId("63abc7d5650d1659f0dd305e"),
 //   name: 'donner',
@@ -59,12 +59,12 @@ console.log(`this is user._id ${user._id}`)
    //if true, lets filter the user out
   //  if false, lets add the user to the name object's likedby property
 
-  toUpdatePost.likes.includes(user._id)? 
+  toUpdatePost.likedby.includes(user._id)? 
 
-        (toUpdatePost.likes= toUpdatePost.likes.filter(userinlikedby=> 
+        (toUpdatePost.likedby= toUpdatePost.likedby.filter(userinlikedby=> 
           userinlikedby!=user._id)):
 
-        (toUpdatePost.likes=toUpdatePost.likes.concat(user._id))
+        (toUpdatePost.likedby=toUpdatePost.likedby.concat(user._id))
       
 
   await toUpdatePost.save();

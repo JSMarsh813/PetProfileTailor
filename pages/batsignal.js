@@ -21,24 +21,25 @@ export const getServerSideProps = async (context) => {
    let postResponse= await fetch('http://localhost:3000/api/individualposts');
    let postData = await postResponse.json()
 
-
-
+   let commentResponse= await fetch('http://localhost:3000/api/individualbatsignalcomments');
+   let commentData = await commentResponse.json()
 
   return {
     props: {    
       sessionFromServer: session,
       postList: postData,
-      // category: data,
+      commentList: commentData
+     
          },
     }
 }
 
 
 
-export default function BatSignal({sessionFromServer, pageProps,postList}) {
+export default function BatSignal({sessionFromServer, pageProps,postList,commentList}) {
   
-  console.log(`this is postlist2 ${JSON.stringify(postList)}`)
-
+  // console.log(`this is postlist2 ${JSON.stringify(postList)}`)
+  // console.log(`this is commentlist ${JSON.stringify(commentList)}`)
 // let postList=[
 //   {
 //     _id: '63d42a6066fe90a742f8edbc',
@@ -292,21 +293,11 @@ export default function BatSignal({sessionFromServer, pageProps,postList}) {
              {filteredPosts.map((post)=>{ 
               
                     return <BatsignalPost 
-                                key={post._id}
-                                image={post.image}
-                                title={post.title}
-                                paragraphText={post.description}
-                                postersProfileImage={post.createdby.profileimage}
-                                profileName={post.createdby.name}
-                                postId={post._id}
-                                postersName={post.createdby.name}
-                                postDate={post.createdAt}
-                                comments={post.comments}
-                                shares={post.shares}
-                                tagList={post.taglist.map(tag=>"#"+tag).join(", ")}
-                                likes={post.likes}
+                                post={post}
+                                key={post._id}             
                                 className="mx-auto"
                                 sessionFromServer={sessionFromServer}
+                                commentList={commentList}
                                 />
                  } ) }  
         
