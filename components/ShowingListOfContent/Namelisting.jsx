@@ -7,13 +7,14 @@ import React, {useEffect, useState} from 'react'
 import { useSession, getSession } from "next-auth/react"
 
 
-import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LikesButtonAndLikesLogic from '../ReusableMediumComponents/LikesButtonAndLikesLogic'
 
 function Namelisting({name,session}) {
   console.log(`this is name ${JSON.stringify(name)}`)
 
-    let [userId,setUserId]=useState(session.user._id)
+ 
     let [currentTargetedId,setCurrentTargetedNameId]=useState(name._id)
     let [openComment, SetOpenComments]=useState(false)
 

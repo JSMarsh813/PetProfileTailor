@@ -50,13 +50,16 @@ export const getServerSideProps = async (context) => {
 
 export default function FetchNames({category,nameList, pageProps, sessionFromServer}) {
   
-  let userName=""
-  let profileImage=""
-
-  if (sessionFromServer){
-      userName=sessionFromServer.user.name
-   profileImage=sessionFromServer.user.profileimage
- }
+   //for Nav menu profile name and image
+        //let section exists in case the user is not signed in
+        let userName=""
+        let profileImage=""
+      
+        if (sessionFromServer){
+            userName=sessionFromServer.user.name
+         profileImage=sessionFromServer.user.profileimage
+       }
+      //end of section for nav menu
 
 
       // useEffect(() => {

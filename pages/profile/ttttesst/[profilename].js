@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu"
 import Namelisting from '../../components/ShowingListOfContent/Namelisting'
-import { authOptions } from "../../pages/api/auth/[...nextauth]"
+import { authOptions } from "../api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 import NameListingAsSections from '../../components/ShowingListOfContent/NameListingAsSections'
 
@@ -13,7 +13,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 export const getServerSideProps = async (context) => {
 
   //allows us to grab the dynamic value from the url
-  const id=context.params.id
+  const id=context.params.profilename
 
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
@@ -22,18 +22,22 @@ export const getServerSideProps = async (context) => {
 
  
 
-    let nameResponse= await fetch('http://localhost:3000/api/individualnames/namesContainingUserId/'+id)
-     let nameData = await nameResponse.json()
+    
 
 
-     let userResponse= await fetch('http://localhost:3000/api/user/getASpecificUser/'+id)
+     let userResponse= await fetch('http://localhost:3000/api/user/getASpecificUserByProfileName/'+id)
      let userData = await userResponse.json()
+
+     let nameid=userData[0]._id
+     console.log(nameid)
+
+     let nameResponse= await fetch('http://localhost:3000/api/individualnames/namesContainingUserId/'+nameid)
+     let nameData = await nameResponse.json()
 
      console.log(`this is ${userData}`)
 
     
-
-
+   
   // const client =  await connectDatabase();
   // const user = await client.db.collection('users').findOne({ _id: UserId }) 
 
@@ -62,7 +66,7 @@ export const getServerSideProps = async (context) => {
  
       nameList: nameData,
       id: id,
-      userData: userData,
+      userData: userData[0],
       sessionFromServer: session,
    
          },
@@ -74,6 +78,7 @@ function ProfilePage({sessionFromServer, nameList,userData,nameList2 }) {
 
 
 console.log(userData )
+console.log(nameList)
 
 
   return (
@@ -225,13 +230,15 @@ console.log(userData )
                             "> Names Added</h2>
 
                     <section 
-                          className="grid grid-cols-4 gap-4 
+                          className="grid md:grid-cols-5
+                          grid-cols-3 gap-4 
                           bg-purple-100
                           text-darkPurple p-2"> 
                         <span> Like </span>
                         <span> Name </span>
                         <span> Description</span>
                         <span> Tags </span>
+                        <span> Created By </span>
                      </section>
 
                      <section

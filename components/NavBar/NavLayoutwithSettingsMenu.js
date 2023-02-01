@@ -21,7 +21,6 @@ import { faBullseye, faFaceGrinWink, faUserTie, faTags, faIgloo, faLightbulb, fa
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 
-
 export default function NavLayoutwithSettingsMenu({ title, children, userName, profileImage}) {
   // const { status, data: session } = useSession();
   
@@ -61,6 +60,7 @@ export default function NavLayoutwithSettingsMenu({ title, children, userName, p
         <meta name="description" content="site to assist with making pet profiles for adoptions" />
         <link rel="icon" href="/favicon.ico" />
       </Head> */}
+
 
       {/* <ToastContainer position="bottom-center" limit={1} /> */}
 

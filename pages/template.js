@@ -24,36 +24,23 @@ export const getServerSideProps = async (context) => {
 
 export default function NavLayoutwithSettingsMenu({category,nameList, sessionFromServer, pageProps}) {
 
-  
-//  const router = useRouter();
 
-//  useEffect(() => {
+  //for Nav menu profile name and image
+        //let section exists in case the user is not signed in
+        let userName=""
+        let profileImage=""
+      
+        if (sessionFromServer){
+            userName=sessionFromServer.user.name
+         profileImage=sessionFromServer.user.profileimage
+       }
+      //end of section for nav menu
 
-//      if (!sessionFromServer) {
-
-//        router.push('/login')}
-//    }, [router, sessionFromServer]);
-
-
-   let userName=""
-   let profileImage=""
-
-   if (sessionFromServer){
-       userName=sessionFromServer.user.name
-    profileImage=sessionFromServer.user.profileimage
-  }
-
-    // let [userId,setUserId]=useState()
-
-    // useEffect(() => {
-    //     const data = localStorage.getItem("session") 
-    //     // console.log(data);
-    //     setUserId(data)
-    // }, [])
-         
 
   return (
-    <Layout profileImage={profileImage} userName={userName}  > 
+    <Layout 
+          profileImage={profileImage} 
+          userName={userName}  > 
   
     <p> {userName} lets test this again</p>
  

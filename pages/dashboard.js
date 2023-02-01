@@ -143,13 +143,16 @@ export default function Dashboard({category,nameList,sessionFromServer,favNames,
      
        console.log(sessionFromServer)
        
-       let userName=""
-       let profileImage=""
-
-       if (sessionFromServer){
-           userName=sessionFromServer.user.name
-        profileImage=sessionFromServer.user.profileimage
-      }
+   //for Nav menu profile name and image
+     //let section exists in case the user is not signed in
+   let userName=""
+   let profileImage=""
+ 
+   if (sessionFromServer){
+       userName=sessionFromServer.user.name
+    profileImage=sessionFromServer.user.profileimage
+  }
+ //end of section for nav menu
 //   let [userId,setUserId]=useState(userIdFromServer._id)
 
 // {console.log(`from server ${(userId)}`)}

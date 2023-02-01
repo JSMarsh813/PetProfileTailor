@@ -9,8 +9,8 @@ import { useState, createContext, useContext } from 'react';
 // import { unstable_getServerSession } from "next-auth/next"
 // import { authOptions } from "../pages/api/auth/[...nextauth]"
 
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //allows us to repeat the layout on every page, versus manually adding the footer header ect to every page
 
@@ -47,7 +47,8 @@ function MyApp({
     
 
  
-    <SessionProvider session={session}>
+    <SessionProvider session={session}
+                      limit={1}>
 
           {/* <UserSessionContext.Provider value={JSON.stringify(userCookies)}>  */}
 
@@ -58,6 +59,7 @@ function MyApp({
               in this case ALL components */}
                 <Component {...pageProps} />
         {/* </UserSessionContext.Provider> */}
+        <ToastContainer />
         <footer className="text-white py-4 px-4 bg-darkPurple border-t-2 border-violet-400 mt-4">
           <h6> Credits: </h6>
               <span className="ml-6"> “Bat” icon by Megan Mitchell, from thenounproject.com.</span>

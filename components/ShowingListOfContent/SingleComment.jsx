@@ -5,10 +5,9 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import AddComment from '../AddingNewData/AddComment'
 import axios from 'axios'
 import LikesButtonAndLikesLogic from '../ReusableMediumComponents/LikesButtonAndLikesLogic'
+import GeneralButton from '../GeneralButton'
 
-function CommentListing({postid,rootComment,replies,sessionFromServer}) {
-  //  { comment,replies}
- 
+function CommentListing({postid,rootComment,sessionFromServer}) {
  
   const [replying, setReplying]=useState(false)
   const [commentParentId, setCommentParentId]=useState(null)
@@ -28,8 +27,7 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
       
   },[])
 
-  console.log(`this is replies ${JSON.stringify(replies)}`)
-         //  #########   FORMATTING DATE  #################
+          //  #########   FORMATTING DATE  #################
             const dateFormatter= new Intl.DateTimeFormat(undefined,
               {dateStyle: "medium",
               timeStyle: "short",
@@ -37,32 +35,15 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
    
        let formattedPostDate= dateFormatter.format(Date.parse(rootComment.createdAt))
 
-    //        //  ###########  GETTING POSTERS DATA ########
-    //  const fetchUserData = async () =>{
-
-    //     await axios.get(`api/user/${rootComment.createdby}`)
-    //     .then((res)=>{
-    //          console.log(res.data.data)
-    //         setPostersName(res.data.data.name)
-    //         setPostersProfileImage(res.data.data.profileimage)
-    //         setProfileName(res.data.data.profilename)
-          
-    //         return postersProfileImage, postersName
-    //         //i'm not sure if the return here is needed
-    //     })
-    //        }
-    //     useEffect(()=>{
-        
-    //     fetchUserData()
-    // },[])
   return (
 <div
     className={`flex-col mx-auto py-2 pr-4
-                rounded-lg ${rootComment.parentcommentid?"pl-6 pr-0":""}`}>
-                  {console.log(rootComment)}
+               bg-darkPurple 
+                border-2 border-violet-300}`}>
+                
 
 
-        <div className="flex flex-row bg-violet-50 p-2 ml-6">
+        <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
                  <img className="w-12 h-12 border-2 border-gray-300 rounded-full" alt="poster's avatar"
                   src={postersProfileImage}/>
 
@@ -114,35 +95,15 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
                       
 
                         </div>
+
                       
                         </div>
+<div className="grid cols-1 justify-items-center my-2">
 
-
-          {/* if replies exist for this post, loop through them. If their parentcommentid matches this current comment, then add it to the bottom of this comment.
-          Otherwise do not add it to the bottom of this comment. */}
-                {replies&&                
-                replies.map(reply=> {
-                  if (reply.parentcommentid==rootComment._id) {
-
-                    return <div>
-                 <CommentListing
-                        rootComment={reply}
-                        replies={null}
-                        key={reply._id}
-                        sessionFromServer={sessionFromServer}
-                     
-                        /> 
-                    </div>
-                    
-                    }})
-                  
-
-                } 
-
-   
-                  
-       
-
+<GeneralButton
+    text={`Link to Post ${rootComment.postid}`}
+    className={""}/>
+ </div>                                     
 </div>
 
 

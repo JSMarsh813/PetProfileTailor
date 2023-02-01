@@ -28,19 +28,24 @@ export const getServerSideProps = async (context) => {
 
 function HomePage({sessionFromServer}) {
 
-  let userName=""
-  let profileImage=""
-
-  if (sessionFromServer){
-      userName=sessionFromServer.user.name
-   profileImage=sessionFromServer.user.profileimage
- }
+   //for Nav menu profile name and image
+        //let section exists in case the user is not signed in
+        let userName=""
+        let profileImage=""
+      
+        if (sessionFromServer){
+            userName=sessionFromServer.user.name
+         profileImage=sessionFromServer.user.profileimage
+       }
+      //end of section for nav menu
 
 
 
 
   return <div className="w-fit bg-violet-900">
-   <Layout profileImage={profileImage} userName={userName} /> 
+   <Layout 
+   profileImage={profileImage} 
+   userName={userName} /> 
 
    <HeroTop/>
    

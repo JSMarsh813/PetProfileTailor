@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faClock, faDeleteLeft, faTrash, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import AddComment from "../AddingNewData/AddComment"
 import GeneralButton from '../GeneralButton';
 import CommentListing from './CommentListing';
 import axios from 'axios';
 import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAndLikesLogic"
+import EditPost from '../EditingData/EditPost';
 
 function BatsignalPost({
-   className,sessionFromServer,post,commentList}) {
+   className,sessionFromServer,post,commentList,tagListProp}) {
 
         console.log(`this is post ${JSON.stringify(post)}`)
    const image=post.image
@@ -31,6 +32,7 @@ function BatsignalPost({
     const [commentsShowing,SetCommentsShowing]=useState(false)
   const rootComments = commentList.filter      
             (comment=>comment.postid===post._id&&comment.parentcommentid=== null)
+  const [showEditPage,SetShowEditPage]=useState(false)
 
   const replyComments = commentList.filter(comment=>comment.parentcommentid!=null)
   console.log(`this is root ${JSON.stringify(replyComments)}`)
@@ -99,17 +101,69 @@ function BatsignalPost({
     <div className="mx-auto px-6 py-8
              ">
                 {/* above is the background of posts
-                below is the start of the posts actually squares */}
+                below is the start of the post squares */}
+{showEditPage&&
+<EditPost
+    SetShowEditPage={SetShowEditPage}
+    sessionFromServer={sessionFromServer}
+    tagListProp={tagListProp}
+    post={post}
+  
+
+/>}
+{console.log(tagListProp)}
+
         <div className={`bg-violet-900 text-white rounded-lg tracking-wide max-w-3xl text-center mx-auto shadow-lg shadow-slate-900/70 border-2 border-violet-400 ${className} pb-4`}>
-          
+       
 
 
             <div className="px-4 py-2 mt-2 flex-1  ">
+            {((sessionFromServer)&&(post.createdby._id==sessionFromServer.user._id))&&
+             <div
+                >
+                         
+                         
+ <div className="grid grid-cols-2">                     
 
-            <h2 className="font-semibold text-2xl  tracking-normal text-center">
-                    {title}
-                </h2>
-
+<label
+     className="justify-self-start"   >
+        
+    <input
+          style={{display:"none"}}
+            type="checkbox"           
+            onClick={()=>SetShowEditPage(true)}    
+    />
+    {console.log(`set show edit page ${!showEditPage}`)}
+       
+       <FontAwesomeIcon 
+                                    icon={faPenToSquare}
+                                    className="text-2xl  text-emerald-500"/>   
+</label>
+  
+               <label
+     className="justify-self-end"   >
+        
+    <input
+          style={{display:"none"}}
+            type="checkbox"           
+            onClick={()=>SetShowEditPage(true)}    
+    />
+    {console.log(`set show edit page ${!showEditPage}`)}       
+                            <FontAwesomeIcon 
+                            icon={faTrashCan}
+                             className="text-2xl justify-self-end text-rose-500"
+                             />
+                 </label>
+                 </div>      
+              </div>
+            }
+            
+                  
+              <h2 
+                                className="font-semibold text-2xl  tracking-normal text-center">
+                            {title}
+                          </h2>
+                
                 {image.length!=0 &&
                 <div className="md:flex-shrink-0 pt-4">
                            <img src={image} alt="" className="max-w-full mx-auto h-96 rounded-lg rounded-b-none"/>
@@ -117,6 +171,7 @@ function BatsignalPost({
 
                     <p className="text-sm py-2 px-2 mr-1">
                         {paragraphText}
+                       
                     </p>
                   
                 <div className="author flex items-center -ml-3 my-3">

@@ -13,6 +13,7 @@
             try {
                
                 const post = await Posts.findById(postId).populate({path:"createdby", select:["name","profilename","profileimage"]}) 
+                
                 res.status(200).json(post);
                 
               } catch (err) {

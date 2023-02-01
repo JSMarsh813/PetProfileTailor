@@ -28,14 +28,16 @@ export const getServerSideProps = async (context) => {
 
 export default function ProfileScreen({sessionFromServer}) {
 
-   //username and profile image for nav bar from session
-  let userName=""
-  let profileImage=""
-
-  if (sessionFromServer){
-      userName=sessionFromServer.user.name
-   profileImage=sessionFromServer.user.profileimage
- }
+   //for Nav menu profile name and image
+        //let section exists in case the user is not signed in
+        let userName=""
+        let profileImage=""
+      
+        if (sessionFromServer){
+            userName=sessionFromServer.user.name
+         profileImage=sessionFromServer.user.profileimage
+       }
+      //end of section for nav menu
  
   const { data: session } = useSession();
 

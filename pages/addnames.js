@@ -41,7 +41,8 @@ function AddNewNameWithTags({tagList,categoryList,sessionFromServer}) {
   
   const { data: session, status } = useSession()
 
-//needed to avoid error if sessionFromServer is null aka not signed in
+//need to do let to avoid error if sessionFromServer is null aka not signed in
+
   let userName=""
   let profileImage=""
   let userId=""

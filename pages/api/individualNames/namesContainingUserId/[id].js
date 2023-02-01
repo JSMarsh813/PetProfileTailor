@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
     if(method === "GET") {
         try {
-            const individualNames = await IndividualNames.find({createdby:userId});          
+            const individualNames = await IndividualNames.find({createdby:userId}).populate({path:"createdby", select:["name","profilename","profileimage"]})      
             res.status(200).json(individualNames);
             
           } catch (err) {

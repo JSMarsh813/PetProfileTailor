@@ -3,16 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCommentDots, faFaceGrinWink, faUserTie, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function LikesButtonAndLikesLogic({data,currentTargetedId,session,apiLink,HeartIconStyling,HeartIconTextStyling}) {
+export default function LikesButtonAndLikesLogic({data,session,apiLink,HeartIconStyling,HeartIconTextStyling}) {
  //############################ LIKES FEATURE #################   
     let [likesCount,setLikesCount]=useState(data.likedby.length)
  const[dataLiked,setdataLiked] = useState(false)  
        let likesColor= dataLiked? "red":"grey"
-       const userId=session.user._id
-       
+       let currentTargetedId=data._id
+       let userId=""
   useEffect(()=>{
-      
+    
+
+    if(session){
+      userId=session.user._id}
+
     //the specific data is being passed as a prop into this component
 
     // it will take a second for userID to show since we have to grab it from the browser/client side aka localstorage, so lets run use effect so we'll wait for userID to arrive. 
@@ -41,7 +47,7 @@ const handlelikes =  (e) => {
      
     //if user is not logged in, tell them to log in to like datas
   { (!session)&&                  
-              toast.error("Please sign in to like")}
+              toast.error("Please sign in to like",{ position: toast.POSITION.BOTTOM_CENTER})}
 
           //axios put request
     const putLikes = async () => {
@@ -53,7 +59,7 @@ const handlelikes =  (e) => {
 
                       );
  
-                      console.log(response.data);
+                      // console.log(response.data);
 
                       dataLiked==true?setLikesCount(likesCount-=1):setLikesCount(likesCount+=1)
                       setdataLiked(!dataLiked)
@@ -66,7 +72,7 @@ const handlelikes =  (e) => {
       putLikes();
 
 
-    (console.log(`in handlelikes ${dataLiked}`)) 
+    // (console.log(`in handlelikes ${dataLiked}`)) 
            //false == result when the heart was grey to start and you clicked it
                //so adding userID to data's likedby
      
@@ -91,8 +97,7 @@ const handlelikes =  (e) => {
       
     
     />
-    {console.log(HeartIconStyling)}
-    
+       
      <FontAwesomeIcon icon={faHeart} 
         className={`${HeartIconStyling}`} 
          color={likesColor}/> 

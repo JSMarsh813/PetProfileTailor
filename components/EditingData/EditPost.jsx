@@ -1,7 +1,4 @@
 import React,{useEffect, useState} from 'react'
-import GeneralButton from '../GeneralButton';
-import DisabledButton from '../DisabledButton';
-
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCommentDots, faImage,faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faTrashCan, faX, faCircleXmark, faTowerBroadcast } from '@fortawesome/free-solid-svg-icons'
@@ -10,17 +7,20 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 
-function AddPost({tagListProp,userId, sessionFromServer}) {
-            //data for posts in mongoDB
-  const [image,setImage]=useState([])
-  const [title,setTitle]=useState("");
-  const [description,setDescription]=useState("");
-  const [tagList,setTags]=useState([]);
-  const [createdby,setCreatedBy]=useState()
+export default function EditPost({SetShowEditPage,sessionFromServer,tagListProp,post}) {
+               //data for posts in mongoDB
+  const [image,setImage]=useState()
+  const [title,setTitle]=useState(post.title);
+  const [description,setDescription]=useState(post.description);
+  const [tagList,setTags]=useState(post.taglist);
+    // tagList:["bugs","general chat"]
+  const [createdby,setCreatedBy]=useState({})
+
+ 
  
            //image we attached, waiting to upload to cloudinary
   const[imageToCloudinary,setImageToCloudinary]=useState("")
-  const[imagePreview,setImagePreview]=useState()
+   const[imagePreview,setImagePreview]=useState(post.image!=[]?post.image:[])
 
   useEffect(()=>{
     setCreatedBy(sessionFromServer?
@@ -121,27 +121,52 @@ const postSubmission = async (image) => {
   return (
     <div>
 
-  <div 
+
+<div className="relative z-10" 
+aria-labelledby="modal-title" 
+role="dialog" 
+aria-modal="true">
+
+  <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+  <div className="fixed inset-0 z-10 overflow-y-auto">
+    
+           {/* centers content */}
+    <div className="            
+            p-4 text-center sm:items-center sm:p-0 
+            max-w-3xl
+            mx-auto my-2">    
+      <div>
+
+        <div className="">                       
+
+            <div 
         className="mx-auto flex flex-col font-semibold text-darkPurple bg-violet-900
                  border-2 border-violet-400 border-dotted 
                  p-4 shadow-lg max-w-3xl">
 
                     {/* ##### TITLE AREA ######*/}
+                    <h4
+        className="text-white"> Title </h4>
     <input 
                 className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"                  
-                placeholder="Type a title here (optional)" 
                 onChange={(e)=>setTitle(e.target.value)}
-                type="text"/>
+                value={title}
+                 type="title"/>
 
-                {/* ##### DESCRIPTION AREA ######*/}
+   {/* ##### DESCRIPTION AREA ######*/}
 
-    <textarea 
-            className={`border ${description? 'border-violet-200': 'border-rose-500 border-2'} bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
+   {/* ${description? 'border-violet-200': 'border-rose-500 border-2'} */}
+   <h4
+        className="text-white"> Description </h4>
 
+   <textarea 
+            className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
             onChange={(e)=>setDescription(e.target.value)}  
             required
-            placeholder="Describe everything about this post here (required)">
+            value={description}>
     </textarea>       
+
 
     <div>
   
@@ -149,7 +174,7 @@ const postSubmission = async (image) => {
       <label htmlFor="attachImage" >
             <FontAwesomeIcon icon={faImage} 
                 className="text-3xl text-yellow-300 mr-2 mt-2 align-middle inline-block
-                                   hover-text-white"/>
+                                   hover:text-white"/>
              <span
                     className="text-white"> Attach an Image (optional)
              </span>
@@ -164,46 +189,37 @@ const postSubmission = async (image) => {
 
       </div>
 
-                 {/* ##### ATTACHING TAGS  ######*/}
-      <label 
-                    className="font-bold block mt-4 text-white"
-                    htmlFor="nameTags">Tags</label>
 
-        <Select 
-                  className={`text-darkPurple mb-4 border ${description? 'border-violet-200': 'border-rose-500 border-2'}`}
+                 {/* ##### ATTACHING TAGS  ######*/}
+                 <label 
+                    className="font-bold block mt-4 text-white"
+                    htmlFor="nameTags">Tags:</label>
+<div className="text-white">
+
+</div>
+        <Select                 
+                 value={tagList.map(tag=>
+                            ({label:tag,value:tag}))}
+    
+                  className={`text-darkPurple mb-4 border ${tagList? 'border-violet-200': 'border-rose-500 border-2'}`}
                   id="nameTags"
                   options={tagListProp.map((opt,index) => ({
                     label: opt,
                     value: opt}))
                    }
-                 
+                
                   isMulti
-                  isSearchable
-                  placeholder="If you type in the tags field, it will filter the tags (required)"
+                  isSearchable                            
                   onChange={(opt) => setTags(opt.map(tag=>tag.label))}
                    
                 />
-      {/* <ToastContainer 
-          position="top-center"
-           limit={1} /> */}      
-        
-    <div className="buttons flex">
 
-    <button 
-            className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-white ml-auto">
-              Cancel</button>
-      <button 
-           className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
-           onClick={handlePostCreate}>
-               Post</button>
-    </div>
-
-    <p
+<p
         className="text-white text-center py-4"> 
         Preview uploaded image(s) below before posting </p>
 
                  {/* ##### IMAGE PREVIEW AREA  ######*/}
-   {imagePreview &&
+  {imagePreview!="" &&
     <div
             className="flex justify-center">
               <div className="relative w-content"> 
@@ -218,14 +234,35 @@ const postSubmission = async (image) => {
                     setImageToCloudinary("")}}
             className="text-3xl text-yellow-300 mr-2 absolute top-1 right-1 justify-center drop-shadow-md"/>
                  </div>
-        </div>}
-          
+        </div>
+        }
+
+            </div>
+            
+          </div>
+        </div>
+                    {/* ###########                       buttons                     ############## */}
+        <div className="bg-darkPurple px-4 py-3
+                 sm:px-6 grid grid-cols-2">
+
+          <button type="button" 
+                 className="justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-base 
+                 
+                 font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                 onClick={()=>SetShowEditPage(false)}>
+                    Save</button>
+
+          <button type="button" className="mt-3 inline-flex justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
+          sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            onClick={()=>SetShowEditPage(false)}>
+                Cancel</button>
+        </div>
 
 
+      
+    </div>
   </div>
-
-  </div>
+</div>
+    </div>
   )
 }
-
-export default AddPost

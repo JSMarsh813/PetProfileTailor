@@ -5,7 +5,7 @@ import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 import { useRouter } from 'next/router';
-import BatsignalPost from "../components/ShowingListOfContent/batsignalPost"
+import BatsignalPost from "../components/ShowingListOfContent/BatsignalPost"
 import FilteringSidebar from '../components/Filtering/FilteringSidebar';
 import { Pagination } from '@nextui-org/react'
 import GeneralButton from '../components/GeneralButton'
@@ -141,14 +141,16 @@ export default function BatSignal({sessionFromServer, pageProps,postList,comment
 //    }, [router, sessionFromServer]);
   
 
+   //for Nav menu profile name and image
+        //let section exists in case the user is not signed in
    let userName=""
    let profileImage=""
-
+ 
    if (sessionFromServer){
        userName=sessionFromServer.user.name
     profileImage=sessionFromServer.user.profileimage
   }
-
+ //end of section for nav menu
 
     const[IsOpen,SetIsOpen] = useState(true)
     //if true, the className for the filter div will be "" (visible)
@@ -298,6 +300,7 @@ export default function BatSignal({sessionFromServer, pageProps,postList,comment
                                 className="mx-auto"
                                 sessionFromServer={sessionFromServer}
                                 commentList={commentList}
+                                tagListProp={tagListProp}
                                 />
                  } ) }  
         

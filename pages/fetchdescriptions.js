@@ -55,9 +55,23 @@ export const getServerSideProps = async (context) => {
 
 
 function FetchDescriptions() {
+
+     //for Nav menu profile name and image
+        //let section exists in case the user is not signed in
+        let userName=""
+        let profileImage=""
+      
+        if (sessionFromServer){
+            userName=sessionFromServer.user.name
+         profileImage=sessionFromServer.user.profileimage
+       }
+      //end of section for nav menu
+
   return (
     <div>
-        <Layout></Layout>
+         <Layout 
+            profileImage={profileImage} 
+            userName={userName}  />
         
   <div
     className="h-32 mb-4 bg-[url('https://images.pexels.com/photos/1599452/pexels-photo-1599452.jpeg?auto=compress&cs=tinysrgb&w=400')] bg-repeat-x bg-contain"

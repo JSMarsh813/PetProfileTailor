@@ -77,8 +77,8 @@ const addCommentToPost = async (commentid,postid) => {
      return (
   <div className="border-b-2 border-violet-100 justify-center shadow-lg mb-4 w-full">
 
-<ToastContainer
-    position="top-center"/>
+{/* <ToastContainer
+    position="top-center"/> */}
 
    
    <form className="w-full bg-violet-900 rounded-lg px-4 pt-2 mb-4 pb-2">
