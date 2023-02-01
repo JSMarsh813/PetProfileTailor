@@ -24,6 +24,7 @@ export const getServerSideProps = async (context) => {
    let commentResponse= await fetch('http://localhost:3000/api/individualbatsignalcomments');
    let commentData = await commentResponse.json()
 
+   console.log(postData)
   return {
     props: {    
       sessionFromServer: session,

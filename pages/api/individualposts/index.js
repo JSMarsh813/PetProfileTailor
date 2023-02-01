@@ -1,16 +1,19 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "../../../config/connectmongodb"
+import db from '../../../utils/db';
 
+
+import Post from "../../../models/posts"
 import IndividualPosts from "../../../models/posts"
 //wasn't working when everything was lowercase, had to be IndividualPosts not individualNames for it to work
 
 export default async function handler(req, res) {
-    const {method} = req;
+    const {method} = req;    
+
   
 
-    dbConnect() //from config/mongo.js
-
     if(method === "GET") {
+      dbConnect() //from config/mongo.js
         try {
             const individualPosts = await IndividualPosts.find()
             .populate({path:"createdby", select:["name","profilename","profileimage"]})
@@ -36,18 +39,43 @@ export default async function handler(req, res) {
           // }
 
     }
+    //  ################### PUT REQUEST ###################
 
+if (req.method !== 'PUT') {
+      return res.status(400).send({ message: `${req.method} not supported` });
+    }
+  
+ 
 
-    if(method ==="PUT"){    
-      try {
-             const test= await IndividualPosts.find({postid})
-             res.status(201).json(test)
-      } 
-      catch(err){
-          res.status(500).json(err)
-          console.log(err)
-      }
-  }
+    
+    //createdby doesn't seem necessary
+    const {image,
+       title, 
+       description,
+       createdby,
+       taglist,
+       postid } = req.body.postSubmission;
+
+       console.log(req.body.postSubmission)
+
+  await db.connect();
+
+    const toUpdatePost = await Post.findById(postid);
+    console.log(toUpdatePost)
+    if (image){
+    toUpdatePost.image =image}
+    if (title){
+    toUpdatePost.title =title}
+    if (title){
+      toUpdatePost.title =title}
+    toUpdatePost.description =description;  
+    toUpdatePost.taglist =taglist;
+
+    await toUpdatePost.save();
+    await db.disconnect();
+    res.send({
+      message: 'User updated',
+    });
 
 
 

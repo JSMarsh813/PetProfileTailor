@@ -70,7 +70,7 @@ const handleImageUpload = async () => {
 // After the handleImageUpload finishes, run the handlePostCreate function
 
 
-const handlePostCreate = async ()=>{
+const handlePostEdit = async ()=>{
   if(!description) {toast.error(`Ruh Roh! A description is required`)   
   return} 
 
@@ -83,6 +83,8 @@ return}
 
 }
 
+
+
 const postSubmission = async (image) => {
             //need to pass image directly into this function, otherwise it'll try to grab from state to early and thus you'll get "" for the image
             console.log((`hi from image ${image}`))
@@ -93,17 +95,26 @@ const postSubmission = async (image) => {
               description: description,
               createdby: createdby.toString(),
               taglist: tagList, 
-   
+              postid: post._id,
  }
  console.log(postSubmission)
  
+
+
       // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
-        axios.post("http://localhost:3000/api/apinewpost", postSubmission).then(response => {
+
+     
+       await axios.put("/api/individualposts/",
+          {
+        postSubmission
+          })
+       .then(response => {
           console.log(response)        
-          toast.success(`Successfully added new post. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`)
+          toast.success(`You successfully edited your post ${sessionFromServer.user.name}!`)
+          SetShowEditPage(false)
           // setImage([])
         }).catch(error => {
-          console.log("this is error", error);
+          console.log("there was an error when sending your post edits", error);
          
           toast.error(`Ruh Roh! Post not added`)
           
@@ -249,7 +260,7 @@ aria-modal="true">
                  className="justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-base 
                  
                  font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                 onClick={()=>SetShowEditPage(false)}>
+                 onClick={()=>handlePostEdit()}>
                     Save</button>
 
           <button type="button" className="mt-3 inline-flex justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
