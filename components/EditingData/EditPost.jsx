@@ -7,8 +7,9 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
+import XSvgIcon from '../ReusableSmallComponents/XSvgIcon';
 
-export default function EditPost({SetShowEditPage,sessionFromServer,tagListProp,post,changeEditState}) {
+export default function EditPost({SetShowEditPage,sessionFromServer,tagListProp,post,changePostState,setToastMessage}) {
                //data for posts in mongoDB
   const [image,setImage]=useState()
   const [title,setTitle]=useState(post.title);
@@ -62,7 +63,7 @@ const handleImageUpload = async () => {
     setImage(imageFromCloudinary)
     setImageToCloudinary("")     
     return imageFromCloudinary     
-    console.log(imageFromCloudinary)              
+                
   }
    
 }
@@ -103,24 +104,25 @@ const postSubmission = async (image) => {
 
 
       // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
-
+   // toast.success(`You successfully edited your post ${sessionFromServer.user.name}!`)
      
        await axios.put("/api/individualposts/",
           {
         postSubmission
           })
        .then(response => {
-          console.log(response)        
-          changeEditState(true)
-          toast.success(`You successfully edited your post ${sessionFromServer.user.name}!`)
+          console.log(response)      
+          //reloads page  
+          changePostState(true)     
           SetShowEditPage(false)
+       
          
          
           // setImage([])
         }).catch(error => {
           console.log("there was an error when sending your post edits", error);
          
-          toast.error(`Ruh Roh! Post not added`)
+          toast.error(`Ruh Roh! Post not edited`)
           
         });
 }
@@ -153,16 +155,30 @@ aria-modal="true">
             mx-auto my-2">    
       <div>
 
-        <div className="">                       
+        <div className="relative">     
+        
+                   {/* X Button and SVG Icon */}
+
+ 
+      <XSvgIcon
+         screenReaderText="Close Edit Screen"
+         onClickAction={()=>SetShowEditPage(false)}
+
+        //  onClick={()=>SetShowEditPage(false)}
+   />
+
+                          
 
             <div 
         className="mx-auto flex flex-col font-semibold text-darkPurple bg-violet-900
                  border-2 border-violet-400 border-dotted 
                  p-4 shadow-lg max-w-3xl">
 
+                  
+
                     {/* ##### TITLE AREA ######*/}
                     <h4
-        className="text-white"> Title </h4>
+        className="text-white mt-4"> Title </h4>
     <input 
                 className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"                  
                 onChange={(e)=>setTitle(e.target.value)}
@@ -240,7 +256,7 @@ aria-modal="true">
               <div className="relative w-content"> 
 
         <img
-        className="max-h-96 object-scale-down mx-auto block"      
+        className="max-h-56 object-scale-down mx-auto block"      
         src={imagePreview}/>
             <FontAwesomeIcon 
             icon={faCircleXmark} 

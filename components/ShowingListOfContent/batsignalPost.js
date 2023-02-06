@@ -10,9 +10,11 @@ import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAnd
 import EditPost from '../EditingData/EditPost';
 import EditButton from '../ReusableSmallComponents/EditButton';
 import DeleteButton from '../ReusableSmallComponents/DeleteButton';
+import DeletePostNotification from '../DeletingData/DeletePostNotification';
 import SeeCommentsButton from '../ReusableSmallComponents/SeeCommentsButton';
 import ShareButton from '../ReusableSmallComponents/ShareButton';
 import PostersImageUsernameProfileName from '../ReusableSmallComponents/PostersImageUsernameProfileName';
+
 import { useRouter } from 'next/router';
 
 function BatsignalPost({
@@ -57,7 +59,8 @@ function BatsignalPost({
   const [currentTargetedId,setCurrentTargetedId]=useState(postId)
                  //if the post is edited, we will refresh this component
 const router=useRouter()
-  const [postEdited,setPostEdited]=useState(false)
+  const [postChanged,setPostChanged]=useState(false)
+  const [toastMessage,setToastMessage]=useState("")
  
     // console.log({rootComments})
  
@@ -92,13 +95,14 @@ const router=useRouter()
            }
            
          //if postEdited in the state is true, then we'll force a reload of the page
-       if (postEdited) {
+       if (postChanged) {
                  
            const forceReload = () => 
            {router.reload()}  
          
              forceReload()
-             setPostEdited(false)
+             setPostChanged(false)
+            
           
          }
 
@@ -115,7 +119,21 @@ const router=useRouter()
         sessionFromServer={sessionFromServer}
         tagListProp={tagListProp}
         post={post}
-        changeEditState={setPostEdited}
+        changePostState={setPostChanged}
+        setToastMessage={setToastMessage}
+         />
+    }
+
+
+{showDeleteConfirmation&&
+
+ 
+        <DeletePostNotification
+            setShowDeleteConfirmation={setShowDeleteConfirmation}
+            sessionFromServer={sessionFromServer}
+            changePostState={setPostChanged}
+            postId={post._id}
+            postCreatedBy={post.createdby._id}
          />
     }
 

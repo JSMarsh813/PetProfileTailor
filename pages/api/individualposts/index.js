@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "../../../config/connectmongodb"
 import db from '../../../utils/db';
-
+const mongoose = require('mongoose');
 
 import Post from "../../../models/posts"
 import IndividualPosts from "../../../models/posts"
@@ -41,9 +41,9 @@ export default async function handler(req, res) {
     }
     //  ################### PUT REQUEST ###################
 
-if (req.method !== 'PUT') {
-      return res.status(400).send({ message: `${req.method} not supported` });
-    }
+if (req.method === 'PUT') {
+      // return res.status(400).send({ message: `${req.method} not supported` });
+   
   
  
 
@@ -77,7 +77,7 @@ if (req.method !== 'PUT') {
       message: 'User updated',
     });
 
-
+  }
 
     if(method ==="POST"){    
         try {
@@ -89,5 +89,21 @@ if (req.method !== 'PUT') {
            
         }
     }
+
+       //  ################### DELETE REQUEST ###################
+
+    if(method ==="DELETE"){    
+      try {
+        console.log(`request body is ${JSON.stringify(req.body.postId)}`)
+
+        let idToObjectId = mongoose.Types.ObjectId(req.body.postId)
+             const test= await IndividualPosts.deleteOne({_id:idToObjectId})
+             res.status(200).json({ success: true, msg: `Post Deleted ${test}` })
+      } 
+      catch(err){
+          res.status(500).json(err)
+         
+      }
+  }
   }
   
