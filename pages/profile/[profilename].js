@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCommentDots, faFaceGrinWink, faUserTie, faCircleChevronDown, faLocationDot, faRankingStar, faUserPlus, faEnvelopeOpenText, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import CommentListing from '../../components/ShowingListOfContent/CommentListing'
+import HeadersForNames from '../../components/ShowingListOfContent/HeadersForNames'
 
 
 export const getServerSideProps = async (context) => {
@@ -240,30 +241,21 @@ function ProfilePage({sessionFromServer, commentList, postData,nameList,userData
 
                <section className="border-2 border-amber-300 w-full"> 
                     
-                    <section 
-                          className="grid md:grid-cols-5
-                          grid-cols-3 gap-4 
-                          bg-purple-100
-                          text-darkPurple p-2"> 
-                        <span> Like </span>
-                        <span> Name </span>
-                        <span> Description</span>
-                        <span> Tags </span>
-                        <span> Created By </span>
-                     </section>
+                    <HeadersForNames/>
 
-                     <section
-                        className="max-h-96 overflow-scroll">
-                     {nameList.map((name)=>{
-                    return <NameListingAsSections
-                    name={name}
-                    key={name._id}
-                    sessionFromServer={sessionFromServer}/>
-                   
-                  }
-                
-                    )}
-                    </section>
+                       <section
+                          className="max-h-96 overflow-scroll">
+                       {nameList.map((name)=>{
+                            return <NameListingAsSections
+                            name={name}
+                            key={name._id}
+                            sessionFromServer={sessionFromServer}
+                            />
+                          
+                          }
+                        
+                          )}
+                      </section>
 
                     </section>
             }

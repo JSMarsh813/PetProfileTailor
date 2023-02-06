@@ -1,4 +1,4 @@
-import PawPrintIcon from '../PawPrintIcon'
+import PawPrintIcon from '../ReusableSmallComponents/PawPrintIcon'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaw } from '@fortawesome/free-solid-svg-icons'
 import GeneralButton from '../GeneralButton'

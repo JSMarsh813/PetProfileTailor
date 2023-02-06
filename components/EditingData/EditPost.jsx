@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import Select from 'react-select';
+import  {useRouter} from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCommentDots, faImage,faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faTrashCan, faX, faCircleXmark, faTowerBroadcast } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -7,7 +8,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 
-export default function EditPost({SetShowEditPage,sessionFromServer,tagListProp,post}) {
+export default function EditPost({SetShowEditPage,sessionFromServer,tagListProp,post,changeEditState}) {
                //data for posts in mongoDB
   const [image,setImage]=useState()
   const [title,setTitle]=useState(post.title);
@@ -16,7 +17,7 @@ export default function EditPost({SetShowEditPage,sessionFromServer,tagListProp,
     // tagList:["bugs","general chat"]
   const [createdby,setCreatedBy]=useState({})
 
- 
+
  
            //image we attached, waiting to upload to cloudinary
   const[imageToCloudinary,setImageToCloudinary]=useState("")
@@ -110,8 +111,11 @@ const postSubmission = async (image) => {
           })
        .then(response => {
           console.log(response)        
+          changeEditState(true)
           toast.success(`You successfully edited your post ${sessionFromServer.user.name}!`)
           SetShowEditPage(false)
+         
+         
           // setImage([])
         }).catch(error => {
           console.log("there was an error when sending your post edits", error);

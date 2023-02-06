@@ -5,7 +5,9 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import AddComment from '../AddingNewData/AddComment'
 import axios from 'axios'
 import LikesButtonAndLikesLogic from '../ReusableMediumComponents/LikesButtonAndLikesLogic'
-
+import PostersImageUsernameProfileName from "../ReusableSmallComponents/PostersImageUsernameProfileName"
+import EditButton from '../ReusableSmallComponents/EditButton'
+import DeleteButton from '../ReusableSmallComponents/DeleteButton'
 function CommentListing({postid,rootComment,replies,sessionFromServer}) {
   //  { comment,replies}
  
@@ -15,9 +17,10 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
   const [postersName,setPostersName]=useState(rootComment.createdby.name)
   const [postersProfileImage,setPostersProfileImage]=useState(rootComment.createdby.profileimage)
   const [postersProfileName,setProfileName]=useState(rootComment.createdby.profilename)
- { console.log(`this is profilename ${JSON.stringify(rootComment)}`)}
   const [adjustedParentId,setAdjustedParentId]=useState("")
          
+  const showtime=true
+
   useEffect(()=>{
     {rootComment.parentcommentid?
       setAdjustedParentId(rootComment.parentcommentid):
@@ -28,14 +31,6 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
       
   },[])
 
-  console.log(`this is replies ${JSON.stringify(replies)}`)
-         //  #########   FORMATTING DATE  #################
-            const dateFormatter= new Intl.DateTimeFormat(undefined,
-              {dateStyle: "medium",
-              timeStyle: "short",
-                })
-   
-       let formattedPostDate= dateFormatter.format(Date.parse(rootComment.createdAt))
 
     //        //  ###########  GETTING POSTERS DATA ########
     //  const fetchUserData = async () =>{
@@ -57,49 +52,62 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
     // },[])
   return (
 <div
-    className={`flex-col mx-auto py-2 pr-4
+    className={`flex-col mx-auto py-2 pr-4 text-darkPurple
                 rounded-lg ${rootComment.parentcommentid?"pl-6 pr-0":""}`}>
                   {console.log(rootComment)}
 
 
-        <div className="flex flex-row bg-violet-50 p-2 ml-6">
-                 <img className="w-12 h-12 border-2 border-gray-300 rounded-full" alt="poster's avatar"
-                  src={postersProfileImage}/>
+        <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
+                
 
                  <div className="w-full mt-1">
-                       <div className="flex items-center  px-2 font-bold  text-black leading-tight">{postersName}
+                  
                        
-                               <span className="ml-2 text-xs font-normal text-gray-500">
-                               @{postersProfileName}
-                                 </span>
-                                <span className="ml-2 text-xs font-normal text-gray-500">
-                                <FontAwesomeIcon 
-                                icon={faClock}
-                                className="mx-2" >
-                            </FontAwesomeIcon> 
-                                 {formattedPostDate}
-                                 </span>
-                       </div>
+                    <PostersImageUsernameProfileName
+                        postersProfileImage={postersProfileImage}
+                        postersName={postersName}
+                        profileName={postersProfileName}
+                        postDate={rootComment.createdAt}
+                        showtime={showtime}
+                          />
+                                
 
-                        <div className=" px-2 ml-2 text-sm font-medium leading-loose text-gray-600 text-left">{rootComment.description}
+                        <div className=" px-2 ml-2 text-sm font-medium leading-loose text-left">{rootComment.description}
                         </div>
                         
-                        <div className="text-left ml-2 mt-2">
+       <div className="text-left ml-2 mt-2 grid grid-cols-2 gap-x-8">
+
+              <div className="place-self-start">
                         <FontAwesomeIcon 
                                 icon={ faCommentDots}
-                                className="mx-2 text-darkPurple text-xl"
+                                className="ml-2 mr-4 text-darkPurple text-2xl"
                                    onClick={()=>
                                   {setReplying(!replying)}} >
                             </FontAwesomeIcon> 
-<LikesButtonAndLikesLogic
-              data={rootComment}                  
-              HeartIconStyling="text-xl"
-              HeartIconTextStyling="text-darkPurple ml-2"
-               session={sessionFromServer}
-               apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}  
 
+                  <LikesButtonAndLikesLogic
+                           data={rootComment}                  
+                           HeartIconStyling="text-2xl"
+                           HeartIconTextStyling="text-darkPurple ml-2"
+                           session={sessionFromServer}
+                           apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}  
+               
             />
-                        </div>            
+          </div>
+
+                  {((sessionFromServer)&&
+                    (rootComment.createdby._id==sessionFromServer.user._id))&&
+                    <div className="place-self-end mr-2">
+                          <EditButton
+                                className="mr-4"
+                                // onupdateEditState={onupdateEditState}
+                          />
+                  
+                        <DeleteButton/>
+                    </div> }
+                      
+              
+          </div>            
                                               
 
                         {replying&& 

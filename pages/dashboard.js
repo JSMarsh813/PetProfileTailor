@@ -25,6 +25,7 @@ import User from "../models/User"
 import { useRouter } from 'next/router';
 
 import RankNames from '../components/RankNames';
+import WideCenteredHeader from '../components/ReusableSmallComponents/WideCenteredHeading';
 
 
 
@@ -370,12 +371,10 @@ export default function Dashboard({category,nameList,sessionFromServer,favNames,
   
        {/* ############# FAVORITE LISTS SECTION ############ */}
 
-  <section className="favoritesSection px-4">
+  <section className="favoritesSection px-4 pt-4">
 
-       <h3 className="text-center mt-5 text-yellow-400  font-bold mb-2 text-2xl 
-       pb-2
-       border-b-2
-       border-yellow-300"> Your Favorites </h3>
+ <WideCenteredHeader
+      heading="Your Favorites"/>
 
        <div className="favoriteSubsections mt-5 text-yellow-400  font-bold mb-2 text-2xl 
        pb-2

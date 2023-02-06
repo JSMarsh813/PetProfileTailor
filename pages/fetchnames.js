@@ -18,6 +18,7 @@ import { unstable_getServerSession } from "next-auth/next"
 import GeneralButton from "../components/GeneralButton"
 import NameListing from "../components/ShowingListOfContent/Namelisting"
 import FilteringSidebar from '../components/Filtering/FilteringSidebar';
+import PageTitleWithImages from '../components/ReusableSmallComponents/PageTitleWithImages';
       
 export const getServerSideProps = async (context) => {
 
@@ -204,22 +205,11 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
 
   <section className="px-4 bg-violet-900">
 
-  <div
-    className="h-32 mb-4 bg-[url('https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1084&q=80')] bg-repeat-x bg-contain"
-    >
-
-    <h3 className="text-center pt-2 
-    w-96 mx-auto  h-32
-    text-5xl text-yellow-300   bg-darkPurple
-    font-semibold
-    border-y-4 border-amber-300"
-     style={{marginBottom: "-90px", background: "hsla(260, 90%, 60%, 0.6)", backdropFilter: "blur(20px)"}}
-     > Fetch Names  </h3>
-     
-
-  </div>
-{/* {    JSON.stringify(filterednames)} */}
-
+      <PageTitleWithImages
+           imgSrc= "bg-[url('https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1084&q=80')]"
+          title="Fetch"
+          title2="Names"
+       />
   
     <div className="flex w-full">
        

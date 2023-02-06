@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import LikesButtonAndLikesLogic from '../ReusableMediumComponents/LikesButtonAndLikesLogic'
+import DeleteButton from '../ReusableSmallComponents/DeleteButton'
+import EditButton from '../ReusableSmallComponents/EditButton'
 
 export default function NameListingAsSections({name, sessionFromServer}) {  
    
@@ -15,11 +17,12 @@ export default function NameListingAsSections({name, sessionFromServer}) {
     <div 
     
             className="grid 
-            md:grid-cols-5
+            lg:grid-cols-5
             grid-cols-3 gap-4 
             border-b-2 border-amber-300
             bg-darkPurple
                     text-purple-200 p-2  
+                    
                     
                     items-center justify-items-center">
         
@@ -38,7 +41,8 @@ export default function NameListingAsSections({name, sessionFromServer}) {
         <span className=""> {name.name} </span>
 
             {/* ###### DESCRIPTION SECTION #### */}
-        <span>
+        <span
+            className="ml-4">
             {name.description[0]==""?
                      "no description"
                      :name.description}
@@ -54,6 +58,17 @@ export default function NameListingAsSections({name, sessionFromServer}) {
 
            <span>  {name.createdby.name}</span>
            <span>   @{name.createdby.profilename}</span>
+
+           {((sessionFromServer)&&
+                   (name.createdby._id==sessionFromServer.user._id))&&
+           <div className="my-2">
+                  <EditButton
+                         className="ml-2 mr-6"/>
+                  <DeleteButton/>
+           </div>
+            }
+
+           
         </section>
        
         

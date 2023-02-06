@@ -10,6 +10,8 @@ import FilteringSidebar from '../components/Filtering/FilteringSidebar';
 import { Pagination } from '@nextui-org/react'
 import GeneralButton from '../components/GeneralButton'
 import AddPost from '../components/AddingNewData/AddPost'
+import PageTitleWithImages from '../components/ReusableSmallComponents/PageTitleWithImages'
+
 
 // import Pagination from '@etchteam/next-pagination'
 // import paginationStyles from '../styles/paginationstyles.module.css'
@@ -38,7 +40,9 @@ export const getServerSideProps = async (context) => {
 
 
 export default function BatSignal({sessionFromServer, pageProps,postList,commentList}) {
-  
+
+
+
   // console.log(`this is postlist2 ${JSON.stringify(postList)}`)
   // console.log(`this is commentlist ${JSON.stringify(commentList)}`)
 // let postList=[
@@ -236,23 +240,12 @@ export default function BatSignal({sessionFromServer, pageProps,postList,comment
             profileImage={profileImage} 
             userName={userName}  /> 
         
-        <div
-        className="h-32 
-        bg-[url('https://images.wagwalkingweb.com/media/daily_wag/blog_articles/hero/1602871850.792525/best-dog-halloween-costumes-of-2018.jpg')] bg-repeat-x bg-contain 
-        ">
-       
+        <PageTitleWithImages
+            imgSrc= "bg-[url('https://images.wagwalkingweb.com/media/daily_wag/blog_articles/hero/1602871850.792525/best-dog-halloween-costumes-of-2018.jpg')]"
+            title="Batsignal &"
+            title2="Play-yard"            
+            />
 
-{/* https://images.unsplash.com/photo-1560160922-6019c26a2523 */}
-
-        <h1 className="text-center 
-    w-96 mx-auto  h-32
-    text-4xl text-yellow-300   bg-darkPurple font-semibold
-    border-y-4 border-amber-300"
-
-         style={{marginBottom: "-90px", background: "hsla(260, 90%, 60%, 0.6)", backdropFilter: "blur(20px)"}}
-        > 
-        BatSignal and Playyard </h1>
-        </div>
      {/* posts section */}
         <section className="flex w-full h-fit bg-darkPurple  rounded-box">
       
@@ -302,6 +295,7 @@ export default function BatSignal({sessionFromServer, pageProps,postList,comment
                                 sessionFromServer={sessionFromServer}
                                 commentList={commentList}
                                 tagListProp={tagListProp}
+                                
                                 />
                  } ) }  
         

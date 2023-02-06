@@ -2,6 +2,7 @@ import React from 'react'
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu"
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
+import PageTitleWithImages from '../components/ReusableSmallComponents/PageTitleWithImages'
 
 
 export const getServerSideProps = async (context) => {
@@ -54,7 +55,7 @@ export const getServerSideProps = async (context) => {
 }
 
 
-function FetchDescriptions() {
+function FetchDescriptions({sessionFromServer}) {
 
      //for Nav menu profile name and image
         //let section exists in case the user is not signed in
@@ -73,25 +74,12 @@ function FetchDescriptions() {
             profileImage={profileImage} 
             userName={userName}  />
         
-  <div
-    className="h-32 mb-4 bg-[url('https://images.pexels.com/photos/1599452/pexels-photo-1599452.jpeg?auto=compress&cs=tinysrgb&w=400')] bg-repeat-x bg-contain"
-    >
-
-    <div className="text-center
-    w-96 mx-auto  h-32
-    text-4xl text-yellow-300   bg-darkPurple
-    font-semibold
-    border-y-4 border-amber-300"
-     style={{background: "hsla(260, 90%, 60%, 0.6)", backdropFilter: "blur(20px)"}}
-     > 
-      <span>Fetch </span>
-      <span 
-      className="block"> Descriptions </span>
-
-    </div>
-     
-
-  </div>
+        <PageTitleWithImages
+           imgSrc= "bg-[url('https://images.pexels.com/photos/1599452/pexels-photo-1599452.jpeg?auto=compress&cs=tinysrgb&w=400')]"
+          title="Fetch "
+          title2="Descriptions"
+       />
+ 
         To be added Later!
     </div>
   )
