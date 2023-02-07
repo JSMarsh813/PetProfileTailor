@@ -65,6 +65,11 @@ import clientPromise from "../auth/lib/mongodb"
       from: process.env.EMAIL_FROM
     }),
   ],
+
 }
 // )
 export default NextAuth(authOptions);
+
+// pages:{
+//   signIn:"/login"
+// },
