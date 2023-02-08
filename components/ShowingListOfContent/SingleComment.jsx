@@ -7,16 +7,36 @@ import axios from 'axios'
 import LikesButtonAndLikesLogic from '../ReusableMediumComponents/LikesButtonAndLikesLogic'
 import GeneralButton from '../GeneralButton'
 
+import EditButton from '../ReusableSmallComponents/EditButton';
+import EditComment from '../EditingData/EditComment'
+import DeleteButton from '../ReusableSmallComponents/DeleteButton';
+import DeleteCommentNotification from '../DeletingData/DeleteCommentNotification';
+
+import { useRouter } from 'next/router';
+
 function CommentListing({postid,rootComment,sessionFromServer}) {
  
   const [replying, setReplying]=useState(false)
+
   const [commentParentId, setCommentParentId]=useState(null)
+
   const [postersName,setPostersName]=useState(rootComment.createdby.name)
+
   const [postersProfileImage,setPostersProfileImage]=useState(rootComment.createdby.profileimage)
+
   const [postersProfileName,setProfileName]=useState(rootComment.createdby.profilename)
- { console.log(`this is profilename ${JSON.stringify(rootComment)}`)}
+
   const [adjustedParentId,setAdjustedParentId]=useState("")
          
+     //for editing
+     const [showEditPage,SetShowEditPage]=useState(false)
+
+     //for deleting
+const [showDeleteConfirmation,setShowDeleteConfirmation]=useState(false)
+         //setting up that we will reroute/refresh if the comment is changed
+const router=useRouter()
+  const [commentChanged,setCommentChanged]=useState(false)
+
   useEffect(()=>{
     {rootComment.parentcommentid?
       setAdjustedParentId(rootComment.parentcommentid):
@@ -34,6 +54,29 @@ function CommentListing({postid,rootComment,sessionFromServer}) {
                 })
    
        let formattedPostDate= dateFormatter.format(Date.parse(rootComment.createdAt))
+
+
+       function updateEditState(){
+        SetShowEditPage(true)
+      
+       }
+
+
+       function updateDeleteState(){
+        setShowDeleteConfirmation(true)
+           }
+    
+           //if postEdited in the state is true, then we'll force a reload of the page
+           if (commentChanged) {
+                 
+            const forceReload = () => 
+            {router.reload()}  
+          
+              forceReload()
+              setCommentChanged(false)           
+           
+          } 
+
 
   return (
 <div
@@ -62,10 +105,16 @@ function CommentListing({postid,rootComment,sessionFromServer}) {
                                  </span>
                        </div>
 
-                        <div className=" px-2 ml-2 text-sm font-medium leading-loose text-gray-600 text-left">{rootComment.description}
-                        </div>
-                        
-                        <div className="text-left ml-2 mt-2">
+                    
+    
+                  <p className=" px-2 ml-2 text-sm font-medium leading-loose text-gray-600 text-left">{rootComment.description}
+                  </p>
+       
+ 
+       <div className="flex justify-between">     
+
+        {/* div with reply and heart icons */}            
+            <div className="text-left ml-2 mt-2 items-start flex">
                         <FontAwesomeIcon 
                                 icon={ faCommentDots}
                                 className="mx-2 text-darkPurple text-xl"
@@ -80,9 +129,50 @@ function CommentListing({postid,rootComment,sessionFromServer}) {
                apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}  
 
             />
-                        </div>            
-                                              
+          </div>
 
+        {((sessionFromServer)&&
+                  (rootComment.createdby._id==sessionFromServer.user._id))&&
+
+              <div className="items-end flex gap-x-2">            
+                          <EditButton
+                              onupdateEditState={updateEditState} 
+                            
+                                  
+                            />  
+                          <DeleteButton
+                              onupdateDeleteState={updateDeleteState}
+                            />
+            </div>                  
+            }
+   {showEditPage&&
+        <EditComment
+          SetShowEditPage={SetShowEditPage}
+           postid={postid}
+           rootComment= {rootComment}
+           sessionFromServer={sessionFromServer}
+        changeCommentState={setCommentChanged}
+        // setToastMessage={setToastMessage}
+         />
+    }
+
+            
+{showDeleteConfirmation&&
+
+ 
+<DeleteCommentNotification
+    setShowDeleteConfirmation={setShowDeleteConfirmation}
+    sessionFromServer={sessionFromServer}
+    changeCommentState={setCommentChanged}
+    commentId={rootComment._id}
+    commentCreatedBy={rootComment.createdby._id}
+ />
+}
+
+
+
+            </div>            
+                   
                         {replying&& 
                         
                        <AddComment

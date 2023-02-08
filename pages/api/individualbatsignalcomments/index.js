@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import db from '../../../utils/db'
-
+const mongoose = require('mongoose');
 import BatSignalComment from "../../../models/BatSignalComment"
 //wasn't working when everything was lowercase, had to be IndividualPosts not individualNames for it to work
 
@@ -34,10 +34,28 @@ export default async function handler(req, res) {
     }
 
 
-    if(method ==="PUT"){    
+    if(method ==="PUT"){   
+      
+     const {
+      description,
+      commentId} =req.body.commentSubmission
+
+ console.log(req.body.commentSubmission)
+
       try {
-             const batSignalComment= await BatSignalComment.find()
-             res.status(201).json(batSignalComment)
+             const toUpdateBatSignalComment= await BatSignalComment.findById(commentId)
+            
+
+             toUpdateBatSignalComment.description=description
+
+             
+         await toUpdateBatSignalComment.save();
+         await db.disconnect();
+        //  res.status(201).json(toUpdateBatSignalComment)
+         res.send({
+              message: 'Comment updated',
+          });
+
       } 
       catch(err){
           res.status(500).json(err)
@@ -90,4 +108,20 @@ export default async function handler(req, res) {
       
     
   }
+
+  if(method ==="DELETE"){    
+    try {
+      console.log(`request body is ${JSON.stringify(req.body.commentId)}`)
+
+      let idToObjectId = mongoose.Types.ObjectId(req.body.commentId)
+           const test= await BatSignalComment.deleteOne({_id:idToObjectId})
+           res.status(200).json({ success: true, msg: `Comment Deleted ${test}` })
+    } 
+    catch(err){
+        res.status(500).json(err)
+       
+    }
+}
+
+
 }

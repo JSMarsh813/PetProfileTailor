@@ -46,7 +46,8 @@ function AddComment({postid,parentcommentid,sessionFromServer}) {
   console.log(`this is id ${commentid}`)
   //comment id and post id is working
   // setImage([])
-  addCommentToPost(commentid,postid)
+  // addCommentToPost(commentid,postid)
+   toast.success(`Successfully added new comment!`)
 
 }).catch(error => {
   console.log("this is error", error);
@@ -57,19 +58,19 @@ function AddComment({postid,parentcommentid,sessionFromServer}) {
 
   }
 
-const addCommentToPost = async (commentid,postid) => {
-  try {
-    const response = await axios.put(
-        `http://localhost:3000/api/individualposts/updatepostscomments`, {commentid,postid}).then(response=>
-        {
-          console.log(response)
-          toast.success(`Successfully added new post. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`)
-        })         
-    }
-    catch (err) {
-      console.log('something went wrong :(', err);
-       }
-   }
+// const addCommentToPost = async (commentid,postid) => {
+//   try {
+//     const response = await axios.put(
+//         `http://localhost:3000/api/individualposts/updatepostscomments`, {commentid,postid}).then(response=>
+//         {
+//           console.log(response)
+//           toast.success(`Successfully added new post. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`)
+//         })         
+//     }
+//     catch (err) {
+//       console.log('something went wrong :(', err);
+//        }
+//    }
 
   
 

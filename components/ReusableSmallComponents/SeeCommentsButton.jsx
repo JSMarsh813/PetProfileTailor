@@ -27,7 +27,7 @@ export default function SeeCommentsButton({comments,onupdateCommentShowState}) {
             className="text-3xl mr-2"/>
      <span
              className="text-xl">
-            {comments.length} 
+            {comments} 
     </span> 
 
 </label>

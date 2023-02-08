@@ -12,7 +12,7 @@ import axios from 'axios';
 
 function AddPost({tagListProp,userId, sessionFromServer}) {
             //data for posts in mongoDB
-  const [image,setImage]=useState([])
+  // const [image,setImage]=useState([])
   const [title,setTitle]=useState("");
   const [description,setDescription]=useState("");
   const [tagList,setTags]=useState([]);
@@ -20,6 +20,7 @@ function AddPost({tagListProp,userId, sessionFromServer}) {
  
            //image we attached, waiting to upload to cloudinary
   const[imageToCloudinary,setImageToCloudinary]=useState("")
+           //turning file into a url so it can be previewed by the user BEFORE being submitted to cloudinary
   const[imagePreview,setImagePreview]=useState()
 
   useEffect(()=>{
@@ -32,9 +33,11 @@ function AddPost({tagListProp,userId, sessionFromServer}) {
 
              // ######Attaching Image ############
   const handleImageAttachment = (e) => {
-    e.preventDefault();             
-   setImageToCloudinary(e.target.files[0])
-   setImagePreview(URL.createObjectURL(e.target.files[0]))
+       e.preventDefault();             
+       //need to target [0] or it leads to an error, even though theres only one file in the array
+       setImageToCloudinary(e.target.files[0])
+       //turning file into a url so it can be previewed by the user BEFORE being submitted to cloudinary
+       setImagePreview(URL.createObjectURL(e.target.files[0]))
   
   }
 
@@ -45,9 +48,9 @@ const handleImageUpload = async () => {
 
   if (imageToCloudinary!="") {
 
-   const formData = new FormData();
-   formData.append('file', imageToCloudinary);
-   formData.append('upload_preset', "db0l5fmb");
+       const formData = new FormData();
+           formData.append('file', imageToCloudinary);
+           formData.append('upload_preset', "db0l5fmb");
   //  console.log(formData)
 
   const response = await fetch("https://api.cloudinary.com/v1_1/dujellms1/image/upload", {
@@ -57,38 +60,42 @@ const handleImageUpload = async () => {
     const data = await response.json();
 
     let imageFromCloudinary = data.secure_url         
-       
-    setImage(imageFromCloudinary)
-    setImageToCloudinary("")     
-    return imageFromCloudinary     
-    console.log(imageFromCloudinary)              
+              
+    // setImage(imageFromCloudinary)         
+        setImageToCloudinary("")     
+     return imageFromCloudinary     
+                 
   }
    
 }
 
 
-// After the handleImageUpload finishes, run the handlePostCreate function
-
-
 const handlePostCreate = async ()=>{
+  
   if(!description) {toast.error(`Ruh Roh! A description is required`)   
-  return} 
+       return} 
 
-  if(tagList.length==0) {toast.error(`Ruh Roh! At least one tag is required`)
-return}
+  if(tagList.length==0) 
+      {toast.error(`Ruh Roh! At least one tag is required`)
+      return}
  
- await handleImageUpload().then((image)=>postSubmission(image))     
-//  necessary to pass image directly to next function as an object, postSubmission({image})
-//  otherwise postSubmission grabs the state's image variable's value before it was updated, aka when it was ""
+      //run handleImageUpload(), 
+      //then push that returned value (imageFromCloudinary) to the next function we want to run, postSubmission
+ await handleImageUpload()
+                .then((imageFromCloudinary )=>postSubmission(imageFromCloudinary))     
 
+//fyi using a state value here won't work
+   //when I put the image into a state value on line 62 setImage(imageFromCloudinary).... (line 15: const [image,setImage]=useState([]))
+   // I tried plopping the image value from state into the .then((image)=>postSubmission(image))
+   // but it doesn't see the state value, it only sees whatever value gets returned to the handleImageUpload function
 }
 
-const postSubmission = async (image) => {
+const postSubmission = async (imageFromCloudinary) => {
             //need to pass image directly into this function, otherwise it'll try to grab from state to early and thus you'll get "" for the image
-            console.log((`hi from image ${image}`))
+            console.log((`hi from image ${imageFromCloudinary}`))
 
             const postSubmission= {
-              image:image,
+              image:imageFromCloudinary,
               title: title, 
               description: description,
               createdby: createdby.toString(),
@@ -97,26 +104,16 @@ const postSubmission = async (image) => {
  }
  console.log(postSubmission)
  
-      // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
-        axios.post("http://localhost:3000/api/apinewpost", postSubmission).then(response => {
-          console.log(response)        
-          toast.success(`Successfully added new post. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`)
-          // setImage([])
-        }).catch(error => {
-          console.log("this is error", error);
-         
-          toast.error(`Ruh Roh! Post not added`)
+            axios.post("http://localhost:3000/api/apinewpost", postSubmission)
+              .then(response => {
+                 console.log(response)        
+                 toast.success(`Successfully added new post. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`)
+            }).catch(error => {
+                  console.log("this is error", error);
+                  toast.error(`Ruh Roh! Post not added`)
           
         });
 }
-
-
-        // ####################### UPLOAD NEW POST TO MONGODB ####################
-        // let createNewPost = function(){
-        
-        //      console.log("hi")
-        
-        // }
 
   return (
     <div>

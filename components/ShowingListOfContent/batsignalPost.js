@@ -33,8 +33,7 @@ function BatsignalPost({
    const profileName= post.createdby.profilename
    const postersProfileImage=post.createdby.profileimage
    const postDate= post.createdAt
-   const comments = post.comments 
-     //comments to change
+   
    const shares =post.shares
    const likes = post.likes
    const tagList= post.taglist.map(tag=>"#"+tag).join(", ")
@@ -196,7 +195,7 @@ const router=useRouter()
                     className="flex border-y-2 border-slate-200 py-2 bg-violet-900 text-white">
 
       <SeeCommentsButton
-           comments={comments}
+           comments={rootComments.length}
            onupdateCommentShowState={updateCommentShowState}
       />
                   

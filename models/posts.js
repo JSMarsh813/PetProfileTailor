@@ -22,11 +22,6 @@ const PostSchema= new mongoose.Schema({
     required: true,
     ref: 'User',
   }, 
-   comments: [{
-    type: Schema.Types.ObjectId,
-    ref: 'BatSignalComment',
-  }
-], 
   shares: {
     type: Array,  
     default: [],

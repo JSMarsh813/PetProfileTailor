@@ -8,6 +8,13 @@ import LikesButtonAndLikesLogic from '../ReusableMediumComponents/LikesButtonAnd
 import PostersImageUsernameProfileName from "../ReusableSmallComponents/PostersImageUsernameProfileName"
 import EditButton from '../ReusableSmallComponents/EditButton'
 import DeleteButton from '../ReusableSmallComponents/DeleteButton'
+
+import EditComment from '../EditingData/EditComment'
+
+import DeleteCommentNotification from '../DeletingData/DeleteCommentNotification'
+
+import { useRouter } from 'next/router';
+
 function CommentListing({postid,rootComment,replies,sessionFromServer}) {
   //  { comment,replies}
  
@@ -30,6 +37,40 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
       //otherwise we are not one level deep/this is the first reply. So we can grab this comments id as the parentcommentid
       
   },[])
+
+     
+     //for editing
+     const [showEditPage,SetShowEditPage]=useState(false)
+
+     //for deleting
+const [showDeleteConfirmation,setShowDeleteConfirmation]=useState(false)
+         //setting up that we will reroute/refresh if the comment is changed
+const router=useRouter()
+  const [commentChanged,setCommentChanged]=useState(false)
+
+
+  
+  function updateEditState(){
+    SetShowEditPage(true)
+  
+   }
+
+
+   function updateDeleteState(){
+    setShowDeleteConfirmation(true)
+       }
+
+       //if postEdited in the state is true, then we'll force a reload of the page
+       if (commentChanged) {
+             
+        const forceReload = () => 
+        {router.reload()}  
+      
+          forceReload()
+          setCommentChanged(false)           
+       
+      } 
+
 
 
     //        //  ###########  GETTING POSTERS DATA ########
@@ -100,12 +141,39 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
                     <div className="place-self-end mr-2">
                           <EditButton
                                 className="mr-4"
-                                // onupdateEditState={onupdateEditState}
+                                onupdateEditState={updateEditState} 
                           />
                   
-                        <DeleteButton/>
+                        <DeleteButton
+                          onupdateDeleteState={updateDeleteState}/>
                     </div> }
                       
+      
+   {showEditPage&&
+        <EditComment
+          SetShowEditPage={SetShowEditPage}
+           postid={postid}
+           rootComment= {rootComment}
+           sessionFromServer={sessionFromServer}
+        changeCommentState={setCommentChanged}
+        // setToastMessage={setToastMessage}
+         />
+    }
+
+            
+{showDeleteConfirmation&&
+
+ 
+<DeleteCommentNotification
+    setShowDeleteConfirmation={setShowDeleteConfirmation}
+    sessionFromServer={sessionFromServer}
+    changeCommentState={setCommentChanged}
+    commentId={rootComment._id}
+    commentCreatedBy={rootComment.createdby._id}
+ />
+}
+
+                
               
           </div>            
                                               
