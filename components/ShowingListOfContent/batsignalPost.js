@@ -17,15 +17,17 @@ import PostersImageUsernameProfileName from '../ReusableSmallComponents/PostersI
 
 import { useRouter } from 'next/router';
 
+
 function BatsignalPost({
    className,
    sessionFromServer,
    post,
-   commentList,
+  //  commentList,
    tagListProp,
   
 }) {
 
+ 
   const image=post.image
    const title=post.title
    const paragraphText=post.description
@@ -42,10 +44,18 @@ function BatsignalPost({
 
    const showtime=true
         
+   const [postsCommentsFromFetch,setPostsCommentsFromFetch]=useState([])
+
                      //for comments
     const [commentsShowing,SetCommentsShowing]=useState(false)
-     const rootComments = commentList.filter      
+
+    let rootComments=[]
+    if (postsCommentsFromFetch){
+     rootComments=postsCommentsFromFetch.filter      
             (comment=>comment.postid===post._id&&comment.parentcommentid=== null)
+          }
+
+    let amountOfComments=rootComments.length
 
                      //for editing
   const [showEditPage,SetShowEditPage]=useState(false)
@@ -53,7 +63,10 @@ function BatsignalPost({
                     //for deleting
   const [showDeleteConfirmation,setShowDeleteConfirmation]=useState(false)
 
-  const replyComments = commentList.filter(comment=>comment.parentcommentid!=null)
+  let replyComments=""
+  if (postsCommentsFromFetch){
+  replyComments = postsCommentsFromFetch.filter(comment=>comment.parentcommentid!=null)
+  }
                       //for likes
   const [currentTargetedId,setCurrentTargetedId]=useState(postId)
                  //if the post is edited, we will refresh this component
@@ -61,6 +74,8 @@ const router=useRouter()
   const [postChanged,setPostChanged]=useState(false)
   const [toastMessage,setToastMessage]=useState("")
  
+
+
     // console.log({rootComments})
  
         //  ###########  GETTING POSTERS DATA ########
@@ -79,6 +94,19 @@ const router=useRouter()
     //        }
 
  
+ 
+     const handleFetchPosts = async () => {
+       const response = await fetch('http://localhost:3000/api/individualbatsignalcomments/commentscontainingpostid/'+postId)
+       const data =await response.json()
+       console.log(data)
+       setPostsCommentsFromFetch(data)
+     }
+
+     useEffect(() => {
+      handleFetchPosts();
+      
+  },[])
+
   function updateEditState(){
     SetShowEditPage(true)
       //passing set state directly as a prop isn't best practice, instead passing a function is better
@@ -123,7 +151,6 @@ const router=useRouter()
          />
     }
 
-
 {showDeleteConfirmation&&
 
  
@@ -137,6 +164,7 @@ const router=useRouter()
     }
 
             {/* WRAPPING POST AND POST'S COMMENT SECTION */}
+
      <div
        className={`bg-violet-900 text-white rounded-lg tracking-wide max-w-3xl text-center mx-auto shadow-lg shadow-slate-900/70 border-2 border-violet-400 ${className} pb-4`}>
        
@@ -195,7 +223,7 @@ const router=useRouter()
                     className="flex border-y-2 border-slate-200 py-2 bg-violet-900 text-white">
 
       <SeeCommentsButton
-           comments={rootComments.length}
+           comments={amountOfComments}
            onupdateCommentShowState={updateCommentShowState}
       />
                   
@@ -222,17 +250,22 @@ const router=useRouter()
         </section>
 
         {/* ######## POST'S COMMENTS SECTION ###########*/}
-           {commentsShowing&&
+
+          
+          {/* this section keeps giving the "Each child in a list should have a unique key prop" error??? */}
+
+           {commentsShowing&&rootComments!=[]&&
             rootComments.map(comment=>
-               <section>
+             
+              
                     <CommentListing 
+                    key={comment._id}
                     rootComment={comment} 
                     replies={replyComments}
                     postid={postId} 
-                    key={comment._id}
                     sessionFromServer={sessionFromServer}/>
             
-                </section>)
+                )
         }
      </div>
 

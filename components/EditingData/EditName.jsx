@@ -9,49 +9,52 @@ import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import XSvgIcon from '../ReusableSmallComponents/XSvgIcon';
 
-export default function EditPost(
-    {SetShowEditPage,sessionFromServer,
-    rootComment,
-    changeCommentState,setToastMessage}) {
+export default function EditName(
+    {SetShowEditPage,
+     name,
+    sessionFromServer,
+    setItemChanged,
+    setToastMessage,
+    tagList}) {
+
+       
                //data for posts in mongoDB
 
-  const [description,setDescription]=useState(rootComment.description);
- 
-  // const [createdby,setCreatedBy]=useState(rootComment.createdBy._id)
+               //  let tagList = await fetch('http://localhost:3000/api/individualtags');
+               //let tagData = await tagList.json()
+  const [description,setDescription]=useState(name.description);
+  const [newName,setName]=useState(name.name);
+  const [tags,setTags]=useState(name.tags);
 
 
-
-
-const commentSubmission = async () => {
-      
+const nameSubmission = async () => {
+         
    
-            const commentSubmission= {
+            const nameSubmission= {
               description: description,
-              // createdby: createdby.toString(),
-              commentId: rootComment._id,
+              name: newName,
+              tags: tags,
+            nameId: name._id,
  }
- console.log(commentSubmission)
+ console.log(nameSubmission)
  
 
-
-      // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
-   // toast.success(`You successfully edited your post ${sessionFromServer.user.name}!`)
-     
-       await axios.put("/api/individualbatsignalcomments/",
+    
+       await axios.put("/api/individualnames/",
           {
-        commentSubmission
+     nameSubmission
           })
        .then(response => {
           console.log(response)      
           //reloads page  
-          changeCommentState(true)     
+          setItemChanged(true)     
           SetShowEditPage(false)
        
          
         }).catch(error => {
-          console.log("there was an error when sending your post edits", error);
+          console.log("there was an error when sending your edits", error);
          
-          toast.error(`Ruh Roh! Post not edited`)
+          toast.error(`Ruh Roh! Name not edited`)
           
         });
 }
@@ -101,7 +104,14 @@ aria-modal="true">
                  border-2 border-violet-400 border-dotted 
                  p-4 shadow-lg max-w-3xl">
 
-                  
+    {/* ##### NAME AREA ######*/}
+                               <h4
+        className="text-white mt-4"> Name </h4>
+    <input 
+                className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"                  
+                onChange={(e)=>setName(e.target.value)}
+                value={newName}
+                 type="title"/>
 
    {/* ##### DESCRIPTION AREA ######*/}
 
@@ -117,12 +127,40 @@ aria-modal="true">
     </textarea>       
 
 
+     {/* ##### ATTACHING TAGS  ######*/}
+     <label 
+                    className="font-bold block mt-4 text-white"
+                    htmlFor="nameTags">Tags:</label>
+<div className="text-white">
+
+</div>
+        <Select                 
+                 value={tags.map(tag=>
+                            ({label:tag,value:tag}))}
+    
+                  className={`text-darkPurple mb-4 border ${tags? 'border-violet-200': 'border-rose-500 border-2'}`}
+                  id="nameTags"
+
+                  options={tagList.map((opt,index) => ({
+                    label: opt,
+                    value: opt}))
+                   }
+                
+                  isMulti
+                  isSearchable                            
+                  onChange={(opt) => setTags(opt.map(tag=>tag.label))}
+                   
+                />
   
-  
+
             </div>
             
           </div>
+          
         </div>
+
+         
+
                     {/* ###########                       buttons                     ############## */}
         <div className="bg-darkPurple px-4 py-3
                  sm:px-6 grid grid-cols-2">
@@ -131,7 +169,7 @@ aria-modal="true">
                  className="justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-base 
                  
                  font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                 onClick={()=>commentSubmission()}>
+                 onClick={()=>nameSubmission()}>
                     Save</button>
 
           <button type="button" className="mt-3 inline-flex justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 

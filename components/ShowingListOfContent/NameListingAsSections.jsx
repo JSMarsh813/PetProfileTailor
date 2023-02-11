@@ -3,14 +3,52 @@ import axios from 'axios'
 import LikesButtonAndLikesLogic from '../ReusableMediumComponents/LikesButtonAndLikesLogic'
 import DeleteButton from '../ReusableSmallComponents/DeleteButton'
 import EditButton from '../ReusableSmallComponents/EditButton'
+import { useRouter } from 'next/router';
+import DeleteItemNotification from '../DeletingData/DeleteItemNotification'
+import EditName from '../EditingData/EditName'
 
-export default function NameListingAsSections({name, sessionFromServer}) {  
-   
+export default function NameListingAsSections({name, sessionFromServer,tagList}) {  
+    const router=useRouter()
 
- //############## LIKES STATE #######
+ //############## STATE FOR LIKES #######
 
  let [currentTargetedId,setCurrentTargetedNameId]=useState(name._id)
+
+ //##### STATE FOR DELETIONS ######
+
+ const [showDeleteConfirmation,setShowDeleteConfirmation]=useState(false)
+
+ // ##### STATE FOR EDITS ####
+  const [showEditPage,SetShowEditPage]=useState(false)
+
+ //#### STATE FOR EDITS AND DELETIONS
+ const [itemChanged,setItemChanged]=useState(false)
  
+
+         // ##for the delete notification button #####
+
+         function updateDeleteState(){
+            setShowDeleteConfirmation(true)
+               }        
+
+        // ### for the edit notification button
+               function updateEditState(){
+                SetShowEditPage(true)
+                 }
+
+        //if itemChanged in the state is true, then we'll force a reload of the page. This is for BOTH the edit and delete functions
+
+      if (itemChanged) {
+             
+        const forceReload = () => 
+        {router.reload()}  
+      
+          forceReload()
+          setItemChanged(false)           
+       
+      } 
+  
+
 
 
   return (
@@ -51,6 +89,7 @@ export default function NameListingAsSections({name, sessionFromServer}) {
             {/* ###### TAGS SECTION #### */}
         <span>{(name.tags).map(names=>names).join(", ")}</span>
         
+            {/* ###### CREATEDBY SECTION #### */}
         <section>
             <img 
                 src={name.createdby.profileimage}
@@ -63,10 +102,42 @@ export default function NameListingAsSections({name, sessionFromServer}) {
                    (name.createdby._id==sessionFromServer.user._id))&&
            <div className="my-2">
                   <EditButton
-                         className="ml-2 mr-6"/>
-                  <DeleteButton/>
+                         className="ml-2 mr-6"
+                         onupdateEditState={updateEditState} 
+                         />
+                  <DeleteButton
+                     onupdateDeleteState={updateDeleteState}/>
+                     
            </div>
             }
+
+ {showDeleteConfirmation&&
+    <DeleteItemNotification
+        setShowDeleteConfirmation=      
+                    {setShowDeleteConfirmation}
+        sessionFromServer=
+                    {sessionFromServer}
+        changeItemState=
+                    {setItemChanged}
+        itemId=
+                    {name._id}
+        itemCreatedBy=
+                    {name.createdby._id}
+
+         deletionApiPath="/api/individualnames/"
+     />
+    }
+
+{showEditPage&&
+        <EditName
+          SetShowEditPage={SetShowEditPage}
+           name={name}
+            sessionFromServer={sessionFromServer}
+        setItemChanged={setItemChanged}
+        tagList={tagList}
+        // setToastMessage={setToastMessage}
+         />
+    }
 
            
         </section>

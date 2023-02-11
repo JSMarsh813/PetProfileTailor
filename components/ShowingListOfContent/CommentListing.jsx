@@ -101,7 +101,7 @@ const router=useRouter()
         <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
                 
 
-                 <div className="w-full mt-1">
+          <div className="w-full mt-1">
                   
                        
                     <PostersImageUsernameProfileName
@@ -196,7 +196,7 @@ const router=useRouter()
 
           {/* if replies exist for this post, loop through them. If their parentcommentid matches this current comment, then add it to the bottom of this comment.
           Otherwise do not add it to the bottom of this comment. */}
-                {replies&&                
+                {(replies!="")&&                
                 replies.map(reply=> {
                   if (reply.parentcommentid==rootComment._id) {
 

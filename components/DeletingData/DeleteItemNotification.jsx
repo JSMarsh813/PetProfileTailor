@@ -3,38 +3,94 @@ import XSvgIcon from '../ReusableSmallComponents/XSvgIcon'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 
-export default function deletePostNotification(
+export default function DeleteNameNotification(    
     {setShowDeleteConfirmation,
-     commentId,
-    sessionFromServer,
-    commentCreatedBy,
-    changeCommentState}
-    ) {
+     itemId,
+     sessionFromServer,
+   itemCreatedBy,
+   changeItemState,
+   deletionApiPath}
+   ) 
+    {
+
+
+    
+ //#### sections that need to be added to the component which calls this component
+
+  //import { useRouter } from 'next/router';
+ //const router=useRouter()
+  //  const [showDeleteConfirmation,setShowDeleteConfirmation]=useState(false)
+  //const [itemChanged,setItemChanged]=useState(false)
+
+      //if itemChanged in the state is true, then we'll force a reload of the page. This is for BOTH the edit and delete functions
+
+    //   if (itemChanged) {
+             
+    //     const forceReload = () => 
+    //     {router.reload()}  
+      
+    //       forceReload()
+    //       setItemChanged(false)           
+       
+    //   } 
+
+         // ##for the delete notification button #####
+
+
+//  function updateDeleteState(){
+//     setShowDeleteConfirmation(true)
+//        }
+
+
+//          <DeleteButton
+//          onupdateDeleteState={updateDeleteState}/>
+//    </div> }
+
+//FOR THIS NOTIFICATION COMPONENT  
+
+
+// {showDeleteConfirmation&&
+//   <DeleteItemNotification
+//       setShowDeleteConfirmation=      
+//                   {setShowDeleteConfirmation}
+//       sessionFromServer=
+//                   {sessionFromServer}
+//       changeItemState=
+//                   {setItemChanged}
+//       itemId=
+//                   {name._id}
+//       itemCreatedBy=
+//                   {name.createdby._id}
+
+//        deletionApiPath="/api/individualnames/"
+            //if its in an object the api path will break
+//    />
+//   }
 
  //  toast.success(`You successfully deleted your post!`)
     
-   const handleCommentDelete= async () =>{
+   const handleItemDelete= async () =>{
 
-    if(sessionFromServer.user._id!=commentCreatedBy){
-        toast.error("validation error, session id does not match post's created by id")
+    if(sessionFromServer.user._id!=itemCreatedBy){
+        toast.error("validation error, session id does not match items's creator's id")
         return
     }
     else {
-        await axios.delete("/api/individualbatsignalcomments/",
+        await axios.delete(deletionApiPath,
                  {
-              data: {commentId}
+              data: {itemId}
                  })
               .then(response => {
                  console.log(response) 
                  //reloads page
-                 changeCommentState(true)
+                 changeItemState(true)
                
                  setShowDeleteConfirmation(false)      
                 })
               .catch(error => {
-                 console.log("there was an error when deleting your post", error);
+                 console.log("there was an error when deleting your item", error);
                 
-                 toast.error(`Ruh Roh! Post not deleted`)
+                 toast.error(`Ruh Roh! Item not deleted`)
                  
                });
             }
@@ -70,7 +126,7 @@ export default function deletePostNotification(
     
                  
 
-    <div class="relative p-4 text-center rounded-lg shadow dark:bg-darkPurple sm:p-5">
+    <div className="relative p-4 text-center rounded-lg shadow dark:bg-darkPurple sm:p-5">
 
                    {/* X Button and SVG Icon */}
 
@@ -81,7 +137,7 @@ export default function deletePostNotification(
 
                        {/* Trash can icon */}
             <svg 
-                class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" 
+                className="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" 
                 aria-hidden="true" 
                 fill="white" 
                 viewBox="0 0 20 20" 
@@ -95,15 +151,15 @@ export default function deletePostNotification(
             </svg>
             
             <p 
-            class="mb-4 text-gray-500 dark:text-gray-300">
+            className="mb-4 text-gray-500 dark:text-gray-300">
                 Are you sure you want to delete this?</p>
 
-            <div class="flex justify-center items-center space-x-4">
+            <div className="flex justify-center items-center space-x-4">
 
                 <button 
                 data-modal-toggle="deleteModal" 
                 type="button" 
-                class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 
+                className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 
                 
                 hover:bg-gray-100 hover:text-gray-900 
                 
@@ -118,8 +174,8 @@ export default function deletePostNotification(
 
                 <button 
                 type="submit" 
-                class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
-                onClick={()=>handleCommentDelete()}
+                className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
+                onClick={()=>handleItemDelete()}
                 
                 >
                     Yes, I'm sure
@@ -136,5 +192,6 @@ export default function deletePostNotification(
         </div>
         </div>
         </div>
+
   )
 }

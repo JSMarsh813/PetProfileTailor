@@ -102,10 +102,6 @@ const postSubmission = async (image) => {
  console.log(postSubmission)
  
 
-
-      // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
-   // toast.success(`You successfully edited your post ${sessionFromServer.user.name}!`)
-     
        await axios.put("/api/individualposts/",
           {
         postSubmission

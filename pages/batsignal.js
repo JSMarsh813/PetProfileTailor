@@ -23,15 +23,16 @@ export const getServerSideProps = async (context) => {
    let postResponse= await fetch('http://localhost:3000/api/individualposts');
    let postData = await postResponse.json()
 
-   let commentResponse= await fetch('http://localhost:3000/api/individualbatsignalcomments');
-   let commentData = await commentResponse.json()
+  //  let commentResponse= await fetch('http://localhost:3000/api/individualbatsignalcomments');
+  //  let commentData = await commentResponse.json()
 
+  
  
   return {
     props: {    
       sessionFromServer: session,
       postList: postData,
-      commentList: commentData
+      // commentList: commentData
      
          },
     }
@@ -173,6 +174,8 @@ export default function BatSignal({sessionFromServer, pageProps,postList,comment
           // const[filteredposts,setFilteredPosts]=useState([...postList])
           //          //filled with all names on default aka, not actually filtered yet
 
+          
+
    const handleFilterChange = (e) => {
 
        
@@ -282,18 +285,21 @@ export default function BatSignal({sessionFromServer, pageProps,postList,comment
                                   </div>
 
                                   {addingPost&& 
-                                  
+                               
                     <AddPost 
                            tagListProp={tagListProp}
                             sessionFromServer={sessionFromServer}/> }
              {filteredPosts.map((post)=>{ 
-              
+              //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+                    // let commentsforspecificpost=commentList.filter
+                    //             (comment=>comment.postid===post._id)
+
                     return <BatsignalPost 
                                 post={post}
                                 key={post._id}             
                                 className="mx-auto"
                                 sessionFromServer={sessionFromServer}
-                                commentList={commentList}
+                                // commentList={commentsforspecificpost}
                                 tagListProp={tagListProp}
                                 
                                 />

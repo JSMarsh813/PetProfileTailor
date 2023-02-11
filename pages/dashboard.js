@@ -17,16 +17,20 @@ import GeneralOpenCloseButton from "../components/buttons/generalOpenCloseButton
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 
+// import PostCategoryData from "../pages/api/BatSignalPostCategoryData/PostCategoryData"
 import db from '../utils/db'
 // import { connectToDatabase } from '../pages/api/auth/lib/db'
 import IndividualNames from "../models/individualNames"
-import User from "../models/User"
-//wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
+// import User from "../models/User"
+// //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 import { useRouter } from 'next/router';
 
 import RankNames from '../components/RankNames';
 import WideCenteredHeader from '../components/ReusableSmallComponents/WideCenteredHeading';
-
+import CommentListing from '../components/ShowingListOfContent/CommentListing';
+import SingleComment from '../components/ShowingListOfContent/SingleComment'
+import BatsignalPost from '../components/ShowingListOfContent/BatsignalPost';
+import PointSystemList from '../components/ShowingListOfContent/PointSystemList';
 
 
 
@@ -36,50 +40,58 @@ export const getServerSideProps = async (context) => {
   // let response = await fetch('http://localhost:3000/api/name-categories');
   // let data = await response.json()
 
-
+                  //all names?
   let nameResponse= await fetch('http://localhost:3000/api/individualnames');  
   let nameData = await nameResponse.json()
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
 
-  const UserId = session.user._id
+  const UserId = await session.user._id
 
  
-  // const client =  await connectDatabase();
-  // const user = await client.db.collection('users').findOne({ _id: UserId }) 
-
-  // console.log(user)
-  // const userEmail = await session.user.email;
-
-
                                 //USERS FAVED NAMES //
+           //forces it to wait for session before looking up data
 
-  let filterednames=""
-       if(session){
-             let filteringNames= await fetch(`http://localhost:3000/api/individualnames/namesContainingUserId/${session.user._id}`);
+     
+             let findLikedNames= await fetch(`http://localhost:3000/api/individualnames/findNamesLikedByUser/${UserId}`);
 
-             filterednames= await filteringNames.json()   
-             }
+             let likedNames= await findLikedNames.json()   
+             
 
                              //NAMES ADDED BY USER //
  
-//   let currentUser= await fetch('http://localhost:3000/api/getCurrentUser');
-//  console.log(`hello from user api ${currentUser}`)
+            let namesCreatedData= await fetch(`http://localhost:3000/api/individualnames/namesContainingUserId/${UserId}`);
 
-
-  // let currentProfilePicture = currentUser
-
-  //look through names, find names user favorited
-  // look through names, find names user created
-  // look at user, find their current profile image
-
-
-  await db.connect()
-
-  const result = await User.find({_id:UserId})
+            let namesCreated= await namesCreatedData.json()   
+                    
 
 
 
+            //POSTS ADDED BY USER
+
+               let postResponse= await fetch('http://localhost:3000/api/individualposts/postscontaininguserid/'+UserId)
+               let postData = await postResponse.json()   
+
+            //POSTS LIKED BY USER
+
+            let findPostsLiked= await fetch('http://localhost:3000/api/individualposts/findLikedPosts/'+UserId)
+            let postsLiked= await findPostsLiked.json()   
+
+                 //COMMENTS ADDED BY USER
+
+                 let UsersCommentResponse= await fetch('http://localhost:3000/api/individualbatsignalcomments/commentscontaininguserid/'+UserId)
+                 let UsersCommentData = await UsersCommentResponse.json()  
+
+                 //COMMENTS LIKED BY USER
+
+                 let findLikedComments= await fetch('http://localhost:3000/api/individualbatsignalcomments/findLikedBatsignalComments/'+UserId)
+                 let likedComments = await findLikedComments.json()  
+
+
+                 //grabbing all comments for posts
+
+                 let allCommentsResponse= await fetch('http://localhost:3000/api/individualbatsignalcomments');
+                 let allComments = await allCommentsResponse.json()
     
         // try {
         //   await dbConnect() //from config/mongo.js
@@ -102,9 +114,14 @@ export const getServerSideProps = async (context) => {
     props: {
       // category: data,
       nameList: nameData,
-      favNames:filterednames,
+      favNames:likedNames,
+      postsCreated:postData,
       sessionFromServer: session,
-      user: JSON.parse(JSON.stringify(result)),
+      commentsCreated:UsersCommentData,    
+      namesCreated:namesCreated, 
+      postsLiked:postsLiked,
+      likedComments: likedComments,
+      allComments: allComments,
          },
     }
 //kept getting an error that it couldn't parse due to Error serializing `.userIdFromServer.user.image` but there was no image property....adding an image property and making it null also didn't work. JSON.parse(JSON.stringify((session)) used as a workaround)
@@ -115,11 +132,12 @@ export const getServerSideProps = async (context) => {
 
 
 
-export default function Dashboard({category,nameList,sessionFromServer,favNames,user}) {
+export default function Dashboard(
+  {nameList,sessionFromServer,favNames,user,postsCreated,commentsCreated,namesCreated,postsLiked,likedComments,allComments}) {
 
-  console.log(user)
-   const [treatBreakdownMenuOpen,settreatBreakdownMenuOpen]=useState(false)
+
   const [favoritesListOpen,setFavoritesListOpen]=useState(false)
+
   const valuetest = useContext(UserSessionContext); 
    
  const router = useRouter();
@@ -130,20 +148,18 @@ export default function Dashboard({category,nameList,sessionFromServer,favNames,
  
         router.push('/login')}
     }, [router, sessionFromServer]);
-                        //##############POINTS###########
 
-       const [nameLikedPoints,setNameLikedPoints]=useState(favNames.length*1)
-       const [nameAddedPoints,setNameAddedPoints]=useState("0")
-       const [commentLikedPoints,setCommentLikedPoints]=useState("3")
-       const [commentAddedPoints,setCommentAddedPoints]=useState("6")
 
-      
-        const [totalPoints,setTotalPoints]=useState((+nameLikedPoints)+(+nameAddedPoints)+(+commentLikedPoints)+(+commentAddedPoints))
-       
-      console.log(totalPoints)
+          // setTotalPoints(treatPoints)
+
      
        console.log(sessionFromServer)
        
+
+       const [favCommentsOpen,setFavCommentsOpen]=useState(false)
+
+       const [favPostsOpen,setFavPostsOpen]=useState(false)
+ 
    //for Nav menu profile name and image
      //let section exists in case the user is not signed in
    let userName=""
@@ -155,6 +171,32 @@ export default function Dashboard({category,nameList,sessionFromServer,favNames,
   }
  //end of section for nav menu
 //   let [userId,setUserId]=useState(userIdFromServer._id)
+
+
+const category=[
+  {
+    name:"BatSignal!",
+    _id:"1",
+    tags: ["name suggestions", "description suggestions","fundraising ideas","social media ideas","photography ideas", "other ideas"]
+  },
+  {
+    name:"PlayYard & Community",
+    _id:"2",
+    tags: ["General ChitChat","showoff your pets!"]
+  },
+  { name:"Bugs & Feedback",
+    _id:"3",
+    tags: ["bugs","feedback"]
+  }
+ ]
+
+
+
+ let tagListProp=category.map(category=>category.tags).reduce((sum,value)=>sum.concat(value),[])
+
+// console.log(category) 
+// let categorytest=Object.values(PostCategoryData)
+//  console.log(`this is categorytest ${JSON.stringify(categorytest)}`)
 
 // {console.log(`from server ${(userId)}`)}
 
@@ -269,94 +311,17 @@ export default function Dashboard({category,nameList,sessionFromServer,favNames,
         
       </section>
 
-    
-    <section className="userStatsSection pt-4">
-      
-      <section className="overallStats mb-2 font-bold">
-          <span className="px-6">
-               <FontAwesomeIcon icon={faCookieBite} className="text-2xl mr-2 text-yellow-400"/>
-               Treats Earned: 
-               <span className="text-yellow-400"> {totalPoints} 
-               </span>
-           </span>
+    <PointSystemList
+          favNames={favNames}
+          namesCreated={namesCreated}
 
-           <div>
-               <FontAwesomeIcon icon={faRankingStar} className="text-2xl mr-2 text-yellow-400"/>
-               <section>
-                    Current Rank Title:
-                            <RankNames points={totalPoints}/>                      
-                </section>
+          postsCreated={postsCreated}
+          postsLiked={postsLiked}
 
-          </div>
-       </section>
-
-      <section className="mt-4">
-
-      <GeneralOpenCloseButton 
-       text="Your Treat Points Breakdown " 
-       setStatus={settreatBreakdownMenuOpen} 
-       styling=""
-        status={treatBreakdownMenuOpen}/>
-
-
-       { treatBreakdownMenuOpen==true&&( <section className="userStatsBreakdownDropDown 
-           grid grid-cols-2 grid-flow-row  gap-2
-           bg-darkPurple font-bold border-2 border-yellow-300 p-4">
-      
-                <div>
-                <FontAwesomeIcon icon={faTags} className="text-xl mr-1 text-red-500"/>
-                  Liked Names: 
-                       <span className="text-yellow-300">{nameLikedPoints}</span>
-                </div>
-
-                <div>
-                <FontAwesomeIcon icon={faIdCard} className="text-xl mr-1 text-red-500"/>
-                  Liked Descriptions: 
-                  <span className="text-yellow-300"> 0</span>
-                  </div>
-
-                  <div>
-                  <FontAwesomeIcon icon={faLightbulb} className="text-xl mr-1 text-red-500"/>
-                  Liked Inspiration Posts: 
-                  <span className="text-yellow-300"> 0</span>
-                  </div>
-
-                  <div>
-               
-                  <FontAwesomeIcon icon={faComment} className="text-xl mr-1 text-red-500"/>
-                  
-                  Liked Comments: 
-                  <span className="text-yellow-300"> {commentLikedPoints}</span>
-                  </div>
-
-                <div>
-                <FontAwesomeIcon icon={faTags} className="text-xl mr-1 text-green-500"/>
-                  Added Names: 
-                  <span className="text-yellow-300"> {nameAddedPoints}</span>
-                  </div>
-
-                <div>
-                <FontAwesomeIcon icon={faIdCard} className="text-xl mr-1 text-green-500"/>
-                  Added Descriptions: 
-                  <span className="text-yellow-300"> 0</span>
-                  </div>
-
-                  <div>
-                  <FontAwesomeIcon icon={faLightbulb} className="text-xl mr-1 text-green-500"/>
-                  Added Inspiration Posts: 
-                  <span className="text-yellow-300"> 0</span>
-                  </div>
-
-                <div>
-                <FontAwesomeIcon icon={faComment} className="text-xl mr-1 text-green-500"/>
-                  Comments Added: 
-                  <span className="text-yellow-300"> {commentAddedPoints}</span>
-                  </div>
-
-             </section>)}
-          
-        </section>
-    </section>
+          commentsCreated={commentsCreated}
+          likedComments={likedComments}
+                 />
+  
     </div>    
     )
 
@@ -418,9 +383,62 @@ export default function Dashboard({category,nameList,sessionFromServer,favNames,
        styling=""
         status={favoritesListOpen}/>
 
-{favoritesListOpen==true&&<MainChartComponent nameList={nameList} session={sessionFromServer}/>}                
+{favoritesListOpen==true&&
+        <MainChartComponent 
+                  nameList={nameList} 
+                  session={sessionFromServer}/>}                
 
               </section>
+   {/* ############# FAVORITE COMMENTS LIST ############ */}
+
+   <section>
+
+   <GeneralOpenCloseButton 
+       text="View Your Favorite Comments" 
+       setStatus={setFavCommentsOpen} 
+       styling=""
+        status={favCommentsOpen}/>
+
+{favCommentsOpen&&
+      (likedComments.map((comment)=>{
+            return <SingleComment
+              rootComment={comment}
+              sessionFromServer={sessionFromServer}/>  
+           }
+        )  
+      )   
+      
+}
+</section>
+{/* {console.log(likedComments)} */}
+{console.log(postsLiked)}
+      {/* ############# POSTS COMMENTS LIST ############ */}
+      <section>
+      <GeneralOpenCloseButton 
+       text="View Your Favorite Posts" 
+       setStatus={setFavPostsOpen} 
+       styling=""
+        status={favPostsOpen}/>
+
+{favPostsOpen&&
+  
+  (postsLiked.map((post)=>{
+        return <BatsignalPost
+          post={post}
+          key={post._id}             
+          className="mx-auto"
+          sessionFromServer={sessionFromServer}
+          commentList={allComments}
+         tagListProp={tagListProp}
+        />  
+       }
+    )  
+  )   
+  
+}
+     </section>
+
+
 
        </div>
 
@@ -430,9 +448,8 @@ export default function Dashboard({category,nameList,sessionFromServer,favNames,
        
        <section>
           
-          <h4> Recent batsignals </h4>
-
-          <p> Offer your help and creativty to your community members who are struggling to find the perfect name, description or more! </p>
+      
+          <p> extra </p>
 
        </section>
       

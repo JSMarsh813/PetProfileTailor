@@ -6,8 +6,7 @@ function generalOpenCloseButton({text,styling,setStatus,status}) {
    
     <button className={`text-xl bg-yellow-300 
     text-violet-700  font-bold py-2 px-4 border-b-4 border-b-transparent 
-    mt-10
-
+    
     hover:bg-violet-700 
     hover:text-yellow-300
     hover:border-yellow-400 rounded

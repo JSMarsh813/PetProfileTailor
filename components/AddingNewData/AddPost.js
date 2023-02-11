@@ -57,9 +57,14 @@ const handleImageUpload = async () => {
       method: 'POST',
       body: formData,
     })
+
     const data = await response.json();
 
-    let imageFromCloudinary = data.secure_url         
+         console.log(`this is data from cloudinary ${JSON.stringify(data)}`)
+
+    let imageFromCloudinary = data.secure_url        
+
+        console.log(`this is imageFromCloudinary ${imageFromCloudinary}`) 
               
     // setImage(imageFromCloudinary)         
         setImageToCloudinary("")     

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "../../../config/connectmongodb"
-
+const mongoose = require('mongoose');
 import IndividualNames from "../../../models/individualNames"
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 
@@ -30,14 +30,36 @@ export default async function handler(req, res) {
 
 
     if(method ==="PUT"){    
+         const {description,
+          name,
+          tags,
+          nameId
+        } =req.body.nameSubmission
+    
+               
+      const toUpdateName = await IndividualNames.findById(nameId);
+     console.log(toUpdateName)
       try {
-             const test= await IndividualNames.find()
-             res.status(201).json(test)
-      } 
+     
+        if (description){
+          toUpdateName.description =description;  
+        }
+      toUpdateName.name =name
+     
+      toUpdateName.tags=tags;
+  
+      await toUpdateName.save();
+      // await db.disconnect();
+      res.send({
+        message: 'Name Updated',
+      });
+          } 
+        
       catch(err){
-          res.status(500).json(err)
-          console.log(err)
-      }
+              res.status(500).json(err)
+             
+          }
+      
   }
 
 
@@ -52,5 +74,21 @@ export default async function handler(req, res) {
            
         }
     }
+
+    
+  if(method ==="DELETE"){    
+    try {
+      console.log(`request body is ${JSON.stringify(req.body.itemId)}`)
+
+      let idToObjectId = mongoose.Types.ObjectId(req.body.itemId)
+           const test= await IndividualNames.deleteOne({_id:idToObjectId})
+           res.status(200).json({ success: true, msg: `Name Deleted ${test}` })
+    } 
+    catch(err){
+        res.status(500).json(err)
+       
+    }
+}
+
   }
   
