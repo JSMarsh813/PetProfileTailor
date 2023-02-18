@@ -10,14 +10,16 @@ import { faHeart, faCommentDots, faFaceGrinWink, faUserTie, faCircleChevronDown,
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import BatsignalPost from '../../components/ShowingListOfContent/batsignalPost'
 import NavLayoutwithSettingsMenu from '../../components/NavBar/NavLayoutwithSettingsMenu'
-
+import DescriptionListingAsSections from '../../components/ShowingListOfContent/DescriptionListingAsSections'
+import HeadersForDescriptions from "../../components/ShowingListOfContent/HeadersForDescriptions"
+import PageTitleWithImages from '../../components/ReusableSmallComponents/PageTitleWithImages'
 
 
 export const getServerSideProps = async (context) => {
 
   //allows us to grab the dynamic value from the url
-  const name=context.params.name
-
+  const id=context.params.id
+  console.log(id)
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
 
@@ -25,11 +27,12 @@ export const getServerSideProps = async (context) => {
 
 
 
-    let nameResponse= await fetch('http://localhost:3000/api/names/findonenamebyname/'+name)
-    let nameData = await nameResponse.json()
+    let descriptionResponse= await fetch('http://localhost:3000/api/description/getASpecificDescriptionById/'+id)
+    let descriptionData = await descriptionResponse.json()
 
-    if(!nameData.length){ 
-      return {
+    if(!descriptionData){ 
+      console.log(descriptionData)
+      return {       
         notFound: true,
       }
      }
@@ -39,20 +42,36 @@ export const getServerSideProps = async (context) => {
 
     //  console.log(`this is ${userData}`)    
 
+       //grabbing Tags for description edit function
 
+    
+       let descriptionTagList = await fetch('http://localhost:3000/api/descriptiontag');
+       let descriptionTagData = await descriptionTagList.json()
+  
+  
+   
+      
+       let tagListProp=descriptionTagData 
+            .map(tag=>tag.tag)
+            .reduce((sum,value)=>sum.concat(value),[])
+      
   return {
     props: {     
-      nameData: nameData,          
+      description:descriptionData,          
       sessionFromServer: session, 
+      tagList: tagListProp
       
          },
     }
   }
 }
 
-export default function Postid({sessionFromServer, nameData}) {
+export default function Postid({
+    sessionFromServer, description,tagList
+}
+) {
   
-   //for Nav menu profile name and image
+   //for Nav menu profile description and image
    let userName=""
    let profileImage=""
  
@@ -60,52 +79,35 @@ export default function Postid({sessionFromServer, nameData}) {
        userName=sessionFromServer.user.name
     profileImage=sessionFromServer.user.profileimage
   }
+
  //end of section for nav menu
  
   return (
     <div>
-      {console.log(nameData)}
+ 
       <NavLayoutwithSettingsMenu
        profileImage={profileImage} 
             userName={userName}  />  
 
-      <div
-    className="h-32 mb-4 bg-[url('https://img.freepik.com/free-photo/silly-brown-newfoundland-dog-with-black-top-hat_493961-1702.jpg?w=1380&t=st=1675080477~exp=1675081077~hmac=ebcf283bee382e2b28fbe047a36223e929aa9da840f7c07b8a1c6ca695988922')] bg-repeat-x bg-contain"
-    >
-
-    <h3 className="text-center pt-2 
-    w-96 mx-auto  h-32
-    text-5xl text-yellow-300   bg-darkPurple
-    font-semibold
-    border-y-4 border-amber-300"
-     style={{marginBottom: "-90px", background: "hsla(260, 90%, 60%, 0.6)", backdropFilter: "blur(20px)"}}
-     >  {nameData[0].name} </h3>
-     
-
-  </div>
+<PageTitleWithImages
+   imgSrc="bg-[url('https://img.freepik.com/free-photo/happy-woman-with-labrador-park_23-2148345919.jpg?w=826&t=st=1676723047~exp=1676723647~hmac=461f234d41e2f8fa984e028db04245a9a4580f1719bf21a5882b091cca91bfa7')] "
+   title="description"/>
         
           <div
           className="mx-2">
-         <section 
-                          className=" grid md:grid-cols-5
-                          grid-cols-3 gap-4 
-                          bg-purple-100
-                          text-darkPurple p-2"> 
-                        <span> Like </span>
-                        <span> Name </span>
-                        <span> Description</span>
-                        <span> Tags </span>
-                        <span> Created By </span>
-          </section>
 
-          <NameListingAsSections
+      <HeadersForDescriptions/>
+
+      <DescriptionListingAsSections
           
-                name={nameData[0]}
-                key={nameData._id}
-                sessionFromServer={sessionFromServer}/>                                                   
+          description={description}
+          key={description._id}
+          sessionFromServer={sessionFromServer}
+          tagList={tagList}
+          />                                                   
           <footer  className="text-white mt-2"> 
             <span             >
-                 Banner image by <a href="https://www.freepik.com/free-photo/silly-brown-newfoundland-dog-with-black-top-hat_26464041.htm#query=silly%20pet&position=19&from_view=search&track=sph">Freepik</a></span></footer>  
+                 Banner image by <a href="https://img.freepik.com/free-photo/happy-woman-with-labrador-park_23-2148345919.jpg?w=826&t=st=1676723047~exp=1676723647~hmac=461f234d41e2f8fa984e028db04245a9a4580f1719bf21a5882b091cca91bfa7">Freepik</a></span></footer>  
 
         </div>     
     </div>

@@ -1,4 +1,4 @@
-import Individualname from '../../../models/individualNames'
+import Names from '../../../models/Names'
 import db from '../../../utils/db'
 import {useRouter} from 'next/router'
 
@@ -21,7 +21,7 @@ const handler = async (req, res) => {
     const getHandler = async (req, res) => {
       await db.connect();
       console.log(req.params)
-      const individualname = await Individualname.findOne({"id":req.query._id});
+      const individualname = await Names.findOne({"id":req.query._id});
       
       await db.disconnect();
       console.log(individualname)
@@ -35,14 +35,14 @@ const handler = async (req, res) => {
 // https://stackoverflow.com/questions/52147649/mongoose-findbyid-return-null
     const putHandler = async (req, res) => {
       await db.connect();
-      const individualname = await Individualname.findById(req.query.id);
+      const individualname = await Names.findById(req.query.id);
       if (individualname) {
         individualname.name = req.body.name;
         individualname.description = req.body.description;
         individualname.tags = req.body.tags;
         individualname.likedby = req.body.likedby;
        
-        await Individualname.save();
+        await Names.save();
         await db.disconnect();
         res.send({ message: 'Name updated successfully' });
       } else {

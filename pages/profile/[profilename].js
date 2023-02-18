@@ -14,6 +14,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import CommentListing from '../../components/ShowingListOfContent/CommentListing'
 import HeadersForNames from '../../components/ShowingListOfContent/HeadersForNames'
 import PointSystemList from '../../components/ShowingListOfContent/PointSystemList'
+import DashboardChartForFavDescriptions from '../../components/ShowingListOfContent/DashboardChartForFavDescriptions'
 
 
 export const getServerSideProps = async (context) => {
@@ -41,7 +42,7 @@ export const getServerSideProps = async (context) => {
      console.log(nameid)
 
      //names user created 
-     let nameResponse= await fetch('http://localhost:3000/api/individualnames/namesContainingUserId/'+nameid)
+     let nameResponse= await fetch('http://localhost:3000/api/names/namesContainingUserId/'+nameid)
      let nameData = await nameResponse.json()    
 
      //grabbing posts
@@ -60,15 +61,33 @@ export const getServerSideProps = async (context) => {
 
      //grabbing Tags for name edit function
 
-     let tagList = await fetch('http://localhost:3000/api/individualTags');
-    let tagData = await tagList.json()
-    let tagListProp=tagData.map(tag=>tag.individualTag).reduce((sum,value)=>sum.concat(value),[])
+     let nameTagList = await fetch('http://localhost:3000/api/nametag');
+    let nametagData = await nameTagList.json()
+    let nameTagListProp=nametagData.map(tag=>tag.tag).reduce((sum,value)=>sum.concat(value),[])
+
+//grabbing DESCRIPTIONS added by user
+
+                 
+     let findCreatedDescriptions= await fetch(`http://localhost:3000/api/description/descriptionsCreatedByLoggedInUser//${UserId}`)
+
+      let createdDescriptions = await findCreatedDescriptions.json() 
+          
+//grabbing Tags for description's edit function
+
+           let descriptionTagList = await fetch('http://localhost:3000/api/descriptiontag');
+           let descriptionTagData = await descriptionTagList.json()
+
+           let descriptionTagListProp=descriptionTagData
+           .map(tag=>tag.tag)
+           .reduce((sum,value)=>sum.concat(value),[])
+
+    //TO CALCULATE USERS POINTS
 
             //USERS FAVED NAMES //
            //forces it to wait for session before looking up data
 
      
-           let findLikedNames= await fetch(`http://localhost:3000/api/individualnames/findNamesLikedByUser/${UserId}`);
+           let findLikedNames= await fetch(`http://localhost:3000/api/names/findNamesLikedByUser/${UserId}`);
 
            let likedNames= await findLikedNames.json()   
 
@@ -82,21 +101,33 @@ export const getServerSideProps = async (context) => {
                   let findLikedComments= await fetch('http://localhost:3000/api/individualbatsignalcomments/findLikedBatsignalComments/'+UserId)
                   let likedComments = await findLikedComments.json()
 
+                //DESCRIPTIONS LIKED BY USER
+
+                   let findLikedDescriptions= await fetch('http://localhost:3000/api/description/findDescriptionsLIkedByUserId/'+UserId)
+                 let likedDescriptions = await findLikedDescriptions.json()
+
+
   return {
     props: {
-   
-      nameList: nameData,
       id: id,
-      UsersCommentData: UsersCommentData,
-      userData: userData[0],
-      commentList:  commentData,
-      postData: postData,
       sessionFromServer: session,
-      tagList:tagListProp,
-      favNames:likedNames,
-      postsLiked:postsLiked,
-      likedComments: likedComments,
+      userData: userData[0],
 
+      nameList: nameData,
+      nameTagList:nameTagListProp,
+      favNames:likedNames,
+
+      UsersCommentData: UsersCommentData,
+      commentList:  commentData,
+      likedComments: likedComments,
+    
+      postData: postData,    
+      postsLiked:postsLiked,
+   
+      likedDescriptions:likedDescriptions,
+      createdDescriptions:createdDescriptions,
+      descriptionTagListProp:descriptionTagListProp
+     
          },
     }
   }
@@ -104,17 +135,25 @@ export const getServerSideProps = async (context) => {
 
 function ProfilePage(
   {sessionFromServer, 
-    commentList, 
-    postData,
-    nameList,
-    userData,
-    UsersCommentData,
-    tagList,
-    favNames,
-    postsLiked,
-    likedComments}) {
+    userData, 
 
-      console.log(tagList)
+    commentList, 
+     UsersCommentData,
+     likedComments,
+
+    postData,
+    postsLiked,
+
+    nameList,
+    nameTagList,
+    favNames,       
+    
+    createdDescriptions,
+    likedDescriptions,
+    descriptionTagListProp
+    
+   }) {
+
 
    //for Nav menu profile name and image
    let userName=""
@@ -245,6 +284,9 @@ function ProfilePage(
 
              commentsCreated={commentList}
              likedComments={likedComments}
+
+             createdDescriptions={createdDescriptions}
+             likedDescriptions={likedDescriptions}
                 />
   
   </div>
@@ -296,7 +338,7 @@ function ProfilePage(
                             name={name}
                             key={name._id}
                             sessionFromServer={sessionFromServer}
-                            tagList={tagList}
+                            tagList={nameTagList}
                             
                             />
                           
@@ -350,7 +392,7 @@ function ProfilePage(
 
               <section className="my-2"> 
 
-              <h2  className="w-full text-center font-semibold text-amber-300 
+  <h2  className="w-full text-center font-semibold text-amber-300 
             text-xl
             bg-darkPurple p-2 
             "> Comments Added</h2>
@@ -380,15 +422,37 @@ function ProfilePage(
                 </div>
                 </section>
           
+
+            {/* ############## DESCRIPTIONS ADDED ##############*/}
+            <section className="my-2"> 
+            <h2  className="w-full text-center font-semibold text-amber-300 
+            text-xl
+            bg-darkPurple p-2 
+            "> Comments Added</h2>
+
+<div className=" flex-1 grid grid-cols-1 gap-4 mr-2  
+ w-full
+ border-2 border-amber-300">
+   {(!likedDescriptions.length)?
+
+<section className="border-2 border-amber-300"> 
+   
+<span>  No descriptions added yet! </span></section>:
+<section className="border-2 border-amber-300 max-h-screen overflow-scroll">
+<DashboardChartForFavDescriptions        
+       likedDescriptions={likedDescriptions}    
+       sessionFromServer={sessionFromServer}
+       tagList={descriptionTagListProp}/>  
+       </section>
+        }
+
+  </div> 
+            </section>     
       </div>
 
 </div>
-
-
-
-
-       
-        {/* ############## CONTRIBUTIONS ##############*/}
+      
+      
 <section>
 
 </section>

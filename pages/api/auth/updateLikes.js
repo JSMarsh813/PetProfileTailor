@@ -1,5 +1,5 @@
 import { getSession } from 'next-auth/react';
-import IndividualNames from '../../../models/individualNames';
+import Names from '../../../models/Names'
 import db from '../../../utils/db';
 const mongoose = require('mongoose');
 
@@ -39,7 +39,7 @@ console.log(`this is nameId ${nameId}`)
   await db.connect();
 
     // use the model we're updating,IndividualNames. Look through it to find the one document we're looking for with the name's id. 
-  const toUpdateName = await IndividualNames.findById(idToObjectId);
+  const toUpdateName = await Names.findById(idToObjectId);
  
   console.log(`this is toupdatename ${toUpdateName}`)
 // result: this is toupdatename {

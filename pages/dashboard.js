@@ -13,7 +13,7 @@ import NameListing from "../components/ShowingListOfContent/Namelisting"
 import MainChartComponent from "../components/MainChartComponent"
 import GeneralButton from '../components/GeneralButton';
 import GeneralOpenCloseButton from "../components/buttons/generalOpenCloseButton"
-
+import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections"
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 
@@ -32,6 +32,7 @@ import CommentListing from '../components/ShowingListOfContent/CommentListing';
 import SingleComment from '../components/ShowingListOfContent/SingleComment'
 import BatsignalPost from '../components/ShowingListOfContent/BatsignalPost';
 import PointSystemList from '../components/ShowingListOfContent/PointSystemList';
+import DashboardChartForFavDescriptions from '../components/ShowingListOfContent/DashboardChartForFavDescriptions';
 
 
 
@@ -42,7 +43,7 @@ export const getServerSideProps = async (context) => {
   // let data = await response.json()
 
                   //all names?
-  let nameResponse= await fetch('http://localhost:3000/api/individualnames');  
+  let nameResponse= await fetch('http://localhost:3000/api/names');  
   let nameData = await nameResponse.json()
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
@@ -54,19 +55,16 @@ export const getServerSideProps = async (context) => {
            //forces it to wait for session before looking up data
 
      
-             let findLikedNames= await fetch(`http://localhost:3000/api/individualnames/findNamesLikedByUser/${UserId}`);
+             let findLikedNames= await fetch(`http://localhost:3000/api/names/findNamesLikedByUser/${UserId}`);
 
              let likedNames= await findLikedNames.json()   
              
 
                              //NAMES ADDED BY USER //
  
-            let namesCreatedData= await fetch(`http://localhost:3000/api/individualnames/namesContainingUserId/${UserId}`);
+            let namesCreatedData= await fetch(`http://localhost:3000/api/names/namesContainingUserId/${UserId}`);
 
-            let namesCreated= await namesCreatedData.json()   
-                    
-
-
+            let namesCreated= await namesCreatedData.json()                  
 
             //POSTS ADDED BY USER
 
@@ -93,7 +91,32 @@ export const getServerSideProps = async (context) => {
 
                  let allCommentsResponse= await fetch('http://localhost:3000/api/individualbatsignalcomments');
                  let allComments = await allCommentsResponse.json()
+
+                 //grabbing DESCRIPTIONS added by user
+
+                 
+                 let findCreatedDescriptions= await fetch(`http://localhost:3000/api/description/descriptionsCreatedByLoggedInUser//${UserId}`)
+
+                 let createdDescriptions = await findCreatedDescriptions.json() 
+                        
+
+                 //grabbing DESCRIPTIONS liked by user
+
+                 let findLikedDescriptions= await fetch('http://localhost:3000/api/description/findDescriptionsLIkedByUserId/'+UserId)
+                 let likedDescriptions = await findLikedDescriptions.json() 
+                //  console.log(`this is likedDescriptions ${JSON.stringify(likedDescriptions)}`)
+
     
+
+              //grabbing Tags for description edit function
+
+     let descriptionTagList = await fetch('http://localhost:3000/api/descriptiontag');
+     let descriptionTagData = await descriptionTagList.json()
+
+    
+     let descriptionTagListProp=descriptionTagData
+          .map(tag=>tag.tag)
+          .reduce((sum,value)=>sum.concat(value),[])
         // try {
         //   await dbConnect() //from config/mongo.js
 
@@ -114,15 +137,22 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       // category: data,
-      nameList: nameData,
-      favNames:likedNames,
-      postsCreated:postData,
       sessionFromServer: session,
-      commentsCreated:UsersCommentData,    
+
+      nameList: nameData,
       namesCreated:namesCreated, 
+      favNames:likedNames,
+
+      postsCreated:postData,
       postsLiked:postsLiked,
+
+      commentsCreated:UsersCommentData,
       likedComments: likedComments,
       allComments: allComments,
+
+      likedDescriptions: likedDescriptions,
+      createdDescriptions: createdDescriptions,
+      descriptionTagListProp: descriptionTagListProp,
          },
     }
 //kept getting an error that it couldn't parse due to Error serializing `.userIdFromServer.user.image` but there was no image property....adding an image property and making it null also didn't work. JSON.parse(JSON.stringify((session)) used as a workaround)
@@ -134,7 +164,12 @@ export const getServerSideProps = async (context) => {
 
 
 export default function Dashboard(
-  {nameList,sessionFromServer,favNames,user,postsCreated,commentsCreated,namesCreated,postsLiked,likedComments,allComments}) {
+  {nameList,sessionFromServer,user,allComments,
+    
+    namesCreated,favNames,
+    postsCreated,postsLiked,
+    likedComments,commentsCreated,
+    likedDescriptions,createdDescriptions, descriptionTagListProp}) {
 
 
   const [favoritesListOpen,setFavoritesListOpen]=useState(false)
@@ -154,12 +189,15 @@ export default function Dashboard(
           // setTotalPoints(treatPoints)
 
      
-       console.log(sessionFromServer)
+      //  console.log(sessionFromServer)
        
 
        const [favCommentsOpen,setFavCommentsOpen]=useState(false)
 
        const [favPostsOpen,setFavPostsOpen]=useState(false)
+
+      const [favDescriptionsOpen,setFavDescriptionsOpen]=useState(false)
+
  
    //for Nav menu profile name and image
      //let section exists in case the user is not signed in
@@ -321,6 +359,9 @@ const category=[
 
           commentsCreated={commentsCreated}
           likedComments={likedComments}
+
+          createdDescriptions={createdDescriptions}
+          likedDescriptions={likedDescriptions}
                  />
   
     </div>    
@@ -368,7 +409,8 @@ const category=[
                 </div>
 
 
-                {favoritesListOpen==true&&  <MainChartComponent nameList={favNames} session={sessionFromServer}/>}
+                {favoritesListOpen==true&&  <MainChartComponent nameList={favNames} 
+                session={sessionFromServer}/>}
                 
 
               </section>
@@ -380,20 +422,24 @@ const category=[
 
               <GeneralOpenCloseButton 
        text="Open Your Favorites Descriptions List" 
-       setStatus={setFavoritesListOpen} 
+       setStatus={setFavDescriptionsOpen} 
        styling=""
-        status={favoritesListOpen}/>
+        status={favDescriptionsOpen}/>
 
-{favoritesListOpen==true&&
-        <MainChartComponent 
-                  nameList={nameList} 
-                  session={sessionFromServer}/>}                
+{favDescriptionsOpen&&
 
+<DashboardChartForFavDescriptions        
+       likedDescriptions={likedDescriptions}    sessionFromServer={sessionFromServer}
+                            tagList={descriptionTagListProp}/>    
+        }         
+        
+                   
+      
               </section>
    {/* ############# FAVORITE COMMENTS LIST ############ */}
 
    <section>
-
+  
    <GeneralOpenCloseButton 
        text="View Your Favorite Comments" 
        setStatus={setFavCommentsOpen} 
@@ -412,7 +458,7 @@ const category=[
 }
 </section>
 {/* {console.log(likedComments)} */}
-{console.log(postsLiked)}
+{/* {console.log(postsLiked)} */}
       {/* ############# POSTS COMMENTS LIST ############ */}
       <section>
       <GeneralOpenCloseButton 

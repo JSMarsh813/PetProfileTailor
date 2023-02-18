@@ -5,7 +5,7 @@
     // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "../../../../config/connectmongodb"
 
-import IndividualNames from "../../../../models/individualNames"
+import Names from "../../../../models/Names"
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 
 export default async function handler(req, res) {
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
     if(method === "GET") {
         try {
-            const individualNames = await IndividualNames.find({createdby:userId}).populate({path:"createdby", select:["name","profilename","profileimage"]})      
+            const individualNames = await Names.find({createdby:userId}).populate({path:"createdby", select:["name","profilename","profileimage"]})      
             res.status(200).json(individualNames);
             
           } catch (err) {

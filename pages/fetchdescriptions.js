@@ -5,7 +5,7 @@ import { unstable_getServerSession } from "next-auth/next"
 import PageTitleWithImages from '../components/ReusableSmallComponents/PageTitleWithImages'
 import FilteringSidebar from '../components/Filtering/FilteringSidebar'
 import GeneralButton from '../components/GeneralButton'
-import HeadersForCategories from '../components/ShowingListOfContent/HeadersForCategories'
+import HeadersForCategories from '../components/ShowingListOfContent/HeadersForDescriptions'
 import DescriptionListingAsSections from '../components/ShowingListOfContent/DescriptionListingAsSections'
 
 

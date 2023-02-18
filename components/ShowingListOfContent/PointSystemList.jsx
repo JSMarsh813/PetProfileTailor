@@ -9,7 +9,8 @@ import GeneralOpenCloseButton from '../buttons/generalOpenCloseButton'
 export default function PointSystemList({
     favNames, namesCreated,
     postsCreated, postsLiked,
-    commentsCreated, likedComments
+    commentsCreated, likedComments,
+    likedDescriptions, createdDescriptions
 }) 
 {
     const [treatBreakdownMenuOpen,settreatBreakdownMenuOpen]=useState(false)
@@ -28,9 +29,9 @@ export default function PointSystemList({
                 
            const [commentsAddedPoints,setCommentsAddedPoints]=useState("loading")
          
-           const [descriptionsLikedPoints,setDescriptionsLikedPoints]=useState("0")
+           const [descriptionsLikedPoints,setDescriptionsLikedPoints]=useState("loading")
     
-           const [descriptionsAddedPoints,setDescriptionsAddedPoints]=useState("0")
+           const [descriptionsAddedPoints,setDescriptionsAddedPoints]=useState("loading")
     
       
           const [totalPoints,setTotalPoints]=useState()
@@ -45,7 +46,8 @@ export default function PointSystemList({
                 setPostsAddedPoints(likedComments.length)
                 setPostsAddedPoints(postsCreated.length*3)
                 setpostsLikedPoints(postsLiked.length)
-               
+                setDescriptionsLikedPoints(likedDescriptions.length)
+                setDescriptionsAddedPoints(createdDescriptions.length)
                          
               },
                 [favNames,namesCreated,
@@ -132,7 +134,7 @@ export default function PointSystemList({
               <div>
               <FontAwesomeIcon icon={faHeart} className="text-xl mr-1 text-red-500"/>
                 Descriptions=
-                <span className="text-yellow-300"> 0</span>
+                <span className="text-yellow-300"> {descriptionsLikedPoints}</span>
                 </div>
 
                 <div>
@@ -158,7 +160,7 @@ export default function PointSystemList({
               <div>
               <FontAwesomeIcon icon={faCirclePlus} className="text-xl mr-1 text-green-500"/>
                 Descriptions= 
-                <span className="text-yellow-300"> 0</span>
+                <span className="text-yellow-300"> {descriptionsAddedPoints}</span>
                 </div>
 
                 <div>

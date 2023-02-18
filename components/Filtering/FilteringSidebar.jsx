@@ -53,6 +53,7 @@ function FilteringSidebar({category, handleFilterChange,IsOpen}) {
                                          // onChange={() => handleOnChange(index)}
                                          className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600 "
                                        />
+                                      
               {/* shows the actual description (male, female, unisex ect for gender) */}
                       <label
                                          htmlFor={`filter-mobile-${option.tag}-${option.tag}`}

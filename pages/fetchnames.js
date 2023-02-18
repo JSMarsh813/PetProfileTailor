@@ -33,7 +33,7 @@ export const getServerSideProps = async (context) => {
     let data = await response.json()
     console.log(data)
 
-    let nameResponse= await fetch('http://localhost:3000/api/individualnames');   
+    let nameResponse= await fetch('http://localhost:3000/api/names');   
     let nameData = await nameResponse.json()
 
       //grabbing Tags for name edit function

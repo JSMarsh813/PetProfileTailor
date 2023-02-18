@@ -7,7 +7,9 @@ import { useRouter } from 'next/router';
 import DeleteItemNotification from '../DeletingData/DeleteItemNotification'
 import EditDescription from '../EditingData/EditDescription'
 
-export default function DescriptionListingAsSections({description, sessionFromServer,tagList}) {  
+export default function DescriptionListingAsSections(
+    {description, sessionFromServer,tagList}
+    ) {  
     const router=useRouter()
 
  //############## STATE FOR LIKES #######
@@ -53,6 +55,7 @@ export default function DescriptionListingAsSections({description, sessionFromSe
 
   return (
     <div className=" border-b-2 border-amber-300">
+      
     <div 
     
             className="grid 

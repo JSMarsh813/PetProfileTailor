@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "../../../config/connectmongodb"
 const mongoose = require('mongoose');
-import IndividualNames from "../../../models/individualNames"
+import Names from "../../../models/Names"
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 
 export default async function handler(req, res) {
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
     if(method === "GET") {
         try {
-            const individualNames = await IndividualNames.find()
+            const individualNames = await Names.find()
             .populate({path:"createdby", select:["name","profilename","profileimage"]});
             res.status(200).json(individualNames);
             
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
         } =req.body.nameSubmission
     
                
-      const toUpdateName = await IndividualNames.findById(nameId);
+      const toUpdateName = await Names.findById(nameId);
      console.log(toUpdateName)
       try {
      
@@ -67,7 +67,7 @@ export default async function handler(req, res) {
 
     if(method ==="POST"){    
         try {
-               const test= await IndividualNames.create(req.body)
+               const test= await Names.create(req.body)
                res.status(201).json(test)
         } 
         catch(err){
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
       console.log(`request body is ${JSON.stringify(req.body.itemId)}`)
 
       let idToObjectId = mongoose.Types.ObjectId(req.body.itemId)
-           const test= await IndividualNames.deleteOne({_id:idToObjectId})
+           const test= await Names.deleteOne({_id:idToObjectId})
            res.status(200).json({ success: true, msg: `Name Deleted ${test}` })
     } 
     catch(err){

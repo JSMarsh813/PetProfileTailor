@@ -113,18 +113,30 @@ export default function BatSignal({sessionFromServer, pageProps,postList,comment
 
    const category=[
     {
-      name:"BatSignal!",
+      category:"BatSignal!",
       _id:"1",
-      tags: ["name suggestions", "description suggestions","fundraising ideas","social media ideas","photography ideas", "other ideas"]
+      tags: [
+        {tag:"name suggestions"},
+       {tag:"description suggestions"},
+       {tag:"fundraising ideas"},
+       {tag:"social media ideas"},
+       {tag:"photography ideas"}, 
+       {tag:"other ideas"}
+      ]
     },
     {
-      name:"PlayYard & Community",
+      category:"PlayYard & Community",
       _id:"2",
-      tags: ["General ChitChat","showoff your pets!"]
+      tags: [
+        {tag:"General ChitChat"},
+        {tag:"showoff your pets!"}
+      ]
     },
-    { name:"Bugs & Feedback",
+    { category:"Bugs & Feedback",
       _id:"3",
-      tags: ["bugs","feedback"]
+      tags: [
+        {tag:"bugs"},
+        {tag:"feedback"}]
     }
    ]
   
