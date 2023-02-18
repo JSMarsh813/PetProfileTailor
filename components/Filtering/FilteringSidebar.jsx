@@ -5,15 +5,17 @@ import React, {useEffect, useState} from 'react'
 
 
 function FilteringSidebar({category, handleFilterChange,IsOpen}) {
+  
 
   return (
     <div className={`w-80 h-fit bg-violet-900 border-b-2 border-solid border-violet-400 rounded-box place-items-center ${IsOpen?"":"hidden"}`}>
     {/* mapping through categories ex: gender, holidays */}
             {category.map((category,index)=>{return (
+            
            <Disclosure 
                 key={category._id} 
+            
                 >
-
 {/* defaultOpen will have the disclosure stay open*/}
              {({ open }) => (
                <>
@@ -21,7 +23,7 @@ function FilteringSidebar({category, handleFilterChange,IsOpen}) {
         {/* Category Name shows here ("species", "food") */}
                  <Disclosure.Button className="flex w-full justify-between rounded-lg rounded-r-none border-t-2 border-violet-300 bg-purple-100 px-4 py-2 text-left text-base font-medium text-purple-900 
                  hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 ">
-                   <span>{category.name} </span>
+                   <span>{category.category} </span>
                    <ChevronUpIcon
                      className={`${
                        open ? 'rotate-180 transform' : ''
@@ -38,12 +40,13 @@ function FilteringSidebar({category, handleFilterChange,IsOpen}) {
    {/* mapping through category options and assigning them a button (ex: male, female, unisex)*/}
    
                      {category.tags.map((option,index)=>
-                     ( <div key={option} className="flex items-center hover:bg-violet-700">
+                    
+                     ( <div key={option._id} className="flex items-center hover:bg-violet-700">
                {/* adds a checkbox*/}
                      <input
                                          id={`filter-mobile-${index}`}
-                                         name={`${option}[]`}
-                                         value={option}
+                                         name={`${option.tag}[]`}
+                                         value={option.tag}
                                          type="checkbox"
                                          // checked={checkedStatusOfTags} 
                                          onChange={handleFilterChange}
@@ -52,10 +55,11 @@ function FilteringSidebar({category, handleFilterChange,IsOpen}) {
                                        />
               {/* shows the actual description (male, female, unisex ect for gender) */}
                       <label
-                                         htmlFor={`filter-mobile-${option}-${option}`}
+                                         htmlFor={`filter-mobile-${option.tag}-${option.tag}`}
                                          className="ml-3 min-w-0 flex-1 text-base text-violet-100 "
                                        >
-                                         {option}
+                                         {option.tag}
+                                         {console.log(option)}
                                        </label>
                      
                      </div>)

@@ -20,7 +20,8 @@ import { unstable_getServerSession } from "next-auth/next"
 // import PostCategoryData from "../pages/api/BatSignalPostCategoryData/PostCategoryData"
 import db from '../utils/db'
 // import { connectToDatabase } from '../pages/api/auth/lib/db'
-import IndividualNames from "../models/individualNames"
+
+import Names from "../models/Names"
 // import User from "../models/User"
 // //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 import { useRouter } from 'next/router';

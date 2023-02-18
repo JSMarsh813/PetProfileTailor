@@ -2,7 +2,7 @@ const { faBullseye } = require("@fortawesome/free-solid-svg-icons");
 const mongoose = require("mongoose");
 const uniqueValidator = require('mongoose-unique-validator');
 
-const IndividualNameSchema= new mongoose.Schema({
+const NameSchema= new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -30,9 +30,9 @@ const IndividualNameSchema= new mongoose.Schema({
 })
 
 // Apply the uniqueValidator plugin to userSchema.
-IndividualNameSchema.plugin(uniqueValidator);
+NameSchema.plugin(uniqueValidator);
 
-module.exports = mongoose.models?.names || mongoose.model("names", IndividualNameSchema);
+module.exports = mongoose.models?.names || mongoose.model("names", NameSchema);
 
   // addedBy:{
   //   type: String,

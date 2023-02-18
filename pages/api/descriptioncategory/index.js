@@ -1,6 +1,6 @@
 import dbConnect from "../../../config/connectmongodb"
-import Category from "../../../models/nameCategory" 
-import NameTag from '../../../models/NameTag'
+import Category from "../../../models/descriptioncategory"
+import descriptiontag from '../../../models/descriptiontag'
 
 export default async function handler(req, res) {
     const {method} = req;

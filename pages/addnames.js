@@ -16,10 +16,10 @@ import PageTitleWithImages from '../components/ReusableSmallComponents/PageTitle
 
 export const getServerSideProps = async (context) => {
 
-    let tagList = await fetch('http://localhost:3000/api/individualtags');
-    let categoryList = await fetch('http://localhost:3000/api/name-categories');
-  
-        let tagData = await tagList.json()
+    let tagList = await fetch('http://localhost:3000/api/nametag');
+    let tagData = await tagList.json()
+
+    let categoryList = await fetch('http://localhost:3000/api/name-categories');     
         let categoryData = await categoryList.json()
     
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
@@ -56,6 +56,7 @@ function AddNewNameWithTags({tagList,categoryList,sessionFromServer}) {
 
      return (     
 <div className="bg-violet-900 h-full text-white">
+  {console.log(tagList)}
 <Layout 
         profileImage={profileImage} 
         userName={userName} 

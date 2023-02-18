@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
     if(method === "GET") {
         try {
-            const individualTags = await IndividualTags.find();
+            const individualTags = await IndividualTags.find()
             res.status(200).json(individualTags);
             
           } catch (err) {

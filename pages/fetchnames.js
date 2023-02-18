@@ -19,17 +19,28 @@ import GeneralButton from "../components/GeneralButton"
 import NameListing from "../components/ShowingListOfContent/Namelisting"
 import FilteringSidebar from '../components/Filtering/FilteringSidebar';
 import PageTitleWithImages from '../components/ReusableSmallComponents/PageTitleWithImages';
+import HeadersForNames from '../components/ShowingListOfContent/HeadersForNames';
+import NameListingAsSections from '../components/ShowingListOfContent/NameListingAsSections';
       
+
+
 export const getServerSideProps = async (context) => {
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
  
 
     let response = await fetch('http://localhost:3000/api/name-categories');
-    let nameResponse= await fetch('http://localhost:3000/api/individualnames');
-  
     let data = await response.json()
+    console.log(data)
+
+    let nameResponse= await fetch('http://localhost:3000/api/individualnames');   
     let nameData = await nameResponse.json()
+
+      //grabbing Tags for name edit function
+
+      let tagList = await fetch('http://localhost:3000/api/nametag');
+      let tagData = await tagList.json()
+      let tagListProp=tagData.map(tag=>tag.tag).reduce((sum,value)=>sum.concat(value),[])
 
     // console.log(data);
   //getServerSideProps allows us to fetch data from an api
@@ -40,6 +51,7 @@ export const getServerSideProps = async (context) => {
         category: data,
         nameList: nameData,
         sessionFromServer: session,
+        tagList:tagListProp,
            },
       }
 
@@ -49,7 +61,10 @@ export const getServerSideProps = async (context) => {
 
 
 
-export default function FetchNames({category,nameList, pageProps, sessionFromServer}) {
+export default function FetchNames(
+  {category,nameList, pageProps, sessionFromServer,tagList}
+  ) {
+
   
    //for Nav menu profile name and image
         //let section exists in case the user is not signed in
@@ -78,9 +93,11 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
   
       //  const [checkedState, setCheckedState] = useState([new Array(category.length).fill([])]);
       // console.log(`namelist ${JSON.stringify(nameList)}`)
-          const[tagFilters,setFiltersState] = useState([])
+          const[tagFilters,setTagFiltersState] = useState([])
                     //array above is filled with tags
                     // ex ["christmas", "male"]
+
+                    console.log(tagFilters)
           const[filterednames,setFilteredNames]=useState([...nameList])
                    //to begin with its filled with all names, not actually filtered yet
                         //  namelist console.log result: 
@@ -114,10 +131,10 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
                   //how do I added checked state for nested array
           const handleFilterChange = (e) => {
 
-       
+            
 
                 const { value, checked } = e.target;
-
+               
                 //copy filteredNames then set it to an empty array, so we "delete" the previous names in the state
                 
                
@@ -147,8 +164,8 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
           //if checked, it will add the new tag to the state/list. If not checked, it will filter it out and replace the state with the new tagfilter array
                 
                 (checked)?   
-                setFiltersState([...tagFilters,value],):( 
-                setFiltersState(tagFilters.filter((tag) => tag!=value)))
+                setTagFiltersState([...tagFilters,value],):( 
+                setTagFiltersState(tagFilters.filter((tag) => tag!=value)))
               // console.log(tagFilters)
                          
           }      
@@ -156,11 +173,13 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
             // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed 
           useEffect(()=>{
             let currenttags=tagFilters
-            
+            console.log(`this is currenttags ${JSON.stringify(currenttags)}`)
+            //this is currenttags ["female","male"]
             setFilteredNames( filterednames.filter((name)=>
                       (currenttags.every((tag)=>
-                                 name.tags.includes(tag)))))
-
+                      name.tags.includes(tag)))))
+            //name.tags.includes(tag))
+            console.log(`this is filterednames ${JSON.stringify(filterednames)}`)
             // console.log((`useEffect filterednames ${JSON.stringify(filterednames)}`))
         },[tagFilters]
           ) 
@@ -199,7 +218,7 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
   return (
   <div className="bg-violet-900">
 
-    <Layout 
+     <Layout 
         profileImage={profileImage} 
         userName={userName}  /> 
 
@@ -215,7 +234,7 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
        
         
         {/* ###################### FILTER DIV ############################ */}
-     
+
         <FilteringSidebar
                  category={category} 
                  handleFilterChange={handleFilterChange}
@@ -233,7 +252,7 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
 
   {/* ex 
                 Bean : male*/}
-        <table className="min-w-full divide-y divide-gray-100 bg-darkPurple text-md ">
+        {/* <table className="min-w-full divide-y divide-gray-100 bg-darkPurple text-md ">
 
           
     <thead className="bg-purple-100">
@@ -291,8 +310,31 @@ export default function FetchNames({category,nameList, pageProps, sessionFromSer
 
           
              </tbody>
-        </table>
+        </table> */}
 
+
+
+        <section className="border-2 border-amber-300 w-full"> 
+                    
+                    <HeadersForNames/>
+                  
+                       <section
+                          className="max-h-96 overflow-scroll">
+                           
+                       {filterednames.map((name)=>{
+                            return <NameListingAsSections
+                            name={name}
+                            key={name._id}
+                            sessionFromServer={sessionFromServer}
+                            tagList={tagList}
+                            />
+                          
+                          }
+                        
+                          )}
+                      </section>
+
+                    </section>
 
       </div>
 

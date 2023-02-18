@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "../../../config/connectmongodb"
 const mongoose = require('mongoose');
-import IndividualNames from "../../../models/individualNames"
+import Description from "../../../models/description"
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 
 export default async function handler(req, res) {
@@ -11,47 +11,42 @@ export default async function handler(req, res) {
 
     if(method === "GET") {
         try {
-            const individualNames = await IndividualNames.find();
-            res.status(200).json(individualNames);
+            const descriptions = await Description.find()
+            .populate({path:"createdby", select:["name","profilename","profileimage"]});
+
+            res.status(200).json(descriptions);
             
           } catch (err) {
             res.status(500).json(err);
           }
         
-          // try {
-          //   const names = await individualNames.find();
-          //   res.status(200).json(individualNames);
-            
-          // } catch (err) {
-          //   res.status(500).json(err);
-          // }
-
+      
     }
 
 
     if(method ==="PUT"){    
          const {description,
-          name,
+          notes,
           tags,
-          nameId
-        } =req.body.nameSubmission
+          descriptionId
+        } =req.body.descriptionSubmission
     
                
-      const toUpdateName = await IndividualNames.findById(nameId);
-     console.log(toUpdateName)
+      const toUpdateDescription = await Description.findById(descriptionId);
+     console.log(toUpdateDescription)
       try {
      
-        if (description){
-          toUpdateName.description =description;  
+        if (notes){
+          toUpdateDescription.notes =notes;  
         }
-      toUpdateName.name =name
+      toUpdateDescription.description =description
      
-      toUpdateName.tags=tags;
+      toUpdateDescription.tags=tags;
   
-      await toUpdateName.save();
+      await toUpdateDescription.save();
       // await db.disconnect();
       res.send({
-        message: 'Name Updated',
+        message: 'Description Updated',
       });
           } 
         
@@ -66,7 +61,9 @@ export default async function handler(req, res) {
 
     if(method ==="POST"){    
         try {
-               const test= await IndividualNames.create(req.body)
+
+          
+               const test= await Description.create(req.body)
                res.status(201).json(test)
         } 
         catch(err){
@@ -81,8 +78,14 @@ export default async function handler(req, res) {
       console.log(`request body is ${JSON.stringify(req.body.itemId)}`)
 
       let idToObjectId = mongoose.Types.ObjectId(req.body.itemId)
-           const test= await IndividualNames.deleteOne({_id:idToObjectId})
-           res.status(200).json({ success: true, msg: `Name Deleted ${test}` })
+      
+           const test= await Description.deleteOne(
+            {_id:idToObjectId}
+            )
+
+           res.status(200).json({
+             success: true,
+              msg: `Description Deleted ${test}` })
     } 
     catch(err){
         res.status(500).json(err)

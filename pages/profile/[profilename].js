@@ -60,7 +60,7 @@ export const getServerSideProps = async (context) => {
 
      //grabbing Tags for name edit function
 
-     let tagList = await fetch('http://localhost:3000/api/individualtags');
+     let tagList = await fetch('http://localhost:3000/api/individualTags');
     let tagData = await tagList.json()
     let tagListProp=tagData.map(tag=>tag.individualTag).reduce((sum,value)=>sum.concat(value),[])
 
@@ -290,13 +290,14 @@ function ProfilePage(
 
                        <section
                           className="max-h-96 overflow-scroll">
-                            
+                           
                        {nameList.map((name)=>{
                             return <NameListingAsSections
                             name={name}
                             key={name._id}
                             sessionFromServer={sessionFromServer}
                             tagList={tagList}
+                            
                             />
                           
                           }
