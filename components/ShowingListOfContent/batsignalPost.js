@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faClock, faDeleteLeft, faTrash, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faClock, faDeleteLeft, faTrash, faTrashCan, faPenToSquare, faLink } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import AddComment from "../AddingNewData/AddComment"
 import GeneralButton from '../GeneralButton';
@@ -27,7 +27,7 @@ function BatsignalPost({
   
 }) {
 
- 
+  let textForShare=`http://localhost:3000/posts/${post._id}`
   const image=post.image
    const title=post.title
    const paragraphText=post.description
@@ -62,6 +62,9 @@ function BatsignalPost({
 
                     //for deleting
   const [showDeleteConfirmation,setShowDeleteConfirmation]=useState(false)
+
+                    //for showing share buttons
+  const[shareSectionShowing,setShareSectionShowing]=useState(false)
 
   let replyComments=""
   if (postsCommentsFromFetch){
@@ -121,6 +124,11 @@ const router=useRouter()
     SetCommentsShowing(!commentsShowing)
            }
            
+  function onClickShowShares() {
+    setShareSectionShowing(!shareSectionShowing)
+  }
+
+  {console.log(`set share section ${shareSectionShowing}`)}
          //if postEdited in the state is true, then we'll force a reload of the page
        if (postChanged) {
                  
@@ -238,8 +246,15 @@ const router=useRouter()
           />
 
               <ShareButton
-                  shares={shares}/>
+                  shares={shares}
+                  onClickShowShares={onClickShowShares}
+                  />
+                 
             </div>
+          
+
+
+
            
             <AddComment 
                   postid={postId} 
@@ -248,6 +263,21 @@ const router=useRouter()
                   />                 
 
         </section>
+
+{/* SHARING OPTIONS SECTION */}
+{shareSectionShowing&&
+        <section>         
+<button
+     onClick={() => { 
+            navigator.clipboard.writeText(textForShare);
+           }}>
+<FontAwesomeIcon 
+      icon={faLink}
+      className="mr-2"/>
+            Copy link
+      </button>
+</section>
+}
 
         {/* ######## POST'S COMMENTS SECTION ###########*/}
 
