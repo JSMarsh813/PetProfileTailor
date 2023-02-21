@@ -14,6 +14,8 @@ import EditComment from '../EditingData/EditComment'
 import DeleteCommentNotification from '../DeletingData/DeleteCommentNotification'
 
 import { useRouter } from 'next/router';
+import ShareButton from '../ReusableSmallComponents/ShareButton'
+import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
 
 function CommentListing({postid,rootComment,replies,sessionFromServer}) {
   //  { comment,replies}
@@ -27,6 +29,13 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
   const [adjustedParentId,setAdjustedParentId]=useState("")
          
   const showtime=true
+
+  
+        //STATE FOR SHOWING SHARE OPTIONS
+        const[shareSectionShowing,setShareSectionShowing]=useState(false)
+
+        let linkToShare=`http://localhost:3000/description/${rootComment._id}`
+
 
   useEffect(()=>{
     {rootComment.parentcommentid?
@@ -61,6 +70,8 @@ const router=useRouter()
        }
 
        //if postEdited in the state is true, then we'll force a reload of the page
+
+       
        if (commentChanged) {
              
         const forceReload = () => 
@@ -70,6 +81,12 @@ const router=useRouter()
           setCommentChanged(false)           
        
       } 
+
+          //for shares
+          function onClickShowShares() {
+            setShareSectionShowing(!shareSectionShowing)
+    }
+
 
 
 
@@ -134,6 +151,15 @@ const router=useRouter()
                            apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}  
                
             />
+
+
+<ShareButton
+              onClickShowShares={onClickShowShares}
+              shareIconStyling="text-darkPurple"
+
+              
+             />
+
           </div>
 
                   {((sessionFromServer)&&
@@ -176,7 +202,13 @@ const router=useRouter()
                 
               
           </div>            
-                                              
+          {shareSectionShowing&&
+        <section
+          className="bg-violet-900 py-2">
+                <SharingOptionsBar
+                  linkToShare={linkToShare}/>
+        </section>
+                }                           
 
                         {replying&& 
                         
@@ -196,7 +228,7 @@ const router=useRouter()
 
           {/* if replies exist for this post, loop through them. If their parentcommentid matches this current comment, then add it to the bottom of this comment.
           Otherwise do not add it to the bottom of this comment. */}
-                {(replies!="")&&                
+                {(replies)&&                
                 replies.map(reply=> {
                   if (reply.parentcommentid==rootComment._id) {
 

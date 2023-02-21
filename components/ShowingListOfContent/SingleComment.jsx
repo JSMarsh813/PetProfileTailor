@@ -12,7 +12,11 @@ import EditComment from '../EditingData/EditComment'
 import DeleteButton from '../ReusableSmallComponents/DeleteButton';
 import DeleteCommentNotification from '../DeletingData/DeleteCommentNotification';
 
+import { ToastContainer, toast } from 'react-toastify';
+
 import { useRouter } from 'next/router';
+import ShareButton from '../ReusableSmallComponents/ShareButton'
+import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
 
 function CommentListing({postid,rootComment,sessionFromServer}) {
  
@@ -37,6 +41,13 @@ const [showDeleteConfirmation,setShowDeleteConfirmation]=useState(false)
 const router=useRouter()
   const [commentChanged,setCommentChanged]=useState(false)
 
+  
+        //STATE FOR SHOWING SHARE OPTIONS
+        const[shareSectionShowing,setShareSectionShowing]=useState(false)
+
+        let linkToShare=`http://localhost:3000/comments/${rootComment._id}`
+
+        let linkToPost=`http://localhost:3000/posts/${rootComment.postid}`
   useEffect(()=>{
     {rootComment.parentcommentid?
       setAdjustedParentId(rootComment.parentcommentid):
@@ -76,6 +87,10 @@ const router=useRouter()
               setCommentChanged(false)           
            
           } 
+    //for shares
+    function onClickShowShares() {
+      setShareSectionShowing(!shareSectionShowing)
+}
 
 
   return (
@@ -129,6 +144,12 @@ const router=useRouter()
                apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}  
 
             />
+
+<ShareButton
+              onClickShowShares={onClickShowShares}
+              shareIconStyling="text-darkPurple"
+             />
+             
           </div>
 
         {((sessionFromServer)&&
@@ -171,7 +192,10 @@ const router=useRouter()
 
 
 
-            </div>            
+            </div>    
+                
+      
+           
                    
                         {replying&& 
                         
@@ -186,14 +210,24 @@ const router=useRouter()
 
                         </div>
 
+
                       
                         </div>
-<div className="grid cols-1 justify-items-center my-2">
-
-<GeneralButton
-    text={`Link to Post ${rootComment.postid}`}
-    className={""}/>
- </div>                                     
+                        {shareSectionShowing&&
+        <section
+          className="bg-violet-900 py-2">
+                <SharingOptionsBar
+                  linkToShare={linkToShare}/>
+        </section>
+                }   
+                <GeneralButton
+                   className="flex my-4"
+                    onClick={ () => { 
+                      navigator.clipboard.writeText(linkToPost)
+                      toast.success("link saved to clipboard")
+                     }}
+                    text="link to related post"/>
+                               
 </div>
 
 

@@ -15,6 +15,7 @@ import CommentListing from '../../components/ShowingListOfContent/CommentListing
 import HeadersForNames from '../../components/ShowingListOfContent/HeadersForNames'
 import PointSystemList from '../../components/ShowingListOfContent/PointSystemList'
 import DashboardChartForFavDescriptions from '../../components/ShowingListOfContent/DashboardChartForFavDescriptions'
+import FollowButton from '../../components/ReusableSmallComponents/buttons/FollowButton'
 
 
 export const getServerSideProps = async (context) => {
@@ -221,13 +222,11 @@ function ProfilePage(
    
 
         <div className=" w-full pb-4">
-      <a href="#" className=" mr-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 
-      hover:border-yellow-500 text-center py-2 px-4 rounded">
-        <FontAwesomeIcon
-             icon={faUserPlus}
-             className="mr-2"/>
-  Follow
-</a>
+
+<FollowButton/>
+
+
+
 <a href="#" className="ml-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 hover:border-yellow-500 text-center py-2 px-4 rounded">
 <FontAwesomeIcon
              icon={faEnvelope}

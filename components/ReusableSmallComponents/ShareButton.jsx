@@ -5,27 +5,30 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 
 export default function ShareButton({
   shares,
-  onClickShowShares
+  onClickShowShares,
+  shareIconStyling,
 }) {
 
-const [sharesCount, setSharesCount ]=useState(shares.length)
-
   return (
+
+
     <label
     className="flex-1 inline ml-6">
-
+  
         <input
+            
             className="hidden"
             type="button"           
             onClick={onClickShowShares}    
          />
 
          <FontAwesomeIcon 
+            
             icon={faShareFromSquare} 
-            className="text-3xl mr-2 inline flex-1"/>
-        <span
-            className="text-xl">{sharesCount}
-        </span>
+            className={`text-2xl mr-2 inline flex-1 ${shareIconStyling}`}
+            />
+         
+
 
 </label>
   )

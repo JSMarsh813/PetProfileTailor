@@ -6,6 +6,8 @@ import EditButton from '../ReusableSmallComponents/EditButton'
 import { useRouter } from 'next/router';
 import DeleteItemNotification from '../DeletingData/DeleteItemNotification'
 import EditName from '../EditingData/EditName'
+import ShareButton from '../ReusableSmallComponents/ShareButton'
+import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
 
 export default function NameListingAsSections({name, sessionFromServer,tagList}) {  
     const router=useRouter()
@@ -23,6 +25,11 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
 
  //#### STATE FOR EDITS AND DELETIONS
  const [itemChanged,setItemChanged]=useState(false)
+
+//STATE FOR SHOWING SHARE OPTIONS
+        const[shareSectionShowing,setShareSectionShowing]=useState(false)
+
+        let linkToShare=`http://localhost:3000/name/${name.name}`
  
 
          // ##for the delete notification button #####
@@ -36,6 +43,10 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
                 SetShowEditPage(true)
                  }
 
+    //for shares
+        function onClickShowShares() {
+              setShareSectionShowing(!shareSectionShowing)
+      }
         //if itemChanged in the state is true, then we'll force a reload of the page. This is for BOTH the edit and delete functions
 
       if (itemChanged) {
@@ -52,6 +63,7 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
 
 
   return (
+    <div>
     <div 
     
             className="grid 
@@ -65,16 +77,21 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
                     items-center justify-items-center">
         
                 {/* ###### LIKES SECTION #### */}
-
+ <div>
                 <LikesButtonAndLikesLogic 
                      data={name}      
                      HeartIconStyling="text-2xl"  
                      HeartIconTextStyling="ml-2" 
                      currentTargetedId={currentTargetedId}
                      session={sessionFromServer}
-                      apiLink={`http://localhost:3000/api/auth/updateLikes`}  
+                      apiLink={`http://localhost:3000/api/auth/updateLikes`} 
+                      
+                      
           />
-
+          <ShareButton
+              onClickShowShares={onClickShowShares}
+             />
+          </div>
             {/* ###### NAME SECTION #### */}
         <span className=""> {name.name} </span>
 
@@ -111,6 +128,8 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
            </div>
             }
 
+
+
  {showDeleteConfirmation&&
     <DeleteItemNotification
         setShowDeleteConfirmation=      
@@ -142,7 +161,17 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
            
         </section>
        
-        
+  
 </div>
+
+{shareSectionShowing&&
+        <section
+          className="bg-violet-900 py-2">
+                <SharingOptionsBar
+                  linkToShare={linkToShare}/>
+        </section>
+                }
+</div>
+
   )
 }

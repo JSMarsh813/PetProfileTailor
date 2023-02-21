@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faClock, faDeleteLeft, faTrash, faTrashCan, faPenToSquare, faLink } from '@fortawesome/free-solid-svg-icons'
-import '@fortawesome/fontawesome-svg-core/styles.css'
+
 import AddComment from "../AddingNewData/AddComment"
 import GeneralButton from '../GeneralButton';
 import CommentListing from './CommentListing';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAndLikesLogic"
 import EditPost from '../EditingData/EditPost';
 import EditButton from '../ReusableSmallComponents/EditButton';
@@ -16,6 +16,7 @@ import ShareButton from '../ReusableSmallComponents/ShareButton';
 import PostersImageUsernameProfileName from '../ReusableSmallComponents/PostersImageUsernameProfileName';
 
 import { useRouter } from 'next/router';
+import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar';
 
 
 function BatsignalPost({
@@ -27,7 +28,7 @@ function BatsignalPost({
   
 }) {
 
-  let textForShare=`http://localhost:3000/posts/${post._id}`
+ 
   const image=post.image
    const title=post.title
    const paragraphText=post.description
@@ -48,12 +49,13 @@ function BatsignalPost({
 
                      //for comments
     const [commentsShowing,SetCommentsShowing]=useState(false)
-
+console.log(postsCommentsFromFetch)
     let rootComments=[]
     if (postsCommentsFromFetch){
      rootComments=postsCommentsFromFetch.filter      
-            (comment=>comment.postid===post._id&&comment.parentcommentid=== null)
+            (comment=>comment.postid===post._id&&comment.parentcommentid===null)
           }
+          console.log(`this is rootComments ${JSON.stringify(rootComments)}`)
 
     let amountOfComments=rootComments.length
 
@@ -65,11 +67,14 @@ function BatsignalPost({
 
                     //for showing share buttons
   const[shareSectionShowing,setShareSectionShowing]=useState(false)
+  let linkToShare=`http://localhost:3000/posts/${post._id}`
+  
 
   let replyComments=""
   if (postsCommentsFromFetch){
   replyComments = postsCommentsFromFetch.filter(comment=>comment.parentcommentid!=null)
   }
+  console.log(`ths is replyComments ${JSON.stringify(replyComments)}`)
                       //for likes
   const [currentTargetedId,setCurrentTargetedId]=useState(postId)
                  //if the post is edited, we will refresh this component
@@ -250,11 +255,7 @@ const router=useRouter()
                   onClickShowShares={onClickShowShares}
                   />
                  
-            </div>
-          
-
-
-
+            </div>        
            
             <AddComment 
                   postid={postId} 
@@ -266,17 +267,8 @@ const router=useRouter()
 
 {/* SHARING OPTIONS SECTION */}
 {shareSectionShowing&&
-        <section>         
-<button
-     onClick={() => { 
-            navigator.clipboard.writeText(textForShare);
-           }}>
-<FontAwesomeIcon 
-      icon={faLink}
-      className="mr-2"/>
-            Copy link
-      </button>
-</section>
+<SharingOptionsBar
+    linkToShare={linkToShare}/>
 }
 
         {/* ######## POST'S COMMENTS SECTION ###########*/}

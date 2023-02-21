@@ -6,10 +6,18 @@ import EditButton from '../ReusableSmallComponents/EditButton'
 import { useRouter } from 'next/router';
 import DeleteItemNotification from '../DeletingData/DeleteItemNotification'
 import EditDescription from '../EditingData/EditDescription'
+import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
+import ShareButton from '../ReusableSmallComponents/ShareButton'
 
 export default function DescriptionListingAsSections(
     {description, sessionFromServer,tagList}
     ) {  
+
+        //STATE FOR SHOWING SHARE OPTIONS
+        const[shareSectionShowing,setShareSectionShowing]=useState(false)
+
+        let linkToShare=`http://localhost:3000/description/${description._id}`
+        
     const router=useRouter()
 
  //############## STATE FOR LIKES #######
@@ -37,6 +45,11 @@ export default function DescriptionListingAsSections(
                function updateEditState(){
                 SetShowEditPage(true)
                  }
+
+    //for shares
+        function onClickShowShares() {
+              setShareSectionShowing(!shareSectionShowing)
+      }
 
         //if itemChanged in the state is true, then we'll force a reload of the page. This is for BOTH the edit and delete functions
 
@@ -69,7 +82,7 @@ export default function DescriptionListingAsSections(
                     items-center justify-items-center">
         
                 {/* ###### LIKES SECTION #### */}
-
+<div>
                 <LikesButtonAndLikesLogic 
                      data={description}      
                      HeartIconStyling="text-2xl"  
@@ -79,6 +92,10 @@ export default function DescriptionListingAsSections(
                       apiLink={`http://localhost:3000/api/description/updateLikes`}  
           />
 
+        <ShareButton
+              onClickShowShares={onClickShowShares}
+             />
+</div>
             {/* ###### description SECTION #### */}
         <span className=""> {description.description} </span>
 
@@ -150,8 +167,15 @@ export default function DescriptionListingAsSections(
         
 </div>
 
-<section
-    className="text-center"> Testing </section>
+
+{shareSectionShowing&&
+        <section
+          className="bg-violet-900 py-2">
+                <SharingOptionsBar
+                  linkToShare={linkToShare}/>
+        </section>
+                }
+                
 </div>
 
   )
