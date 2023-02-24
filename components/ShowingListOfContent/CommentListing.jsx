@@ -34,7 +34,7 @@ function CommentListing({postid,rootComment,replies,sessionFromServer}) {
         //STATE FOR SHOWING SHARE OPTIONS
         const[shareSectionShowing,setShareSectionShowing]=useState(false)
 
-        let linkToShare=`http://localhost:3000/description/${rootComment._id}`
+        let linkToShare=`http://localhost:3000/comments/${rootComment._id}`
 
 
   useEffect(()=>{

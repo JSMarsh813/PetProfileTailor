@@ -49,7 +49,8 @@ import clientPromise from "../auth/lib/mongodb"
             _id: user._id,
             name: user.name,
             email: user.email,
-            profileimage: user.profileimage,            
+            profileimage: user.profileimage,          
+           
           };
         }
         throw new Error('Invalid email or password');

@@ -175,8 +175,8 @@ const postSubmission = async (imageFromCloudinary) => {
                   className={`text-darkPurple mb-4 border ${description? 'border-violet-200': 'border-rose-500 border-2'}`}
                   id="nameTags"
                   options={tagListProp.map((opt,index) => ({
-                    label: opt,
-                    value: opt}))
+                    label: opt.tag,
+                    value: opt.tag}))
                    }
                  
                   isMulti

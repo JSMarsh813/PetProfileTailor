@@ -7,7 +7,7 @@ export default function HeadersForCategories() {
           className="grid lg:grid-cols-5
           grid-cols-3 gap-4 
           bg-purple-100
-          text-darkPurple p-2"> 
+          text-darkPurple p-2 text-base"> 
         <span> Like </span>
         <span> Description</span>
         <span> Notes </span>

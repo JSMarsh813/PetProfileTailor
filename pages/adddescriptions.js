@@ -18,9 +18,11 @@ export const getServerSideProps = async (context) => {
 
      let tagList = await fetch('http://localhost:3000/api/descriptiontag');
     let tagData = await tagList.json()
-    let tagListProp=tagData.map(tag=>tag.descriptiontag).reduce((sum,value)=>sum.concat(value),[])
+    let tagListProp=tagData
+          .map(tag=>tag.tag)
+          .reduce((sum,value)=>sum.concat(value),[])
 
-             
+             console.log(tagListProp)
 
   return {
     props: {

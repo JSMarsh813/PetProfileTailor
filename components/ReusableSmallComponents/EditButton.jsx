@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faClock, faDeleteLeft, faTrash, faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
-export default function EditButton({onupdateEditState,className}) {
+export default function EditButton({setShowProfileEditPage,className}) {
 
     // const [showEditPage,SetShowEditPage]=useState(false)
 
@@ -24,7 +24,7 @@ export default function EditButton({onupdateEditState,className}) {
     <input
            className="hidden"
             type="button"           
-            onClick={onupdateEditState}    
+            onClick={setShowProfileEditPage}    
     />
           
        <FontAwesomeIcon 

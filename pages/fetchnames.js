@@ -29,7 +29,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
  
 
-    let response = await fetch('http://localhost:3000/api/name-categories');
+    let response = await fetch('http://localhost:3000/api/namecategories');
     let data = await response.json()
     console.log(data)
 
@@ -240,6 +240,8 @@ export default function FetchNames(
                  handleFilterChange={handleFilterChange}
                  IsOpen={IsOpen}
                  />
+
+            
       
                   {/*################# CONTENT DIV ################### */}
 

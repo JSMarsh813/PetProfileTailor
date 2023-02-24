@@ -51,6 +51,7 @@ function BatsignalPost({
     const [commentsShowing,SetCommentsShowing]=useState(false)
 console.log(postsCommentsFromFetch)
     let rootComments=[]
+    
     if (postsCommentsFromFetch){
      rootComments=postsCommentsFromFetch.filter      
             (comment=>comment.postid===post._id&&comment.parentcommentid===null)
@@ -228,7 +229,8 @@ const router=useRouter()
                     showtime={showtime}
                     />
 
-                <h4> 
+                <h4
+                    className="text-base"> 
                   Tags: {tagList}
                 </h4>
 

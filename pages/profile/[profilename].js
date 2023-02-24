@@ -8,6 +8,7 @@ import { authOptions } from "../api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 import NameListingAsSections from '../../components/ShowingListOfContent/NameListingAsSections'
 
+import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCommentDots, faFaceGrinWink, faUserTie, faCircleChevronDown, faLocationDot, faRankingStar, faUserPlus, faEnvelopeOpenText, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -16,7 +17,10 @@ import HeadersForNames from '../../components/ShowingListOfContent/HeadersForNam
 import PointSystemList from '../../components/ShowingListOfContent/PointSystemList'
 import DashboardChartForFavDescriptions from '../../components/ShowingListOfContent/DashboardChartForFavDescriptions'
 import FollowButton from '../../components/ReusableSmallComponents/buttons/FollowButton'
-
+import EditBioAndProfile from '../../components/EditingData/EditBioAndProfile'
+import EditBioProfileButton from '../../components/ReusableSmallComponents/buttons/EditBioProfileButton'
+import UsersFollowersList from '../../components/ShowingListOfContent/UsersFollowersList'
+import UsersFollowingList from '../../components/ShowingListOfContent/UsersFollowingList'
 
 export const getServerSideProps = async (context) => {
 
@@ -40,7 +44,7 @@ export const getServerSideProps = async (context) => {
      
      let nameid=userData[0]._id
      let UserId=userData[0]._id
-     console.log(nameid)
+   
 
      //names user created 
      let nameResponse= await fetch('http://localhost:3000/api/names/namesContainingUserId/'+nameid)
@@ -107,6 +111,11 @@ export const getServerSideProps = async (context) => {
                    let findLikedDescriptions= await fetch('http://localhost:3000/api/description/findDescriptionsLIkedByUserId/'+UserId)
                  let likedDescriptions = await findLikedDescriptions.json()
 
+                 //FOLLOWING LIST
+                  let findUsersFollowing = await fetch(
+                      'http://localhost:3000//api/user/grabusersfollowing/'+nameid)                           
+                 
+                let usersFollowing = await findUsersFollowing.json()
 
   return {
     props: {
@@ -127,7 +136,9 @@ export const getServerSideProps = async (context) => {
    
       likedDescriptions:likedDescriptions,
       createdDescriptions:createdDescriptions,
-      descriptionTagListProp:descriptionTagListProp
+      descriptionTagListProp:descriptionTagListProp,
+
+      usersFollowing:usersFollowing
      
          },
     }
@@ -151,7 +162,8 @@ function ProfilePage(
     
     createdDescriptions,
     likedDescriptions,
-    descriptionTagListProp
+    descriptionTagListProp,
+    usersFollowing
     
    }) {
 
@@ -164,7 +176,31 @@ function ProfilePage(
        userName=sessionFromServer.user.name
     profileImage=sessionFromServer.user.profileimage
   }
- //end of section for nav menu
+
+     const [showProfileEditPage,setShowProfileEditPage]=useState(false)
+  const [profileChanged,setProfileChange]=useState(false)
+
+  const [showFollowersList,setShowFollowersListPage]=useState(false)
+ 
+  const [showFollowingList,setShowFollowingList]=useState(false)
+
+   function updateSetShowProfileEditPage(){
+    setShowProfileEditPage(!showProfileEditPage)
+       }
+
+   function updateSetProfileChange(){
+   setProfileChange(!profileChanged)
+       }
+
+
+       function showListOfFollowers(){
+        setShowFollowersListPage(!showFollowersList)
+       }
+       
+
+    function showfollowingListFunction(){
+      setShowFollowingList(!showFollowingList)
+    }
 
   return (
     <div >
@@ -199,9 +235,13 @@ function ProfilePage(
         
             <div className="mr-4 text-center">
               <span className="text-xl font-bold block tracking-wide">
-                10
+                {usersFollowing.length}
               </span>
-              <span className="text-sm">Following</span>
+              <button
+                   className="text-sm"
+                   onClick={()=>showfollowingListFunction()}>
+                    Following
+                   </button>
             </div>
 
 
@@ -209,7 +249,12 @@ function ProfilePage(
               <span className="text-xl font-bold block tracking-wide">
                  {userData.followers.length}
               </span>
-              <span className="text-sm">Followers</span>
+              <button
+                  className="text-sm"
+                    onClick={()=>showListOfFollowers()}>
+                    Followers
+              </button>
+
             </div>
           </div>
         </div>
@@ -221,11 +266,18 @@ function ProfilePage(
        
    
 
+{sessionFromServer.user._id == userData._id?
+<EditBioProfileButton
+setShowProfileEditPage={updateSetShowProfileEditPage}/>
+:
+
         <div className=" w-full pb-4">
 
-<FollowButton/>
+<FollowButton
+  data={userData}
+  session={sessionFromServer}
 
-
+/>
 
 <a href="#" className="ml-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 hover:border-yellow-500 text-center py-2 px-4 rounded">
 <FontAwesomeIcon
@@ -235,7 +287,10 @@ function ProfilePage(
 </a>
 
 </div>
-        <div className="text-sm leading-normal mt-0 mb-2 font-bold ">
+
+}
+<span> The message feature is still in development</span>
+        <div className="text-sm leading-normal mt-4 mb-2 font-bold ">
         <FontAwesomeIcon 
               icon={faLocationDot}
               className="mr-2 text-lg "/>
@@ -446,6 +501,30 @@ function ProfilePage(
         }
 
   </div> 
+
+  {showProfileEditPage&&
+  
+ <EditBioAndProfile
+ userData={userData}
+ sessionFromServer={sessionFromServer}
+ setShowProfileEditPage={updateSetShowProfileEditPage}
+ setProfileChange={updateSetProfileChange}
+ />}
+
+ {showFollowersList&&
+ <UsersFollowersList
+      userData={userData}
+      sessionFromServer={sessionFromServer}
+      setShowUsersListPage={showListOfFollowers}
+      />}
+
+
+  {showFollowingList&&
+  <UsersFollowingList
+ userData={usersFollowing}
+ sessionFromServer={sessionFromServer}
+ setShowUsersListPage={showfollowingListFunction}
+ />}
             </section>     
       </div>
 

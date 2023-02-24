@@ -5,23 +5,32 @@ import 'react-toastify/dist/ReactToastify.css';
 import GeneralButton from './GeneralButton';
 import DisabledButton from './DisabledButton';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faCommentDots, faImage,faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faTrashCan, faX, faCircleXmark, faTowerBroadcast } from '@fortawesome/free-solid-svg-icons'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
 function imageUpload({sessionFromServer}) {
 
 const [selectedImage, setSelectedImage] = useState();
 const [newProfileImage,setNewProfileImage] =useState("")
-      
+const[imagePreview,setImagePreview]=useState()
 
  const handleImageAttachment = (e) => {
   e.preventDefault();             
  setSelectedImage(e.target.files[0])
+
+ setImagePreview(URL.createObjectURL(e.target.files[0]))
+
  console.log(selectedImage)
 }
 
 // ########## upload image to cloudinary #############
+
 const handleImageUpload = async () => {
     if (!selectedImage) return
 
     const formData = new FormData();
+    
     formData.append('file', selectedImage);
     formData.append('userId', sessionFromServer.user._id);
     formData.append('upload_preset', "noyhrbxs");
@@ -37,7 +46,7 @@ const handleImageUpload = async () => {
       setNewProfileImage(profileImage)
                    
       // toast('Image uploaded Successfully!', { type: 'success' });
-          
+      updateUserProfileImage(profileImage)
   }
   console.log(`This is ${newProfileImage}`)
   //Works! Result: This is https://res.cloudinary.com/dujellms1/image/upload/v1673928335/profileimage/acpzgzskf3vaxjhpcesj.jpg
@@ -46,7 +55,8 @@ const handleImageUpload = async () => {
                           // ########## upload image to current users mongoDB user document  #############
 
   const updateUserProfileImage = async (newProfileImage) => {
-       console.log(`in function${newProfileImage}`)
+       console.log(`in function
+       ${newProfileImage}`)
      //Result in functionhttps://res.cloudinary.com/dujellms1/image/upload/v1673929130/profileimage/ormkjpffjkhhv6rjm53b.jpg
      //so its getting the right data/parameter
 
@@ -58,9 +68,10 @@ const handleImageUpload = async () => {
             //XHR error message ==>Json in request newProfileImage	"https://res.cloudinary.com/dujellms1/image/upload/v1673930174/profileimage/b2xuq8gosdpoqifsm06x.jpg". So the request itself is correct....
             
            if(res.status == 200){
-            toast.success('Profile Image updated successfully');
+            toast.success('Avatar updated! Please sign back in to finish updating your avatar');
             setSelectedImage("")
-            console.log(res)
+            setImagePreview("")
+           
             }
 
            else if (res.error) {
@@ -78,16 +89,17 @@ const handleImageUpload = async () => {
         };
 
         //only run updateUserProfileImage if the state value, newProfileImage, has updated. 
-useEffect(()=>{
-  console.log(`in useEffect ${newProfileImage}`)
-  //when page loads
-          //Result: in useEffect 
-  //Result after submitting image: in useEffect https://res.cloudinary.com/dujellms1/image/upload/v1673928814/profileimage/wdxjcabyzqgzp0zyx5i5.jpg
 
-  if (newProfileImage!=""){
-    updateUserProfileImage(newProfileImage)
-  }
-},[newProfileImage])
+// useEffect(()=>{
+//   console.log(`in useEffect ${newProfileImage}`)
+//   //when page loads
+//           //Result: in useEffect 
+//   //Result after submitting image: in useEffect https://res.cloudinary.com/dujellms1/image/upload/v1673928814/profileimage/wdxjcabyzqgzp0zyx5i5.jpg
+
+//   if (newProfileImage!=""){
+//     updateUserProfileImage("")
+//   }
+// },[newProfileImage])
 
 
 
@@ -131,6 +143,23 @@ useEffect(()=>{
         }
 
 
+                 {/* ##### IMAGE PREVIEW AREA  ######*/}
+                 {imagePreview &&
+    <div
+            className="flex justify-center">
+              <div className="relative w-content"> 
+
+        <img
+        className="max-h-96 object-scale-down mx-auto block"      
+        src={imagePreview}/>
+            <FontAwesomeIcon 
+            icon={faCircleXmark} 
+            onClick={()=>{
+                    setSelectedImage(""); 
+                    setImagePreview("")}}
+            className="text-3xl text-yellow-300 mr-2 absolute top-1 right-1 justify-center drop-shadow-md"/>
+                 </div>
+        </div>}
 
         <p className="mt-4">
              After uploading the new image, to finish updating your avatar please log out and log back in </p>

@@ -8,6 +8,10 @@ import DeleteItemNotification from '../DeletingData/DeleteItemNotification'
 import EditName from '../EditingData/EditName'
 import ShareButton from '../ReusableSmallComponents/ShareButton'
 import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
+import SeeCommentsButton from '../ReusableSmallComponents/SeeCommentsButton'
+import GeneralButton from '../GeneralButton'
+import AddNameComment from '../AddingNewData/AddNameComment'
+import CommentListing from '../ShowingListOfContent/CommentListing'
 
 export default function NameListingAsSections({name, sessionFromServer,tagList}) {  
     const router=useRouter()
@@ -25,6 +29,14 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
 
  //#### STATE FOR EDITS AND DELETIONS
  const [itemChanged,setItemChanged]=useState(false)
+
+ //### STATE FOR COMMENTS ######
+ const [commentsShowing,SetCommentsShowing]=useState(false)
+
+ let amountOfComments=1
+
+ 
+ const [commentsFromFetch,setCommentsFromFetch]=useState([])
 
 //STATE FOR SHOWING SHARE OPTIONS
         const[shareSectionShowing,setShareSectionShowing]=useState(false)
@@ -47,6 +59,42 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
         function onClickShowShares() {
               setShareSectionShowing(!shareSectionShowing)
       }
+
+      //########## for comments
+      function updateCommentShowState(){
+        SetCommentsShowing(!commentsShowing)
+               }
+
+               const handleFetchComments = async () => {
+                const response = await fetch('http://localhost:3000/api/names/commentscontainingnameid/'+name._id)
+                const data =await response.json()
+                console.log(data)
+                setCommentsFromFetch(data)
+              }
+         
+              useEffect(() => {
+               handleFetchComments();
+               console.log(commentsFromFetch)
+           },[])
+
+             //root comments
+         let rootComments=[]
+    
+             if (commentsFromFetch){
+              rootComments=commentsFromFetch.filter      
+                     (comment=>comment.nameid===name._id&&
+                              comment.parentcommentid===null)
+                   }
+
+            //reply comments
+      let replyComments=""
+
+            if (commentsFromFetch){
+            replyComments = commentsFromFetch.filter(comment=>comment.parentcommentid!=null)
+            }
+
+
+
         //if itemChanged in the state is true, then we'll force a reload of the page. This is for BOTH the edit and delete functions
 
       if (itemChanged) {
@@ -57,13 +105,13 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
           forceReload()
           setItemChanged(false)           
        
-      } 
-  
+      }   
 
 
 
   return (
-    <div>
+    <div
+        className="text-base">
     <div 
     
             className="grid 
@@ -84,13 +132,16 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
                      HeartIconTextStyling="ml-2" 
                      currentTargetedId={currentTargetedId}
                      session={sessionFromServer}
-                      apiLink={`http://localhost:3000/api/auth/updateLikes`} 
-                      
-                      
+                      apiLink={`http://localhost:3000/api/auth/updateLikes`}                                             
           />
           <ShareButton
               onClickShowShares={onClickShowShares}
              />
+
+            <SeeCommentsButton
+               comments={commentsFromFetch.length}
+               onupdateCommentShowState={updateCommentShowState}/>
+
           </div>
             {/* ###### NAME SECTION #### */}
         <span className=""> {name.name} </span>
@@ -108,19 +159,23 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
         
             {/* ###### CREATEDBY SECTION #### */}
         <section>
+        <a
+             href={`http://localhost:3000/profile/${name.createdby.profilename.toLowerCase()}`}>
+
             <img 
                 src={name.createdby.profileimage}
                 className="rounded-2xl h-16"/>
 
            <span>  {name.createdby.name}</span>
            <span>   @{name.createdby.profilename}</span>
+  </a>
 
            {((sessionFromServer)&&
                    (name.createdby._id==sessionFromServer.user._id))&&
            <div className="my-2">
                   <EditButton
                          className="ml-2 mr-6"
-                         onupdateEditState={updateEditState} 
+                         setShowProfileEditPage={updateEditState} 
                          />
                   <DeleteButton
                      onupdateDeleteState={updateDeleteState}/>
@@ -171,7 +226,28 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
                   linkToShare={linkToShare}/>
         </section>
                 }
+
+{commentsShowing&&
+<section
+ className="bg-violet-900 py-2">
+  
+  <AddNameComment
+        nameid={name._id}
+        hasParent={null}
+        sessionFromServer={sessionFromServer}/>
+             {/* ######### showing comments #########*/}
+
+  {rootComments.map((comment)=>{
+
+    return <CommentListing
+        postid={comment.nameid}
+        rootComment={comment}
+        replies={replyComments}
+        sessionFromServer={sessionFromServer}/>
+  })}
+  </section>}
 </div>
+
 
   )
 }

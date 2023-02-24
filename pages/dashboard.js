@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBowlFood, faCookieBite,faRankingStar, faTags, faIgloo, faLightbulb, faIdCard, faComment } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
+import Link from 'next/Link';
+
 import axios from 'axios'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import UserSessionContext from "../src/context/UserSessionContext"
@@ -33,6 +35,8 @@ import SingleComment from '../components/ShowingListOfContent/SingleComment'
 import BatsignalPost from '../components/ShowingListOfContent/BatsignalPost';
 import PointSystemList from '../components/ShowingListOfContent/PointSystemList';
 import DashboardChartForFavDescriptions from '../components/ShowingListOfContent/DashboardChartForFavDescriptions';
+import NameListingAsSections from '../components/ShowingListOfContent/NameListingAsSections';
+import HeadersForNames from '../components/ShowingListOfContent/HeadersForNames';
 
 
 
@@ -340,11 +344,21 @@ const category=[
             ) :
             
     (<div>
-        <section className="Welcome-username-and-profile-image flex border-b-2 border-yellow-300 pb-4">
+        <section className="Welcome-username-and-profile-image flex items-center border-b-2 border-yellow-300 pb-4">
+           <div className="flex-1">
+          <h3 className="text-yellow-400  font-bold mb-2 mx-auto font-semibold text-4xl mb-4">{`Welcome Back ${userName}!`}
+          </h3> 
 
-         <h3 className="text-yellow-400  font-bold mb-2 mx-auto font-semibold text-4xl mb-4">{`Welcome Back ${userName}!`}
-      </h3> 
-         <img className="ml-3  h-32 rounded-full inline"src={profileImage}/>
+        <button
+        className="bg-darkPurple py-2 px-4 rounded-xl text-white border-2 border-yellow-300 shadow-xl">
+            <Link
+              href={`http://localhost:3000/profile/${sessionFromServer.user.name.toLowerCase()}`}>
+             profile link/ edit contributions
+          </Link>
+       </button> 
+
+         </div>
+         <img className="ml-3  h-32 rounded-full inline border-2 border-yellow-300 shadow-xl"src={profileImage}/>
 
          {/* for large screens: -mt-11 */}
         
@@ -378,7 +392,7 @@ const category=[
   
        {/* ############# FAVORITE LISTS SECTION ############ */}
 
-  <section className="favoritesSection px-4 pt-4">
+  <section className="favoritesSection px-4 pt-4 text-center">
 
  <WideCenteredHeader
       heading="Your Favorites"/>
@@ -399,7 +413,7 @@ const category=[
   <GeneralOpenCloseButton 
        text="Open Your Favorites Names List" 
        setStatus={setFavoritesListOpen} 
-       styling=""
+       styling="mb-2"
         status={favoritesListOpen}/>
 
                   {/* <div className="float-right mb-4">
@@ -409,9 +423,20 @@ const category=[
                 </div>
 
 
-                {favoritesListOpen==true&&  <MainChartComponent nameList={favNames} 
-                session={sessionFromServer}/>}
-                
+   
+                {favoritesListOpen==true&&  <div>
+                  <HeadersForNames/>
+                   {favNames.map((name)=>{
+                            return <NameListingAsSections
+                            name={name}
+                            key={name._id}
+                            sessionFromServer={sessionFromServer}
+                            // tagList={tagList}
+                            />}               
+                          )}
+                          </div>}
+
+
 
               </section>
 
@@ -423,14 +448,15 @@ const category=[
               <GeneralOpenCloseButton 
        text="Open Your Favorites Descriptions List" 
        setStatus={setFavDescriptionsOpen} 
-       styling=""
+       styling="mb-2"
         status={favDescriptionsOpen}/>
 
 {favDescriptionsOpen&&
 
 <DashboardChartForFavDescriptions        
-       likedDescriptions={likedDescriptions}    sessionFromServer={sessionFromServer}
-                            tagList={descriptionTagListProp}/>    
+       likedDescriptions={likedDescriptions}    
+       sessionFromServer={sessionFromServer}
+       tagList={descriptionTagListProp}/>    
         }         
         
                    
@@ -443,7 +469,7 @@ const category=[
    <GeneralOpenCloseButton 
        text="View Your Favorite Comments" 
        setStatus={setFavCommentsOpen} 
-       styling=""
+       styling="mb-2"
         status={favCommentsOpen}/>
 
 {favCommentsOpen&&
@@ -460,11 +486,11 @@ const category=[
 {/* {console.log(likedComments)} */}
 {/* {console.log(postsLiked)} */}
       {/* ############# POSTS COMMENTS LIST ############ */}
-      <section>
+      <section >
       <GeneralOpenCloseButton 
        text="View Your Favorite Posts" 
        setStatus={setFavPostsOpen} 
-       styling=""
+       styling="mb-2"
         status={favPostsOpen}/>
 
 {favPostsOpen&&

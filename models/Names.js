@@ -16,6 +16,9 @@ const NameSchema= new mongoose.Schema({
     type: Array,
     required: true,
   },
+  comments:{
+    type: Array,
+  },
   likedby: {
     type:Array,
     required:true,

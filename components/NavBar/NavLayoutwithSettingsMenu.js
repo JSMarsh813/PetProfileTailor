@@ -159,9 +159,9 @@ export default function NavLayoutwithSettingsMenu({ title, children, userName, p
 
                       <DropDownLink
                         className="dropdown-link"
-                         href="/editprofile"
+                         href="/editsettings"
                       >
-                        Edit Profile
+                        Edit Settings
                       </DropDownLink>
                     </Menu.Item>
                    

@@ -5,7 +5,10 @@ import axios from 'axios'
 // import User from '../../models/User';
 
 import { toast, ToastContainer } from 'react-toastify';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/Link';
+import GeneralButton from '../GeneralButton';
 
 //another serverSide props from  let categoryList = await fetch('http://localhost:3000/api/name-categories);
 
@@ -20,7 +23,9 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
     const [isPending,setIsPending]=useState(false);
     const [nameAlreadyExists,setNameExists]=useState(false);
     const [description, setDescription] =useState("")
-   
+    const [namesThatExist,setNamesThatExist]=useState([])
+    const [nameCheck,setNameCheck]=useState("")
+    const [nameCheckFunctionRun,setNameCheckFunctionRun]=useState(false)
    
     // useEffect(() => {
     //   if (session?.user) 
@@ -29,6 +34,26 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
     // }, [session]);
 
     // console.log(`This is session${userId}`)
+
+
+   
+
+  async function checkIfNameExists(){
+   
+    let nameResponse= await fetch('http://localhost:3000/api/names/findonenamebyname/'+nameCheck)
+    let nameData = await nameResponse.json()
+    console.log(nameData)
+    setNamesThatExist(nameData)
+    setNameCheckFunctionRun(true)
+    console.log(`this is names that exist ${JSON.stringify(namesThatExist)}`)
+  }
+
+  function resetData(e){
+    setNameCheck(e.target.value.toLowerCase())
+    setNameCheckFunctionRun(false)
+    setNamesThatExist(null)    
+  }
+
    function handleNameSubmission (e){
     
     
@@ -106,6 +131,61 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
                 <p
                 className="ml-6">Batman could have the tags: comics, superheroes, batman, male, edgy</p>
 
+                <section
+                    className="text-center mt-4">
+              <h6
+                 className="font-semibold text-lg"> Check if a name exists: </h6>
+
+              <input type="text"
+                     className="text-darkPurple"
+                     value={nameCheck}
+                     onChange={
+                      (e)=>resetData(e)} 
+                     />
+                <button
+                   className="inline-block bg-darkPurple p-2 border-2 border-yellow-200"
+                   onClick={()=>checkIfNameExists()}>
+                   
+                   <FontAwesomeIcon 
+                       icon={faSearch} 
+                       className="text-2xl" 
+                       color="yellow"/>   
+
+                    <span
+                        className="mx-2
+                                   text-yellow-200"> Search </span>
+                    </button>
+                
+                    {nameCheckFunctionRun&&namesThatExist.length!=0&&
+                           <p
+                              className="mt-2 
+                                        text-yellow-200 font-bold
+                                         bg-red-700
+                                         border-2 border-yellow-200">
+                                 {namesThatExist[0].name} already exists! 
+                               
+              <Link
+              href={`http://localhost:3000/name/${namesThatExist[0].name.toLowerCase()}`}>
+
+                <GeneralButton            
+                    className="ml-12 my-4"
+                    text={`Link to ${namesThatExist[0].name}'s page`}>
+                      
+                </GeneralButton>
+          </Link></p>
+}
+                {nameCheckFunctionRun&&!namesThatExist.length&&
+                    <span
+                       className="block"> 
+                        Success! {nameCheck} does NOT exist yet. 
+                   </span>
+        }      
+     
+
+                                   
+              </section>
+
+            
 
               <form onSubmit={handleNameSubmission}>
                 {/* needs label and value for Select to work  */}
@@ -123,6 +203,9 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
                     onClick={(e)=>setNameExists(false)}
                                        
                     ></input>
+                    <span
+                      className="block">
+                        Note: Names are saved in lowercase</span>
                     {nameAlreadyExists==true &&      
                  <p 
                     className="text-red-500 font-bold"> 

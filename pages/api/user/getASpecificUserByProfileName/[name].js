@@ -19,6 +19,8 @@
         if(method === "GET") {
             try {
                 const user = await Users.find({profilename:profilename}).select("name followers name profileimage profilename bioblurb location")  
+                .populate("followers","name followers name profileimage profilename bioblurb location")  
+
                 if (user==[]){
                     console.log("error")
                     return res.status(404).send()

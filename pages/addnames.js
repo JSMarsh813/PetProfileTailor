@@ -19,7 +19,7 @@ export const getServerSideProps = async (context) => {
     let tagList = await fetch('http://localhost:3000/api/nametag');
     let tagData = await tagList.json()
 
-    let categoryList = await fetch('http://localhost:3000/api/name-categories');     
+    let categoryList = await fetch('http://localhost:3000/api/namecategories');     
         let categoryData = await categoryList.json()
     
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
@@ -56,7 +56,7 @@ function AddNewNameWithTags({tagList,categoryList,sessionFromServer}) {
 
      return (     
 <div className="bg-violet-900 h-full text-white">
-  {console.log(tagList)}
+  {/* {console.log(tagList)} */}
 <Layout 
         profileImage={profileImage} 
         userName={userName} 
@@ -73,7 +73,7 @@ function AddNewNameWithTags({tagList,categoryList,sessionFromServer}) {
         {/* if not signed in, do not allow them to add names */}
       {(status !="authenticated")&&<div className="bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 text-center"> To avoid spam, users must sign in to add names </div>}
         {/* if not signed in, allow them to add names */}
-      {console.log(`this is session ${sessionFromServer}`)}
+      {/* {console.log(`this is session ${sessionFromServer}`)} */}
         
      <NewNameWithTagsData 
         tagList={tagList} 

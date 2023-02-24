@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
-import axios from 'axios'
+import axios from 'axios';
 
 export const getServerSideProps = async (context) => {
 
@@ -20,15 +20,16 @@ export const getServerSideProps = async (context) => {
 export default function AddCategory({sessionFromServer}) {
     
     const [newCategory,setNewCategory]=useState("")
+
     function handleCategorySubmission (e){ 
         e.preventDefault();
         //prevent buttons default behavior
 
         const categorySubmission= { 
-            name: newCategory,
+            category: newCategory
         }
-
-        axios.post("http://localhost:3000/api/name-categories", categorySubmission)
+  
+        axios.post("http://localhost:3000/api/namecategories", categorySubmission)
         .then(response => {
             console.log(response)})
         .catch(error => {

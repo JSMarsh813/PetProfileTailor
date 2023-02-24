@@ -263,12 +263,13 @@ export default function BatSignal({sessionFromServer, pageProps,postList,comment
 
      {/* posts section */}
         <section className="flex w-full h-fit bg-darkPurple  rounded-box">
-      
+          
              <FilteringSidebar
                  category={category} 
                  handleFilterChange={handleFilterChange}
                  IsOpen={IsOpen}
                  />
+                
     
              <section className="mb-0 w-full flex-1 border-2 border-violet-400 ">
       
@@ -290,10 +291,13 @@ export default function BatSignal({sessionFromServer, pageProps,postList,comment
                                         className="w-full text-white text-xl mx-auto mt-2"> 
                                         Come join us in the play yard! Ask for advice, share ideas, or just chat! </p>
                                       
+                                   
+                
                                         <GeneralButton 
                                             text="Add a Post"
                                             className="ml-2 mt-2"
                                             onClick={()=>{setAddingPost(!addingPost)}}/>
+
                                   </div>
 
                                   {addingPost&& 

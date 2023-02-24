@@ -27,6 +27,7 @@ const UserSchema= new mongoose.Schema({
   followers: {
     type: Array,  
     default: [],
+    ref:"User"
   }, 
   bioblurb: {
     type: String,  
@@ -39,7 +40,7 @@ const UserSchema= new mongoose.Schema({
   },
   profileimage:{
     type:String,
-    default:"http://placekitten.com/50/50"
+    default:"http://placekitten.com/300/300"
   }
 
 }, {timestamps:true})

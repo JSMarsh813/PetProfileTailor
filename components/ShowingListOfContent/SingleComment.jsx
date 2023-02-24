@@ -101,17 +101,35 @@ const router=useRouter()
                 
 
 
-        <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
-                 <img className="w-12 h-12 border-2 border-gray-300 rounded-full" alt="poster's avatar"
-                  src={postersProfileImage}/>
+        <div 
+              className="flex flex-row bg-violet-50 p-2 ml-6 ">
+          
+                 <img 
+                      className="w-12 h-12 border-2 border-gray-300 rounded-full" 
+                      alt="poster's avatar"
+                      src={postersProfileImage}/>
 
-                 <div className="w-full mt-1">
-                       <div className="flex items-center  px-2 font-bold  text-black leading-tight">{postersName}
+                 <div
+                      className="w-full mt-1">
+                       <div 
+                            className="flex items-center  px-2 font-bold  text-black leading-tight">
+                        
+                        <a 
+                              href={`http://localhost:3000/profile/${postersProfileName.toLowerCase()}`}>
+                           <span
+                                className="text-base">
+                                {postersName}
+                           </span>
                        
-                               <span className="ml-2 text-xs font-normal text-gray-500">
+                               <span 
+                                  className="ml-2 text-xs font-normal text-gray-500">
                                @{postersProfileName}
                                  </span>
-                                <span className="ml-2 text-xs font-normal text-gray-500">
+                       </a>
+
+                                <span 
+                                    className="mt-2 ml-2 text-xs font-normal text-gray-500">
+                          
                                 <FontAwesomeIcon 
                                 icon={faClock}
                                 className="mx-2" >
@@ -122,14 +140,17 @@ const router=useRouter()
 
                     
     
-                  <p className=" px-2 ml-2 text-sm font-medium leading-loose text-gray-600 text-left">{rootComment.description}
+                  <p 
+                      className=" px-2 ml-2 text-sm font-medium leading-loose text-gray-600 text-left">{rootComment.description}
                   </p>
        
  
-       <div className="flex justify-between">     
+       <div 
+            className="flex justify-between">     
 
         {/* div with reply and heart icons */}            
-            <div className="text-left ml-2 mt-2 items-start flex">
+            <div 
+                  className="text-left ml-2 mt-2 items-start flex">
                         <FontAwesomeIcon 
                                 icon={ faCommentDots}
                                 className="mx-2 text-darkPurple text-xl"
@@ -155,9 +176,10 @@ const router=useRouter()
         {((sessionFromServer)&&
                   (rootComment.createdby._id==sessionFromServer.user._id))&&
 
-              <div className="items-end flex gap-x-2">            
+              <div 
+                  className="items-end flex gap-x-2">            
                           <EditButton
-                              onupdateEditState={updateEditState} 
+                              setShowProfileEditPage={updateEditState} 
                             
                                   
                             />  
@@ -221,7 +243,7 @@ const router=useRouter()
         </section>
                 }   
                 <GeneralButton
-                   className="flex my-4"
+                   className="flex my-4 text-base"
                     onClick={ () => { 
                       navigator.clipboard.writeText(linkToPost)
                       toast.success("link saved to clipboard")

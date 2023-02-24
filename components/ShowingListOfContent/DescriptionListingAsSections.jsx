@@ -9,6 +9,8 @@ import EditDescription from '../EditingData/EditDescription'
 import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
 import ShareButton from '../ReusableSmallComponents/ShareButton'
 
+import Link from 'next/Link';
+
 export default function DescriptionListingAsSections(
     {description, sessionFromServer,tagList}
     ) {  
@@ -30,7 +32,7 @@ export default function DescriptionListingAsSections(
 
  // ##### STATE FOR EDITS ####
   const [showEditPage,SetShowEditPage]=useState(false)
-
+console.log(`show edit page ${showEditPage}`)
  //#### STATE FOR EDITS AND DELETIONS
  const [itemChanged,setItemChanged]=useState(false)
  
@@ -73,7 +75,7 @@ export default function DescriptionListingAsSections(
     
             className="grid 
             lg:grid-cols-5
-            grid-cols-3 gap-4 
+            grid-cols-3 gap-4 text-base
            
             bg-darkPurple
                     text-purple-200 p-2  
@@ -111,20 +113,25 @@ export default function DescriptionListingAsSections(
         <span>{(description.tags).map(descriptions=>descriptions).join(", ")}</span>
         
             {/* ###### CREATEDBY SECTION #### */}
+            
         <section>
+        <a
+             href={`http://localhost:3000/profile/${description.createdby.profilename.toLowerCase()}`}>
+             
             <img 
                 src={description.createdby.profileimage}
                 className="rounded-2xl h-16"/>
 
            <span>  {description.createdby.name}</span>
            <span>   @{description.createdby.profilename}</span>
-
+           
+           </a>
            {((sessionFromServer)&&
                    (description.createdby._id==sessionFromServer.user._id))&&
            <div className="my-2">
                   <EditButton
                          className="ml-2 mr-6"
-                         onupdateEditState={updateEditState} 
+                         setShowProfileEditPage={updateEditState} 
                          />
                   <DeleteButton
                      onupdateDeleteState={updateDeleteState}/>
@@ -163,7 +170,7 @@ export default function DescriptionListingAsSections(
 
            
         </section>
-       
+      
         
 </div>
 

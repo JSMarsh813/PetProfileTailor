@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     if(method === "GET") {
         try {
             const individualNames = await Names.find()
-            .populate({path:"createdby", select:["name","profilename","profileimage"]});
+            .populate({path:"createdby", select:["name","profilename","profileimage"]})
             res.status(200).json(individualNames);
             
           } catch (err) {

@@ -12,4 +12,4 @@ const NameCategorySchema= new mongoose.Schema({
   }]
 })
 
-module.exports = mongoose.models['NameCategory'] || mongoose.model("NameCategory", NameCategorySchema);
+module.exports = mongoose.models['namecategory'] || mongoose.model("namecategory", NameCategorySchema);

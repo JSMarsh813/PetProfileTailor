@@ -1,5 +1,6 @@
 import React from 'react'
 import ShowTime from './ShowTime'
+import Link from 'next/Link';
 
 export default function PostersImageUsernameProfileName({
     postersProfileImage,
@@ -11,6 +12,8 @@ export default function PostersImageUsernameProfileName({
 
         
     return (
+    <Link
+             href={`http://localhost:3000/profile/${profileName.toLowerCase()}`}>
     <div className="author flex items-center -ml-3 my-3">
 
                      <div>
@@ -40,5 +43,6 @@ export default function PostersImageUsernameProfileName({
                     </h2>
 
                 </div>
+   </Link>
   )
 }
