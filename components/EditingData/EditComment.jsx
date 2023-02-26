@@ -12,7 +12,7 @@ import XSvgIcon from '../ReusableSmallComponents/XSvgIcon';
 export default function EditPost(
     {SetShowEditPage,sessionFromServer,
     rootComment,
-    changeCommentState,setToastMessage}) {
+    changeCommentState,setToastMessage,apiLink}) {
                //data for posts in mongoDB
 
   const [description,setDescription]=useState(rootComment.description);
@@ -37,7 +37,8 @@ const commentSubmission = async () => {
       // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
    // toast.success(`You successfully edited your post ${sessionFromServer.user.name}!`)
      
-       await axios.put("/api/individualbatsignalcomments/",
+   //"/api/individualbatsignalcomments/"
+       await axios.put(apiLink,
           {
         commentSubmission
           })

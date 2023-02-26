@@ -5,7 +5,8 @@ import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, f
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios'
 
-function AddComment({postid,parentcommentid,sessionFromServer}) {
+function AddComment({replyingtothisid,parentcommentid,sessionFromServer,
+apiLink}) {
 
    const [showCommentForm,setShowCommentForm]=useState(false)
    const [description,setDescription]=useState("");
@@ -32,16 +33,17 @@ function AddComment({postid,parentcommentid,sessionFromServer}) {
             const commentSubmission= {
               image:image,
               parentcommentid: parentcommentid,
-              postid: postid,
+              replyingtothisid: replyingtothisid,
               description: description,
               createdby: createdby.toString(),
              
    
  }
-
- await axios.post("http://localhost:3000/api/individualbatsignalcomments", commentSubmission).then(response => {
+//  "http://localhost:3000/api/individualbatsignalcomments"
+console.log(commentSubmission)
+ await axios.post(apiLink, commentSubmission).then(response => {
   const commentid= response.data._id
-  const postid= response.data.postid
+  const replyingtothisidresponse= response.data.replyingtothisid
   console.log(response)
   console.log(`this is id ${commentid}`)
   //comment id and post id is working

@@ -11,7 +11,7 @@ const namecommentSchema= new mongoose.Schema({
     required: true,
     unique: false,
   },
-  nameid: {
+  replyingtothisid: {
     type: String,
     required: true,
     unique: false,

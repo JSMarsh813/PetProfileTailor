@@ -179,7 +179,7 @@ const router=useRouter()
               <div 
                   className="items-end flex gap-x-2">            
                           <EditButton
-                              setShowProfileEditPage={updateEditState} 
+                              setShowEditPage={updateEditState} 
                             
                                   
                             />  

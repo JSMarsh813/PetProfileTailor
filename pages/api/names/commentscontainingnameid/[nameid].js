@@ -14,7 +14,7 @@ import NameComments from "../../../../models/namecomment"
     
         if(method === "GET") {
             try {
-                const nameComments= await NameComments.find({nameid:nameid})
+                const nameComments= await NameComments.find({replyingtothisid:nameid})
                 .populate({path:"createdby", select:["name","profilename","profileimage"]})      
                 res.status(200).json(nameComments);
                 

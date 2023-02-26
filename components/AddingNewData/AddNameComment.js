@@ -5,7 +5,7 @@ import { faHeart, faCommentDots, faShareFromSquare, faFaceGrinWink, faUserTie, f
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios'
 
-function AddNameComment({nameid,sessionFromServer}) {
+function AddNameComment({replyingtothisid, parentcommentid,sessionFromServer}) {
 
    const [showCommentForm,setShowCommentForm]=useState(false)
 
@@ -15,6 +15,7 @@ function AddNameComment({nameid,sessionFromServer}) {
 
    const [image,setImage]=useState([])
    
+   console.log(`this is replyingtothisid ${replyingtothisid}`)
 
    useEffect(()=>{
     setCreatedBy(sessionFromServer?
@@ -33,19 +34,22 @@ function AddNameComment({nameid,sessionFromServer}) {
 
             const commentSubmission= {
               image:image,          
-              nameid: nameid,
+              replyingtothisid: replyingtothisid,
               description: description,
               createdby: createdby.toString(),
             
    
  }
 
+ console.log(commentSubmission)
+
  await axios.post("http://localhost:3000/api/namecomments", commentSubmission).then(response => 
  {
-  const commentIdToNameDoc={
-  commentid: response.data._id,
-  nameid:response.data.nameid
-  }
+  console.log(response)
+  // const commentIdToNameDoc={
+  // commentid: response.data._id,
+  // replyingtothisid:response.data.replyingtothisid
+  // }
  
    toast.success(`Successfully added new comment!`)
 

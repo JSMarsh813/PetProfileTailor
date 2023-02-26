@@ -17,7 +17,7 @@ import { useRouter } from 'next/router';
 import ShareButton from '../ReusableSmallComponents/ShareButton'
 import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
 
-function CommentListing({postid,rootComment,replies,sessionFromServer}) {
+function CommentListing({replyingtothisid,rootComment,replies,sessionFromServer,apiLink}) {
   //  { comment,replies}
  
  
@@ -167,7 +167,7 @@ const router=useRouter()
                     <div className="place-self-end mr-2">
                           <EditButton
                                 className="mr-4"
-                                onupdateEditState={updateEditState} 
+                                setShowEditPage={updateEditState} 
                           />
                   
                         <DeleteButton
@@ -178,10 +178,11 @@ const router=useRouter()
    {showEditPage&&
         <EditComment
           SetShowEditPage={SetShowEditPage}
-           postid={postid}
+          replyingtothisid={replyingtothisid} //not needed???
            rootComment= {rootComment}
            sessionFromServer={sessionFromServer}
         changeCommentState={setCommentChanged}
+        apiLink={apiLink} 
         // setToastMessage={setToastMessage}
          />
     }
@@ -196,6 +197,7 @@ const router=useRouter()
     changeCommentState={setCommentChanged}
     commentId={rootComment._id}
     commentCreatedBy={rootComment.createdby._id}
+    apiLink={apiLink}  
  />
 }
 
@@ -213,8 +215,8 @@ const router=useRouter()
                         {replying&& 
                         
                        <AddComment
-                        
-                        postid={rootComment.postid}
+                       apiLink={apiLink} 
+                       replyingtothisid={rootComment.replyingtothisid}
                         parentcommentid={adjustedParentId}
                         sessionFromServer={sessionFromServer}
                         />
@@ -238,6 +240,7 @@ const router=useRouter()
                         replies={null}
                         key={reply._id}
                         sessionFromServer={sessionFromServer}
+                        apiLink={apiLink}
                      
                         /> 
                     </div>

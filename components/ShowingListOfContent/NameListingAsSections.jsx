@@ -12,6 +12,8 @@ import SeeCommentsButton from '../ReusableSmallComponents/SeeCommentsButton'
 import GeneralButton from '../GeneralButton'
 import AddNameComment from '../AddingNewData/AddNameComment'
 import CommentListing from '../ShowingListOfContent/CommentListing'
+import CommentListingName from './CommentListingName'
+import AddComment from '../AddingNewData/AddComment'
 
 export default function NameListingAsSections({name, sessionFromServer,tagList}) {  
     const router=useRouter()
@@ -26,6 +28,8 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
 
  // ##### STATE FOR EDITS ####
   const [showEditPage,SetShowEditPage]=useState(false)
+
+  console.log(`this is showEditPage ${showEditPage}`)
 
  //#### STATE FOR EDITS AND DELETIONS
  const [itemChanged,setItemChanged]=useState(false)
@@ -82,7 +86,8 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
     
              if (commentsFromFetch){
               rootComments=commentsFromFetch.filter      
-                     (comment=>comment.nameid===name._id&&
+                     (comment=>
+                      comment.replyingtothisid===name._id&&
                               comment.parentcommentid===null)
                    }
 
@@ -175,7 +180,7 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
            <div className="my-2">
                   <EditButton
                          className="ml-2 mr-6"
-                         setShowProfileEditPage={updateEditState} 
+                         setShowEditPage={updateEditState} 
                          />
                   <DeleteButton
                      onupdateDeleteState={updateDeleteState}/>
@@ -230,20 +235,27 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
 {commentsShowing&&
 <section
  className="bg-violet-900 py-2">
-  
-  <AddNameComment
-        nameid={name._id}
-        hasParent={null}
-        sessionFromServer={sessionFromServer}/>
-             {/* ######### showing comments #########*/}
+  {JSON.stringify(name._id)}
 
+  {/* <AddNameComment */}
+  <AddComment
+        apiLink={`http://localhost:3000/api/namecomments/`}  
+        replyingtothisid={name._id}
+        hasParent={null}
+        sessionFromServer={sessionFromServer}
+        />
+             {/* ######### showing comments #########*/}
+             {JSON.stringify(rootComments)}
   {rootComments.map((comment)=>{
 
     return <CommentListing
-        postid={comment.nameid}
-        rootComment={comment}
-        replies={replyComments}
-        sessionFromServer={sessionFromServer}/>
+    key={comment._id}
+    rootComment={comment} 
+    replies={replyComments}
+    replyingtothisid={comment.replyingtothisid} 
+    sessionFromServer={sessionFromServer}
+    apiLink={`http://localhost:3000/api/namecomments/`}  
+    />
   })}
   </section>}
 </div>

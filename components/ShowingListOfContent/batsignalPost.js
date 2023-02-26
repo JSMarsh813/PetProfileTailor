@@ -54,7 +54,7 @@ console.log(postsCommentsFromFetch)
     
     if (postsCommentsFromFetch){
      rootComments=postsCommentsFromFetch.filter      
-            (comment=>comment.postid===post._id&&comment.parentcommentid===null)
+            (comment=>comment.replyingtothisid===post._id&&comment.parentcommentid===null)
           }
           console.log(`this is rootComments ${JSON.stringify(rootComments)}`)
 
@@ -260,9 +260,10 @@ const router=useRouter()
             </div>        
            
             <AddComment 
-                  postid={postId} 
-                  hasParent={null}
+                  replyingtothisid={postId} 
+                  parentcommentid={null}
                   sessionFromServer={sessionFromServer}
+                  apiLink="/api/individualbatsignalcomments/"
                   />                 
 
         </section>
@@ -287,7 +288,9 @@ const router=useRouter()
                     rootComment={comment} 
                     replies={replyComments}
                     postid={postId} 
-                    sessionFromServer={sessionFromServer}/>
+                    sessionFromServer={sessionFromServer}
+                    apiLink="/api/individualbatsignalcomments/"
+                    />
             
                 )
         }

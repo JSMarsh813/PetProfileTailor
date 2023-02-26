@@ -131,7 +131,7 @@ console.log(`show edit page ${showEditPage}`)
            <div className="my-2">
                   <EditButton
                          className="ml-2 mr-6"
-                         setShowProfileEditPage={updateEditState} 
+                         setShowEditPage={updateEditState} 
                          />
                   <DeleteButton
                      onupdateDeleteState={updateDeleteState}/>

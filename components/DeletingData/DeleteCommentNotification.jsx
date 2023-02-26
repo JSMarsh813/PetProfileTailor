@@ -3,13 +3,13 @@ import XSvgIcon from '../ReusableSmallComponents/XSvgIcon'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 
-export default function deletePostNotification(
+export default function deleteCommentNotification(
     {setShowDeleteConfirmation,
      commentId,
     sessionFromServer,
     commentCreatedBy,
-    changeCommentState}
-    ) {
+    changeCommentState,
+    apiLink}) {
 
  //  toast.success(`You successfully deleted your post!`)
     
@@ -20,7 +20,9 @@ export default function deletePostNotification(
         return
     }
     else {
-        await axios.delete("/api/individualbatsignalcomments/",
+
+        // await axios.delete("/api/individualbatsignalcomments/",
+        await axios.delete(apiLink,
                  {
               data: {commentId}
                  })

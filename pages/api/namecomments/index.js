@@ -66,11 +66,11 @@ export default async function handler(req, res) {
 
 
     if(method ==="POST"){    
-      const { image, description, createdby, nameid } = req.body;
+      const { image, description, createdby, replyingtothisid,parentcommentid } = req.body;
        console.log(req.body)
       if (
         !description||
-        !nameid||  
+        !replyingtothisid||  
         !createdby
       ) {
         res.status(422).json({
@@ -82,9 +82,10 @@ export default async function handler(req, res) {
                  
       const newComment = new NameComment({
         image,
+        parentcommentid,
         description,
-        nameid,
-        createdby,
+        replyingtothisid,
+        createdby,        
          });
     
       const comment = await newComment.save();
@@ -98,9 +99,11 @@ export default async function handler(req, res) {
     
         _id: comment._id,
         image: comment.image,   
+        parentcommentid: comment.parentcommentid,
         description: comment.description,
-        nameid: comment.nameid,
+       replyingtothisid: comment.replyingtothisid,
        createdby: comment.createdby,
+       
         
       });
       

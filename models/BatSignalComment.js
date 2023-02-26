@@ -11,7 +11,7 @@ const BatSignalCommentSchema= new mongoose.Schema({
     required: true,
     unique: false,
   },
-  postid: {
+  replyingtothisid: {
     type: String,
     required: true,
     unique: false,

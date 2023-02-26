@@ -66,11 +66,11 @@ export default async function handler(req, res) {
 
 
     if(method ==="POST"){    
-      const { image, parentcommentid, description, createdby, postid } = req.body;
+      const { image, parentcommentid, description, createdby, replyingtothisid } = req.body;
     
       if (
         !description||
-        !postid||  
+        !replyingtothisid||  
         !createdby
       ) {
         res.status(422).json({
@@ -84,7 +84,7 @@ export default async function handler(req, res) {
         image,
         parentcommentid,
         description,
-        postid,
+        replyingtothisid,
         createdby,
          });
     
@@ -101,7 +101,7 @@ export default async function handler(req, res) {
         image: comment.image,
         parentcommentid: comment.parentcommentid,
         description: comment.description,
-        postid: comment.postid,
+        replyingtothisid: comment.replyingtothisid,
        createdby: comment.createdby,
         
       });
