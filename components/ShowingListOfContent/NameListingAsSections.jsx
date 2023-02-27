@@ -235,7 +235,7 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
 {commentsShowing&&
 <section
  className="bg-violet-900 py-2">
-  {JSON.stringify(name._id)}
+ 
 
   {/* <AddNameComment */}
   <AddComment
@@ -245,7 +245,7 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
         sessionFromServer={sessionFromServer}
         />
              {/* ######### showing comments #########*/}
-             {JSON.stringify(rootComments)}
+      
   {rootComments.map((comment)=>{
 
     return <CommentListing
@@ -255,6 +255,7 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
     replyingtothisid={comment.replyingtothisid} 
     sessionFromServer={sessionFromServer}
     apiLink={`http://localhost:3000/api/namecomments/`}  
+    likesApiLink="http://localhost:3000/api/namecomments/updatenamecommentlikes"
     />
   })}
   </section>}

@@ -35,6 +35,7 @@ function AddNameComment({replyingtothisid, parentcommentid,sessionFromServer}) {
             const commentSubmission= {
               image:image,          
               replyingtothisid: replyingtothisid,
+              parentcommentid: parentcommentid,
               description: description,
               createdby: createdby.toString(),
             

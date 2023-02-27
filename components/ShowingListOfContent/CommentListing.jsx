@@ -17,9 +17,7 @@ import { useRouter } from 'next/router';
 import ShareButton from '../ReusableSmallComponents/ShareButton'
 import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
 
-function CommentListing({replyingtothisid,rootComment,replies,sessionFromServer,apiLink}) {
-  //  { comment,replies}
- 
+function CommentListing({replyingtothisid,rootComment,replies,sessionFromServer,apiLink,likesApiLink}) {
  
   const [replying, setReplying]=useState(false)
   const [commentParentId, setCommentParentId]=useState(null)
@@ -148,7 +146,7 @@ const router=useRouter()
                            HeartIconStyling="text-2xl"
                            HeartIconTextStyling="text-darkPurple ml-2"
                            session={sessionFromServer}
-                           apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}  
+                           apiLink={likesApiLink}  
                
             />
 
@@ -241,6 +239,7 @@ const router=useRouter()
                         key={reply._id}
                         sessionFromServer={sessionFromServer}
                         apiLink={apiLink}
+                        likesApiLink={likesApiLink}
                      
                         /> 
                     </div>

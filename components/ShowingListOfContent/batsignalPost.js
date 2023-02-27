@@ -290,6 +290,7 @@ const router=useRouter()
                     postid={postId} 
                     sessionFromServer={sessionFromServer}
                     apiLink="/api/individualbatsignalcomments/"
+                    likesApiLink="http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes"
                     />
             
                 )
