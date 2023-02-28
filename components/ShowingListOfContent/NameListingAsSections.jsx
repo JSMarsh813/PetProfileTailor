@@ -249,6 +249,7 @@ export default function NameListingAsSections({name, sessionFromServer,tagList})
   {rootComments.map((comment)=>{
 
     return <CommentListing
+    typeOfContentReplyingTo="name"
     key={comment._id}
     rootComment={comment} 
     replies={replyComments}

@@ -288,6 +288,7 @@ const router=useRouter()
                     rootComment={comment} 
                     replies={replyComments}
                     postid={postId} 
+                    typeOfContentReplyingTo={post}
                     sessionFromServer={sessionFromServer}
                     apiLink="/api/individualbatsignalcomments/"
                     likesApiLink="http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes"

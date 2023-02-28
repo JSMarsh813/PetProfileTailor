@@ -30,7 +30,6 @@ import { useRouter } from 'next/router';
 
 import RankNames from '../components/RankNames';
 import WideCenteredHeader from '../components/ReusableSmallComponents/WideCenteredHeading';
-import CommentListing from '../components/ShowingListOfContent/CommentListing';
 import SingleComment from '../components/ShowingListOfContent/SingleComment'
 import BatsignalPost from '../components/ShowingListOfContent/BatsignalPost';
 import PointSystemList from '../components/ShowingListOfContent/PointSystemList';

@@ -1,6 +1,6 @@
-import dbConnect from "../../../../config/connectmongodb"
+import dbConnect from "../../../../../config/connectmongodb"
 const ObjectId = require('mongodb').ObjectId;
-import Comments from "../../../../models/BatSignalComment"
+import Comments from "../../../../../models/BatSignalComment"
 
 
 export default async function handler(req, res)  {

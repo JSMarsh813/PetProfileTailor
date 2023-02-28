@@ -12,7 +12,7 @@ import axios from 'axios'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCommentDots, faFaceGrinWink, faUserTie, faCircleChevronDown, faLocationDot, faRankingStar, faUserPlus, faEnvelopeOpenText, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import CommentListing from '../../components/ShowingListOfContent/CommentListing'
+
 import HeadersForNames from '../../components/ShowingListOfContent/HeadersForNames'
 import PointSystemList from '../../components/ShowingListOfContent/PointSystemList'
 import DashboardChartForFavDescriptions from '../../components/ShowingListOfContent/DashboardChartForFavDescriptions'
@@ -466,8 +466,10 @@ setShowProfileEditPage={updateSetShowProfileEditPage}/>
           {UsersCommentData.map(singleComment=>
                 <SingleComment
                 key={singleComment._id}
+                replyingtothisid={singleComment.replyingtothisid}
                 rootComment={singleComment}
                 sessionFromServer={sessionFromServer}
+                typeOfContentReplyingTo="post"
                 />
                 )}
 
@@ -482,7 +484,7 @@ setShowProfileEditPage={updateSetShowProfileEditPage}/>
             <h2  className="w-full text-center font-semibold text-amber-300 
             text-xl
             bg-darkPurple p-2 
-            "> Comments Added</h2>
+            "> Descriptions Added</h2>
 
 <div className=" flex-1 grid grid-cols-1 gap-4 mr-2  
  w-full

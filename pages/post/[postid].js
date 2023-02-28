@@ -1,7 +1,7 @@
 import React, {useEffect,useState} from 'react'
 import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu"
 import Namelisting from '../../components/ShowingListOfContent/Namelisting'
-import { authOptions } from "../../pages/api/auth/[...nextauth]"
+import { authOptions } from "../api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
 import NameListingAsSections from '../../components/ShowingListOfContent/NameListingAsSections'
 
@@ -31,12 +31,14 @@ let UserId = ""
 
     let postResponse= await fetch('http://localhost:3000/api/individualposts/getASpecificPost/'+id)
     let postData = await postResponse.json()
+  
 
     if((!postData)){ 
       return {
         notFound: true,
       }
      }
+   
      else{
     let commentResponse= await fetch('http://localhost:3000/api/individualbatsignalcomments');
     let commentData = await commentResponse.json()

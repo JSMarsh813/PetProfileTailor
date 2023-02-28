@@ -97,17 +97,19 @@ function NewDescriptionWithTagsData({tagList,userId, sessionFromServer}) {
      
     {console.log(tagList)}
     
-       <section className="my-6">
+       <section className="my-6 text-white">
                        
                 <p> Add a description with one or more tags. </p>
                
                 <h6 
-                className="mt-4 ml-4"> Example: A dog named batman </h6>
+                className="mt-4 ml-4"> Example: </h6>
                 <img 
-                className="w-52 ml-6
-                mb-4"src="https://i.pinimg.com/originals/19/44/92/194492b23b8f04d3e624eb7b6148c1be.jpg" alt="React Image" />
+                className="w-80 ml-6
+                mb-4"src="https://static.boredpanda.com/blog/wp-content/uploads/2019/08/adult-animal-adoption-posters-protective-association-of-missouri-14-5d42ccafb202a__700.jpg" 
+                alt="Poster of a dog says this: I like to sleep through the night. I'll bet you do, too. Because I'm a grown-ass adult. Get a dog who gets you. Adopt adult. APA adoption center"/>
                 <p
-                className="ml-6">Batman could have the tags: comics, superheroes, batman, male, edgy</p>
+                className="ml-6">
+                  This description could have tags like: senior, funny, quiet, well-behaved.</p>
 
 
               <form onSubmit={handleDescriptionSubmission}>
@@ -126,12 +128,13 @@ function NewDescriptionWithTagsData({tagList,userId, sessionFromServer}) {
                     placeholder="enter a description to add" 
 
                     onChange={(e)=>setNewDescription(e.target.value.toLowerCase())}
-
+                    maxlength="900"
                     disabled={sessionFromServer?"":"disabled"}
-
-                    onClick={(e)=>setDescriptionExists(false)}
-                                       
+                    onClick={(e)=>setDescriptionExists(false)}                                       
                     ></textarea>
+
+                    <span> {`${1000-newDescription.length}/1000 characters left`}</span>
+
                     {descriptionAlreadyExists==true &&      
                  <p 
                     className="text-red-500 font-bold"> 
@@ -150,14 +153,16 @@ function NewDescriptionWithTagsData({tagList,userId, sessionFromServer}) {
                       type="text" 
                       id="noteinput"
                       className="text-darkPurple block w-full" 
+                      maxlength="800"
                    
-                    placeholder="(Optional) enter any notes to add. For example, explaining if it has any references to shows/popular culture, ect." 
+                    placeholder="(Optional) enter any notes to add. For example, explaining if it has any references to shows/popular culture, ect."
 
                     onChange={(e)=>setNotes(e.target.value.toLowerCase())}
 
                     disabled={sessionFromServer?"":"disabled"}
                                        
                     ></textarea>
+                    <span> {`${800-notes.length}/800 characters left`}</span>
 
          {/* TAGS SECTION */}
                   <label 

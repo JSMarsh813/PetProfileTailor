@@ -17,7 +17,7 @@ import { useRouter } from 'next/router';
 import ShareButton from '../ReusableSmallComponents/ShareButton'
 import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
 
-function CommentListing({replyingtothisid,rootComment,replies,sessionFromServer,apiLink,likesApiLink}) {
+function CommentListing({replyingtothisid,rootComment,replies,sessionFromServer,apiLink,likesApiLink,typeOfContentReplyingTo}) {
  
   const [replying, setReplying]=useState(false)
   const [commentParentId, setCommentParentId]=useState(null)
@@ -32,8 +32,8 @@ function CommentListing({replyingtothisid,rootComment,replies,sessionFromServer,
         //STATE FOR SHOWING SHARE OPTIONS
         const[shareSectionShowing,setShareSectionShowing]=useState(false)
 
-        let linkToShare=`http://localhost:3000/comments/${rootComment._id}`
-
+        let linkToShare=`http://localhost:3000/${typeOfContentReplyingTo}/comment/${rootComment._id}`
+      console.log(`this is linktoshare ${JSON.stringify(rootComment._id)}`)
 
   useEffect(()=>{
     {rootComment.parentcommentid?
@@ -110,7 +110,7 @@ const router=useRouter()
 <div
     className={`flex-col mx-auto py-2 pr-4 text-darkPurple
                 rounded-lg ${rootComment.parentcommentid?"pl-6 pr-0":""}`}>
-                  {console.log(rootComment)}
+                  {/* {console.log(rootComment)} */}
 
 
         <div className="flex flex-row bg-violet-50 p-2 ml-6 ">

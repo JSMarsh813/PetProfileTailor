@@ -18,7 +18,9 @@ import { useRouter } from 'next/router';
 import ShareButton from '../ReusableSmallComponents/ShareButton'
 import SharingOptionsBar from '../ReusableMediumComponents/SharingOptionsBar'
 
-function CommentListing({postid,rootComment,sessionFromServer}) {
+function CommentListing({replyingtothisid,rootComment,sessionFromServer,typeOfContentReplyingTo}) {
+
+
  
   const [replying, setReplying]=useState(false)
 
@@ -44,10 +46,14 @@ const router=useRouter()
   
         //STATE FOR SHOWING SHARE OPTIONS
         const[shareSectionShowing,setShareSectionShowing]=useState(false)
+      
 
-        let linkToShare=`http://localhost:3000/comments/${rootComment._id}`
+        let linkToShare=`http://localhost:3000/${typeOfContentReplyingTo}/comment/${rootComment._id}`
 
-        let linkToPost=`http://localhost:3000/posts/${rootComment.postid}`
+        console.log(typeOfContentReplyingTo)
+        let linkToPost=`http://localhost:3000/${typeOfContentReplyingTo}/${rootComment.replyingtothisid}`
+     
+       
   useEffect(()=>{
     {rootComment.parentcommentid?
       setAdjustedParentId(rootComment.parentcommentid):
@@ -191,7 +197,7 @@ const router=useRouter()
    {showEditPage&&
         <EditComment
           SetShowEditPage={SetShowEditPage}
-           postid={postid}
+          replyingtothisid={replyingtothisid}
            rootComment= {rootComment}
            sessionFromServer={sessionFromServer}
         changeCommentState={setCommentChanged}
@@ -221,9 +227,8 @@ const router=useRouter()
                    
                         {replying&& 
                         
-                       <AddComment
-                        
-                        postid={rootComment.postid}
+                       <AddComment                        
+                       replyingtothisid={rootComment.replyingtothisid}
                         parentcommentid={adjustedParentId}
                         sessionFromServer={sessionFromServer}
                         />

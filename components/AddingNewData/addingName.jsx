@@ -16,6 +16,7 @@ import GeneralButton from '../GeneralButton';
 function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
   const { data: session, status } = useSession()
   
+  console.log(tagList)
   
     const [newName,setNewName] =useState("");
     const [tags,setTags]=useState([]);
@@ -139,9 +140,11 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
               <input type="text"
                      className="text-darkPurple"
                      value={nameCheck}
+                      maxlength="40"
                      onChange={
                       (e)=>resetData(e)} 
                      />
+
                 <button
                    className="inline-block bg-darkPurple p-2 border-2 border-yellow-200"
                    onClick={()=>checkIfNameExists()}>
@@ -155,7 +158,10 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
                         className="mx-2
                                    text-yellow-200"> Search </span>
                     </button>
-                
+                    <span
+                        className="block"> 
+                      {`${40-nameCheck.length}/40 characters left`} </span>
+
                     {nameCheckFunctionRun&&namesThatExist.length!=0&&
                            <p
                               className="mt-2 
@@ -199,10 +205,15 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
                     // className={`${(!sessionFromServer)&&"bg-slate-400"}`} 
                     placeholder="enter a name to add" 
                     onChange={(e)=>setNewName(e.target.value.toLowerCase())}
+                    maxlength="40"
                     disabled={sessionFromServer?"":"disabled"}
                     onClick={(e)=>setNameExists(false)}
-                                       
                     ></input>
+
+        <span 
+            className="block">
+               {`${40-newName.length}/40 characters left`} </span>
+
                     <span
                       className="block">
                         Note: Names are saved in lowercase</span>
@@ -220,12 +231,13 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
                     <textarea 
                       type="text" 
                       id="nameDescription"
+                      maxlength="500"
                       className="text-darkPurple block w-full" 
                      placeholder="optional description: please add anything that would be useful to know. Examples: the name's meaning, popular fictional or historical figures with this name, ect" 
                     onChange={(e)=>setDescription(e.target.value.trim())}>
                     </textarea>
 
-
+                    <span> {`${500-description.length}/500 characters left`} </span>
                  
 
                   <label 
@@ -235,7 +247,7 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
                   className="text-darkPurple mb-4"
                   id="nameTags"
                   options={tagList.map((opt,index) => ({
-                     label: opt.nameTag, value: opt.nameTag,
+                     label: opt.tag, value: opt.tag,
                    }))}
                  
                   isMulti

@@ -1,10 +1,10 @@
 import React from 'react'
-import SingleComment from "../../components/ShowingListOfContent/SingleComment"
+import SingleComment from "../../../components/ShowingListOfContent/SingleComment"
 
-import { authOptions } from "../../pages/api/auth/[...nextauth]"
+import { authOptions } from "../../api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
-import NavLayoutwithSettingsMenu from '../../components/NavBar/NavLayoutwithSettingsMenu'
-import PageTitleWithImage from "../../components/ReusableSmallComponents/PageTitleWithImages"
+import NavLayoutwithSettingsMenu from '../../../components/NavBar/NavLayoutwithSettingsMenu'
+import PageTitleWithImage from "../../../components/ReusableSmallComponents/PageTitleWithImages"
 export const getServerSideProps = async (context) => {
     const id=context.params.id
 
@@ -15,7 +15,7 @@ let UserId = ""
 if (session){
 UserId=session.user._id}
 
-let commentResponse=await fetch('http://localhost:3000/api/comment/getASpecificCommentById/'+id)
+let commentResponse=await fetch('http://localhost:3000/api/comment/batsignalpostcomment/getaspecificcommentbyid/'+id)
 let commentData= await commentResponse.json()
 
 
@@ -58,9 +58,9 @@ export default function GetAComment({commentData,sessionFromServer}) {
   
 
         <SingleComment
-        postid={commentData2.postid}
+        replyingtothisid={commentData2.replyingtothisid}
         rootComment={commentData2}
-
+        typeOfContentReplyingTo="post"
         sessionFromServer={sessionFromServer}
         />
     </div>
