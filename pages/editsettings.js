@@ -109,6 +109,7 @@ export default function ProfileScreen({sessionFromServer}) {
                 >Name</label>
           <input
             type="text"
+            maxLength="50"
             className="w-full text-darkPurple"
             id="name"
             autoFocus
@@ -120,6 +121,8 @@ export default function ProfileScreen({sessionFromServer}) {
             <div className="text-red-500">{errors.name.message}</div>
           )}
         </div>
+
+        <span className="text-white"> {`${50-newDescription.length}/50 characters left`}</span>
 
         <div className="mb-4">
           <label 

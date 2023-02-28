@@ -179,7 +179,11 @@ aria-modal="true">
                 className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"                  
                 onChange={(e)=>setTitle(e.target.value)}
                 value={title}
+                maxlength="80"
                  type="title"/>
+
+<span className="text-white"> {`${80-title.length}/80 characters left`}</span>
+
 
    {/* ##### DESCRIPTION AREA ######*/}
 
@@ -191,8 +195,10 @@ aria-modal="true">
             className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
             onChange={(e)=>setDescription(e.target.value)}  
             required
+            maxlength="1000"
             value={description}>
     </textarea>       
+    <span className="text-white"> {`${1000-description.length}/1000 characters left`}</span>
 
 
     <div>

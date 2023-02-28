@@ -133,7 +133,12 @@ const postSubmission = async (imageFromCloudinary) => {
                 className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"                  
                 placeholder="Type a title here (optional)" 
                 onChange={(e)=>setTitle(e.target.value)}
+                maxlength="80"
                 type="text"/>
+
+<span 
+    className="text-white"> 
+    {`${80-title.length}/80 characters left`}</span>
 
                 {/* ##### DESCRIPTION AREA ######*/}
 
@@ -142,8 +147,13 @@ const postSubmission = async (imageFromCloudinary) => {
 
             onChange={(e)=>setDescription(e.target.value)}  
             required
+            maxlength="2000"
             placeholder="Describe everything about this post here (required)">
     </textarea>       
+
+    <span 
+    className="text-white"> 
+    {`${2000-title.length}/2000 characters left`}</span>
 
     <div>
   

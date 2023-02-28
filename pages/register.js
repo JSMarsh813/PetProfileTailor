@@ -106,10 +106,11 @@ export default function Register({sessionFromServer}) {
 
 
         <div className="mb-4">
-          <label htmlFor="name"> UserName (this can be changed later)</label>
+          <label htmlFor="name"> UserName (this can be changed later, 50 characters max)</label>
           <input
             type="text"
             className="w-full"
+            maxLength="50"
             id="name"
             autoFocus
             {...register('name', {
@@ -122,16 +123,18 @@ export default function Register({sessionFromServer}) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="name"> Profile Name (this CAN'T be changed later)</label>
+          <label htmlFor="name"> Profile Name (this CAN'T be changed later,50 characters max)</label>
           <input
             type="text"
             className="w-full"
+            maxLength="50"
             id="name"
             autoFocus
             {...register('profilename', {
               required: 'Please enter a profilename',
             })}
           />
+  
           {errors.name && (
             <div className="text-red-500">{errors.name.message}</div>
           )}

@@ -103,8 +103,13 @@ console.log(commentSubmission)
             name="body" 
             onChange={(e)=>setDescription(e.target.value)}  
             required
+            maxlength="700"
             placeholder='Type Your Comment'>
                             </textarea>
+
+    <span
+        className="text-white">
+           {`${700-description.length}/700 characters left`}</span>
                               {/* Post comment area */}
                               <div className="w-full md:w-full md:w-full px-3">
 
