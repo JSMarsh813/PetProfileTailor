@@ -66,6 +66,19 @@ export default async function handler(req, res) {
 
 
     if(method ==="POST"){    
+      const {name,
+        description,
+        tags,     
+        createdby}=req.body
+
+        let existingNameCheck =await Names.find({"name":name})
+        console.log(existingNameCheck)
+
+        if (existingNameCheck && existingNameCheck.length!=0) {
+          res.status(409).json({ message: 'Name already exists', existingName: existingNameCheck });
+          return
+        }
+        else {
         try {
                const test= await Names.create(req.body)
                res.status(201).json(test)
@@ -75,7 +88,7 @@ export default async function handler(req, res) {
            
         }
     }
-
+  }
     
   if(method ==="DELETE"){    
     try {

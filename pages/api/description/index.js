@@ -6,6 +6,7 @@ import Description from "../../../models/description"
 
 export default async function handler(req, res) {
     const {method} = req;
+   console.log(req.body)
 
     dbConnect() //from config/mongo.js
 
@@ -25,12 +26,12 @@ export default async function handler(req, res) {
 
 
     if(method ==="PUT"){    
-         const {description,
-          notes,
-          tags,
-          descriptionId
-        } =req.body.descriptionSubmission
     
+      const {description,
+        tags,
+        notes,       
+        descriptionId
+      } =req.body.descriptionSubmission
                
       const toUpdateDescription = await Description.findById(descriptionId);
      console.log(toUpdateDescription)
@@ -60,9 +61,22 @@ export default async function handler(req, res) {
 
 
     if(method ==="POST"){    
-        try {
 
-          
+      const {description,
+        tags,
+        notes,     
+        createdby}=req.body
+        
+    console.log(`this is description ${description}`)
+      let existingUserCheck =await Description.find({"description":description})
+      console.log(existingUserCheck) //[]
+
+      if (existingUserCheck && existingUserCheck.length!=0) {
+        res.status(409).json({ message: 'User already exists', existingUser: existingUserCheck });
+        return
+      }
+      else {
+        try {          
                const test= await Description.create(req.body)
                res.status(201).json(test)
         } 
@@ -71,6 +85,7 @@ export default async function handler(req, res) {
            
         }
     }
+  }
 
     
   if(method ==="DELETE"){    

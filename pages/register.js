@@ -1,5 +1,5 @@
 import Link from 'next/Link'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
@@ -11,6 +11,10 @@ import GeneralButton from '../components/GeneralButton'
 
 import { authOptions } from "./api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faCommentDots, faImage,faShareFromSquare, faFaceGrinWink, faUserTie, faCircleChevronDown, faTrashCan, faX, faCircleXmark, faTowerBroadcast, faSearch } from '@fortawesome/free-solid-svg-icons'
+import '@fortawesome/fontawesome-svg-core/styles.css'
 
 export const getServerSideProps = async (context) => {
 
@@ -25,6 +29,11 @@ export const getServerSideProps = async (context) => {
 }
 
 export default function Register({sessionFromServer}) {
+
+
+  const [namesThatExist,setNamesThatExist]=useState([])
+  const [nameCheck,setNameCheck]=useState("")
+  const [nameCheckFunctionRun,setNameCheckFunctionRun]=useState(false)
 
   //for Nav menu profile name and image
         //let section exists in case the user is not signed in
@@ -48,6 +57,26 @@ export default function Register({sessionFromServer}) {
       router.push('/');
     }
   }, [router, session, redirect]);
+
+  
+   
+
+  async function checkIfNameExists(){
+   
+    let nameResponse= await fetch('http://localhost:3000/api/user/getASpecificUserByProfileName/'+nameCheck)
+    let nameData = await nameResponse.json()
+    console.log(nameData)
+    setNamesThatExist(nameData)
+    setNameCheckFunctionRun(true)
+    console.log(`this is names that exist ${JSON.stringify(namesThatExist)}`)
+  }
+
+  function resetData(e){
+    setNameCheck(e.target.value.toLowerCase())
+    setNameCheckFunctionRun(false)
+    setNamesThatExist(null)    
+  }
+
 
   const {
     handleSubmit,
@@ -88,7 +117,7 @@ export default function Register({sessionFromServer}) {
     }
   };
   return (
-    <div className="bg-violet-900 h-screen">
+    <div className="bg-violet-900 h-fit text-white">
     <Layout 
         title="Create Account"  
         profileImage={profileImage} 
@@ -98,23 +127,78 @@ export default function Register({sessionFromServer}) {
             className="mx-auto h-60"
             src="https://media.tenor.com/IJBRrnPWOqoAAAAd/welcome-high-five.gif"/>
 
+
+<section
+    className="text-center mt-2">
+<h4
+                 className="font-semibold text-lg"> Check if a profile name is available </h4>
+
+
+<input type="text"
+                     className="text-darkPurple"
+                     value={nameCheck}
+                      maxLength="30"
+                     onChange={
+                      (e)=>resetData(e)} 
+                     />
+
+                <button
+                   className="inline-block bg-darkPurple p-2 border-2 border-yellow-200"
+                   onClick={()=>checkIfNameExists()}>
+                   
+                   <FontAwesomeIcon 
+                       icon={faSearch} 
+                       className="text-2xl" 
+                       color="yellow"/>   
+
+                    <span
+                        className="mx-2
+                                   text-yellow-200"> Search </span>
+                </button>
+                    <span
+                        className="block"> 
+                      {`${30-nameCheck.length}/30 characters left`} </span>
+
+                    {nameCheckFunctionRun&&namesThatExist.length!=0&&
+                           <p
+                              className="mt-2 
+                                        text-yellow-200 font-bold
+                                         bg-red-700
+                                         border-2 border-yellow-200">
+                                 {namesThatExist[0].name} already exists! 
+                                 </p>
+                    }
+                    
+                    {nameCheckFunctionRun&&!namesThatExist.length&&
+                    <span
+                       className="block"> 
+                        Success! {nameCheck} does NOT exist yet. 
+                   </span>
+        }      
+</section>
+{/* #################### FORM #########################*/}
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
         <h1 className="my-4 text-2xl text-center">Create Account</h1>
 
+       
+
+
 
         <div className="mb-4">
-          <label htmlFor="name"> UserName (this can be changed later, 50 characters max)</label>
+
+
+          <label htmlFor="name"> UserName (this can be changed later, 30 characters max)</label>
           <input
             type="text"
-            className="w-full"
-            maxLength="50"
+            className="w-full text-darkPurple"
+            maxLength="30"
             id="name"
             autoFocus
             {...register('name', {
-              required: 'Please enter name',
+              required: 'Please enter a name',
             })}
           />
           {errors.name && (
@@ -123,11 +207,11 @@ export default function Register({sessionFromServer}) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="name"> Profile Name (this CAN'T be changed later,50 characters max)</label>
+          <label htmlFor="name"> Profile Name (this CAN'T be changed later,30 characters max)</label>
           <input
             type="text"
-            className="w-full"
-            maxLength="50"
+            className="w-full text-darkPurple"
+            maxLength="30"
             id="name"
             autoFocus
             {...register('profilename', {
@@ -146,13 +230,13 @@ export default function Register({sessionFromServer}) {
           <input
             type="email"
             {...register('email', {
-              required: 'Please enter email',
+              required: 'Please enter an email',
               pattern: {
                 value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                message: 'Please enter valid email',
+                message: 'Please enter a valid email',
               },
             })}
-            className="w-full"
+            className="w-full text-darkPurple"
             id="email"
           ></input>
           {errors.email && (
@@ -169,7 +253,7 @@ export default function Register({sessionFromServer}) {
               required: 'Please enter password',
               minLength: { value: 6, message: 'password is more than 5 chars' },
             })}
-            className="w-full"
+            className="w-full text-darkPurple"
             id="password"
             autoFocus
           ></input>
@@ -180,7 +264,7 @@ export default function Register({sessionFromServer}) {
         <div className="mb-4">
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
-            className="w-full"
+            className="w-full text-darkPurple"
             type="password"
             id="confirmPassword"
             {...register('confirmPassword', {

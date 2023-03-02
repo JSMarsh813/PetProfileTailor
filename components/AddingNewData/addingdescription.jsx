@@ -53,13 +53,16 @@ function NewDescriptionWithTagsData({tagList,userId, sessionFromServer}) {
           axios.post("http://localhost:3000/api/description", descriptionSubmission).then(response => {
             console.log(response)
             setIsPending(false);
-            toast.success(`Successfully added description: ${newDescription}. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`)
+            toast.success(`Successfully added description: ${newDescription}. Heres 3 treat points as thanks for your contribution ${sessionFromServer.user.name}!`)
             
           }).catch(error => {
-            console.log("this is error", error);
-            setDescriptionExists(true)
+            console.log("this is error", error);           
             setIsPending(false)
             toast.error(`Ruh Roh! ${newDescription} not added`)
+
+            if(error.response.status==409){
+              setDescriptionExists(true)
+            }                    
             
           });
 

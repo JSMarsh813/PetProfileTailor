@@ -29,7 +29,7 @@ async function handler(req, res) {
     await db.disconnect();
     return;
   }
-
+  
   const existingUserProfile = await User.findOne({ profilename: profilename});
   if (existingUserProfile) {
     res.status(422).json({ message: 'That profile name is already used!' });

@@ -73,7 +73,7 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
           //from state
 
         // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
-          axios.post("http://localhost:3000/api/individualnames", nameSubmission).then(response => {
+          axios.post("http://localhost:3000/api/names", nameSubmission).then(response => {
             console.log(response)
             setIsPending(false);
             toast.success(`Successfully added name: ${newName}. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`)
@@ -134,8 +134,8 @@ function NewNameWithTagsData({tagList,userId, sessionFromServer}) {
 
                 <section
                     className="text-center mt-4">
-              <h6
-                 className="font-semibold text-lg"> Check if a name exists: </h6>
+              <h4
+                 className="font-semibold text-lg"> Check if a name exists: </h4>
 
               <input type="text"
                      className="text-darkPurple"
