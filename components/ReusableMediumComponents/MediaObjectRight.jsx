@@ -1,7 +1,4 @@
-import PawPrintIcon from "../ReusableSmallComponents/PawPrintIcon";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaw } from "@fortawesome/free-solid-svg-icons";
-import GeneralButton from "../GeneralButton";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import ListWithPawPrintIcon from "../ReusableSmallComponents/ListWithPawPrintIcon";
 
 const MediaObjectRight = ({
@@ -32,7 +29,10 @@ const MediaObjectRight = ({
           )}
 
           {buttonTextRight && (
-            <a href={buttonTextRightLink}>
+            <a
+              className="ml-2"
+              href={buttonTextRightLink}
+            >
               <GeneralButton text={buttonTextRight} />
             </a>
           )}

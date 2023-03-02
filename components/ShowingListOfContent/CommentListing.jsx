@@ -14,17 +14,17 @@ import {
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import AddComment from "../AddingNewData/AddComment";
 import axios from "axios";
-import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAndLikesLogic";
+import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import PostersImageUsernameProfileName from "../ReusableSmallComponents/PostersImageUsernameProfileName";
-import EditButton from "../ReusableSmallComponents/EditButton";
-import DeleteButton from "../ReusableSmallComponents/DeleteButton";
+import EditButton from "../ReusableSmallComponents/buttons/EditButton";
+import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
 
 import EditComment from "../EditingData/EditComment";
 
 import DeleteCommentNotification from "../DeletingData/DeleteCommentNotification";
 
 import { useRouter } from "next/router";
-import ShareButton from "../ReusableSmallComponents/ShareButton";
+import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 
 function CommentListing({
@@ -54,6 +54,9 @@ function CommentListing({
 
   let linkToShare = `http://localhost:3000/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
   console.log(`this is linktoshare ${JSON.stringify(rootComment._id)}`);
+  console.log(
+    `this is typeOfContentReplyingTo ${JSON.stringify(typeOfContentReplyingTo)}`
+  );
 
   useEffect(() => {
     {

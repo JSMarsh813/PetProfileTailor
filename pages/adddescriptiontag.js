@@ -27,8 +27,6 @@ export default function AddDescriptionTag({ sessionFromServer }) {
       descriptiontag: newDescriptionTag,
     };
 
-    console.log(descriptionTagSubmission);
-
     axios
       .post(
         "http://localhost:3000/api/descriptiontag",
@@ -54,7 +52,10 @@ export default function AddDescriptionTag({ sessionFromServer }) {
           onChange={(e) => setNewDescriptionTag(e.target.value.toLowerCase())}
         />
 
-        <button type="submit" onClick={handleDescriptionTagSubmission}>
+        <button
+          type="submit"
+          onClick={handleDescriptionTagSubmission}
+        >
           Submit category
         </button>
       </form>

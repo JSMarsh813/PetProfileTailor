@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import RankNames from "../RankNames";
-import GeneralOpenCloseButton from "../buttons/generalOpenCloseButton";
+import GeneralOpenCloseButton from "../ReusableSmallComponents/buttons/generalOpenCloseButton";
 
 export default function PointSystemList({
   favNames,
@@ -92,7 +92,7 @@ export default function PointSystemList({
   ]);
 
   return (
-    <section className="userStatsSection pt-4">
+    <section className="userStatsSection pt-4 text-base">
       <section className="overallStats mb-2 font-bold text-white text-center">
         <div>
           <FontAwesomeIcon
@@ -119,7 +119,7 @@ export default function PointSystemList({
         <GeneralOpenCloseButton
           text="Treat Points Breakdown "
           setStatus={settreatBreakdownMenuOpen}
-          styling="w-full "
+          styling="w-full text-base"
           status={treatBreakdownMenuOpen}
         />
 

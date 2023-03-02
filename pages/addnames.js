@@ -9,7 +9,7 @@ import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import PageTitleWithImages from "../components/ReusableSmallComponents/PageTitleWithImages";
+import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
 export const getServerSideProps = async (context) => {
   let tagList = await fetch("http://localhost:3000/api/nametag");
@@ -52,7 +52,10 @@ function AddNewNameWithTags({ tagList, categoryList, sessionFromServer }) {
   return (
     <div className="bg-violet-900 h-full text-white">
       {/* {console.log(tagList)} */}
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
 
       <PageTitleWithImages
         imgSrc="bg-[url('https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/Z5QQMNJZGJDSVJFNHHR3QYNMCE.jpg')] "
@@ -60,7 +63,10 @@ function AddNewNameWithTags({ tagList, categoryList, sessionFromServer }) {
         title2="Name"
       />
 
-      <div style={{ width: "700px" }} className="mx-auto mt-4 ">
+      <div
+        style={{ width: "700px" }}
+        className="mx-auto mt-4 "
+      >
         {/* if not signed in, do not allow them to add names */}
         {status != "authenticated" && (
           <div className="bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 text-center">

@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import GeneralButton from "../GeneralButton";
-import DisabledButton from "../DisabledButton";
-
 import Select from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -185,7 +182,10 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
         </div>
 
         {/* ##### ATTACHING TAGS  ######*/}
-        <label className="font-bold block mt-4 text-white" htmlFor="nameTags">
+        <label
+          className="font-bold block mt-4 text-white"
+          htmlFor="nameTags"
+        >
           Tags
         </label>
 

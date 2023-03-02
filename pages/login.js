@@ -20,12 +20,11 @@ import { useCookies } from "react-cookie";
 
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import GeneralButton from "../components/GeneralButton";
+import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 
 import { getCsrfToken } from "next-auth/react";
-import NounBlackCatIcon from "../components/ReusableSmallComponents/svgImages/NounBlackCatIcon";
-import NounCat from "../public/noun-black-cat.svg";
-import MagicRabbitSVG from "../components/ReusableSmallComponents/svgImages/MagicRabbitSVG";
+import NounBlackCatIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/svgImages/NounBlackCatIcon";
+import MagicRabbitSVG from "../components/ReusableSmallComponents/iconsOrSvgImages/svgImages/MagicRabbitSVG";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -124,7 +123,11 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
 
   return (
     <div>
-      <Layout title="Login" profileImage={profileImage} userName={userName} />
+      <Layout
+        title="Login"
+        profileImage={profileImage}
+        userName={userName}
+      />
       <div>
         <section className="h-fit">
           <div className="px-6 h-full text-gray-100">
@@ -268,7 +271,10 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
       </div> */}
 
                     {/* <!-- Forgot Password Link --> */}
-                    <a href="#!" className="text-white">
+                    <a
+                      href="#!"
+                      className="text-white"
+                    >
                       Forgot password?
                     </a>
                   </div>

@@ -14,7 +14,7 @@ import { useSession, getSession } from "next-auth/react";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAndLikesLogic";
+import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 
 function Namelisting({ name, session }) {
   console.log(`this is name ${JSON.stringify(name)}`);

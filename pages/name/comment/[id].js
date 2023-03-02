@@ -14,10 +14,9 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  let UserId = "";
-
   if (session) {
-    UserId = session.user._id;
+    userName = sessionFromServer.user.name;
+    profileImage = sessionFromServer.user.profileimage;
   }
 
   let commentResponse = await fetch(
@@ -35,23 +34,33 @@ export const getServerSideProps = async (context) => {
       props: {
         commentData: commentData,
         sessionFromServer: session,
+        userName: userName,
+        profileImage: profileImage,
       },
     };
   }
 };
 
-export default function GetAComment({ commentData, sessionFromServer }) {
+export default function GetAComment({
+  commentData,
+  sessionFromServer,
+  userName,
+  profileImage,
+}) {
   let commentData2 = commentData[0];
   //this allows us to grab the first and only object, out of the commentData array
 
   return (
     <div>
       <NavLayoutwithSettingsMenu
-        profileImage={sessionFromServer.user.profileimage}
-        userName={sessionFromServer.user.name}
+        profileImage={profileImage}
+        userName={userName}
       />
 
-      <PageTitleWithImage title="Single" title2="Comment" />
+      <PageTitleWithImage
+        title="Single"
+        title2="Comment"
+      />
 
       <SingleComment
         replyingtothisid={commentData2.postid}

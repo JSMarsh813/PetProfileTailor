@@ -19,7 +19,7 @@ import {
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
+import BatsignalPost from "../../components/ShowingListOfContent/BatSignalPost";
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
 export const getServerSideProps = async (context) => {
@@ -32,7 +32,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  const UserId = session.user._id;
+  const UserId = session ? session.user._id : "";
 
   let nameResponse = await fetch(
     "http://localhost:3000/api/names/findonenamebyname/" + name

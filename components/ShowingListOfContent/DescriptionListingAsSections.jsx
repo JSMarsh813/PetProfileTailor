@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAndLikesLogic";
-import DeleteButton from "../ReusableSmallComponents/DeleteButton";
-import EditButton from "../ReusableSmallComponents/EditButton";
+import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
+import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
+import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import { useRouter } from "next/router";
 import DeleteItemNotification from "../DeletingData/DeleteItemNotification";
 import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
-import ShareButton from "../ReusableSmallComponents/ShareButton";
+import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 
 import Link from "next/Link";
 

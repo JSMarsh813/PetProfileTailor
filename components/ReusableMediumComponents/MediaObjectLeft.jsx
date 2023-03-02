@@ -1,7 +1,4 @@
-import PawPrintIcon from "../ReusableSmallComponents/PawPrintIcon";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaw } from "@fortawesome/free-solid-svg-icons";
-import GeneralButton from "../GeneralButton";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import ListWithPawPrintIcon from "../ReusableSmallComponents/ListWithPawPrintIcon";
 const MediaObject = ({
   image,
@@ -36,12 +33,18 @@ const MediaObject = ({
         <div className="flex items-center max-w-2xl ml-4">
           {buttonTextLeft && (
             <a href={buttonTextLeftLink}>
-              <GeneralButton text={buttonTextLeft} className="shadow-lg" />
+              <GeneralButton
+                text={buttonTextLeft}
+                className="shadow-lg"
+              />
             </a>
           )}
           {buttonTextRight && (
             <a href={buttonTextRightLink}>
-              <GeneralButton text={buttonTextRight} className="shadow-lg" />
+              <GeneralButton
+                text={buttonTextRight}
+                className="shadow-lg"
+              />
             </a>
           )}
         </div>

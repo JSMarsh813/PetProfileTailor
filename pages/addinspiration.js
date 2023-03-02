@@ -1,7 +1,20 @@
 import React from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 
-function AddInspiration() {
+export const getServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  return {
+    props: {
+      sessionFromServer: session,
+    },
+  };
+};
+function AddInspiration({ sessionFromServer }) {
   //for Nav menu profile name and image
   let userName = "";
   let profileImage = "";
@@ -14,7 +27,10 @@ function AddInspiration() {
 
   return (
     <div>
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
       To be added later!{" "}
     </div>
   );

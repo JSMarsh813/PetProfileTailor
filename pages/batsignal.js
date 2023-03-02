@@ -5,12 +5,12 @@ import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { useRouter } from "next/router";
-import BatsignalPost from "../components/ShowingListOfContent/BatsignalPost";
+import BatsignalPost from "../components/ShowingListOfContent/BatSignalPost";
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import { Pagination } from "@nextui-org/react";
-import GeneralButton from "../components/GeneralButton";
+import GeneralButton from "../components//ReusableSmallComponents/buttons/GeneralButton";
 import AddPost from "../components/AddingNewData/AddPost";
-import PageTitleWithImages from "../components/ReusableSmallComponents/PageTitleWithImages";
+import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
 // import Pagination from '@etchteam/next-pagination'
 // import paginationStyles from '../styles/paginationstyles.module.css'
@@ -223,7 +223,10 @@ export default function BatSignal({
 
   return (
     <div className="pb-8 w-screen ">
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
 
       <PageTitleWithImages
         imgSrc="bg-[url('https://images.wagwalkingweb.com/media/daily_wag/blog_articles/hero/1602871850.792525/best-dog-halloween-costumes-of-2018.jpg')]"

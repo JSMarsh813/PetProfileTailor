@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/Link";
-import GeneralButton from "../GeneralButton";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 
 //another serverSide props from  let categoryList = await fetch('http://localhost:3000/api/name-categories);
 
@@ -111,7 +111,10 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   }
 
   return (
-    <div style={{ width: "700px" }} className="mx-auto">
+    <div
+      style={{ width: "700px" }}
+      className="mx-auto"
+    >
       {/* {console.log(tagList[0].individualTag)} */}
 
       <section className="my-6">
@@ -188,7 +191,10 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
 
         <form onSubmit={handleNameSubmission}>
           {/* needs label and value for Select to work  */}
-          <label className="font-bold block mt-4" for="nameInput">
+          <label
+            className="font-bold block mt-4"
+            htmlFor="nameInput"
+          >
             New Name
           </label>
           <input
@@ -213,7 +219,10 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           )}
 
           {/* setDescription */}
-          <label className="font-bold block mt-4" for="nameDescription">
+          <label
+            className="font-bold block mt-4"
+            htmlFor="nameDescription"
+          >
             Description (optional)
           </label>
           <textarea
@@ -227,7 +236,10 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
 
           <span> {`${500 - description.length}/500 characters left`} </span>
 
-          <label className="font-bold block mt-4" for="nameTags">
+          <label
+            className="font-bold block mt-4"
+            htmlFor="nameTags"
+          >
             Tags
           </label>
           <Select
@@ -264,7 +276,10 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           )}
 
           {isPending && (
-            <button className="btn" disabled>
+            <button
+              className="btn"
+              disabled
+            >
               {" "}
               Adding name ...{" "}
             </button>

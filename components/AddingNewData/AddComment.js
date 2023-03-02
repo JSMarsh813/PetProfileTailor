@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import GeneralButton from "../GeneralButton";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart,
@@ -31,9 +31,12 @@ function AddComment({
   const commentSubmission = async (e) => {
     e.preventDefault();
     //need to pass image directly into this function, otherwise it'll try to grab from state to early and thus you'll get "" for the image
-    // console.log((`hi from image ${image}`))
     if (!description) {
       toast.error(`Ruh Roh! A description is required`);
+      return;
+    }
+    if (createdby == "") {
+      toast.error(`Ruh Roh! You must be signed in to add comments`);
       return;
     }
 
@@ -61,7 +64,7 @@ function AddComment({
       .catch((error) => {
         console.log("this is error", error);
 
-        toast.error(`Ruh Roh! Post not added`);
+        toast.error(`Ruh Roh! Comment not added`);
       });
   };
 

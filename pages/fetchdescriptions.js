@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import PageTitleWithImages from "../components/ReusableSmallComponents/PageTitleWithImages";
+import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
-import GeneralButton from "../components/GeneralButton";
+import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import HeadersForCategories from "../components/ShowingListOfContent/HeadersForDescriptions";
 import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections";
 
@@ -24,7 +24,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  const UserId = session.user._id;
+  const UserId = session ? session.user._id : "";
 
   //grabbing Tags for description edit function
 
@@ -95,7 +95,10 @@ function FetchDescriptions({
 
   return (
     <div>
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
 
       <PageTitleWithImages
         imgSrc="bg-[url('https://images.pexels.com/photos/1599452/pexels-photo-1599452.jpeg?auto=compress&cs=tinysrgb&w=400')]"

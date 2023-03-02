@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import PageTitleWithImages from "../components/ReusableSmallComponents/PageTitleWithImages";
+import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
@@ -47,9 +47,12 @@ function AddDescriptions({ sessionFromServer, tagList }) {
 
   return (
     <div>
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
       <PageTitleWithImages
-        imgSrc="bg-[url('https://images.wagwalkingweb.com/media/daily_wag/blog_articles/hero/1602871850.792525/best-dog-halloween-costumes-of-2018.jpg')]"
+        imgSrc="bg-[url('https://images.unsplash.com/photo-1516222338250-863216ce01ea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80')]"
         title="Add a"
         title2="Description"
       />
@@ -58,7 +61,6 @@ function AddDescriptions({ sessionFromServer, tagList }) {
         userId={userId}
         sessionFromServer={sessionFromServer}
       />
-      To be added later!{" "}
     </div>
   );
 }

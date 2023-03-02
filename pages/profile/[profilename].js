@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
-import BatsignalPost from "../../components/ShowingListOfContent/BatsignalPost";
+import BatsignalPost from "../../components/ShowingListOfContent/BatSignalPost";
 import SingleComment from "../../components/ShowingListOfContent/SingleComment";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
@@ -232,7 +232,10 @@ function ProfilePage({
 
   return (
     <div>
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
 
       <div className="flex flex-col md:flex-row">
         {/* ############## BIO ############## */}
@@ -289,7 +292,7 @@ function ProfilePage({
                 </div>
 
                 <div className="text-center">
-                  {sessionFromServer.user._id == userData._id ? (
+                  {userName == userData._id ? (
                     <EditBioProfileButton
                       setShowProfileEditPage={updateSetShowProfileEditPage}
                     />
@@ -304,7 +307,10 @@ function ProfilePage({
                         href="#"
                         className="ml-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 hover:border-yellow-500 text-center py-2 px-4 rounded"
                       >
-                        <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
+                        <FontAwesomeIcon
+                          icon={faEnvelope}
+                          className="mr-2"
+                        />
                         Message
                       </a>
                     </div>

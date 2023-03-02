@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import GeneralButton from "../GeneralButton";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart,

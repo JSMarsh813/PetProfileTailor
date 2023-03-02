@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 
 import AddComment from "../AddingNewData/AddComment";
-import GeneralButton from "../GeneralButton";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import CommentListing from "./CommentListing";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAndLikesLogic";
+import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import EditPost from "../EditingData/EditPost";
-import EditButton from "../ReusableSmallComponents/EditButton";
-import DeleteButton from "../ReusableSmallComponents/DeleteButton";
+import EditButton from "../ReusableSmallComponents/buttons/EditButton";
+import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
 import DeletePostNotification from "../DeletingData/DeletePostNotification";
-import SeeCommentsButton from "../ReusableSmallComponents/SeeCommentsButton";
-import ShareButton from "../ReusableSmallComponents/ShareButton";
+import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
+import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import PostersImageUsernameProfileName from "../ReusableSmallComponents/PostersImageUsernameProfileName";
 
 import { useRouter } from "next/router";
@@ -57,7 +57,7 @@ function BatsignalPost({
   console.log(`this is rootComments ${JSON.stringify(rootComments)}`);
 
   let amountOfComments = rootComments.length;
-
+  console.log(postsCommentsFromFetch);
   //for editing
   const [showEditPage, SetShowEditPage] = useState(false);
 
@@ -66,7 +66,7 @@ function BatsignalPost({
 
   //for showing share buttons
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
-  let linkToShare = `http://localhost:3000/posts/${post._id}`;
+  let linkToShare = `http://localhost:3000/post/${post._id}`;
 
   let replyComments = "";
   if (postsCommentsFromFetch) {
@@ -256,7 +256,7 @@ function BatsignalPost({
               rootComment={comment}
               replies={replyComments}
               postid={postId}
-              typeOfContentReplyingTo={post}
+              typeOfContentReplyingTo="post"
               sessionFromServer={sessionFromServer}
               apiLink="/api/individualbatsignalcomments/"
               likesApiLink="http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes"

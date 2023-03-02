@@ -26,11 +26,8 @@ import {
 } from "@heroicons/react/20/solid";
 import UserSessionContext from "../src/context/UserSessionContext";
 
-import NameListing from "../components/ShowingListOfContent/Namelisting";
-import MainChartComponent from "../components/MainChartComponent";
-import GeneralButton from "../components/GeneralButton";
-import GeneralOpenCloseButton from "../components/buttons/generalOpenCloseButton";
-import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections";
+import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
+import GeneralOpenCloseButton from "../components/ReusableSmallComponents/buttons/generalOpenCloseButton";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
@@ -44,9 +41,9 @@ import Names from "../models/Names";
 import { useRouter } from "next/router";
 
 import RankNames from "../components/RankNames";
-import WideCenteredHeader from "../components/ReusableSmallComponents/WideCenteredHeading";
+import WideCenteredHeader from "../components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 import SingleComment from "../components/ShowingListOfContent/SingleComment";
-import BatsignalPost from "../components/ShowingListOfContent/BatsignalPost";
+import BatsignalPost from "../components/ShowingListOfContent/BatSignalPost";
 import PointSystemList from "../components/ShowingListOfContent/PointSystemList";
 import DashboardChartForFavDescriptions from "../components/ShowingListOfContent/DashboardChartForFavDescriptions";
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
@@ -335,7 +332,10 @@ export default function Dashboard({
 
   return (
     <div className="bg-violet-900 h-fit">
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
       {/* <p> {currentProfilePicture}</p> */}
 
       <section>

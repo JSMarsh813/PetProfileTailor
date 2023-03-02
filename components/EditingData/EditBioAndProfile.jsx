@@ -19,9 +19,9 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
-import XSvgIcon from "../ReusableSmallComponents/XSvgIcon";
+import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 
-import ImageUpload from "../../components/ImageUpload";
+import ImageUpload from "../../components/AddingNewData/ImageUpload";
 
 export default function EditBioAndProfile({
   setShowProfileEditPage,
@@ -124,7 +124,10 @@ export default function EditBioAndProfile({
 
                   <h4 className="text-white mt-2">Current Avatar </h4>
 
-                  <img src={avatar} className="h-28 w-scale mx-auto" />
+                  <img
+                    src={avatar}
+                    className="h-28 w-scale mx-auto"
+                  />
 
                   <ImageUpload sessionFromServer={sessionFromServer} />
                 </div>

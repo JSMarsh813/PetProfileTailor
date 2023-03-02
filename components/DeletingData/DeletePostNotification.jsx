@@ -1,5 +1,5 @@
 import React from "react";
-import XSvgIcon from "../ReusableSmallComponents/XSvgIcon";
+import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 

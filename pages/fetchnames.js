@@ -19,10 +19,10 @@ import { useForm } from "react-hook-form";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
-import GeneralButton from "../components/GeneralButton";
+import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import NameListing from "../components/ShowingListOfContent/Namelisting";
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
-import PageTitleWithImages from "../components/ReusableSmallComponents/PageTitleWithImages";
+import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
 
@@ -204,7 +204,10 @@ export default function FetchNames({
 
   return (
     <div className="bg-violet-900">
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
 
       <section className="px-4 bg-violet-900">
         <PageTitleWithImages

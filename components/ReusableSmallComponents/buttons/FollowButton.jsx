@@ -15,6 +15,7 @@ import {
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function FollowButton({
   data,
@@ -40,7 +41,7 @@ export default function FollowButton({
 
   const handleFollows = (e) => {
     //if user is not logged in, tell them to log in to like datas
-    !session && toast.error("Please sign in to like");
+    !session && toast.error("Please sign in to follow users");
 
     const putFollows = async () => {
       try {

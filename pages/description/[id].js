@@ -19,24 +19,21 @@ import {
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
+
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 import DescriptionListingAsSections from "../../components/ShowingListOfContent/DescriptionListingAsSections";
 import HeadersForDescriptions from "../../components/ShowingListOfContent/HeadersForDescriptions";
-import PageTitleWithImages from "../../components/ReusableSmallComponents/PageTitleWithImages";
+import PageTitleWithImages from "../../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
 export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url
   const id = context.params.id;
-  console.log(id);
 
   const session = await unstable_getServerSession(
     context.req,
     context.res,
     authOptions
   );
-
-  const UserId = session.user._id;
 
   let descriptionResponse = await fetch(
     "http://localhost:3000/api/description/getASpecificDescriptionById/" + id

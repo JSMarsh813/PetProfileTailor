@@ -1,17 +1,16 @@
 // import React from 'react';
 // import ReactDOM from 'react-dom';
 // these react imports added behind the scenes writing it like this isn't needed for nextjs
-import HeroTop from "../components/HeroTop";
+import HeroTop from "../components/LandingPage/HeroTop";
 import pirate from "../pirate.webp";
 import MediaObjectLeft from "../components/ReusableMediumComponents/MediaObjectLeft";
 import MediaObjectRight from "../components/ReusableMediumComponents/MediaObjectRight";
-import PawPrintIcon from "../components/ReusableSmallComponents/PawPrintIcon";
 import Profile from "../public/profile.png";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import WideCenteredHeading from "../components/ReusableSmallComponents/WideCenteredHeading";
+import WideCenteredHeading from "../components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -41,7 +40,10 @@ function HomePage({ sessionFromServer }) {
 
   return (
     <div className="w-fit bg-violet-900">
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
 
       <HeroTop />
 
@@ -110,15 +112,17 @@ function HomePage({ sessionFromServer }) {
         <WideCenteredHeading heading="Psst...Want To Help Some Pets 😸🐹?" />
 
         <MediaObjectRight
-          image="https://media.istockphoto.com/id/1267466399/photo/happy-puppy-dog-smiling-on-isolated-yellow-background.jpg?b=1&s=170667a&w=0&k=20&c=BoRUS0nBttBCTjLYpECarqTPfLNv2GmMLkSCsFrllFs="
+          image="https://img.freepik.com/free-photo/portrait-playful-dog-halloween-costume_329181-17005.jpg?w=740&t=st=1677738928~exp=1677739528~hmac=71ffbf8c971f87db898002469175d4dc23bd90713152dfcaa62a016835a3d48c"
           listOfText={[
             "Do you want to help pets get adopted but you can't volunteer or foster?",
             "Excellent, you're barking up the right tree!",
             "Sign up to add names or behavior descriptions. Animal welfare professionals can use your contributions to create creative and tailored pet profiles to help pets get adopted! ",
-            "Or check out our batSignal and playyard area where other users are asking for your help with names and other ideas!",
+            "Or check out our bat signal and play yard area where other users are asking for your help with names and other ideas!",
           ]}
-          buttonTextLeft="Check out Batsignal & Play Yard"
+          buttonTextLeft="Check Out Batsignal & Play Yard"
           buttonTextLeftLink="/batsignal"
+          buttonTextRight="Sign Up"
+          buttonTextRightLink="/register"
         />
       </section>
     </div>

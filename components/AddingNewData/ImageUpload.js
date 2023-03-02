@@ -2,8 +2,8 @@ import React, { useContext, createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import GeneralButton from "./GeneralButton";
-import DisabledButton from "./DisabledButton";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import DisabledButton from "../ReusableSmallComponents/buttons//DisabledButton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

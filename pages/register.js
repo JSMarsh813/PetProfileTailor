@@ -7,7 +7,7 @@ import { getError } from "../utils/error";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import axios from "axios";
-import GeneralButton from "../components/GeneralButton";
+import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";

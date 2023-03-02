@@ -1,5 +1,5 @@
 import React from "react";
-import PawPrintIcon from "./PawPrintIcon";
+import PawPrintIcon from "./iconsOrSvgImages/PawPrintIcon";
 
 function ListWithPawPrintIcon({ text }) {
   return (

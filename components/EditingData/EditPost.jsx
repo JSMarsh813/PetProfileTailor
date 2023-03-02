@@ -19,7 +19,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
-import XSvgIcon from "../ReusableSmallComponents/XSvgIcon";
+import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 
 export default function EditPost({
   SetShowEditPage,

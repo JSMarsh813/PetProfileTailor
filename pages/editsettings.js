@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { getError } from "../utils/error";
 import axios from "axios";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import GeneralButton from "../components/GeneralButton";
+import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
@@ -78,7 +78,11 @@ export default function ProfileScreen({ sessionFromServer }) {
 
   return (
     <div>
-      <Layout title="Profile" profileImage={profileImage} userName={userName} />
+      <Layout
+        title="Profile"
+        profileImage={profileImage}
+        userName={userName}
+      />
 
       <img
         className="max-h-48 mx-auto mb-4 rounded-full "
@@ -97,7 +101,10 @@ export default function ProfileScreen({ sessionFromServer }) {
         </p>
 
         <div className="mb-4">
-          <label htmlFor="name" className="text-white">
+          <label
+            htmlFor="name"
+            className="text-white"
+          >
             Name
           </label>
           <input
@@ -121,7 +128,10 @@ export default function ProfileScreen({ sessionFromServer }) {
         </span>
 
         <div className="mb-4">
-          <label htmlFor="email" className="text-white">
+          <label
+            htmlFor="email"
+            className="text-white"
+          >
             Email
           </label>
           <input
@@ -142,7 +152,10 @@ export default function ProfileScreen({ sessionFromServer }) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="password" className="text-white">
+          <label
+            htmlFor="password"
+            className="text-white"
+          >
             New Password
           </label>
 
@@ -160,7 +173,10 @@ export default function ProfileScreen({ sessionFromServer }) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="confirmPassword" className="text-white">
+          <label
+            htmlFor="confirmPassword"
+            className="text-white"
+          >
             Confirm New Password
           </label>
           <input

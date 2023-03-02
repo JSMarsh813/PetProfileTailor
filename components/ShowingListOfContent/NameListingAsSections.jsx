@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAndLikesLogic";
-import DeleteButton from "../ReusableSmallComponents/DeleteButton";
-import EditButton from "../ReusableSmallComponents/EditButton";
+import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
+import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
+import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import { useRouter } from "next/router";
 import DeleteItemNotification from "../DeletingData/DeleteItemNotification";
 import EditName from "../EditingData/EditName";
-import ShareButton from "../ReusableSmallComponents/ShareButton";
+import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
-import SeeCommentsButton from "../ReusableSmallComponents/SeeCommentsButton";
-import GeneralButton from "../GeneralButton";
-import AddNameComment from "../AddingNewData/AddNameComment";
+import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
 import CommentListing from "../ShowingListOfContent/CommentListing";
-import CommentListingName from "./CommentListingName";
 import AddComment from "../AddingNewData/AddComment";
 
 export default function NameListingAsSections({

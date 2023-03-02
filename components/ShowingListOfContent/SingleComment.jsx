@@ -14,18 +14,18 @@ import {
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import AddComment from "../AddingNewData/AddComment";
 import axios from "axios";
-import LikesButtonAndLikesLogic from "../ReusableMediumComponents/LikesButtonAndLikesLogic";
-import GeneralButton from "../GeneralButton";
+import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 
-import EditButton from "../ReusableSmallComponents/EditButton";
+import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import EditComment from "../EditingData/EditComment";
-import DeleteButton from "../ReusableSmallComponents/DeleteButton";
+import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
 import DeleteCommentNotification from "../DeletingData/DeleteCommentNotification";
 
 import { ToastContainer, toast } from "react-toastify";
 
 import { useRouter } from "next/router";
-import ShareButton from "../ReusableSmallComponents/ShareButton";
+import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 
 function CommentListing({
@@ -63,6 +63,7 @@ function CommentListing({
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
   let linkToShare = `http://localhost:3000/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
+  let apiLink = "http://localhost:3000/api/individualbatsignalcomments";
 
   console.log(typeOfContentReplyingTo);
   let linkToPost = `http://localhost:3000/${typeOfContentReplyingTo}/${rootComment.replyingtothisid}`;
@@ -186,6 +187,7 @@ function CommentListing({
                 rootComment={rootComment}
                 sessionFromServer={sessionFromServer}
                 changeCommentState={setCommentChanged}
+                apiLink={apiLink}
                 // setToastMessage={setToastMessage}
               />
             )}
@@ -197,6 +199,7 @@ function CommentListing({
                 changeCommentState={setCommentChanged}
                 commentId={rootComment._id}
                 commentCreatedBy={rootComment.createdby._id}
+                apiLink={apiLink}
               />
             )}
           </div>
@@ -206,6 +209,7 @@ function CommentListing({
               replyingtothisid={rootComment.replyingtothisid}
               parentcommentid={adjustedParentId}
               sessionFromServer={sessionFromServer}
+              apiLink={apiLink}
             />
           )}
         </div>
