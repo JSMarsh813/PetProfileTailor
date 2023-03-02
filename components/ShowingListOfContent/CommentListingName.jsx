@@ -19,23 +19,20 @@
 
 // function CommentListingName({nameid,rootComment,replies,sessionFromServer}) {
 //   //  { comment,replies}
- 
- 
+
 //   const [replying, setReplying]=useState(false)
 //   const [commentParentId, setCommentParentId]=useState(null)
 //   const [postersName,setPostersName]=useState(rootComment.createdby.name)
 //   const [postersProfileImage,setPostersProfileImage]=useState(rootComment.createdby.profileimage)
 //   const [postersProfileName,setProfileName]=useState(rootComment.createdby.profilename)
 //   const [adjustedParentId,setAdjustedParentId]=useState("")
-         
+
 //   const showtime=true
 
-  
 //         //STATE FOR SHOWING SHARE OPTIONS
 //         const[shareSectionShowing,setShareSectionShowing]=useState(false)
 
 //         let linkToShare=`http://localhost:3000/comments/${rootComment._id}`
-
 
 //   useEffect(()=>{
 //     {rootComment.parentcommentid?
@@ -44,10 +41,9 @@
 //        //We only go one level deep. If the comment already has a parent id then we're already one level deep. So we want to set the id of this new comment as the same as this comment's parentcommendid
 
 //       //otherwise we are not one level deep/this is the first reply. So we can grab this comments id as the parentcommentid
-      
+
 //   },[])
 
-     
 //      //for editing
 //      const [showEditPage,SetShowEditPage]=useState(false)
 
@@ -57,13 +53,10 @@
 // const router=useRouter()
 //   const [commentChanged,setCommentChanged]=useState(false)
 
-
-  
 //   function updateEditState(){
 //     SetShowEditPage(true)
-  
-//    }
 
+//    }
 
 //    function updateDeleteState(){
 //     setShowDeleteConfirmation(true)
@@ -71,24 +64,20 @@
 
 //        //if postEdited in the state is true, then we'll force a reload of the page
 
-       
 //        if (commentChanged) {
-             
-//         const forceReload = () => 
-//         {router.reload()}  
-      
+
+//         const forceReload = () =>
+//         {router.reload()}
+
 //           forceReload()
-//           setCommentChanged(false)           
-       
-//       } 
+//           setCommentChanged(false)
+
+//       }
 
 //           //for shares
 //           function onClickShowShares() {
 //             setShareSectionShowing(!shareSectionShowing)
 //     }
-
-
-
 
 //     //        //  ###########  GETTING POSTERS DATA ########
 //     //  const fetchUserData = async () =>{
@@ -99,13 +88,13 @@
 //     //         setPostersName(res.data.data.name)
 //     //         setPostersProfileImage(res.data.data.profileimage)
 //     //         setProfileName(res.data.data.profilename)
-          
+
 //     //         return postersProfileImage, postersName
 //     //         //i'm not sure if the return here is needed
 //     //     })
 //     //        }
 //     //     useEffect(()=>{
-        
+
 //     //     fetchUserData()
 //     // },[])
 //   return (
@@ -114,13 +103,10 @@
 //                 rounded-lg ${rootComment.parentcommentid?"pl-6 pr-0":""}`}>
 //                   {console.log(rootComment)}
 
-
 //         <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
-                
 
 //           <div className="w-full mt-1">
-                  
-                       
+
 //                     <PostersImageUsernameProfileName
 //                         postersProfileImage={postersProfileImage}
 //                         postersName={postersName}
@@ -128,36 +114,33 @@
 //                         postDate={rootComment.createdAt}
 //                         showtime={showtime}
 //                           />
-                                
 
 //                         <div className=" px-2 ml-2 text-sm font-medium leading-loose text-left">{rootComment.description}
 //                         </div>
-                        
+
 //        <div className="text-left ml-2 mt-2 grid grid-cols-2 gap-x-8">
 
 //               <div className="place-self-start">
-//                         <FontAwesomeIcon 
+//                         <FontAwesomeIcon
 //                                 icon={ faCommentDots}
 //                                 className="ml-2 mr-4 text-darkPurple text-2xl"
 //                                    onClick={()=>
 //                                   {setReplying(!replying)}} >
-//                             </FontAwesomeIcon> 
+//                             </FontAwesomeIcon>
 
 //                   <LikesButtonAndLikesLogic
-//                            data={rootComment}                  
+//                            data={rootComment}
 //                            HeartIconStyling="text-2xl"
 //                            HeartIconTextStyling="text-darkPurple ml-2"
 //                            session={sessionFromServer}
-//                            apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}  
-               
-//             />
+//                            apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}
 
+//             />
 
 // <ShareButton
 //               onClickShowShares={onClickShowShares}
 //               shareIconStyling="text-darkPurple"
 
-              
 //              />
 
 //           </div>
@@ -167,14 +150,13 @@
 //                     <div className="place-self-end mr-2">
 //                           <EditButton
 //                                 className="mr-4"
-//                                 onupdateEditState={updateEditState} 
+//                                 onupdateEditState={updateEditState}
 //                           />
-                  
+
 //                         <DeleteButton
 //                           onupdateDeleteState={updateDeleteState}/>
 //                     </div> }
-                      
-      
+
 //    {showEditPage&&
 //         <EditComment
 //           SetShowEditPage={SetShowEditPage}
@@ -186,50 +168,44 @@
 //          />
 //     }
 
-            
 // {showDeleteConfirmation&&
 
- 
 // <DeleteCommentNotification
 //     setShowDeleteConfirmation={setShowDeleteConfirmation}
 //     sessionFromServer={sessionFromServer}
 //     changeCommentState={setCommentChanged}
 //     commentId={rootComment._id}
 //     commentCreatedBy={rootComment.createdby._id}
-//     apiLink={`http://localhost:3000/api/individualposts/updatepostlikes`}  
+//     apiLink={`http://localhost:3000/api/individualposts/updatepostlikes`}
 //  />
 // }
 
-                
-              
-//           </div>            
+//           </div>
 //           {shareSectionShowing&&
 //         <section
 //           className="bg-violet-900 py-2">
 //                 <SharingOptionsBar
 //                   linkToShare={linkToShare}/>
 //         </section>
-//                 }                           
+//                 }
 
-//                         {replying&& 
-                        
+//                         {replying&&
+
 //                        <AddComment
-                        
+
 //                         postid={rootComment.postid}
 //                         parentcommentid={adjustedParentId}
 //                         sessionFromServer={sessionFromServer}
 //                         />
 //                         }
-                      
 
 //                         </div>
-                      
-//                         </div>
 
+//                         </div>
 
 //           {/* if replies exist for this post, loop through them. If their parentcommentid matches this current comment, then add it to the bottom of this comment.
 //           Otherwise do not add it to the bottom of this comment. */}
-//                 {(replies)&&                
+//                 {(replies)&&
 //                 replies.map(reply=> {
 //                   if (reply.parentcommentid==rootComment._id) {
 
@@ -239,21 +215,15 @@
 //                         replies={null}
 //                         key={reply._id}
 //                         sessionFromServer={sessionFromServer}
-                     
-//                         /> 
+
+//                         />
 //                     </div>
-                    
+
 //                     }})
-                  
 
-//                 } 
-
-   
-                  
-       
+//                 }
 
 // </div>
-
 
 //   )
 // }

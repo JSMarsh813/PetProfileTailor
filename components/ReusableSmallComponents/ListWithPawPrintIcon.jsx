@@ -1,12 +1,15 @@
-import React from 'react'
-import PawPrintIcon from './PawPrintIcon'
+import React from "react";
+import PawPrintIcon from "./PawPrintIcon";
 
-function ListWithPawPrintIcon({text}) {
+function ListWithPawPrintIcon({ text }) {
   return (
-                  <li className="my-2" >
-    <p> <PawPrintIcon/>  {text} </p>
-            </li>
-  )
+    <li className="my-2">
+      <p>
+        {" "}
+        <PawPrintIcon /> {text}{" "}
+      </p>
+    </li>
+  );
 }
 
-export default ListWithPawPrintIcon
+export default ListWithPawPrintIcon;

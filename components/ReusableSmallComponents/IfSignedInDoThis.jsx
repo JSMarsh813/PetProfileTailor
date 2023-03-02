@@ -1,14 +1,10 @@
-import React from 'react'
+import React from "react";
 
-export default function IfSignedInDoThis({thingToDo} ) {
+export default function IfSignedInDoThis({ thingToDo }) {
   return (
     <>
-    {((sessionFromServer)&&
-        (post.createdby._id==sessionFromServer.user._id))&&
-
-          {thingToDo}               
-  }
-  </>
-  )
-  
+      {sessionFromServer &&
+        post.createdby._id == sessionFromServer.user._id && { thingToDo }}
+    </>
+  );
 }

@@ -2,30 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700;900&family=Edu+TAS+Beginner:wght@500&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700;900&family=Edu+TAS+Beginner:wght@500&display=swap");
 
 /* needed for when text overflows, the background doesn't turn gray */
 :root {
-    background-color:rgba(76,29,149);
-    font-size: 18px;
+  background-color: rgba(76, 29, 149);
+  font-size: 18px;
 }
 
 input::file-selector-button {
-    font-weight: bold;
-    color: rgb(76 29 149);
-    background-color: rgb(253 224 71);
-    padding: 8px 12px;
-    border-bottom: 6px solid rgb(254 249 195);
-    border-radius: 3px;
-    border-right: 0px;
-    border-left: 0px;
-    border-top: 0px;
+  font-weight: bold;
+  color: rgb(76 29 149);
+  background-color: rgb(253 224 71);
+  padding: 8px 12px;
+  border-bottom: 6px solid rgb(254 249 195);
+  border-radius: 3px;
+  border-right: 0px;
+  border-left: 0px;
+  border-top: 0px;
 }
 
 input::file-selector-button:hover {
-    background-color: rgb(96 165 250);
-    color: white;
-    border-bottom: 6px solid rgb(59 130 246);
-    font-style: inherit;
+  background-color: rgb(96 165 250);
+  color: white;
+  border-bottom: 6px solid rgb(59 130 246);
+  font-style: inherit;
 }

@@ -1,163 +1,152 @@
-import Link from 'next/Link'
-import React, { useContext, createContext, useState, useEffect } from 'react'
-import { signIn, useSession } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
-import Layout from '../components/NavBar/NavLayoutwithSettingsMenu';
-import { getError } from '../utils/error';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
+import Link from "next/Link";
+import React, { useContext, createContext, useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import { getError } from "../utils/error";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBullseye, faFaceGrinWink, faUserTie, faPaw } from '@fortawesome/free-solid-svg-icons'
-import '@fortawesome/fontawesome-svg-core/styles.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBullseye,
+  faFaceGrinWink,
+  faUserTie,
+  faPaw,
+} from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import { useCookies } from "react-cookie"
+import { useCookies } from "react-cookie";
 
-import { authOptions } from "../pages/api/auth/[...nextauth]"
-import { unstable_getServerSession } from "next-auth/next"
-import GeneralButton from '../components/GeneralButton';
+import { authOptions } from "../pages/api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
+import GeneralButton from "../components/GeneralButton";
 
-import { getCsrfToken } from "next-auth/react"
-import NounBlackCatIcon from '../components/ReusableSmallComponents/svgImages/NounBlackCatIcon';
-import NounCat from '../public/noun-black-cat.svg'
-import MagicRabbitSVG from '../components/ReusableSmallComponents/svgImages/MagicRabbitSVG';
+import { getCsrfToken } from "next-auth/react";
+import NounBlackCatIcon from "../components/ReusableSmallComponents/svgImages/NounBlackCatIcon";
+import NounCat from "../public/noun-black-cat.svg";
+import MagicRabbitSVG from "../components/ReusableSmallComponents/svgImages/MagicRabbitSVG";
 
 export const getServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  const csrfToken = await getCsrfToken(context);
 
-  const session = await unstable_getServerSession(context.req, context.res, authOptions)
-  const csrfToken = await getCsrfToken(context)
-   
   return {
-    props: {    
+    props: {
       sessionFromServer: session,
       csrfToken,
-         },
-    }
-}
-
-export default function LoginScreen({sessionFromServer, csrfToken}) {
-
- //grab data from useSession and rename data to session
-
- const { data: session } = useSession();
-//  const [cookie, setCookie] = useCookies(["user"])
-
- const router = useRouter();
- const { redirect } = router.query;
- //extract redirect from router.query
-
-   //for Nav menu profile name and image
-        //let section exists in case the user is not signed in
-        let userName=""
-        let profileImage=""
-      
-        if (sessionFromServer){
-            userName=sessionFromServer.user.name
-         profileImage=sessionFromServer.user.profileimage
-       }
-      //end of section for nav menu
-
- //import this from line 2/react
-  useEffect(() => {
-   if (session?.user) {
-    // localStorage.setItem("session",JSON.stringify(session.user._id)), 
-
-    // setCookie("user", 
-    // JSON.stringify(session), {
-     
-    //   sameSite: true,
-    //   }),
-    
-//  console.log(session.user._id),
- router.push(redirect || '/dashboard');
- }
- }, [router, session, redirect]);
- //if the session exists, then the user is already signed in. So if this is true, push back to the homepage
- //we need to use router (line 8) to redirect user
-
-
- const {
- handleSubmit,
- register,
- formState: { errors },
- } = useForm();
-
- const submitHandler = async ({ email, password }) => {
- try {
-//import signIn on line 3 from nextAuth, which will be handled in the nextauth.js handler
- const result = await signIn
- ('credentials', {
- redirect: false,
-//gets rid of callback url @10:20 https://www.youtube.com/watch?v=EFucgPdjeNg&t=594s&ab_channel=FullStackNiraj
- email,
- password,
- });
- if (result.error) {
- //if error when signing in
- //layout.js is where toast container is called/shown
- toast.error(result.error);
-
- }
- else {
-
- toast.success("Successfully signed in! Sending to profile page")
-//  console.log(`login.js submitHandler else block ${JSON.stringify(result)}`)
-// Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
- console.log(`email: ${email} pass:${password}`)
- 
- //email: testtest@gmail.com pass:testtest
- // router.push("/")
-
- //save to cookie
- }
-
- } catch (err) {
-//error.js file in utils, this is for if there is an error in the api
-//  console.log(`login.js catch block error: ${JSON.stringify(err)}`)
- toast.error(getError(err));
- } 
-
-
-//when button clicked, look for the user by their email, and grab their profile picture
-//put profile picture in local storage
-
+    },
+  };
 };
 
- 
- return (
-  <div>
-  <Layout
-       title="Login"  
-       profileImage={profileImage} 
-       userName={userName} />
-  <div>
-   <section className="h-fit">
-   <div className="px-6 h-full text-gray-100"> 
-   {/* text-gray-100 makes text white */}
-<div
-className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h- g-6"
->
-<div
-  className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0"
->
-  <img
-    src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg    
+export default function LoginScreen({ sessionFromServer, csrfToken }) {
+  //grab data from useSession and rename data to session
+
+  const { data: session } = useSession();
+  //  const [cookie, setCookie] = useCookies(["user"])
+
+  const router = useRouter();
+  const { redirect } = router.query;
+  //extract redirect from router.query
+
+  //for Nav menu profile name and image
+  //let section exists in case the user is not signed in
+  let userName = "";
+  let profileImage = "";
+
+  if (sessionFromServer) {
+    userName = sessionFromServer.user.name;
+    profileImage = sessionFromServer.user.profileimage;
+  }
+  //end of section for nav menu
+
+  //import this from line 2/react
+  useEffect(() => {
+    if (session?.user) {
+      // localStorage.setItem("session",JSON.stringify(session.user._id)),
+
+      // setCookie("user",
+      // JSON.stringify(session), {
+
+      //   sameSite: true,
+      //   }),
+
+      //  console.log(session.user._id),
+      router.push(redirect || "/dashboard");
+    }
+  }, [router, session, redirect]);
+  //if the session exists, then the user is already signed in. So if this is true, push back to the homepage
+  //we need to use router (line 8) to redirect user
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const submitHandler = async ({ email, password }) => {
+    try {
+      //import signIn on line 3 from nextAuth, which will be handled in the nextauth.js handler
+      const result = await signIn("credentials", {
+        redirect: false,
+        //gets rid of callback url @10:20 https://www.youtube.com/watch?v=EFucgPdjeNg&t=594s&ab_channel=FullStackNiraj
+        email,
+        password,
+      });
+      if (result.error) {
+        //if error when signing in
+        //layout.js is where toast container is called/shown
+        toast.error(result.error);
+      } else {
+        toast.success("Successfully signed in! Sending to profile page");
+        //  console.log(`login.js submitHandler else block ${JSON.stringify(result)}`)
+        // Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
+        console.log(`email: ${email} pass:${password}`);
+
+        //email: testtest@gmail.com pass:testtest
+        // router.push("/")
+
+        //save to cookie
+      }
+    } catch (err) {
+      //error.js file in utils, this is for if there is an error in the api
+      //  console.log(`login.js catch block error: ${JSON.stringify(err)}`)
+      toast.error(getError(err));
+    }
+
+    //when button clicked, look for the user by their email, and grab their profile picture
+    //put profile picture in local storage
+  };
+
+  return (
+    <div>
+      <Layout title="Login" profileImage={profileImage} userName={userName} />
+      <div>
+        <section className="h-fit">
+          <div className="px-6 h-full text-gray-100">
+            {/* text-gray-100 makes text white */}
+            <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h- g-6">
+              <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
+                <img
+                  src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg    
   "
-    className="w-full rounded-full shadow-lg border-2 border-yellow-300 border-dashed"
-    alt="Sample image"
-  />
-</div>
+                  className="w-full rounded-full shadow-lg border-2 border-yellow-300 border-dashed"
+                  alt="Sample image"
+                />
+              </div>
 
-<div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+              <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+                <form
+                  className="mx-auto max-w-screen-md"
+                  onSubmit={handleSubmit(submitHandler)}
+                >
+                  <div className="text-center text-2xl mb-4"> Login </div>
 
-<form
-className="mx-auto max-w-screen-md"
-onSubmit={handleSubmit(submitHandler)}
->
-  <div
-     className="text-center text-2xl mb-4"> Login </div>
-
-    {/* <div className="flex flex-row items-center justify-center">
+                  {/* <div className="flex flex-row items-center justify-center">
       <p className="text-lg mb-0 mr-4">Sign in with</p>
       <button
         type="button"
@@ -166,7 +155,7 @@ onSubmit={handleSubmit(submitHandler)}
         className="inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1"
       >
   {/* f svg */}
- {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="w-4 h-4">
+                  {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="w-4 h-4">
      
      <path
        fill="currentColor"
@@ -183,7 +172,7 @@ onSubmit={handleSubmit(submitHandler)}
         className="inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1"
       >
   {/* twitter svg */}
-        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-4 h-4">
+                  {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-4 h-4">
 
           <path
             fill="currentColor"
@@ -198,8 +187,8 @@ onSubmit={handleSubmit(submitHandler)}
         data-mdb-ripple-color="light"
         className="inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1"
       > */}
-   {/* linkedin svg */}
-        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-4 h-4">
+                  {/* linkedin svg */}
+                  {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-4 h-4">
 
           <path
             fill="currentColor"
@@ -207,62 +196,65 @@ onSubmit={handleSubmit(submitHandler)}
           />
         </svg>
       </button>
-    </div> */} 
+    </div> */}
 
-    {/* <div
+                  {/* <div
       className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
     >
       <p className="text-center font-semibold mx-4 mb-0">Or</p>
     </div> */}
 
-    {/* <!-- Email input --> */}
-<div className="mb-6">
-     <label htmlFor="email">Email</label>
-         <input
-                type="email"
-               
-                {...register('email', {
-                required: 'Please enter email',
-                pattern: {
-                        value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                    message: 'Please enter valid email',
-                      },
-                })}
+                  {/* <!-- Email input --> */}
+                  <div className="mb-6">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      type="email"
+                      {...register("email", {
+                        required: "Please enter email",
+                        pattern: {
+                          value:
+                            /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
+                          message: "Please enter valid email",
+                        },
+                      })}
+                      className="w-full text-darkPurple"
+                      id="email"
+                      autoFocus
+                    ></input>
 
-          className="w-full text-darkPurple"
-          id="email"
-          autoFocus
-         ></input>
+                    {errors.email && (
+                      <div className="text-red-500">{errors.email.message}</div>
+                    )}
+                  </div>
 
-        {errors.email && (
-        <div className="text-red-500">{errors.email.message}</div>
-       )}    
+                  {/* <!-- Password input --> */}
+                  <div className="mb-4">
+                    <label htmlFor="password">Password</label>
 
-    </div>
+                    <input
+                      type="password"
+                      {...register("password", {
+                        required: "Please enter password",
+                        minLength: {
+                          value: 6,
+                          message: "password is more than 5 chars",
+                        },
+                      })}
+                      className="w-full text-darkPurple"
+                      id="password"
+                      autoFocus
+                    ></input>
 
-    {/* <!-- Password input --> */}
-    <div className="mb-4">
-       <label htmlFor="password">Password</label>
+                    {errors.password && (
+                      <div className="text-red-500 ">
+                        {errors.password.message}
+                      </div>
+                    )}
+                  </div>
 
-              <input
-                type="password"
-                {...register('password', {
-                    required: 'Please enter password',
-                    minLength: { value: 6, message: 'password is more than 5 chars' },
-                    })}
-                    className="w-full text-darkPurple"
-                    id="password"
-                    autoFocus
-              ></input>
-
-                {errors.password && (
-                <div className="text-red-500 ">{errors.password.message}</div>
-                 )}
-    </div>
-
-        {/* <!-- Remember Me Toggle Checkbox --> */}
-    <div className="flex justify-between items-center mb-6">
-{/*       
+                  {/* <!-- Remember Me Toggle Checkbox --> */}
+                  <div className="flex justify-between items-center mb-6">
+                    {/*       
       <div className="form-group form-check">
               <input
                 type="checkbox"
@@ -275,118 +267,112 @@ onSubmit={handleSubmit(submitHandler)}
               </label>
       </div> */}
 
-        {/* <!-- Forgot Password Link --> */}
-      <a href="#!" className="text-white">Forgot password?</a>
+                    {/* <!-- Forgot Password Link --> */}
+                    <a href="#!" className="text-white">
+                      Forgot password?
+                    </a>
+                  </div>
+
+                  {/* <!-- Login Button --> */}
+                  <div className="text-center lg:text-left">
+                    <button
+                      type="submit"
+                      className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                    >
+                      Login
+                    </button>
+                  </div>
+                </form>
+
+                <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
+                  <p className="text-center font-semibold mx-4 mb-0">Or</p>
+                </div>
+
+                <section className="bg-darkPurple p-2 ">
+                  <h4 className="text-center mb-2 pb-2 font-semibold border-b-2 border-white">
+                    Sign in with a magic Link
+                  </h4>
+
+                  <form
+                    method="post"
+                    action="/api/auth/signin/email"
+                    className="text-center"
+                  >
+                    <input
+                      name="csrfToken"
+                      type="hidden"
+                      defaultValue={csrfToken}
+                    />
+
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="w-2/3 text-darkPurple "
+                    />
+
+                    <GeneralButton
+                      text="sign in"
+                      className="ml-2 mb-2 text-center"
+                    />
+                  </form>
+
+                  <div className="flex mt-2">
+                    <MagicRabbitSVG />
+                    <p className="text-center rounded-lg">
+                      {" "}
+                      We'll email you a magic link so you can sign in without a
+                      password.{" "}
+                    </p>
+
+                    <NounBlackCatIcon fill="purple" />
+                  </div>
+                </section>
+
+                <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"></div>
+
+                {/* <!-- Registration Link--> */}
+
+                <p className="text-sm font-semibold mt-2 pt-1 mb-0 text-center">
+                  <FontAwesomeIcon
+                    className="fa-bounce text-yellow-300 mr-2 text-xl"
+                    icon={faPaw}
+                  />
+                  Don&apos;t have an account? Welcome! &nbsp;
+                  <Link href={`/register?redirect=${redirect || "/"}`}>
+                    <a className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
+                      Register by clicking here
+                    </a>
+                  </Link>
+                </p>
+
+                <p className="text-xs text-center mt-4">
+                  Icons from Noun Project:
+                  <span>
+                    {" "}
+                    <a
+                      href="https://thenounproject.com/browse/icons/term/magic/"
+                      target="_blank"
+                      title="magic Icons"
+                    >
+                      * Magic by Monkik{" "}
+                    </a>
+                  </span>
+                  <span>
+                    <a
+                      href="https://thenounproject.com/browse/icons/term/black-cat/"
+                      target="_blank"
+                      title="black cat Icons"
+                    >
+                      * Black Cat by Narakorn Chanchittakarm{" "}
+                    </a>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
-
-              {/* <!-- Login Button --> */}
-    <div className="text-center lg:text-left">
-      <button
-        type="submit"
-        className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-       
-      >
-        Login
-      </button>
-
-   
-         
-     
-    </div>
-  </form>
-
-  <div
-      className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-    >
-      <p className="text-center font-semibold mx-4 mb-0">Or</p>
-    </div>
-
-    <section
-       className="bg-darkPurple p-2 ">
-
-    <h4
-         className="text-center mb-2 pb-2 font-semibold border-b-2 border-white"> 
-         Sign in with a magic Link</h4>
-
-    <form 
-          method="post" 
-          action="/api/auth/signin/email"
-          className="text-center"
-          >
-      <input 
-          name="csrfToken" 
-          type="hidden"
-          defaultValue={csrfToken} />
-            
-        <input 
-            type="email" 
-            id="email" 
-            name="email"
-            className="w-2/3 text-darkPurple " 
-           
-            />
-     
-     <GeneralButton
-       text="sign in"
-       className="ml-2 mb-2 text-center"
-     />
-     
-    </form>
-
-<div className="flex mt-2">
-   <MagicRabbitSVG/>
-    <p
-      className="text-center rounded-lg"> We'll email you a magic link so you can sign in without a password. </p>
-
-<NounBlackCatIcon
-  fill="purple"/>
-
-</div>
-
-   
-   </section>
-
-    <div
-      className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
-    >      
-    </div>
-
-          {/* <!-- Registration Link--> */}
-
-         
-
-          <p className="text-sm font-semibold mt-2 pt-1 mb-0 text-center">
-          <FontAwesomeIcon 
-                className="fa-bounce text-yellow-300 mr-2 text-xl"
-                icon={faPaw}/>
-
-             Don&apos;t have an account? Welcome! &nbsp;
-                   
-             <Link 
-               href={`/register?redirect=${redirect || '/'}`}>
-                <a className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">Register by clicking here</a>
-             </Link>
-
-            
-             
-       </p>
-       
-       <p className="text-xs text-center mt-4">Icons from Noun Project: 
-
-<span> <a href="https://thenounproject.com/browse/icons/term/magic/" target="_blank"
-   title="magic Icons"> 
-   * Magic by Monkik </a></span>
-
-<span><a href="https://thenounproject.com/browse/icons/term/black-cat/"   target="_blank" 
-    title="black cat Icons">
-    * Black Cat by Narakorn Chanchittakarm </a></span>
-</p>
-    
-</div>
-</div>
-  </div>
-    </section>
-</div>
-</div>
-)
+  );
 }

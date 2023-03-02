@@ -9,8 +9,8 @@
 
 //     await db.connect();
 
-//     if(method ==="PUT"){   
-      
+//     if(method ==="PUT"){
+
 //         console.log(`this is req body ${JSON.stringify(req.body)}`)
 
 //      const {
@@ -20,24 +20,22 @@
 //      console.log(`this is commentid ${commentid}`)
 
 //       try {
-//              const toUpdateName = await Name.findOneAndUpdate({"_id":nameid},            
-//                 {$push: {comments:commentid}})    
-//              console.log(toUpdateName)       
-             
+//              const toUpdateName = await Name.findOneAndUpdate({"_id":nameid},
+//                 {$push: {comments:commentid}})
+//              console.log(toUpdateName)
+
 //          await toUpdateName.save();
 //          await db.disconnect();
- 
+
 //          res.send({
 //               message: 'Comment added to name listing',
 //           });
 
-//       } 
+//       }
 //       catch(err){
 //           res.status(500).json(err)
 //           console.log(err)
 //       }
 //   }
-
-
 
 // }

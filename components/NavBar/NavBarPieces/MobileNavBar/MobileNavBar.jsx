@@ -1,18 +1,26 @@
-import React from 'react'
-import DropDownLink from '../DropDownLink';
-import { Menu, Transition } from '@headlessui/react'
-import Link from 'next/Link'
+import React from "react";
+import DropDownLink from "../DropDownLink";
+import { Menu, Transition } from "@headlessui/react";
+import Link from "next/Link";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBullseye, faFaceGrinWink, faUserTie, faTags, faIgloo, faLightbulb, faIdCard, faBars } from '@fortawesome/free-solid-svg-icons'
-import '@fortawesome/fontawesome-svg-core/styles.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBullseye,
+  faFaceGrinWink,
+  faUserTie,
+  faTags,
+  faIgloo,
+  faLightbulb,
+  faIdCard,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 function MobileNavBar() {
   return (
-
-<div>
-    
-<Menu.Items className="block px-4 py-2 text-sm font-medium text-white 
+    <div>
+      <Menu.Items
+        className="block px-4 py-2 text-sm font-medium text-white 
  absolute  divide-y divide-gray-100 rounded-md bg-violet-800 shadow-lg ring-1 ring-black ring-opacity-5 
 
  
@@ -24,220 +32,185 @@ z-10
 focus:outline-none 
 focus-visible:ring-2 
 focus-visible:ring-white 
-focus-visible:ring-opacity-75">
-
-
-      <Menu.Item as="div">
-              
-              <Link href="/">
-
-             <button
-               className="
+focus-visible:ring-opacity-75"
+      >
+        <Menu.Item as="div">
+          <Link href="/">
+            <button
+              className="
                  hover:bg-yellow-500 
                  hover:text-violet-900
 
                  text-white             
                  w-full items-center rounded-md px-2 py-2 text-sm"
-             >
-                                    
-                 <FontAwesomeIcon icon={faIgloo}
-                  className="text-xl mr-1 
+            >
+              <FontAwesomeIcon
+                icon={faIgloo}
+                className="text-xl mr-1 
                  text-violet-100
                 "
               />
-            
-                    <a>Home</a>    
-            
-                </button>
 
-             </Link>
-         
-         </Menu.Item>
+              <a>Home</a>
+            </button>
+          </Link>
+        </Menu.Item>
 
-
-         <Menu.Item as="div">
-              
-            
-                    
-                    <button className="text-yellow-300         
+        <Menu.Item as="div">
+          <button
+            className="text-yellow-300         
                       w-full items-center rounded-md px-2 py-2 text-sm font-bold bg-violet-600"
-                      disabled={true}
-                  > Fetch/Find </button> 
-        
-          
-          </Menu.Item>          
+            disabled={true}
+          >
+            {" "}
+            Fetch/Find{" "}
+          </button>
+        </Menu.Item>
 
-
-
-              <Menu.Item as="div">
-              
-                   <Link href="/addnames">
-
-                  <button
-                    className="
+        <Menu.Item as="div">
+          <Link href="/addnames">
+            <button
+              className="
                       hover:bg-yellow-500 
                       hover:text-violet-900
 
                       text-white             
                       w-full items-center rounded-md px-2 py-2 text-sm"
-                  >
-                                         
-                      <FontAwesomeIcon icon={faTags} 
-                       className="text-xl mr-1 
+            >
+              <FontAwesomeIcon
+                icon={faTags}
+                className="text-xl mr-1 
                       text-violet-100
                      "
-                   />
-                 
-                       <a> Names</a>
-                 
+              />
 
-                     </button>
+              <a> Names</a>
+            </button>
+          </Link>
+        </Menu.Item>
 
-                  </Link>
-              
-              </Menu.Item>
-
-
-              <Menu.Item as="div">
-              
-                   <Link href="/adddescriptions">
-                   <button
-                    className="
+        <Menu.Item as="div">
+          <Link href="/adddescriptions">
+            <button
+              className="
                       hover:bg-yellow-500 
                       hover:text-violet-900
 
                       text-white             
                        w-full items-center rounded-md px-2 py-2 text-sm"
-                  >
-
-                   <FontAwesomeIcon icon={faIdCard}
-                    className="text-xl mr-1 
+            >
+              <FontAwesomeIcon
+                icon={faIdCard}
+                className="text-xl mr-1 
                       text-violet-100
                      "
-                   />
-                    
-                   <a> Descriptions </a>
-                   
-                  </button>
-                  </Link>
-               </Menu.Item>
-                  
+              />
 
-                  
-              <Menu.Item as="div">
-              
-                  <Link href="/addinspiration">
-                  <button
-                    className="
+              <a> Descriptions </a>
+            </button>
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item as="div">
+          <Link href="/addinspiration">
+            <button
+              className="
                       hover:bg-yellow-500 
                       hover:text-violet-900
 
                       text-white             
                       w-full items-center rounded-md px-2 py-2 text-sm"
-                  >
-
-                  
-                   <FontAwesomeIcon icon={faLightbulb}   className="text-xl mr-1 
+            >
+              <FontAwesomeIcon
+                icon={faLightbulb}
+                className="text-xl mr-1 
                       text-violet-100
-                     "/>
-                        
-              <a> Inspiration </a> 
-            
-                  </button>
-                  </Link>
-         
-              </Menu.Item>          
+                     "
+              />
 
-              <button className="text-yellow-300  
+              <a> Inspiration </a>
+            </button>
+          </Link>
+        </Menu.Item>
+
+        <button
+          className="text-yellow-300  
                       bg-violet-600       
                       w-full items-center rounded-md px-2 py-2 text-sm font-bold"
-                      disabled={true}
-                  > Add </button> 
+          disabled={true}
+        >
+          {" "}
+          Add{" "}
+        </button>
 
-                <Menu.Item as="div">
-              
-                   <Link href="/addnames">
-
-                  <button
-                    className="
+        <Menu.Item as="div">
+          <Link href="/addnames">
+            <button
+              className="
                       hover:bg-yellow-500 
                       hover:text-violet-900
 
                       text-white             
                       w-full items-center rounded-md px-2 py-2 text-sm"
-                  >
-                                         
-                      <FontAwesomeIcon icon={faTags} 
-                       className="text-xl mr-1 
+            >
+              <FontAwesomeIcon
+                icon={faTags}
+                className="text-xl mr-1 
                       text-violet-100
                      "
-                   />
-                 
-                       <a> Names</a>
-                 
+              />
 
-                     </button>
+              <a> Names</a>
+            </button>
+          </Link>
+        </Menu.Item>
 
-                  </Link>
-              
-              </Menu.Item>
- 
-
-
-              <Menu.Item as="div">
-              
-              <Link href="/adddescriptions">
-              <button
-               className="
+        <Menu.Item as="div">
+          <Link href="/adddescriptions">
+            <button
+              className="
                  hover:bg-yellow-500 
                  hover:text-violet-900
 
                  text-white             
                  w-full items-center rounded-md px-2 py-2 text-sm"
-             >
-
-              <FontAwesomeIcon icon={faIdCard}
-               className="text-xl mr-1 
+            >
+              <FontAwesomeIcon
+                icon={faIdCard}
+                className="text-xl mr-1 
                  text-violet-100
                 "
               />
-               
+
               <a> Descriptions </a>
-              
-             </button>
-             </Link>
-          </Menu.Item>
+            </button>
+          </Link>
+        </Menu.Item>
 
-
-              
-              <Menu.Item as="div">
-              
-                  <Link href="/addinspiration">
-                  <button
-                    className="
+        <Menu.Item as="div">
+          <Link href="/addinspiration">
+            <button
+              className="
                       hover:bg-yellow-500 
                       hover:text-violet-900
 
                       text-white             
                       w-full items-center rounded-md px-2 py-2 text-sm"
-                  >
-
-                  
-                   <FontAwesomeIcon icon={faLightbulb}   className="text-xl mr-1 
+            >
+              <FontAwesomeIcon
+                icon={faLightbulb}
+                className="text-xl mr-1 
                       text-violet-100
-                     "/>
-                        
-              <a> Inspiration </a> 
-            
-                  </button>
-                  </Link>
-         
-              </Menu.Item>          
-                
-  </Menu.Items>
-  
-</div>
-  )
+                     "
+              />
+
+              <a> Inspiration </a>
+            </button>
+          </Link>
+        </Menu.Item>
+      </Menu.Items>
+    </div>
+  );
 }
 
-export default MobileNavBar
+export default MobileNavBar;

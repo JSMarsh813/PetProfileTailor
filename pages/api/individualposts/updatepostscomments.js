@@ -3,7 +3,6 @@
 // import db from '../../../utils/db';
 // const mongoose = require('mongoose');
 
-
 // async function handler(req, res) {
 //   const commentid=req.body.commentid
 //   const postid=req.body.postid
@@ -20,18 +19,17 @@
 
 //   //session info
 //   const { user } = session;
- 
+
 //   await db.connect();
 //   const postToUpdate = await Post.findById(idToObjectId)
- 
+
 //   postToUpdate.comments.push(commentid)
- 
+
 //   await postToUpdate.save();
 //   await db.disconnect();
 //   res.send({
 //     message: 'comment id added to post',
 //   });
-
 
 // }
 

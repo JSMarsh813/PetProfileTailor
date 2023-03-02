@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
 
-const DescriptionCategorySchema= new mongoose.Schema({
+const DescriptionCategorySchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
     unique: true,
   },
-  tags: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:"descriptiontag"
-  }]
-})
+  tags: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "descriptiontag",
+    },
+  ],
+});
 
-module.exports = mongoose.models['descriptioncategory'] || mongoose.model("descriptioncategory", DescriptionCategorySchema);
+module.exports =
+  mongoose.models["descriptioncategory"] ||
+  mongoose.model("descriptioncategory", DescriptionCategorySchema);

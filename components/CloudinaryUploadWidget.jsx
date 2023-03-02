@@ -1,14 +1,14 @@
 // import React, { Component } from "react";
 
 // class CloudinaryUploadWidget extends Component {
-   
+
 //   componentDidMount() {
 //     var myWidget = window.cloudinary.createUploadWidget(
 //       {
 //         cloudName: "dujellms1",
 //         uploadPreset: "noyhrbxs"
 //       },
-      
+
 //        // cloudName: process.env.cloud_name,
 //         // uploadPreset: "noyhrbxs"
 //       (error, result) => {
