@@ -12,9 +12,6 @@ import GeneralButton from "../components//ReusableSmallComponents/buttons/Genera
 import AddPost from "../components/AddingNewData/AddPost";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
-// import Pagination from '@etchteam/next-pagination'
-// import paginationStyles from '../styles/paginationstyles.module.css'
-
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
@@ -25,14 +22,10 @@ export const getServerSideProps = async (context) => {
   let postResponse = await fetch("http://localhost:3000/api/individualposts");
   let postData = await postResponse.json();
 
-  //  let commentResponse= await fetch('http://localhost:3000/api/individualbatsignalcomments');
-  //  let commentData = await commentResponse.json()
-
   return {
     props: {
       sessionFromServer: session,
       postList: postData,
-      // commentList: commentData
     },
   };
 };
@@ -43,71 +36,6 @@ export default function BatSignal({
   postList,
   commentList,
 }) {
-  // console.log(`this is postlist2 ${JSON.stringify(postList)}`)
-  // console.log(`this is commentlist ${JSON.stringify(commentList)}`)
-  // let postList=[
-  //   {
-  //     _id: '63d42a6066fe90a742f8edbc',
-  //     image: [],
-  //     title: '',
-  //     description: 'comment',
-  //     createdby: {
-  //       _id: '63a90c2e83e6366b179ffc40',
-  //       name: 'GhibliM',
-  //       profileimage: 'https://res.cloudinary.com/dujellms1/image/upload/v1674006701/profileimage/gxxcmwg0lrwdwsmqodng.jpg',
-  //       profilename: 'ghiblimagic'
-  //     },
-  //     comments: [
-  //       '63d42a8866fe90a742f8edc0',
-  //       '63d42b4366fe90a742f8edc9',
-  //       '63d43a9566fe90a742f8ee14',
-  //       '63d4482666fe90a742f8ef4c',
-  //       '63d448b766fe90a742f8ef70',
-  //       '63d44bbc66fe90a742f8efc8'
-  //     ],
-  //     shares: [],
-  //     likes: [],
-  //     taglist: [ 'photography ideas' ],
-  //     createdAt: '2023-01-27T19:47:44.426Z',
-  //     updatedAt: '2023-01-27T22:10:04.827Z',
-  //     __v: 6
-  //   },
-  //   {
-  //     _id: '63d423e252c89332d426b061',
-  //     image: [
-  //       'https://res.cloudinary.com/dujellms1/image/upload/v1674847201/posts/khgbk3ufwzieuzocxxcp.jpg'
-  //     ],
-  //     title: 'test',
-  //     description: 'test',
-  //     createdby: {
-  //       _id: '63a90c2e83e6366b179ffc40',
-  //       name: 'GhibliM',
-  //       profileimage: 'https://res.cloudinary.com/dujellms1/image/upload/v1674006701/profileimage/gxxcmwg0lrwdwsmqodng.jpg',
-  //       profilename: 'ghiblimagic'
-  //     },
-  //     comments: [
-  //       '63d4242352c89332d426b067',
-  //       '63d4493d66fe90a742f8ef8a',
-  //       '63d4494e66fe90a742f8ef95'
-  //     ],
-  //     shares: [],
-  //     likes: [],
-  //     taglist: [ 'name suggestions' ],
-  //     createdAt: '2023-01-27T19:20:02.866Z',
-  //     updatedAt: '2023-01-27T21:59:43.049Z',
-  //     __v: 3
-  //   }
-  // ]
-
-  // ##################### Category Objects List for Batsignal ###########################
-
-  // let newestPostsFirstList=postList
-
-  // .slice().sort((a,b)=>{
-  //   if (a.createdAt>b.createdAt){
-  //     return 0
-  //   }})
-
   const category = [
     {
       category: "BatSignal!",
@@ -138,20 +66,9 @@ export default function BatSignal({
     .reduce((sum, value) => sum.concat(value), []);
 
   const [tagFilters, setFiltersState] = useState([]);
-  //array above is filled with tags
-  // ex ["christmas", "male"]
 
   const [filteredPosts, setFilteredPosts] = useState([...postList]);
 
-  //  useEffect(() => {
-
-  //      if (!sessionFromServer) {
-
-  //        router.push('/login')}
-  //    }, [router, sessionFromServer]);
-
-  //for Nav menu profile name and image
-  //let section exists in case the user is not signed in
   let userName = "";
   let profileImage = "";
 
@@ -159,7 +76,6 @@ export default function BatSignal({
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
   }
-  //end of section for nav menu
 
   const [IsOpen, SetIsOpen] = useState(true);
   //if true, the className for the filter div will be "" (visible)
@@ -167,22 +83,12 @@ export default function BatSignal({
 
   const [addingPost, setAddingPost] = useState(false);
 
-  // let tagListForPost=["names","photography"]
-
-  // const[tagFilters,setTagFilters] = useState([])
-  //           //array above is filled with tags
-  //           // ex ["name suggestions", "description suggestions"]
-  // const[filteredposts,setFilteredPosts]=useState([...postList])
-  //          //filled with all names on default aka, not actually filtered yet
-
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
 
-    // //copy filteredNames then set it to an empty array, so we "delete" the previous names in the state
-
     setFilteredPosts(postList);
 
-    //every time we click, lets reset filteredNames to nameList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
+    //every time we click, lets reset filteredPosts to postList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
     // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
     //      round: 2, we unclick male
     //we need to reset the nameList, so that it will give us ALL christmas names
@@ -198,14 +104,11 @@ export default function BatSignal({
     //ex: beans has male, but not christmas. so it'd return false
     //while santa would return true so it's rendered
 
-    // console.log(`${value} is ${checked}`);
-
     //if checked, it will add the new tag to the state/list. If not checked, it will filter it out and replace the state with the new tagfilter array
 
     checked
       ? setFiltersState([...tagFilters, value])
       : setFiltersState(tagFilters.filter((tag) => tag != value));
-    // console.log(tagFilters)
   };
 
   // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
@@ -217,8 +120,6 @@ export default function BatSignal({
         currenttags.every((tag) => post.taglist.includes(tag))
       )
     );
-
-    // console.log((`useEffect filterednames ${JSON.stringify(filterednames)}`))
   }, [tagFilters]);
 
   return (
@@ -280,10 +181,6 @@ export default function BatSignal({
             />
           )}
           {filteredPosts.map((post) => {
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // let commentsforspecificpost=commentList.filter
-            //             (comment=>comment.postid===post._id)
-
             return (
               <BatsignalPost
                 post={post}
@@ -297,12 +194,11 @@ export default function BatSignal({
           })}
 
           <div className="text-center mb-4">
-            <Pagination
+            {/* <Pagination
               rounded
               total={20}
-              // page={}
               initialPage={1}
-            />
+            /> */}
           </div>
         </section>
       </section>

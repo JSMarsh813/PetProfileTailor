@@ -11,57 +11,6 @@ export default function DeleteNameNotification({
   changeItemState,
   deletionApiPath,
 }) {
-  //#### sections that need to be added to the component which calls this component
-
-  //import { useRouter } from 'next/router';
-  //const router=useRouter()
-  //  const [showDeleteConfirmation,setShowDeleteConfirmation]=useState(false)
-  //const [itemChanged,setItemChanged]=useState(false)
-
-  //if itemChanged in the state is true, then we'll force a reload of the page. This is for BOTH the edit and delete functions
-
-  //   if (itemChanged) {
-
-  //     const forceReload = () =>
-  //     {router.reload()}
-
-  //       forceReload()
-  //       setItemChanged(false)
-
-  //   }
-
-  // ##for the delete notification button #####
-
-  //  function updateDeleteState(){
-  //     setShowDeleteConfirmation(true)
-  //        }
-
-  //          <DeleteButton
-  //          onupdateDeleteState={updateDeleteState}/>
-  //    </div> }
-
-  //FOR THIS NOTIFICATION COMPONENT
-
-  // {showDeleteConfirmation&&
-  //   <DeleteItemNotification
-  //       setShowDeleteConfirmation=
-  //                   {setShowDeleteConfirmation}
-  //       sessionFromServer=
-  //                   {sessionFromServer}
-  //       changeItemState=
-  //                   {setItemChanged}
-  //       itemId=
-  //                   {name._id}
-  //       itemCreatedBy=
-  //                   {name.createdby._id}
-
-  //        deletionApiPath="/api/individualnames/"
-  //if its in an object the api path will break
-  //    />
-  //   }
-
-  //  toast.success(`You successfully deleted your post!`)
-
   const handleItemDelete = async () => {
     if (sessionFromServer.user._id != itemCreatedBy) {
       toast.error(
@@ -74,15 +23,11 @@ export default function DeleteNameNotification({
           data: { itemId },
         })
         .then((response) => {
-          console.log(response);
-          //reloads page
           changeItemState(true);
-
           setShowDeleteConfirmation(false);
         })
         .catch((error) => {
           console.log("there was an error when deleting your item", error);
-
           toast.error(`Ruh Roh! Item not deleted`);
         });
     }

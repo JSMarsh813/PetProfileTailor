@@ -1,20 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Select from "react-select";
-import { useRouter } from "next/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faImage,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faTrashCan,
-  faX,
-  faCircleXmark,
-  faTowerBroadcast,
-} from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { toast, ToastContainer } from "react-toastify";
@@ -64,13 +48,6 @@ export default function EditPost({
       });
   };
 
-  // ####################### UPLOAD NEW POST TO MONGODB ####################
-  // let createNewPost = function(){
-
-  //      console.log("hi")
-
-  // }
-
   return (
     <div>
       <div
@@ -96,8 +73,6 @@ export default function EditPost({
                 <XSvgIcon
                   screenReaderText="Close Edit Screen"
                   onClickAction={() => SetShowEditPage(false)}
-
-                  //  onClick={()=>SetShowEditPage(false)}
                 />
 
                 <div
@@ -106,8 +81,6 @@ export default function EditPost({
                  p-4 shadow-lg max-w-3xl"
                 >
                   {/* ##### DESCRIPTION AREA ######*/}
-
-                  {/* ${description? 'border-violet-200': 'border-rose-500 border-2'} */}
                   <h4 className="text-white"> Description </h4>
 
                   <textarea

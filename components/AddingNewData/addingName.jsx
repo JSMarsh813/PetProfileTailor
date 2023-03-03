@@ -14,12 +14,8 @@ import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 
 function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   const { data: session, status } = useSession();
-
-  console.log(tagList);
-
   const [newName, setNewName] = useState("");
   const [tags, setTags] = useState([]);
-  // const [description,setDescription]=useState([]);
   const [isPending, setIsPending] = useState(false);
   const [nameAlreadyExists, setNameExists] = useState(false);
   const [description, setDescription] = useState("");
@@ -27,23 +23,13 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   const [nameCheck, setNameCheck] = useState("");
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
 
-  // useEffect(() => {
-  //   if (session?.user)
-  //       {setUserId(session.user._id.toString(""))}
-
-  // }, [session]);
-
-  // console.log(`This is session${userId}`)
-
   async function checkIfNameExists() {
     let nameResponse = await fetch(
       "http://localhost:3000/api/names/findonenamebyname/" + nameCheck
     );
     let nameData = await nameResponse.json();
-    console.log(nameData);
     setNamesThatExist(nameData);
     setNameCheckFunctionRun(true);
-    console.log(`this is names that exist ${JSON.stringify(namesThatExist)}`);
   }
 
   function resetData(e) {
@@ -54,8 +40,6 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
 
   function handleNameSubmission(e) {
     e.preventDefault();
-    //prevent buttons default behavior
-
     setIsPending(true);
 
     const nameSubmission = {
@@ -64,14 +48,10 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
       tags: tags,
       createdby: userId.toString(),
     };
-    //  addedBy: userId,
-    //from state
 
-    // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
     axios
       .post("http://localhost:3000/api/names", nameSubmission)
       .then((response) => {
-        console.log(response);
         setIsPending(false);
         toast.success(
           `Successfully added name: ${newName}. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`
@@ -83,31 +63,6 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
         setIsPending(false);
         toast.error(`Ruh Roh! ${newName} not added`);
       });
-
-    // fetch('http://localhost:3000/api/individualTags', {
-    //   method: 'POST',
-    //   headers: {"Content-type": "application/json"},
-    //   body: JSON.stringify(nameSubmission)
-    // }).then(()=>{
-    //   console.log(`New Name added: ${nameSubmission}`)
-    //   setIsPending(false)
-    //     //when the request is done, by changing setIsPending to false we change the rendered button from the disabled one, to the one that allows submissions
-    // }).catch((error)=>{
-    //     console.log(`There was an error ${nameSubmission}`,error)
-    // });
-
-    //Error handling
-    // only allow submission if NAME and TAGS are filled out, aka state isn't blank. Make button deactivated until this happens
-    // (newName!=""&&tags!=[])
-
-    //if error happens, send error
-
-    //don't allow duplicate names
-    //if name exists already, send error
-    //map through server, does it include the name? if so reject and send error message
-
-    //submit to server
-    //add name to individual Names collection,submit state to server in correct format
   }
 
   return (
@@ -115,8 +70,6 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
       style={{ width: "700px" }}
       className="mx-auto"
     >
-      {/* {console.log(tagList[0].individualTag)} */}
-
       <section className="my-6">
         <p> Add a name with one or more tags. </p>
 
@@ -201,7 +154,6 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             type="text"
             id="nameInput"
             className="text-darkPurple"
-            // className={`${(!sessionFromServer)&&"bg-slate-400"}`}
             placeholder="enter a name to add"
             onChange={(e) => setNewName(e.target.value.toLowerCase())}
             maxlength="40"
@@ -253,8 +205,6 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             isSearchable
             placeholder="If you type in the tags field, it will filter the tags"
             onChange={(opt) => setTags(opt.map((tag) => tag.label))}
-
-            //update STATE of section of object
           />
 
           {/* BUTTON */}
@@ -290,8 +240,6 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
               Please sign in to submit a name{" "}
             </span>
           )}
-
-          {/* <input type="hidden" id="userId" name="userId" value={session.user._id} /> */}
         </form>
       </section>
     </div>

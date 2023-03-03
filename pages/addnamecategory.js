@@ -22,7 +22,6 @@ export default function AddCategory({ sessionFromServer }) {
 
   function handleCategorySubmission(e) {
     e.preventDefault();
-    //prevent buttons default behavior
 
     const categorySubmission = {
       category: newCategory,
@@ -45,12 +44,14 @@ export default function AddCategory({ sessionFromServer }) {
           type="text"
           id="categoryInput"
           className="text-darkPurple"
-          // className={`${(!sessionFromServer)&&"bg-slate-400"}`}
           placeholder="enter a category to add"
           onChange={(e) => setNewCategory(e.target.value.toLowerCase())}
         />
 
-        <button type="submit" onClick={handleCategorySubmission}>
+        <button
+          type="submit"
+          onClick={handleCategorySubmission}
+        >
           Submit category
         </button>
       </form>

@@ -1,10 +1,5 @@
 import React from "react";
 
-// example:
-// <XSvgIcon
-// screenReaderText="Close Delete Confirmaton Screen"
-// onClickAction={()=>SetShowEditPage(false)}
-
 //needs to be in a relative parent
 
 export default function XSvgIcon({ onClickAction, screenReaderText }) {

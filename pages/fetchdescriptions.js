@@ -12,7 +12,6 @@ export const getServerSideProps = async (context) => {
   let response = await fetch("http://localhost:3000/api/descriptioncategory");
   let data = await response.json();
 
-  //  console.log(`this is data ${JSON.stringify(data)}`)
   let descriptionResponse = await fetch(
     "http://localhost:3000/api/description"
   );
@@ -25,8 +24,6 @@ export const getServerSideProps = async (context) => {
   );
 
   const UserId = session ? session.user._id : "";
-
-  //grabbing Tags for description edit function
 
   let tagList = await fetch("http://localhost:3000/api/descriptiontag");
   let tagData = await tagList.json();
@@ -51,8 +48,6 @@ function FetchDescriptions({
   descriptionList,
   tagList,
 }) {
-  //for Nav menu profile name and image
-  //let section exists in case the user is not signed in
   let userName = "";
   let profileImage = "";
 
@@ -81,16 +76,12 @@ function FetchDescriptions({
 
   useEffect(() => {
     let currenttags = tagFilters;
-    // console.log(`this is currenttags ${JSON.stringify(currenttags)}`)
-    //this is currenttags ["female","male"]
+
     setFilteredDescriptions(
       filteredDescriptions.filter((description) =>
         currenttags.every((tag) => description.tags.includes(tag))
       )
     );
-    //name.tags.includes(tag))
-    // console.log(`this is filterednames ${JSON.stringify(filterednames)}`)
-    // console.log((`useEffect filterednames ${JSON.stringify(filterednames)}`))
   }, [tagFilters]);
 
   return (
@@ -107,7 +98,6 @@ function FetchDescriptions({
       />
 
       <div className="flex w-full">
-        {/* {console.log(category)} */}
         <FilteringSidebar
           category={category}
           handleFilterChange={handleFilterChange}
@@ -117,7 +107,6 @@ function FetchDescriptions({
         {/*################# CONTENT DIV ################### */}
 
         <div className="grow bg-darkPurple rounded-box place-items-center">
-          {/* Button that toggles the filter div */}
           <GeneralButton
             text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
             onClick={() => SetIsOpen(!IsOpen)}

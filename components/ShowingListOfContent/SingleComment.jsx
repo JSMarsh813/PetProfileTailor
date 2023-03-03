@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faReply,
-  faComment,
-  faClock,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCommentDots, faClock } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import AddComment from "../AddingNewData/AddComment";
-import axios from "axios";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
-
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import EditComment from "../EditingData/EditComment";
 import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
 import DeleteCommentNotification from "../DeletingData/DeleteCommentNotification";
-
 import { ToastContainer, toast } from "react-toastify";
-
 import { useRouter } from "next/router";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
@@ -188,7 +174,6 @@ function CommentListing({
                 sessionFromServer={sessionFromServer}
                 changeCommentState={setCommentChanged}
                 apiLink={apiLink}
-                // setToastMessage={setToastMessage}
               />
             )}
 

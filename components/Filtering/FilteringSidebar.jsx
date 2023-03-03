@@ -44,9 +44,7 @@ function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
                           name={`${option.tag}[]`}
                           value={option.tag}
                           type="checkbox"
-                          // checked={checkedStatusOfTags}
                           onChange={handleFilterChange}
-                          // onChange={() => handleOnChange(index)}
                           className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600 "
                         />
 

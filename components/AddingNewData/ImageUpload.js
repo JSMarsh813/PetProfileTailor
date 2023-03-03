@@ -6,19 +6,7 @@ import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import DisabledButton from "../ReusableSmallComponents/buttons//DisabledButton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faImage,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faTrashCan,
-  faX,
-  faCircleXmark,
-  faTowerBroadcast,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 function imageUpload({ sessionFromServer }) {
@@ -29,10 +17,7 @@ function imageUpload({ sessionFromServer }) {
   const handleImageAttachment = (e) => {
     e.preventDefault();
     setSelectedImage(e.target.files[0]);
-
     setImagePreview(URL.createObjectURL(e.target.files[0]));
-
-    console.log(selectedImage);
   };
 
   // ########## upload image to cloudinary #############
@@ -45,7 +30,6 @@ function imageUpload({ sessionFromServer }) {
     formData.append("file", selectedImage);
     formData.append("userId", sessionFromServer.user._id);
     formData.append("upload_preset", "noyhrbxs");
-    console.log(formData);
 
     const data = await fetch(
       "https://api.cloudinary.com/v1_1/dujellms1/image/upload",
@@ -58,27 +42,16 @@ function imageUpload({ sessionFromServer }) {
     let profileImage = data.secure_url;
 
     setNewProfileImage(profileImage);
-
-    // toast('Image uploaded Successfully!', { type: 'success' });
     updateUserProfileImage(profileImage);
   };
-  console.log(`This is ${newProfileImage}`);
-  //Works! Result: This is https://res.cloudinary.com/dujellms1/image/upload/v1673928335/profileimage/acpzgzskf3vaxjhpcesj.jpg
 
   // ########## upload image to current users mongoDB user document  #############
 
   const updateUserProfileImage = async (newProfileImage) => {
-    console.log(`in function
-       ${newProfileImage}`);
-    //Result in functionhttps://res.cloudinary.com/dujellms1/image/upload/v1673929130/profileimage/ormkjpffjkhhv6rjm53b.jpg
-    //so its getting the right data/parameter
-
     try {
       let res = await axios.put("/api/user/uploadprofileimage", {
         newProfileImage: newProfileImage.toString(),
       });
-      //api path is correct...
-      //XHR error message ==>Json in request newProfileImage	"https://res.cloudinary.com/dujellms1/image/upload/v1673930174/profileimage/b2xuq8gosdpoqifsm06x.jpg". So the request itself is correct....
 
       if (res.status == 200) {
         toast.success(
@@ -90,26 +63,13 @@ function imageUpload({ sessionFromServer }) {
         toast.error(res.error);
         console.log(res.error);
       } else {
-        console.log("????");
+        console.log("this is an error, check imageUpload component");
       }
     } catch (err) {
       toast.error(err);
       console.log(err);
     }
   };
-
-  //only run updateUserProfileImage if the state value, newProfileImage, has updated.
-
-  // useEffect(()=>{
-  //   console.log(`in useEffect ${newProfileImage}`)
-  //   //when page loads
-  //           //Result: in useEffect
-  //   //Result after submitting image: in useEffect https://res.cloudinary.com/dujellms1/image/upload/v1673928814/profileimage/wdxjcabyzqgzp0zyx5i5.jpg
-
-  //   if (newProfileImage!=""){
-  //     updateUserProfileImage("")
-  //   }
-  // },[newProfileImage])
 
   return (
     <div className="mx-auto max-w-screen-md text-white ">
@@ -128,10 +88,6 @@ function imageUpload({ sessionFromServer }) {
         className="fileInput mb-4"
         type="file"
       ></input>
-
-      {/* <ToastContainer 
-          position="top-center"
-           limit={1} /> */}
 
       <div>
         <p className="mb-4">

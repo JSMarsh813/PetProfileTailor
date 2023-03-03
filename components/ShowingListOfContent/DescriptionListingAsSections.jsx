@@ -35,7 +35,7 @@ export default function DescriptionListingAsSections({
 
   // ##### STATE FOR EDITS ####
   const [showEditPage, SetShowEditPage] = useState(false);
-  console.log(`show edit page ${showEditPage}`);
+
   //#### STATE FOR EDITS AND DELETIONS
   const [itemChanged, setItemChanged] = useState(false);
 
@@ -148,7 +148,6 @@ export default function DescriptionListingAsSections({
               sessionFromServer={sessionFromServer}
               setItemChanged={setItemChanged}
               tagList={tagList}
-              // setToastMessage={setToastMessage}
             />
           )}
         </section>

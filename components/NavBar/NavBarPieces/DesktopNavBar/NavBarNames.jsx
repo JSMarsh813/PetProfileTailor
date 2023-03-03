@@ -2,31 +2,22 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import AddItemsDropDownMenu from "./AddItemsDropDownMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBullseye,
-  faFaceGrinWink,
-  faUserTie,
-  faTags,
-  faIgloo,
-  faLightbulb,
-  faIdCard,
-  faBars,
-  faHandHoldingHand,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTags, faIgloo, faIdCard } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import Link from "next/Link";
 
 //onclick wrapped in spans due to this error https://github.com/vercel/next.js/discussions/39212
-// https://headlessui.com/react/menu
 
 const NavBarNames = ({}) => {
-  //!!!!!!! TURN INTO HAMBURGER AT SPECIFIC SIZES !!!!!!//
   return (
     <div className="divWhichHasBothMenus">
       {/* DESKTOP MENU */}
 
       <section className="hidden md:flex desktop-menu ">
-        <Menu as="div" className="inline-block text-left">
+        <Menu
+          as="div"
+          className="inline-block text-left"
+        >
           <span>
             <Link href="/">
               <Menu.Button
@@ -54,7 +45,10 @@ focus-visible:ring-opacity-75"
           </span>
         </Menu>
 
-        <Menu as="div" className="relative inline-block text-left">
+        <Menu
+          as="div"
+          className="relative inline-block text-left"
+        >
           <span>
             <Link href="/fetchnames">
               <Menu.Button
@@ -82,7 +76,10 @@ focus-visible:ring-opacity-75"
           </span>
         </Menu>
 
-        <Menu as="div" className="relative inline-block text-left">
+        <Menu
+          as="div"
+          className="relative inline-block text-left"
+        >
           <span>
             <Link href="/fetchdescriptions">
               <Menu.Button
@@ -109,7 +106,10 @@ focus-visible:ring-opacity-75"
           </span>
         </Menu>
 
-        <Menu as="div" className="relative inline-block text-left">
+        <Menu
+          as="div"
+          className="relative inline-block text-left"
+        >
           <span>
             <Link href="/batsignal">
               <Menu.Button
@@ -126,8 +126,6 @@ focus-visible:ring-2
 focus-visible:ring-white 
 focus-visible:ring-opacity-75"
               >
-                {/* <FontAwesomeIcon icon={faHandHoldingHand} className="text-xl mr-1 text-white"/> */}
-
                 <img
                   className="h-16 inline-block absolute -bottom-3 -left-1 invert"
                   src="/batsignal.png"

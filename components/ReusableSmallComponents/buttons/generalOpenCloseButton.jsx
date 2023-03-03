@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  ChevronDownIcon,
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
-} from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 function generalOpenCloseButton({ text, styling, setStatus, status }) {
   return (
@@ -20,7 +14,10 @@ function generalOpenCloseButton({ text, styling, setStatus, status }) {
       onClick={() => setStatus(!status)}
     >
       {text}
-      <ChevronDownIcon className="inline ml-2 h-5" aria-hidden="true" />
+      <ChevronDownIcon
+        className="inline ml-2 h-5"
+        aria-hidden="true"
+      />
     </button>
   );
 }

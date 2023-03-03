@@ -16,25 +16,20 @@ export default function deleteCommentNotification({
   const handleCommentDelete = async () => {
     if (sessionFromServer.user._id != commentCreatedBy) {
       toast.error(
-        "validation error, session id does not match post's created by id"
+        "validation error, session id does not match the post creator's id"
       );
       return;
     } else {
-      // await axios.delete("/api/individualbatsignalcomments/",
       await axios
         .delete(apiLink, {
           data: { commentId },
         })
         .then((response) => {
-          console.log(response);
-          //reloads page
           changeCommentState(true);
-
           setShowDeleteConfirmation(false);
         })
         .catch((error) => {
           console.log("there was an error when deleting your post", error);
-
           toast.error(`Ruh Roh! Post not deleted`);
         });
     }

@@ -4,7 +4,6 @@ import { NextAuthOptions } from "next-auth";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
-// import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 import User from "../../../models/User";
 
 import NameTag from "../../../models/NameTag";
@@ -13,9 +12,6 @@ import db from "../../../utils/db";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../auth/lib/mongodb";
 
-// import clientPromise from "../auth/lib/mongodb"
-
-// export default NextAuth({
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   session: {
@@ -66,9 +62,5 @@ export const authOptions = {
     }),
   ],
 };
-// )
-export default NextAuth(authOptions);
 
-// pages:{
-//   signIn:"/login"
-// },
+export default NextAuth(authOptions);

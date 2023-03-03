@@ -130,4 +130,3 @@ function HomePage({ sessionFromServer }) {
 }
 
 export default HomePage;
-// must export homepage so nextJs knows where to find it

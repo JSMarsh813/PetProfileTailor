@@ -113,11 +113,7 @@ export default function Register({ sessionFromServer }) {
         toast.error(result.error);
       } else {
         toast.success("Successfully signed up! Sending to profile page");
-        console.log(result);
-        // Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
-        console.log(`email: ${email} pass:${password}`);
-        //email: kyunyu@gmail.com pass:testtest
-        //and appears in mongodb users collection
+
         router.push("/");
       }
     } catch (err) {

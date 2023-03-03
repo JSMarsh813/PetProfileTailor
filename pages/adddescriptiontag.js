@@ -21,7 +21,6 @@ export default function AddDescriptionTag({ sessionFromServer }) {
   const [newDescriptionTag, setNewDescriptionTag] = useState("");
   function handleDescriptionTagSubmission(e) {
     e.preventDefault();
-    //prevent buttons default behavior
 
     const descriptionTagSubmission = {
       descriptiontag: newDescriptionTag,
@@ -47,7 +46,6 @@ export default function AddDescriptionTag({ sessionFromServer }) {
           type="text"
           id="categoryInput"
           className="text-darkPurple"
-          // className={`${(!sessionFromServer)&&"bg-slate-400"}`}
           placeholder="enter a description tag to add"
           onChange={(e) => setNewDescriptionTag(e.target.value.toLowerCase())}
         />

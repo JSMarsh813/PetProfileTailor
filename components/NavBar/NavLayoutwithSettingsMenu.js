@@ -1,32 +1,17 @@
 import { signOut, useSession } from "next-auth/react";
-import Head from "next/head";
 import Link from "next/Link";
 // //Special jsx code that allows us to build links. Allows us to keep everything on a single page (makes it a SPA), rather than using a href="page link", which would make us lose any state and require that we get a new file sent from the server
 
-// import Cookies from 'js-cookie';
 import React, { useContext, useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
 import { Menu } from "@headlessui/react";
 import "react-toastify/dist/ReactToastify.css";
-// import { Store } from '../utils/Store';
 import DropDownLink from "./NavBarPieces/DropDownLink";
-import { useRouter } from "next/router";
-import { SearchIcon } from "@heroicons/react/outline";
 import MobileNavBar from "./NavBarPieces/MobileNavBar/MobileNavBar";
 import NavBarNames from "./NavBarPieces/DesktopNavBar/NavBarNames";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBullseye,
-  faFaceGrinWink,
-  faUserTie,
-  faTags,
-  faIgloo,
-  faLightbulb,
-  faIdCard,
-  faBars,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 export default function NavLayoutwithSettingsMenu({
@@ -35,44 +20,15 @@ export default function NavLayoutwithSettingsMenu({
   userName,
   profileImage,
 }) {
-  // const { status, data: session } = useSession();
-
-  // const { state, dispatch } = useContext(Store);
-  // const { cart } = state;
-  // const [cartItemsCount, setCartItemsCount] = useState(0);
-  // useEffect(() => {
-  //   setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
-  // }, [cart.cartItems]);
-  // console.log(`this is username ${userName}`)
   const [isHamBurgNavOpen, setisHamBurgNavOpen] = useState(false);
 
   const logoutClickHandler = () => {
-    // Cookies.remove('cart');
-    // dispatch({ type: 'CART_RESET' });
-
     localStorage.removeItem("session");
     signOut({ callbackUrl: "/login" });
   };
 
-  // const [query, setQuery] = useState('');
-
-  // const router = useRouter();
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   router.push(`/search?query=${query}`);
-  // };
-
   return (
     <>
-      {console.log(isHamBurgNavOpen)}
-      {/* <Head>
-        <title>{title ? title + ' - PetProfileTailor' : 'PetProfileTailor'}</title>
-        <meta name="description" content="site to assist with making pet profiles for adoptions" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head> */}
-
-      {/* <ToastContainer position="bottom-center" limit={1} /> */}
-
       <div className="flex flex-col justify-between bg-violet-900">
         <header>
           <nav className="flex h-12 items-center px-4 justify-between shadow-md bg-violet-600 ">
@@ -110,19 +66,11 @@ export default function NavLayoutwithSettingsMenu({
             <NavBarNames />
 
             <div className="mr-4">
-              {/* <Link href="/cart">
-                <a className="p-2">
-                  Cart
-                  {cartItemsCount > 0 && (
-                    <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
-                      {cartItemsCount}
-                    </span>
-                  )}
-                </a>
-              </Link> */}
-
               {userName != "" ? (
-                <Menu as="div" className="relative inline-block text-left z-10">
+                <Menu
+                  as="div"
+                  className="relative inline-block text-left z-10"
+                >
                   <Menu.Button
                     className="inline-flex justify-center px-4 
                   text-yellow-400 
@@ -159,7 +107,10 @@ export default function NavLayoutwithSettingsMenu({
                   hover:bg-yellow-400
                   hover:text-violet-900"
                     >
-                      <DropDownLink className="dropdown-link" href="/dashboard">
+                      <DropDownLink
+                        className="dropdown-link"
+                        href="/dashboard"
+                      >
                         Dashboard
                       </DropDownLink>
                     </Menu.Item>
@@ -197,7 +148,10 @@ export default function NavLayoutwithSettingsMenu({
                   </Menu.Items>
                 </Menu>
               ) : (
-                <Menu as="div" className="relative inline-block text-left z-10">
+                <Menu
+                  as="div"
+                  className="relative inline-block text-left z-10"
+                >
                   <Menu.Button
                     className="inline-flex justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white
                 text-yellow-400 font-extrabold

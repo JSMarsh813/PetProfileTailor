@@ -1,22 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Select from "react-select";
-import { useRouter } from "next/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faImage,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faTrashCan,
-  faX,
-  faCircleXmark,
-  faTowerBroadcast,
-} from "@fortawesome/free-solid-svg-icons";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
@@ -106,7 +88,6 @@ export default function EditBioAndProfile({
 
                   {/* ##### DESCRIPTION AREA ######*/}
 
-                  {/* ${description? 'border-violet-200': 'border-rose-500 border-2'} */}
                   <h4 className="text-white"> Bio </h4>
 
                   <textarea

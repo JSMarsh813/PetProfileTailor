@@ -44,11 +44,6 @@ export const getServerSideProps = async (context) => {
       notFound: true,
     };
   } else {
-    //  let userResponse= await fetch('http://localhost:3000/api/posts/getASpecificPost/'+id)
-    //  let userData = await userResponse.json()
-
-    //  console.log(`this is ${userData}`)
-
     return {
       props: {
         nameData: nameData,
@@ -59,7 +54,6 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function Postid({ sessionFromServer, nameData }) {
-  //for Nav menu profile name and image
   let userName = "";
   let profileImage = "";
 
@@ -67,7 +61,6 @@ export default function Postid({ sessionFromServer, nameData }) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
   }
-  //end of section for nav menu
 
   return (
     <div>

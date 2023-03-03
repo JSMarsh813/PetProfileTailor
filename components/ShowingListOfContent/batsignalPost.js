@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import AddComment from "../AddingNewData/AddComment";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import CommentListing from "./CommentListing";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import EditPost from "../EditingData/EditPost";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
@@ -18,13 +14,7 @@ import PostersImageUsernameProfileName from "../ReusableSmallComponents/PostersI
 import { useRouter } from "next/router";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 
-function BatsignalPost({
-  className,
-  sessionFromServer,
-  post,
-  //  commentList,
-  tagListProp,
-}) {
+function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
   const image = post.image;
   const title = post.title;
   const paragraphText = post.description;
@@ -81,23 +71,6 @@ function BatsignalPost({
   const router = useRouter();
   const [postChanged, setPostChanged] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-
-  // console.log({rootComments})
-
-  //  ###########  GETTING POSTERS DATA ########
-  //  const fetchUserData = async () =>{
-
-  //     await axios.get(`api/user/${postersId}`)
-  //     .then((res)=>{
-  //          console.log(res.data.data)
-  //         setPostersName(res.data.data.name)
-  //         setPostersProfileImage(res.data.data.profileimage)
-  //         setProfileName(res.data.data.profilename)
-
-  //         return postersProfileImage, postersName
-  //         //i'm not sure if the return here is needed
-  //     })
-  //        }
 
   const handleFetchPosts = async () => {
     const response = await fetch(
@@ -245,8 +218,6 @@ function BatsignalPost({
         {shareSectionShowing && <SharingOptionsBar linkToShare={linkToShare} />}
 
         {/* ######## POST'S COMMENTS SECTION ###########*/}
-
-        {/* this section keeps giving the "Each child in a list should have a unique key prop" error??? */}
 
         {commentsShowing &&
           rootComments != [] &&

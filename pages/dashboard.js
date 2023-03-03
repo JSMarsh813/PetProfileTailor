@@ -1,46 +1,17 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import { signOut, useSession } from "next-auth/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBowlFood,
-  faCookieBite,
-  faRankingStar,
-  faTags,
-  faIgloo,
-  faLightbulb,
-  faIdCard,
-  faComment,
-} from "@fortawesome/free-solid-svg-icons";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-
 import Link from "next/Link";
 
-import axios from "axios";
-import {
-  ChevronDownIcon,
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
-} from "@heroicons/react/20/solid";
 import UserSessionContext from "../src/context/UserSessionContext";
 
-import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import GeneralOpenCloseButton from "../components/ReusableSmallComponents/buttons/generalOpenCloseButton";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
-// import PostCategoryData from "../pages/api/BatSignalPostCategoryData/PostCategoryData"
-import db from "../utils/db";
-// import { connectToDatabase } from '../pages/api/auth/lib/db'
-
 import Names from "../models/Names";
-// import User from "../models/User"
 // //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 import { useRouter } from "next/router";
 
-import RankNames from "../components/RankNames";
 import WideCenteredHeader from "../components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 import SingleComment from "../components/ShowingListOfContent/SingleComment";
 import BatsignalPost from "../components/ShowingListOfContent/BatSignalPost";
@@ -50,10 +21,6 @@ import NameListingAsSections from "../components/ShowingListOfContent/NameListin
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 
 export const getServerSideProps = async (context) => {
-  // let response = await fetch('http://localhost:3000/api/name-categories');
-  // let data = await response.json()
-
-  //all names?
   let nameResponse = await fetch("http://localhost:3000/api/names");
   let nameData = await nameResponse.json();
 
@@ -146,24 +113,8 @@ export const getServerSideProps = async (context) => {
   let descriptionTagListProp = descriptionTagData
     .map((tag) => tag.tag)
     .reduce((sum, value) => sum.concat(value), []);
-  // try {
-  //   await dbConnect() //from config/mongo.js
-
-  //     const individualNames = await IndividualNames.find();
-  //     filteredNames = individualNames.filter(name=>name.likedby.includes("63a90c2e83e6366b179ffc40"))
-  //     return filteredNames
-
-  //   } catch (err) {
-  //     JSON.stringify(err);
-  //   }
-
-  // console.log(data);
-  //getServerSideProps allows us to fetch data from an api
-  //runs only on server side, will never run clicent side
-  //can run server-side code directly in getStaticProps
   return {
     props: {
-      // category: data,
       sessionFromServer: session,
 
       nameList: nameData,
@@ -215,10 +166,6 @@ export default function Dashboard({
     }
   }, [router, sessionFromServer]);
 
-  // setTotalPoints(treatPoints)
-
-  //  console.log(sessionFromServer)
-
   const [favCommentsOpen, setFavCommentsOpen] = useState(false);
 
   const [favPostsOpen, setFavPostsOpen] = useState(false);
@@ -226,7 +173,6 @@ export default function Dashboard({
   const [favDescriptionsOpen, setFavDescriptionsOpen] = useState(false);
 
   //for Nav menu profile name and image
-  //let section exists in case the user is not signed in
   let userName = "";
   let profileImage = "";
 
@@ -235,7 +181,6 @@ export default function Dashboard({
     profileImage = sessionFromServer.user.profileimage;
   }
   //end of section for nav menu
-  //   let [userId,setUserId]=useState(userIdFromServer._id)
 
   const category = [
     {
@@ -262,85 +207,14 @@ export default function Dashboard({
     .map((category) => category.tags)
     .reduce((sum, value) => sum.concat(value), []);
 
-  // console.log(category)
-  // let categorytest=Object.values(PostCategoryData)
-  //  console.log(`this is categorytest ${JSON.stringify(categorytest)}`)
-
-  // {console.log(`from server ${(userId)}`)}
-
-  // const currentUserInfo = async ({ name, email, password }) => {
-  //   try {
-  //     await axios.post('/api/auth/signup', {
-  //       name,
-  //       email,
-  //       password,
-  //     });
-
-  //     const result = await signIn('credentials', {
-  //       redirect: false,
-  //       email,
-  //       password,
-  //     });
-  //     if (result.error) {
-  //       toast.error(result.error);
-  //     }
-  //     else {
-
-  //       toast.success("Successfully signed up! Sending to profile page")
-  //       console.log(result)
-  //       // Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
-  //       console.log(`email: ${email} pass:${password}`)
-  //       //email: kyunyu@gmail.com pass:testtest
-  //       //and appears in mongodb users collection
-  //       router.push("/")
-  //     }
-  //   } catch (err) {
-  //     toast.error(getError(err));
-  //   }
-  // };
-
-  //grab userID from localStorage
-
-  // useEffect(() => {
-  //   let data= (!localStorage.getItem("session"))?
-  //       data="0":
-  //       data=JSON.parse(localStorage.getItem("session")).toString()
-
-  //we had to convert mongo's object ID to a JSON object, JSON.stringify to store in local storage when we logged in at login.js
-  //however JSON's objects are stored with two "", so it stored as ""145555ect""
-  // so data=="145555ect" would always be false since ""145555ect""!= "145555ect" (see the "")
-  //so we need to use JSON.parse to make it a useable string
-
-  // console.log(data);
-  // setUserId(data)
-  // getUser()
-
-  // }, [])
-
-  // get request to api/user/???
-
-  // const getUser = async()=> {
-
-  //   let response=await fetch(`/api/user/${userId}`);
-
-  //   let data = await response.json()
-
-  //   setUserInfo(data)
-  //   return res.status(422).send("somethings wrong")
-
-  // }
-
   return (
     <div className="bg-violet-900 h-fit">
       <Layout
         profileImage={profileImage}
         userName={userName}
       />
-      {/* <p> {currentProfilePicture}</p> */}
 
       <section>
-        {/* <p> {(valuetest)}</p> */}
-
         <div
           className="relative overflow-hidden bg-no-repeat bg-cover"
           style={{
@@ -424,10 +298,6 @@ export default function Dashboard({
                 styling="mb-2"
                 status={favoritesListOpen}
               />
-
-              {/* <div className="float-right mb-4">
-                        <GeneralButton text="Sort Names by Categories"></GeneralButton>
-                  </div> */}
             </div>
 
             {favoritesListOpen == true && (
@@ -439,7 +309,6 @@ export default function Dashboard({
                       name={name}
                       key={name._id}
                       sessionFromServer={sessionFromServer}
-                      // tagList={tagList}
                     />
                   );
                 })}
@@ -485,9 +354,7 @@ export default function Dashboard({
                 );
               })}
           </section>
-          {/* {console.log(likedComments)} */}
-          {/* {console.log(postsLiked)} */}
-          {/* ############# POSTS COMMENTS LIST ############ */}
+
           <section>
             <GeneralOpenCloseButton
               text="View Your Favorite Posts"
@@ -514,10 +381,6 @@ export default function Dashboard({
       </section>
 
       {/* <p>{userId}</p> */}
-
-      <section>
-        <p> extra </p>
-      </section>
     </div>
   );
 }

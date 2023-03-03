@@ -2,19 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faImage,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faTrashCan,
-  faX,
-  faCircleXmark,
-  faTowerBroadcast,
-} from "@fortawesome/free-solid-svg-icons";
+import { faImage, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { toast, ToastContainer } from "react-toastify";
@@ -29,12 +17,10 @@ export default function EditPost({
   changePostState,
   setToastMessage,
 }) {
-  //data for posts in mongoDB
   const [image, setImage] = useState();
   const [title, setTitle] = useState(post.title);
   const [description, setDescription] = useState(post.description);
   const [tagList, setTags] = useState(post.taglist);
-  // tagList:["bugs","general chat"]
   const [createdby, setCreatedBy] = useState({});
 
   //image we attached, waiting to upload to cloudinary
@@ -121,8 +107,6 @@ export default function EditPost({
         //reloads page
         changePostState(true);
         SetShowEditPage(false);
-
-        // setImage([])
       })
       .catch((error) => {
         console.log("there was an error when sending your post edits", error);
@@ -130,13 +114,6 @@ export default function EditPost({
         toast.error(`Ruh Roh! Post not edited`);
       });
   };
-
-  // ####################### UPLOAD NEW POST TO MONGODB ####################
-  // let createNewPost = function(){
-
-  //      console.log("hi")
-
-  // }
 
   return (
     <div>
@@ -163,8 +140,6 @@ export default function EditPost({
                 <XSvgIcon
                   screenReaderText="Close Edit Screen"
                   onClickAction={() => SetShowEditPage(false)}
-
-                  //  onClick={()=>SetShowEditPage(false)}
                 />
 
                 <div
@@ -189,7 +164,6 @@ export default function EditPost({
 
                   {/* ##### DESCRIPTION AREA ######*/}
 
-                  {/* ${description? 'border-violet-200': 'border-rose-500 border-2'} */}
                   <h4 className="text-white"> Description </h4>
 
                   <textarea

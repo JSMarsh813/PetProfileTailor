@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   const { method } = req;
   console.log(req.body);
 
-  dbConnect(); //from config/mongo.js
+  dbConnect();
 
   if (method === "GET") {
     try {
@@ -54,15 +54,13 @@ export default async function handler(req, res) {
     let existingUserCheck = await Description.find({
       description: description,
     });
-    console.log(existingUserCheck); //[]
+    console.log(existingUserCheck);
 
     if (existingUserCheck && existingUserCheck.length != 0) {
-      res
-        .status(409)
-        .json({
-          message: "User already exists",
-          existingUser: existingUserCheck,
-        });
+      res.status(409).json({
+        message: "User already exists",
+        existingUser: existingUserCheck,
+      });
       return;
     } else {
       try {

@@ -10,8 +10,6 @@ export default function deletePostNotification({
   postCreatedBy,
   changePostState,
 }) {
-  //  toast.success(`You successfully deleted your post!`)
-
   const handlePostDelete = async () => {
     if (sessionFromServer.user._id != postCreatedBy) {
       toast.error(

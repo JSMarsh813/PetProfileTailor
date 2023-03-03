@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faReply,
-  faComment,
-  faClock,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import AddComment from "../AddingNewData/AddComment";
 import axios from "axios";
@@ -74,7 +64,6 @@ function CommentListing({
 
   //for deleting
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  //setting up that we will reroute/refresh if the comment is changed
   const router = useRouter();
   const [commentChanged, setCommentChanged] = useState(false);
 
@@ -85,8 +74,6 @@ function CommentListing({
   function updateDeleteState() {
     setShowDeleteConfirmation(true);
   }
-
-  //if postEdited in the state is true, then we'll force a reload of the page
 
   if (commentChanged) {
     const forceReload = () => {
@@ -102,31 +89,11 @@ function CommentListing({
     setShareSectionShowing(!shareSectionShowing);
   }
 
-  //        //  ###########  GETTING POSTERS DATA ########
-  //  const fetchUserData = async () =>{
-
-  //     await axios.get(`api/user/${rootComment.createdby}`)
-  //     .then((res)=>{
-  //          console.log(res.data.data)
-  //         setPostersName(res.data.data.name)
-  //         setPostersProfileImage(res.data.data.profileimage)
-  //         setProfileName(res.data.data.profilename)
-
-  //         return postersProfileImage, postersName
-  //         //i'm not sure if the return here is needed
-  //     })
-  //        }
-  //     useEffect(()=>{
-
-  //     fetchUserData()
-  // },[])
   return (
     <div
       className={`flex-col mx-auto py-2 pr-4 text-darkPurple
                 rounded-lg ${rootComment.parentcommentid ? "pl-6 pr-0" : ""}`}
     >
-      {/* {console.log(rootComment)} */}
-
       <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
         <div className="w-full mt-1">
           <PostersImageUsernameProfileName
@@ -180,12 +147,11 @@ function CommentListing({
             {showEditPage && (
               <EditComment
                 SetShowEditPage={SetShowEditPage}
-                replyingtothisid={replyingtothisid} //not needed???
+                replyingtothisid={replyingtothisid}
                 rootComment={rootComment}
                 sessionFromServer={sessionFromServer}
                 changeCommentState={setCommentChanged}
                 apiLink={apiLink}
-                // setToastMessage={setToastMessage}
               />
             )}
 

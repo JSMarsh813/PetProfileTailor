@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   const method = req.method;
 
-  dbConnect(); //from config/mongo.js
+  dbConnect();
 
   if (method === "GET") {
     try {

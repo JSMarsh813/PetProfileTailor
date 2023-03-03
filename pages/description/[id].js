@@ -46,13 +46,6 @@ export const getServerSideProps = async (context) => {
       notFound: true,
     };
   } else {
-    //  let userResponse= await fetch('http://localhost:3000/api/posts/getASpecificPost/'+id)
-    //  let userData = await userResponse.json()
-
-    //  console.log(`this is ${userData}`)
-
-    //grabbing Tags for description edit function
-
     let descriptionTagList = await fetch(
       "http://localhost:3000/api/descriptiontag"
     );

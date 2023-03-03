@@ -67,23 +67,17 @@ function AddNewNameWithTags({ tagList, categoryList, sessionFromServer }) {
         style={{ width: "700px" }}
         className="mx-auto mt-4 "
       >
-        {/* if not signed in, do not allow them to add names */}
         {status != "authenticated" && (
           <div className="bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 text-center">
-            {" "}
             To avoid spam, users must sign in to add names{" "}
           </div>
         )}
-        {/* if not signed in, allow them to add names */}
-        {/* {console.log(`this is session ${sessionFromServer}`)} */}
 
         <NewNameWithTagsData
           tagList={tagList}
           userId={userId}
           sessionFromServer={sessionFromServer}
         />
-
-        {/* <AddNewTag categoryList={categoryList}/> */}
       </div>
     </div>
   );

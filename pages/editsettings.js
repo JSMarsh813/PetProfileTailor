@@ -27,8 +27,6 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function ProfileScreen({ sessionFromServer }) {
-  //for Nav menu profile name and image
-  //let section exists in case the user is not signed in
   let userName = "";
   let profileImage = "";
 
@@ -40,7 +38,6 @@ export default function ProfileScreen({ sessionFromServer }) {
 
   const { data: session } = useSession();
 
-  //to change name, email or password
   const {
     handleSubmit,
     register,
@@ -53,7 +50,6 @@ export default function ProfileScreen({ sessionFromServer }) {
     setValue("name", sessionFromServer.user.name);
     setValue("email", sessionFromServer.user.email);
   }, [sessionFromServer.user, setValue]);
-  // }, [session.user, setValue]);
 
   const submitHandler = async ({ name, email, password }) => {
     try {

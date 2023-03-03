@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
@@ -37,8 +36,6 @@ export default function NameListingAsSections({
 
   //### STATE FOR COMMENTS ######
   const [commentsShowing, SetCommentsShowing] = useState(false);
-
-  let amountOfComments = 1;
 
   const [commentsFromFetch, setCommentsFromFetch] = useState([]);
 
@@ -197,7 +194,6 @@ export default function NameListingAsSections({
               sessionFromServer={sessionFromServer}
               setItemChanged={setItemChanged}
               tagList={tagList}
-              // setToastMessage={setToastMessage}
             />
           )}
         </section>
@@ -211,7 +207,6 @@ export default function NameListingAsSections({
 
       {commentsShowing && (
         <section className="bg-violet-900 py-2">
-          {/* <AddNameComment */}
           <AddComment
             apiLink={`http://localhost:3000/api/namecomments/`}
             replyingtothisid={name._id}

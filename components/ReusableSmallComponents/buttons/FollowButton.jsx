@@ -2,18 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faLocationDot,
-  faRankingStar,
-  faUserPlus,
-  faEnvelopeOpenText,
-  faEnvelope,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -40,7 +29,6 @@ export default function FollowButton({
   }, [userId]);
 
   const handleFollows = (e) => {
-    //if user is not logged in, tell them to log in to like datas
     !session && toast.error("Please sign in to follow users");
 
     const putFollows = async () => {
@@ -48,8 +36,6 @@ export default function FollowButton({
         const response = await axios.put("/api/user/updatefollows/", {
           currentTargetedId,
         });
-
-        // console.log(response.data);
 
         setUserFollowed(!userFollowed);
       } catch (err) {

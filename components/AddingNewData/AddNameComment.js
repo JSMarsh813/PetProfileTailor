@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from "react";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faClock,
-} from "@fortawesome/free-solid-svg-icons";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 
@@ -19,14 +9,9 @@ function AddNameComment({
   sessionFromServer,
 }) {
   const [showCommentForm, setShowCommentForm] = useState(false);
-
   const [description, setDescription] = useState("");
-
   const [createdby, setCreatedBy] = useState();
-
   const [image, setImage] = useState([]);
-
-  console.log(`this is replyingtothisid ${replyingtothisid}`);
 
   useEffect(() => {
     setCreatedBy(sessionFromServer ? sessionFromServer.user._id : "");
@@ -53,12 +38,6 @@ function AddNameComment({
     await axios
       .post("http://localhost:3000/api/namecomments", commentSubmission)
       .then((response) => {
-        console.log(response);
-        // const commentIdToNameDoc={
-        // commentid: response.data._id,
-        // replyingtothisid:response.data.replyingtothisid
-        // }
-
         toast.success(`Successfully added new comment!`);
       })
       .catch((error) => {

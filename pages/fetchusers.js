@@ -26,10 +26,6 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  // console.log(data);
-  //getServerSideProps allows us to fetch data from an api
-  //runs only on server side, will never run clicent side
-  //can run server-side code directly in getStaticProps
   return {
     props: {
       sessionFromServer: session,
@@ -50,7 +46,10 @@ export default function FetchUsers({ sessionFromServer }) {
 
   return (
     <div className="bg-violet-900 h-screen">
-      <Layout profileImage={profileImage} userName={userName} />
+      <Layout
+        profileImage={profileImage}
+        userName={userName}
+      />
 
       <div>lookup user by: user name</div>
 

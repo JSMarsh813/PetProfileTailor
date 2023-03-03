@@ -6,30 +6,17 @@ import axios from "axios";
 
 import { toast, ToastContainer } from "react-toastify";
 
-//another serverSide props from  let categoryList = await fetch('http://localhost:3000/api/name-categories);
-
 function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
   const { data: session, status } = useSession();
 
   const [newDescription, setNewDescription] = useState("");
   const [tags, setTags] = useState([]);
   const [notes, setNotes] = useState("");
-  // const [description,setDescription]=useState([]);
   const [isPending, setIsPending] = useState(false);
   const [descriptionAlreadyExists, setDescriptionExists] = useState(false);
-  const [description, setDescription] = useState("");
 
-  // useEffect(() => {
-  //   if (session?.user)
-  //       {setUserId(session.user._id.toString(""))}
-
-  // }, [session]);
-
-  // console.log(`This is session${userId}`)
   function handleDescriptionSubmission(e) {
     e.preventDefault();
-    //prevent buttons default behavior
-
     setIsPending(true);
 
     const descriptionSubmission = {
@@ -38,14 +25,11 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
       notes: notes,
       createdby: userId.toString(),
     };
-    //  addedBy: userId,
-    //from state
 
-    // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
+    // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true and do not allow the new description
     axios
       .post("http://localhost:3000/api/description", descriptionSubmission)
       .then((response) => {
-        console.log(response);
         setIsPending(false);
         toast.success(
           `Successfully added description: ${newDescription}. Heres 3 treat points as thanks for your contribution ${sessionFromServer.user.name}!`
@@ -60,39 +44,13 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
           setDescriptionExists(true);
         }
       });
-
-    // fetch('http://localhost:3000/api/individualTags', {
-    //   method: 'POST',
-    //   headers: {"Content-type": "application/json"},
-    //   body: JSON.stringify(nameSubmission)
-    // }).then(()=>{
-    //   console.log(`New Name added: ${nameSubmission}`)
-    //   setIsPending(false)
-    //     //when the request is done, by changing setIsPending to false we change the rendered button from the disabled one, to the one that allows submissions
-    // }).catch((error)=>{
-    //     console.log(`There was an error ${nameSubmission}`,error)
-    // });
-
-    //Error handling
-    // only allow submission if NAME and TAGS are filled out, aka state isn't blank. Make button deactivated until this happens
-    // (newName!=""&&tags!=[])
-
-    //if error happens, send error
-
-    //don't allow duplicate names
-    //if name exists already, send error
-    //map through server, does it include the name? if so reject and send error message
-
-    //submit to server
-    //add name to individual Names collection,submit state to server in correct format
   }
 
   return (
-    <div style={{ width: "700px" }} className="mx-auto">
-      {/* {console.log(tagList[0].individualTag)} */}
-
-      {console.log(tagList)}
-
+    <div
+      style={{ width: "700px" }}
+      className="mx-auto"
+    >
       <section className="my-6 text-white">
         <p> Add a description with one or more tags. </p>
 
@@ -111,7 +69,10 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
         <form onSubmit={handleDescriptionSubmission}>
           {/* needs label and value for Select to work  */}
 
-          <label className="font-bold block mt-4" htmlFor="descriptionInput">
+          <label
+            className="font-bold block mt-4"
+            htmlFor="descriptionInput"
+          >
             New Description
           </label>
 
@@ -134,7 +95,10 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
 
           {/* NOTES SECTION           */}
 
-          <label className="font-bold block mt-4" htmlFor="notesinput">
+          <label
+            className="font-bold block mt-4"
+            htmlFor="notesinput"
+          >
             Notes
           </label>
 
@@ -150,7 +114,10 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
           <span> {`${800 - notes.length}/800 characters left`}</span>
 
           {/* TAGS SECTION */}
-          <label className="font-bold block mt-4" htmlFor="descriptionTags">
+          <label
+            className="font-bold block mt-4"
+            htmlFor="descriptionTags"
+          >
             Tags
           </label>
           <Select
@@ -164,8 +131,6 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
             isSearchable
             placeholder="If you type in the tags field, it will filter the tags"
             onChange={(opt) => setTags(opt.map((tag) => tag.label))}
-
-            //update STATE of section of object
           />
 
           {/* BUTTON */}
@@ -187,7 +152,10 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
           )}
 
           {isPending && (
-            <button className="btn" disabled>
+            <button
+              className="btn"
+              disabled
+            >
               {" "}
               Adding description ...{" "}
             </button>
@@ -198,8 +166,6 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
               Please sign in to submit a description{" "}
             </span>
           )}
-
-          {/* <input type="hidden" id="userId" name="userId" value={session.user._id} /> */}
         </form>
       </section>
     </div>

@@ -22,7 +22,7 @@ async function handler(req, res) {
   }
 
   await db.connect();
-  //tests for existing user
+
   const existingEmail = await User.findOne({ email: email });
   if (existingEmail) {
     res.status(422).json({ message: "Email is already used!" });
@@ -45,10 +45,9 @@ async function handler(req, res) {
   });
 
   const user = await newUser.save();
-  //create new user with .save from mongoose
 
   await db.disconnect();
-  //disconnect from database then send a successful response
+
   res.status(201).send({
     message: "Created user!",
     _id: user._id,

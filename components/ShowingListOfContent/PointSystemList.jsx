@@ -2,14 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBowlFood,
   faCookieBite,
   faRankingStar,
-  faTags,
-  faIgloo,
-  faLightbulb,
-  faIdCard,
-  faComment,
   faHeart,
   faCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
@@ -146,7 +140,6 @@ export default function PointSystemList({
                 />
                 Descriptions=
                 <span className="text-yellow-300">
-                  {" "}
                   {descriptionsLikedPoints}
                 </span>
               </div>
@@ -185,7 +178,6 @@ export default function PointSystemList({
                 />
                 Descriptions=
                 <span className="text-yellow-300">
-                  {" "}
                   {descriptionsAddedPoints}
                 </span>
               </div>
@@ -210,8 +202,7 @@ export default function PointSystemList({
             </section>
 
             <span className="text-yellow-300">
-              {" "}
-              Added content is worth *3 bonus points!{" "}
+              Added content is worth *3 bonus points!
             </span>
           </section>
         )}

@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faImage,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faTrashCan,
-  faX,
-  faCircleXmark,
-  faTowerBroadcast,
-} from "@fortawesome/free-solid-svg-icons";
+import { faImage, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 
 function AddPost({ tagListProp, userId, sessionFromServer }) {
-  //data for posts in mongoDB
-  // const [image,setImage]=useState([])
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tagList, setTags] = useState([]);
@@ -52,7 +38,6 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
       const formData = new FormData();
       formData.append("file", imageToCloudinary);
       formData.append("upload_preset", "db0l5fmb");
-      //  console.log(formData)
 
       const response = await fetch(
         "https://api.cloudinary.com/v1_1/dujellms1/image/upload",
@@ -61,16 +46,8 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
           body: formData,
         }
       );
-
       const data = await response.json();
-
-      console.log(`this is data from cloudinary ${JSON.stringify(data)}`);
-
       let imageFromCloudinary = data.secure_url;
-
-      console.log(`this is imageFromCloudinary ${imageFromCloudinary}`);
-
-      // setImage(imageFromCloudinary)
       setImageToCloudinary("");
       return imageFromCloudinary;
     }
@@ -110,12 +87,10 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
       createdby: createdby.toString(),
       taglist: tagList,
     };
-    console.log(postSubmission);
 
     axios
       .post("http://localhost:3000/api/apinewpost", postSubmission)
       .then((response) => {
-        console.log(response);
         toast.success(
           `Successfully added new post. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`
         );
@@ -203,9 +178,6 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
           placeholder="If you type in the tags field, it will filter the tags (required)"
           onChange={(opt) => setTags(opt.map((tag) => tag.label))}
         />
-        {/* <ToastContainer 
-          position="top-center"
-           limit={1} /> */}
 
         <div className="buttons flex">
           <button className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-white ml-auto">

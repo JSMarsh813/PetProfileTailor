@@ -36,9 +36,3 @@ const NameSchema = new mongoose.Schema({
 NameSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.models?.names || mongoose.model("names", NameSchema);
-
-// addedBy:{
-//   type: String,
-//   required: true,
-//   unique: true,
-// }

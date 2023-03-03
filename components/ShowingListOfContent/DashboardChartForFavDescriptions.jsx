@@ -10,7 +10,7 @@ export default function DashboardChartForFavDescriptions({
   return (
     <div>
       <HeadersForCategories />
-      {console.log(likedDescriptions)}
+
       {likedDescriptions.map((description) => {
         return (
           <DescriptionListingAsSections

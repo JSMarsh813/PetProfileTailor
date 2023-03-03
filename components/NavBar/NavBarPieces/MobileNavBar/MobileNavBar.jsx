@@ -1,18 +1,13 @@
 import React from "react";
-import DropDownLink from "../DropDownLink";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/Link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBullseye,
-  faFaceGrinWink,
-  faUserTie,
   faTags,
   faIgloo,
   faLightbulb,
   faIdCard,
-  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
@@ -205,6 +200,37 @@ focus-visible:ring-opacity-75"
               />
 
               <a> Inspiration </a>
+            </button>
+          </Link>
+        </Menu.Item>
+
+        <button
+          className="text-yellow-300  
+                      bg-violet-600       
+                      w-full items-center rounded-md px-2 py-2 text-sm font-bold"
+          disabled={true}
+        >
+          Community
+        </button>
+
+        <Menu.Item as="div">
+          <Link href="/">
+            <button
+              className="
+                 hover:bg-yellow-500 
+                 hover:text-violet-900
+                 -mt-3
+
+                 text-white             
+                 w-full items-center rounded-md px-2 py-2 text-sm"
+            >
+              <img
+                className="h-12 inline-block invert"
+                src="/batsignal.png"
+                alt="bat logo, created by Megan Mitchell from Noun Project"
+              />
+
+              <a>Batsignal/ Play Yard</a>
             </button>
           </Link>
         </Menu.Item>
