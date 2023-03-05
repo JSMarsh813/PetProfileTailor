@@ -1,5 +1,5 @@
 import { Disclosure } from "@headlessui/react";
-import { ChevronUpIcon, FaceSmileIcon } from "@heroicons/react/20/solid";
+import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
 
 function FilteringSidebar({ category, handleFilterChange, IsOpen }) {

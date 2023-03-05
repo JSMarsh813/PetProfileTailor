@@ -113,9 +113,7 @@ function FetchDescriptions({
           />
 
           <section className="border-2 border-amber-300 w-full">
-            <HeadersForCategories />
-
-            <section className="max-h-96 overflow-scroll">
+            <section className="">
               {filteredDescriptions.map((description) => {
                 return (
                   <DescriptionListingAsSections

@@ -25,6 +25,9 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
       notes: notes,
       createdby: userId.toString(),
     };
+    {
+      console.log(JSON.stringify(descriptionSubmission));
+    }
 
     // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true and do not allow the new description
     axios
@@ -82,12 +85,12 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
             className="text-darkPurple block w-full"
             placeholder="enter a description to add"
             onChange={(e) => setNewDescription(e.target.value.toLowerCase())}
-            maxlength="900"
+            maxlength="4000"
             disabled={sessionFromServer ? "" : "disabled"}
             onClick={(e) => setDescriptionExists(false)}
           ></textarea>
 
-          <span> {`${1000 - newDescription.length}/1000 characters left`}</span>
+          <span> {`${4000 - newDescription.length}/4000 characters left`}</span>
 
           {descriptionAlreadyExists == true && (
             <p className="text-red-500 font-bold">Description already exists</p>

@@ -67,11 +67,21 @@ export default function DescriptionListingAsSections({
   }
 
   return (
-    <div className=" border-b-2 border-amber-300">
+    <div className=" border-b-2 border-amber-300 text-white w-screen px-6">
+      {/* ###### description SECTION #### */}
+      <div className="whitespace-pre-line">
+        <span className="text-amber-200 font-bold">Description: </span>
+        {description.description}{" "}
+      </div>
+
+      {/* ###### NOTES SECTION #### */}
+      <p className="whitespace-pre-line">
+        <span className="text-amber-200 font-bold">Notes: </span>
+        {description.notes == "" ? "no notes" : description.notes}
+      </p>
       <div
         className="grid 
-            lg:grid-cols-5
-            grid-cols-3 gap-4 text-base
+            grid-cols-4 gap-4 text-base
            
             bg-darkPurple
                     text-purple-200 p-2  
@@ -80,48 +90,22 @@ export default function DescriptionListingAsSections({
                     items-center justify-items-center"
       >
         {/* ###### LIKES SECTION #### */}
-        <div>
-          <LikesButtonAndLikesLogic
-            data={description}
-            HeartIconStyling="text-2xl"
-            HeartIconTextStyling="ml-2"
-            currentTargetedId={currentTargetedId}
-            session={sessionFromServer}
-            apiLink={`http://localhost:3000/api/description/updateLikes`}
-          />
 
+        <LikesButtonAndLikesLogic
+          data={description}
+          HeartIconStyling="text-2xl"
+          HeartIconTextStyling="ml-2"
+          currentTargetedId={currentTargetedId}
+          session={sessionFromServer}
+          apiLink={`http://localhost:3000/api/description/updateLikes`}
+        />
+
+        <div className="text-center">
           <ShareButton onClickShowShares={onClickShowShares} />
-        </div>
-        {/* ###### description SECTION #### */}
-        <span className=""> {description.description} </span>
 
-        {/* ###### NOTES SECTION #### */}
-        <span className="ml-4">
-          {description.notes == "" ? "no notes" : description.notes}
-        </span>
-
-        {/* ###### TAGS SECTION #### */}
-        <span>
-          {description.tags.map((descriptions) => descriptions).join(", ")}
-        </span>
-
-        {/* ###### CREATEDBY SECTION #### */}
-
-        <section>
-          <a
-            href={`http://localhost:3000/profile/${description.createdby.profilename.toLowerCase()}`}
-          >
-            <img
-              src={description.createdby.profileimage}
-              className="rounded-2xl h-16"
-            />
-
-            <span> {description.createdby.name}</span>
-            <span> @{description.createdby.profilename}</span>
-          </a>
           {sessionFromServer &&
             description.createdby._id == sessionFromServer.user._id && (
-              <div className="my-2">
+              <div className="grid grid-cols-2">
                 <EditButton
                   className="ml-2 mr-6"
                   setShowEditPage={updateEditState}
@@ -129,6 +113,29 @@ export default function DescriptionListingAsSections({
                 <DeleteButton onupdateDeleteState={updateDeleteState} />
               </div>
             )}
+        </div>
+
+        {/* ###### TAGS SECTION #### */}
+        <p>
+          <span className="text-amber-200 font-bold">Tags: </span>
+          {description.tags.map((descriptions) => descriptions).join(", ")}
+        </p>
+
+        {/* ###### CREATEDBY SECTION #### */}
+
+        <section>
+          <span className="text-amber-200 font-bold">Shared by: </span>
+          <a
+            href={`http://localhost:3000/profile/${description.createdby.profilename.toLowerCase()}`}
+          >
+            <img
+              src={description.createdby.profileimage}
+              className="rounded-2xl h-16 inline"
+            />
+
+            <span> {description.createdby.name}</span>
+            <span> @{description.createdby.profilename}</span>
+          </a>
 
           {showDeleteConfirmation && (
             <DeleteItemNotification
