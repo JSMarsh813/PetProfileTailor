@@ -25,7 +25,6 @@ export const getServerSideProps = async (context) => {
     `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
   );
   let nameData = await nameResponse.json();
-  nameid;
 
   const session = await unstable_getServerSession(
     context.req,
