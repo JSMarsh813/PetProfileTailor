@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
   );
 
   let postResponse = await fetch(
-    `${process.env.BASE_FETCH_URL}/api/individualposts`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts`
   );
   let postData = await postResponse.json();
 

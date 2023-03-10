@@ -13,7 +13,7 @@ export const getServerSideProps = async (context) => {
   );
 
   let categoryList = await fetch(
-    `${process.env.BASE_FETCH_URL}/api/descriptioncategory`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptioncategory`
   );
   let categoryData = await categoryList.json();
   console.log(categoryData);

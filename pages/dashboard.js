@@ -21,7 +21,9 @@ import NameListingAsSections from "../components/ShowingListOfContent/NameListin
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 
 export const getServerSideProps = async (context) => {
-  let nameResponse = await fetch(`${process.env.BASE_FETCH_URL}/api/names`);
+  let nameResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
+  );
   let nameData = await nameResponse.json();
 
   const session = await unstable_getServerSession(
@@ -36,7 +38,7 @@ export const getServerSideProps = async (context) => {
   //forces it to wait for session before looking up data
 
   let findLikedNames = await fetch(
-    `${process.env.BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/names/findNamesLikedByUser/${UserId}`
   );
 
   let likedNames = await findLikedNames.json();

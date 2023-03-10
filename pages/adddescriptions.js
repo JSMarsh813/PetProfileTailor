@@ -16,7 +16,9 @@ export const getServerSideProps = async (context) => {
 
   //grabbing Tags for description edit function
 
-  let tagList = await fetch(`${process.env.BASE_FETCH_URL}/api/descriptiontag`);
+  let tagList = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
+  );
   let tagData = await tagList.json();
   let tagListProp = tagData
     .map((tag) => tag)
@@ -25,7 +27,9 @@ export const getServerSideProps = async (context) => {
   console.log(`this is taglistprop ${JSON.stringify(tagListProp)}`);
   //grabbing names
 
-  let nameList = await fetch(`${process.env.BASE_FETCH_URL}/api/names`);
+  let nameList = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
+  );
   let nameData = await nameList.json();
   console.log(`this is nameData ${JSON.stringify(nameData)}`);
   let nameListProp = nameData;
