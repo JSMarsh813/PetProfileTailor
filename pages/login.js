@@ -7,30 +7,40 @@ import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBullseye, faFaceGrinWink, faUserTie, faPaw } from '@fortawesome/free-solid-svg-icons'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
 import { useCookies } from "react-cookie"
 
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
+import GeneralButton from '../components/GeneralButton';
 
-
+import { getCsrfToken } from "next-auth/react"
+import NounBlackCatIcon from '../components/ReusableSmallComponents/svgImages/NounBlackCatIcon';
+import NounCat from '../public/noun-black-cat.svg'
+import MagicRabbitSVG from '../components/ReusableSmallComponents/svgImages/MagicRabbitSVG';
 
 export const getServerSideProps = async (context) => {
 
   const session = await unstable_getServerSession(context.req, context.res, authOptions)
- 
+  const csrfToken = await getCsrfToken(context)
    
   return {
     props: {    
       sessionFromServer: session,
+      csrfToken,
          },
     }
 }
 
-export default function LoginScreen({sessionFromServer}) {
+export default function LoginScreen({sessionFromServer, csrfToken}) {
+
  //grab data from useSession and rename data to session
 
  const { data: session } = useSession();
- const [cookie, setCookie] = useCookies(["user"])
+//  const [cookie, setCookie] = useCookies(["user"])
 
  const router = useRouter();
  const { redirect } = router.query;
@@ -52,10 +62,11 @@ export default function LoginScreen({sessionFromServer}) {
    if (session?.user) {
     // localStorage.setItem("session",JSON.stringify(session.user._id)), 
 
-    setCookie("user", JSON.stringify(session), {
+    // setCookie("user", 
+    // JSON.stringify(session), {
      
-      sameSite: true,
-      }),
+    //   sameSite: true,
+    //   }),
     
 //  console.log(session.user._id),
  router.push(redirect || '/dashboard');
@@ -93,6 +104,7 @@ export default function LoginScreen({sessionFromServer}) {
 //  console.log(`login.js submitHandler else block ${JSON.stringify(result)}`)
 // Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
  console.log(`email: ${email} pass:${password}`)
+ 
  //email: testtest@gmail.com pass:testtest
  // router.push("/")
 
@@ -119,11 +131,11 @@ export default function LoginScreen({sessionFromServer}) {
        profileImage={profileImage} 
        userName={userName} />
   <div>
-   <section className="h-screen">
+   <section className="h-fit">
    <div className="px-6 h-full text-gray-100"> 
    {/* text-gray-100 makes text white */}
 <div
-className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6"
+className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h- g-6"
 >
 <div
   className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0"
@@ -131,7 +143,7 @@ className="flex xl:justify-center lg:justify-between justify-center items-center
   <img
     src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg    
   "
-    className="w-full"
+    className="w-full rounded-full shadow-lg border-2 border-yellow-300 border-dashed"
     alt="Sample image"
   />
 </div>
@@ -142,8 +154,10 @@ className="flex xl:justify-center lg:justify-between justify-center items-center
 className="mx-auto max-w-screen-md"
 onSubmit={handleSubmit(submitHandler)}
 >
+  <div
+     className="text-center text-2xl mb-4"> Login </div>
 
-    <div className="flex flex-row items-center justify-center lg:justify-start">
+    {/* <div className="flex flex-row items-center justify-center">
       <p className="text-lg mb-0 mr-4">Sign in with</p>
       <button
         type="button"
@@ -152,7 +166,7 @@ onSubmit={handleSubmit(submitHandler)}
         className="inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1"
       >
   {/* f svg */}
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="w-4 h-4">
+ {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="w-4 h-4">
      
      <path
        fill="currentColor"
@@ -169,7 +183,7 @@ onSubmit={handleSubmit(submitHandler)}
         className="inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1"
       >
   {/* twitter svg */}
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-4 h-4">
+        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-4 h-4">
 
           <path
             fill="currentColor"
@@ -183,9 +197,9 @@ onSubmit={handleSubmit(submitHandler)}
         data-mdb-ripple="true"
         data-mdb-ripple-color="light"
         className="inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1"
-      >
+      > */}
    {/* linkedin svg */}
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-4 h-4">
+        {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-4 h-4">
 
           <path
             fill="currentColor"
@@ -193,13 +207,13 @@ onSubmit={handleSubmit(submitHandler)}
           />
         </svg>
       </button>
-    </div>
+    </div> */} 
 
-    <div
+    {/* <div
       className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
     >
       <p className="text-center font-semibold mx-4 mb-0">Or</p>
-    </div>
+    </div> */}
 
     {/* <!-- Email input --> */}
 <div className="mb-6">
@@ -248,6 +262,7 @@ onSubmit={handleSubmit(submitHandler)}
 
         {/* <!-- Remember Me Toggle Checkbox --> */}
     <div className="flex justify-between items-center mb-6">
+{/*       
       <div className="form-group form-check">
               <input
                 type="checkbox"
@@ -256,9 +271,9 @@ onSubmit={handleSubmit(submitHandler)}
               />
 
               <label className="form-check-label inline-block text-gray-100" htmlFor="exampleCheck2">
-                Remember me
+                Remember me on this computer
               </label>
-      </div>
+      </div> */}
 
         {/* <!-- Forgot Password Link --> */}
       <a href="#!" className="text-white">Forgot password?</a>
@@ -274,20 +289,99 @@ onSubmit={handleSubmit(submitHandler)}
         Login
       </button>
 
-             {/* <!-- Registraton Link--> */}
-      <p className="text-sm font-semibold mt-2 pt-1 mb-0">
-             Don&apos;t have an account? &nbsp;
-             
-             <Link 
-               href={`/register?redirect=${redirect || '/'}`}>
-                <a className="text-red-400 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out">Register</a>
-             </Link>
-       </p>
+   
          
      
     </div>
   </form>
 
+  <div
+      className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+    >
+      <p className="text-center font-semibold mx-4 mb-0">Or</p>
+    </div>
+
+    <section
+       className="bg-darkPurple p-2 ">
+
+    <h4
+         className="text-center mb-2 pb-2 font-semibold border-b-2 border-white"> 
+         Sign in with a magic Link</h4>
+
+    <form 
+          method="post" 
+          action="/api/auth/signin/email"
+          className="text-center"
+          >
+      <input 
+          name="csrfToken" 
+          type="hidden"
+          defaultValue={csrfToken} />
+            
+        <input 
+            type="email" 
+            id="email" 
+            name="email"
+            className="w-2/3 text-darkPurple " 
+           
+            />
+     
+     <GeneralButton
+       text="sign in"
+       className="ml-2 mb-2 text-center"
+     />
+     
+    </form>
+
+<div className="flex mt-2">
+   <MagicRabbitSVG/>
+    <p
+      className="text-center rounded-lg"> We'll email you a magic link so you can sign in without a password. </p>
+
+<NounBlackCatIcon
+  fill="purple"/>
+
+</div>
+
+   
+   </section>
+
+    <div
+      className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+    >      
+    </div>
+
+          {/* <!-- Registration Link--> */}
+
+         
+
+          <p className="text-sm font-semibold mt-2 pt-1 mb-0 text-center">
+          <FontAwesomeIcon 
+                className="fa-bounce text-yellow-300 mr-2 text-xl"
+                icon={faPaw}/>
+
+             Don&apos;t have an account? Welcome! &nbsp;
+                   
+             <Link 
+               href={`/register?redirect=${redirect || '/'}`}>
+                <a className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">Register by clicking here</a>
+             </Link>
+
+            
+             
+       </p>
+       
+       <p className="text-xs text-center mt-4">Icons from Noun Project: 
+
+<span> <a href="https://thenounproject.com/browse/icons/term/magic/" target="_blank"
+   title="magic Icons"> 
+   * Magic by Monkik </a></span>
+
+<span><a href="https://thenounproject.com/browse/icons/term/black-cat/"   target="_blank" 
+    title="black cat Icons">
+    * Black Cat by Narakorn Chanchittakarm </a></span>
+</p>
+    
 </div>
 </div>
   </div>

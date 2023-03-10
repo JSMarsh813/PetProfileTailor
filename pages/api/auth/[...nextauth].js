@@ -3,14 +3,20 @@ import NextAuth from 'next-auth';
 import { NextAuthOptions } from 'next-auth'
 
 import CredentialsProvider from 'next-auth/providers/credentials';
+import EmailProvider from "next-auth/providers/email";
 // import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
 import User from '../../../models/User'
 import db from '../../../utils/db';
+
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
+import clientPromise from "../auth/lib/mongodb"
+
 // import clientPromise from "../auth/lib/mongodb"
 
 
 // export default NextAuth({
   export const authOptions= {
+  adapter: MongoDBAdapter(clientPromise),
   session: {
     strategy: 'jwt',
        // Set to jwt in order for CredentialsProvider to work properly
@@ -47,7 +53,23 @@ import db from '../../../utils/db';
         throw new Error('Invalid email or password');
       },
     }),
+    EmailProvider({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD
+        }
+      },
+      from: process.env.EMAIL_FROM
+    }),
   ],
+
 }
 // )
 export default NextAuth(authOptions);
+
+// pages:{
+//   signIn:"/login"
+// },

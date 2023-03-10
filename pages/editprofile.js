@@ -147,7 +147,7 @@ export default function ProfileScreen({sessionFromServer}) {
           <label 
               htmlFor="password"
               className="text-white"
-              >Password</label>
+              >New Password</label>
 
           <input
             className="w-full text-darkPurple"
@@ -167,7 +167,7 @@ export default function ProfileScreen({sessionFromServer}) {
               htmlFor="confirmPassword"
               className="text-white"
               >
-                Confirm Password</label>
+                Confirm New Password</label>
           <input
             className="w-full text-darkPurple"
             type="password"
