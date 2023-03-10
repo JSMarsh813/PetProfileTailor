@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+const source = process.env.MONGODB_URI;
+
+
 const connection = {};
 
 async function connect() {
@@ -15,7 +18,8 @@ async function connect() {
     }
     await mongoose.disconnect();
   }
-  const db = await mongoose.connect(process.env.MONGODB_URI);
+  console.log(source)
+  const db = mongoose.connect(source);
   console.log('new connection');
   connection.isConnected = db.connections[0].readyState;
 }

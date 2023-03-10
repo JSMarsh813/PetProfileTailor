@@ -17,7 +17,7 @@ fontFamily:'Comfortaa'}}>
      
 
         <section className="w-full flex justify-center gap-3">
-                    <div ClassName="flex-1">
+                    <div className="flex-1">
                         
 
                            <FontAwesomeIcon icon={faBullseye} className="text-4xl" color="yellow" />
@@ -25,14 +25,14 @@ fontFamily:'Comfortaa'}}>
                            <button className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 font-black text-lg">Impactful</button>
                     </div>
 
-                    <div ClassName="flex-1">
+                    <div className="flex-1">
 
                             <FontAwesomeIcon icon={faFaceGrinWink} className="text-4xl fa-bounce" color="yellow" />
 
                             <button className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 text-lg">Fun</button>
                     </div>
 
-                    <div ClassName="flex-1">
+                    <div className="flex-1">
                                <FontAwesomeIcon icon={faUserTie} className="text-4xl" color="yellow"/>
                                <button className="btn btn-primary w-full mt-2 bg-yellow-300  text-violet-900 text-lg">Tailor Fitted</button>
                     </div>

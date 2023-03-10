@@ -1,7 +1,9 @@
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/Link'
 
-const SettingsNav = ({dropdownSettings, className}) => {
 
+const SettingsNav = ({dropdownSettings, className}) => {
+const { status, data: session } = useSession();
     return (
 
 
@@ -13,6 +15,9 @@ const SettingsNav = ({dropdownSettings, className}) => {
           </div>
           
         </label>
+        {status === 'loading'||status ===null ? (
+                'Loading'
+              ) : session?.user ? (
         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           <li>
             <a className="justify-between">
@@ -22,7 +27,10 @@ const SettingsNav = ({dropdownSettings, className}) => {
           </li>
           <li><a>Settings</a></li>
           <li><a>Logout</a></li>
-        </ul>
+        </ul>): (  <Link href="/login">
+                  <a className="p-2">Login</a>
+                </Link>
+              )}
       </div>
 
     )

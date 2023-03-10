@@ -7,11 +7,13 @@ import MediaObjectLeft from '../components/MediaObjectLeft'
 import MediaObjectRight from '../components/MediaObjectRight'
 import PawPrintIcon from '../components/PawPrintIcon'
 import Profile from '../public/profile.png'
-
+import Layout from '../components/layout'
 function HomePage() {
   return <div className="w-fit">
-   
+   <Layout title="home page"> Home Page </Layout>
+
    <HeroTop/>
+   
 
    <section className="w-full bg-violet-900 ~ h-24 flex place-items-center justify-center">
 

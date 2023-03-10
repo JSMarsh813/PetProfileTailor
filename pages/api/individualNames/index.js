@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import dbConnect from "../../../config/mongo"
+import dbConnect from "../../../config/connectmongodb"
 
 import IndividualNames from "../../../models/individualNames"
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
