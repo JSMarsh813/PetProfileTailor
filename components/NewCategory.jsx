@@ -140,7 +140,7 @@ export const getStaticProps = async () => {
     let response = await fetch('http://localhost:3000/api/name-categories');
   
     let data = await response.json()
-    console.log(data);
+    // console.log(data);
   //getServerSideProps allows us to fetch data from an api
   //runs only on server side, will never run clicent side
   //can run server-side code directly in getStaticProps

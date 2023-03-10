@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { getError } from '../utils/error';
 import axios from 'axios';
-import Layout from '../components/layout';
+import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
 
 export default function ProfileScreen() {
   const { data: session } = useSession();
@@ -46,7 +46,7 @@ export default function ProfileScreen() {
   return (
     <Layout title="Profile">
       <form
-        className="mx-auto max-w-screen-md"
+        className="mx-auto max-w-screen-md h-screen"
         onSubmit={handleSubmit(submitHandler)}
       >
         <h1 className="mb-4 text-xl">Update Profile</h1>

@@ -5,6 +5,9 @@ import NewNameWithTagsData from '../components/AddingNewData/addingName'
 //another serverSide props from  let categoryList = await fetch('http://localhost:3000/api/name-categories);
 import AddNewTag from '../components/AddingNewData/AddingNewTag'
 import { useSession } from "next-auth/react"
+import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
+
+
 
 export const getServerSideProps = async () => {
 
@@ -33,10 +36,10 @@ function AddNewNameWithTags({tagList,categoryList}) {
   console.log(session)
 
      return (     
+<div className="bg-violet-900 h-screen text-white">
+  <Layout></Layout>
 
-  
-
-      <div style={{width:"700px"}} className="mx-auto mt-4">
+      <div style={{width:"700px"}} className="mx-auto mt-4 ">
         {/* if not signed in, do not allow them to add names */}
       {(status !="authenticated")&&<div> To avoid spam, we ask users to sign in to add names </div>}
         {/* if not signed in, allow them to add names */}
@@ -48,6 +51,7 @@ function AddNewNameWithTags({tagList,categoryList}) {
         
    
    
+      </div>
       </div>
     );
   }

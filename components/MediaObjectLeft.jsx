@@ -6,7 +6,7 @@ import GeneralButton from './GeneralButton'
 const MediaObject= () =>{
 
     return (
-    <div className="flex justify-center w-screen my-6">
+    <div className="flex justify-center w-screen my-6 ">
 
     <div className="self-center">
         
@@ -33,7 +33,7 @@ const MediaObject= () =>{
 
     <div className="flex items-center">
 
-         <GeneralButton text="search Names"/>
+    <GeneralButton text="Search for Names"/>
 
          <GeneralButton text="Add A Name"/>
    

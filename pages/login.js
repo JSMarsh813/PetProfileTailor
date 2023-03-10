@@ -1,17 +1,19 @@
 import Link from 'next/Link'
-import React, { useEffect } from 'react';
+import React, { useContext, createContext, useState, useEffect } from 'react'
 import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import Layout from '../components/layout';
+import Layout from '../components/NavBar/NavLayoutwithSettingsMenu';
 import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+
+import { useCookies } from "react-cookie"
 
 export default function LoginScreen() {
  //grab data from useSession and rename data to session
 
  const { data: session } = useSession();
-
+ const [cookie, setCookie] = useCookies(["user"])
 
  const router = useRouter();
  const { redirect } = router.query;
@@ -20,8 +22,14 @@ export default function LoginScreen() {
  //import this from line 2/react
   useEffect(() => {
    if (session?.user) {
- console.log(session)
- console.log(session.user._id)
+    localStorage.setItem("session",JSON.stringify(session.user._id)), 
+
+    setCookie("user", JSON.stringify(session), {
+     
+      sameSite: true,
+      }),
+    
+//  console.log(session.user._id),
  router.push(redirect || '/');
  }
  }, [router, session, redirect]);
@@ -53,21 +61,25 @@ export default function LoginScreen() {
  else {
 
  toast.success("Successfully signed in! Sending to profile page")
- console.log(`login.js submitHandler else block ${JSON.stringify(result)}`)
+//  console.log(`login.js submitHandler else block ${JSON.stringify(result)}`)
 // Object { error: null, status: 200, ok: true, url: "http://localhost:3000/api/auth/signin?csrf=true" }
  console.log(`email: ${email} pass:${password}`)
  //email: testtest@gmail.com pass:testtest
  // router.push("/")
+
+ //save to cookie
  }
 
  } catch (err) {
 //error.js file in utils, this is for if there is an error in the api
- console.log(`login.js catch block error: ${JSON.stringify(err)}`)
+//  console.log(`login.js catch block error: ${JSON.stringify(err)}`)
  toast.error(getError(err));
  } };
+
+ 
  return (
-  
-  <Layout title="Login">
+  <div>
+  <Layout title="Login"></Layout>
   <div>
    <section className="h-screen">
    <div className="px-6 h-full text-gray-100"> 
@@ -241,6 +253,6 @@ onSubmit={handleSubmit(submitHandler)}
   </div>
     </section>
 </div>
-</Layout>
+</div>
 )
 }
