@@ -19,7 +19,6 @@ import {
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import BatsignalPost from "../../components/ShowingListOfContent/BatSignalPost";
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
 export const getServerSideProps = async (context) => {

@@ -5,7 +5,7 @@ import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { useRouter } from "next/router";
-import BatsignalPost from "../components/ShowingListOfContent/BatSignalPost";
+import BatsignalPost from "../components/ShowingListOfContent/batsignalPost";
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import { Pagination } from "@nextui-org/react";
 import GeneralButton from "../components//ReusableSmallComponents/buttons/GeneralButton";

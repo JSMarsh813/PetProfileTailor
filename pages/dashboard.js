@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 
 import WideCenteredHeader from "../components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 import SingleComment from "../components/ShowingListOfContent/SingleComment";
-import BatsignalPost from "../components/ShowingListOfContent/BatSignalPost";
+import BatsignalPost from "../components/ShowingListOfContent/batsignalPost";
 import PointSystemList from "../components/ShowingListOfContent/PointSystemList";
 import DashboardChartForFavDescriptions from "../components/ShowingListOfContent/DashboardChartForFavDescriptions";
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";

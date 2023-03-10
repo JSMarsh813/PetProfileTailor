@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/Link";
+import Link from "next/link";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 
 function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
