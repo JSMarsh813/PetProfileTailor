@@ -176,6 +176,13 @@ export default function Example({category,nameList, pageProps}) {
 
   return (
    <Layout>
+  <div
+    className="h-32 mb-4 bg-[url('https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1084&q=80')] bg-repeat-x bg-contain">
+
+    <h3 className=" hero-content text-center  text-5xl text-white"> Fetch Names </h3>
+     
+
+    </div>
 {/* {    JSON.stringify(filterednames)} */}
 
   

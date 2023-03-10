@@ -40,7 +40,7 @@ function ChartComponent({nameList}) {
 
         {nameList.map((name)=>{
          
-         return <NameListing key={name.id} name={name}/>
+         return <NameListing key={name._id} name={name}/>
        }   
    )
 

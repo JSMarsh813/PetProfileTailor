@@ -151,13 +151,14 @@ useEffect(() => {
       style={{backgroundPosition: "80%",
        backgroundImage: `url("https://www.freewebheaders.com/wp-content/gallery/dogs/dogs-header-2121-800x200.jpg")`, 
       height: "200px"}}
-      testing
+     
       >
+       
      </div>
 
-<div class="container mx-auto px-4 md:px-12 xl:px-32">
-<div class="text-center text-white">
-  <div class="block rounded-lg shadow-lg px-6 py-12 md:py-16 md:px-12" style={{marginTop: "-70px", background: "hsla(273, 98%, 60%, 0.4)", backdropFilter: "blur(20px)"}}>
+<div className="container mx-auto px-4 md:px-12 xl:px-32">
+<div className="text-center text-white">
+  <div className="block rounded-lg shadow-lg px-6 py-12 md:py-16 md:px-12" style={{marginTop: "-70px", background: "hsla(273, 98%, 60%, 0.4)", backdropFilter: "blur(20px)"}}>
 
   {status === 'loading' ? (
               'Loading'
@@ -166,7 +167,7 @@ useEffect(() => {
     (<div>
         <section className="Welcome-username-and-profile-image flex border-b-2 border-yellow-300 pb-4">
 
-         <h3 class="text-yellow-400  font-bold mb-2 mx-auto font-semibold text-4xl mb-4">{`Welcome Back ${session.user.name}!`}
+         <h3 className="text-yellow-400  font-bold mb-2 mx-auto font-semibold text-4xl mb-4">{`Welcome Back ${session.user.name}!`}
       </h3> 
          <img className="ml-3  h-32 rounded-full inline"src="https://preview.redd.it/mretq5qte3451.png?auto=webp&s=6040f7d829d09479fd3f44a0546d19653f35219c"/>
 
@@ -304,7 +305,7 @@ useEffect(() => {
 
               
 
-               <div classname="flow-root w-screen">
+               <div className="flow-root w-screen">
        
                    <h4 className="float-left"> Your Favorite Names </h4>
 

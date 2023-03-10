@@ -1,5 +1,7 @@
 import React, { useContext, createContext, useState, useEffect } from 'react'
+// import { unstable_getServerSession } from "next-auth/next";
 
+// import { authOptions } from "./auth/[...nextauth]";'@fortawesome/fontawesome-svg-core'
 // // create context
 const UserSessionContext = createContext("null")
 
