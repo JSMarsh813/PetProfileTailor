@@ -20,7 +20,7 @@ export default function DescriptionListingAsSections({
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
-  let linkToShare = `http://localhost:3000/description/${description._id}`;
+  let linkToShare = `${process.env.BASE_FETCH_URL}/description/${description._id}`;
 
   const router = useRouter();
 

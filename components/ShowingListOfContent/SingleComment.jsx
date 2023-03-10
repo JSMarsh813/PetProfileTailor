@@ -48,10 +48,10 @@ function CommentListing({
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
-  let linkToShare = `http://localhost:3000/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
+  let linkToShare = `${process.env.BASE_FETCH_URL}/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
   let apiLink = "/api/individualbatsignalcomments";
 
-  let linkToPost = `http://localhost:3000/${typeOfContentReplyingTo}/${rootComment.replyingtothisid}`;
+  let linkToPost = `${process.env.BASE_FETCH_URL}/${typeOfContentReplyingTo}/${rootComment.replyingtothisid}`;
 
   useEffect(() => {
     {

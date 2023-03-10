@@ -42,7 +42,7 @@ export default function NameListingAsSections({
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
-  let linkToShare = `http://localhost:3000/name/${name.name}`;
+  let linkToShare = `${process.env.BASE_FETCH_URL}/name/${name.name}`;
 
   // ##for the delete notification button #####
 

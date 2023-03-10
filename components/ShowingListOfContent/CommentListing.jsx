@@ -42,11 +42,7 @@ function CommentListing({
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
-  let linkToShare = `http://localhost:3000/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
-  console.log(`this is linktoshare ${JSON.stringify(rootComment._id)}`);
-  console.log(
-    `this is typeOfContentReplyingTo ${JSON.stringify(typeOfContentReplyingTo)}`
-  );
+  let linkToShare = `${process.env.BASE_FETCH_URL}/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
 
   useEffect(() => {
     {

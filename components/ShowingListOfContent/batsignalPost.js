@@ -56,7 +56,7 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
 
   //for showing share buttons
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
-  let linkToShare = `http://localhost:3000/post/${post._id}`;
+  let linkToShare = `${process.env.BASE_FETCH_URL}/post/${post._id}`;
 
   let replyComments = "";
   if (postsCommentsFromFetch) {
