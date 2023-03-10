@@ -34,7 +34,8 @@ export const getServerSideProps = async (context) => {
   const UserId = session ? session.user._id : "";
 
   let nameResponse = await fetch(
-    `${process.env.BASE_FETCH_URL}/api/names/findonenamebyname/` + name
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/names/findonenamebyname/` +
+      name
   );
   let nameData = await nameResponse.json();
 
