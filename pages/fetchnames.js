@@ -20,7 +20,6 @@ export const getServerSideProps = async (context) => {
     `${process.env.BASE_FETCH_URL}/api/namecategories`
   );
   let data = await response.json();
-  // console.log(data);
 
   let nameResponse = await fetch(`${process.env.BASE_FETCH_URL}/api/names`);
   let nameData = await nameResponse.json();
@@ -68,7 +67,6 @@ export default function FetchNames({
   const [filterednames, setFilteredNames] = useState([...nameList]);
   //to begin with its filled with all names, not actually filtered yet
 
-  console.log(filterednames);
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
 

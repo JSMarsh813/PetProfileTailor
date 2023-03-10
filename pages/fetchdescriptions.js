@@ -141,7 +141,7 @@ function FetchDescriptions({
               onClick={() => SetIsOpen(!IsOpen)}
             />
 
-            <section className="border-2 border-amber-300 w-full">
+            <section className="border-2 border-amber-300">
               <section className="">
                 {filteredDescriptions.map((description) => {
                   return (

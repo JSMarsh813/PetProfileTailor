@@ -31,8 +31,7 @@ export const getServerSideProps = async (context) => {
   );
 
   let userResponse = await fetch(
-    `${process.env.BASE_FETCH_URL}
-    /api/user/getASpecificUserByProfileName/` + id
+    `${process.env.BASE_FETCH_URL}/api/user/getASpecificUserByProfileName/` + id
   );
   let userData = await userResponse.json();
 
@@ -46,36 +45,35 @@ export const getServerSideProps = async (context) => {
 
     //names user created
     let nameResponse = await fetch(
-      `${process.env.BASE_FETCH_URL}
-      /api/names/namesContainingUserId/` + nameid
+      `${process.env.BASE_FETCH_URL}/api/names/namesContainingUserId/` + nameid
     );
     let nameData = await nameResponse.json();
 
     //grabbing posts
 
     let postResponse = await fetch(
-      `${process.env.BASE_FETCH_URL}
-      /api/individualposts/postscontaininguserid/` + nameid
+      `${process.env.BASE_FETCH_URL}/api/individualposts/postscontaininguserid/` +
+        nameid
     );
     let postData = await postResponse.json();
 
     //grabbing all comments
-    let commentResponse = await fetch(`${process.env.BASE_FETCH_URL}
-    /api/individualbatsignalcomments`);
+    let commentResponse = await fetch(
+      `${process.env.BASE_FETCH_URL}/api/individualbatsignalcomments`
+    );
     let commentData = await commentResponse.json();
 
     //grabbing comments by user
 
     let UsersCommentResponse = await fetch(
-      `${process.env.BASE_FETCH_URL}
-      /api/individualbatsignalcomments/commentscontaininguserid/` + nameid
+      `${process.env.BASE_FETCH_URL}/api/individualbatsignalcomments/commentscontaininguserid/` +
+        nameid
     );
     let UsersCommentData = await UsersCommentResponse.json();
 
     //grabbing Tags for name edit function
 
-    let nameTagList = await fetch(`${process.env.BASE_FETCH_URL}
-    /api/nametag`);
+    let nameTagList = await fetch(`${process.env.BASE_FETCH_URL}/api/nametag`);
     let nametagData = await nameTagList.json();
     let nameTagListProp = nametagData
       .map((tag) => tag.tag)
@@ -84,16 +82,16 @@ export const getServerSideProps = async (context) => {
     //grabbing DESCRIPTIONS added by user
 
     let findCreatedDescriptions = await fetch(
-      `${process.env.BASE_FETCH_URL}
-      /api/description/descriptionsCreatedByLoggedInUser/${UserId}`
+      `${process.env.BASE_FETCH_URL}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
     );
 
     let createdDescriptions = await findCreatedDescriptions.json();
 
     //grabbing Tags for description's edit function
 
-    let descriptionTagList = await fetch(`${process.env.BASE_FETCH_URL}
-    /api/descriptiontag`);
+    let descriptionTagList = await fetch(
+      `${process.env.BASE_FETCH_URL}/api/descriptiontag`
+    );
     let descriptionTagData = await descriptionTagList.json();
 
     let descriptionTagListProp = descriptionTagData
@@ -106,8 +104,7 @@ export const getServerSideProps = async (context) => {
     //forces it to wait for session before looking up data
 
     let findLikedNames = await fetch(
-      `${process.env.BASE_FETCH_URL}
-      /api/names/findNamesLikedByUser/${UserId}`
+      `${process.env.BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
     );
 
     let likedNames = await findLikedNames.json();
@@ -115,31 +112,30 @@ export const getServerSideProps = async (context) => {
     //POSTS LIKED BY USER
 
     let findPostsLiked = await fetch(
-      `${process.env.BASE_FETCH_URL}
-      /api/individualposts/findLikedPosts/` + UserId
+      `${process.env.BASE_FETCH_URL}/api/individualposts/findLikedPosts/` +
+        UserId
     );
     let postsLiked = await findPostsLiked.json();
 
     //COMMENTS LIKED BY USER
 
     let findLikedComments = await fetch(
-      `${process.env.BASE_FETCH_URL}
-      /api/individualbatsignalcomments/findLikedBatsignalComments/` + UserId
+      `${process.env.BASE_FETCH_URL}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
+        UserId
     );
     let likedComments = await findLikedComments.json();
 
     //DESCRIPTIONS LIKED BY USER
 
     let findLikedDescriptions = await fetch(
-      `${process.env.BASE_FETCH_URL}
-      /api/description/findDescriptionsLIkedByUserId/` + UserId
+      `${process.env.BASE_FETCH_URL}/api/description/findDescriptionsLIkedByUserId/` +
+        UserId
     );
     let likedDescriptions = await findLikedDescriptions.json();
 
     //FOLLOWING LIST
     let findUsersFollowing = await fetch(
-      `${process.env.BASE_FETCH_URL}
-      /api/user/grabusersfollowing/` + nameid
+      `${process.env.BASE_FETCH_URL}/api/user/grabusersfollowing/` + nameid
     );
 
     let usersFollowing = await findUsersFollowing.json();
@@ -199,6 +195,9 @@ function ProfilePage({
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
   }
+
+  console.log(`this is userData ${JSON.stringify(userData.name)}`);
+  console.log(userName);
 
   const [showProfileEditPage, setShowProfileEditPage] = useState(false);
   const [profileChanged, setProfileChange] = useState(false);
@@ -285,7 +284,7 @@ function ProfilePage({
                 </div>
 
                 <div className="text-center">
-                  {userName == userData._id ? (
+                  {sessionFromServer.user._id == userData._id ? (
                     <EditBioProfileButton
                       setShowProfileEditPage={updateSetShowProfileEditPage}
                     />
@@ -308,7 +307,10 @@ function ProfilePage({
                       </a>
                     </div>
                   )}
-                  <span> The message feature is still in development</span>
+                  <p className="mt-4">
+                    {" "}
+                    The message feature is still in development
+                  </p>
                   <div className="text-sm leading-normal mt-4 mb-2 font-bold ">
                     <FontAwesomeIcon
                       icon={faLocationDot}
@@ -362,7 +364,6 @@ function ProfilePage({
                              p-2 
                             "
             >
-              {" "}
               Names Added
             </h2>
             <div
@@ -378,7 +379,7 @@ function ProfilePage({
                 <section className="border-2 border-amber-300 w-full">
                   <HeadersForNames />
 
-                  <section className="max-h-96 overflow-scroll">
+                  <section className="">
                     {nameList.map((name) => {
                       return (
                         <NameListingAsSections
@@ -403,7 +404,6 @@ function ProfilePage({
             
             "
             >
-              {" "}
               Posts Added
             </h2>
 
@@ -417,7 +417,7 @@ function ProfilePage({
                   <span className="bg-none">"no posts added yet!"</span>
                 </section>
               ) : (
-                <section className="max-h-screen overflow-scroll">
+                <section className="">
                   {postData.map((post) => {
                     return (
                       <BatsignalPost
@@ -442,7 +442,6 @@ function ProfilePage({
             bg-darkPurple p-2 
             "
             >
-              {" "}
               Comments Added
             </h2>
             <div
@@ -455,7 +454,7 @@ function ProfilePage({
                   <span> No comments added yet! </span>
                 </section>
               ) : (
-                <section className="border-2 border-amber-300 max-h-screen overflow-scroll">
+                <section className="border-2 border-amber-300">
                   {UsersCommentData.map((singleComment) => (
                     <SingleComment
                       key={singleComment._id}
@@ -478,7 +477,6 @@ function ProfilePage({
             bg-darkPurple p-2 
             "
             >
-              {" "}
               Descriptions Added
             </h2>
 
@@ -492,7 +490,7 @@ function ProfilePage({
                   <span> No descriptions added yet! </span>
                 </section>
               ) : (
-                <section className="border-2 border-amber-300 max-h-screen overflow-scroll">
+                <section className="border-2 border-amber-300">
                   <DashboardChartForFavDescriptions
                     likedDescriptions={likedDescriptions}
                     sessionFromServer={sessionFromServer}

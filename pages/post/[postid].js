@@ -39,8 +39,7 @@ export const getServerSideProps = async (context) => {
   }
 
   let postResponse = await fetch(
-    `${process.env.BASE_FETCH_URL}
-  /api/individualposts/getASpecificPost/` + id
+    `${process.env.BASE_FETCH_URL}/api/individualposts/getASpecificPost/` + id
   );
   let postData = await postResponse.json();
 
@@ -49,8 +48,9 @@ export const getServerSideProps = async (context) => {
       notFound: true,
     };
   } else {
-    let commentResponse = await fetch(`${process.env.BASE_FETCH_URL}
-    /api/individualbatsignalcomments`);
+    let commentResponse = await fetch(
+      `${process.env.BASE_FETCH_URL}/api/individualbatsignalcomments`
+    );
     let commentData = await commentResponse.json();
 
     return {

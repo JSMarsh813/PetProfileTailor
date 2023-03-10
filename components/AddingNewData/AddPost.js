@@ -92,7 +92,7 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
       .post("/api/apinewpost", postSubmission)
       .then((response) => {
         toast.success(
-          `Successfully added new post. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`
+          `Successfully added new post. Heres 3 treat points as thanks for your contribution ${sessionFromServer.user.name}!`
         );
       })
       .catch((error) => {
