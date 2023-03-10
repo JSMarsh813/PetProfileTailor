@@ -106,14 +106,19 @@ export const getServerSideProps = async (context) => {
 
   //grabbing Tags for description edit function
 
-  let descriptionTagList = await fetch(
-    `${process.env.BASE_FETCH_URL}/api/descriptiontag`
-  );
-  let descriptionTagData = await descriptionTagList.json();
+  // let descriptionTagList = await fetch(
+  //   `${process.env.BASE_FETCH_URL}/api/descriptiontag`
+  // );
+  // let descriptionTagData = await descriptionTagList.json();
+  // let descriptionTagListProp = "";
 
-  let descriptionTagListProp = descriptionTagData
-    .map((tag) => tag.tag)
-    .reduce((sum, value) => sum.concat(value), []);
+  // if (descriptionTagData) {
+  //   descriptionTagListProp = descriptionTagData
+  //     .map((tag) => tag.tag)
+  //     .reduce((sum, value) => sum.concat(value), []);
+  // }
+  let descriptionTagListProp = ["this", "is", "a", "test"];
+
   return {
     props: {
       sessionFromServer: session,
