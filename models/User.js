@@ -6,6 +6,11 @@ const UserSchema= new mongoose.Schema({
     required: true,
     unique: false,     
   },
+  profilename: {
+    type: String,
+    required: true,
+    unique: true,     
+  },
   email: {
     type: String,
     required: true,
@@ -15,14 +20,18 @@ const UserSchema= new mongoose.Schema({
     type: String,
     required: true,
   }, 
-  favnames: {
+   blockedusers: {
     type: Array,  
     default: [],
-  },
-  favbehaviors: {
-    type: Array, 
+  }, 
+  followers: {
+    type: Array,  
     default: [],
-  },
+  }, 
+  bioblurb: {
+    type: String,  
+    default: "",
+  }, 
   profileimage:{
     type:String,
     default:"http://placekitten.com/50/50"
@@ -33,6 +42,14 @@ const UserSchema= new mongoose.Schema({
 const User = mongoose.models.User || mongoose.model('User', UserSchema);
 export default User;
 
+ // favnames: {
+  //   type: Array,  
+  //   default: [],
+  // },
+  // favbehaviors: {
+  //   type: Array, 
+  //   default: [],
+  // },
 
 // module.exports = mongoose.models['users'] || mongoose.model("users", UserSchema);
 

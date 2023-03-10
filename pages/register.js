@@ -7,8 +7,34 @@ import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import GeneralButton from '../components/GeneralButton'
 
-export default function LoginScreen() {
+import { authOptions } from "./api/auth/[...nextauth]"
+import { unstable_getServerSession } from "next-auth/next"
+
+export const getServerSideProps = async (context) => {
+
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+ 
+   
+  return {
+    props: {    
+      sessionFromServer: session,
+         },
+    }
+}
+
+export default function Register({sessionFromServer}) {
+
+  let userName=""
+  let profileImage=""
+
+  if (sessionFromServer){
+      userName=sessionFromServer.user.name
+   profileImage=sessionFromServer.user.profileimage
+ }
+ 
+
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -26,12 +52,14 @@ export default function LoginScreen() {
     getValues,
     formState: { errors },
   } = useForm();
-  const submitHandler = async ({ name, email, password }) => {
+  
+  const submitHandler = async ({ name, email, password, profilename }) => {
     try {
       await axios.post('/api/auth/signup', {
         name,
         email,
         password,
+        profilename,
       });
 
       const result = await signIn('credentials', {
@@ -57,14 +85,25 @@ export default function LoginScreen() {
     }
   };
   return (
-    <Layout title="Create Account">
+    <div className="bg-violet-900 h-screen">
+    <Layout 
+        title="Create Account"  
+        profileImage={profileImage} 
+        userName={userName} />
+
+      <img 
+            className="mx-auto h-60"
+            src="https://media.tenor.com/IJBRrnPWOqoAAAAd/welcome-high-five.gif"/>
+
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h1 className="mb-4 text-xl">Create Account</h1>
+        <h1 className="my-4 text-2xl text-center">Create Account</h1>
+
+
         <div className="mb-4">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name"> UserName (this can be changed later)</label>
           <input
             type="text"
             className="w-full"
@@ -78,6 +117,23 @@ export default function LoginScreen() {
             <div className="text-red-500">{errors.name.message}</div>
           )}
         </div>
+
+        <div className="mb-4">
+          <label htmlFor="name"> Profile Name (this CAN'T be changed later)</label>
+          <input
+            type="text"
+            className="w-full"
+            id="name"
+            autoFocus
+            {...register('profilename', {
+              required: 'Please enter a profilename',
+            })}
+          />
+          {errors.name && (
+            <div className="text-red-500">{errors.name.message}</div>
+          )}
+        </div>
+
 
         <div className="mb-4">
           <label htmlFor="email">Email</label>
@@ -97,6 +153,8 @@ export default function LoginScreen() {
             <div className="text-red-500">{errors.email.message}</div>
           )}
         </div>
+
+
         <div className="mb-4">
           <label htmlFor="password">Password</label>
           <input
@@ -139,14 +197,10 @@ export default function LoginScreen() {
             )}
         </div>
 
-        <div className="mb-4 ">
-          <button className="primary-button">Register</button>
-        </div>
-        <div className="mb-4 ">
-          Don&apos;t have an account? &nbsp;
-          <Link href={`/register?redirect=${redirect || '/'}`}>Register</Link>
-        </div>
+            <GeneralButton text="register"/>
+       
       </form>
-    </Layout>
+    
+    </div>
   );
 }

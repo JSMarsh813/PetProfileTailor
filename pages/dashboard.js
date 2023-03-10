@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, createContext, useState, useEffect } from 'react'
 import Layout from '../components/NavBar/NavLayoutwithSettingsMenu'
 import { signOut, useSession } from 'next-auth/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,15 +12,72 @@ import UserSessionContext from "../src/context/UserSessionContext"
 import NameListing from "../components/Namelisting"
 import MainChartComponent from "../components/MainChartComponent"
 import GeneralButton from '../components/GeneralButton';
+import GeneralOpenCloseButton from "../components/buttons/generalOpenCloseButton"
 
-export const getStaticProps = async () => {
+import { authOptions } from "../pages/api/auth/[...nextauth]"
+import { unstable_getServerSession } from "next-auth/next"
+
+import dbConnect from "../utils/db"
+import IndividualNames from "../models/individualNames"
+//wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
+import { useRouter } from 'next/router';
+
+import RankNames from '../components/RankNames';
+
+
+
+
+
+export const getServerSideProps = async (context) => {
 
   let response = await fetch('http://localhost:3000/api/name-categories');
-  let nameResponse= await fetch('http://localhost:3000/api/individualnames');
-
   let data = await response.json()
+
+
+  let nameResponse= await fetch('http://localhost:3000/api/individualnames');  
   let nameData = await nameResponse.json()
 
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+  // const userEmail = await session.user.email;
+
+
+                                //USERS FAVED NAMES //
+
+  let filterednames=""
+       if(session){
+             let filteringNames= await fetch(`http://localhost:3000/api/individualnames/namesContainingUserId/${session.user._id}`);
+
+             filterednames= await filteringNames.json()   
+             }
+
+                             //NAMES ADDED BY USER //
+ 
+  // let currentUser= await fetch('http://localhost:3000/api/getCurrentUser');
+ 
+
+
+  // let currentProfilePicture = currentUser
+
+  //look through names, find names user favorited
+  // look through names, find names user created
+  // look at user, find their current profile image
+
+
+
+
+
+    
+        // try {
+        //   await dbConnect() //from config/mongo.js
+
+        //     const individualNames = await IndividualNames.find();
+        //     filteredNames = individualNames.filter(name=>name.likedby.includes("63a90c2e83e6366b179ffc40"))
+        //     return filteredNames
+           
+        //   } catch (err) {
+        //     JSON.stringify(err);
+        //   }
+         
 
 
   // console.log(data);
@@ -31,42 +88,57 @@ export const getStaticProps = async () => {
     props: {
       category: data,
       nameList: nameData,
+      favNames:filterednames,
+      sessionFromServer: session,
          },
     }
-
+//kept getting an error that it couldn't parse due to Error serializing `.userIdFromServer.user.image` but there was no image property....adding an image property and making it null also didn't work. JSON.parse(JSON.stringify((session)) used as a workaround)
 
   //and provide the data as props to the page by returning an object from the function
 }
 
 
 
-function dashboard({category,nameList}) {
+
+function dashboard({category,nameList,sessionFromServer,favNames}) {
 
 
-  const { status, data: session } = useSession();
-  const [userId,setUserId] =useState()
-  const [treatBreakdownMenuOpen,settreatBreakdownMenuOpen]=useState(false)
-
+   const [treatBreakdownMenuOpen,settreatBreakdownMenuOpen]=useState(false)
+  const [favoritesListOpen,setFavoritesListOpen]=useState(false)
   const valuetest = useContext(UserSessionContext); 
+   
+ const router = useRouter();
 
-  // let [userId,setUserId]=useState("")
-  // get users data from the server
+  useEffect(() => {
 
-        //need userId, from getStorage or maybe request params somehow?
+      if (!sessionFromServer) {
+ 
+        router.push('/login')}
+    }, [router, sessionFromServer]);
+                        //##############POINTS###########
 
+       const [nameLikedPoints,setNameLikedPoints]=useState(favNames.length*1)
+       const [nameAddedPoints,setNameAddedPoints]=useState("0")
+       const [commentLikedPoints,setCommentLikedPoints]=useState("3")
+       const [commentAddedPoints,setCommentAddedPoints]=useState("6")
 
-//put session id into state
+      
+        const [totalPoints,setTotalPoints]=useState((+nameLikedPoints)+(+nameAddedPoints)+(+commentLikedPoints)+(+commentAddedPoints))
+       
+      console.log(totalPoints)
+     
+       console.log(sessionFromServer)
+       
+       let userName=""
+       let profileImage=""
 
-useEffect(() => {
-  if (session?.user) {
-   setUserId(session.user._id)
-   console.log(userId=="63a90c2e83e6366b179ffc40")
-  }
+       if (sessionFromServer){
+           userName=sessionFromServer.user.name
+        profileImage=sessionFromServer.user.profileimage
+      }
+//   let [userId,setUserId]=useState(userIdFromServer._id)
 
-  
-}, [session]);
-
-
+// {console.log(`from server ${(userId)}`)}
 
 // const currentUserInfo = async ({ name, email, password }) => {
 //   try {
@@ -135,14 +207,17 @@ useEffect(() => {
 
   
   // }
+         
 
 
 
   return (
     <div className="bg-violet-900 h-fit">
      
-        <Layout></Layout>
-        <section>
+     <Layout profileImage={profileImage} userName={userName} /> 
+  {/* <p> {currentProfilePicture}</p> */}
+      
+       <section>
 
      {/* <p> {(valuetest)}</p> */}
 
@@ -156,20 +231,21 @@ useEffect(() => {
        
      </div>
 
+
 <div className="container mx-auto px-4 md:px-12 xl:px-32">
 <div className="text-center text-white">
   <div className="block rounded-lg shadow-lg px-6 py-12 md:py-16 md:px-12" style={{marginTop: "-70px", background: "hsla(273, 98%, 60%, 0.4)", backdropFilter: "blur(20px)"}}>
 
-  {status === 'loading' ? (
+  {!sessionFromServer ? (
               'Loading'
             ) :
             
     (<div>
         <section className="Welcome-username-and-profile-image flex border-b-2 border-yellow-300 pb-4">
 
-         <h3 className="text-yellow-400  font-bold mb-2 mx-auto font-semibold text-4xl mb-4">{`Welcome Back ${session.user.name}!`}
+         <h3 className="text-yellow-400  font-bold mb-2 mx-auto font-semibold text-4xl mb-4">{`Welcome Back ${userName}!`}
       </h3> 
-         <img className="ml-3  h-32 rounded-full inline"src="https://preview.redd.it/mretq5qte3451.png?auto=webp&s=6040f7d829d09479fd3f44a0546d19653f35219c"/>
+         <img className="ml-3  h-32 rounded-full inline"src={profileImage}/>
 
          {/* for large screens: -mt-11 */}
         
@@ -182,41 +258,28 @@ useEffect(() => {
           <span className="px-6">
                <FontAwesomeIcon icon={faCookieBite} className="text-2xl mr-2 text-yellow-400"/>
                Treats Earned: 
-               <span className="text-yellow-400"> {session.user.points||"6"} 
+               <span className="text-yellow-400"> {totalPoints} 
                </span>
            </span>
 
            <div>
                <FontAwesomeIcon icon={faRankingStar} className="text-2xl mr-2 text-yellow-400"/>
-               <span >
+               <section>
                     Current Rank Title:
-                       <span className="text-yellow-400"> The Babiest Woofer </span>
-                </span>
+                            <RankNames points={totalPoints}/>                      
+                </section>
 
           </div>
        </section>
 
       <section className="mt-4">
 
-        <button className="text-xl bg-yellow-300 
-        text-violet-700  font-bold py-2 px-4 border-b-4 border-b-transparent
+      <GeneralOpenCloseButton 
+       text="Your Treat Points Breakdown " 
+       setStatus={settreatBreakdownMenuOpen} 
+       styling=""
+        status={treatBreakdownMenuOpen}/>
 
-        hover:bg-violet-700 
-        hover:text-yellow-300
-        hover:border-yellow-400 rounded"
-        onClick={()=> 
-          settreatBreakdownMenuOpen(!treatBreakdownMenuOpen)}
-        >
-              Your Treat Points Breakdown 
-              <ChevronDownIcon
-                      className="inline ml-2 h-5"
-                      aria-hidden="true"
-                     
-                    />
-              
-
-           
-        </button>
 
        { treatBreakdownMenuOpen==true&&( <section className="userStatsBreakdownDropDown 
            grid grid-cols-2 grid-flow-row  gap-2
@@ -225,7 +288,7 @@ useEffect(() => {
                 <div>
                 <FontAwesomeIcon icon={faTags} className="text-xl mr-1 text-red-500"/>
                   Liked Names: 
-                       <span className="text-yellow-300"> 2</span>
+                       <span className="text-yellow-300">{nameLikedPoints}</span>
                 </div>
 
                 <div>
@@ -245,13 +308,13 @@ useEffect(() => {
                   <FontAwesomeIcon icon={faComment} className="text-xl mr-1 text-red-500"/>
                   
                   Liked Comments: 
-                  <span className="text-yellow-300"> 0</span>
+                  <span className="text-yellow-300"> {commentLikedPoints}</span>
                   </div>
 
                 <div>
                 <FontAwesomeIcon icon={faTags} className="text-xl mr-1 text-green-500"/>
                   Added Names: 
-                  <span className="text-yellow-300"> 4</span>
+                  <span className="text-yellow-300"> {nameAddedPoints}</span>
                   </div>
 
                 <div>
@@ -269,7 +332,7 @@ useEffect(() => {
                 <div>
                 <FontAwesomeIcon icon={faComment} className="text-xl mr-1 text-green-500"/>
                   Comments Added: 
-                  <span className="text-yellow-300"> 0</span>
+                  <span className="text-yellow-300"> {commentAddedPoints}</span>
                   </div>
 
              </section>)}
@@ -288,6 +351,7 @@ useEffect(() => {
 
      </section>
   
+       {/* ############# FAVORITE LISTS SECTION ############ */}
 
   <section className="favoritesSection px-4">
 
@@ -301,29 +365,44 @@ useEffect(() => {
        border-b-2
        border-yellow-300">
 
+         {/* ############# FAVORITE NAMES LIST ############ */}
+
               <section className="favoriteNames">
 
               
 
                <div className="flow-root w-screen">
-       
-                   <h4 className="float-left"> Your Favorite Names </h4>
 
-                  <div className="float-right mb-4">
+  <GeneralOpenCloseButton 
+       text="Open Your Favorites Names List" 
+       setStatus={setFavoritesListOpen} 
+       styling=""
+        status={favoritesListOpen}/>
+
+                  {/* <div className="float-right mb-4">
                         <GeneralButton text="Sort Names by Categories"></GeneralButton>
-                  </div>
+                  </div> */}
                  
                 </div>
 
 
-                 <MainChartComponent nameList={nameList}/>
+                {favoritesListOpen==true&&  <MainChartComponent nameList={favNames}/>}
                 
 
               </section>
 
-              <section className="favoriteNames">
+ {/* ############# FAVORITE DESCRIPTIONS LIST ############ */}
 
-               <h4> Your Favorite Descriptions </h4>
+              <section className="favoriteDescriptions">
+
+
+              <GeneralOpenCloseButton 
+       text="Open Your Favorites Descriptions List" 
+       setStatus={setFavoritesListOpen} 
+       styling=""
+        status={favoritesListOpen}/>
+
+{favoritesListOpen==true&&<MainChartComponent nameList={nameList}/>}                
 
               </section>
 

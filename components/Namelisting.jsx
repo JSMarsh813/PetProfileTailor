@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart, faFaceGrinWink, faUserTie } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faCommentDots, faFaceGrinWink, faUserTie, faCircleChevronDown } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import React, {useEffect, useState} from 'react'
 // import individualuser from '../models/User'
@@ -18,7 +18,7 @@ function Namelisting({name}) {
     //grab current user's id
     let [userId,setUserId]=useState()
     let [currentTargetedNameId,setCurrentTargetedNameId]=useState("")
-
+    let [openComment, SetOpenComments]=useState(false)
 
     useEffect(() => {
         let data= (!localStorage.getItem("session"))?
@@ -187,17 +187,31 @@ const handlelikes =  (e) => {
 
 <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">{name.name}</td>
 
-<td className="border-b-2 border-amber-200 px-4 py-2 text-left font-medium">{name.description}</td>
+<td className="border-b-2 border-amber-200 px-4 py-2 text-left font-medium">
+      
+    
+      {name.description}
 
+</td>
+
+
+
+  
 <td className="border-b-2 border-amber-100 px-4 py-2 text-left font-medium">{
         (name.tags)
             .map(names=>names)
             .join(", ")}
         </td>
-{console.log((name.tags))}
-{console.log(Array.isArray(name.tags))}
+{/* {console.log((name.tags))}
+{console.log(Array.isArray(name.tags))} */}
+
+{/* {(openComment)&& <div>
+   "comments!"
+  </div>} */}
 
 </tr>
+
+
 )
  
 }
