@@ -7,8 +7,6 @@ const handler = async (req, res) => {
     return getHandler(req, res);
   } else if (req.method === "PUT") {
     return putHandler(req, res);
-  } else if (req.method === "DELETE") {
-    return deleteHandler(req, res);
   } else {
     return res.status(400).send({ message: "Method not allowed" });
   }

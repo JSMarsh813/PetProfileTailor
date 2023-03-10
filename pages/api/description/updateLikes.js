@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react";
-import IndividualNames from "../../../models/Names";
+// import IndividualNames from "../../../models/Names";
 
 import Description from "../../../models/description";
 import db from "../../../utils/db";

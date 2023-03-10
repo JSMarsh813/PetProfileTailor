@@ -87,6 +87,7 @@ function FetchDescriptions({
       : setTagFiltersState(tagFilters.filter((tag) => tag != value));
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     let currenttags = tagFilters;
 

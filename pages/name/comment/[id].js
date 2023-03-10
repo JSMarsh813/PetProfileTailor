@@ -4,17 +4,21 @@ import SingleComment from "../../../components/ShowingListOfContent/SingleCommen
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import NavLayoutwithSettingsMenu from "../../../components/NavBar/NavLayoutwithSettingsMenu";
-import PageTitleWithImage from "../../../components/ReusableSmallComponents/PageTitleWithImages";
+import PageTitleWithImage from "../../../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
+
 export const getServerSideProps = async (context) => {
   const id = context.params.id;
 
-  const session = await unstable_getServerSession(
+  const sessionFromServer = await unstable_getServerSession(
     context.req,
     context.res,
     authOptions
   );
 
-  if (session) {
+  let userName = "";
+  let profileImage = "";
+
+  if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
   }
@@ -33,7 +37,7 @@ export const getServerSideProps = async (context) => {
     return {
       props: {
         commentData: commentData,
-        sessionFromServer: session,
+        sessionFromServer: sessionFromServer,
         userName: userName,
         profileImage: profileImage,
       },

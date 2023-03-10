@@ -414,7 +414,7 @@ function ProfilePage({
             >
               {!postData.length ? (
                 <section>
-                  <span className="bg-none">"no posts added yet!"</span>
+                  <span className="bg-none">no posts added yet!</span>
                 </section>
               ) : (
                 <section className="">

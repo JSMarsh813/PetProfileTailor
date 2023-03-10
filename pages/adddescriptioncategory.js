@@ -17,7 +17,7 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-export default function AddCategory({ sessionFromServer }) {
+export default function AddCategory() {
   const [newCategory, setNewCategory] = useState("");
   function handleCategorySubmission(e) {
     e.preventDefault();

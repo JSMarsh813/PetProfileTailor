@@ -56,8 +56,8 @@ export default async function handler(req, res) {
   }
 
   if (method === "POST") {
-    const { description, tags, notes, createdby, relatednames } = req.body;
-
+    const { description } = req.body;
+    //tags, notes, createdby, relatednames
     console.log(`this is description ${description}`);
     let existingDescriptionCheck = await Description.find({
       description: description,

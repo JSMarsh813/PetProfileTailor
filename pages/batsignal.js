@@ -122,6 +122,7 @@ export default function BatSignal({
         currenttags.every((tag) => post.taglist.includes(tag))
       )
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tagFilters]);
 
   return (

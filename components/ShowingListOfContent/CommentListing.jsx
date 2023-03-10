@@ -189,11 +189,10 @@ function CommentListing({
         replies.map((reply) => {
           if (reply.parentcommentid == rootComment._id) {
             return (
-              <div>
+              <div key={reply._id}>
                 <CommentListing
                   rootComment={reply}
                   replies={null}
-                  key={reply._id}
                   sessionFromServer={sessionFromServer}
                   apiLink={apiLink}
                   likesApiLink={likesApiLink}

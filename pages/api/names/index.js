@@ -2,7 +2,10 @@
 import dbConnect from "../../../config/connectmongodb";
 const mongoose = require("mongoose");
 import Names from "../../../models/Names";
-//wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
+
+// eslint-disable-next-line no-unused-vars
+import tags from "../../../models/NameTag";
+//necessary or the tags won't populate
 
 export default async function handler(req, res) {
   const { method } = req;

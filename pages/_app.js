@@ -1,9 +1,9 @@
 import "../styles/globals.css";
-import { SessionProvider, useSession, getSession } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 
 import "@etchteam/next-pagination/dist/index.css";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {

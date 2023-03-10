@@ -8,7 +8,7 @@ import Link from "next/Link";
 
 //onclick wrapped in spans due to this error https://github.com/vercel/next.js/discussions/39212
 
-const NavBarNames = ({}) => {
+const NavBarNames = () => {
   return (
     <div className="divWhichHasBothMenus">
       {/* DESKTOP MENU */}

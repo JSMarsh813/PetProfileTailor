@@ -214,8 +214,7 @@ export default function Register({ sessionFromServer }) {
 
         <div className="mb-4">
           <label htmlFor="name">
-            {" "}
-            Profile Name (this CAN'T be changed later,30 characters max)
+            Profile Name (this CAN&apos;t be changed later,30 characters max)
           </label>
           <input
             type="text"

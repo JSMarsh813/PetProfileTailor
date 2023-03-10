@@ -347,8 +347,10 @@ export default function Dashboard({
 
             {favCommentsOpen &&
               likedComments.map((comment) => {
+                console.log(comment);
                 return (
                   <SingleComment
+                    key={comment._id}
                     rootComment={comment}
                     sessionFromServer={sessionFromServer}
                   />

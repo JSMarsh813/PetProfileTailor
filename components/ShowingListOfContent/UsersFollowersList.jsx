@@ -46,6 +46,7 @@ export default function UsersFollowersList({
                   {userData.followers[0] ? (
                     userData.followers.map((follower) => (
                       <a
+                        key={follower._id}
                         href={`http://localhost:3000/profile/${follower.name.toLowerCase()}`}
                       >
                         <section

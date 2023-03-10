@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-function imageUpload({ sessionFromServer }) {
+function ImageUpload({ sessionFromServer }) {
   const [selectedImage, setSelectedImage] = useState();
   const [newProfileImage, setNewProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState();
@@ -139,4 +139,4 @@ function imageUpload({ sessionFromServer }) {
   );
 }
 
-export default imageUpload;
+export default ImageUpload;

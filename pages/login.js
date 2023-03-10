@@ -231,9 +231,8 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   <div className="flex mt-2">
                     <MagicRabbitSVG />
                     <p className="text-center rounded-lg">
-                      {" "}
-                      We'll email you a magic link so you can sign in without a
-                      password.{" "}
+                      We&apos;ll email you a magic link so you can sign in
+                      without a password.
                     </p>
 
                     <NounBlackCatIcon fill="purple" />
@@ -260,10 +259,8 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                 <p className="text-xs text-center mt-4">
                   Icons from Noun Project:
                   <span>
-                    {" "}
                     <a
                       href="https://thenounproject.com/browse/icons/term/magic/"
-                      target="_blank"
                       title="magic Icons"
                     >
                       * Magic by Monkik{" "}
@@ -272,7 +269,6 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   <span>
                     <a
                       href="https://thenounproject.com/browse/icons/term/black-cat/"
-                      target="_blank"
                       title="black cat Icons"
                     >
                       * Black Cat by Narakorn Chanchittakarm{" "}

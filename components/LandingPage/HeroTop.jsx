@@ -26,7 +26,8 @@ border-y-4 border-darkPurple  "
           <p className="mb-5 text-xl">
             {" "}
             Naming your new pet or creating engaging pet profiles for adoptable
-            pets can feel ruff! We've been there! And we’re here to help.
+            pets can feel ruff! We&apos;ve been there! And we&apos;re here to
+            help.
           </p>
           <p className="mb-5 text-xl">
             {" "}

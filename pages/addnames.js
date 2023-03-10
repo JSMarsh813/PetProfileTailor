@@ -1,9 +1,6 @@
-import Select from "react-select";
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import NewNameWithTagsData from "../components/AddingNewData/addingName";
 
-import AddNewTag from "../components/AddingNewData/AddingNewTag";
 import { useSession } from "next-auth/react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 
@@ -26,6 +23,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
+  //categoryList not needed???
   return {
     props: {
       tagList: tagData,
@@ -36,7 +34,7 @@ export const getServerSideProps = async (context) => {
   //and provide the data as props to the page by returning an object from the function
 };
 
-function AddNewNameWithTags({ tagList, categoryList, sessionFromServer }) {
+function AddNewNameWithTags({ tagList, sessionFromServer }) {
   const { data: session, status } = useSession();
 
   //need to do let to avoid error if sessionFromServer is null aka not signed in

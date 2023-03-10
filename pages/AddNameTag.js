@@ -30,7 +30,6 @@ export default function AddNameTag({ sessionFromServer, categoryData }) {
   const [categoryList, setCategoryList] = useState(
     categoryData.map((listing) => listing.category)
   );
-  const [chosenCategories, setChosenCategoriess] = useState([]);
 
   //for Nav menu profile name and image
   let userName = "";
@@ -111,7 +110,7 @@ export default function AddNameTag({ sessionFromServer, categoryData }) {
         <Select
           className="text-darkPurple mb-4"
           id="nameTags"
-          options={categoryData.map((opt, index) => ({
+          options={categoryData.map((opt) => ({
             label: opt.category,
             value: opt._id,
           }))}

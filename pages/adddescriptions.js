@@ -22,15 +22,17 @@ export const getServerSideProps = async (context) => {
     .map((tag) => tag)
     .reduce((sum, value) => sum.concat(value), []);
 
+  console.log(`this is taglistprop ${JSON.stringify(tagListProp)}`);
   //grabbing names
 
   let nameList = await fetch(`${process.env.BASE_FETCH_URL}/api/names`);
   let nameData = await nameList.json();
-  let nameListProp = nameData
-    .map((name) => name.name)
-    .reduce((sum, value) => sum.concat(value), []);
+  console.log(`this is nameData ${JSON.stringify(nameData)}`);
+  let nameListProp = nameData;
+  //   .map((name) => name.name)
+  //   .reduce((sum, value) => sum.concat(value), []);
 
-  console.log(nameListProp);
+  // console.log(nameListProp);
 
   return {
     props: {
@@ -65,12 +67,12 @@ function AddDescriptions({ sessionFromServer, tagList, nameList }) {
         title="Add a"
         title2="Description"
       />
-      <AddingDescription
+      {/* <AddingDescription
         tagList={tagList}
         userId={userId}
         sessionFromServer={sessionFromServer}
         nameList={nameList}
-      />
+      /> */}
     </div>
   );
 }

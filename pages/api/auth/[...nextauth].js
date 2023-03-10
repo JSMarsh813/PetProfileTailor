@@ -1,12 +1,12 @@
 import bcryptjs from "bcryptjs";
 import NextAuth from "next-auth";
-import { NextAuthOptions } from "next-auth";
+// import { NextAuthOptions } from "next-auth";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import User from "../../../models/User";
 
-import NameTag from "../../../models/NameTag";
+// import NameTag from "../../../models/NameTag";
 import db from "../../../utils/db";
 
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
@@ -25,7 +25,8 @@ export const authOptions = {
       if (user) token = user;
       return token;
     },
-    session({ session, user, token }) {
+    session({ session, token }) {
+      //used to be session, user, token
       session.user = token;
       return session;
     },

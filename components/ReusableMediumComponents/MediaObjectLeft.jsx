@@ -26,7 +26,10 @@ const MediaObject = ({
       >
         <ul className="text-lg text-white pb-8 pl-4">
           {listOfText.map((sentence) => (
-            <ListWithPawPrintIcon text={sentence} />
+            <ListWithPawPrintIcon
+              text={sentence}
+              key={sentence}
+            />
           ))}
         </ul>
 

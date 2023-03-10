@@ -3,6 +3,7 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import axios from "axios";
 import Select from "react-select";
+import NavLayoutwithSettingsMenu from "../components/NavBar/NavLayoutwithSettingsMenu";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -76,6 +77,10 @@ export default function AddDescriptionTag({ sessionFromServer, categoryData }) {
   }
   return (
     <div>
+      <NavLayoutwithSettingsMenu
+        profileImage={profileImage}
+        userName={userName}
+      />
       <form onSubmit={handleDescriptionTagSubmission}>
         <input
           type="text"
@@ -102,7 +107,7 @@ export default function AddDescriptionTag({ sessionFromServer, categoryData }) {
         <Select
           className="text-darkPurple mb-4"
           id="nameTags"
-          options={categoryData.map((opt, index) => ({
+          options={categoryData.map((opt) => ({
             label: opt.category,
             value: opt._id,
           }))}
