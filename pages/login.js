@@ -36,20 +36,21 @@ export default function LoginScreen({sessionFromServer}) {
  const { redirect } = router.query;
  //extract redirect from router.query
 
- let userName=""
- let profileImage=""
-
- console.log(sessionFromServer)
-
- if (sessionFromServer){
-     userName=sessionFromServer.user.name
-  profileImage=sessionFromServer.user.profileimage
-}
+   //for Nav menu profile name and image
+        //let section exists in case the user is not signed in
+        let userName=""
+        let profileImage=""
+      
+        if (sessionFromServer){
+            userName=sessionFromServer.user.name
+         profileImage=sessionFromServer.user.profileimage
+       }
+      //end of section for nav menu
 
  //import this from line 2/react
   useEffect(() => {
    if (session?.user) {
-    localStorage.setItem("session",JSON.stringify(session.user._id)), 
+    // localStorage.setItem("session",JSON.stringify(session.user._id)), 
 
     setCookie("user", JSON.stringify(session), {
      

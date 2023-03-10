@@ -6,7 +6,7 @@ const CategoryCollectionSchema= new mongoose.Schema({
     required: true,
     unique: true,
   },
-  links: {
+  tags: {
     type: Array,
     required: true,
   }

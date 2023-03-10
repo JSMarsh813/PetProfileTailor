@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -9,6 +9,8 @@ import GeneralButton from '../components/GeneralButton'
 
 import { authOptions } from "./api/auth/[...nextauth]"
 import { unstable_getServerSession } from "next-auth/next"
+
+import ImageUpload from '../components/ImageUpload';
 
 export const getServerSideProps = async (context) => {
 
@@ -26,18 +28,20 @@ export const getServerSideProps = async (context) => {
 
 export default function ProfileScreen({sessionFromServer}) {
 
-  
-
-  let userName=""
-  let profileImage=""
-
-  if (sessionFromServer){
-      userName=sessionFromServer.user.name
-   profileImage=sessionFromServer.user.profileimage
- }
+   //for Nav menu profile name and image
+        //let section exists in case the user is not signed in
+        let userName=""
+        let profileImage=""
+      
+        if (sessionFromServer){
+            userName=sessionFromServer.user.name
+         profileImage=sessionFromServer.user.profileimage
+       }
+      //end of section for nav menu
  
   const { data: session } = useSession();
 
+  //to change name, email or password
   const {
     handleSubmit,
     register,
@@ -73,20 +77,39 @@ export default function ProfileScreen({sessionFromServer}) {
     }
   };
 
+  
   return (
     <div>
-    <Layout title="Profile" profileImage={profileImage} userName={userName}/>
+
+    <Layout 
+      title="Profile" 
+      profileImage={profileImage} 
+      userName={userName}/>
+
+      <img 
+        className="max-h-48 mx-auto mb-4 rounded-full "
+        src="https://images.unsplash.com/photo-1554224311-beee415c201f"/>
       <form
-        className="mx-auto max-w-screen-md h-screen"
+        className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h1 className="mb-4 text-xl">Update Profile</h1>
+        <h1 
+          className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-700 font-semibold text-white">
+            Update Profile</h1>
 
-        <div className="mb-4">
-          <label htmlFor="name">Name</label>
+        <p 
+          className="text-white text-center pb-2"> 
+          You can change your name, email and/or password</p>
+
+        <div 
+            className="mb-4">
+          <label 
+                htmlFor="name"
+                className="text-white"
+                >Name</label>
           <input
             type="text"
-            className="w-full"
+            className="w-full text-darkPurple"
             id="name"
             autoFocus
             {...register('name', {
@@ -99,10 +122,13 @@ export default function ProfileScreen({sessionFromServer}) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="email">Email</label>
+          <label 
+              htmlFor="email"
+              className="text-white">
+                Email</label>
           <input
             type="email"
-            className="w-full"
+            className="w-full text-darkPurple"
             id="email"
             {...register('email', {
               required: 'Please enter email',
@@ -118,9 +144,13 @@ export default function ProfileScreen({sessionFromServer}) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="password">Password</label>
+          <label 
+              htmlFor="password"
+              className="text-white"
+              >Password</label>
+
           <input
-            className="w-full"
+            className="w-full text-darkPurple"
             type="password"
             id="password"
             {...register('password', {
@@ -133,9 +163,13 @@ export default function ProfileScreen({sessionFromServer}) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="confirmPassword">Confirm Password</label>
+          <label 
+              htmlFor="confirmPassword"
+              className="text-white"
+              >
+                Confirm Password</label>
           <input
-            className="w-full"
+            className="w-full text-darkPurple"
             type="password"
             id="confirmPassword"
             {...register('confirmPassword', {
@@ -161,6 +195,7 @@ export default function ProfileScreen({sessionFromServer}) {
         </div>
       </form>
    
+          <ImageUpload sessionFromServer={sessionFromServer}/>
     </div>
   );
 }

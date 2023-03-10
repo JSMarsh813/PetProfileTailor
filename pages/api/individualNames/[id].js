@@ -1,7 +1,9 @@
 import Individualname from '../../../models/individualNames'
 import db from '../../../utils/db'
+import {useRouter} from 'next/router'
 
 const handler = async (req, res) => {
+
 
     if (req.method === 'GET') {
         return getHandler(req, res);

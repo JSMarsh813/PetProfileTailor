@@ -25,6 +25,7 @@ const IndividualNameSchema= new mongoose.Schema({
   createdby:{
     type: String,
     required: false,
+    ref:"User"
   }
 })
 

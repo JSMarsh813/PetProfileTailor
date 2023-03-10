@@ -21,9 +21,8 @@ import { faBullseye, faFaceGrinWink, faUserTie, faTags, faIgloo, faLightbulb, fa
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 
-
 export default function NavLayoutwithSettingsMenu({ title, children, userName, profileImage}) {
-  const { status, data: session } = useSession();
+  // const { status, data: session } = useSession();
   
 
   // const { state, dispatch } = useContext(Store);
@@ -32,7 +31,7 @@ export default function NavLayoutwithSettingsMenu({ title, children, userName, p
   // useEffect(() => {
   //   setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   // }, [cart.cartItems]);
-  console.log(`this is username ${userName}`)
+  // console.log(`this is username ${userName}`)
   const [isHamBurgNavOpen, setisHamBurgNavOpen] = useState(false);
 
 
@@ -62,7 +61,8 @@ export default function NavLayoutwithSettingsMenu({ title, children, userName, p
         <link rel="icon" href="/favicon.ico" />
       </Head> */}
 
-      <ToastContainer position="bottom-center" limit={1} />
+
+      {/* <ToastContainer position="bottom-center" limit={1} /> */}
 
       <div className="flex flex-col justify-between bg-violet-900">
         <header>
