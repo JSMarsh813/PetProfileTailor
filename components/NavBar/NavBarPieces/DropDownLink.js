@@ -1,5 +1,5 @@
-import Link from 'next/Link'
-import React from 'react';
+import Link from "next/Link";
+import React from "react";
 
 export default function DropDownLink(props) {
   let { href, children, ...rest } = props;

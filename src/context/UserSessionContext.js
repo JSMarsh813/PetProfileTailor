@@ -1,33 +1,25 @@
-import React, { useContext, createContext, useState, useEffect } from 'react'
+import React, { useContext, createContext, useState, useEffect } from "react";
 // import { unstable_getServerSession } from "next-auth/next";
 
 // import { authOptions } from "./auth/[...nextauth]";'@fortawesome/fontawesome-svg-core'
 // // create context
-const UserSessionContext = createContext("null")
-
-
-
-
-
+const UserSessionContext = createContext("null");
 
 // https://www.youtube.com/watch?v=t9WmZFnE6Hg&ab_channel=PedroTech
 // 6:53 null is good for testing
 
 //The defaultValue argument is only used when a component does not have a matching Provider above it in the tree. https://reactjs.org/docs/context.html
 
-
 //We then create the prop that we're going to insert into UserSessionContext
 // function UserSessionContext() {
 //     const [user, setUser] = useState({})
-  
+
 //     return (
 //       <ThemeContext.Provider value={{ theme, setTheme }}>
 //         <ChildComponent />
 //       </ThemeContext.Provider>
 //     )
 //   }
-
-
 
 // const UserContextProvider = ({ children }) => {
 //     // the value that will be given to the context https://devtrium.com/posts/how-use-react-context-pro
@@ -58,7 +50,7 @@ const UserSessionContext = createContext("null")
 //   );
 // };
 
-export default UserSessionContext
+export default UserSessionContext;
 
 // export { UserSessionContext , UserContextProvider };
 

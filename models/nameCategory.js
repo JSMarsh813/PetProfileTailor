@@ -1,17 +1,19 @@
 const mongoose = require("mongoose");
 
-const CategoryCollectionSchema= new mongoose.Schema({
-  name: {
+const NameCategorySchema = new mongoose.Schema({
+  category: {
     type: String,
     required: true,
     unique: true,
   },
-  tags: {
-    type: Array,
-    required: true,
-  }
-})
+  tags: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "NameTag",
+    },
+  ],
+});
 
-module.exports = mongoose.models['test5'] || mongoose.model("test5", CategoryCollectionSchema);
-//mongoose.models['test5'] needed to avoid " OverwriteModelError: Cannot overwrite `test5` model once compiled." axios error
-//"test" will be what it appears as in mongodb as a collection
+module.exports =
+  mongoose.models["namecategory"] ||
+  mongoose.model("namecategory", NameCategorySchema);

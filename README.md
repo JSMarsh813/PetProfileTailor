@@ -41,9 +41,9 @@ Potential Future Optimizations:
 
 ########### Lessons Learned
 
-1. Problem: 	
+1. Problem:
 
-When trying to install npm install -D @tailwindcss/forms I kept Getting an error code: 
+When trying to install npm install -D @tailwindcss/forms I kept Getting an error code:
 
 npm ERR! code EWORKSPACESCONFIG npm ERR! workspaces config expects an Array
 
@@ -51,6 +51,4 @@ Result: Tried a few things after googling, but what ended up fixing it was delet
 
 2. Problem: Needed to install multiple packages for a tailwind component
 
-I kept getting "module not found errors" but after installing the modules with npm they worked. 
-
-
+I kept getting "module not found errors" but after installing the modules with npm they worked.

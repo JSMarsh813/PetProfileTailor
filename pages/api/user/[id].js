@@ -1,57 +1,51 @@
-import db from '../../../utils/db'
-import User from '../../../models/User'
+import db from "../../../utils/db";
+import User from "../../../models/User";
 
 export default async function handler(req, res) {
   const {
     query: { id },
     method,
-  } = req
+  } = req;
 
+  //   const session = await getSession({ req });
+  //   if (!session) {
+  //     return res.status(401).send({ message: 'signin required' });
+  //   }
 
-  
-//   const session = await getSession({ req });
-//   if (!session) {
-//     return res.status(401).send({ message: 'signin required' });
-//   }
+  //   const { user } = session;
 
-//   const { user } = session;
-
-  await db.connect()
+  await db.connect();
 
   switch (method) {
-    case 'GET' /* Get a user by its ID */:
+    case "GET" /* Get a user by its ID */:
       try {
-        const user = await User.findById(id)
+        const user = await User.findById(id);
         if (!user) {
-          return res.status(400).json({ success: false })
+          return res.status(400).json({ success: false });
         }
-        res.status(200).json({ success: true, data: user })
-
-
+        res.status(200).json({ success: true, data: user });
       } catch (error) {
-        res.status(400).json({ success: false })
+        res.status(400).json({ success: false });
       }
-      break
+      break;
 
-    case 'PUT' /* Edit a model by its ID */:
+    case "PUT" /* Edit a model by its ID */:
       try {
-        const user= await User.findByIdAndUpdate(id, req.body, {
+        const user = await User.findByIdAndUpdate(id, req.body, {
           new: true,
           runValidators: true,
-        })
+        });
 
         if (!user) {
-          return res.status(400).json({ success: false })
+          return res.status(400).json({ success: false });
         }
 
         await db.disconnect();
-        res.status(200).json({ success: true, data: user })
-
-
+        res.status(200).json({ success: true, data: user });
       } catch (error) {
-        res.status(400).json({ success: false })
+        res.status(400).json({ success: false });
       }
-      break
+      break;
 
     // case 'DELETE' /* Delete a model by its ID */:
     //   try {
@@ -66,7 +60,7 @@ export default async function handler(req, res) {
     //   break
 
     default:
-      res.status(400).json({ success: false })
-      break
+      res.status(400).json({ success: false });
+      break;
   }
 }
