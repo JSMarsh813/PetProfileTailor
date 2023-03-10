@@ -39,7 +39,7 @@ export const getServerSideProps = async (context) => {
   }
 
   let postResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/individualposts/getASpecificPost/` +
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/getASpecificPost/` +
       id
   );
   let postData = await postResponse.json();
@@ -50,7 +50,7 @@ export const getServerSideProps = async (context) => {
     };
   } else {
     let commentResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/individualbatsignalcomments`
+      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
     );
     let commentData = await commentResponse.json();
 

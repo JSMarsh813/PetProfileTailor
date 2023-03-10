@@ -10,12 +10,12 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 
 export const getServerSideProps = async (context) => {
   let tagList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/nametag`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/nametag`
   );
   let tagData = await tagList.json();
 
   let categoryList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/namecategories`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/namecategories`
   );
   let categoryData = await categoryList.json();
 

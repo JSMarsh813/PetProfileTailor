@@ -24,7 +24,7 @@ export const getServerSideProps = async (context) => {
   }
 
   let commentResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/comment/namecomment/getaspecificcommentbyid/` +
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/comment/namecomment/getaspecificcommentbyid/` +
       id
   );
   let commentData = await commentResponse.json();

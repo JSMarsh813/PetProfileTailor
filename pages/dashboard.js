@@ -110,7 +110,7 @@ export const getServerSideProps = async (context) => {
   //grabbing Tags for description edit function
 
   // let descriptionTagList = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/descriptiontag`
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
   // );
   // let descriptionTagData = await descriptionTagList.json();
   // let descriptionTagListProp = "";

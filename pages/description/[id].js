@@ -36,7 +36,7 @@ export const getServerSideProps = async (context) => {
   );
 
   let descriptionResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/description/getASpecificDescriptionById/` +
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/getASpecificDescriptionById/` +
       id
   );
   let descriptionData = await descriptionResponse.json();
@@ -48,7 +48,7 @@ export const getServerSideProps = async (context) => {
     };
   } else {
     let descriptionTagList = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/descriptiontag`
+      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
     );
     let descriptionTagData = await descriptionTagList.json();
 
