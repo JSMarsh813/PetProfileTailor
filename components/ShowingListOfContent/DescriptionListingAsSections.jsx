@@ -9,7 +9,7 @@ import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 
-import Link from "next/Link";
+import Link from "next/link";
 
 export default function DescriptionListingAsSections({
   description,

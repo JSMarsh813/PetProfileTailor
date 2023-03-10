@@ -1,5 +1,5 @@
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/Link";
+import Link from "next/link";
 // //Special jsx code that allows us to build links. Allows us to keep everything on a single page (makes it a SPA), rather than using a href="page link", which would make us lose any state and require that we get a new file sent from the server
 
 import React, { useContext, useEffect, useState } from "react";

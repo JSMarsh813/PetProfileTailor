@@ -1,6 +1,6 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import Link from "next/Link";
+import Link from "next/link";
 
 import UserSessionContext from "../src/context/UserSessionContext";
 

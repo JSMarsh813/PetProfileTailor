@@ -4,7 +4,7 @@ import AddItemsDropDownMenu from "./AddItemsDropDownMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags, faIgloo, faIdCard } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import Link from "next/Link";
+import Link from "next/link";
 
 //onclick wrapped in spans due to this error https://github.com/vercel/next.js/discussions/39212
 

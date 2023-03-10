@@ -1,7 +1,6 @@
 import React from "react";
 import ShowTime from "./ShowTime";
-import Link from "next/Link";
-
+import Link from "next/link";
 export default function PostersImageUsernameProfileName({
   postersProfileImage,
   postersName,
@@ -21,11 +20,17 @@ export default function PostersImageUsernameProfileName({
         </div>
 
         <h2 className="text-sm tracking-tighter">
-          <a className="font-bold block text-left" href="#">
+          <a
+            className="font-bold block text-left"
+            href="#"
+          >
             By {postersName}
           </a>
 
-          <a className="" href="#">
+          <a
+            className=""
+            href="#"
+          >
             @{profileName}
           </a>
           {postDate && showtime == true && <ShowTime postDate={postDate} />}

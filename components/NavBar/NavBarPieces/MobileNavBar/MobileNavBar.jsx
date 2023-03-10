@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, Transition } from "@headlessui/react";
-import Link from "next/Link";
+import Link from "next/link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

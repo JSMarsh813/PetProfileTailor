@@ -12,7 +12,7 @@ import {
   faCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import Link from "next/Link";
+import Link from "next/link";
 import DropDownLink from "../DropDownLink";
 
 export default function DropDownMenu() {
