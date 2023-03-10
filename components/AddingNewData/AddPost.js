@@ -89,7 +89,7 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
     };
 
     axios
-      .post("http://localhost:3000/api/apinewpost", postSubmission)
+      .post("/api/apinewpost", postSubmission)
       .then((response) => {
         toast.success(
           `Successfully added new post. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`

@@ -9,11 +9,13 @@ import HeadersForCategories from "../components/ShowingListOfContent/HeadersForD
 import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections";
 
 export const getServerSideProps = async (context) => {
-  let response = await fetch("http://localhost:3000/api/descriptioncategory");
+  let response = await fetch(
+    `${process.env.BASE_FETCH_URL}/api/descriptioncategory`
+  );
   let data = await response.json();
 
   let descriptionResponse = await fetch(
-    "http://localhost:3000/api/description"
+    `${process.env.BASE_FETCH_URL}/api/description`
   );
   let descriptionData = await descriptionResponse.json();
 
@@ -25,11 +27,19 @@ export const getServerSideProps = async (context) => {
 
   const UserId = session ? session.user._id : "";
 
-  let tagList = await fetch("http://localhost:3000/api/descriptiontag");
+  let tagList = await fetch(`${process.env.BASE_FETCH_URL}/api/descriptiontag`);
   let tagData = await tagList.json();
 
   let tagListProp = tagData
-    .map((tag) => tag.tag)
+    .map((tag) => tag)
+    .reduce((sum, value) => sum.concat(value), []);
+
+  //grabbing names
+
+  let nameList = await fetch(`${process.env.BASE_FETCH_URL}/api/names`);
+  let nameData = await nameList.json();
+  let nameListProp = nameData
+    .map((name) => name.name)
     .reduce((sum, value) => sum.concat(value), []);
 
   return {
@@ -38,6 +48,7 @@ export const getServerSideProps = async (context) => {
       descriptionList: descriptionData,
       tagList: tagListProp,
       sessionFromServer: session,
+      nameList: nameListProp,
     },
   };
 };
@@ -47,6 +58,7 @@ function FetchDescriptions({
   category,
   descriptionList,
   tagList,
+  nameList,
 }) {
   let userName = "";
   let profileImage = "";
@@ -55,6 +67,7 @@ function FetchDescriptions({
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
   }
+
   //end of section for nav menu
   const [IsOpen, SetIsOpen] = useState(true);
 
@@ -66,7 +79,7 @@ function FetchDescriptions({
 
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
-
+    console.log(e.target);
     setFilteredDescriptions(descriptionList);
 
     checked
@@ -78,11 +91,23 @@ function FetchDescriptions({
     let currenttags = tagFilters;
 
     setFilteredDescriptions(
-      filteredDescriptions.filter((description) =>
-        currenttags.every((tag) => description.tags.includes(tag))
+      filteredDescriptions.filter(
+        (description) =>
+          currenttags.every((selectedtag) =>
+            description.tags.map(({ tag }) => tag).includes(selectedtag)
+          )
+
+        //  (description) => console.log(description.tags.map(({ tag }) => tag))
+        // turns it into an array of tags ["likes food","large"]
       )
     );
   }, [tagFilters]);
+
+  // console.log(
+  //   descriptionList.map((object) =>
+  //     object.tags.map((tag) => tag.tag.includes(tag))
+  //   )
+  // );
 
   return (
     <div>
@@ -91,43 +116,49 @@ function FetchDescriptions({
         userName={userName}
       />
 
-      <PageTitleWithImages
-        imgSrc="bg-[url('https://images.pexels.com/photos/1599452/pexels-photo-1599452.jpeg?auto=compress&cs=tinysrgb&w=400')]"
-        title="Fetch "
-        title2="Descriptions"
-      />
+      {/* {JSON.stringify(filteredDescriptions)} */}
+      {JSON.stringify(tagFilters)}
 
-      <div className="flex w-full">
-        <FilteringSidebar
-          category={category}
-          handleFilterChange={handleFilterChange}
-          IsOpen={IsOpen}
+      <section className="px-4 bg-violet-900">
+        <PageTitleWithImages
+          imgSrc="bg-[url('https://images.pexels.com/photos/1599452/pexels-photo-1599452.jpeg?auto=compress&cs=tinysrgb&w=400')]"
+          title="Fetch "
+          title2="Descriptions"
         />
 
-        {/*################# CONTENT DIV ################### */}
-
-        <div className="grow bg-darkPurple rounded-box place-items-center">
-          <GeneralButton
-            text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
-            onClick={() => SetIsOpen(!IsOpen)}
+        <div className="flex w-full">
+          <FilteringSidebar
+            category={category}
+            handleFilterChange={handleFilterChange}
+            IsOpen={IsOpen}
           />
 
-          <section className="border-2 border-amber-300 w-full">
-            <section className="">
-              {filteredDescriptions.map((description) => {
-                return (
-                  <DescriptionListingAsSections
-                    description={description}
-                    key={description._id}
-                    sessionFromServer={sessionFromServer}
-                    tagList={tagList}
-                  />
-                );
-              })}
+          {/*################# CONTENT DIV ################### */}
+
+          <div className="grow bg-darkPurple rounded-box place-items-center">
+            <GeneralButton
+              text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
+              onClick={() => SetIsOpen(!IsOpen)}
+            />
+
+            <section className="border-2 border-amber-300 w-full">
+              <section className="">
+                {filteredDescriptions.map((description) => {
+                  return (
+                    <DescriptionListingAsSections
+                      description={description}
+                      key={description._id}
+                      sessionFromServer={sessionFromServer}
+                      tagList={tagList}
+                      nameList={nameList}
+                    />
+                  );
+                })}
+              </section>
             </section>
-          </section>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

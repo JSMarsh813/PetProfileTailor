@@ -16,23 +16,32 @@ export const getServerSideProps = async (context) => {
 
   //grabbing Tags for description edit function
 
-  let tagList = await fetch("http://localhost:3000/api/descriptiontag");
+  let tagList = await fetch(`${process.env.BASE_FETCH_URL}/api/descriptiontag`);
   let tagData = await tagList.json();
   let tagListProp = tagData
-    .map((tag) => tag.tag)
+    .map((tag) => tag)
     .reduce((sum, value) => sum.concat(value), []);
 
-  console.log(tagListProp);
+  //grabbing names
+
+  let nameList = await fetch(`${process.env.BASE_FETCH_URL}/api/names`);
+  let nameData = await nameList.json();
+  let nameListProp = nameData
+    .map((name) => name.name)
+    .reduce((sum, value) => sum.concat(value), []);
+
+  console.log(nameListProp);
 
   return {
     props: {
       sessionFromServer: session,
       tagList: tagListProp,
+      nameList: nameListProp,
     },
   };
 };
 
-function AddDescriptions({ sessionFromServer, tagList }) {
+function AddDescriptions({ sessionFromServer, tagList, nameList }) {
   //for Nav menu profile name and image
   let userName = "";
   let profileImage = "";
@@ -60,6 +69,7 @@ function AddDescriptions({ sessionFromServer, tagList }) {
         tagList={tagList}
         userId={userId}
         sessionFromServer={sessionFromServer}
+        nameList={nameList}
       />
     </div>
   );

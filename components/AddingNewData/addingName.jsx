@@ -10,8 +10,6 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/Link";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 
-//another serverSide props from  let categoryList = await fetch('http://localhost:3000/api/name-categories);
-
 function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   const { data: session, status } = useSession();
   const [newName, setNewName] = useState("");
@@ -24,9 +22,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
 
   async function checkIfNameExists() {
-    let nameResponse = await fetch(
-      "http://localhost:3000/api/names/findonenamebyname/" + nameCheck
-    );
+    let nameResponse = await fetch("/api/names/findonenamebyname/" + nameCheck);
     let nameData = await nameResponse.json();
     setNamesThatExist(nameData);
     setNameCheckFunctionRun(true);
@@ -49,8 +45,10 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
       createdby: userId.toString(),
     };
 
+    console.log(nameSubmission);
+
     axios
-      .post("http://localhost:3000/api/names", nameSubmission)
+      .post("/api/names", nameSubmission)
       .then((response) => {
         setIsPending(false);
         toast.success(
@@ -199,12 +197,12 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             id="nameTags"
             options={tagList.map((opt, index) => ({
               label: opt.tag,
-              value: opt.tag,
+              value: opt._id,
             }))}
             isMulti
             isSearchable
             placeholder="If you type in the tags field, it will filter the tags"
-            onChange={(opt) => setTags(opt.map((tag) => tag.label))}
+            onChange={(opt) => setTags(opt.map((tag) => tag.value))}
           />
 
           {/* BUTTON */}

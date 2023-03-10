@@ -10,7 +10,7 @@ import GeneralButton from "../components/ReusableSmallComponents/buttons/General
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
-import ImageUpload from "../components/ImageUpload";
+import ImageUpload from "../components/AddingNewData/ImageUpload";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -105,7 +105,7 @@ export default function ProfileScreen({ sessionFromServer }) {
           </label>
           <input
             type="text"
-            maxLength="50"
+            maxLength="30"
             className="w-full text-darkPurple"
             id="name"
             autoFocus
@@ -117,11 +117,6 @@ export default function ProfileScreen({ sessionFromServer }) {
             <div className="text-red-500">{errors.name.message}</div>
           )}
         </div>
-
-        <span className="text-white">
-          {" "}
-          {`${50 - newDescription.length}/50 characters left`}
-        </span>
 
         <div className="mb-4">
           <label

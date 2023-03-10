@@ -2,7 +2,7 @@ import Select from "react-select";
 import React, { useState } from "react";
 import axios from "axios";
 import NewNameWithTagsData from "../components/AddingNewData/addingName";
-//another serverSide props from  let categoryList = await fetch('http://localhost:3000/api/name-categories);
+
 import AddNewTag from "../components/AddingNewData/AddingNewTag";
 import { useSession } from "next-auth/react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
@@ -12,10 +12,12 @@ import { unstable_getServerSession } from "next-auth/next";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
 export const getServerSideProps = async (context) => {
-  let tagList = await fetch("http://localhost:3000/api/nametag");
+  let tagList = await fetch(`${process.env.BASE_FETCH_URL}/api/nametag`);
   let tagData = await tagList.json();
 
-  let categoryList = await fetch("http://localhost:3000/api/namecategories");
+  let categoryList = await fetch(
+    `${process.env.BASE_FETCH_URL}/api/namecategories`
+  );
   let categoryData = await categoryList.json();
 
   const session = await unstable_getServerSession(

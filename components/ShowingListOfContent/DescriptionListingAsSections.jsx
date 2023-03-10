@@ -15,6 +15,7 @@ export default function DescriptionListingAsSections({
   description,
   sessionFromServer,
   tagList,
+  nameList,
 }) {
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
@@ -38,8 +39,6 @@ export default function DescriptionListingAsSections({
 
   //#### STATE FOR EDITS AND DELETIONS
   const [itemChanged, setItemChanged] = useState(false);
-
-  // ##for the delete notification button #####
 
   function updateDeleteState() {
     setShowDeleteConfirmation(true);
@@ -67,27 +66,27 @@ export default function DescriptionListingAsSections({
   }
 
   return (
-    <div className=" border-b-2 border-amber-300 text-white w-screen px-6">
+    <div className=" border-b-2 border-amber-300 text-white px-6 w-screen">
       {/* ###### description SECTION #### */}
-      <div className="whitespace-pre-line">
+      <div className="whitespace-pre-line mt-2">
         <span className="text-amber-200 font-bold">Description: </span>
         {description.description}{" "}
       </div>
 
       {/* ###### NOTES SECTION #### */}
-      <p className="whitespace-pre-line">
+      <p className="whitespace-pre-line mt-4">
         <span className="text-amber-200 font-bold">Notes: </span>
         {description.notes == "" ? "no notes" : description.notes}
       </p>
       <div
         className="grid 
-            grid-cols-4 gap-4 text-base
-           
-            bg-darkPurple
+            grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 text-base
+            place-items-center
+            bg-violet-900 border-2 border-yellow-200
                     text-purple-200 p-2  
+                    my-4                
                     
-                    
-                    items-center justify-items-center"
+                   "
       >
         {/* ###### LIKES SECTION #### */}
 
@@ -97,8 +96,15 @@ export default function DescriptionListingAsSections({
           HeartIconTextStyling="ml-2"
           currentTargetedId={currentTargetedId}
           session={sessionFromServer}
-          apiLink={`http://localhost:3000/api/description/updateLikes`}
+          apiLink="/api/description/updateLikes"
         />
+
+        {/* ###### TAGS SECTION #### */}
+        <p>
+          <span className="text-amber-200 font-bold">Tags: </span>
+
+          {description.tags.map((tag) => tag.tag).join(", ")}
+        </p>
 
         <div className="text-center">
           <ShareButton onClickShowShares={onClickShowShares} />
@@ -115,26 +121,23 @@ export default function DescriptionListingAsSections({
             )}
         </div>
 
-        {/* ###### TAGS SECTION #### */}
-        <p>
-          <span className="text-amber-200 font-bold">Tags: </span>
-          {description.tags.map((descriptions) => descriptions).join(", ")}
-        </p>
-
         {/* ###### CREATEDBY SECTION #### */}
 
-        <section>
+        <section className="flex gap-1.5 place-items-center lg:ml-10 bg-violet-700 p-4 border-2 border-amber-200 border-dotted">
           <span className="text-amber-200 font-bold">Shared by: </span>
+
+          <img
+            src={description.createdby.profileimage}
+            className="rounded-2xl h-16 inline"
+          />
           <a
+            className=""
             href={`http://localhost:3000/profile/${description.createdby.profilename.toLowerCase()}`}
           >
-            <img
-              src={description.createdby.profileimage}
-              className="rounded-2xl h-16 inline"
-            />
-
-            <span> {description.createdby.name}</span>
-            <span> @{description.createdby.profilename}</span>
+            <div className="inline flex flex-col">
+              <span className=""> {description.createdby.name}</span>
+              <span className="">@{description.createdby.profilename}</span>
+            </div>
           </a>
 
           {showDeleteConfirmation && (
@@ -155,9 +158,17 @@ export default function DescriptionListingAsSections({
               sessionFromServer={sessionFromServer}
               setItemChanged={setItemChanged}
               tagList={tagList}
+              nameList={nameList}
             />
           )}
         </section>
+
+        <div>
+          <span className="text-amber-200 font-bold">Related Names: </span>
+          {description.relatednames
+            .map((relatedname) => relatedname)
+            .join(", ")}
+        </div>
       </div>
 
       {shareSectionShowing && (

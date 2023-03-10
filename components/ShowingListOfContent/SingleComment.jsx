@@ -49,9 +49,8 @@ function CommentListing({
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
   let linkToShare = `http://localhost:3000/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
-  let apiLink = "http://localhost:3000/api/individualbatsignalcomments";
+  let apiLink = "/api/individualbatsignalcomments";
 
-  console.log(typeOfContentReplyingTo);
   let linkToPost = `http://localhost:3000/${typeOfContentReplyingTo}/${rootComment.replyingtothisid}`;
 
   useEffect(() => {
@@ -150,7 +149,7 @@ function CommentListing({
                 HeartIconStyling="text-xl"
                 HeartIconTextStyling="text-darkPurple ml-2"
                 session={sessionFromServer}
-                apiLink={`http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes`}
+                apiLink="/api/individualbatsignalcomments/updatecommentlikes"
               />
 
               <ShareButton

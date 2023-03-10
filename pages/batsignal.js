@@ -19,7 +19,9 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  let postResponse = await fetch("http://localhost:3000/api/individualposts");
+  let postResponse = await fetch(
+    `${process.env.BASE_FETCH_URL}/api/individualposts`
+  );
   let postData = await postResponse.json();
 
   return {

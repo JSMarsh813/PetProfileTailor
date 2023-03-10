@@ -11,25 +11,20 @@ export default async function handler(req, res) {
 
   if (method === "GET") {
     try {
-      const individualNames = await Names.find().populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
-      });
+      const individualNames = await Names.find()
+        .populate({
+          path: "createdby",
+          select: ["name", "profilename", "profileimage"],
+        })
+        .populate({ path: "tags", select: ["tag"] });
       res.status(200).json(individualNames);
     } catch (err) {
       res.status(500).json(err);
     }
-
-    // try {
-    //   const names = await individualNames.find();
-    //   res.status(200).json(individualNames);
-
-    // } catch (err) {
-    //   res.status(500).json(err);
-    // }
   }
 
   if (method === "PUT") {
+    console.log(req.body.nameSubmission);
     const { description, name, tags, nameId } = req.body.nameSubmission;
 
     const toUpdateName = await Names.findById(nameId);
@@ -59,12 +54,10 @@ export default async function handler(req, res) {
     console.log(existingNameCheck);
 
     if (existingNameCheck && existingNameCheck.length != 0) {
-      res
-        .status(409)
-        .json({
-          message: "Name already exists",
-          existingName: existingNameCheck,
-        });
+      res.status(409).json({
+        message: "Name already exists",
+        existingName: existingNameCheck,
+      });
       return;
     } else {
       try {

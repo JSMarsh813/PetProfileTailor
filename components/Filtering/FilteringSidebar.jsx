@@ -3,6 +3,7 @@ import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
 
 function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
+  // console.log(category);
   return (
     <div
       className={`w-80 h-fit bg-violet-900 border-b-2 border-solid border-violet-400 rounded-box place-items-center ${
@@ -54,7 +55,7 @@ function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
                           className="ml-3 min-w-0 flex-1 text-base text-violet-100 "
                         >
                           {option.tag}
-                          {console.log(option)}
+                          {/* {console.log(option)} */}
                         </label>
                       </div>
                     ))}

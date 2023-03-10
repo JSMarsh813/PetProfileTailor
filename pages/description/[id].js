@@ -36,7 +36,8 @@ export const getServerSideProps = async (context) => {
   );
 
   let descriptionResponse = await fetch(
-    "http://localhost:3000/api/description/getASpecificDescriptionById/" + id
+    `${process.env.BASE_FETCH_URL}
+  /api/description/getASpecificDescriptionById/` + id
   );
   let descriptionData = await descriptionResponse.json();
 
@@ -46,9 +47,8 @@ export const getServerSideProps = async (context) => {
       notFound: true,
     };
   } else {
-    let descriptionTagList = await fetch(
-      "http://localhost:3000/api/descriptiontag"
-    );
+    let descriptionTagList = await fetch(`${process.env.BASE_FETCH_URL}
+    /api/descriptiontag`);
     let descriptionTagData = await descriptionTagList.json();
 
     let tagListProp = descriptionTagData

@@ -13,7 +13,8 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  let categoryList = await fetch("http://localhost:3000/api/namecategories");
+  let categoryList = await fetch(`${process.env.BASE_FETCH_URL}
+  /api/namecategories`);
   let categoryData = await categoryList.json();
 
   return {
@@ -50,7 +51,7 @@ export default function AddNameTag({ sessionFromServer, categoryData }) {
     };
 
     axios
-      .post("http://localhost:3000/api/nametag", nameTagSubmission)
+      .post("/api/nametag", nameTagSubmission)
       .then((response) => {
         let newNameTagId = response.data._id;
         addTagToCategories(newNameTagId);
@@ -100,6 +101,7 @@ export default function AddNameTag({ sessionFromServer, categoryData }) {
           onClick={handleNameTagSubmission}
         />
 
+        {/* TAG AREA */}
         <label
           className="font-bold block mt-4 text-white"
           htmlFor="nameTags"

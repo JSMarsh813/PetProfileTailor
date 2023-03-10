@@ -12,10 +12,13 @@ const NameSchema = new mongoose.Schema({
     type: Array,
     required: false,
   },
-  tags: {
-    type: Array,
-    required: true,
-  },
+  tags: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "NameTag",
+    },
+  ],
   comments: {
     type: Array,
   },

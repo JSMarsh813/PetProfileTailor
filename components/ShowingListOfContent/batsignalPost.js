@@ -74,8 +74,7 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
 
   const handleFetchPosts = async () => {
     const response = await fetch(
-      "http://localhost:3000/api/individualbatsignalcomments/commentscontainingpostid/" +
-        postId
+      "/api/individualbatsignalcomments/commentscontainingpostid/" + postId
     );
     const data = await response.json();
     console.log(data);
@@ -197,7 +196,8 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
               currentTargetedId={currentTargetedId}
               HeartIconStyling="text-3xl"
               session={sessionFromServer}
-              apiLink={`http://localhost:3000/api/individualposts/updatepostlikes`}
+              apiLink="/api/individualposts/updatepostlikes"
+              //changed from {} to ""
             />
 
             <ShareButton
@@ -230,7 +230,7 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
               typeOfContentReplyingTo="post"
               sessionFromServer={sessionFromServer}
               apiLink="/api/individualbatsignalcomments/"
-              likesApiLink="http://localhost:3000/api/individualbatsignalcomments/updatecommentlikes"
+              likesApiLink="/api/individualbatsignalcomments/updatecommentlikes"
             />
           ))}
       </div>

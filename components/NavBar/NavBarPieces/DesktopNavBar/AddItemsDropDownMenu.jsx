@@ -17,7 +17,10 @@ import DropDownLink from "../DropDownLink";
 
 export default function DropDownMenu() {
   return (
-    <Menu as="div" className="relative inline-block text-left z-10">
+    <Menu
+      as="div"
+      className="relative inline-block text-left z-10"
+    >
       <div>
         <Menu.Button
           className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white
@@ -92,29 +95,6 @@ export default function DropDownMenu() {
                 />
 
                 <a> Descriptions </a>
-              </button>
-            </Link>
-          </Menu.Item>
-        </div>
-        <div className="px-1 py-1">
-          <Menu.Item>
-            <Link href="/addinspiration">
-              <button
-                className="
-                      hover:bg-yellow-500 
-                      hover:text-violet-900
-
-                      text-white             
-                      group flex w-full items-center rounded-md px-2 py-2 text-sm"
-              >
-                <FontAwesomeIcon
-                  icon={faLightbulb}
-                  className="text-xl mr-1 
-                      text-violet-100
-                     "
-                />
-
-                <a>Inspiration Fuel</a>
               </button>
             </Link>
           </Menu.Item>

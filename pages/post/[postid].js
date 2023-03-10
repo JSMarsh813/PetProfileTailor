@@ -39,7 +39,8 @@ export const getServerSideProps = async (context) => {
   }
 
   let postResponse = await fetch(
-    "http://localhost:3000/api/individualposts/getASpecificPost/" + id
+    `${process.env.BASE_FETCH_URL}
+  /api/individualposts/getASpecificPost/` + id
   );
   let postData = await postResponse.json();
 
@@ -48,15 +49,9 @@ export const getServerSideProps = async (context) => {
       notFound: true,
     };
   } else {
-    let commentResponse = await fetch(
-      "http://localhost:3000/api/individualbatsignalcomments"
-    );
+    let commentResponse = await fetch(`${process.env.BASE_FETCH_URL}
+    /api/individualbatsignalcomments`);
     let commentData = await commentResponse.json();
-
-    //  let userResponse= await fetch('http://localhost:3000/api/posts/getASpecificPost/'+id)
-    //  let userData = await userResponse.json()
-
-    //  console.log(`this is ${userData}`)
 
     return {
       props: {

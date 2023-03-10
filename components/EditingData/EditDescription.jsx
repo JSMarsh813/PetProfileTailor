@@ -13,26 +13,29 @@ export default function EditName({
   setItemChanged,
   setToastMessage,
   tagList,
+  nameList,
 }) {
-  //data for posts in mongoDB
-
-  //  let tagList = await fetch('http://localhost:3000/api/individualtags');
-  //let tagData = await tagList.json()
   const [descriptionState, setDescription] = useState(description.description);
   const [notes, setNotes] = useState(description.notes);
-  const [tags, setTags] = useState(description.tags);
+  const [tags, setTags] = useState(
+    description.tags.map((tag) => ({ label: tag.tag, value: tag._id }))
+  );
+
+  const [relatedNames, setRelatedNames] = useState(description.relatednames);
 
   const descriptionSubmission = async () => {
     const descriptionSubmission = {
       description: descriptionState,
       notes: notes,
-      tags: tags,
+      tags: tags.map((tag) => tag.value),
+      //changing each {label: tag.tag, value:tag._id} into just an object id
       descriptionId: description._id,
+      relatednames: relatedNames,
     };
     console.log(descriptionSubmission);
 
     await axios
-      .put("/api/description/", {
+      .put("/api/description", {
         descriptionSubmission,
       })
       .then((response) => {
@@ -112,18 +115,53 @@ export default function EditName({
                   </label>
                   <div className="text-white"></div>
                   <Select
-                    value={tags.map((tag) => ({ label: tag, value: tag }))}
+                    value={tags.map((tag) => ({
+                      label: tag.label,
+                      value: tag.value,
+                    }))}
                     className={`text-darkPurple mb-4 border ${
                       tags ? "border-violet-200" : "border-rose-500 border-2"
                     }`}
                     id="nameTags"
                     options={tagList.map((opt, index) => ({
+                      label: opt.tag,
+                      value: opt._id,
+                    }))}
+                    isMulti
+                    isSearchable
+                    onChange={(opt) =>
+                      setTags(
+                        opt.map((tag) => ({
+                          label: tag.label,
+                          value: tag.value,
+                        }))
+                      )
+                    }
+                  />
+                  {/* RELATED NAMES SECTION */}
+                  <label
+                    className="font-bold block mt-4"
+                    htmlFor="descriptionTags"
+                  >
+                    Related Names
+                  </label>
+                  <Select
+                    value={relatedNames.map((relatedNames) => ({
+                      label: relatedNames,
+                      value: relatedNames,
+                    }))}
+                    className="text-darkPurple mb-4"
+                    id="descriptionTags"
+                    options={nameList.map((opt, index) => ({
                       label: opt,
                       value: opt,
                     }))}
                     isMulti
                     isSearchable
-                    onChange={(opt) => setTags(opt.map((tag) => tag.label))}
+                    placeholder="If you type in the tags field, it will filter the tags"
+                    onChange={(opt) =>
+                      setRelatedNames(opt.map((tag) => tag.label))
+                    }
                   />
                 </div>
               </div>

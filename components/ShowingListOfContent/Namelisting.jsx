@@ -13,7 +13,7 @@ function Namelisting({ name, session }) {
           data={name}
           currentTargetedId={currentTargetedId}
           session={session}
-          apiLink={`http://localhost:3000/api/auth/updateLikes`}
+          apiLink="/api/auth/updateLikes"
         />
       </td>
       {/* end of likes checkbox section*/}

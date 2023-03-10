@@ -7,15 +7,17 @@ import Description from "../../../models/description";
 export default async function handler(req, res) {
   const { method } = req;
   console.log(req.body);
-
+  console.log(`inside description index.js`);
   dbConnect();
 
   if (method === "GET") {
     try {
-      const descriptions = await Description.find().populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
-      });
+      const descriptions = await Description.find()
+        .populate({
+          path: "createdby",
+          select: ["name", "profilename", "profileimage"],
+        })
+        .populate({ path: "tags", select: ["tag"] });
 
       res.status(200).json(descriptions);
     } catch (err) {
@@ -24,7 +26,10 @@ export default async function handler(req, res) {
   }
 
   if (method === "PUT") {
-    const { description, tags, notes, descriptionId } =
+    console.log(
+      `this is inside the put request ${req.body.descriptionSubmission}`
+    );
+    const { description, tags, notes, descriptionId, relatednames } =
       req.body.descriptionSubmission;
 
     const toUpdateDescription = await Description.findById(descriptionId);
@@ -32,6 +37,9 @@ export default async function handler(req, res) {
     try {
       if (notes) {
         toUpdateDescription.notes = notes;
+      }
+      if (relatednames) {
+        toUpdateDescription.relatednames = relatednames;
       }
       toUpdateDescription.description = description;
 
@@ -48,18 +56,18 @@ export default async function handler(req, res) {
   }
 
   if (method === "POST") {
-    const { description, tags, notes, createdby } = req.body;
+    const { description, tags, notes, createdby, relatednames } = req.body;
 
     console.log(`this is description ${description}`);
-    let existingUserCheck = await Description.find({
+    let existingDescriptionCheck = await Description.find({
       description: description,
     });
-    console.log(existingUserCheck);
+    console.log(existingDescriptionCheck);
 
-    if (existingUserCheck && existingUserCheck.length != 0) {
+    if (existingDescriptionCheck && existingDescriptionCheck.length != 0) {
       res.status(409).json({
-        message: "User already exists",
-        existingUser: existingUserCheck,
+        message: "Description already exists",
+        existingDescription: existingDescriptionCheck,
       });
       return;
     } else {

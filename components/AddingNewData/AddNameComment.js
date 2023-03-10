@@ -36,7 +36,7 @@ function AddNameComment({
     console.log(commentSubmission);
 
     await axios
-      .post("http://localhost:3000/api/namecomments", commentSubmission)
+      .post("/api/namecomments", commentSubmission)
       .then((response) => {
         toast.success(`Successfully added new comment!`);
       })

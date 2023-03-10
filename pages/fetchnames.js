@@ -16,19 +16,21 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  let response = await fetch("http://localhost:3000/api/namecategories");
+  let response = await fetch(
+    `${process.env.BASE_FETCH_URL}/api/namecategories`
+  );
   let data = await response.json();
-  console.log(data);
+  // console.log(data);
 
-  let nameResponse = await fetch("http://localhost:3000/api/names");
+  let nameResponse = await fetch(`${process.env.BASE_FETCH_URL}/api/names`);
   let nameData = await nameResponse.json();
 
   //grabbing Tags for name edit function
 
-  let tagList = await fetch("http://localhost:3000/api/nametag");
+  let tagList = await fetch(`${process.env.BASE_FETCH_URL}/api/nametag`);
   let tagData = await tagList.json();
   let tagListProp = tagData
-    .map((tag) => tag.tag)
+    .map((tag) => tag)
     .reduce((sum, value) => sum.concat(value), []);
 
   return {
@@ -63,10 +65,10 @@ export default function FetchNames({
   //array above is filled with tags
   // ex ["christmas", "male"]
 
-  console.log(tagFilters);
   const [filterednames, setFilteredNames] = useState([...nameList]);
   //to begin with its filled with all names, not actually filtered yet
 
+  console.log(filterednames);
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
 
@@ -96,15 +98,20 @@ export default function FetchNames({
   };
 
   // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
+
   useEffect(() => {
     let currenttags = tagFilters;
-    console.log(`this is currenttags ${JSON.stringify(currenttags)}`);
-    //this is currenttags ["female","male"]
+
     setFilteredNames(
-      filterednames.filter((name) =>
-        currenttags.every((tag) => name.tags.includes(tag))
+      filterednames.filter((names) =>
+        currenttags.every((selectedtag) =>
+          names.tags.map(({ tag }) => tag).includes(selectedtag)
+        )
       )
     );
+    //the old way I used to do it:
+    //   // filterednames.filter((name) =>
+    //   //   currenttags.every((tag) => name.tags.includes(tag))
   }, [tagFilters]);
 
   return (
@@ -142,7 +149,7 @@ export default function FetchNames({
             <section className="border-2 border-amber-300 w-full">
               <HeadersForNames />
 
-              <section className="max-h-96 overflow-scroll">
+              <section className="whitespace-pre-line">
                 {filterednames.map((name) => {
                   return (
                     <NameListingAsSections

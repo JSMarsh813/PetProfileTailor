@@ -72,8 +72,7 @@ export default function Register({ sessionFromServer }) {
 
   async function checkIfNameExists() {
     let nameResponse = await fetch(
-      "http://localhost:3000/api/user/getASpecificUserByProfileName/" +
-        nameCheck
+      "/api/user/getASpecificUserByProfileName/" + nameCheck
     );
     let nameData = await nameResponse.json();
     console.log(nameData);

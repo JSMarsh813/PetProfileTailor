@@ -6,7 +6,13 @@ import axios from "axios";
 
 import { toast, ToastContainer } from "react-toastify";
 
-function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
+function NewDescriptionWithTagsData({
+  tagList,
+  userId,
+  sessionFromServer,
+  nameList,
+}) {
+  console.log(`this is tagList ${JSON.stringify(tagList)}`);
   const { data: session, status } = useSession();
 
   const [newDescription, setNewDescription] = useState("");
@@ -14,6 +20,7 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
   const [notes, setNotes] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [descriptionAlreadyExists, setDescriptionExists] = useState(false);
+  const [relatedNames, setRelatedNames] = useState([]);
 
   function handleDescriptionSubmission(e) {
     e.preventDefault();
@@ -24,14 +31,12 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
       tags: tags,
       notes: notes,
       createdby: userId.toString(),
+      relatednames: relatedNames,
     };
-    {
-      console.log(JSON.stringify(descriptionSubmission));
-    }
 
     // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true and do not allow the new description
     axios
-      .post("http://localhost:3000/api/description", descriptionSubmission)
+      .post("/api/description", descriptionSubmission)
       .then((response) => {
         setIsPending(false);
         toast.success(
@@ -123,19 +128,46 @@ function NewDescriptionWithTagsData({ tagList, userId, sessionFromServer }) {
           >
             Tags
           </label>
+
           <Select
             className="text-darkPurple mb-4"
             id="descriptionTags"
             options={tagList.map((opt, index) => ({
+              label: opt.tag,
+              value: opt._id,
+            }))}
+            isMulti
+            isSearchable
+            placeholder="If you type in the tags field, it will filter the tags"
+            onChange={(opt) => setTags(opt.map((tag) => tag.value))}
+          />
+          {JSON.stringify(tags)}
+
+          {/* RELATED NAMES SECTION */}
+          <label
+            className="font-bold block mt-4"
+            htmlFor="descriptionTags"
+          >
+            Related Names
+          </label>
+          <Select
+            className="text-darkPurple mb-4"
+            id="descriptionTags"
+            options={nameList.map((opt, index) => ({
               label: opt,
               value: opt,
             }))}
             isMulti
             isSearchable
             placeholder="If you type in the tags field, it will filter the tags"
-            onChange={(opt) => setTags(opt.map((tag) => tag.label))}
+            onChange={(opt) =>
+              setRelatedNames(
+                opt.map((tag) => {
+                  tag.label;
+                })
+              )
+            }
           />
-
           {/* BUTTON */}
 
           {!isPending && (

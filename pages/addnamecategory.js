@@ -28,7 +28,7 @@ export default function AddCategory({ sessionFromServer }) {
     };
 
     axios
-      .post("http://localhost:3000/api/namecategories", categorySubmission)
+      .post("/api/namecategories", categorySubmission)
       .then((response) => {
         console.log(response);
       })

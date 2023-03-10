@@ -25,9 +25,15 @@ const DescriptionSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    tags: {
+    tags: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "descriptiontag",
+      },
+    ],
+    relatednames: {
       type: Array,
-      required: true,
     },
   },
   { timestamps: true }

@@ -15,7 +15,7 @@ export default function LikesButtonAndLikesLogic({
 }) {
   let [likesCount, setLikesCount] = useState(data.likedby.length);
   const [dataLiked, setdataLiked] = useState(false);
-  let likesColor = dataLiked ? "red" : "grey";
+  let likesColor = dataLiked ? "red" : "#87ceeb";
   let currentTargetedId = data._id;
   let userId = "";
 

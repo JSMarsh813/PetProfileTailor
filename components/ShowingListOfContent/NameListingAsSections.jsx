@@ -29,7 +29,7 @@ export default function NameListingAsSections({
   // ##### STATE FOR EDITS ####
   const [showEditPage, SetShowEditPage] = useState(false);
 
-  console.log(`this is showEditPage ${showEditPage}`);
+  // console.log(`this is showEditPage ${showEditPage}`);
 
   //#### STATE FOR EDITS AND DELETIONS
   const [itemChanged, setItemChanged] = useState(false);
@@ -67,16 +67,16 @@ export default function NameListingAsSections({
 
   const handleFetchComments = async () => {
     const response = await fetch(
-      "http://localhost:3000/api/names/commentscontainingnameid/" + name._id
+      "/api/names/commentscontainingnameid/" + name._id
     );
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     setCommentsFromFetch(data);
   };
 
   useEffect(() => {
     handleFetchComments();
-    console.log(commentsFromFetch);
+    // console.log(commentsFromFetch);
   }, []);
 
   //root comments
@@ -131,7 +131,7 @@ export default function NameListingAsSections({
             HeartIconTextStyling="ml-2"
             currentTargetedId={currentTargetedId}
             session={sessionFromServer}
-            apiLink={`http://localhost:3000/api/auth/updateLikes`}
+            apiLink="/api/auth/updateLikes"
           />
           <ShareButton onClickShowShares={onClickShowShares} />
 
@@ -149,7 +149,7 @@ export default function NameListingAsSections({
         </span>
 
         {/* ###### TAGS SECTION #### */}
-        <span>{name.tags.map((names) => names).join(", ")}</span>
+        <span>{name.tags.map((names) => names.tag).join(", ")}</span>
 
         {/* ###### CREATEDBY SECTION #### */}
         <section>
@@ -183,7 +183,7 @@ export default function NameListingAsSections({
               changeItemState={setItemChanged}
               itemId={name._id}
               itemCreatedBy={name.createdby._id}
-              deletionApiPath="/api/individualnames/"
+              deletionApiPath="/api/names/"
             />
           )}
 
@@ -208,7 +208,7 @@ export default function NameListingAsSections({
       {commentsShowing && (
         <section className="bg-violet-900 py-2">
           <AddComment
-            apiLink={`http://localhost:3000/api/namecomments/`}
+            apiLink="/api/namecomments/"
             replyingtothisid={name._id}
             hasParent={null}
             sessionFromServer={sessionFromServer}
@@ -224,8 +224,8 @@ export default function NameListingAsSections({
                 replies={replyComments}
                 replyingtothisid={comment.replyingtothisid}
                 sessionFromServer={sessionFromServer}
-                apiLink={`http://localhost:3000/api/namecomments/`}
-                likesApiLink="http://localhost:3000/api/namecomments/updatenamecommentlikes"
+                apiLink="/api/namecomments/"
+                likesApiLink="/api/namecomments/updatenamecommentlikes"
               />
             );
           })}

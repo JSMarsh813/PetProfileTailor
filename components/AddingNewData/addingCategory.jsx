@@ -26,7 +26,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
 
     // #######if the collection does not have the name, do this (allow post): otherwise update setNameExists to true and do not allow the post
     axios
-      .post("http://localhost:3000/api/individualnames", nameSubmission)
+      .post("/api/individualnames", nameSubmission)
       .then((response) => {
         setIsPending(false);
         toast.success(

@@ -24,8 +24,8 @@ export const getServerSideProps = async (context) => {
   }
 
   let commentResponse = await fetch(
-    "http://localhost:3000/api/comment/batsignalpostcomment/getaspecificcommentbyid/" +
-      id
+    `${process.env.BASE_FETCH_URL}
+    /api/comment/batsignalpostcomment/getaspecificcommentbyid/` + id
   );
   let commentData = await commentResponse.json();
 

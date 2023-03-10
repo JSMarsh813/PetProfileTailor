@@ -21,7 +21,7 @@ import NameListingAsSections from "../components/ShowingListOfContent/NameListin
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 
 export const getServerSideProps = async (context) => {
-  let nameResponse = await fetch("http://localhost:3000/api/names");
+  let nameResponse = await fetch(`${process.env.BASE_FETCH_URL}/api/names`);
   let nameData = await nameResponse.json();
 
   const session = await unstable_getServerSession(
@@ -36,7 +36,7 @@ export const getServerSideProps = async (context) => {
   //forces it to wait for session before looking up data
 
   let findLikedNames = await fetch(
-    `http://localhost:3000/api/names/findNamesLikedByUser/${UserId}`
+    `${process.env.BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
   );
 
   let likedNames = await findLikedNames.json();
@@ -44,7 +44,7 @@ export const getServerSideProps = async (context) => {
   //NAMES ADDED BY USER //
 
   let namesCreatedData = await fetch(
-    `http://localhost:3000/api/names/namesContainingUserId/${UserId}`
+    `${process.env.BASE_FETCH_URL}/api/names/namesContainingUserId/${UserId}`
   );
 
   let namesCreated = await namesCreatedData.json();
@@ -52,21 +52,22 @@ export const getServerSideProps = async (context) => {
   //POSTS ADDED BY USER
 
   let postResponse = await fetch(
-    "http://localhost:3000/api/individualposts/postscontaininguserid/" + UserId
+    `${process.env.BASE_FETCH_URL}/api/individualposts/postscontaininguserid/` +
+      UserId
   );
   let postData = await postResponse.json();
 
   //POSTS LIKED BY USER
 
   let findPostsLiked = await fetch(
-    "http://localhost:3000/api/individualposts/findLikedPosts/" + UserId
+    `${process.env.BASE_FETCH_URL}/api/individualposts/findLikedPosts/` + UserId
   );
   let postsLiked = await findPostsLiked.json();
 
   //COMMENTS ADDED BY USER
 
   let UsersCommentResponse = await fetch(
-    "http://localhost:3000/api/individualbatsignalcomments/commentscontaininguserid/" +
+    `${process.env.BASE_FETCH_URL}/api/individualbatsignalcomments/commentscontaininguserid/` +
       UserId
   );
   let UsersCommentData = await UsersCommentResponse.json();
@@ -74,7 +75,7 @@ export const getServerSideProps = async (context) => {
   //COMMENTS LIKED BY USER
 
   let findLikedComments = await fetch(
-    "http://localhost:3000/api/individualbatsignalcomments/findLikedBatsignalComments/" +
+    `${process.env.BASE_FETCH_URL}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
       UserId
   );
   let likedComments = await findLikedComments.json();
@@ -82,14 +83,14 @@ export const getServerSideProps = async (context) => {
   //grabbing all comments for posts
 
   let allCommentsResponse = await fetch(
-    "http://localhost:3000/api/individualbatsignalcomments"
+    `${process.env.BASE_FETCH_URL}/api/individualbatsignalcomments`
   );
   let allComments = await allCommentsResponse.json();
 
   //grabbing DESCRIPTIONS added by user
 
   let findCreatedDescriptions = await fetch(
-    `http://localhost:3000/api/description/descriptionsCreatedByLoggedInUser//${UserId}`
+    `${process.env.BASE_FETCH_URL}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
   );
 
   let createdDescriptions = await findCreatedDescriptions.json();
@@ -97,7 +98,7 @@ export const getServerSideProps = async (context) => {
   //grabbing DESCRIPTIONS liked by user
 
   let findLikedDescriptions = await fetch(
-    "http://localhost:3000/api/description/findDescriptionsLIkedByUserId/" +
+    `${process.env.BASE_FETCH_URL}/api/description/findDescriptionsLIkedByUserId/` +
       UserId
   );
   let likedDescriptions = await findLikedDescriptions.json();
@@ -106,7 +107,7 @@ export const getServerSideProps = async (context) => {
   //grabbing Tags for description edit function
 
   let descriptionTagList = await fetch(
-    "http://localhost:3000/api/descriptiontag"
+    `${process.env.BASE_FETCH_URL}/api/descriptiontag`
   );
   let descriptionTagData = await descriptionTagList.json();
 

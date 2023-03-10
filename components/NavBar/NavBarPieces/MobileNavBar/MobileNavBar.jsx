@@ -106,36 +106,13 @@ focus-visible:ring-opacity-75"
           </Link>
         </Menu.Item>
 
-        <Menu.Item as="div">
-          <Link href="/addinspiration">
-            <button
-              className="
-                      hover:bg-yellow-500 
-                      hover:text-violet-900
-
-                      text-white             
-                      w-full items-center rounded-md px-2 py-2 text-sm"
-            >
-              <FontAwesomeIcon
-                icon={faLightbulb}
-                className="text-xl mr-1 
-                      text-violet-100
-                     "
-              />
-
-              <a> Inspiration </a>
-            </button>
-          </Link>
-        </Menu.Item>
-
         <button
           className="text-yellow-300  
                       bg-violet-600       
                       w-full items-center rounded-md px-2 py-2 text-sm font-bold"
           disabled={true}
         >
-          {" "}
-          Add{" "}
+          Add
         </button>
 
         <Menu.Item as="div">
@@ -178,28 +155,6 @@ focus-visible:ring-opacity-75"
               />
 
               <a> Descriptions </a>
-            </button>
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item as="div">
-          <Link href="/addinspiration">
-            <button
-              className="
-                      hover:bg-yellow-500 
-                      hover:text-violet-900
-
-                      text-white             
-                      w-full items-center rounded-md px-2 py-2 text-sm"
-            >
-              <FontAwesomeIcon
-                icon={faLightbulb}
-                className="text-xl mr-1 
-                      text-violet-100
-                     "
-              />
-
-              <a> Inspiration </a>
             </button>
           </Link>
         </Menu.Item>

@@ -14,19 +14,22 @@ export default function EditName({
 }) {
   const [description, setDescription] = useState(name.description);
   const [newName, setName] = useState(name.name);
-  const [tags, setTags] = useState(name.tags);
+  const [tags, setTags] = useState(
+    name.tags.map((tag) => ({ label: tag.tag, value: tag._id }))
+  );
 
   const nameSubmission = async () => {
     const nameSubmission = {
       description: description,
       name: newName,
-      tags: tags,
+      tags: tags.map((tag) => tag.value),
+      //changing each {label: tag.tag, value:tag._id} into just an object id
       nameId: name._id,
     };
     console.log(nameSubmission);
 
     await axios
-      .put("/api/individualnames/", {
+      .put("/api/names/", {
         nameSubmission,
       })
       .then((response) => {
@@ -111,19 +114,31 @@ export default function EditName({
                     Tags:
                   </label>
                   <div className="text-white"></div>
+
                   <Select
-                    value={tags.map((tag) => ({ label: tag, value: tag }))}
+                    value={tags.map((tag) => ({
+                      label: tag.label,
+                      value: tag.value,
+                    }))}
                     className={`text-darkPurple mb-4 border ${
                       tags ? "border-violet-200" : "border-rose-500 border-2"
                     }`}
                     id="nameTags"
                     options={tagList.map((opt, index) => ({
-                      label: opt,
-                      value: opt,
+                      label: opt.tag,
+                      value: opt._id,
                     }))}
                     isMulti
                     isSearchable
-                    onChange={(opt) => setTags(opt.map((tag) => tag.label))}
+                    onChange={(opt) =>
+                      // setVisibleTags(opt.map((tag) => tag.label)) &&
+                      setTags(
+                        opt.map((tag) => ({
+                          label: tag.label,
+                          value: tag.value,
+                        }))
+                      )
+                    }
                   />
                 </div>
               </div>
