@@ -38,7 +38,7 @@ export const getServerSideProps = async (context) => {
   //forces it to wait for session before looking up data
 
   let findLikedNames = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/names/findNamesLikedByUser/${UserId}`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
   );
 
   let likedNames = await findLikedNames.json();
@@ -46,7 +46,7 @@ export const getServerSideProps = async (context) => {
   //NAMES ADDED BY USER //
 
   let namesCreatedData = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/names/namesContainingUserId/${UserId}`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/namesContainingUserId/${UserId}`
   );
 
   let namesCreated = await namesCreatedData.json();
@@ -54,7 +54,7 @@ export const getServerSideProps = async (context) => {
   //POSTS ADDED BY USER
 
   let postResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/individualposts/postscontaininguserid/` +
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/postscontaininguserid/` +
       UserId
   );
   let postData = await postResponse.json();
@@ -62,7 +62,7 @@ export const getServerSideProps = async (context) => {
   //POSTS LIKED BY USER
 
   let findPostsLiked = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/individualposts/findLikedPosts/` +
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/findLikedPosts/` +
       UserId
   );
   let postsLiked = await findPostsLiked.json();
@@ -70,7 +70,7 @@ export const getServerSideProps = async (context) => {
   //COMMENTS ADDED BY USER
 
   let UsersCommentResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/individualbatsignalcomments/commentscontaininguserid/` +
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/commentscontaininguserid/` +
       UserId
   );
   let UsersCommentData = await UsersCommentResponse.json();
@@ -78,7 +78,7 @@ export const getServerSideProps = async (context) => {
   //COMMENTS LIKED BY USER
 
   let findLikedComments = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
       UserId
   );
   let likedComments = await findLikedComments.json();
@@ -86,14 +86,14 @@ export const getServerSideProps = async (context) => {
   //grabbing all comments for posts
 
   let allCommentsResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/individualbatsignalcomments`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
   );
   let allComments = await allCommentsResponse.json();
 
   //grabbing DESCRIPTIONS added by user
 
   let findCreatedDescriptions = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
   );
 
   let createdDescriptions = await findCreatedDescriptions.json();
@@ -101,7 +101,7 @@ export const getServerSideProps = async (context) => {
   //grabbing DESCRIPTIONS liked by user
 
   let findLikedDescriptions = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/description/findDescriptionsLIkedByUserId/` +
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/findDescriptionsLIkedByUserId/` +
       UserId
   );
   let likedDescriptions = await findLikedDescriptions.json();

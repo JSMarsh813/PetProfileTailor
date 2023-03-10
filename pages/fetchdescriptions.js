@@ -10,12 +10,12 @@ import DescriptionListingAsSections from "../components/ShowingListOfContent/Des
 
 export const getServerSideProps = async (context) => {
   let response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/descriptioncategory`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptioncategory`
   );
   let data = await response.json();
 
   let descriptionResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/description`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description`
   );
   let descriptionData = await descriptionResponse.json();
 
@@ -28,7 +28,7 @@ export const getServerSideProps = async (context) => {
   const UserId = session ? session.user._id : "";
 
   let tagList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/descriptiontag`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
   );
   let tagData = await tagList.json();
 
@@ -39,7 +39,7 @@ export const getServerSideProps = async (context) => {
   //grabbing names
 
   let nameList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/names`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
   );
   let nameData = await nameList.json();
   let nameListProp = nameData

@@ -17,19 +17,19 @@ export const getServerSideProps = async (context) => {
   );
 
   let response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/namecategories`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/namecategories`
   );
   let data = await response.json();
 
   let nameResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/names`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
   );
   let nameData = await nameResponse.json();
 
   //grabbing Tags for name edit function
 
   let tagList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}}/api/nametag`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/nametag`
   );
   let tagData = await tagList.json();
   let tagListProp = tagData
