@@ -1,5 +1,5 @@
 import dbConnect from "../../../config/connectmongodb";
-import Category from "../../../models/namecategory";
+import Category from "../../../models/nameCategory";
 import NameTag from "../../../models/NameTag";
 
 export default async function handler(req, res) {

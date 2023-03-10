@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
-import BatsignalPost from "../../components/ShowingListOfContent/BatSignalPost";
+import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
 import SingleComment from "../../components/ShowingListOfContent/SingleComment";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
