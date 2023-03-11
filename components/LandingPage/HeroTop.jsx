@@ -12,7 +12,7 @@ const HeroTop = () => {
       className="hero min-h-fit font-serif 
 border-y-4 border-darkPurple  "
       style={{
-        backgroundImage: `url("https://img.buzzfeed.com/buzzfeed-static/static/2018-08/20/12/asset/buzzfeed-prod-web-03/anigif_sub-buzz-25459-1534782361-2.gif")`,
+        backgroundImage: `url("/pugs.webp")`,
         fontFamily: "Comfortaa",
       }}
     >
@@ -20,17 +20,14 @@ border-y-4 border-darkPurple  "
       <div className="hero-content text-center text-neutral-content mb-10">
         <div className="max-w-xl text-white">
           <h1 className="mb-5 text-5xl text-yellow-300 font-black">
-            {" "}
             Welcome to <br /> Pet Profile Tailor!
           </h1>
           <p className="mb-5 text-xl">
-            {" "}
             Naming your new pet or creating engaging pet profiles for adoptable
             pets can feel ruff! We&apos;ve been there! And we&apos;re here to
             help.
           </p>
           <p className="mb-5 text-xl">
-            {" "}
             Pet profile tailor is a community powered assistant which assists
             you finding that perfect name or creating pet profiles which are:
           </p>

@@ -1,10 +1,9 @@
 import Select from "react-select";
 import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import axios from "axios";
-// import User from '../../models/User';
+import Image from "next/image";
 
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 function NewDescriptionWithTagsData({
   tagList,
@@ -12,9 +11,6 @@ function NewDescriptionWithTagsData({
   sessionFromServer,
   nameList,
 }) {
-  console.log(`this is tagList ${JSON.stringify(tagList)}`);
-  const { data: session, status } = useSession();
-
   const [newDescription, setNewDescription] = useState("");
   const [tags, setTags] = useState([]);
   const [notes, setNotes] = useState("");
@@ -63,12 +59,17 @@ function NewDescriptionWithTagsData({
         <p> Add a description with one or more tags. </p>
 
         <h6 className="mt-4 ml-4"> Example: </h6>
-        <img
-          className="w-80 ml-6
+        <div className="w-80 mx-auto">
+          <Image
+            className="w-80 ml-6
                 mb-4"
-          src="https://static.boredpanda.com/blog/wp-content/uploads/2019/08/adult-animal-adoption-posters-protective-association-of-missouri-14-5d42ccafb202a__700.jpg"
-          alt="Poster of a dog says this: I like to sleep through the night. I'll bet you do, too. Because I'm a grown-ass adult. Get a dog who gets you. Adopt adult. APA adoption center"
-        />
+            src="/addingdescriptionexample.jpg"
+            width={100}
+            height={100}
+            layout="responsive"
+            alt="Poster of an old large dog sitting patiently which says: I like to sleep through the night. I'll bet you do, too. Because I'm a grown-ass adult. Get a dog who gets you. Adopt adult. APA adoption center"
+          />
+        </div>
         <p className="ml-6">
           This description could have tags like: senior, funny, quiet,
           well-behaved.
@@ -90,7 +91,7 @@ function NewDescriptionWithTagsData({
             className="text-darkPurple block w-full"
             placeholder="enter a description to add"
             onChange={(e) => setNewDescription(e.target.value.toLowerCase())}
-            maxlength="4000"
+            maxLength="4000"
             disabled={sessionFromServer ? "" : "disabled"}
             onClick={(e) => setDescriptionExists(false)}
           ></textarea>
@@ -114,7 +115,7 @@ function NewDescriptionWithTagsData({
             type="text"
             id="noteinput"
             className="text-darkPurple block w-full"
-            maxlength="800"
+            maxLength="800"
             placeholder="(Optional) enter any notes to add. For example, explaining if it has any references to shows/popular culture, ect."
             onChange={(e) => setNotes(e.target.value.toLowerCase())}
             disabled={sessionFromServer ? "" : "disabled"}
@@ -141,7 +142,6 @@ function NewDescriptionWithTagsData({
             placeholder="If you type in the tags field, it will filter the tags"
             onChange={(opt) => setTags(opt.map((tag) => tag.value))}
           />
-          {JSON.stringify(tags)}
 
           {/* RELATED NAMES SECTION */}
           <label

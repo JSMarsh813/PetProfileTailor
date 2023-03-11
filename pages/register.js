@@ -7,25 +7,13 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import axios from "axios";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
+import Image from "next/image";
 
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faImage,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faTrashCan,
-  faX,
-  faCircleXmark,
-  faTowerBroadcast,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 export const getServerSideProps = async (context) => {
@@ -126,15 +114,18 @@ export default function Register({ sessionFromServer }) {
         userName={userName}
       />
 
-      <img
+      <Image
         className="mx-auto h-60"
-        src="https://media.tenor.com/IJBRrnPWOqoAAAAd/welcome-high-five.gif"
+        src="/welcometothepack.webp"
+        alt="picture of a dog high fiving and the text welcome to the pack"
+        layout="responsive"
+        width={100}
+        height={100}
       />
 
       <section className="text-center mt-2">
         <h4 className="font-semibold text-lg">
-          {" "}
-          Check if a profile name is available{" "}
+          Check if a profile name is available
         </h4>
 
         <input

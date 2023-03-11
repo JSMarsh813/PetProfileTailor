@@ -1,6 +1,6 @@
-import React, { useContext, createContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import DisabledButton from "../ReusableSmallComponents/buttons//DisabledButton";
@@ -8,6 +8,7 @@ import DisabledButton from "../ReusableSmallComponents/buttons//DisabledButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import Image from "next/image";
 
 function ImageUpload({ sessionFromServer }) {
   const [selectedImage, setSelectedImage] = useState();
@@ -114,9 +115,11 @@ function ImageUpload({ sessionFromServer }) {
         {imagePreview && (
           <div className="flex justify-center">
             <div className="relative w-content">
-              <img
-                className="max-h-96 object-scale-down mx-auto block"
+              <Image
+                className="object-scale-down mx-auto block"
                 src={imagePreview}
+                width={300}
+                height={300}
               />
               <FontAwesomeIcon
                 icon={faCircleXmark}
@@ -124,7 +127,7 @@ function ImageUpload({ sessionFromServer }) {
                   setSelectedImage("");
                   setImagePreview("");
                 }}
-                className="text-3xl text-yellow-300 mr-2 absolute top-1 right-1 justify-center drop-shadow-md"
+                className="text-3xl text-yellow-300 mr-2 absolute top-4 right-2 justify-center drop-shadow-md"
               />
             </div>
           </div>

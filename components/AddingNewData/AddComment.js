@@ -79,7 +79,7 @@ function AddComment({
               name="body"
               onChange={(e) => setDescription(e.target.value)}
               required
-              maxlength="700"
+              maxLength="700"
               placeholder="Type Your Comment"
             ></textarea>
 

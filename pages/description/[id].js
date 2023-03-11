@@ -25,6 +25,11 @@ import DescriptionListingAsSections from "../../components/ShowingListOfContent/
 import HeadersForDescriptions from "../../components/ShowingListOfContent/HeadersForDescriptions";
 import PageTitleWithImages from "../../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
+import dbConnect from "../../config/connectmongodb";
+import Descriptions from "../../models/description";
+import DescriptionTag from "../../models/descriptiontag";
+const ObjectId = require("mongodb").ObjectId;
+
 export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url
   const id = context.params.id;
@@ -35,11 +40,20 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  let descriptionResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/getASpecificDescriptionById/` +
-      id
-  );
-  let descriptionData = await descriptionResponse.json();
+  // let descriptionResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/getASpecificDescriptionById/` +
+  //     id
+  // );
+  // let descriptionData = await descriptionResponse.json();
+
+  dbConnect();
+
+  const descriptionId = ObjectId(context.params.id);
+
+  let descriptionData = await Descriptions.findById(descriptionId).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
 
   if (!descriptionData) {
     console.log(descriptionData);
@@ -47,10 +61,12 @@ export const getServerSideProps = async (context) => {
       notFound: true,
     };
   } else {
-    let descriptionTagList = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
-    );
-    let descriptionTagData = await descriptionTagList.json();
+    // let descriptionTagList = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
+    // );
+    // let descriptionTagData = await descriptionTagList.json();
+
+    const descriptionTagData = await DescriptionTag.find();
 
     let tagListProp = descriptionTagData
       .map((tag) => tag.tag)
@@ -58,9 +74,9 @@ export const getServerSideProps = async (context) => {
 
     return {
       props: {
-        description: descriptionData,
+        description: JSON.parse(JSON.stringify(descriptionData)),
         sessionFromServer: session,
-        tagList: tagListProp,
+        tagList: JSON.parse(JSON.stringify(tagListProp)),
       },
     };
   }

@@ -10,6 +10,7 @@ import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
 import CommentListing from "../ShowingListOfContent/CommentListing";
 import AddComment from "../AddingNewData/AddComment";
+import Image from "next/image";
 
 export default function NameListingAsSections({
   name,
@@ -17,7 +18,6 @@ export default function NameListingAsSections({
   tagList,
 }) {
   const router = useRouter();
-
   //############## STATE FOR LIKES #######
 
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
@@ -115,7 +115,7 @@ export default function NameListingAsSections({
       <div
         className="grid 
             lg:grid-cols-5
-            grid-cols-3 gap-4 
+            grid-cols-3 gap-3 
             border-b-2 border-amber-300
             bg-darkPurple
                     text-purple-200 p-2  
@@ -156,13 +156,18 @@ export default function NameListingAsSections({
           <a
             href={`http://localhost:3000/profile/${name.createdby.profilename.toLowerCase()}`}
           >
-            <img
+            <Image
               src={name.createdby.profileimage}
-              className="rounded-2xl h-16"
+              className="rounded-2xl"
+              width={80}
+              height={80}
+              alt="users profile image"
             />
 
-            <span> {name.createdby.name}</span>
-            <span> @{name.createdby.profilename}</span>
+            <div>
+              <span> {name.createdby.name}</span>
+              <span> @{name.createdby.profilename}</span>
+            </div>
           </a>
 
           {sessionFromServer &&

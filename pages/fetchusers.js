@@ -1,20 +1,5 @@
-import { Disclosure } from "@headlessui/react";
-import { ChevronUpIcon, FaceSmileIcon } from "@heroicons/react/20/solid";
-import React, { useEffect, useState } from "react";
-import { useSession, getSession } from "next-auth/react";
-
-import { toast } from "react-toastify";
+import React from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faFaceGrinWink,
-  faUserTie,
-} from "@fortawesome/free-solid-svg-icons";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-import usersId from "./api/auth/updateLikes";
-import { useForm } from "react-hook-form";
 
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";

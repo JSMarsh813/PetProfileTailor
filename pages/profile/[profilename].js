@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
 import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
@@ -6,6 +6,7 @@ import SingleComment from "../../components/ShowingListOfContent/SingleComment";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import NameListingAsSections from "../../components/ShowingListOfContent/NameListingAsSections";
+import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faEnvelope } from "@fortawesome/free-solid-svg-icons";
@@ -20,9 +21,18 @@ import EditBioProfileButton from "../../components/ReusableSmallComponents/butto
 import UsersFollowersList from "../../components/ShowingListOfContent/UsersFollowersList";
 import UsersFollowingList from "../../components/ShowingListOfContent/UsersFollowingList";
 
+import dbConnect from "../../config/connectmongodb";
+import Names from "../../models/Names";
+import BatSignalComments from "../../models/BatSignalComment";
+import NameTag from "../../models/NameTag";
+import Descriptions from "../../models/description";
+import DescriptionTag from "../../models/descriptiontag";
+import IndividualPosts from "../../models/posts";
+import User from "../../models/User";
+
 export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url
-  const id = context.params.profilename;
+  const usersProfileName = context.params.profilename;
 
   const session = await unstable_getServerSession(
     context.req,
@@ -30,73 +40,110 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  let userResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/user/getASpecificUserByProfileName/` +
-      id
-  );
-  let userData = await userResponse.json();
+  // let userResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/user/getASpecificUserByProfileName/` +
+  //     id
+  // );
+  // let userData = await userResponse.json();
+  dbConnect();
+
+  const userData = await User.find({ profilename: usersProfileName })
+    .select("name followers name profileimage profilename bioblurb location")
+    .populate(
+      "followers",
+      "name followers name profileimage profilename bioblurb location"
+    );
+  console.log(userData);
 
   if (!userData.length) {
     return {
       notFound: true,
     };
   } else {
-    let nameid = userData[0]._id;
-    let UserId = userData[0]._id;
+    let userId = userData[0]._id;
 
     //names user created
-    let nameResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/namesContainingUserId/` +
-        nameid
-    );
-    let nameData = await nameResponse.json();
+    // let nameResponse = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/namesContainingUserId/` +
+    //     nameid
+    // );
+    // let nameData = await nameResponse.json();
 
+    const nameData = await Names.find({ createdby: userId }).populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    });
     //grabbing posts
 
-    let postResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/postscontaininguserid/` +
-        nameid
-    );
-    let postData = await postResponse.json();
+    // let postResponse = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/postscontaininguserid/` +
+    //     nameid
+    // );
+    // let postData = await postResponse.json();
+    let postData = await IndividualPosts.find({
+      createdby: userId,
+    }).populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    });
 
-    //grabbing all comments
-    let commentResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
-    );
-    let commentData = await commentResponse.json();
+    // //grabbing all comments NOT NEEDED
+    // let commentResponse = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
+    // );
+    // let commentData = await commentResponse.json();
 
-    //grabbing comments by user
+    //###### grabbing comments by user, aka user created the comment
 
-    let UsersCommentResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/commentscontaininguserid/` +
-        nameid
-    );
-    let UsersCommentData = await UsersCommentResponse.json();
+    // let UsersCommentResponse = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/commentscontaininguserid/` +
+    //     nameid
+    // );
+    // let UsersCommentData = await UsersCommentResponse.json();
 
-    //grabbing Tags for name edit function
+    const UsersCommentData = await BatSignalComments.find({
+      createdby: userId,
+    }).populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    });
 
-    let nameTagList = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/nametag`
-    );
-    let nametagData = await nameTagList.json();
+    //##### grabbing Tags for name edit function
+
+    // let nameTagList = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/nametag`
+    // );
+    // let nametagData = await nameTagList.json();
+
+    let nametagData = await NameTag.find();
+
     let nameTagListProp = nametagData
       .map((tag) => tag.tag)
       .reduce((sum, value) => sum.concat(value), []);
 
-    //grabbing DESCRIPTIONS added by user
+    //##### grabbing DESCRIPTIONS added by user
 
-    let findCreatedDescriptions = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
-    );
+    // let findCreatedDescriptions = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
+    // );
 
-    let createdDescriptions = await findCreatedDescriptions.json();
+    // let createdDescriptions = await findCreatedDescriptions.json();
 
-    //grabbing Tags for description's edit function
+    const createdDescriptions = await Descriptions.find({
+      createdby: userId,
+    }).populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    });
 
-    let descriptionTagList = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
-    );
-    let descriptionTagData = await descriptionTagList.json();
+    //##### grabbing Tags for description's edit function
+
+    // let descriptionTagList = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
+    // );
+    // let descriptionTagData = await descriptionTagList.json();
+
+    const descriptionTagData = await DescriptionTag.find();
 
     let descriptionTagListProp = descriptionTagData
       .map((tag) => tag.tag)
@@ -107,66 +154,83 @@ export const getServerSideProps = async (context) => {
     //USERS FAVED NAMES //
     //forces it to wait for session before looking up data
 
-    let findLikedNames = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
-    );
+    // let findLikedNames = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
+    // );
 
-    let likedNames = await findLikedNames.json();
+    // let likedNames = await findLikedNames.json();
 
-    //POSTS LIKED BY USER
+    const likedNames = await Names.find({ likedby: userId });
 
-    let findPostsLiked = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/findLikedPosts/` +
-        UserId
-    );
-    let postsLiked = await findPostsLiked.json();
+    //#### POSTS LIKED BY USER
 
-    //COMMENTS LIKED BY USER
+    // let findPostsLiked = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/findLikedPosts/` +
+    //     UserId
+    // );
+    // let postsLiked = await findPostsLiked.json();
 
-    let findLikedComments = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
-        UserId
-    );
-    let likedComments = await findLikedComments.json();
+    const postsLiked = await IndividualPosts.find({
+      likedby: userId,
+    });
 
-    //DESCRIPTIONS LIKED BY USER
+    //#### COMMENTS LIKED BY USER
 
-    let findLikedDescriptions = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/findDescriptionsLIkedByUserId/` +
-        UserId
-    );
-    let likedDescriptions = await findLikedDescriptions.json();
+    // let findLikedComments = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
+    //     UserId
+    // );
+    // let likedComments = await findLikedComments.json();
 
-    //FOLLOWING LIST
-    let findUsersFollowing = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/user/grabusersfollowing/` +
-        nameid
-    );
+    const likedComments = await BatSignalComments.find({
+      likedby: userId,
+    });
 
-    let usersFollowing = await findUsersFollowing.json();
+    //### DESCRIPTIONS LIKED BY USER
+
+    // let findLikedDescriptions = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/findDescriptionsLIkedByUserId/` +
+    //     UserId
+    // );
+    // let likedDescriptions = await findLikedDescriptions.json();
+
+    const likedDescriptions = await Descriptions.find({
+      likedby: userId,
+    });
+
+    //### FOLLOWING LIST
+    // let findUsersFollowing = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/user/grabusersfollowing/` +
+    //     nameid
+    // );
+
+    // let usersFollowing = await findUsersFollowing.json();
+
+    let usersFollowing = await User.find({
+      followers: userId.toString(),
+    }).select("name followers name profileimage profilename bioblurb location");
 
     return {
       props: {
-        id: id,
         sessionFromServer: session,
-        userData: userData[0],
+        userData: JSON.parse(JSON.stringify(userData[0])),
 
-        nameList: nameData,
-        nameTagList: nameTagListProp,
-        favNames: likedNames,
+        nameList: JSON.parse(JSON.stringify(nameData)),
+        nameTagList: JSON.parse(JSON.stringify(nameTagListProp)),
+        favNames: JSON.parse(JSON.stringify(likedNames)),
 
-        UsersCommentData: UsersCommentData,
-        commentList: commentData,
-        likedComments: likedComments,
+        UsersCommentData: JSON.parse(JSON.stringify(UsersCommentData)),
+        // commentList: commentData,
+        likedComments: JSON.parse(JSON.stringify(likedComments)),
 
-        postData: postData,
-        postsLiked: postsLiked,
+        postData: JSON.parse(JSON.stringify(postData)),
+        postsLiked: JSON.parse(JSON.stringify(postsLiked)),
 
-        likedDescriptions: likedDescriptions,
-        createdDescriptions: createdDescriptions,
+        likedDescriptions: JSON.parse(JSON.stringify(likedDescriptions)),
+        createdDescriptions: JSON.parse(JSON.stringify(createdDescriptions)),
         descriptionTagListProp: descriptionTagListProp,
 
-        usersFollowing: usersFollowing,
+        usersFollowing: JSON.parse(JSON.stringify(usersFollowing)),
       },
     };
   }
@@ -176,7 +240,6 @@ function ProfilePage({
   sessionFromServer,
   userData,
 
-  commentList,
   UsersCommentData,
   likedComments,
 
@@ -246,9 +309,12 @@ function ProfilePage({
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full px-4 flex justify-center">
                     <div className="relative">
-                      <img
-                        alt="..."
+                      <Image
+                        width={100}
+                        height={100}
+                        layout="responsive"
                         src={userData.profileimage}
+                        alt="users profile image"
                         className="shadow-xl rounded-full border-4 border-amber-300 align-middle -mt-16 h-60 shadow-slate-800/50"
                       />
                     </div>
@@ -313,7 +379,6 @@ function ProfilePage({
                     </div>
                   )}
                   <p className="mt-4">
-                    {" "}
                     The message feature is still in development
                   </p>
                   <div className="text-sm leading-normal mt-4 mb-2 font-bold ">
@@ -345,7 +410,7 @@ function ProfilePage({
                       namesCreated={nameList}
                       postsCreated={postData}
                       postsLiked={postsLiked}
-                      commentsCreated={commentList}
+                      commentsCreated={UsersCommentData}
                       likedComments={likedComments}
                       createdDescriptions={createdDescriptions}
                       likedDescriptions={likedDescriptions}
@@ -430,7 +495,7 @@ function ProfilePage({
                         key={post._id}
                         className="mx-auto"
                         sessionFromServer={sessionFromServer}
-                        commentList={commentList}
+                        // commentList={commentList}
                       />
                     );
                   })}

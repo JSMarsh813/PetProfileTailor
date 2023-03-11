@@ -8,17 +8,13 @@ import GeneralButton from "../components/ReusableSmallComponents/buttons/General
 import HeadersForCategories from "../components/ShowingListOfContent/HeadersForDescriptions";
 import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections";
 
+import dbConnect from "../config/connectmongodb";
+import Category from "../models/descriptioncategory";
+import Description from "../models/description";
+import DescriptionTag from "../models/descriptiontag";
+import Names from "../models/Names";
+
 export const getServerSideProps = async (context) => {
-  let response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptioncategory`
-  );
-  let data = await response.json();
-
-  let descriptionResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description`
-  );
-  let descriptionData = await descriptionResponse.json();
-
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -27,10 +23,36 @@ export const getServerSideProps = async (context) => {
 
   const UserId = session ? session.user._id : "";
 
-  let tagList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
-  );
-  let tagData = await tagList.json();
+  dbConnect();
+  //############ GETTING CATEGORIES ###########
+  // let response = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptioncategory`
+  // );
+  // let data = await response.json();
+
+  let data = await Category.find().populate("tags");
+
+  //##########grabbing descriptions ########
+  // let descriptionResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description`
+  // );
+  // let descriptionData = await descriptionResponse.json();
+
+  const descriptionData = await Description.find()
+    .populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    })
+    .populate({ path: "tags", select: ["tag"] });
+
+  //######GRABBING DESCRIPTION TAGS #######
+
+  // let tagList = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
+  // );
+  // let tagData = await tagList.json();
+
+  let tagData = await DescriptionTag.find();
 
   let tagListProp = tagData
     .map((tag) => tag)
@@ -38,21 +60,24 @@ export const getServerSideProps = async (context) => {
 
   //grabbing names
 
-  let nameList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
-  );
-  let nameData = await nameList.json();
+  // let nameList = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
+  // );
+  // let nameData = await nameList.json();
+
+  const nameData = await Names.find();
+
   let nameListProp = nameData
     .map((name) => name.name)
     .reduce((sum, value) => sum.concat(value), []);
 
   return {
     props: {
-      category: data,
-      descriptionList: descriptionData,
-      tagList: tagListProp,
+      category: JSON.parse(JSON.stringify(data)),
+      descriptionList: JSON.parse(JSON.stringify(descriptionData)),
+      tagList: JSON.parse(JSON.stringify(tagListProp)),
       sessionFromServer: session,
-      nameList: nameListProp,
+      nameList: JSON.parse(JSON.stringify(nameListProp)),
     },
   };
 };

@@ -22,10 +22,11 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
-export const getServerSideProps = async (context) => {
-  //allows us to grab the dynamic value from the url
-  const id = context.params.postid;
+import dbConnect from "../../config/connectmongodb";
+const ObjectId = require("mongodb").ObjectId;
+import Posts from "../../models/posts";
 
+export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -38,27 +39,37 @@ export const getServerSideProps = async (context) => {
     UserId = session.user._id;
   }
 
-  let postResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/getASpecificPost/` +
-      id
-  );
-  let postData = await postResponse.json();
+  //allows us to grab the dynamic value from the url
+  const id = context.params.postid;
+  const postId = ObjectId(id);
+  dbConnect();
+
+  // let postResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/getASpecificPost/` +
+  //     id
+  // );
+  // let postData = await postResponse.json();
+
+  const postData = await Posts.findById(postId).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
 
   if (!postData) {
     return {
       notFound: true,
     };
   } else {
-    let commentResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
-    );
-    let commentData = await commentResponse.json();
+    // let commentResponse = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
+    // );
+    // let commentData = await commentResponse.json();
 
     return {
       props: {
-        postList: postData,
+        postList: JSON.parse(JSON.stringify(postData)),
         sessionFromServer: session,
-        commentList: commentData,
+        // commentList: JSON.parse(JSON.stringify(commentData)),
       },
     };
   }
@@ -88,7 +99,7 @@ export default function Postid({ sessionFromServer, postList, commentList }) {
         key={postList._id}
         className="mx-auto"
         sessionFromServer={sessionFromServer}
-        commentList={commentList}
+        // commentList={commentList}
       />
     </div>
   );

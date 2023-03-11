@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import FollowButton from "../ReusableSmallComponents/buttons/FollowButton";
+import Image from "next/image";
 
 export default function UsersFollowingList({
   setShowUsersListPage,
@@ -60,18 +61,19 @@ export default function UsersFollowingList({
             items-center justify-items-center"
                         >
                           {/* ###### PROFILE IMAGE #### */}
-                          <img
+                          <Image
                             src={person.profileimage}
                             className="rounded-2xl h-16"
+                            alt="users profile image"
+                            width={100}
+                            height={100}
+                            layout="responsive"
                           />
                           {/* ###### PROFILE name, profile and bioblurb #### */}
                           <section>
                             <span className="block"> {person.name}</span>
 
-                            <span className="block">
-                              {" "}
-                              @{person.profilename}
-                            </span>
+                            <span className="block">@{person.profilename}</span>
                           </section>
 
                           <p>{person.bioblurb}</p>
@@ -90,10 +92,13 @@ export default function UsersFollowingList({
                       <p className="py-4">Currently not following anyone 😿</p>
 
                       <p> Lets find some friends! </p>
-                      <img
+                      <Image
                         className="mx-auto pt-2 pb-6 rounded-full"
-                        src="https://img.huffingtonpost.com/asset/5774075f1800002500fa30fa.gif"
+                        src="/kittentopuppy.webp"
                         alt="gif of a kitten climbing out of its cage into the excited puppies cage next to it"
+                        layout="responsive"
+                        width={100}
+                        height={100}
                       />
                     </div>
                   )}

@@ -10,6 +10,7 @@ import DeletePostNotification from "../DeletingData/DeletePostNotification";
 import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import PostersImageUsernameProfileName from "../ReusableSmallComponents/PostersImageUsernameProfileName";
+import Image from "next/image";
 
 import { useRouter } from "next/router";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
@@ -64,7 +65,6 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
       (comment) => comment.parentcommentid != null
     );
   }
-  console.log(`ths is replyComments ${JSON.stringify(replyComments)}`);
   //for likes
   const [currentTargetedId, setCurrentTargetedId] = useState(postId);
   //if the post is edited, we will refresh this component
@@ -169,6 +169,8 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
                 src={image}
                 alt=""
                 className="max-w-full mx-auto h-96 rounded-lg rounded-b-none"
+                height={100}
+                width={100}
               />
             </div>
           )}
@@ -197,7 +199,6 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
               HeartIconStyling="text-3xl"
               session={sessionFromServer}
               apiLink="/api/individualposts/updatepostlikes"
-              //changed from {} to ""
             />
 
             <ShareButton

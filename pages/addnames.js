@@ -8,28 +8,36 @@ import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
+import dbConnect from "../config/connectmongodb";
+import NameTag from "../models/NameTag";
+
 export const getServerSideProps = async (context) => {
-  let tagList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/nametag`
-  );
-  let tagData = await tagList.json();
-
-  let categoryList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/namecategories`
-  );
-  let categoryData = await categoryList.json();
-
   const session = await unstable_getServerSession(
     context.req,
     context.res,
     authOptions
   );
 
+  dbConnect();
+
+  const tagData = await NameTag.find();
+
+  // let tagList = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/nametag`
+  // );
+  // let tagData = await tagList.json();
+
   //categoryList not needed???
+
+  // let categoryList = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/namecategories`
+  // );
+  // let categoryData = await categoryList.json();
+
   return {
     props: {
-      tagList: tagData,
-      categoryList: categoryData,
+      tagList: JSON.parse(JSON.stringify(tagData)),
+      // categoryList: categoryData,
       sessionFromServer: session,
     },
   };

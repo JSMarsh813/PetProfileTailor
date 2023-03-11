@@ -6,8 +6,7 @@ import Description from "../../../models/description";
 
 export default async function handler(req, res) {
   const { method } = req;
-  console.log(req.body);
-  console.log(`inside description index.js`);
+
   dbConnect();
 
   if (method === "GET") {

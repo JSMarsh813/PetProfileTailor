@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import FollowButton from "../ReusableSmallComponents/buttons/FollowButton";
+import Image from "next/image";
 
 export default function UsersFollowersList({
   setShowUsersListPage,
@@ -60,9 +61,13 @@ export default function UsersFollowersList({
             items-center justify-items-center"
                         >
                           {/* ###### PROFILE IMAGE #### */}
-                          <img
+                          <Image
                             src={follower.profileimage}
                             className="rounded-2xl h-16"
+                            alt="users profile image"
+                            width={100}
+                            height={100}
+                            layout="responsive"
                           />
                           {/* ###### PROFILE name, profile and bioblurb #### */}
                           <section>
@@ -90,10 +95,13 @@ export default function UsersFollowersList({
                       <p className="py-4">No followers currently 😿</p>
 
                       <p> Lets find some friends! </p>
-                      <img
+                      <Image
                         className="mx-auto pt-2 pb-6 rounded-full"
-                        src="https://img.huffingtonpost.com/asset/5774075f1800002500fa30fa.gif"
+                        src="/kittentopuppy.webp"
                         alt="gif of a kitten climbing out of its cage into the excited puppies cage next to it"
+                        layout="responsive"
+                        width={100}
+                        height={100}
                       />
                     </div>
                   )}

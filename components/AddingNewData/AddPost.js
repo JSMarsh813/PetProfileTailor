@@ -3,8 +3,8 @@ import Select from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-
-import { toast, ToastContainer } from "react-toastify";
+import Image from "next/image";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 function AddPost({ tagListProp, userId, sessionFromServer }) {
@@ -113,7 +113,7 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
           className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"
           placeholder="Type a title here (optional)"
           onChange={(e) => setTitle(e.target.value)}
-          maxlength="80"
+          maxLength="80"
           type="text"
         />
 
@@ -129,7 +129,7 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
           } bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
           onChange={(e) => setDescription(e.target.value)}
           required
-          maxlength="2000"
+          maxLength="2000"
           placeholder="Describe everything about this post here (required)"
         ></textarea>
 
@@ -200,6 +200,8 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
           <div className="flex justify-center">
             <div className="relative w-content">
               <img
+                width={100}
+                height={100}
                 className="max-h-96 object-scale-down mx-auto block"
                 src={imagePreview}
               />

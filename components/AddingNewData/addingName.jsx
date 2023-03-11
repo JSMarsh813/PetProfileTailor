@@ -1,17 +1,15 @@
 import Select from "react-select";
-import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import React, { useState } from "react";
 import axios from "axios";
-// import User from '../../models/User';
+import Image from "next/image";
 
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 
 function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
-  const { data: session, status } = useSession();
   const [newName, setNewName] = useState("");
   const [tags, setTags] = useState([]);
   const [isPending, setIsPending] = useState(false);
@@ -72,12 +70,16 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
         <p> Add a name with one or more tags. </p>
 
         <h6 className="mt-4 ml-4"> Example: A dog named batman </h6>
-        <img
-          className="w-52 ml-6
-                mb-4"
-          src="https://i.pinimg.com/originals/19/44/92/194492b23b8f04d3e624eb7b6148c1be.jpg"
-          alt="React Image"
-        />
+        <div className="w-52 mx-auto">
+          <Image
+            className=" ml-6 rounded mb-4"
+            src="/batdog.jpg"
+            width={100}
+            height={100}
+            layout="responsive"
+            alt="Image of a pug with a stern batman mask on"
+          />
+        </div>
         <p className="ml-6">
           Batman could have the tags: comics, superheroes, batman, male, edgy
         </p>
@@ -89,7 +91,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             type="text"
             className="text-darkPurple"
             value={nameCheck}
-            maxlength="40"
+            maxLength="40"
             onChange={(e) => resetData(e)}
           />
 
@@ -154,7 +156,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             className="text-darkPurple"
             placeholder="enter a name to add"
             onChange={(e) => setNewName(e.target.value.toLowerCase())}
-            maxlength="40"
+            maxLength="40"
             disabled={sessionFromServer ? "" : "disabled"}
             onClick={(e) => setNameExists(false)}
           ></input>
@@ -178,7 +180,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           <textarea
             type="text"
             id="nameDescription"
-            maxlength="500"
+            maxLength="500"
             className="text-darkPurple block w-full"
             placeholder="optional description: please add anything that would be useful to know. Examples: the name's meaning, popular fictional or historical figures with this name, ect"
             onChange={(e) => setDescription(e.target.value.trim())}

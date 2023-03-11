@@ -21,6 +21,9 @@ import {
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
+import dbConnect from "../../config/connectmongodb";
+import Names from "../../models/Names";
+
 export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url
   const name = context.params.name;
@@ -33,11 +36,17 @@ export const getServerSideProps = async (context) => {
 
   const UserId = session ? session.user._id : "";
 
-  let nameResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/findonenamebyname/` +
-      name
-  );
-  let nameData = await nameResponse.json();
+  // let nameResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/findonenamebyname/` +
+  //     name
+  // );
+  // let nameData = await nameResponse.json();
+  dbConnect();
+
+  const nameData = await Names.find({ name: name }).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
 
   if (!nameData.length) {
     return {
@@ -46,7 +55,7 @@ export const getServerSideProps = async (context) => {
   } else {
     return {
       props: {
-        nameData: nameData,
+        nameData: JSON.parse(JSON.stringify(nameData)),
         sessionFromServer: session,
       },
     };

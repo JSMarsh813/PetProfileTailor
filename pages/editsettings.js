@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { getError } from "../utils/error";
 import axios from "axios";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
-
+import Image from "next/image";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
@@ -35,8 +35,6 @@ export default function ProfileScreen({ sessionFromServer }) {
     profileImage = sessionFromServer.user.profileimage;
   }
   //end of section for nav menu
-
-  const { data: session } = useSession();
 
   const {
     handleSubmit,
@@ -73,17 +71,25 @@ export default function ProfileScreen({ sessionFromServer }) {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <Layout
         title="Profile"
         profileImage={profileImage}
         userName={userName}
       />
 
-      <img
-        className="max-h-48 mx-auto mb-4 rounded-full "
-        src="https://images.unsplash.com/photo-1554224311-beee415c201f"
-      />
+      <div className="h-40 w-40 mx-auto mb-4">
+        <Image
+          className="rounded-full"
+          src="/sunglasseseditsettingsdog.jpg"
+          layout="responsive"
+          width={160}
+          height={160}
+          objectFit="cover"
+          alt="Image of a small dog looking relaxed and wearing sunglasses"
+        />
+      </div>
+
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}

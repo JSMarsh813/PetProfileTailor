@@ -1,16 +1,12 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import Link from "next/link";
-
-import UserSessionContext from "../src/context/UserSessionContext";
-
 import GeneralOpenCloseButton from "../components/ReusableSmallComponents/buttons/generalOpenCloseButton";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
-import Names from "../models/Names";
-// //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import WideCenteredHeader from "../components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 import SingleComment from "../components/ShowingListOfContent/SingleComment";
@@ -20,12 +16,17 @@ import DashboardChartForFavDescriptions from "../components/ShowingListOfContent
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 
-export const getServerSideProps = async (context) => {
-  let nameResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
-  );
-  let nameData = await nameResponse.json();
+import dbConnect from "../config/connectmongodb";
+// import Category from "../models/nameCategory";
+// import NameTag from "../models/NameTag";
+import Names from "../models/Names";
+import IndividualPosts from "../models/posts";
+import BatSignalComments from "../models/BatSignalComment";
+import Descriptions from "../models/description";
+import DescriptionTag from "../models/descriptiontag";
+import NameTag from "../models/NameTag";
 
+export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -34,77 +35,137 @@ export const getServerSideProps = async (context) => {
 
   const UserId = await session.user._id;
 
+  //namelist not used so nameData not needed?
+  // let nameResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
+  // );
+  // let nameData = await nameResponse.json();
+
+  dbConnect();
+
   //USERS FAVED NAMES //
   //forces it to wait for session before looking up data
 
-  let findLikedNames = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
-  );
+  // let findLikedNames = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
+  // );
 
-  let likedNames = await findLikedNames.json();
+  // let likedNames = await findLikedNames.json();
+
+  const likedNames = await Names.find({ likedby: UserId })
+    .populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    })
+    .populate({ path: "tags" });
 
   //NAMES ADDED BY USER //
 
-  let namesCreatedData = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/namesContainingUserId/${UserId}`
-  );
+  // let namesCreatedData = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/namesContainingUserId/${UserId}`
+  // );
 
-  let namesCreated = await namesCreatedData.json();
+  // let namesCreated = await namesCreatedData.json();
+
+  const namesCreated = await Names.find({ createdby: UserId }).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
 
   //POSTS ADDED BY USER
 
-  let postResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/postscontaininguserid/` +
-      UserId
-  );
-  let postData = await postResponse.json();
+  const postData = await IndividualPosts.find({
+    createdby: UserId,
+  }).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
+
+  // let postResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/postscontaininguserid/` +
+  //     UserId
+  // );
+  // let postData = await postResponse.json();
 
   //POSTS LIKED BY USER
 
-  let findPostsLiked = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/findLikedPosts/` +
-      UserId
-  );
-  let postsLiked = await findPostsLiked.json();
+  const postsLiked = await IndividualPosts.find({
+    likedby: UserId,
+  }).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
+
+  // let findPostsLiked = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/findLikedPosts/` +
+  //     UserId
+  // );
+  // let postsLiked = await findPostsLiked.json();
 
   //COMMENTS ADDED BY USER
 
-  let UsersCommentResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/commentscontaininguserid/` +
-      UserId
-  );
-  let UsersCommentData = await UsersCommentResponse.json();
+  const UsersCommentData = await BatSignalComments.find({
+    createdby: UserId,
+  }).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
+
+  // let UsersCommentResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/commentscontaininguserid/` +
+  //     UserId
+  // );
+  // let UsersCommentData = await UsersCommentResponse.json();
 
   //COMMENTS LIKED BY USER
 
-  let findLikedComments = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
-      UserId
-  );
-  let likedComments = await findLikedComments.json();
+  const likedComments = await BatSignalComments.find({
+    likedby: UserId,
+  }).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
 
-  //grabbing all comments for posts
+  // let findLikedComments = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
+  //     UserId
+  // );
+  // let likedComments = await findLikedComments.json();
 
-  let allCommentsResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
-  );
-  let allComments = await allCommentsResponse.json();
+  // let allCommentsResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
+  // );
+  // let allComments = await allCommentsResponse.json();
 
   //grabbing DESCRIPTIONS added by user
 
-  let findCreatedDescriptions = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
-  );
+  const createdDescriptions = await Descriptions.find({
+    createdby: UserId,
+  }).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
 
-  let createdDescriptions = await findCreatedDescriptions.json();
+  // let findCreatedDescriptions = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
+  // );
+
+  // let createdDescriptions = await findCreatedDescriptions.json();
 
   //grabbing DESCRIPTIONS liked by user
+  const likedDescriptions = await Descriptions.find({
+    likedby: UserId,
+  }).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
 
-  let findLikedDescriptions = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/findDescriptionsLIkedByUserId/` +
-      UserId
-  );
-  let likedDescriptions = await findLikedDescriptions.json();
+  // let findLikedDescriptions = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/findDescriptionsLIkedByUserId/` +
+  //     UserId
+  // );
+  // let likedDescriptions = await findLikedDescriptions.json();
+
   //  console.log(`this is likedDescriptions ${JSON.stringify(likedDescriptions)}`)
 
   //grabbing Tags for description edit function
@@ -115,31 +176,41 @@ export const getServerSideProps = async (context) => {
   // let descriptionTagData = await descriptionTagList.json();
   // let descriptionTagListProp = "";
 
-  // if (descriptionTagData) {
-  //   descriptionTagListProp = descriptionTagData
-  //     .map((tag) => tag.tag)
-  //     .reduce((sum, value) => sum.concat(value), []);
-  // }
-  let descriptionTagListProp = ["this", "is", "a", "test"];
+  const descriptionTagData = await DescriptionTag.find();
+
+  let descriptionTagListProp = descriptionTagData
+    .map((tag) => tag)
+    .reduce((sum, value) => sum.concat(value), []);
+  // console.log(tagList);
+
+  // .map((tag) => ({ label: tag.tag, id: tag._id }))
+
+  const NameTagListProp = await NameTag.find();
 
   return {
     props: {
       sessionFromServer: session,
+      namesCreated: JSON.parse(JSON.stringify(namesCreated)),
 
-      nameList: nameData,
-      namesCreated: namesCreated,
-      favNames: likedNames,
+      favNames: JSON.parse(JSON.stringify(likedNames)),
 
-      postsCreated: postData,
-      postsLiked: postsLiked,
+      postsCreated: JSON.parse(JSON.stringify(postData)),
 
-      commentsCreated: UsersCommentData,
-      likedComments: likedComments,
-      allComments: allComments,
+      postsLiked: JSON.parse(JSON.stringify(postsLiked)),
 
-      likedDescriptions: likedDescriptions,
-      createdDescriptions: createdDescriptions,
-      descriptionTagListProp: descriptionTagListProp,
+      commentsCreated: JSON.parse(JSON.stringify(UsersCommentData)),
+
+      likedComments: JSON.parse(JSON.stringify(likedComments)),
+
+      likedDescriptions: JSON.parse(JSON.stringify(likedDescriptions)),
+
+      createdDescriptions: JSON.parse(JSON.stringify(createdDescriptions)),
+
+      descriptionTagListProp: JSON.parse(
+        JSON.stringify(descriptionTagListProp)
+      ),
+
+      NameTagListProp: JSON.parse(JSON.stringify(NameTagListProp)),
     },
   };
   //kept getting an error that it couldn't parse due to Error serializing `.userIdFromServer.user.image` but there was no image property....adding an image property and making it null also didn't work. JSON.parse(JSON.stringify((session)) used as a workaround)
@@ -148,7 +219,6 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function Dashboard({
-  nameList,
   sessionFromServer,
   user,
   allComments,
@@ -162,10 +232,11 @@ export default function Dashboard({
   likedDescriptions,
   createdDescriptions,
   descriptionTagListProp,
+  NameTagListProp,
 }) {
   const [favoritesListOpen, setFavoritesListOpen] = useState(false);
 
-  const valuetest = useContext(UserSessionContext);
+  // const valuetest = useContext(UserSessionContext);
 
   const router = useRouter();
 
@@ -255,15 +326,20 @@ export default function Dashboard({
 
                       <button className="bg-darkPurple py-2 px-4 rounded-xl text-white border-2 border-yellow-300 shadow-xl">
                         <Link
-                          href={`http://localhost:3000/profile/${sessionFromServer.user.name.toLowerCase()}`}
+                          href={`${
+                            process.env.NEXT_PUBLIC_BASE_FETCH_URL
+                          }/profile/${sessionFromServer.user.name.toLowerCase()}`}
                         >
                           profile link/ edit contributions
                         </Link>
                       </button>
                     </div>
-                    <img
+                    <Image
                       className="ml-3  h-32 rounded-full inline border-2 border-yellow-300 shadow-xl"
                       src={profileImage}
+                      width={200}
+                      height={200}
+                      alt="users profile image"
                     />
 
                     {/* for large screens: -mt-11 */}
@@ -318,6 +394,7 @@ export default function Dashboard({
                       name={name}
                       key={name._id}
                       sessionFromServer={sessionFromServer}
+                      tagList={NameTagListProp}
                     />
                   );
                 })}
@@ -343,6 +420,7 @@ export default function Dashboard({
               />
             )}
           </section>
+
           {/* ############# FAVORITE COMMENTS LIST ############ */}
 
           <section>

@@ -7,6 +7,10 @@ import { unstable_getServerSession } from "next-auth/next";
 
 import AddingDescription from "../components/AddingNewData/addingdescription";
 
+import dbConnect from "../config/connectmongodb";
+import Names from "../models/Names";
+import DescriptionTag from "../models/descriptiontag";
+
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
@@ -14,35 +18,36 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
+  dbConnect();
+
   //grabbing Tags for description edit function
 
-  let tagList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
-  );
-  let tagData = await tagList.json();
+  // let tagList = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
+  // );
+  // let tagData = await tagList.json();
+
+  let tagData = await DescriptionTag.find();
   let tagListProp = tagData
     .map((tag) => tag)
     .reduce((sum, value) => sum.concat(value), []);
 
-  console.log(`this is taglistprop ${JSON.stringify(tagListProp)}`);
-  //grabbing names
+  //########## grabbing names
 
-  let nameList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
-  );
-  let nameData = await nameList.json();
-  console.log(`this is nameData ${JSON.stringify(nameData)}`);
-  let nameListProp = nameData;
-  //   .map((name) => name.name)
-  //   .reduce((sum, value) => sum.concat(value), []);
-
-  // console.log(nameListProp);
+  // let nameList = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
+  // );
+  // let nameData = await nameList.json();
+  const nameData = await Names.find();
+  let nameListProp = nameData
+    .map((name) => name.name)
+    .reduce((sum, value) => sum.concat(value), []);
 
   return {
     props: {
       sessionFromServer: session,
-      tagList: tagListProp,
-      nameList: nameListProp,
+      tagList: JSON.parse(JSON.stringify(tagListProp)),
+      nameList: JSON.parse(JSON.stringify(nameListProp)),
     },
   };
 };
@@ -71,12 +76,12 @@ function AddDescriptions({ sessionFromServer, tagList, nameList }) {
         title="Add a"
         title2="Description"
       />
-      {/* <AddingDescription
+      <AddingDescription
         tagList={tagList}
         userId={userId}
         sessionFromServer={sessionFromServer}
         nameList={nameList}
-      /> */}
+      />
     </div>
   );
 }

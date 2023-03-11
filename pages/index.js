@@ -2,11 +2,10 @@
 // import ReactDOM from 'react-dom';
 // these react imports added behind the scenes writing it like this isn't needed for nextjs
 import HeroTop from "../components/LandingPage/HeroTop";
-import pirate from "../pirate.webp";
 import MediaObjectLeft from "../components/ReusableMediumComponents/MediaObjectLeft";
 import MediaObjectRight from "../components/ReusableMediumComponents/MediaObjectRight";
-import Profile from "../public/profile.png";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import Image from "next/image";
 
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
@@ -50,15 +49,16 @@ function HomePage({ sessionFromServer }) {
       <section className="w-full bg-violet-900 ~ h-24 flex place-items-center justify-center">
         <h5 className="text-white text-2xl">Adoptions Ahoy!</h5>
 
-        <img
-          src={
-            "https://static.wikia.nocookie.net/southpark/images/e/e7/Guinea-pigs-stripe.png"
-          }
+        <Image
+          width={100}
+          height={100}
+          src="/smallpirate.webp"
           style={{
             height: "160px",
             paddingBottom: "27px",
             paddingLeft: "50px",
           }}
+          alt="image of a guinea pig wearing a tiny pirate hat"
         />
       </section>
 
@@ -66,7 +66,7 @@ function HomePage({ sessionFromServer }) {
         <WideCenteredHeading heading="Find the Purrfect Name" />
 
         <MediaObjectLeft
-          image="https://pbs.twimg.com/media/FW0rgc-XwAYbgS9?format=jpg&name=medium"
+          image="/chamil.jpg"
           listOfText={[
             "Find eye-catching pet names you wouldn't find on regular name sites",
             "Easily sort by personality, species, and characteristics",
@@ -74,6 +74,7 @@ function HomePage({ sessionFromServer }) {
           ]}
           buttonTextLeft="Search for Names"
           buttonTextLeftLink="/fetchnames"
+          alttext="a picture of a chameleon with a cartoony bling necklace drawn on his neck. The text underneath says: chamillionare, young, lizard, 210 miles away"
         />
       </section>
 
@@ -81,7 +82,7 @@ function HomePage({ sessionFromServer }) {
         <WideCenteredHeading heading="Find Tailor-fit Descriptions" />
 
         <MediaObjectRight
-          image="https://media-be.chewy.com/wp-content/uploads/2018/05/honey.jpg"
+          image="/obviousplant.webp"
           listOfText={[
             "Engaging and creative descriptions",
             " Honest and engaging wording for problem behaviors",
@@ -89,6 +90,7 @@ function HomePage({ sessionFromServer }) {
           ]}
           buttonTextLeft="Search Descriptions"
           buttonTextLeftLink="/fetchdescriptions"
+          alttext="Picture of an adoption sign. There is a black and white cat with the text Honey next to it. Underneath it reads: Likes: catnip. Dislikes: Birds. And in quotation marks is They are lousy sky wizards that need to obey the laws of gravity! - honey. Sante D'or adoption center obvious plant"
         />
       </section>
 
@@ -105,6 +107,7 @@ function HomePage({ sessionFromServer }) {
           ]}
           buttonTextLeft="Sign Up"
           buttonTextLeftLink="/register"
+          alttext="screenshot of the dashboard for the site. It says welcome back, treats earned, shows the profile image and shows a your favorite section. A list of names is seen underneath it, all which have red hearts"
         />
       </section>
 
@@ -112,7 +115,7 @@ function HomePage({ sessionFromServer }) {
         <WideCenteredHeading heading="Psst...Want To Help Some Pets 😸🐹?" />
 
         <MediaObjectRight
-          image="https://img.freepik.com/free-photo/portrait-playful-dog-halloween-costume_329181-17005.jpg?w=740&t=st=1677738928~exp=1677739528~hmac=71ffbf8c971f87db898002469175d4dc23bd90713152dfcaa62a016835a3d48c"
+          image="/freepikhalloween.avif"
           listOfText={[
             "Do you want to help pets get adopted but you can't volunteer or foster?",
             "Excellent, you're barking up the right tree!",
@@ -123,6 +126,7 @@ function HomePage({ sessionFromServer }) {
           buttonTextLeftLink="/batsignal"
           buttonTextRight="Sign Up"
           buttonTextRightLink="/register"
+          alttext="picture of a cute white pomeranian sitting and lifting a paw up. Its wearing a black mask and a black cape, its tongue is sticking out in a relaxed manner."
         />
       </section>
     </div>

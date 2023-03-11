@@ -1,8 +1,8 @@
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 // //Special jsx code that allows us to build links. Allows us to keep everything on a single page (makes it a SPA), rather than using a href="page link", which would make us lose any state and require that we get a new file sent from the server
-
-import React, { useContext, useEffect, useState } from "react";
+import Image from "next/image";
+import React, { useState } from "react";
 import { Menu } from "@headlessui/react";
 import "react-toastify/dist/ReactToastify.css";
 import DropDownLink from "./NavBarPieces/DropDownLink";
@@ -15,7 +15,6 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 export default function NavLayoutwithSettingsMenu({
-  title,
   children,
   userName,
   profileImage,
@@ -87,11 +86,15 @@ export default function NavLayoutwithSettingsMenu({
                   focus-visible:ring-opacity-75"
                   >
                     <span className="text-lg font-bold"> {userName} </span>
-
-                    <img
-                      className="ml-3 h-8 rounded-full inline"
-                      src={profileImage}
-                    />
+                    <div className="ml-3 h-8 w-8 relative">
+                      <Image
+                        src={profileImage}
+                        layout="fill"
+                        alt="users profile image"
+                        className="ml-3 rounded-full inline relative"
+                        unoptimized
+                      />
+                    </div>
 
                     <ChevronDownIcon
                       className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"

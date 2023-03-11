@@ -1,6 +1,8 @@
 import React from "react";
 import ShowTime from "./ShowTime";
 import Link from "next/link";
+import Image from "next/image";
+
 export default function PostersImageUsernameProfileName({
   postersProfileImage,
   postersName,
@@ -11,11 +13,15 @@ export default function PostersImageUsernameProfileName({
   return (
     <Link href={`http://localhost:3000/profile/${profileName.toLowerCase()}`}>
       <div className="author flex items-center -ml-3 my-3">
-        <div>
-          <img
-            className="w-12 h-12  object-cover rounded-full mx-4 shadow"
+        <div className="w-12 mr-2">
+          <Image
+            className="object-cover rounded-full mx-4 shadow"
             src={postersProfileImage}
             alt="posters avatar image"
+            width={100}
+            height={100}
+            layout="responsive"
+            unoptimized
           />
         </div>
 

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags, faIgloo, faIdCard } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import Link from "next/link";
+import Image from "next/image";
 
 //onclick wrapped in spans due to this error https://github.com/vercel/next.js/discussions/39212
 
@@ -127,9 +128,10 @@ focus-visible:ring-white
 focus-visible:ring-opacity-75"
               >
                 <img
-                  className="h-16 inline-block absolute -bottom-3 -left-1 invert"
+                  className="h-16 inline-block absolute -top-2 -left-1 invert"
                   src="/batsignal.png"
-                  alt="bat logo, created by Megan Mitchell from Noun Project"
+                  alt="cute white bat logo"
+                  layout="responsive"
                 />
                 <a> BatSignal/ PlayYard</a>
               </Menu.Button>

@@ -6,9 +6,11 @@ import { unstable_getServerSession } from "next-auth/next";
 import NavLayoutwithSettingsMenu from "../../../components/NavBar/NavLayoutwithSettingsMenu";
 import PageTitleWithImage from "../../../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
-export const getServerSideProps = async (context) => {
-  const id = context.params.id;
+import dbConnect from "../../../config/connectmongodb";
+const ObjectId = require("mongodb").ObjectId;
+import Comments from "../../../models/namecomment";
 
+export const getServerSideProps = async (context) => {
   const sessionFromServer = await unstable_getServerSession(
     context.req,
     context.res,
@@ -23,12 +25,22 @@ export const getServerSideProps = async (context) => {
     profileImage = sessionFromServer.user.profileimage;
   }
 
-  let commentResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/comment/namecomment/getaspecificcommentbyid/` +
-      id
-  );
-  let commentData = await commentResponse.json();
+  dbConnect();
 
+  const id = context.params.id;
+  // let commentResponse = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/comment/namecomment/getaspecificcommentbyid/` +
+  //     id
+  // );
+  // let commentData = await commentResponse.json();
+
+  const commentId = ObjectId(id);
+  const commentData = await Comments.find({
+    _id: commentId,
+  }).populate({
+    path: "createdby",
+    select: ["name", "profilename", "profileimage"],
+  });
   if (!commentData) {
     return {
       notFound: true,
@@ -36,8 +48,8 @@ export const getServerSideProps = async (context) => {
   } else {
     return {
       props: {
-        commentData: commentData,
-        sessionFromServer: sessionFromServer,
+        commentData: JSON.parse(JSON.stringify(commentData)),
+        sessionFromServer: JSON.parse(JSON.stringify(sessionFromServer)),
         userName: userName,
         profileImage: profileImage,
       },

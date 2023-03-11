@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { useSession, getSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import { useRouter } from "next/router";
 import BatsignalPost from "../components/ShowingListOfContent/batsignalPost";
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
-import { Pagination } from "@nextui-org/react";
 import GeneralButton from "../components//ReusableSmallComponents/buttons/GeneralButton";
 import AddPost from "../components/AddingNewData/AddPost";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
+import Image from "next/image";
+
+import dbConnect from "../config/connectmongodb";
+import IndividualPosts from "../models/posts";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -19,25 +19,24 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  let postResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts`
-  );
-  let postData = await postResponse.json();
+  dbConnect();
 
+  const postData = await IndividualPosts.find()
+    .populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    })
+    .sort({ _id: -1 });
+  //this way we get the most recent posts first, we use id since mongoDB's objectID has a 4 byte timestamp naturally built in
   return {
     props: {
       sessionFromServer: session,
-      postList: postData,
+      postList: JSON.parse(JSON.stringify(postData)),
     },
   };
 };
 
-export default function BatSignal({
-  sessionFromServer,
-  pageProps,
-  postList,
-  commentList,
-}) {
+export default function BatSignal({ sessionFromServer, postList }) {
   const category = [
     {
       category: "BatSignal!",
@@ -122,7 +121,6 @@ export default function BatSignal({
         currenttags.every((tag) => post.taglist.includes(tag))
       )
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tagFilters]);
 
   return (
@@ -158,14 +156,17 @@ export default function BatSignal({
             className="mx-auto bg-violet-900 max-w-3xl text-center py-4 border-2 border-violet-400 border-dotted 
                                     shadow-lg shadow-slate-900/100"
           >
-            <img
+            <Image
               className="max-h-32 mx-auto rounded-full"
-              src="https://images.unsplash.com/photo-1602067340370-bdcebe8d1930?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+              src="/batsignaldogsrunning.avif"
+              width={200}
+              height={200}
+              alt="picture of two small dogs running in a large grassy area, one which is looking at the screen"
             />
 
             <p className="w-full text-white text-xl mx-auto mt-2">
               Come join us in the play yard! Ask for advice, share ideas, or
-              just chat!{" "}
+              just chat!
             </p>
 
             <GeneralButton
@@ -190,19 +191,12 @@ export default function BatSignal({
                 key={post._id}
                 className="mx-auto"
                 sessionFromServer={sessionFromServer}
-                // commentList={commentsforspecificpost}
                 tagListProp={tagListProp}
               />
             );
           })}
 
-          <div className="text-center mb-4">
-            {/* <Pagination
-              rounded
-              total={20}
-              initialPage={1}
-            /> */}
-          </div>
+          <div className="text-center mb-4"></div>
         </section>
       </section>
     </div>

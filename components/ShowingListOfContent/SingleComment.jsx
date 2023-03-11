@@ -9,10 +9,11 @@ import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import EditComment from "../EditingData/EditComment";
 import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
 import DeleteCommentNotification from "../DeletingData/DeleteCommentNotification";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
+import Image from "next/image";
 
 function CommentListing({
   replyingtothisid,
@@ -103,7 +104,7 @@ function CommentListing({
                 border-2 border-violet-300}`}
     >
       <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
-        <img
+        <Image
           className="w-12 h-12 border-2 border-gray-300 rounded-full"
           alt="poster's avatar"
           src={postersProfileImage}

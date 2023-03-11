@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
+import Image from "next/image";
 
 export default function EditPost({
   SetShowEditPage,
@@ -15,7 +15,6 @@ export default function EditPost({
   tagListProp,
   post,
   changePostState,
-  setToastMessage,
 }) {
   const [image, setImage] = useState();
   const [title, setTitle] = useState(post.title);
@@ -153,7 +152,7 @@ export default function EditPost({
                     className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"
                     onChange={(e) => setTitle(e.target.value)}
                     value={title}
-                    maxlength="80"
+                    maxLength="80"
                     type="title"
                   />
 
@@ -170,7 +169,7 @@ export default function EditPost({
                     className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
                     onChange={(e) => setDescription(e.target.value)}
                     required
-                    maxlength="1000"
+                    maxLength="1000"
                     value={description}
                   ></textarea>
                   <span className="text-white">
@@ -231,7 +230,7 @@ export default function EditPost({
                   {imagePreview != "" && (
                     <div className="flex justify-center">
                       <div className="relative w-content">
-                        <img
+                        <Image
                           className="max-h-56 object-scale-down mx-auto block"
                           src={imagePreview}
                         />

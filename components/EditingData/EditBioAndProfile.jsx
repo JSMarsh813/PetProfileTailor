@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
-
+import Image from "next/image";
 import ImageUpload from "../../components/AddingNewData/ImageUpload";
 
 export default function EditBioAndProfile({
@@ -21,7 +21,6 @@ export default function EditBioAndProfile({
       location: location,
       userid: sessionFromServer.user._id,
     };
-    console.log(bioSubmission);
 
     await axios
       .put("/api/user/editbiolocationavatar", {
@@ -77,7 +76,7 @@ export default function EditBioAndProfile({
                     className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"
                     onChange={(e) => setLocation(e.target.value)}
                     value={location}
-                    maxlength="70"
+                    maxLength="70"
                     type="title"
                   />
 
@@ -94,7 +93,7 @@ export default function EditBioAndProfile({
                     className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
                     onChange={(e) => setBio(e.target.value)}
                     required
-                    maxlength="400"
+                    maxLength="400"
                     value={bio}
                   ></textarea>
 
@@ -105,7 +104,7 @@ export default function EditBioAndProfile({
 
                   <h4 className="text-white mt-2">Current Avatar </h4>
 
-                  <img
+                  <Image
                     src={avatar}
                     className="h-28 w-scale mx-auto"
                   />

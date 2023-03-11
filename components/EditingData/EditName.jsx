@@ -18,6 +18,10 @@ export default function EditName({
     name.tags.map((tag) => ({ label: tag.tag, value: tag._id }))
   );
 
+  {
+    console.log(JSON.stringify(name));
+  }
+
   const nameSubmission = async () => {
     const nameSubmission = {
       description: description,
@@ -83,7 +87,7 @@ export default function EditName({
                     className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"
                     onChange={(e) => setName(e.target.value)}
                     value={newName}
-                    maxlength="40"
+                    maxLength="40"
                     type="title"
                   />
 
@@ -98,12 +102,11 @@ export default function EditName({
                     className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
                     onChange={(e) => setDescription(e.target.value)}
                     required
-                    maxlength="500"
+                    maxLength="500"
                     value={description}
                   ></textarea>
 
                   <span>
-                    {" "}
                     {`${500 - description.length}/500 characters left`}{" "}
                   </span>
                   {/* ##### ATTACHING TAGS  ######*/}

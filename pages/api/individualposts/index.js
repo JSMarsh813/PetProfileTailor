@@ -3,7 +3,6 @@ import dbConnect from "../../../config/connectmongodb";
 import db from "../../../utils/db";
 const mongoose = require("mongoose");
 
-import Post from "../../../models/posts";
 import IndividualPosts from "../../../models/posts";
 //wasn't working when everything was lowercase, had to be IndividualPosts not individualNames for it to work
 
@@ -40,7 +39,7 @@ export default async function handler(req, res) {
 
     await db.connect();
 
-    const toUpdatePost = await Post.findById(postid);
+    const toUpdatePost = await IndividualPosts.findById(postid);
     console.log(toUpdatePost);
     if (image) {
       toUpdatePost.image = image;

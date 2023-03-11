@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useContext, createContext, useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
@@ -15,6 +15,7 @@ import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 
+import Image from "next/image";
 import { getCsrfToken } from "next-auth/react";
 import NounBlackCatIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/svgImages/NounBlackCatIcon";
 import MagicRabbitSVG from "../components/ReusableSmallComponents/iconsOrSvgImages/svgImages/MagicRabbitSVG";
@@ -97,11 +98,14 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
           <div className="px-6 h-full text-gray-100">
             <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h- g-6">
               <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
-                <img
-                  src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg    
-  "
+                <Image
+                  src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg"
                   className="w-full rounded-full shadow-lg border-2 border-yellow-300 border-dashed"
+                  width={200}
+                  height={200}
+                  layout="responsive"
                   alt="Sample image"
+                  unoptimized
                 />
               </div>
 

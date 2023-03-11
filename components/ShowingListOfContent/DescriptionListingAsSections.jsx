@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
@@ -8,8 +7,7 @@ import DeleteItemNotification from "../DeletingData/DeleteItemNotification";
 import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
-
-import Link from "next/link";
+import Image from "next/image";
 
 export default function DescriptionListingAsSections({
   description,
@@ -126,9 +124,12 @@ export default function DescriptionListingAsSections({
         <section className="flex gap-1.5 place-items-center lg:ml-10 bg-violet-700 p-4 border-2 border-amber-200 border-dotted">
           <span className="text-amber-200 font-bold">Shared by: </span>
 
-          <img
+          <Image
             src={description.createdby.profileimage}
             className="rounded-2xl h-16 inline"
+            width={80}
+            height={80}
+            alt="users profile image"
           />
           <a
             className=""

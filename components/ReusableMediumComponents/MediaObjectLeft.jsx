@@ -1,5 +1,7 @@
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import ListWithPawPrintIcon from "../ReusableSmallComponents/ListWithPawPrintIcon";
+import Image from "next/image";
+
 const MediaObject = ({
   image,
   listOfText,
@@ -7,16 +9,22 @@ const MediaObject = ({
   buttonTextRight,
   buttonTextLeftLink,
   buttonTextRightLink,
+  alttext,
 }) => {
   return (
     <div className="flex justify-center w-screen my-6 flex-col md:flex-row">
-      <div className="self-center">
-        <img
-          className="max-h-96 mx-auto mr-12 
+      <div
+        className="self-center w-80 mr-12 
             shadow-lg shadow-slate-900/70
             border-t-8  border-l-8 border-amber-300"
+      >
+        <Image
+          className=""
           src={image}
-          alt=""
+          width={100}
+          height={100}
+          layout="responsive"
+          alt={alttext}
         />
       </div>
 

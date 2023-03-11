@@ -9,6 +9,11 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
 
+import dbConnect from "../config/connectmongodb";
+import Category from "../models/nameCategory";
+import NameTag from "../models/NameTag";
+import Names from "../models/Names";
+
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
@@ -16,32 +21,33 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  let response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/namecategories`
-  );
-  let data = await response.json();
+  dbConnect();
 
-  let nameResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
-  );
-  let nameData = await nameResponse.json();
+  //grabbing category's
+
+  const data = await Category.find().populate("tags");
+
+  //grabbing names
+  const nameData = await Names.find()
+    .populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    })
+    .populate({ path: "tags", select: ["tag"] });
 
   //grabbing Tags for name edit function
 
-  let tagList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/nametag`
-  );
-  let tagData = await tagList.json();
+  const tagData = await NameTag.find();
   let tagListProp = tagData
     .map((tag) => tag)
     .reduce((sum, value) => sum.concat(value), []);
 
   return {
     props: {
-      category: data,
-      nameList: nameData,
+      category: JSON.parse(JSON.stringify(data)),
+      nameList: JSON.parse(JSON.stringify(nameData)),
       sessionFromServer: session,
-      tagList: tagListProp,
+      tagList: JSON.parse(JSON.stringify(tagListProp)),
     },
   };
 };
@@ -49,7 +55,6 @@ export const getServerSideProps = async (context) => {
 export default function FetchNames({
   category,
   nameList,
-  pageProps,
   sessionFromServer,
   tagList,
 }) {
@@ -65,11 +70,8 @@ export default function FetchNames({
   const [IsOpen, SetIsOpen] = useState(true);
 
   const [tagFilters, setTagFiltersState] = useState([]);
-  //array above is filled with tags
-  // ex ["christmas", "male"]
 
   const [filterednames, setFilteredNames] = useState([...nameList]);
-  //to begin with its filled with all names, not actually filtered yet
 
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
@@ -111,9 +113,6 @@ export default function FetchNames({
         )
       )
     );
-    //the old way I used to do it:
-    //   // filterednames.filter((name) =>
-    //   //   currenttags.every((tag) => name.tags.includes(tag))
   }, [tagFilters]);
 
   return (

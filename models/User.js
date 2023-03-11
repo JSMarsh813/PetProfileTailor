@@ -41,7 +41,7 @@ const UserSchema = new mongoose.Schema(
     },
     profileimage: {
       type: String,
-      default: "http://placekitten.com/300/300",
+      default: "https://placekitten.com/300/300",
     },
   },
   { timestamps: true }
