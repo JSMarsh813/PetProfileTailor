@@ -44,12 +44,6 @@ export const getServerSideProps = async (context) => {
   const postId = ObjectId(id);
   dbConnect();
 
-  // let postResponse = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/getASpecificPost/` +
-  //     id
-  // );
-  // let postData = await postResponse.json();
-
   const postData = await Posts.findById(postId).populate({
     path: "createdby",
     select: ["name", "profilename", "profileimage"],
@@ -60,22 +54,16 @@ export const getServerSideProps = async (context) => {
       notFound: true,
     };
   } else {
-    // let commentResponse = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
-    // );
-    // let commentData = await commentResponse.json();
-
     return {
       props: {
         postList: JSON.parse(JSON.stringify(postData)),
         sessionFromServer: session,
-        // commentList: JSON.parse(JSON.stringify(commentData)),
       },
     };
   }
 };
 
-export default function Postid({ sessionFromServer, postList, commentList }) {
+export default function Postid({ sessionFromServer, postList }) {
   //for Nav menu profile name and image
   let userName = "";
   let profileImage = "";
@@ -99,7 +87,6 @@ export default function Postid({ sessionFromServer, postList, commentList }) {
         key={postList._id}
         className="mx-auto"
         sessionFromServer={sessionFromServer}
-        // commentList={commentList}
       />
     </div>
   );

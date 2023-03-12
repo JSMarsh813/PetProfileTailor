@@ -104,7 +104,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   width={200}
                   height={200}
                   layout="responsive"
-                  alt="Sample image"
+                  alt="A guinea pig looks at the screen calmly as it sits on a keyboard"
                   unoptimized
                 />
               </div>

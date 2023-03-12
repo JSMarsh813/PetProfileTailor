@@ -62,24 +62,14 @@ export const getServerSideProps = async (context) => {
   } else {
     let userId = userData[0]._id;
 
-    //names user created
-    // let nameResponse = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/namesContainingUserId/` +
-    //     nameid
-    // );
-    // let nameData = await nameResponse.json();
-
-    const nameData = await Names.find({ createdby: userId }).populate({
-      path: "createdby",
-      select: ["name", "profilename", "profileimage"],
-    });
+    const nameData = await Names.find({ createdby: userId })
+      .populate({
+        path: "createdby",
+        select: ["name", "profilename", "profileimage"],
+      })
+      .populate({ path: "tags", select: ["tag"] });
     //grabbing posts
 
-    // let postResponse = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/postscontaininguserid/` +
-    //     nameid
-    // );
-    // let postData = await postResponse.json();
     let postData = await IndividualPosts.find({
       createdby: userId,
     }).populate({
@@ -87,19 +77,7 @@ export const getServerSideProps = async (context) => {
       select: ["name", "profilename", "profileimage"],
     });
 
-    // //grabbing all comments NOT NEEDED
-    // let commentResponse = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
-    // );
-    // let commentData = await commentResponse.json();
-
-    //###### grabbing comments by user, aka user created the comment
-
-    // let UsersCommentResponse = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/commentscontaininguserid/` +
-    //     nameid
-    // );
-    // let UsersCommentData = await UsersCommentResponse.json();
+    //###### grabbing comments user created
 
     const UsersCommentData = await BatSignalComments.find({
       createdby: userId,
@@ -110,11 +88,6 @@ export const getServerSideProps = async (context) => {
 
     //##### grabbing Tags for name edit function
 
-    // let nameTagList = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/nametag`
-    // );
-    // let nametagData = await nameTagList.json();
-
     let nametagData = await NameTag.find();
 
     let nameTagListProp = nametagData
@@ -122,12 +95,6 @@ export const getServerSideProps = async (context) => {
       .reduce((sum, value) => sum.concat(value), []);
 
     //##### grabbing DESCRIPTIONS added by user
-
-    // let findCreatedDescriptions = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
-    // );
-
-    // let createdDescriptions = await findCreatedDescriptions.json();
 
     const createdDescriptions = await Descriptions.find({
       createdby: userId,
@@ -138,11 +105,6 @@ export const getServerSideProps = async (context) => {
 
     //##### grabbing Tags for description's edit function
 
-    // let descriptionTagList = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
-    // );
-    // let descriptionTagData = await descriptionTagList.json();
-
     const descriptionTagData = await DescriptionTag.find();
 
     let descriptionTagListProp = descriptionTagData
@@ -152,59 +114,22 @@ export const getServerSideProps = async (context) => {
     //TO CALCULATE USERS POINTS
 
     //USERS FAVED NAMES //
-    //forces it to wait for session before looking up data
-
-    // let findLikedNames = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
-    // );
-
-    // let likedNames = await findLikedNames.json();
 
     const likedNames = await Names.find({ likedby: userId });
-
-    //#### POSTS LIKED BY USER
-
-    // let findPostsLiked = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/findLikedPosts/` +
-    //     UserId
-    // );
-    // let postsLiked = await findPostsLiked.json();
 
     const postsLiked = await IndividualPosts.find({
       likedby: userId,
     });
 
-    //#### COMMENTS LIKED BY USER
-
-    // let findLikedComments = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
-    //     UserId
-    // );
-    // let likedComments = await findLikedComments.json();
-
     const likedComments = await BatSignalComments.find({
       likedby: userId,
     });
-
-    //### DESCRIPTIONS LIKED BY USER
-
-    // let findLikedDescriptions = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/findDescriptionsLIkedByUserId/` +
-    //     UserId
-    // );
-    // let likedDescriptions = await findLikedDescriptions.json();
 
     const likedDescriptions = await Descriptions.find({
       likedby: userId,
     });
 
-    //### FOLLOWING LIST
-    // let findUsersFollowing = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/user/grabusersfollowing/` +
-    //     nameid
-    // );
-
-    // let usersFollowing = await findUsersFollowing.json();
+    //### FOLLOWING LIST, followers is grabbed from userData
 
     let usersFollowing = await User.find({
       followers: userId.toString(),
@@ -220,7 +145,6 @@ export const getServerSideProps = async (context) => {
         favNames: JSON.parse(JSON.stringify(likedNames)),
 
         UsersCommentData: JSON.parse(JSON.stringify(UsersCommentData)),
-        // commentList: commentData,
         likedComments: JSON.parse(JSON.stringify(likedComments)),
 
         postData: JSON.parse(JSON.stringify(postData)),
@@ -309,20 +233,16 @@ function ProfilePage({
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full px-4 flex justify-center">
                     <div className="relative">
-                      <Image
-                        width={100}
-                        height={100}
-                        layout="responsive"
+                      <img
                         src={userData.profileimage}
                         alt="users profile image"
-                        className="shadow-xl rounded-full border-4 border-amber-300 align-middle -mt-16 h-60 shadow-slate-800/50"
+                        className="rounded-full border-4 border-amber-300 align-middle -mt-16 h-36"
                       />
                     </div>
                   </div>
                   <div className="w-full text-center mt-2">
                     <span className="text-xl font-bold leading-normal ">
-                      {" "}
-                      {userData.name}{" "}
+                      {userData.name}
                     </span>
                     <span> @{userData.profilename} </span>
 
@@ -376,11 +296,12 @@ function ProfilePage({
                         />
                         Message
                       </a>
+                      <p className="mt-4">
+                        The message feature is still in development
+                      </p>
                     </div>
                   )}
-                  <p className="mt-4">
-                    The message feature is still in development
-                  </p>
+
                   <div className="text-sm leading-normal mt-4 mb-2 font-bold ">
                     <FontAwesomeIcon
                       icon={faLocationDot}

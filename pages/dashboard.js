@@ -17,8 +17,6 @@ import NameListingAsSections from "../components/ShowingListOfContent/NameListin
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 
 import dbConnect from "../config/connectmongodb";
-// import Category from "../models/nameCategory";
-// import NameTag from "../models/NameTag";
 import Names from "../models/Names";
 import IndividualPosts from "../models/posts";
 import BatSignalComments from "../models/BatSignalComment";
@@ -44,13 +42,6 @@ export const getServerSideProps = async (context) => {
   dbConnect();
 
   //USERS FAVED NAMES //
-  //forces it to wait for session before looking up data
-
-  // let findLikedNames = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/findNamesLikedByUser/${UserId}`
-  // );
-
-  // let likedNames = await findLikedNames.json();
 
   const likedNames = await Names.find({ likedby: UserId })
     .populate({
@@ -60,12 +51,6 @@ export const getServerSideProps = async (context) => {
     .populate({ path: "tags" });
 
   //NAMES ADDED BY USER //
-
-  // let namesCreatedData = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/namesContainingUserId/${UserId}`
-  // );
-
-  // let namesCreated = await namesCreatedData.json();
 
   const namesCreated = await Names.find({ createdby: UserId }).populate({
     path: "createdby",
@@ -81,12 +66,6 @@ export const getServerSideProps = async (context) => {
     select: ["name", "profilename", "profileimage"],
   });
 
-  // let postResponse = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/postscontaininguserid/` +
-  //     UserId
-  // );
-  // let postData = await postResponse.json();
-
   //POSTS LIKED BY USER
 
   const postsLiked = await IndividualPosts.find({
@@ -95,12 +74,6 @@ export const getServerSideProps = async (context) => {
     path: "createdby",
     select: ["name", "profilename", "profileimage"],
   });
-
-  // let findPostsLiked = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualposts/findLikedPosts/` +
-  //     UserId
-  // );
-  // let postsLiked = await findPostsLiked.json();
 
   //COMMENTS ADDED BY USER
 
@@ -111,12 +84,6 @@ export const getServerSideProps = async (context) => {
     select: ["name", "profilename", "profileimage"],
   });
 
-  // let UsersCommentResponse = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/commentscontaininguserid/` +
-  //     UserId
-  // );
-  // let UsersCommentData = await UsersCommentResponse.json();
-
   //COMMENTS LIKED BY USER
 
   const likedComments = await BatSignalComments.find({
@@ -125,17 +92,6 @@ export const getServerSideProps = async (context) => {
     path: "createdby",
     select: ["name", "profilename", "profileimage"],
   });
-
-  // let findLikedComments = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments/findLikedBatsignalComments/` +
-  //     UserId
-  // );
-  // let likedComments = await findLikedComments.json();
-
-  // let allCommentsResponse = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/individualbatsignalcomments`
-  // );
-  // let allComments = await allCommentsResponse.json();
 
   //grabbing DESCRIPTIONS added by user
 
@@ -146,12 +102,6 @@ export const getServerSideProps = async (context) => {
     select: ["name", "profilename", "profileimage"],
   });
 
-  // let findCreatedDescriptions = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/descriptionsCreatedByLoggedInUser/${UserId}`
-  // );
-
-  // let createdDescriptions = await findCreatedDescriptions.json();
-
   //grabbing DESCRIPTIONS liked by user
   const likedDescriptions = await Descriptions.find({
     likedby: UserId,
@@ -160,30 +110,13 @@ export const getServerSideProps = async (context) => {
     select: ["name", "profilename", "profileimage"],
   });
 
-  // let findLikedDescriptions = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description/findDescriptionsLIkedByUserId/` +
-  //     UserId
-  // );
-  // let likedDescriptions = await findLikedDescriptions.json();
-
-  //  console.log(`this is likedDescriptions ${JSON.stringify(likedDescriptions)}`)
-
   //grabbing Tags for description edit function
-
-  // let descriptionTagList = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
-  // );
-  // let descriptionTagData = await descriptionTagList.json();
-  // let descriptionTagListProp = "";
 
   const descriptionTagData = await DescriptionTag.find();
 
   let descriptionTagListProp = descriptionTagData
     .map((tag) => tag)
     .reduce((sum, value) => sum.concat(value), []);
-  // console.log(tagList);
-
-  // .map((tag) => ({ label: tag.tag, id: tag._id }))
 
   const NameTagListProp = await NameTag.find();
 
@@ -213,16 +146,10 @@ export const getServerSideProps = async (context) => {
       NameTagListProp: JSON.parse(JSON.stringify(NameTagListProp)),
     },
   };
-  //kept getting an error that it couldn't parse due to Error serializing `.userIdFromServer.user.image` but there was no image property....adding an image property and making it null also didn't work. JSON.parse(JSON.stringify((session)) used as a workaround)
-
-  //and provide the data as props to the page by returning an object from the function
 };
 
 export default function Dashboard({
   sessionFromServer,
-  user,
-  allComments,
-
   namesCreated,
   favNames,
   postsCreated,
@@ -235,8 +162,6 @@ export default function Dashboard({
   NameTagListProp,
 }) {
   const [favoritesListOpen, setFavoritesListOpen] = useState(false);
-
-  // const valuetest = useContext(UserSessionContext);
 
   const router = useRouter();
 
@@ -299,7 +224,7 @@ export default function Dashboard({
           className="relative overflow-hidden bg-no-repeat bg-cover"
           style={{
             backgroundPosition: "80%",
-            backgroundImage: `url("https://www.freewebheaders.com/wp-content/gallery/dogs/dogs-header-2121-800x200.jpg")`,
+            backgroundImage: `url("/dogheaderfreewebheaders.jpg")`,
             height: "200px",
           }}
         ></div>
@@ -341,8 +266,6 @@ export default function Dashboard({
                       height={200}
                       alt="users profile image"
                     />
-
-                    {/* for large screens: -mt-11 */}
                   </section>
 
                   <PointSystemList
@@ -425,7 +348,7 @@ export default function Dashboard({
 
           <section>
             <GeneralOpenCloseButton
-              text="View Your Favorite Comments"
+              text="View Your Favorite Comments From Posts"
               setStatus={setFavCommentsOpen}
               styling="mb-2"
               status={favCommentsOpen}
@@ -433,12 +356,12 @@ export default function Dashboard({
 
             {favCommentsOpen &&
               likedComments.map((comment) => {
-                console.log(comment);
                 return (
                   <SingleComment
                     key={comment._id}
                     rootComment={comment}
                     sessionFromServer={sessionFromServer}
+                    typeOfContentReplyingTo="post"
                   />
                 );
               })}
@@ -460,7 +383,6 @@ export default function Dashboard({
                     key={post._id}
                     className="mx-auto"
                     sessionFromServer={sessionFromServer}
-                    commentList={allComments}
                     tagListProp={tagListProp}
                   />
                 );

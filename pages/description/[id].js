@@ -50,10 +50,12 @@ export const getServerSideProps = async (context) => {
 
   const descriptionId = ObjectId(context.params.id);
 
-  let descriptionData = await Descriptions.findById(descriptionId).populate({
-    path: "createdby",
-    select: ["name", "profilename", "profileimage"],
-  });
+  let descriptionData = await Descriptions.findById(descriptionId)
+    .populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    })
+    .populate({ path: "tags", select: ["tag"] });
 
   if (!descriptionData) {
     console.log(descriptionData);
@@ -101,11 +103,6 @@ export default function Postid({ sessionFromServer, description, tagList }) {
         userName={userName}
       />
 
-      <PageTitleWithImages
-        imgSrc="bg-[url('https://img.freepik.com/free-photo/happy-woman-with-labrador-park_23-2148345919.jpg?w=826&t=st=1676723047~exp=1676723647~hmac=461f234d41e2f8fa984e028db04245a9a4580f1719bf21a5882b091cca91bfa7')] "
-        title="description"
-      />
-
       <div className="mx-2">
         <HeadersForDescriptions />
 
@@ -115,14 +112,6 @@ export default function Postid({ sessionFromServer, description, tagList }) {
           sessionFromServer={sessionFromServer}
           tagList={tagList}
         />
-        <footer className="text-white mt-2">
-          <span>
-            Banner image by{" "}
-            <a href="https://img.freepik.com/free-photo/happy-woman-with-labrador-park_23-2148345919.jpg?w=826&t=st=1676723047~exp=1676723647~hmac=461f234d41e2f8fa984e028db04245a9a4580f1719bf21a5882b091cca91bfa7">
-              Freepik
-            </a>
-          </span>
-        </footer>
       </div>
     </div>
   );

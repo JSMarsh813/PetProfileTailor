@@ -233,6 +233,9 @@ export default function EditPost({
                         <Image
                           className="max-h-56 object-scale-down mx-auto block"
                           src={imagePreview}
+                          width={100}
+                          height={100}
+                          layout="responsive"
                         />
                         <FontAwesomeIcon
                           icon={faCircleXmark}

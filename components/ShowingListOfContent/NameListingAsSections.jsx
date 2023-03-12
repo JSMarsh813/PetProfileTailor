@@ -154,7 +154,9 @@ export default function NameListingAsSections({
         {/* ###### CREATEDBY SECTION #### */}
         <section>
           <a
-            href={`http://localhost:3000/profile/${name.createdby.profilename.toLowerCase()}`}
+            href={`${
+              process.env.NEXT_PUBLIC_BASE_FETCH_URL
+            }/profile/${name.createdby.profilename.toLowerCase()}`}
           >
             <Image
               src={name.createdby.profileimage}

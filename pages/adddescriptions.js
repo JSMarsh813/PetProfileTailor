@@ -72,7 +72,6 @@ function AddDescriptions({ sessionFromServer, tagList, nameList }) {
         userName={userName}
       />
       <PageTitleWithImages
-        imgSrc="bg-[url('https://images.unsplash.com/photo-1516222338250-863216ce01ea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80')]"
         title="Add a"
         title2="Description"
       />

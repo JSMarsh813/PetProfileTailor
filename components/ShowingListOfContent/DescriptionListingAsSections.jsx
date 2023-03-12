@@ -13,7 +13,6 @@ export default function DescriptionListingAsSections({
   description,
   sessionFromServer,
   tagList,
-  nameList,
 }) {
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
@@ -133,7 +132,9 @@ export default function DescriptionListingAsSections({
           />
           <a
             className=""
-            href={`http://localhost:3000/profile/${description.createdby.profilename.toLowerCase()}`}
+            href={`${
+              process.env.NEXT_PUBLIC_BASE_FETCH_URL
+            }profile/${description.createdby.profilename.toLowerCase()}`}
           >
             <div className="inline flex flex-col">
               <span className=""> {description.createdby.name}</span>
@@ -159,7 +160,6 @@ export default function DescriptionListingAsSections({
               sessionFromServer={sessionFromServer}
               setItemChanged={setItemChanged}
               tagList={tagList}
-              nameList={nameList}
             />
           )}
         </section>

@@ -48,7 +48,9 @@ export default function UsersFollowersList({
                     userData.followers.map((follower) => (
                       <a
                         key={follower._id}
-                        href={`http://localhost:3000/profile/${follower.name.toLowerCase()}`}
+                        href={`${
+                          process.env.NEXT_PUBLIC_BASE_FETCH_URL
+                        }/profile/${follower.name.toLowerCase()}`}
                       >
                         <section
                           className="grid 
@@ -95,14 +97,16 @@ export default function UsersFollowersList({
                       <p className="py-4">No followers currently 😿</p>
 
                       <p> Lets find some friends! </p>
-                      <Image
-                        className="mx-auto pt-2 pb-6 rounded-full"
-                        src="/kittentopuppy.webp"
-                        alt="gif of a kitten climbing out of its cage into the excited puppies cage next to it"
-                        layout="responsive"
-                        width={100}
-                        height={100}
-                      />
+                      <div className="w-60 mx-auto py-6">
+                        <Image
+                          className="rounded-full"
+                          src="/kittentopuppy.webp"
+                          alt="gif of a kitten climbing out of its cage into the excited puppies cage next to it"
+                          layout="responsive"
+                          width={100}
+                          height={100}
+                        />
+                      </div>
                     </div>
                   )}
                 </div>

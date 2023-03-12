@@ -1,9 +1,8 @@
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
-  // console.log(category);
   return (
     <div
       className={`w-80 h-fit bg-violet-900 border-b-2 border-solid border-violet-400 rounded-box place-items-center ${

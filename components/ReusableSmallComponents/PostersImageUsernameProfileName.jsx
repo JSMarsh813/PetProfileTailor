@@ -11,7 +11,11 @@ export default function PostersImageUsernameProfileName({
   showtime,
 }) {
   return (
-    <Link href={`http://localhost:3000/profile/${profileName.toLowerCase()}`}>
+    <Link
+      href={`${
+        process.env.NEXT_PUBLIC_BASE_FETCH_URL
+      }/profile/${profileName.toLowerCase()}`}
+    >
       <div className="author flex items-center -ml-3 my-3">
         <div className="w-12 mr-2">
           <Image

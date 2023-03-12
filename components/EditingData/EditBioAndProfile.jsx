@@ -107,6 +107,9 @@ export default function EditBioAndProfile({
                   <Image
                     src={avatar}
                     className="h-28 w-scale mx-auto"
+                    width={100}
+                    height={100}
+                    layout="responsive"
                   />
 
                   <ImageUpload sessionFromServer={sessionFromServer} />

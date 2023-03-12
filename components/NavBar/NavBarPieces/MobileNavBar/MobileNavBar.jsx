@@ -175,7 +175,7 @@ focus-visible:ring-opacity-75"
                  text-white             
                  w-full items-center rounded-md px-2 py-2 text-sm"
             >
-              <Image
+              <img
                 className="h-12 inline-block invert"
                 src="/batsignal.png"
                 alt="bat logo, created by Megan Mitchell from Noun Project"

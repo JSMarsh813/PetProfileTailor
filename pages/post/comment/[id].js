@@ -73,11 +73,6 @@ export default function GetAComment({
         userName={userName}
       />
 
-      <PageTitleWithImage
-        title="Single"
-        title2="Comment"
-      />
-
       <SingleComment
         replyingtothisid={commentData2.replyingtothisid}
         rootComment={commentData2}

@@ -32,12 +32,6 @@ export const getServerSideProps = async (context) => {
 
   let data = await Category.find().populate("tags");
 
-  //##########grabbing descriptions ########
-  // let descriptionResponse = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/description`
-  // );
-  // let descriptionData = await descriptionResponse.json();
-
   const descriptionData = await Description.find()
     .populate({
       path: "createdby",
@@ -46,11 +40,6 @@ export const getServerSideProps = async (context) => {
     .populate({ path: "tags", select: ["tag"] });
 
   //######GRABBING DESCRIPTION TAGS #######
-
-  // let tagList = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptiontag`
-  // );
-  // let tagData = await tagList.json();
 
   let tagData = await DescriptionTag.find();
 
@@ -65,19 +54,12 @@ export const getServerSideProps = async (context) => {
   // );
   // let nameData = await nameList.json();
 
-  const nameData = await Names.find();
-
-  let nameListProp = nameData
-    .map((name) => name.name)
-    .reduce((sum, value) => sum.concat(value), []);
-
   return {
     props: {
       category: JSON.parse(JSON.stringify(data)),
       descriptionList: JSON.parse(JSON.stringify(descriptionData)),
       tagList: JSON.parse(JSON.stringify(tagListProp)),
       sessionFromServer: session,
-      nameList: JSON.parse(JSON.stringify(nameListProp)),
     },
   };
 };
@@ -87,7 +69,6 @@ function FetchDescriptions({
   category,
   descriptionList,
   tagList,
-  nameList,
 }) {
   let userName = "";
   let profileImage = "";
@@ -108,8 +89,6 @@ function FetchDescriptions({
 
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
-    console.log(e.target);
-    setFilteredDescriptions(descriptionList);
 
     checked
       ? setTagFiltersState([...tagFilters, value])
@@ -121,7 +100,7 @@ function FetchDescriptions({
     let currenttags = tagFilters;
 
     setFilteredDescriptions(
-      filteredDescriptions.filter(
+      descriptionList.filter(
         (description) =>
           currenttags.every((selectedtag) =>
             description.tags.map(({ tag }) => tag).includes(selectedtag)
@@ -180,7 +159,6 @@ function FetchDescriptions({
                       key={description._id}
                       sessionFromServer={sessionFromServer}
                       tagList={tagList}
-                      nameList={nameList}
                     />
                   );
                 })}

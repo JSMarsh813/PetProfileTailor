@@ -76,26 +76,6 @@ export default function FetchNames({
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
 
-    setFilteredNames(nameList);
-
-    //every time we click, lets reset filteredNames to nameList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
-    // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
-    //      round: 2, we unclick male
-    //we need to reset the nameList, so that it will give us ALL christmas names
-    // so reset the list with all the names
-    // then the filter function in useEffect runs since the filteredtag array was changed
-
-    // name.tags.includes(tag))))
-    //We want ONE result for each name, so map through names
-    //names ex: beans, santa
-    //then we want to look through EVERY tag filter ONCE
-    //ex filters: Male and christmas
-    // does the name have all of these tags?
-    //ex: beans has male, but not christmas. so it'd return false
-    //while santa would return true so it's rendered
-
-    //if checked, it will add the new tag to the state/list. If not checked, it will filter it out and replace the state with the new tagfilter array
-
     checked
       ? setTagFiltersState([...tagFilters, value])
       : setTagFiltersState(tagFilters.filter((tag) => tag != value));
@@ -106,8 +86,12 @@ export default function FetchNames({
   useEffect(() => {
     let currenttags = tagFilters;
 
+    //every time we click, lets start off with nameList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
+    // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
+    //      round: 2, we unclick male
+
     setFilteredNames(
-      filterednames.filter((names) =>
+      nameList.filter((names) =>
         currenttags.every((selectedtag) =>
           names.tags.map(({ tag }) => tag).includes(selectedtag)
         )
@@ -124,7 +108,6 @@ export default function FetchNames({
 
       <section className="px-4 bg-violet-900">
         <PageTitleWithImages
-          imgSrc="bg-[url('https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1084&q=80')]"
           title="Fetch"
           title2="Names"
         />

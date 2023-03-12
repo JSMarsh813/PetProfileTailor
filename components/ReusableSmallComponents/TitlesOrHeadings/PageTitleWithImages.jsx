@@ -2,16 +2,22 @@ import React from "react";
 
 export default function PageTitleWithImages({ imgSrc, title, title2 }) {
   return (
-    <div className={`h-32 mb-4 bg-repeat-x bg-contain ${imgSrc}`}>
+    <div
+      className={`h-32 mb-4 bg-no-repeat relative bg-cover ${imgSrc} relative`}
+      style={{
+        backgroundPosition: "80%",
+        backgroundImage: `url("/dogheaderfreewebheaders.jpg")`,
+        height: "200px",
+      }}
+    >
       <h3
         className="text-center pt-2 
     w-96 mx-auto  h-32
-    text-4xl text-yellow-300   bg-darkPurple
+    text-4xl text-yellow-300 bg-darkPurple
     font-semibold
-    border-y-4 border-amber-300"
+    border-y-4 border-amber-300 absolute inset-0 my-auto"
         style={{
-          marginBottom: "-90px",
-          background: "hsla(260, 90%, 60%, 0.6)",
+          background: "hsla(260, 80%, 60%, 0.5)",
           backdropFilter: "blur(20px)",
         }}
       >

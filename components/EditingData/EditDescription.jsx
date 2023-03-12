@@ -21,7 +21,9 @@ export default function EditName({
     description.tags.map((tag) => ({ label: tag.tag, value: tag._id }))
   );
 
-  const [relatedNames, setRelatedNames] = useState(description.relatednames);
+  const [relatedNames, setRelatedNames] = useState(
+    description.relatednames.join(",")
+  );
 
   const descriptionSubmission = async () => {
     const descriptionSubmission = {
@@ -140,29 +142,24 @@ export default function EditName({
                   />
                   {/* RELATED NAMES SECTION */}
                   <label
-                    className="font-bold block mt-4"
-                    htmlFor="descriptionTags"
+                    className="font-bold block mt-4 text-white"
+                    htmlFor="relatedNames"
                   >
                     Related Names
                   </label>
-                  <Select
-                    value={relatedNames.map((relatedNames) => ({
-                      label: relatedNames,
-                      value: relatedNames,
-                    }))}
-                    className="text-darkPurple mb-4"
-                    id="descriptionTags"
-                    options={nameList.map((opt, index) => ({
-                      label: opt,
-                      value: opt,
-                    }))}
-                    isMulti
-                    isSearchable
-                    placeholder="If you type in the tags field, it will filter the tags"
-                    onChange={(opt) =>
-                      setRelatedNames(opt.map((tag) => tag.label))
+                  <input
+                    className="text-darkPurple mb-4 "
+                    id="relatedNames"
+                    type="text"
+                    value={relatedNames}
+                    onChange={(e) =>
+                      setRelatedNames(e.target.value.toLowerCase().trim())
                     }
-                  />
+                  ></input>
+                  <p className="text-white">
+                    Please seperate multiple names with a comma. Example:
+                    Jedi,Luke,obiwan,Darth
+                  </p>
                 </div>
               </div>
             </div>

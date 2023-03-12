@@ -126,7 +126,9 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             >
               {namesThatExist[0].name} already exists!
               <Link
-                href={`http://localhost:3000/name/${namesThatExist[0].name.toLowerCase()}`}
+                href={`${
+                  process.env.NEXT_PUBLIC_BASE_FETCH_URL
+                }/name/${namesThatExist[0].name.toLowerCase()}`}
               >
                 <GeneralButton
                   className="ml-12 my-4"

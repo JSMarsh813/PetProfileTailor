@@ -48,7 +48,9 @@ export default function UsersFollowingList({
                     userData.map((person) => (
                       <a
                         key={person._id}
-                        href={`http://localhost:3000/profile/${person.name.toLowerCase()}`}
+                        href={`${
+                          process.env.NEXT_PUBLIC_BASE_FETCH_URL
+                        }/profile/${person.name.toLowerCase()}`}
                       >
                         <section
                           className="grid 
@@ -92,14 +94,17 @@ export default function UsersFollowingList({
                       <p className="py-4">Currently not following anyone 😿</p>
 
                       <p> Lets find some friends! </p>
-                      <Image
-                        className="mx-auto pt-2 pb-6 rounded-full"
-                        src="/kittentopuppy.webp"
-                        alt="gif of a kitten climbing out of its cage into the excited puppies cage next to it"
-                        layout="responsive"
-                        width={100}
-                        height={100}
-                      />
+
+                      <div className="w-60 mx-auto py-6">
+                        <Image
+                          className="rounded-full"
+                          src="/kittentopuppy.webp"
+                          alt="gif of a kitten climbing out of its cage into the excited puppies cage next to it"
+                          layout="responsive"
+                          width={100}
+                          height={100}
+                        />
+                      </div>
                     </div>
                   )}
                 </div>

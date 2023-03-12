@@ -21,13 +21,14 @@ function NewDescriptionWithTagsData({
   function handleDescriptionSubmission(e) {
     e.preventDefault();
     setIsPending(true);
+    let relatedNamesArray = relatedNames.split(",");
 
     const descriptionSubmission = {
       description: newDescription,
       tags: tags,
       notes: notes,
       createdby: userId.toString(),
-      relatednames: relatedNames,
+      relatednames: relatedNamesArray,
     };
 
     // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true and do not allow the new description
@@ -146,11 +147,25 @@ function NewDescriptionWithTagsData({
           {/* RELATED NAMES SECTION */}
           <label
             className="font-bold block mt-4"
-            htmlFor="descriptionTags"
+            htmlFor="relatedNames"
           >
             Related Names
           </label>
-          <Select
+          <input
+            className="text-darkPurple mb-4"
+            id="relatedNames"
+            type="text"
+            value={relatedNames}
+            onChange={(e) =>
+              setRelatedNames(e.target.value.toLowerCase().trim())
+            }
+          ></input>
+          <p>
+            {" "}
+            Please seperate multiple names with a comma. Example:
+            Jedi,Luke,obiwan,Darth
+          </p>
+          {/* <Select
             className="text-darkPurple mb-4"
             id="descriptionTags"
             options={nameList.map((opt, index) => ({
@@ -167,7 +182,7 @@ function NewDescriptionWithTagsData({
                 })
               )
             }
-          />
+          /> */}
           {/* BUTTON */}
 
           {!isPending && (

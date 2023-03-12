@@ -104,16 +104,23 @@ function CommentListing({
                 border-2 border-violet-300}`}
     >
       <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
-        <Image
-          className="w-12 h-12 border-2 border-gray-300 rounded-full"
-          alt="poster's avatar"
-          src={postersProfileImage}
-        />
+        <div className="w-16">
+          <Image
+            className="w-12 h-12 border-2 border-gray-300 rounded-full"
+            alt="poster's avatar"
+            src={postersProfileImage}
+            width={100}
+            height={100}
+            display="responsive"
+          />
+        </div>
 
         <div className="w-full mt-1">
           <div className="flex items-center  px-2 font-bold  text-black leading-tight">
             <a
-              href={`http://localhost:3000/profile/${postersProfileName.toLowerCase()}`}
+              href={`${
+                process.env.NEXT_PUBLIC_BASE_FETCH_URL
+              }/profile/${postersProfileName.toLowerCase()}`}
             >
               <span className="text-base">{postersName}</span>
 
