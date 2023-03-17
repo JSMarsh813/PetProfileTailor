@@ -30,6 +30,7 @@ const MyLink = forwardRef((props, ref) => {
     </Link>
   );
 });
+MyLink.displayName = "MyLink";
 
 export default function DropDownMenu() {
   return (

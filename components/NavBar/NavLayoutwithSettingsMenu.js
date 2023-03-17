@@ -45,6 +45,7 @@ export default function NavLayoutwithSettingsMenu({
       </Link>
     );
   });
+  MyLink.displayName = "MyLink";
 
   return (
     <>

@@ -25,6 +25,7 @@ const MyLink = forwardRef((props, ref) => {
     </Link>
   );
 });
+MyLink.displayName = "MyLink";
 
 function MobileNavBar() {
   return (

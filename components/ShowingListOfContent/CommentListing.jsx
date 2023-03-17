@@ -187,6 +187,7 @@ function CommentListing({
             return (
               <div key={reply._id}>
                 <CommentListing
+                  key={`comment${reply._id}`}
                   rootComment={reply}
                   replies={null}
                   sessionFromServer={sessionFromServer}
