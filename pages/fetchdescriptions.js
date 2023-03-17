@@ -5,7 +5,6 @@ import { unstable_getServerSession } from "next-auth/next";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
-import HeadersForCategories from "../components/ShowingListOfContent/HeadersForDescriptions";
 import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections";
 
 import dbConnect from "../config/connectmongodb";
@@ -124,9 +123,6 @@ function FetchDescriptions({
         profileImage={profileImage}
         userName={userName}
       />
-
-      {/* {JSON.stringify(filteredDescriptions)} */}
-      {JSON.stringify(tagFilters)}
 
       <section className="px-4 bg-violet-900">
         <PageTitleWithImages

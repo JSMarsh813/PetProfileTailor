@@ -47,17 +47,12 @@ function HomePage({ sessionFromServer }) {
       <HeroTop />
 
       <section className="w-full bg-violet-900 ~ h-24 flex place-items-center justify-center">
-        <h5 className="text-white text-2xl">Adoptions Ahoy!</h5>
+        <h5 className="text-white text-2xl pr-2">Adoptions Ahoy!</h5>
 
         <Image
-          width={100}
-          height={100}
+          width={90}
+          height={110}
           src="/smallpirate.webp"
-          style={{
-            height: "160px",
-            paddingBottom: "27px",
-            paddingLeft: "50px",
-          }}
           alt="image of a guinea pig wearing a tiny pirate hat"
         />
       </section>
@@ -75,6 +70,8 @@ function HomePage({ sessionFromServer }) {
           buttonTextLeft="Search for Names"
           buttonTextLeftLink="/fetchnames"
           alttext="a picture of a chameleon with a cartoony bling necklace drawn on his neck. The text underneath says: chamillionare, young, lizard, 210 miles away"
+          imgwidth="220"
+          imgheight="330"
         />
       </section>
 
@@ -91,6 +88,8 @@ function HomePage({ sessionFromServer }) {
           buttonTextLeft="Search Descriptions"
           buttonTextLeftLink="/fetchdescriptions"
           alttext="Picture of an adoption sign. There is a black and white cat with the text Honey next to it. Underneath it reads: Likes: catnip. Dislikes: Birds. And in quotation marks is They are lousy sky wizards that need to obey the laws of gravity! - honey. Sante D'or adoption center obvious plant"
+          imgwidth="128"
+          imgheight="113"
         />
       </section>
 
@@ -108,6 +107,8 @@ function HomePage({ sessionFromServer }) {
           buttonTextLeft="Sign Up"
           buttonTextLeftLink="/register"
           alttext="screenshot of the dashboard for the site. It says welcome back, treats earned, shows the profile image and shows a your favorite section. A list of names is seen underneath it, all which have red hearts"
+          imgwidth="517"
+          imgheight="508"
         />
       </section>
 
@@ -126,6 +127,8 @@ function HomePage({ sessionFromServer }) {
           buttonTextLeftLink="/batsignal"
           buttonTextRight="Sign Up"
           buttonTextRightLink="/register"
+          imgwidth="70"
+          imgheight="100"
           alttext="picture of a cute white pomeranian sitting and lifting a paw up. Its wearing a black mask and a black cape, its tongue is sticking out in a relaxed manner."
         />
       </section>

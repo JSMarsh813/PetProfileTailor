@@ -1,19 +1,35 @@
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Menu } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBullseye,
-  faFaceGrinWink,
-  faUserTie,
   faTags,
-  faLightbulb,
   faIdCard,
   faCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+
 import Link from "next/link";
-import DropDownLink from "../DropDownLink";
+import { forwardRef } from "react";
+
+const MyLink = forwardRef((props, ref) => {
+  let { href, active, children, ...rest } = props;
+  return (
+    <Link href={href}>
+      <a
+        ref={ref}
+        className={`block rounded-md px-2 py-2 text-md
+        hover:bg-yellow-400
+        hover:text-violet-900  
+        text-center                   
+    ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
+`}
+        {...rest}
+      >
+        {children}
+      </a>
+    </Link>
+  );
+});
 
 export default function DropDownMenu() {
   return (
@@ -21,9 +37,8 @@ export default function DropDownMenu() {
       as="div"
       className="relative inline-block text-left z-10"
     >
-      <div>
-        <Menu.Button
-          className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white
+      <Menu.Button
+        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white align-middle
           
           border-4 border-transparent border-r-violet-400 
 
@@ -35,70 +50,59 @@ export default function DropDownMenu() {
           focus-visible:ring-2 
           focus-visible:ring-white 
           focus-visible:ring-opacity-75"
-        >
-          <FontAwesomeIcon
-            icon={faCirclePlus}
-            className="text-xl mr-2 font-bold text-white "
-          />
+      >
+        <FontAwesomeIcon
+          icon={faCirclePlus}
+          className="text-xl mr-2 font-bold text-white "
+        />
 
-          <span className="font-bold  text-white "> Add </span>
-          <ChevronDownIcon
-            className="ml-2 -mr-1 h-5 w-5 text-white  hover:text-violet-100"
-            aria-hidden="true"
-          />
-        </Menu.Button>
-      </div>
+        <span className="font-bold  text-white "> Add </span>
+        <ChevronDownIcon
+          className="ml-2 -mr-1 h-5 w-5 text-white  hover:text-violet-100"
+          aria-hidden="true"
+        />
+      </Menu.Button>
 
       <Menu.Items
-        className="absolute font-bold  text-white  right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-violet-800 shadow-lg ring-1 ring-black ring-opacity-5 
+        className="absolute font-bold  text-white  right-0 mt-2 w-56 origin-top-right rounded-md bg-violet-800 shadow-lg ring-1 ring-black ring-opacity-5 
           
           focus:outline-none"
       >
-        <div className="px-1 py-1 ">
-          <Menu.Item>
-            <Link href="/addnames">
-              <button
-                className="
-                      hover:bg-yellow-500 
-                      hover:text-violet-900
+        <Menu.Item>
+          {({ active }) => (
+            <MyLink
+              href="/addnames"
+              active={active}
+            >
+              <FontAwesomeIcon
+                icon={faTags}
+                className={`text-xl mr-1 
+                      
+                        
+                        ${active ? "text-violet-800" : "text-violet-100"}`}
+              />
+              Names
+            </MyLink>
+          )}
+        </Menu.Item>
 
-                      text-white             
-                      group flex w-full items-center rounded-md px-2 py-2 text-sm"
-              >
-                <FontAwesomeIcon
-                  icon={faTags}
-                  className="text-xl mr-1 
-                      text-violet-100
-                     "
-                />
-
-                <a> Names</a>
-              </button>
-            </Link>
-          </Menu.Item>
-
-          <Menu.Item>
-            <Link href="/adddescriptions">
-              <button
-                className="
-                      hover:bg-yellow-500 
-                      hover:text-violet-900
-
-                      text-white             
-                      group flex w-full items-center rounded-md px-2 py-2 text-sm"
-              >
-                <FontAwesomeIcon
-                  icon={faIdCard}
-                  className="text-xl mr-1 
-                      text-violet-100
-                     "
-                />
-
-                <a> Descriptions </a>
-              </button>
-            </Link>
-          </Menu.Item>
-        </div>
+        <Menu.Item>
+          {({ active }) => (
+            <MyLink
+              href="/adddescriptions"
+              active={active}
+            >
+              <FontAwesomeIcon
+                icon={faIdCard}
+                className={`text-xl mr-1 
+                      
+                        
+                        ${active ? "text-violet-800" : "text-violet-100"}`}
+              />
+              Descriptions
+            </MyLink>
+          )}
+        </Menu.Item>
       </Menu.Items>
     </Menu>
   );

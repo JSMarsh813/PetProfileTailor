@@ -1,21 +1,43 @@
 import React from "react";
 import { Menu } from "@headlessui/react";
-import Link from "next/link";
-import Image from "next/image";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags, faIgloo, faIdCard } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { forwardRef } from "react";
+import Link from "next/link";
+
+const MyLink = forwardRef((props, ref) => {
+  let { href, active, children, ...rest } = props;
+  return (
+    <Link href={href}>
+      <a
+        ref={ref}
+        className={`block rounded-md px-2 py-2 text-md
+        hover:bg-yellow-400
+        hover:text-violet-900  
+        text-center                   
+    ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
+`}
+        {...rest}
+      >
+        {children}
+      </a>
+    </Link>
+  );
+});
 
 function MobileNavBar() {
   return (
     <div>
       <Menu.Items
-        className="block px-4 py-2 text-sm font-medium text-white 
- absolute  divide-y divide-gray-100 rounded-md bg-violet-800 shadow-lg ring-1 ring-black ring-opacity-5 
+        className="block px-4 py-2 text-sm text-white 
+ absolute  
+ divide-y divide-gray-100 
+ rounded-md bg-violet-800 shadow-lg ring-1 ring-black ring-opacity-5 
 
  
  w-screen
+ items-center
 border-4 border-transparent border-r-violet-400 
 -left-4
 z-10
@@ -25,165 +47,142 @@ focus-visible:ring-2
 focus-visible:ring-white 
 focus-visible:ring-opacity-75"
       >
-        <Menu.Item as="div">
-          <Link href="/">
-            <button
-              className="
-                 hover:bg-yellow-500 
-                 hover:text-violet-900
-
-                 text-white             
-                 w-full items-center rounded-md px-2 py-2 text-sm"
+        <Menu.Item>
+          {({ active }) => (
+            <MyLink
+              href="/"
+              active={active}
             >
               <FontAwesomeIcon
                 icon={faIgloo}
-                className="text-xl mr-1 
-                 text-violet-100
-                "
+                className={`text-xl mr-1 
+                      
+                        
+                        ${active ? "text-violet-800" : "text-violet-100"}`}
               />
-
-              <a>Home</a>
-            </button>
-          </Link>
+              Home
+            </MyLink>
+          )}
         </Menu.Item>
 
-        <Menu.Item as="div">
+        <Menu.Item disabled>
           <button
             className="text-yellow-300         
                       w-full items-center rounded-md px-2 py-2 text-sm font-bold bg-violet-600"
             disabled={true}
           >
-            {" "}
-            Fetch/Find{" "}
+            Fetch/Find
           </button>
         </Menu.Item>
 
-        <Menu.Item as="div">
-          <Link href="/addnames">
-            <button
-              className="
-                      hover:bg-yellow-500 
-                      hover:text-violet-900
-
-                      text-white             
-                      w-full items-center rounded-md px-2 py-2 text-sm"
+        <Menu.Item>
+          {({ active }) => (
+            <MyLink
+              href="/fetchnames"
+              active={active}
             >
               <FontAwesomeIcon
                 icon={faTags}
-                className="text-xl mr-1 
-                      text-violet-100
-                     "
+                className={`text-xl mr-1 
+                      
+                        
+                        ${active ? "text-violet-800" : "text-violet-100"}`}
               />
-
-              <a> Names</a>
-            </button>
-          </Link>
+              Names
+            </MyLink>
+          )}
         </Menu.Item>
 
-        <Menu.Item as="div">
-          <Link href="/adddescriptions">
-            <button
-              className="
-                      hover:bg-yellow-500 
-                      hover:text-violet-900
-
-                      text-white             
-                       w-full items-center rounded-md px-2 py-2 text-sm"
+        <Menu.Item>
+          {({ active }) => (
+            <MyLink
+              href="/fetchdescriptions"
+              active={active}
             >
               <FontAwesomeIcon
                 icon={faIdCard}
-                className="text-xl mr-1 
-                      text-violet-100
-                     "
+                className={`text-xl mr-1 
+                      
+                        
+                        ${active ? "text-violet-800" : "text-violet-100"}`}
               />
-
-              <a> Descriptions </a>
-            </button>
-          </Link>
+              Descriptions
+            </MyLink>
+          )}
         </Menu.Item>
 
-        <button
-          className="text-yellow-300  
+        <Menu.Item disabled>
+          <button
+            className="text-yellow-300  
                       bg-violet-600       
                       w-full items-center rounded-md px-2 py-2 text-sm font-bold"
-          disabled={true}
-        >
-          Add
-        </button>
+            disabled={true}
+          >
+            Add
+          </button>
+        </Menu.Item>
 
-        <Menu.Item as="div">
-          <Link href="/addnames">
-            <button
-              className="
-                      hover:bg-yellow-500 
-                      hover:text-violet-900
-
-                      text-white             
-                      w-full items-center rounded-md px-2 py-2 text-sm"
+        <Menu.Item>
+          {({ active }) => (
+            <MyLink
+              href="/addnames"
+              active={active}
             >
               <FontAwesomeIcon
                 icon={faTags}
-                className="text-xl mr-1 
-                      text-violet-100
-                     "
+                className={`text-xl mr-1 
+                      
+                        
+                        ${active ? "text-violet-800" : "text-violet-100"}`}
               />
-
-              <a> Names</a>
-            </button>
-          </Link>
+              Names
+            </MyLink>
+          )}
         </Menu.Item>
 
-        <Menu.Item as="div">
-          <Link href="/adddescriptions">
-            <button
-              className="
-                 hover:bg-yellow-500 
-                 hover:text-violet-900
-
-                 text-white             
-                 w-full items-center rounded-md px-2 py-2 text-sm"
+        <Menu.Item>
+          {({ active }) => (
+            <MyLink
+              href="/adddescriptions"
+              active={active}
             >
               <FontAwesomeIcon
                 icon={faIdCard}
-                className="text-xl mr-1 
-                 text-violet-100
-                "
+                className={`text-xl mr-1 
+                      
+                        
+                        ${active ? "text-violet-800" : "text-violet-100"}`}
               />
-
-              <a> Descriptions </a>
-            </button>
-          </Link>
+              Descriptions
+            </MyLink>
+          )}
         </Menu.Item>
 
-        <button
-          className="text-yellow-300  
+        <Menu.Item disabled>
+          <button
+            className="text-yellow-300  
                       bg-violet-600       
                       w-full items-center rounded-md px-2 py-2 text-sm font-bold"
-          disabled={true}
-        >
-          Community
-        </button>
+            disabled={true}
+          >
+            Community
+          </button>
+        </Menu.Item>
 
-        <Menu.Item as="div">
-          <Link href="/">
-            <button
-              className="
-                 hover:bg-yellow-500 
-                 hover:text-violet-900
-                 -mt-3
-
-                 text-white             
-                 w-full items-center rounded-md px-2 py-2 text-sm"
+        <Menu.Item>
+          {({ active }) => (
+            <MyLink
+              href="/batsignal"
+              active={active}
             >
               <img
-                className="h-12 inline-block invert"
+                className={`h-5 mr-1 inline-block ${active ? "" : "invert"}`}
                 src="/batsignal.png"
                 alt="bat logo, created by Megan Mitchell from Noun Project"
               />
-
-              <a>Batsignal/ Play Yard</a>
-            </button>
-          </Link>
+              Descriptions
+            </MyLink>
+          )}
         </Menu.Item>
       </Menu.Items>
     </div>

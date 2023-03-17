@@ -10,6 +10,8 @@ const MediaObjectRight = ({
   buttonTextLeftLink,
   buttonTextRightLink,
   alttext,
+  imgwidth,
+  imgheight,
 }) => {
   return (
     <div className="flex justify-center w-screen my-6 flex-col md:flex-row">
@@ -50,8 +52,8 @@ const MediaObjectRight = ({
       >
         <Image
           className=""
-          width={100}
-          height={100}
+          width={imgwidth}
+          height={imgheight}
           src={image}
           layout="responsive"
           alt={alttext}

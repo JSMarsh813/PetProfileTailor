@@ -180,12 +180,12 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
       </div> */}
 
                     {/* <!-- Forgot Password Link --> */}
-                    <a
+                    {/* <a
                       href="#!"
                       className="text-white"
                     >
                       Forgot password?
-                    </a>
+                    </a> */}
                   </div>
 
                   {/* <!-- Login Button --> */}

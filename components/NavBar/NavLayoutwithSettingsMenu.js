@@ -5,7 +5,6 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Menu } from "@headlessui/react";
 import "react-toastify/dist/ReactToastify.css";
-import DropDownLink from "./NavBarPieces/DropDownLink";
 import MobileNavBar from "./NavBarPieces/MobileNavBar/MobileNavBar";
 import NavBarNames from "./NavBarPieces/DesktopNavBar/NavBarNames";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -13,6 +12,8 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+
+import { forwardRef } from "react";
 
 export default function NavLayoutwithSettingsMenu({
   children,
@@ -22,9 +23,28 @@ export default function NavLayoutwithSettingsMenu({
   const [isHamBurgNavOpen, setisHamBurgNavOpen] = useState(false);
 
   const logoutClickHandler = () => {
-    localStorage.removeItem("session");
     signOut({ callbackUrl: "/login" });
   };
+
+  const MyLink = forwardRef((props, ref) => {
+    let { href, active, children, ...rest } = props;
+    return (
+      <Link href={href}>
+        <a
+          ref={ref}
+          className={`block rounded-md px-2 py-2 text-md
+          hover:bg-yellow-400
+          hover:text-violet-900  
+          text-center                   
+      ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
+  `}
+          {...rest}
+        >
+          {children}
+        </a>
+      </Link>
+    );
+  });
 
   return (
     <>
@@ -35,32 +55,33 @@ export default function NavLayoutwithSettingsMenu({
 
             <Menu
               as="div"
-              className="relative inline-block text-white bg-violet-700 z-10 md:hidden"
+              className="relative inline-block text-white bg-violet-700 z-10 xl:hidden"
             >
               {/* md:hidden makes it so the dropdown will be hidden if the screen is enlarged from a small screen. Important because the hamburger button disappears on medium screens */}
+
               <Menu.Button
-                className="inline-flex justify-center md:hidden"
-                onClick={() => setisHamBurgNavOpen(!isHamBurgNavOpen)}
+                className="inline-flex justify-center xl:hidden
+                focus-visible:ring-white 
+                focus-visible:ring-opacity-75"
               >
                 <FontAwesomeIcon
                   icon={faBars}
                   className="text-xl text-violet-100 "
+                  aria-hidden="true"
                 />
               </Menu.Button>
 
-              {isHamBurgNavOpen && <MobileNavBar />}
+              <MobileNavBar />
             </Menu>
 
             {/* Name disappears at smaller screen sizes */}
 
-            <Link href="/">
-              <a
-                className="text-lg font-extrabold text-yellow-300 
-              hidden lg:block "
-              >
-                PetProfileTailor
-              </a>
-            </Link>
+            <span
+              className="text-lg font-extrabold text-yellow-300 
+              lg:block mx-auto ml-2"
+            >
+              PetProfileTailor
+            </span>
 
             <NavBarNames />
 
@@ -97,56 +118,44 @@ export default function NavLayoutwithSettingsMenu({
                     </div>
 
                     <ChevronDownIcon
-                      className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
+                      className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-amber-300"
                       aria-hidden="true"
                     />
                   </Menu.Button>
 
-                  <Menu.Items className="absolute right-0 w-56 origin-top-right bg-violet-800 text-white shadow-lg ">
-                    <Menu.Item
-                      className="group flex w-full items-center rounded-md px-2 py-2 text-md
-                        // above code =items show on top of eachother 
-
-                  hover:bg-yellow-400
-                  hover:text-violet-900"
-                    >
-                      <DropDownLink
-                        className="dropdown-link"
-                        href="/dashboard"
-                      >
-                        Dashboard
-                      </DropDownLink>
+                  <Menu.Items className="absolute font-bold right-0 w-56 origin-top-right bg-violet-800 text-white shadow-lg ">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <MyLink
+                          href="/dashboard"
+                          active={active}
+                        >
+                          dashboard
+                        </MyLink>
+                      )}
                     </Menu.Item>
 
-                    <Menu.Item
-                      className="group flex w-full items-center rounded-md px-2 py-2 text-md
-                        // above code =items show on top of eachother 
-                        
-                      hover:bg-yellow-400
-                      hover:text-violet-900"
-                    >
-                      <DropDownLink
-                        className="dropdown-link"
-                        href="/editsettings"
-                      >
-                        Edit Settings
-                      </DropDownLink>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <MyLink
+                          href="/editsettings"
+                          active={active}
+                        >
+                          Edit Settings
+                        </MyLink>
+                      )}
                     </Menu.Item>
 
-                    <Menu.Item
-                      className="group flex w-full items-center rounded-md px-2 py-2 text-md
-                        // above code =items show on top of eachother 
-
-                  hover:bg-yellow-400
-                  hover:text-violet-900"
-                    >
-                      <a
-                        className="dropdown-link"
-                        href="#"
-                        onClick={logoutClickHandler}
-                      >
-                        Logout
-                      </a>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <MyLink
+                          href="/"
+                          active={active}
+                          onClick={logoutClickHandler}
+                        >
+                          Logout
+                        </MyLink>
+                      )}
                     </Menu.Item>
                   </Menu.Items>
                 </Menu>

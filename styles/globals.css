@@ -22,6 +22,18 @@ input::file-selector-button {
   border-top: 0px;
 }
 
+.visually-hidden,
+.sr-only {
+  /* hides content except when viewed by screen readers
+  https://prismic.io/blog/nextjs-accessibility */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
 input::file-selector-button:hover {
   background-color: rgb(96 165 250);
   color: white;
