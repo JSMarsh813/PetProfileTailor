@@ -8,7 +8,7 @@ import useSWRInfinite from "swr/infinite";
 import fetcher from "../utils/fetch";
 import useOnScreen from "../hooks/useOnScreen";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
 
@@ -64,7 +64,7 @@ export default function NavLayoutwithSettingsMenu({ sessionFromServer }) {
   //always is true
   const isEmpty = data?.[0]?.length === 0;
   //always is false
-  const isReachingEnd = names && names[names.length - 1]?.length < PAGE_SIZE;
+  const isReachingEnd = data && data[data.length - 1]?.length < PAGE_SIZE;
   //always is false
   const isRefreshing = isValidating && data && data.length === size;
   //always is false
@@ -89,15 +89,18 @@ export default function NavLayoutwithSettingsMenu({ sessionFromServer }) {
         return (
           <p
             key={name._id}
-            style={{ margin: "6px 0", height: 200 }}
+            style={{ margin: "20px 0", height: 20 }}
           >
             - {name.name}
           </p>
         );
       })}
 
+      {JSON.stringify(isVisible)}
+
+      {/* <button onClick={() => setSize(size + 1)}>Load More</button> */}
+      {/* {console.log(JSON.stringify(names))} */}
       <div ref={ref}>
-        {/* when this div becomes visible, load more names */}
         {isLoadingMore ? "loading..." : isReachingEnd ? "no more names" : ""}
       </div>
     </Layout>

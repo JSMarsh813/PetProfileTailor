@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
@@ -13,6 +13,22 @@ import dbConnect from "../config/connectmongodb";
 import Category from "../models/nameCategory";
 import NameTag from "../models/NameTag";
 import Names from "../models/Names";
+
+import useSWRInfinite from "swr/infinite";
+import fetcher from "../utils/fetch";
+import useOnScreen from "../hooks/useOnScreen";
+
+const PAGE_SIZE = 10;
+
+//getkey: accepts the index of the current page, as well as the data from the previous page.
+
+const getKey = (pageIndex, previousPageData, pagesize) => {
+  if (previousPageData && !previousPageData.length) return null; // reached the end
+
+  return `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/swr/swr?page=${
+    pageIndex + 1
+  }&limit=${pagesize}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+};
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -66,12 +82,45 @@ export default function FetchNames({
     profileImage = sessionFromServer.user.profileimage;
   }
 
+  const ref = useRef();
+  const isVisible = useOnScreen(ref);
+  //true, then false. But all 30 names are loaded even when it says isVisible is false? Turns to true when scrolled down as expected...but its strange all 30 names load even when the div is not visible?
+
+  const { data, error, isLoading, isValidating, mutate, size, setSize } =
+    useSWRInfinite((...args) => getKey(...args, PAGE_SIZE), fetcher);
+
+  const names = data ? [].concat(...data) : [];
+  // 0 names, then 20 names, then 30 names
+  const isLoadingInitialData = !data && !error;
+  // true then false
+  const isLoadingMore =
+    isLoadingInitialData ||
+    (size > 0 && data && typeof data[size - 1] === "undefined");
+  //always is true
+  const isEmpty = data?.[0]?.length === 0;
+  //always is false
+  const isAtEnd = data && data[data.length - 1]?.length < 1;
+  //always is false
+  const isRefreshing = isValidating && data && data.length === size;
+  //always is false
+
+  // mutate();
+
+  console.log(`isVisible ${names.length}`);
+
   //  ################ sets up the toggle for the filter div #############################
   const [IsOpen, SetIsOpen] = useState(true);
 
   const [tagFilters, setTagFiltersState] = useState([]);
 
-  const [filterednames, setFilteredNames] = useState([...nameList]);
+  const [filterednames, setFilteredNames] = useState([]);
+
+  useEffect(() => {
+    if (names) {
+      setFilteredNames([...names]);
+    }
+  }, [data]);
+  //data was necessary to make it work with swr, using the names variable instead wouldn't trigger a state update
 
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
@@ -91,13 +140,13 @@ export default function FetchNames({
     //      round: 2, we unclick male
 
     setFilteredNames(
-      nameList.filter((names) =>
+      names.filter((names) =>
         currenttags.every((selectedtag) =>
           names.tags.map(({ tag }) => tag).includes(selectedtag)
         )
       )
     );
-  }, [tagFilters]);
+  }, [tagFilters, data, isRefreshing, isValidating]);
 
   return (
     <div className="bg-violet-900">
@@ -144,6 +193,23 @@ export default function FetchNames({
                     />
                   );
                 })}
+                {/* {!isRefreshing && isReachingEnd ? (
+                  "no more names available"
+                ) : ( */}
+                <div className="text-center my-4">
+                  <GeneralButton
+                    text="Check for more names"
+                    className=""
+                    onClick={() => setSize(size + 1) && mutate()}
+                  />
+                  {isAtEnd && (
+                    <p>
+                      You have reached the end of the list! However you can
+                      click "check more names" again to check for just-added
+                      names.
+                    </p>
+                  )}
+                </div>
               </section>
             </section>
           </div>
