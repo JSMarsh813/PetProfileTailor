@@ -26,7 +26,8 @@ export default function Pagination({
 
   const lastPageHandler = () => {
     if (!isAtEnd) {
-      setSizeFunction(size + 1) && mutate();
+      setSizeFunction(size + 1);
+      // && mutate();
     }
     if (page >= filteredListLastPage) {
       return;
@@ -36,7 +37,8 @@ export default function Pagination({
 
   const clickOnLastNumber = (number) => {
     setPageFunction(number);
-    setSizeFunction(size + 1) && mutate();
+    setSizeFunction(size + 1);
+    //  && mutate();
   };
 
   return (
