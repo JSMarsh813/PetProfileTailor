@@ -13,8 +13,9 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  let categoryList = await fetch(`${process.env.NEXT_PUBLIC_BASE_FETCH_URL}
-  /api/namecategories`);
+  let categoryList = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/namecategories`
+  );
   let categoryData = await categoryList.json();
 
   return {
