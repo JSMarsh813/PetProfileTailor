@@ -168,9 +168,6 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           </span>
 
           <span className="block">Note: Names are saved in lowercase</span>
-          {nameAlreadyExists == true && (
-            <p className="text-red-500 font-bold">Name already exists</p>
-          )}
 
           {/* setDescription */}
           <label
