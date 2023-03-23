@@ -1,5 +1,7 @@
 import dbConnect from "../../../../config/connectmongodb";
 import Description from "../../../../models/description";
+import Users from "../../../../models/User";
+import Tags from "../../../../models/descriptiontag";
 
 export default async function handler(req, res) {
   const method = req.method;

@@ -1,5 +1,6 @@
 import dbConnect from "../../../../config/connectmongodb";
 import Posts from "../../../../models/posts";
+import Users from "../../../../models/User";
 
 export default async function handler(req, res) {
   const method = req.method;
