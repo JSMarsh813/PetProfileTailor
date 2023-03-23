@@ -159,9 +159,86 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
         profileImage={profileImage}
         userName={userName}
       />
-      {`this is data ${JSON.stringify(data)}`}
+      {/* {`this is data ${JSON.stringify(data)}`}
       {`this is filtered names ${JSON.stringify(filterednames)}`}
-      {`this is names ${JSON.stringify(names)}`}
+      {`this is names ${JSON.stringify(names)}`} */}
+      <section className="px-4 bg-violet-900">
+        <PageTitleWithImages
+          title="Fetch"
+          title2="Names"
+        />
+
+        <div className="flex w-full">
+          <FilteringSidebar
+            category={category}
+            handleFilterChange={handleFilterChange}
+            IsOpen={IsOpen}
+          />
+
+          {/*################# CONTENT DIV ################### */}
+
+          <div className="grow bg-darkPurple rounded-box place-items-center">
+            {/* Button that toggles the filter div */}
+            <GeneralButton
+              text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
+              onClick={() => SetIsOpen(!IsOpen)}
+            />
+
+            <Pagination
+              page={page}
+              itemsPerPage={itemsPerPage}
+              filteredListLastPage={filteredListLastPage}
+              isAtEnd={isAtEnd}
+              setItemsPerPageFunction={setItemsPerPageFunction}
+              setPageFunction={setPageFunction}
+              setSizeFunction={setSizeFunction}
+              size={size}
+              filterednameslength={filterednames.length}
+            />
+
+            <section className="w-full">
+              <HeadersForNames />
+
+              <section className="whitespace-pre-line">
+                {filterednames
+                  .slice(
+                    page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
+                    page * itemsPerPage
+                  )
+                  .map((name) => {
+                    return (
+                      <NameListingAsSections
+                        name={name}
+                        key={name._id}
+                        sessionFromServer={sessionFromServer}
+                        tagList={tagList}
+                      />
+                    );
+                  })}
+
+                <Pagination
+                  page={page}
+                  itemsPerPage={itemsPerPage}
+                  filteredListLastPage={filteredListLastPage}
+                  isAtEnd={isAtEnd}
+                  setItemsPerPageFunction={setItemsPerPageFunction}
+                  setPageFunction={setPageFunction}
+                  setSizeFunction={setSizeFunction}
+                  size={size}
+                  filterednameslength={filterednames.length}
+                />
+
+                <CheckForMoreData
+                  page={page}
+                  filteredListLastPage={filteredListLastPage}
+                  setSizeFunction={setSizeFunction}
+                  isAtEnd={isAtEnd}
+                />
+              </section>
+            </section>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
