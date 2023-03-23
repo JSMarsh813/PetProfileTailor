@@ -144,9 +144,9 @@ export default function NameListingAsSections({
         <span className=""> {name.name} </span>
 
         {/* ###### DESCRIPTION SECTION #### */}
-        <span className="ml-4">
+        {/* <span className="ml-4">
           {name.description[0] == "" ? "no description" : name.description}
-        </span>
+        </span> */}
 
         {/* ###### TAGS SECTION #### */}
         <span>{name.tags.map((names) => names.tag).join(", ")}</span>
