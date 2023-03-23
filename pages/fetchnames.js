@@ -17,7 +17,7 @@ import useSWRInfinite from "swr/infinite";
 import fetcher from "../utils/fetch";
 import Pagination from "../components/ShowingListOfContent/pagination";
 import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
-import ErrorBoundary from "../components/errorBoundary";
+
 //getkey: accepts the index of the current page, as well as the data from the previous page.
 
 export const getServerSideProps = async (context) => {
