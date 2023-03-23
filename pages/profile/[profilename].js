@@ -98,10 +98,12 @@ export const getServerSideProps = async (context) => {
 
     const createdDescriptions = await Descriptions.find({
       createdby: userId,
-    }).populate({
-      path: "createdby",
-      select: ["name", "profilename", "profileimage"],
-    });
+    })
+      .populate({
+        path: "createdby",
+        select: ["name", "profilename", "profileimage"],
+      })
+      .populate({ path: "tags" });
 
     //##### grabbing Tags for description's edit function
 
@@ -476,14 +478,14 @@ function ProfilePage({
  w-full
  border-2 border-amber-300"
             >
-              {!likedDescriptions.length ? (
+              {!createdDescriptions.length ? (
                 <section className="border-2 border-amber-300">
                   <span> No descriptions added yet! </span>
                 </section>
               ) : (
                 <section className="border-2 border-amber-300">
                   <DashboardChartForFavDescriptions
-                    likedDescriptions={likedDescriptions}
+                    likedDescriptions={createdDescriptions}
                     sessionFromServer={sessionFromServer}
                     tagList={descriptionTagListProp}
                   />

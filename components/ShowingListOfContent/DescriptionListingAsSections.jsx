@@ -13,6 +13,7 @@ export default function DescriptionListingAsSections({
   description,
   sessionFromServer,
   tagList,
+  className,
 }) {
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
@@ -63,7 +64,9 @@ export default function DescriptionListingAsSections({
   }
 
   return (
-    <div className=" border-b-2 border-amber-300 text-white px-6 w-full">
+    <div
+      className={`border-b-2 border-amber-300 text-white px-6 w-full ${className}`}
+    >
       {/* ###### DESCRIPTION SECTION #### */}
 
       <p className="whitespace-pre-line mt-2">

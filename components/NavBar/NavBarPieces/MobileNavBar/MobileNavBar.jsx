@@ -181,7 +181,7 @@ focus-visible:ring-opacity-75"
                 src="/batsignal.png"
                 alt="bat logo, created by Megan Mitchell from Noun Project"
               />
-              Descriptions
+              Community
             </MyLink>
           )}
         </Menu.Item>

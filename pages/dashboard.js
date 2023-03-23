@@ -105,10 +105,14 @@ export const getServerSideProps = async (context) => {
   //grabbing DESCRIPTIONS liked by user
   const likedDescriptions = await Descriptions.find({
     likedby: UserId,
-  }).populate({
-    path: "createdby",
-    select: ["name", "profilename", "profileimage"],
-  });
+  })
+    .populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    })
+    .populate({
+      path: "tags",
+    });
 
   //grabbing Tags for description edit function
 
@@ -291,7 +295,7 @@ export default function Dashboard({
         <WideCenteredHeader heading="Your Favorites" />
 
         <div
-          className="favoriteSubsections mt-5 text-yellow-400  font-bold mb-2 text-2xl 
+          className="favoriteSubsections mt-5 text-yellow-400  font-bold mb-2 text-lg 
        pb-2
        border-b-2
        border-yellow-300"
@@ -340,6 +344,7 @@ export default function Dashboard({
                 likedDescriptions={likedDescriptions}
                 sessionFromServer={sessionFromServer}
                 tagList={descriptionTagListProp}
+                className="text-base text-violet-100"
               />
             )}
           </section>

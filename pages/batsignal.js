@@ -25,17 +25,9 @@ export const getServerSideProps = async (context) => {
 
   dbConnect();
 
-  // const postData = await IndividualPosts.find()
-  //   .populate({
-  //     path: "createdby",
-  //     select: ["name", "profilename", "profileimage"],
-  //   })
-  //   .sort({ _id: -1 });
-  //this way we get the most recent posts first, we use id since mongoDB's objectID has a 4 byte timestamp naturally built in
   return {
     props: {
       sessionFromServer: session,
-      // postList: JSON.parse(JSON.stringify(postData)),
     },
   };
 };
@@ -50,6 +42,16 @@ export default function BatSignal({ sessionFromServer }) {
     profileImage = sessionFromServer.user.profileimage;
   }
   // ##### end of section for nav menu
+
+  const [IsOpen, SetIsOpen] = useState(true);
+  const [tagFilters, setFiltersState] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [page, setPage] = useState(1);
+  const [addingPost, setAddingPost] = useState(false);
+
+  let filteredListLastPage = filteredPosts.length / itemsPerPage;
+  const PAGE_SIZE = itemsPerPage;
 
   const category = [
     {
@@ -75,20 +77,9 @@ export default function BatSignal({ sessionFromServer }) {
       tags: [{ tag: "bugs" }, { tag: "feedback" }],
     },
   ];
-
   let tagListProp = category
     .map((category) => category.tags)
     .reduce((sum, value) => sum.concat(value), []);
-
-  const [IsOpen, SetIsOpen] = useState(true);
-  const [tagFilters, setFiltersState] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
-  const [page, setPage] = useState(1);
-  const [addingPost, setAddingPost] = useState(false);
-
-  let filteredListLastPage = filteredPosts.length / itemsPerPage;
-  const PAGE_SIZE = itemsPerPage;
 
   // ############ Section for passing state into components as functions #######
   function setItemsPerPageFunction(event) {
@@ -107,24 +98,6 @@ export default function BatSignal({ sessionFromServer }) {
 
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
-
-    //every time we click, lets reset filteredPosts to postList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
-    // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
-    //      round: 2, we unclick male
-    //we need to reset the nameList, so that it will give us ALL christmas names
-    // so reset the list with all the names
-    // then the filter function in useEffect runs since the filteredtag array was changed
-
-    // name.tags.includes(tag))))
-    //We want ONE result for each name, so map through names
-    //names ex: beans, santa
-    //then we want to look through EVERY tag filter ONCE
-    //ex filters: Male and christmas
-    // does the name have all of these tags?
-    //ex: beans has male, but not christmas. so it'd return false
-    //while santa would return true so it's rendered
-
-    //if checked, it will add the new tag to the state/list. If not checked, it will filter it out and replace the state with the new tagfilter array
 
     checked
       ? setFiltersState([...tagFilters, value])
@@ -209,29 +182,33 @@ export default function BatSignal({ sessionFromServer }) {
           />
 
           <div
-            className="mx-auto bg-violet-900 max-w-3xl text-center py-4 border-2 border-violet-400 border-dotted 
-                                    shadow-lg shadow-slate-900/100"
+            className="mx-auto bg-violet-900 max-w-4xl text-center py-4 border-2 border-violet-400 border-dotted 
+                                    shadow-lg shadow-slate-900/100 pl-4"
           >
-            <Image
-              className="max-h-32 mx-auto rounded-full"
-              src="/batsignaldogsrunning.avif"
-              width={200}
-              height={200}
-              alt="picture of two small dogs running in a large grassy area, one which is looking at the screen"
-            />
-
-            <p className="w-full text-white text-xl mx-auto mt-2">
-              Come join us in the play yard! Ask for advice, share ideas, or
-              just chat!
-            </p>
-
-            <GeneralButton
-              text="Add a Post"
-              className="ml-2 mt-2"
-              onClick={() => {
-                setAddingPost(!addingPost);
-              }}
-            />
+            <div className="flex">
+              <div className="my-auto">
+                <Image
+                  className=" mx-auto rounded-full flex-none lg:h-20"
+                  src="/batsignaldogsrunning.avif"
+                  width={140}
+                  height={120}
+                  alt="picture of two small dogs running in a large grassy area, one which is looking at the screen"
+                />
+              </div>
+              <div className="my-auto">
+                <p className="w-full text-white text-xl mx-auto mt-2 ml-4">
+                  Come join us in the play yard! Ask for advice, share ideas, or
+                  just chat!
+                </p>
+                <GeneralButton
+                  text="Add a Post"
+                  className="ml-2 mt-2"
+                  onClick={() => {
+                    setAddingPost(!addingPost);
+                  }}
+                />
+              </div>
+            </div>
           </div>
 
           {addingPost && (

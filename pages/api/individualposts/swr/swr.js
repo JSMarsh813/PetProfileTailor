@@ -12,6 +12,7 @@ export default async function handler(req, res) {
     try {
       const postList = await Posts.find()
         .sort({ _id: -1 })
+        //this way we get the most recent posts first, we use id since mongoDB's objectID has a 4 byte timestamp naturally built in
         .skip((page - 1) * limit)
         // page 0 * 10 items = 0
         // so no items skipped for page "0"

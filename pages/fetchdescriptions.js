@@ -149,7 +149,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
           title2="Descriptions"
         />
 
-        <div className="flex max-w-screen border-2 border-white">
+        <div className="flex max-w-screen">
           <FilteringSidebar
             className="min-w-24"
             category={category}
@@ -159,7 +159,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
 
           {/*################# CONTENT DIV ################### */}
 
-          <div className="bg-darkPurple rounded-box  border-2 border-red-500 ">
+          <div className="bg-darkPurple rounded-box ">
             <GeneralButton
               text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
               onClick={() => SetIsOpen(!IsOpen)}

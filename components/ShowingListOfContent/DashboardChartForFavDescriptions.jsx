@@ -6,9 +6,10 @@ export default function DashboardChartForFavDescriptions({
   likedDescriptions,
   sessionFromServer,
   tagList,
+  className,
 }) {
   return (
-    <div>
+    <div className="bg-darkPurple">
       <HeadersForCategories />
 
       {likedDescriptions.map((description) => {
@@ -18,6 +19,7 @@ export default function DashboardChartForFavDescriptions({
             key={description._id}
             sessionFromServer={sessionFromServer}
             tagList={tagList}
+            className={className}
           ></DescriptionListingAsSections>
         );
       })}
