@@ -159,6 +159,9 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
         profileImage={profileImage}
         userName={userName}
       />
+      {`this is data ${JSON.stringify(data)}`}
+      {`this is filtered names ${JSON.stringify(filterednames)}`}
+      {`this is names ${JSON.stringify(names)}`}
     </div>
   );
 }
