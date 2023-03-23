@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       res.status(200).json(individualNames);
     } catch (err) {
       res.status(500).json(err);
-      console.log("this is an error");
+      console.log(`this is an error ${JSON.stringify(err)}`);
     }
   }
 }
