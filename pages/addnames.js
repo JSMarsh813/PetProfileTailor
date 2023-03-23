@@ -22,26 +22,12 @@ export const getServerSideProps = async (context) => {
 
   const tagData = await NameTag.find();
 
-  // let tagList = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/nametag`
-  // );
-  // let tagData = await tagList.json();
-
-  //categoryList not needed???
-
-  // let categoryList = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/namecategories`
-  // );
-  // let categoryData = await categoryList.json();
-
   return {
     props: {
       tagList: JSON.parse(JSON.stringify(tagData)),
-      // categoryList: categoryData,
       sessionFromServer: session,
     },
   };
-  //and provide the data as props to the page by returning an object from the function
 };
 
 function AddNewNameWithTags({ tagList, sessionFromServer }) {
@@ -61,7 +47,6 @@ function AddNewNameWithTags({ tagList, sessionFromServer }) {
 
   return (
     <div className="bg-violet-900 h-full text-white">
-      {/* {console.log(tagList)} */}
       <Layout
         profileImage={profileImage}
         userName={userName}
@@ -79,7 +64,7 @@ function AddNewNameWithTags({ tagList, sessionFromServer }) {
       >
         {status != "authenticated" && (
           <div className="bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 text-center">
-            To avoid spam, users must sign in to add names{" "}
+            To avoid spam, users must sign in to add names
           </div>
         )}
 
