@@ -18,12 +18,7 @@ export default async function handler(req, res) {
     try {
       const individualNames = await Names.find()
         .skip((page - 1) * limit)
-        // page 0 * 10 items = 0
-        // so no items skipped for page "0"
-
-        //ex: page 1, has 10 items (limit). So it will skip page 1s's 10 items
         .limit(limit)
-        //how many items per page
         .populate({
           path: "createdby",
           select: ["name", "profilename", "profileimage"],
