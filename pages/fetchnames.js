@@ -102,15 +102,12 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     if (previousPageData && !previousPageData.length) return null; // reached the end
     // console.log(`this is pagesize ${pagesize}`);
 
-    return `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/swr/swr?page=${
-      pageIndex + 1
-    }&limit=${pagesize}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+    return `/api/names/swr/swr?page=${pageIndex + 1}&limit=${pagesize}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
   };
 
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
     useSWRInfinite((...args) => getKey(...args, PAGE_SIZE), fetcher);
 
-  console.log(error);
   const names = data ? [].concat(...data) : [];
 
   let isAtEnd = data && data[data.length - 1]?.length < 1;
