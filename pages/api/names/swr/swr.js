@@ -1,6 +1,6 @@
 import dbConnect from "../../../../config/connectmongodb";
 import Names from "../../../../models/Names";
-
+import Users from "../../../../models/User";
 export default async function handler(req, res) {
   const method = req.method;
   const { page, limit } = req.query;
@@ -12,10 +12,10 @@ export default async function handler(req, res) {
       const individualNames = await Names.find()
         .skip((page - 1) * limit)
         .limit(limit);
-      // .populate({
-      //   path: "createdby",
-      //   select: ["name", "profilename", "profileimage"],
-      // })
+      .populate({
+        path: "createdby",
+        select: ["name", "profilename", "profileimage"],
+      })
       // .populate({ path: "tags", select: ["tag"] });
       res.status(200).json(individualNames);
     } catch (err) {
