@@ -110,6 +110,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
     useSWRInfinite((...args) => getKey(...args, PAGE_SIZE), fetcher);
 
+  console.log(error);
   const names = data ? [].concat(...data) : [];
 
   let isAtEnd = data && data[data.length - 1]?.length < 1;
