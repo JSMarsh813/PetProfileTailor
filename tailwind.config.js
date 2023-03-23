@@ -17,6 +17,9 @@ module.exports = {
         darkPurple: "#140223",
         //22043b
       },
+      width: {
+        "30rem": "40rem",
+      },
     },
   },
   plugins: [

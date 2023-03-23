@@ -5,6 +5,8 @@ async function APINewPost(req, res) {
   if (req.method !== "POST") {
     return;
   }
+
+  console.log(req.body);
   const { image, title, description, createdby, taglist } = req.body;
 
   if (!description || !taglist || !createdby) {

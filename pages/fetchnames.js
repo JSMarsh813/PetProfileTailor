@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import { authOptions } from "../pages/api/auth/[...nextauth]";
+import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
@@ -12,23 +12,13 @@ import NameListingAsSections from "../components/ShowingListOfContent/NameListin
 import dbConnect from "../config/connectmongodb";
 import Category from "../models/nameCategory";
 import NameTag from "../models/NameTag";
-import Names from "../models/Names";
 
 import useSWRInfinite from "swr/infinite";
 import fetcher from "../utils/fetch";
-import useOnScreen from "../hooks/useOnScreen";
-
-const PAGE_SIZE = 10;
+import Pagination from "../components/ShowingListOfContent/pagination";
+import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
-
-const getKey = (pageIndex, previousPageData, pagesize) => {
-  if (previousPageData && !previousPageData.length) return null; // reached the end
-
-  return `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/swr/swr?page=${
-    pageIndex + 1
-  }&limit=${pagesize}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
-};
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -43,14 +33,6 @@ export const getServerSideProps = async (context) => {
 
   const data = await Category.find().populate("tags");
 
-  //grabbing names
-  const nameData = await Names.find()
-    .populate({
-      path: "createdby",
-      select: ["name", "profilename", "profileimage"],
-    })
-    .populate({ path: "tags", select: ["tag"] });
-
   //grabbing Tags for name edit function
 
   const tagData = await NameTag.find();
@@ -61,19 +43,15 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       category: JSON.parse(JSON.stringify(data)),
-      nameList: JSON.parse(JSON.stringify(nameData)),
-      sessionFromServer: session,
       tagList: JSON.parse(JSON.stringify(tagListProp)),
+      sessionFromServer: session,
     },
   };
 };
 
-export default function FetchNames({
-  category,
-  nameList,
-  sessionFromServer,
-  tagList,
-}) {
+export default function FetchNames({ category, sessionFromServer, tagList }) {
+  // #### Info for nav menu
+
   let userName = "";
   let profileImage = "";
 
@@ -81,39 +59,60 @@ export default function FetchNames({
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
   }
+  // ##### end of section for nav menu
 
-  const ref = useRef();
-  const isVisible = useOnScreen(ref);
-  //true, then false. But all 30 names are loaded even when it says isVisible is false? Turns to true when scrolled down as expected...but its strange all 30 names load even when the div is not visible?
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [IsOpen, SetIsOpen] = useState(true);
+  const [tagFilters, setTagFiltersState] = useState([]);
+  const [filterednames, setFilteredNames] = useState([]);
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = itemsPerPage;
+
+  let filteredListLastPage = filterednames.length / itemsPerPage;
+
+  // ############ Section for passing state into components as functions #######
+
+  function setItemsPerPageFunction(event) {
+    setItemsPerPage(event);
+  }
+
+  function setPageFunction(event) {
+    setPage(event);
+  }
+
+  function setSizeFunction(event) {
+    setSize(event) && mutate();
+  }
+
+  // ########## End of section for passing state into components as functions ####
+
+  const handleFilterChange = (e) => {
+    const { value, checked } = e.target;
+
+    checked
+      ? setTagFiltersState([...tagFilters, value])
+      : setTagFiltersState(tagFilters.filter((tag) => tag != value));
+
+    setPage(1);
+  };
+
+  // ########### SWR Section #################
+
+  const getKey = (pageIndex, previousPageData, pagesize) => {
+    if (previousPageData && !previousPageData.length) return null; // reached the end
+    // console.log(`this is pagesize ${pagesize}`);
+
+    return `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/swr/swr?page=${
+      pageIndex + 1
+    }&limit=${pagesize}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+  };
 
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
     useSWRInfinite((...args) => getKey(...args, PAGE_SIZE), fetcher);
 
   const names = data ? [].concat(...data) : [];
-  // 0 names, then 20 names, then 30 names
-  const isLoadingInitialData = !data && !error;
-  // true then false
-  const isLoadingMore =
-    isLoadingInitialData ||
-    (size > 0 && data && typeof data[size - 1] === "undefined");
-  //always is true
-  const isEmpty = data?.[0]?.length === 0;
-  //always is false
-  const isAtEnd = data && data[data.length - 1]?.length < 1;
-  //always is false
-  const isRefreshing = isValidating && data && data.length === size;
-  //always is false
 
-  // mutate();
-
-  console.log(`isVisible ${names.length}`);
-
-  //  ################ sets up the toggle for the filter div #############################
-  const [IsOpen, SetIsOpen] = useState(true);
-
-  const [tagFilters, setTagFiltersState] = useState([]);
-
-  const [filterednames, setFilteredNames] = useState([]);
+  let isAtEnd = data && data[data.length - 1]?.length < 1;
 
   useEffect(() => {
     if (names) {
@@ -122,20 +121,16 @@ export default function FetchNames({
   }, [data]);
   //data was necessary to make it work with swr, using the names variable instead wouldn't trigger a state update
 
-  const handleFilterChange = (e) => {
-    const { value, checked } = e.target;
+  //#################### END of SWR section ##############
 
-    checked
-      ? setTagFiltersState([...tagFilters, value])
-      : setTagFiltersState(tagFilters.filter((tag) => tag != value));
-  };
-
-  // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
+  useEffect(() => {
+    setPage(1);
+  }, [itemsPerPage]);
 
   useEffect(() => {
     let currenttags = tagFilters;
 
-    //every time we click, lets start off with nameList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
+    //every time we click, lets start off with names aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
     // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
     //      round: 2, we unclick male
 
@@ -146,7 +141,16 @@ export default function FetchNames({
         )
       )
     );
-  }, [tagFilters, data, isRefreshing, isValidating]);
+  }, [tagFilters, data]);
+  // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
+
+  useEffect(() => {
+    if (filterednames.length / page < itemsPerPage) {
+      setSize(size + 1) && mutate();
+    }
+  }, [filterednames]);
+
+  //makes sure there is at least 10 items(aka itemsPerPage value) per page or try to grab more names
 
   return (
     <div className="bg-violet-900">
@@ -162,8 +166,6 @@ export default function FetchNames({
         />
 
         <div className="flex w-full">
-          {/* ###################### FILTER DIV ############################ */}
-
           <FilteringSidebar
             category={category}
             handleFilterChange={handleFilterChange}
@@ -179,37 +181,56 @@ export default function FetchNames({
               onClick={() => SetIsOpen(!IsOpen)}
             />
 
-            <section className="border-2 border-amber-300 w-full">
+            <Pagination
+              page={page}
+              itemsPerPage={itemsPerPage}
+              filteredListLastPage={filteredListLastPage}
+              isAtEnd={isAtEnd}
+              setItemsPerPageFunction={setItemsPerPageFunction}
+              setPageFunction={setPageFunction}
+              setSizeFunction={setSizeFunction}
+              size={size}
+              filterednameslength={filterednames.length}
+            />
+
+            <section className="w-full">
               <HeadersForNames />
 
               <section className="whitespace-pre-line">
-                {filterednames.map((name) => {
-                  return (
-                    <NameListingAsSections
-                      name={name}
-                      key={name._id}
-                      sessionFromServer={sessionFromServer}
-                      tagList={tagList}
-                    />
-                  );
-                })}
-                {/* {!isRefreshing && isReachingEnd ? (
-                  "no more names available"
-                ) : ( */}
-                <div className="text-center my-4">
-                  <GeneralButton
-                    text="Check for more names"
-                    className=""
-                    onClick={() => setSize(size + 1) && mutate()}
-                  />
-                  {isAtEnd && (
-                    <p>
-                      You have reached the end of the list! However you can
-                      click "check more names" again to check for just-added
-                      names.
-                    </p>
-                  )}
-                </div>
+                {filterednames
+                  .slice(
+                    page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
+                    page * itemsPerPage
+                  )
+                  .map((name) => {
+                    return (
+                      <NameListingAsSections
+                        name={name}
+                        key={name._id}
+                        sessionFromServer={sessionFromServer}
+                        tagList={tagList}
+                      />
+                    );
+                  })}
+
+                <Pagination
+                  page={page}
+                  itemsPerPage={itemsPerPage}
+                  filteredListLastPage={filteredListLastPage}
+                  isAtEnd={isAtEnd}
+                  setItemsPerPageFunction={setItemsPerPageFunction}
+                  setPageFunction={setPageFunction}
+                  setSizeFunction={setSizeFunction}
+                  size={size}
+                  filterednameslength={filterednames.length}
+                />
+
+                <CheckForMoreData
+                  page={page}
+                  filteredListLastPage={filteredListLastPage}
+                  setSizeFunction={setSizeFunction}
+                  isAtEnd={isAtEnd}
+                />
               </section>
             </section>
           </div>

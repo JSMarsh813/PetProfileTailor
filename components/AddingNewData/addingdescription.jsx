@@ -21,7 +21,10 @@ function NewDescriptionWithTagsData({
   function handleDescriptionSubmission(e) {
     e.preventDefault();
     setIsPending(true);
-    let relatedNamesArray = relatedNames.split(",");
+    let relatedNamesArray = [];
+    if (relatedNames.length) {
+      relatedNamesArray = relatedNames.split(",");
+    }
 
     const descriptionSubmission = {
       description: newDescription,

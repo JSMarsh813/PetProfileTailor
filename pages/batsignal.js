@@ -10,7 +10,11 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 import Image from "next/image";
 
 import dbConnect from "../config/connectmongodb";
-import IndividualPosts from "../models/posts";
+import Pagination from "../components/ShowingListOfContent/pagination";
+
+import useSWRInfinite from "swr/infinite";
+import fetcher from "../utils/fetch";
+import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -21,22 +25,32 @@ export const getServerSideProps = async (context) => {
 
   dbConnect();
 
-  const postData = await IndividualPosts.find()
-    .populate({
-      path: "createdby",
-      select: ["name", "profilename", "profileimage"],
-    })
-    .sort({ _id: -1 });
+  // const postData = await IndividualPosts.find()
+  //   .populate({
+  //     path: "createdby",
+  //     select: ["name", "profilename", "profileimage"],
+  //   })
+  //   .sort({ _id: -1 });
   //this way we get the most recent posts first, we use id since mongoDB's objectID has a 4 byte timestamp naturally built in
   return {
     props: {
       sessionFromServer: session,
-      postList: JSON.parse(JSON.stringify(postData)),
+      // postList: JSON.parse(JSON.stringify(postData)),
     },
   };
 };
 
-export default function BatSignal({ sessionFromServer, postList }) {
+export default function BatSignal({ sessionFromServer }) {
+  // #### Info for nav menu
+  let userName = "";
+  let profileImage = "";
+
+  if (sessionFromServer) {
+    userName = sessionFromServer.user.name;
+    profileImage = sessionFromServer.user.profileimage;
+  }
+  // ##### end of section for nav menu
+
   const category = [
     {
       category: "BatSignal!",
@@ -66,28 +80,33 @@ export default function BatSignal({ sessionFromServer, postList }) {
     .map((category) => category.tags)
     .reduce((sum, value) => sum.concat(value), []);
 
+  const [IsOpen, SetIsOpen] = useState(true);
   const [tagFilters, setFiltersState] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [page, setPage] = useState(1);
+  const [addingPost, setAddingPost] = useState(false);
 
-  const [filteredPosts, setFilteredPosts] = useState([...postList]);
+  let filteredListLastPage = filteredPosts.length / itemsPerPage;
+  const PAGE_SIZE = itemsPerPage;
 
-  let userName = "";
-  let profileImage = "";
-
-  if (sessionFromServer) {
-    userName = sessionFromServer.user.name;
-    profileImage = sessionFromServer.user.profileimage;
+  // ############ Section for passing state into components as functions #######
+  function setItemsPerPageFunction(event) {
+    setItemsPerPage(event);
   }
 
-  const [IsOpen, SetIsOpen] = useState(true);
-  //if true, the className for the filter div will be "" (visible)
-  //if false, the className for the filter div will be hidden
+  function setPageFunction(event) {
+    setPage(event);
+  }
 
-  const [addingPost, setAddingPost] = useState(false);
+  function setSizeFunction(event) {
+    setSize(event) && mutate();
+  }
+
+  // ########## End of section for passing state into components as functions ####
 
   const handleFilterChange = (e) => {
     const { value, checked } = e.target;
-
-    setFilteredPosts(postList);
 
     //every time we click, lets reset filteredPosts to postList aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
     // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
@@ -110,18 +129,55 @@ export default function BatSignal({ sessionFromServer, postList }) {
     checked
       ? setFiltersState([...tagFilters, value])
       : setFiltersState(tagFilters.filter((tag) => tag != value));
+
+    setPage(1);
   };
 
-  // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
+  // ########### SWR Section #################
+  const getKey = (pageIndex, previousPageData, pagesize) => {
+    if (previousPageData && !previousPageData.length) return null;
+
+    return `${
+      process.env.NEXT_PUBLIC_BASE_FETCH_URL
+    }/api/individualposts/swr/swr?page=${pageIndex + 1}&limit=${pagesize}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+  };
+
+  const { data, error, isLoading, isValidating, mutate, size, setSize } =
+    useSWRInfinite((...args) => getKey(...args, PAGE_SIZE), fetcher);
+
+  const posts = data ? [].concat(...data) : [];
+
+  let isAtEnd = data && data[data.length - 1]?.length < 1;
+
+  useEffect(() => {
+    if (posts) {
+      setFilteredPosts([...posts]);
+    }
+  }, [data]);
+  //data was necessary to make it work with swr, using the names descriptions instead wouldn't trigger a state update
+
+  //#################### END of main swr section ################
+
   useEffect(() => {
     let currenttags = tagFilters;
 
     setFilteredPosts(
-      filteredPosts.filter((post) =>
+      posts.filter((post) =>
         currenttags.every((tag) => post.taglist.includes(tag))
       )
     );
-  }, [tagFilters]);
+  }, [tagFilters, data]);
+  // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
+
+  useEffect(() => {
+    setPage(1);
+  }, [itemsPerPage]);
+
+  useEffect(() => {
+    if (filteredPosts.length / page < itemsPerPage) {
+      setSize(size + 1) && mutate();
+    }
+  }, [filteredPosts]);
 
   return (
     <div className="pb-8 w-screen ">
@@ -182,21 +238,58 @@ export default function BatSignal({ sessionFromServer, postList }) {
             <AddPost
               tagListProp={tagListProp}
               sessionFromServer={sessionFromServer}
+              setSizeFunction={setSizeFunction}
+              size={size}
             />
           )}
-          {filteredPosts.map((post) => {
-            return (
-              <BatsignalPost
-                post={post}
-                key={post._id}
-                className="mx-auto"
-                sessionFromServer={sessionFromServer}
-                tagListProp={tagListProp}
-              />
-            );
-          })}
 
-          <div className="text-center mb-4"></div>
+          <Pagination
+            page={page}
+            itemsPerPage={itemsPerPage}
+            filteredListLastPage={filteredListLastPage}
+            isAtEnd={isAtEnd}
+            setItemsPerPageFunction={setItemsPerPageFunction}
+            setPageFunction={setPageFunction}
+            setSizeFunction={setSizeFunction}
+            size={size}
+            filterednameslength={filteredPosts.length}
+          />
+
+          {filteredPosts
+            .slice(
+              page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
+              page * itemsPerPage
+            )
+            .map((post) => {
+              return (
+                <BatsignalPost
+                  post={post}
+                  key={post._id}
+                  className="mx-auto"
+                  sessionFromServer={sessionFromServer}
+                  tagListProp={tagListProp}
+                />
+              );
+            })}
+
+          <Pagination
+            page={page}
+            itemsPerPage={itemsPerPage}
+            filteredListLastPage={filteredListLastPage}
+            isAtEnd={isAtEnd}
+            setItemsPerPageFunction={setItemsPerPageFunction}
+            setPageFunction={setPageFunction}
+            setSizeFunction={setSizeFunction}
+            size={size}
+            filterednameslength={filteredPosts.length}
+          />
+
+          <CheckForMoreData
+            page={page}
+            filteredListLastPage={filteredListLastPage}
+            setSizeFunction={setSizeFunction}
+            isAtEnd={isAtEnd}
+          />
         </section>
       </section>
     </div>

@@ -63,27 +63,27 @@ export default function DescriptionListingAsSections({
   }
 
   return (
-    <div className=" border-b-2 border-amber-300 text-white px-6 w-screen">
-      {/* ###### description SECTION #### */}
-      <div className="whitespace-pre-line mt-2">
+    <div className=" border-b-2 border-amber-300 text-white px-6 w-full">
+      {/* ###### DESCRIPTION SECTION #### */}
+
+      <p className="whitespace-pre-line mt-2">
         <span className="text-amber-200 font-bold">Description: </span>
-        {description.description}{" "}
-      </div>
+        {description.description}
+      </p>
 
       {/* ###### NOTES SECTION #### */}
-      <p className="whitespace-pre-line mt-4">
-        <span className="text-amber-200 font-bold">Notes: </span>
+      <p className="max-w-12 whitespace-pre-wrap break-all">
+        <span className="text-amber-200 font-bold">notes: </span>
         {description.notes == "" ? "no notes" : description.notes}
       </p>
+
       <div
-        className="grid 
-            grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 text-base
+        className="grid
+            grid-cols-1  xl:grid-cols-4 gap-4 text-base
             place-items-center
             bg-violet-900 border-2 border-yellow-200
                     text-purple-200 p-2  
-                    my-4                
-                    
-                   "
+                    my-4 "
       >
         {/* ###### LIKES SECTION #### */}
 
@@ -97,11 +97,8 @@ export default function DescriptionListingAsSections({
         />
 
         {/* ###### TAGS SECTION #### */}
-        <p>
-          <span className="text-amber-200 font-bold">Tags: </span>
-
-          {description.tags.map((tag) => tag.tag).join(", ")}
-        </p>
+        <span className="text-amber-200 font-bold">Tags: </span>
+        <p className="">{description.tags.map((tag) => tag.tag).join(",  ")}</p>
 
         <div className="text-center">
           <ShareButton onClickShowShares={onClickShowShares} />
@@ -120,7 +117,7 @@ export default function DescriptionListingAsSections({
 
         {/* ###### CREATEDBY SECTION #### */}
 
-        <section className="flex gap-1.5 place-items-center lg:ml-10 bg-violet-700 p-4 border-2 border-amber-200 border-dotted">
+        <section className="flex gap-1.5 place-items-center  bg-violet-700 p-4 border-2 border-amber-200 border-dotted ">
           <span className="text-amber-200 font-bold">Shared by: </span>
 
           <Image

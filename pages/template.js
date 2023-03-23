@@ -8,6 +8,8 @@ import useSWRInfinite from "swr/infinite";
 import fetcher from "../utils/fetch";
 import useOnScreen from "../hooks/useOnScreen";
 
+import useSWR from "swr";
+
 const PAGE_SIZE = 5;
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
@@ -77,6 +79,19 @@ export default function NavLayoutwithSettingsMenu({ sessionFromServer }) {
       //as we reach the bottom aka the "ref" div, grab more data
     }
   }, [isVisible, isRefreshing]);
+
+  //swr for total number of items
+
+  const getNumberOfItems = async () => {
+    const { totalNumberOfItems, error, isLoading } = useSWR(
+      `/api/names/getnamecount`,
+      fetcher
+    );
+
+    console.log(totalNumberOfItems);
+  };
+
+  getNumberOfItems();
 
   return (
     <Layout

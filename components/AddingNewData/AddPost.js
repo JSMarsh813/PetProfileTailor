@@ -7,7 +7,13 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-function AddPost({ tagListProp, userId, sessionFromServer }) {
+function AddPost({
+  tagListProp,
+  userId,
+  sessionFromServer,
+  setSizeFunction,
+  size,
+}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tagList, setTags] = useState([]);
@@ -88,12 +94,14 @@ function AddPost({ tagListProp, userId, sessionFromServer }) {
       taglist: tagList,
     };
 
+    console.log(postSubmission);
     axios
-      .post("/api/apinewpost", postSubmission)
+      .post("/api/APINewPost", postSubmission)
       .then((response) => {
         toast.success(
           `Successfully added new post. Heres 3 treat points as thanks for your contribution ${sessionFromServer.user.name}!`
         );
+        setSizeFunction(size + 1);
       })
       .catch((error) => {
         console.log("this is error", error);
