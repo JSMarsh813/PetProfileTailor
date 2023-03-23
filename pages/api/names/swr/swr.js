@@ -11,12 +11,12 @@ export default async function handler(req, res) {
     try {
       const individualNames = await Names.find()
         .skip((page - 1) * limit)
-        .limit(limit)
-        .populate({
-          path: "createdby",
-          select: ["name", "profilename", "profileimage"],
-        })
-        .populate({ path: "tags", select: ["tag"] });
+        .limit(limit);
+      // .populate({
+      //   path: "createdby",
+      //   select: ["name", "profilename", "profileimage"],
+      // })
+      // .populate({ path: "tags", select: ["tag"] });
       res.status(200).json(individualNames);
     } catch (err) {
       res.status(500).json(err);
