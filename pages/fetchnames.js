@@ -17,7 +17,7 @@ import useSWRInfinite from "swr/infinite";
 import fetcher from "../utils/fetch";
 import Pagination from "../components/ShowingListOfContent/pagination";
 import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
-
+import ErrorBoundary from "../components/errorBoundary";
 //getkey: accepts the index of the current page, as well as the data from the previous page.
 
 export const getServerSideProps = async (context) => {
@@ -153,89 +153,91 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   //makes sure there is at least 10 items(aka itemsPerPage value) per page or try to grab more names
 
   return (
-    <div className="bg-violet-900">
-      <Layout
-        profileImage={profileImage}
-        userName={userName}
-      />
-
-      <section className="px-4 bg-violet-900">
-        <PageTitleWithImages
-          title="Fetch"
-          title2="Names"
+    <ErrorBoundary>
+      <div className="bg-violet-900">
+        <Layout
+          profileImage={profileImage}
+          userName={userName}
         />
 
-        <div className="flex w-full">
-          <FilteringSidebar
-            category={category}
-            handleFilterChange={handleFilterChange}
-            IsOpen={IsOpen}
+        <section className="px-4 bg-violet-900">
+          <PageTitleWithImages
+            title="Fetch"
+            title2="Names"
           />
 
-          {/*################# CONTENT DIV ################### */}
-
-          <div className="grow bg-darkPurple rounded-box place-items-center">
-            {/* Button that toggles the filter div */}
-            <GeneralButton
-              text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
-              onClick={() => SetIsOpen(!IsOpen)}
+          <div className="flex w-full">
+            <FilteringSidebar
+              category={category}
+              handleFilterChange={handleFilterChange}
+              IsOpen={IsOpen}
             />
 
-            <Pagination
-              page={page}
-              itemsPerPage={itemsPerPage}
-              filteredListLastPage={filteredListLastPage}
-              isAtEnd={isAtEnd}
-              setItemsPerPageFunction={setItemsPerPageFunction}
-              setPageFunction={setPageFunction}
-              setSizeFunction={setSizeFunction}
-              size={size}
-              filterednameslength={filterednames.length}
-            />
+            {/*################# CONTENT DIV ################### */}
 
-            <section className="w-full">
-              <HeadersForNames />
+            <div className="grow bg-darkPurple rounded-box place-items-center">
+              {/* Button that toggles the filter div */}
+              <GeneralButton
+                text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
+                onClick={() => SetIsOpen(!IsOpen)}
+              />
 
-              <section className="whitespace-pre-line">
-                {filterednames
-                  .slice(
-                    page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
-                    page * itemsPerPage
-                  )
-                  .map((name) => {
-                    return (
-                      <NameListingAsSections
-                        name={name}
-                        key={name._id}
-                        sessionFromServer={sessionFromServer}
-                        tagList={tagList}
-                      />
-                    );
-                  })}
+              <Pagination
+                page={page}
+                itemsPerPage={itemsPerPage}
+                filteredListLastPage={filteredListLastPage}
+                isAtEnd={isAtEnd}
+                setItemsPerPageFunction={setItemsPerPageFunction}
+                setPageFunction={setPageFunction}
+                setSizeFunction={setSizeFunction}
+                size={size}
+                filterednameslength={filterednames.length}
+              />
 
-                <Pagination
-                  page={page}
-                  itemsPerPage={itemsPerPage}
-                  filteredListLastPage={filteredListLastPage}
-                  isAtEnd={isAtEnd}
-                  setItemsPerPageFunction={setItemsPerPageFunction}
-                  setPageFunction={setPageFunction}
-                  setSizeFunction={setSizeFunction}
-                  size={size}
-                  filterednameslength={filterednames.length}
-                />
+              <section className="w-full">
+                <HeadersForNames />
 
-                <CheckForMoreData
-                  page={page}
-                  filteredListLastPage={filteredListLastPage}
-                  setSizeFunction={setSizeFunction}
-                  isAtEnd={isAtEnd}
-                />
+                <section className="whitespace-pre-line">
+                  {filterednames
+                    .slice(
+                      page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
+                      page * itemsPerPage
+                    )
+                    .map((name) => {
+                      return (
+                        <NameListingAsSections
+                          name={name}
+                          key={name._id}
+                          sessionFromServer={sessionFromServer}
+                          tagList={tagList}
+                        />
+                      );
+                    })}
+
+                  <Pagination
+                    page={page}
+                    itemsPerPage={itemsPerPage}
+                    filteredListLastPage={filteredListLastPage}
+                    isAtEnd={isAtEnd}
+                    setItemsPerPageFunction={setItemsPerPageFunction}
+                    setPageFunction={setPageFunction}
+                    setSizeFunction={setSizeFunction}
+                    size={size}
+                    filterednameslength={filterednames.length}
+                  />
+
+                  <CheckForMoreData
+                    page={page}
+                    filteredListLastPage={filteredListLastPage}
+                    setSizeFunction={setSizeFunction}
+                    isAtEnd={isAtEnd}
+                  />
+                </section>
               </section>
-            </section>
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </ErrorBoundary>
   );
 }

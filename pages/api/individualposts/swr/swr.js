@@ -1,12 +1,11 @@
 import dbConnect from "../../../../config/connectmongodb";
 import Posts from "../../../../models/posts";
-//wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 
 export default async function handler(req, res) {
   const method = req.method;
   const { page, limit } = req.query;
   console.log(`this is page ${page} with this many items ${limit}`);
-  dbConnect(); //from config/mongo.js
+  dbConnect();
 
   if (method === "GET") {
     try {
