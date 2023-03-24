@@ -70,8 +70,10 @@ export default function Pagination({
           className="bg-violet-200  ml-2"
           onChange={(e) => setSortingLogicFunction(e.target.value)}
         >
-          <option value="1">oldest </option>
-          <option value="-1">newest</option>
+          <option value="_id,-1">Newest</option>
+          <option value="_id,1">Oldest </option>
+          <option value="likedbylength,-1">Most Popular</option>
+          <option value="likedbylength,1">Least Popular</option>
         </select>
         <label
           className="text-white ml-2"

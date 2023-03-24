@@ -29,7 +29,7 @@ const NameSchema = new mongoose.Schema({
     unique: false,
   },
   createdby: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: false,
     ref: "User",
   },

@@ -24,7 +24,7 @@ async function handler(req, res) {
   await db.connect();
 
   const toUpdateName = await Names.findById(idToObjectId);
-
+  console.log(toUpdateName);
   toUpdateName.likedby.includes(user._id)
     ? (toUpdateName.likedby = toUpdateName.likedby.filter(
         (userinlikedby) => userinlikedby != user._id
