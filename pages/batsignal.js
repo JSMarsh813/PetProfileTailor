@@ -49,7 +49,7 @@ export default function BatSignal({ sessionFromServer }) {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [page, setPage] = useState(1);
   const [addingPost, setAddingPost] = useState(false);
-  const [sortinglogic, setSortingLogic] = useState(1);
+  const [sortinglogic, setSortingLogic] = useState(-1);
 
   let filteredListLastPage = filteredPosts.length / itemsPerPage;
   const PAGE_SIZE = itemsPerPage;
