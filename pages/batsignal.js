@@ -49,6 +49,7 @@ export default function BatSignal({ sessionFromServer }) {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [page, setPage] = useState(1);
   const [addingPost, setAddingPost] = useState(false);
+  const [sortinglogic, setSortingLogic] = useState(1);
 
   let filteredListLastPage = filteredPosts.length / itemsPerPage;
   const PAGE_SIZE = itemsPerPage;
@@ -94,6 +95,9 @@ export default function BatSignal({ sessionFromServer }) {
     setSize(event) && mutate();
   }
 
+  function setSortingLogicFunction(event) {
+    setSortingLogic(event);
+  }
   // ########## End of section for passing state into components as functions ####
 
   const handleFilterChange = (e) => {
@@ -112,7 +116,9 @@ export default function BatSignal({ sessionFromServer }) {
 
     return `${
       process.env.NEXT_PUBLIC_BASE_FETCH_URL
-    }/api/individualposts/swr/swr?page=${pageIndex + 1}&limit=${pagesize}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+    }/api/individualposts/swr/swr?page=${
+      pageIndex + 1
+    }&limit=${pagesize}&sort=${sortinglogic}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
   };
 
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
@@ -230,6 +236,7 @@ export default function BatSignal({ sessionFromServer }) {
             setSizeFunction={setSizeFunction}
             size={size}
             filterednameslength={filteredPosts.length}
+            setSortingLogicFunction={setSortingLogicFunction}
           />
 
           {filteredPosts
@@ -259,6 +266,7 @@ export default function BatSignal({ sessionFromServer }) {
             setSizeFunction={setSizeFunction}
             size={size}
             filterednameslength={filteredPosts.length}
+            setSortingLogicFunction={setSortingLogicFunction}
           />
 
           <CheckForMoreData

@@ -90,8 +90,8 @@ function CommentListing({
       className={`flex-col mx-auto py-2 pr-4 text-darkPurple
                 rounded-lg ${rootComment.parentcommentid ? "pl-6 pr-0" : ""}`}
     >
-      <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
-        <div className="w-full mt-1">
+      <div className="flex flex-row bg-violet-50 p-2">
+        <div className="w-full mt-1 ml-6">
           <PostersImageUsernameProfileName
             postersProfileImage={postersProfileImage}
             postersName={postersName}

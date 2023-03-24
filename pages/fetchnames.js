@@ -66,6 +66,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   const [tagFilters, setTagFiltersState] = useState([]);
   const [filterednames, setFilteredNames] = useState([]);
   const [page, setPage] = useState(1);
+  const [sortinglogic, setSortingLogic] = useState(1);
   const PAGE_SIZE = itemsPerPage;
 
   let filteredListLastPage = filterednames.length / itemsPerPage;
@@ -82,6 +83,10 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
   function setSizeFunction(event) {
     setSize(event) && mutate();
+  }
+
+  function setSortingLogicFunction(event) {
+    setSortingLogic(event);
   }
 
   // ########## End of section for passing state into components as functions ####
@@ -104,7 +109,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
     return `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/swr/swr?page=${
       pageIndex + 1
-    }&limit=${pagesize}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+    }&limit=${pagesize}&sort=${sortinglogic}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
   };
 
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
@@ -194,6 +199,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
               setSizeFunction={setSizeFunction}
               size={size}
               filterednameslength={filterednames.length}
+              setSortingLogicFunction={setSortingLogicFunction}
             />
 
             <section className="w-full">
@@ -226,6 +232,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                   setSizeFunction={setSizeFunction}
                   size={size}
                   filterednameslength={filterednames.length}
+                  setSortingLogicFunction={setSortingLogicFunction}
                 />
 
                 <CheckForMoreData

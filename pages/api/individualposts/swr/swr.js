@@ -4,14 +4,14 @@ import Users from "../../../../models/User";
 
 export default async function handler(req, res) {
   const method = req.method;
-  const { page, limit } = req.query;
+  const { page, limit, sort } = req.query;
   console.log(`this is page ${page} with this many items ${limit}`);
   dbConnect();
 
   if (method === "GET") {
     try {
       const postList = await Posts.find()
-        .sort({ _id: -1 })
+        .sort({ _id: sort })
         //this way we get the most recent posts first, we use id since mongoDB's objectID has a 4 byte timestamp naturally built in
         .skip((page - 1) * limit)
         // page 0 * 10 items = 0

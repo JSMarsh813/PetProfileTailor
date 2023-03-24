@@ -91,7 +91,7 @@ export default function EditName({
                     type="title"
                   />
 
-                  <span className="block">
+                  <span className="block text-white mb-2">
                     {`${40 - newName.length}/40 characters left`}{" "}
                   </span>
 
@@ -106,7 +106,7 @@ export default function EditName({
                     value={description}
                   ></textarea>
 
-                  <span>
+                  <span className="block text-white mb-2">
                     {`${500 - description.length}/500 characters left`}{" "}
                   </span>
                   {/* ##### ATTACHING TAGS  ######*/}

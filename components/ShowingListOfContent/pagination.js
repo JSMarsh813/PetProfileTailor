@@ -14,6 +14,7 @@ export default function Pagination({
   setSizeFunction,
   size,
   filterednameslength,
+  setSortingLogicFunction,
 }) {
   const numberOfPages = Math.ceil(filterednameslength / itemsPerPage);
 
@@ -62,6 +63,21 @@ export default function Pagination({
           htmlFor="per-page"
         >
           Per Page
+        </label>
+
+        <select
+          id="per-page"
+          className="bg-violet-200  ml-2"
+          onChange={(e) => setSortingLogicFunction(e.target.value)}
+        >
+          <option value="1">oldest </option>
+          <option value="-1">newest</option>
+        </select>
+        <label
+          className="text-white ml-2"
+          htmlFor="per-page"
+        >
+          Sort by
         </label>
       </div>
 

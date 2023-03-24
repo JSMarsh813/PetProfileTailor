@@ -5,13 +5,14 @@ import Tags from "../../../../models/descriptiontag";
 
 export default async function handler(req, res) {
   const method = req.method;
-  const { page, limit } = req.query;
+  const { page, limit, sort } = req.query;
   console.log(`this is page ${page} with this many items ${limit}`);
   dbConnect(); //from config/mongo.js
 
   if (method === "GET") {
     try {
       const descriptionList = await Description.find()
+        .sort({ _id: sort })
         .skip((page - 1) * limit)
         // page 0 * 10 items = 0
         // so no items skipped for page "0"
