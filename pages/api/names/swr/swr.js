@@ -5,8 +5,8 @@ import Tags from "../../../../models/NameTag";
 export default async function handler(req, res) {
   const method = req.method;
   const { page, limit, sortinglogicstring } = req.query;
-  let skipvalue = parseInt((page - 1) * limit);
-  let limitvalue = parseInt(limit);
+  // let skipvalue = parseInt((page - 1) * limit);
+  // let limitvalue = parseInt(limit);
 
   //https://stackoverflow.com/questions/70751313/how-can-i-pass-a-variable-in-sort-funtcion-of-mongobd
   // let sortlogic = {};
@@ -15,6 +15,7 @@ export default async function handler(req, res) {
   // let sortvalue = parseInt(test[1]);
 
   // sortlogic[sortproperty] = sortvalue;
+  dbConnect();
 
   if (method === "GET") {
     try {
@@ -31,8 +32,8 @@ export default async function handler(req, res) {
           },
         },
         // { $sort: sortlogic },
-        { $skip: skipvalue },
-        { $limit: limitvalue },
+        { $skip: 5 },
+        { $limit: 10 },
         {
           $lookup: {
             from: "users",
