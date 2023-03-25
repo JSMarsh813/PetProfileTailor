@@ -67,6 +67,8 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   const [filterednames, setFilteredNames] = useState([]);
   const [page, setPage] = useState(1);
   const [sortinglogicstring, setSortingLogicString] = useState("_id,-1");
+  const [sortingvalue, setSortingValue] = useState(-1);
+  const [sortingproperty, setSortingProperty] = useState("_id");
 
   const PAGE_SIZE = itemsPerPage;
 
@@ -88,7 +90,12 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
   function setSortingLogicFunction(event) {
     setSortingLogicString(event);
+    setSortingValue(event.split(",")[1]);
+    setSortingProperty(event.split(",")[0]);
+
     console.log(sortinglogicstring);
+    console.log(sortingvalue);
+    console.log(sortingproperty);
   }
 
   // ########## End of section for passing state into components as functions ####
@@ -109,7 +116,8 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     pageIndex,
     previousPageData,
     pagesize,
-    sortinglogicstring
+    sortingvalue,
+    sortingproperty
   ) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
     // console.log(`this is pagesize ${pagesize}`);
@@ -118,12 +126,12 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
       pageIndex + 1
     }
     &limit=${pagesize}
-    &sortinglogicstring=${sortinglogicstring}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+    &sortingvalue=${sortingvalue}&sortingproperty=${sortingproperty}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
   };
 
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
     useSWRInfinite(
-      (...args) => getKey(...args, PAGE_SIZE, sortinglogicstring),
+      (...args) => getKey(...args, PAGE_SIZE, sortingvalue, sortingproperty),
       fetcher
     );
 

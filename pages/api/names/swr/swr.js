@@ -4,18 +4,16 @@ import Users from "../../../../models/User";
 import Tags from "../../../../models/NameTag";
 export default async function handler(req, res) {
   const method = req.method;
-  const { page, limit, sortinglogicstring } = req.query;
-  console.log(typeof limit);
+  const { page, limit, sortingvalue, sortingproperty } = req.query;
+
   // let skipvalue = parseInt((page - 1) * limit);
   // let limitvalue = parseInt(limit);
 
   //https://stackoverflow.com/questions/70751313/how-can-i-pass-a-variable-in-sort-funtcion-of-mongobd
-  // let sortlogic = {};
-  // let test = sortinglogicstring.split(",");
-  // let sortproperty = test[0];
-  // let sortvalue = parseInt(test[1]);
+  let sortlogic = {};
 
-  // sortlogic[sortproperty] = sortvalue;
+  sortlogic[sortingproperty] = parseInt(sortingvalue);
+
   dbConnect();
 
   if (method === "GET") {
@@ -32,9 +30,9 @@ export default async function handler(req, res) {
             likedbylength: { $size: "$likedby" },
           },
         },
-        // { $sort: sortlogic },
+        { $sort: sortlogic },
         { $skip: parseInt((page - 1) * limit) },
-        { $limit: 10 },
+        { $limit: parseInt(limit) },
         {
           $lookup: {
             from: "users",
