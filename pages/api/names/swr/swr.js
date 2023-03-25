@@ -5,6 +5,7 @@ import Tags from "../../../../models/NameTag";
 export default async function handler(req, res) {
   const method = req.method;
   const { page, limit, sortinglogicstring } = req.query;
+  console.log(typeof limit);
   // let skipvalue = parseInt((page - 1) * limit);
   // let limitvalue = parseInt(limit);
 
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
           },
         },
         // { $sort: sortlogic },
-        { $skip: 5 },
+        { $skip: parseInt((page - 1) * limit) },
         { $limit: 10 },
         {
           $lookup: {
