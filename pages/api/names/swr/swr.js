@@ -30,7 +30,7 @@ export default async function handler(req, res) {
             likedbylength: { $size: "$likedby" },
           },
         },
-        { $sort: sortlogic },
+        // { $sort: sortlogic },
         { $skip: skipvalue },
         { $limit: limitvalue },
         {

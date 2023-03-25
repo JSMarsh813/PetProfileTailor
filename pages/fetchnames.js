@@ -172,6 +172,8 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
   return (
     <div className="bg-violet-900">
+      {console.log(`this is ${names}`)}
+      {console.log(`this is ${filterednames}`)}
       <Layout
         profileImage={profileImage}
         userName={userName}
