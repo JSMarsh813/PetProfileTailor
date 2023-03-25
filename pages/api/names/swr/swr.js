@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   // let sortproperty = test[0];
   // let sortvalue = parseInt(test[1]);
 
-  sortlogic[sortproperty] = sortvalue;
+  // sortlogic[sortproperty] = sortvalue;
 
   if (method === "GET") {
     try {
