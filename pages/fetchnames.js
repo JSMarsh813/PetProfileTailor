@@ -151,7 +151,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
   useEffect(() => {
     setPage(1);
-  }, [itemsPerPage]);
+  }, [itemsPerPage, sortingvalue, sortingproperty]);
 
   useEffect(() => {
     let currenttags = tagFilters;
