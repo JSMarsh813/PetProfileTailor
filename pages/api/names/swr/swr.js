@@ -6,7 +6,6 @@ export default async function handler(req, res) {
   const { page, limit, sortingvalue, sortingproperty } = req.query;
   //https://stackoverflow.com/questions/70751313/how-can-i-pass-a-variable-in-sort-funtcion-of-mongobd
   let sortlogic = {};
-
   sortlogic[sortingproperty] = parseInt(sortingvalue);
 
   dbConnect();

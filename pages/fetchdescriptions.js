@@ -197,7 +197,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
                 {isLoading && (
                   <div className="flex">
                     <span className="text-white text-3xl my-20 mx-auto">
-                      Loading ...
+                      Fetching data ...
                     </span>
                   </div>
                 )}
