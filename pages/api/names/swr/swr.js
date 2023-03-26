@@ -1,14 +1,9 @@
 import dbConnect from "../../../../config/connectmongodb";
 import Names from "../../../../models/Names";
-import Users from "../../../../models/User";
-import Tags from "../../../../models/NameTag";
+
 export default async function handler(req, res) {
   const method = req.method;
   const { page, limit, sortingvalue, sortingproperty } = req.query;
-
-  // let skipvalue = parseInt((page - 1) * limit);
-  // let limitvalue = parseInt(limit);
-
   //https://stackoverflow.com/questions/70751313/how-can-i-pass-a-variable-in-sort-funtcion-of-mongobd
   let sortlogic = {};
 

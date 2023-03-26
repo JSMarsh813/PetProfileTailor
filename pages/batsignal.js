@@ -51,8 +51,11 @@ export default function BatSignal({ sessionFromServer }) {
   const [addingPost, setAddingPost] = useState(false);
   const [sortinglogic, setSortingLogic] = useState(-1);
 
-  let filteredListLastPage = filteredPosts.length / itemsPerPage;
+  const [sortingvalue, setSortingValue] = useState(-1);
+  const [sortingproperty, setSortingProperty] = useState("_id");
+
   const PAGE_SIZE = itemsPerPage;
+  let filteredListLastPage = filteredPosts.length / itemsPerPage;
 
   const category = [
     {
@@ -96,7 +99,10 @@ export default function BatSignal({ sessionFromServer }) {
   }
 
   function setSortingLogicFunction(event) {
-    setSortingLogic(event);
+    // setSortingLogic(event);
+
+    setSortingValue(event.split(",")[1]);
+    setSortingProperty(event.split(",")[0]);
   }
   // ########## End of section for passing state into components as functions ####
 
@@ -118,11 +124,14 @@ export default function BatSignal({ sessionFromServer }) {
       process.env.NEXT_PUBLIC_BASE_FETCH_URL
     }/api/individualposts/swr/swr?page=${
       pageIndex + 1
-    }&limit=${pagesize}&sort=${sortinglogic}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+    }&limit=${pagesize}&sortingvalue=${sortingvalue}&sortingproperty=${sortingproperty}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
   };
 
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
-    useSWRInfinite((...args) => getKey(...args, PAGE_SIZE), fetcher);
+    useSWRInfinite(
+      (...args) => getKey(...args, PAGE_SIZE, sortingvalue, sortingproperty),
+      fetcher
+    );
 
   const posts = data ? [].concat(...data) : [];
 
@@ -150,7 +159,7 @@ export default function BatSignal({ sessionFromServer }) {
 
   useEffect(() => {
     setPage(1);
-  }, [itemsPerPage]);
+  }, [itemsPerPage, sortingvalue, sortingproperty]);
 
   useEffect(() => {
     if (filteredPosts.length / page < itemsPerPage) {
@@ -238,6 +247,14 @@ export default function BatSignal({ sessionFromServer }) {
             filterednameslength={filteredPosts.length}
             setSortingLogicFunction={setSortingLogicFunction}
           />
+
+          {isLoading && (
+            <div className="flex">
+              <span className="text-white text-3xl my-20 mx-auto">
+                Loading ...
+              </span>
+            </div>
+          )}
 
           {filteredPosts
             .slice(

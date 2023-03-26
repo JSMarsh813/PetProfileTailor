@@ -18,8 +18,8 @@ const namecommentSchema = new mongoose.Schema(
       unique: false,
     },
     createdby: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
       ref: "User",
     },
     shares: {

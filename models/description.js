@@ -13,8 +13,8 @@ const DescriptionSchema = new mongoose.Schema(
       required: false,
     },
     createdby: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
       ref: "User",
     },
     shares: {

@@ -4,26 +4,55 @@ import Users from "../../../../models/User";
 
 export default async function handler(req, res) {
   const method = req.method;
-  const { page, limit, sort } = req.query;
-  console.log(`this is page ${page} with this many items ${limit}`);
+  const { page, limit, sortingvalue, sortingproperty } = req.query;
+
+  let sortlogic = {};
+  sortlogic[sortingproperty] = parseInt(sortingvalue);
+
   dbConnect();
 
   if (method === "GET") {
     try {
-      const postList = await Posts.find()
-        .sort({ _id: sort })
-        //this way we get the most recent posts first, we use id since mongoDB's objectID has a 4 byte timestamp naturally built in
-        .skip((page - 1) * limit)
-        // page 0 * 10 items = 0
-        // so no items skipped for page "0"
-
-        //ex: page 1, has 10 items (limit). So it will skip page 1s's 10 items
-        .limit(limit)
-        //how many items per page
-        .populate({
-          path: "createdby",
-          select: ["name", "profilename", "profileimage"],
-        });
+      const postList = await Posts.aggregate([
+        {
+          $project: {
+            image: 1,
+            title: 1,
+            description: 1,
+            createdby: 1,
+            taglist: 1,
+            likedby: 1,
+            likedbylength: { $size: "$likedby" },
+          },
+        },
+        { $sort: sortlogic },
+        { $skip: parseInt((page - 1) * limit) },
+        { $limit: parseInt(limit) },
+        {
+          $lookup: {
+            from: "users",
+            localField: "createdby",
+            foreignField: "_id",
+            as: "createdby",
+          },
+        },
+        { $unwind: "$createdby" },
+        {
+          $project: {
+            image: 1,
+            title: 1,
+            description: 1,
+            createdby: {
+              name: 1,
+              profilename: 1,
+              profileimage: 1,
+            },
+            taglist: 1,
+            likedby: 1,
+            length: { $size: "$likedby" },
+          },
+        },
+      ]);
 
       res.status(200).json(postList);
     } catch (err) {

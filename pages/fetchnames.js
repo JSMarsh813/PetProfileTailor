@@ -17,6 +17,7 @@ import useSWRInfinite from "swr/infinite";
 import fetcher from "../utils/fetch";
 import Pagination from "../components/ShowingListOfContent/pagination";
 import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
+import Image from "next/image";
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
 
@@ -66,7 +67,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   const [tagFilters, setTagFiltersState] = useState([]);
   const [filterednames, setFilteredNames] = useState([]);
   const [page, setPage] = useState(1);
-  const [sortinglogicstring, setSortingLogicString] = useState("_id,-1");
+  // const [sortinglogicstring, setSortingLogicString] = useState("_id,-1");
   const [sortingvalue, setSortingValue] = useState(-1);
   const [sortingproperty, setSortingProperty] = useState("_id");
 
@@ -89,13 +90,9 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   }
 
   function setSortingLogicFunction(event) {
-    setSortingLogicString(event);
+    // setSortingLogicString(event);
     setSortingValue(event.split(",")[1]);
     setSortingProperty(event.split(",")[0]);
-
-    console.log(sortinglogicstring);
-    console.log(sortingvalue);
-    console.log(sortingproperty);
   }
 
   // ########## End of section for passing state into components as functions ####
@@ -226,6 +223,13 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
             <section className="w-full">
               <HeadersForNames />
+              {isLoading && (
+                <div className="flex">
+                  <span className="text-white text-3xl my-20 mx-auto">
+                    Loading ...
+                  </span>
+                </div>
+              )}
 
               <section className="whitespace-pre-line">
                 {filterednames

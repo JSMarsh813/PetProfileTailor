@@ -6,8 +6,9 @@ const DescriptionTagSchema = new mongoose.Schema({
     required: true,
   },
   createdby: {
-    type: String,
-    default: "",
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    ref: "User",
   },
 });
 

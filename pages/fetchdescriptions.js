@@ -58,10 +58,11 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   const [filteredDescriptions, setFilteredDescriptions] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [page, setPage] = useState(1);
-  const [sortinglogic, setSortingLogic] = useState(1);
+  const [sortingvalue, setSortingValue] = useState(-1);
+  const [sortingproperty, setSortingProperty] = useState("likedbylength");
 
-  let filteredListLastPage = filteredDescriptions.length / itemsPerPage;
   const PAGE_SIZE = itemsPerPage;
+  let filteredListLastPage = filteredDescriptions.length / itemsPerPage;
 
   // ############ Section for passing state into components as functions #######
   function setItemsPerPageFunction(event) {
@@ -77,7 +78,10 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   }
 
   function setSortingLogicFunction(event) {
-    setSortingLogic(event);
+    setSortingValue(event.split(",")[1]);
+    setSortingProperty(event.split(",")[0]);
+    console.log(sortingvalue);
+    console.log(sortingproperty);
   }
 
   // ########## End of section for passing state into components as functions ####
@@ -100,14 +104,17 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
       process.env.NEXT_PUBLIC_BASE_FETCH_URL
     }/api/description/swr/swr?page=${
       pageIndex + 1
-    }&limit=${pagesize}&sort=${sortinglogic}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+    }&limit=${pagesize}&sortingvalue=${sortingvalue}&sortingproperty=${sortingproperty}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
   };
 
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
-    useSWRInfinite((...args) => getKey(...args, PAGE_SIZE), fetcher);
+    useSWRInfinite(
+      (...args) => getKey(...args, PAGE_SIZE, sortingvalue, sortingproperty),
+      fetcher
+    );
 
   const descriptions = data ? [].concat(...data) : [];
-
+  console.log(descriptions);
   let isAtEnd = data && data[data.length - 1]?.length < 1;
 
   useEffect(() => {
@@ -134,7 +141,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
 
   useEffect(() => {
     setPage(1);
-  }, [itemsPerPage]);
+  }, [itemsPerPage, sortingvalue, sortingproperty]);
 
   useEffect(() => {
     if (filteredDescriptions.length / page < itemsPerPage) {
@@ -187,6 +194,14 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
 
             <section>
               <section className="">
+                {isLoading && (
+                  <div className="flex">
+                    <span className="text-white text-3xl my-20 mx-auto">
+                      Loading ...
+                    </span>
+                  </div>
+                )}
+
                 {filteredDescriptions
                   .slice(
                     page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
