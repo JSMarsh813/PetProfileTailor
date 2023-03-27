@@ -16,6 +16,7 @@ export default async function handler(req, res) {
       const postList = await Posts.aggregate([
         {
           $project: {
+            _id: 1,
             image: 1,
             title: 1,
             description: 1,
@@ -43,6 +44,7 @@ export default async function handler(req, res) {
             title: 1,
             description: 1,
             createdby: {
+              _id: 1,
               name: 1,
               profilename: 1,
               profileimage: 1,

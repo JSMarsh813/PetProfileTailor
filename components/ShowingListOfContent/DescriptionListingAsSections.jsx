@@ -14,6 +14,7 @@ export default function DescriptionListingAsSections({
   sessionFromServer,
   tagList,
   className,
+  setItemEditedFunction,
 }) {
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
@@ -35,9 +36,6 @@ export default function DescriptionListingAsSections({
   // ##### STATE FOR EDITS ####
   const [showEditPage, SetShowEditPage] = useState(false);
 
-  //#### STATE FOR EDITS AND DELETIONS
-  const [itemChanged, setItemChanged] = useState(false);
-
   function updateDeleteState() {
     setShowDeleteConfirmation(true);
   }
@@ -53,15 +51,6 @@ export default function DescriptionListingAsSections({
   }
 
   //if itemChanged in the state is true, then we'll force a reload of the page. This is for BOTH the edit and delete functions
-
-  if (itemChanged) {
-    const forceReload = () => {
-      router.reload();
-    };
-
-    forceReload();
-    setItemChanged(false);
-  }
 
   return (
     <div
@@ -146,10 +135,10 @@ export default function DescriptionListingAsSections({
             <DeleteItemNotification
               setShowDeleteConfirmation={setShowDeleteConfirmation}
               sessionFromServer={sessionFromServer}
-              changeItemState={setItemChanged}
               itemId={description._id}
               itemCreatedBy={description.createdby._id}
               deletionApiPath="/api/description/"
+              setEditedFunction={setItemEditedFunction}
             />
           )}
 
@@ -158,8 +147,8 @@ export default function DescriptionListingAsSections({
               SetShowEditPage={SetShowEditPage}
               description={description}
               sessionFromServer={sessionFromServer}
-              setItemChanged={setItemChanged}
               tagList={tagList}
+              setEditedFunction={setItemEditedFunction}
             />
           )}
         </section>

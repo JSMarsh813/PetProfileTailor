@@ -15,7 +15,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 
-function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
+function BatsignalPost({
+  className,
+  sessionFromServer,
+  post,
+  tagListProp,
+  setItemEditedFunction,
+}) {
   const image = post.image;
   const title = post.title;
   const paragraphText = post.description;
@@ -68,9 +74,6 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
   //for likes
   const [currentTargetedId, setCurrentTargetedId] = useState(postId);
   //if the post is edited, we will refresh this component
-  const router = useRouter();
-  const [postChanged, setPostChanged] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
 
   const handleFetchPosts = async () => {
     const response = await fetch(
@@ -91,6 +94,10 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
     // https://www.reddit.com/r/learnreactjs/comments/m99nbz/is_it_a_good_practice_to_pass_setstate_of_one/
   }
 
+  {
+    console.log(showEditPage);
+  }
+
   function updateDeleteState() {
     setShowDeleteConfirmation(true);
   }
@@ -101,19 +108,6 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
 
   function onClickShowShares() {
     setShareSectionShowing(!shareSectionShowing);
-  }
-
-  {
-    console.log(`set share section ${shareSectionShowing}`);
-  }
-  //if postEdited in the state is true, then we'll force a reload of the page
-  if (postChanged) {
-    const forceReload = () => {
-      router.reload();
-    };
-
-    forceReload();
-    setPostChanged(false);
   }
 
   return (
@@ -129,8 +123,8 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
           sessionFromServer={sessionFromServer}
           tagListProp={tagListProp}
           post={post}
-          changePostState={setPostChanged}
-          setToastMessage={setToastMessage}
+          // setToastMessage={setToastMessage}
+          setItemEditedFunction={setItemEditedFunction}
         />
       )}
 
@@ -138,9 +132,9 @@ function BatsignalPost({ className, sessionFromServer, post, tagListProp }) {
         <DeletePostNotification
           setShowDeleteConfirmation={setShowDeleteConfirmation}
           sessionFromServer={sessionFromServer}
-          changePostState={setPostChanged}
           postId={post._id}
           postCreatedBy={post.createdby._id}
+          setItemEditedFunction={setItemEditedFunction}
         />
       )}
 

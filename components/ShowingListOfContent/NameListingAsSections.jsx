@@ -16,6 +16,7 @@ export default function NameListingAsSections({
   name,
   sessionFromServer,
   tagList,
+  setNameEditedFunction,
 }) {
   const router = useRouter();
   //############## STATE FOR LIKES #######
@@ -28,11 +29,6 @@ export default function NameListingAsSections({
 
   // ##### STATE FOR EDITS ####
   const [showEditPage, SetShowEditPage] = useState(false);
-
-  // console.log(`this is showEditPage ${showEditPage}`);
-
-  //#### STATE FOR EDITS AND DELETIONS
-  const [itemChanged, setItemChanged] = useState(false);
 
   //### STATE FOR COMMENTS ######
   const [commentsShowing, SetCommentsShowing] = useState(false);
@@ -99,17 +95,6 @@ export default function NameListingAsSections({
     );
   }
 
-  //if itemChanged in the state is true, then we'll force a reload of the page. This is for BOTH the edit and delete functions
-
-  if (itemChanged) {
-    const forceReload = () => {
-      router.reload();
-    };
-
-    forceReload();
-    setItemChanged(false);
-  }
-
   return (
     <div className="text-base">
       <div
@@ -150,6 +135,7 @@ export default function NameListingAsSections({
 
         {/* ###### TAGS SECTION #### */}
         <span>{name.tags.map((names) => names.tag).join(", ")}</span>
+        {console.log(name.tags)}
 
         {/* ###### CREATEDBY SECTION #### */}
         <section>
@@ -187,7 +173,7 @@ export default function NameListingAsSections({
             <DeleteItemNotification
               setShowDeleteConfirmation={setShowDeleteConfirmation}
               sessionFromServer={sessionFromServer}
-              changeItemState={setItemChanged}
+              setEditedFunction={setNameEditedFunction}
               itemId={name._id}
               itemCreatedBy={name.createdby._id}
               deletionApiPath="/api/names/"
@@ -199,8 +185,8 @@ export default function NameListingAsSections({
               SetShowEditPage={SetShowEditPage}
               name={name}
               sessionFromServer={sessionFromServer}
-              setItemChanged={setItemChanged}
               tagList={tagList}
+              setEditedFunction={setNameEditedFunction}
             />
           )}
         </section>

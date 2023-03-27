@@ -15,6 +15,7 @@ export default async function handler(req, res) {
       const individualNames = await Names.aggregate([
         {
           $project: {
+            _id: 1,
             name: 1,
             description: 1,
             tags: 1,
@@ -46,14 +47,16 @@ export default async function handler(req, res) {
         },
         {
           $project: {
+            _id: 1,
             name: 1,
             description: 1,
-            tags: { tag: 1 },
+            tags: { tag: 1, _id: 1 },
             comments: 1,
             createdby: {
               name: 1,
               profilename: 1,
               profileimage: 1,
+              _id: 1,
             },
             likedby: 1,
             length: { $size: "$likedby" },

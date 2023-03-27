@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const { description, name, tags, nameId } = req.body.nameSubmission;
 
     const toUpdateName = await Names.findById(nameId);
-    console.log(toUpdateName);
+    console.log(`222 this is to update name ${JSON.stringify(toUpdateName)}`);
     try {
       if (description) {
         toUpdateName.description = description;

@@ -63,13 +63,14 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   // ##### end of section for nav menu
 
   const [itemsPerPage, setItemsPerPage] = useState(5);
-  const [IsOpen, SetIsOpen] = useState(true);
+  const [IsOpen, setIsOpen] = useState(true);
   const [tagFilters, setTagFiltersState] = useState([]);
   const [filterednames, setFilteredNames] = useState([]);
   const [page, setPage] = useState(1);
   // const [sortinglogicstring, setSortingLogicString] = useState("_id,-1");
   const [sortingvalue, setSortingValue] = useState(-1);
   const [sortingproperty, setSortingProperty] = useState("_id");
+  const [nameEdited, setNameEdited] = useState(false);
 
   const PAGE_SIZE = itemsPerPage;
 
@@ -93,6 +94,10 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     // setSortingLogicString(event);
     setSortingValue(event.split(",")[1]);
     setSortingProperty(event.split(",")[0]);
+  }
+
+  function setNameEditedFunction() {
+    setNameEdited(!nameEdited);
   }
 
   // ########## End of section for passing state into components as functions ####
@@ -172,13 +177,14 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
       setSize(size + 1) && mutate();
     }
   }, [filterednames]);
-
   //makes sure there is at least 10 items(aka itemsPerPage value) per page or try to grab more names
+
+  useEffect(() => {
+    mutate();
+  }, [nameEdited]);
 
   return (
     <div className="bg-violet-900">
-      {console.log(`this is ${names}`)}
-      {console.log(`this is ${filterednames}`)}
       <Layout
         profileImage={profileImage}
         userName={userName}
@@ -205,7 +211,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
             {/* Button that toggles the filter div */}
             <GeneralButton
               text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
-              onClick={() => SetIsOpen(!IsOpen)}
+              onClick={() => setIsOpen(!IsOpen)}
             />
 
             <Pagination
@@ -244,6 +250,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                         key={name._id}
                         sessionFromServer={sessionFromServer}
                         tagList={tagList}
+                        setNameEditedFunction={setNameEditedFunction}
                       />
                     );
                   })}

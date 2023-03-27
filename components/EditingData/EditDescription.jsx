@@ -10,10 +10,10 @@ export default function EditName({
   SetShowEditPage,
   description,
   sessionFromServer,
-  setItemChanged,
   setToastMessage,
   tagList,
   nameList,
+  setEditedFunction,
 }) {
   const [descriptionState, setDescription] = useState(description.description);
   const [notes, setNotes] = useState(description.notes);
@@ -43,8 +43,8 @@ export default function EditName({
       .then((response) => {
         console.log(response);
         //reloads page
-        setItemChanged(true);
         SetShowEditPage(false);
+        setEditedFunction(true);
       })
       .catch((error) => {
         console.log("there was an error when sending your edits", error);

@@ -15,6 +15,7 @@ export default async function handler(req, res) {
       const descriptionList = await Description.aggregate([
         {
           $project: {
+            _id: 1,
             description: 1,
             notes: 1,
             tags: 1,
@@ -48,8 +49,9 @@ export default async function handler(req, res) {
           $project: {
             description: 1,
             notes: 1,
-            tags: { tag: 1 },
+            tags: { tag: 1, _id: 1 },
             createdby: {
+              _id: 1,
               name: 1,
               profilename: 1,
               profileimage: 1,

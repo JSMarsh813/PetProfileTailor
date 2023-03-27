@@ -14,7 +14,7 @@ export default function EditPost({
   sessionFromServer,
   tagListProp,
   post,
-  changePostState,
+  setItemEditedFunction,
 }) {
   const [image, setImage] = useState();
   const [title, setTitle] = useState(post.title);
@@ -102,10 +102,8 @@ export default function EditPost({
         postSubmission,
       })
       .then((response) => {
-        console.log(response);
-        //reloads page
-        changePostState(true);
         SetShowEditPage(false);
+        setItemEditedFunction();
       })
       .catch((error) => {
         console.log("there was an error when sending your post edits", error);

@@ -8,8 +8,8 @@ export default function DeleteNameNotification({
   itemId,
   sessionFromServer,
   itemCreatedBy,
-  changeItemState,
   deletionApiPath,
+  setEditedFunction,
 }) {
   const handleItemDelete = async () => {
     if (sessionFromServer.user._id != itemCreatedBy) {
@@ -23,8 +23,8 @@ export default function DeleteNameNotification({
           data: { itemId },
         })
         .then((response) => {
-          changeItemState(true);
           setShowDeleteConfirmation(false);
+          setEditedFunction(true);
         })
         .catch((error) => {
           console.log("there was an error when deleting your item", error);

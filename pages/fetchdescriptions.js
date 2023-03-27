@@ -60,6 +60,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   const [page, setPage] = useState(1);
   const [sortingvalue, setSortingValue] = useState(-1);
   const [sortingproperty, setSortingProperty] = useState("likedbylength");
+  const [itemEdited, setItemEdited] = useState(false);
 
   const PAGE_SIZE = itemsPerPage;
   let filteredListLastPage = filteredDescriptions.length / itemsPerPage;
@@ -80,8 +81,10 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   function setSortingLogicFunction(event) {
     setSortingValue(event.split(",")[1]);
     setSortingProperty(event.split(",")[0]);
-    console.log(sortingvalue);
-    console.log(sortingproperty);
+  }
+
+  function setItemEditedFunction() {
+    setItemEdited(!itemEdited);
   }
 
   // ########## End of section for passing state into components as functions ####
@@ -149,6 +152,10 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
     }
   }, [filteredDescriptions]);
 
+  useEffect(() => {
+    mutate();
+  }, [itemEdited]);
+
   return (
     <div>
       <Layout
@@ -214,6 +221,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
                         key={description._id}
                         sessionFromServer={sessionFromServer}
                         tagList={tagList}
+                        setItemEditedFunction={setItemEditedFunction}
                       />
                     );
                   })}

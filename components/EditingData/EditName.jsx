@@ -8,19 +8,15 @@ export default function EditName({
   SetShowEditPage,
   name,
   sessionFromServer,
-  setItemChanged,
   setToastMessage,
   tagList,
+  setEditedFunction,
 }) {
   const [description, setDescription] = useState(name.description);
   const [newName, setName] = useState(name.name);
   const [tags, setTags] = useState(
     name.tags.map((tag) => ({ label: tag.tag, value: tag._id }))
   );
-
-  {
-    console.log(JSON.stringify(name));
-  }
 
   const nameSubmission = async () => {
     const nameSubmission = {
@@ -30,7 +26,6 @@ export default function EditName({
       //changing each {label: tag.tag, value:tag._id} into just an object id
       nameId: name._id,
     };
-    console.log(nameSubmission);
 
     await axios
       .put("/api/names/", {
@@ -38,9 +33,8 @@ export default function EditName({
       })
       .then((response) => {
         console.log(response);
-        //reloads page
-        setItemChanged(true);
         SetShowEditPage(false);
+        setEditedFunction(true);
       })
       .catch((error) => {
         console.log("there was an error when sending your edits", error);

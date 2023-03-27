@@ -49,8 +49,7 @@ export default function BatSignal({ sessionFromServer }) {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [page, setPage] = useState(1);
   const [addingPost, setAddingPost] = useState(false);
-  const [sortinglogic, setSortingLogic] = useState(-1);
-
+  const [itemEdited, setItemEdited] = useState(false);
   const [sortingvalue, setSortingValue] = useState(-1);
   const [sortingproperty, setSortingProperty] = useState("_id");
 
@@ -99,11 +98,14 @@ export default function BatSignal({ sessionFromServer }) {
   }
 
   function setSortingLogicFunction(event) {
-    // setSortingLogic(event);
-
     setSortingValue(event.split(",")[1]);
     setSortingProperty(event.split(",")[0]);
   }
+
+  function setItemEditedFunction() {
+    setItemEdited(!itemEdited);
+  }
+
   // ########## End of section for passing state into components as functions ####
 
   const handleFilterChange = (e) => {
@@ -166,6 +168,10 @@ export default function BatSignal({ sessionFromServer }) {
       setSize(size + 1) && mutate();
     }
   }, [filteredPosts]);
+
+  useEffect(() => {
+    mutate();
+  }, [itemEdited]);
 
   return (
     <div className="pb-8 w-screen ">
@@ -269,6 +275,7 @@ export default function BatSignal({ sessionFromServer }) {
                   className="mx-auto"
                   sessionFromServer={sessionFromServer}
                   tagListProp={tagListProp}
+                  setItemEditedFunction={setItemEditedFunction}
                 />
               );
             })}
