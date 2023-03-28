@@ -84,7 +84,6 @@ function HomePage({ sessionFromServer }) {
             "Engaging and creative descriptions",
             "Honest and engaging wording for problem behaviors",
             "Easily sort by personality, species, physical traits, and more",
-            ,
           ]}
           buttonTextLeft="Search Descriptions"
           buttonTextLeftLink="/fetchdescriptions"
