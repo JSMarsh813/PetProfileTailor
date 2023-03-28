@@ -7,7 +7,7 @@ async function APINewPost(req, res) {
   }
 
   console.log(req.body);
-  const { image, title, description, createdby, taglist } = req.body;
+  const { image, title, description, createdby, taglist, alttext } = req.body;
 
   if (!description || !taglist || !createdby) {
     res.status(422).json({
@@ -24,6 +24,7 @@ async function APINewPost(req, res) {
     description,
     taglist,
     createdby,
+    alttext,
   });
 
   const post = await newPost.save();
@@ -41,6 +42,7 @@ async function APINewPost(req, res) {
     description: post.description,
     tagList: post.taglist,
     createdby: post.createdby,
+    alttext: post.alttext,
   });
 }
 

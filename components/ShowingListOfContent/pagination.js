@@ -72,8 +72,8 @@ export default function Pagination({
         >
           <option value="_id,-1">Newest</option>
           <option value="_id,1">Oldest </option>
-          <option value="likedbylength,-1">Most Popular</option>
-          <option value="likedbylength,1">Least Popular</option>
+          <option value="likedbylength,-1">Most Liked</option>
+          <option value="likedbylength,1">Least Liked</option>
         </select>
         <label
           className="text-white ml-2"

@@ -19,7 +19,8 @@ export default function DescriptionListingAsSections({
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
-  let linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/description/${description._id}`;
+  const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/description/${description._id}`;
+  const localLink = `/description/${description._id}`;
 
   const router = useRouter();
 
@@ -100,7 +101,7 @@ export default function DescriptionListingAsSections({
               <div className="grid grid-cols-2">
                 <EditButton
                   className="ml-2 mr-6"
-                  setShowEditPage={updateEditState}
+                  onupdateEditState={updateEditState}
                 />
                 <DeleteButton onupdateDeleteState={updateDeleteState} />
               </div>
@@ -117,7 +118,7 @@ export default function DescriptionListingAsSections({
             className="rounded-2xl h-16 inline"
             width={80}
             height={80}
-            alt="users profile image"
+            alt=""
           />
           <a
             className=""
@@ -163,7 +164,10 @@ export default function DescriptionListingAsSections({
 
       {shareSectionShowing && (
         <section className="bg-violet-900 py-2">
-          <SharingOptionsBar linkToShare={linkToShare} />
+          <SharingOptionsBar
+            linkToShare={linkToShare}
+            localLink={localLink}
+          />
         </section>
       )}
     </div>

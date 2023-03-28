@@ -268,7 +268,7 @@ export default function Dashboard({
                       src={profileImage}
                       width={200}
                       height={200}
-                      alt="users profile image"
+                      alt=""
                     />
                   </section>
 

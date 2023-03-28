@@ -51,6 +51,7 @@ function CommentListing({
 
   let linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
   let apiLink = "/api/individualbatsignalcomments";
+  const localLink = `/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
 
   let linkToPost = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/${typeOfContentReplyingTo}/${rootComment.replyingtothisid}`;
 
@@ -107,7 +108,7 @@ function CommentListing({
         <div className="w-16">
           <Image
             className="w-12 h-12 border-2 border-gray-300 rounded-full"
-            alt="poster's avatar"
+            alt=""
             src={postersProfileImage}
             width={100}
             height={100}
@@ -208,7 +209,10 @@ function CommentListing({
       </div>
       {shareSectionShowing && (
         <section className="bg-violet-900 py-2">
-          <SharingOptionsBar linkToShare={linkToShare} />
+          <SharingOptionsBar
+            linkToShare={linkToShare}
+            localLink={localLink}
+          />
         </section>
       )}
       <GeneralButton

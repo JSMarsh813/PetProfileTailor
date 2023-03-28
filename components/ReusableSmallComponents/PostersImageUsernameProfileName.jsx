@@ -21,7 +21,7 @@ export default function PostersImageUsernameProfileName({
           <Image
             className="object-cover rounded-full mx-4 shadow"
             src={postersProfileImage}
-            alt="posters avatar image"
+            alt=""
             width={100}
             height={100}
             layout="responsive"

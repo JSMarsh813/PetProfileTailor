@@ -42,7 +42,8 @@ function CommentListing({
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
-  let linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
+  const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
+  const localLink = `/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
 
   useEffect(() => {
     {
@@ -164,7 +165,10 @@ function CommentListing({
           </div>
           {shareSectionShowing && (
             <section className="bg-violet-900 py-2">
-              <SharingOptionsBar linkToShare={linkToShare} />
+              <SharingOptionsBar
+                linkToShare={linkToShare}
+                localLink={localLink}
+              />
             </section>
           )}
 

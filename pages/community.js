@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import { authOptions } from "../pages/api/auth/[...nextauth]";
+import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import BatsignalPost from "../components/ShowingListOfContent/batsignalPost";
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
-import GeneralButton from "../components//ReusableSmallComponents/buttons/GeneralButton";
+import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import AddPost from "../components/AddingNewData/AddPost";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import Image from "next/image";
@@ -61,23 +61,29 @@ export default function BatSignal({ sessionFromServer }) {
       category: "BatSignal!",
       _id: "1",
       tags: [
-        { tag: "name suggestions" },
-        { tag: "description suggestions" },
-        { tag: "fundraising ideas" },
-        { tag: "social media ideas" },
-        { tag: "photography ideas" },
-        { tag: "other ideas" },
+        { _id: "batsignal1", tag: "name suggestions" },
+        { _id: "batsignal2", tag: "description suggestions" },
+        { _id: "batsignal3", tag: "fundraising ideas" },
+        { _id: "batsignal4", tag: "social media ideas" },
+        { _id: "batsignal5", tag: "photography ideas" },
+        { _id: "batsignal6", tag: "other ideas" },
       ],
     },
     {
       category: "PlayYard & Community",
       _id: "2",
-      tags: [{ tag: "General ChitChat" }, { tag: "showoff your pets!" }],
+      tags: [
+        { _id: "playyard1", tag: "General ChitChat" },
+        { _id: "playyard2", tag: "showoff your pets!" },
+      ],
     },
     {
       category: "Bugs & Feedback",
       _id: "3",
-      tags: [{ tag: "bugs" }, { tag: "feedback" }],
+      tags: [
+        { _id: "feedback1", tag: "bugs" },
+        { _id: "feedback2", tag: "feedback" },
+      ],
     },
   ];
   let tagListProp = category
@@ -213,7 +219,7 @@ export default function BatSignal({ sessionFromServer }) {
                   src="/batsignaldogsrunning.avif"
                   width={140}
                   height={120}
-                  alt="picture of two small dogs running in a large grassy area, one which is looking at the screen"
+                  alt=""
                 />
               </div>
               <div className="my-auto">

@@ -8,6 +8,10 @@ const PostSchema = new mongoose.Schema(
       required: false,
       unique: false,
     },
+    alttext: {
+      type: String,
+      required: false,
+    },
     title: {
       type: String,
       required: false,

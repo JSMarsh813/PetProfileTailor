@@ -24,6 +24,7 @@ export default async function handler(req, res) {
             taglist: 1,
             likedby: 1,
             likedbylength: { $size: "$likedby" },
+            alttext: 1,
           },
         },
         { $sort: sortlogic },
@@ -52,6 +53,7 @@ export default async function handler(req, res) {
             taglist: 1,
             likedby: 1,
             length: { $size: "$likedby" },
+            alttext: 1,
           },
         },
       ]);

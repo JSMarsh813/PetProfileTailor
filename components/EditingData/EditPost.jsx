@@ -212,8 +212,8 @@ export default function EditPost({
                     }`}
                     id="nameTags"
                     options={tagListProp.map((opt, index) => ({
-                      label: opt,
-                      value: opt,
+                      label: opt.tag,
+                      value: opt.tag,
                     }))}
                     isMulti
                     isSearchable

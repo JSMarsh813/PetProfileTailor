@@ -50,7 +50,7 @@ function HomePage({ sessionFromServer }) {
         <h5 className="text-white text-2xl pr-2">Adoptions Ahoy!</h5>
 
         <Image
-          width={90}
+          width={110}
           height={110}
           src="/smallpirate.webp"
           alt="image of a guinea pig wearing a tiny pirate hat"
@@ -124,7 +124,7 @@ function HomePage({ sessionFromServer }) {
             "Or check out our bat signal and play yard area where other users are asking for your help with names and other ideas!",
           ]}
           buttonTextLeft="Check Out Batsignal & Play Yard"
-          buttonTextLeftLink="/batsignal"
+          buttonTextLeftLink="/community"
           buttonTextRight="Sign Up"
           buttonTextRightLink="/register"
           imgwidth="70"

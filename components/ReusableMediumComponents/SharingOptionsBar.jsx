@@ -1,6 +1,8 @@
 import React from "react";
+import { forwardRef } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink } from "@fortawesome/free-solid-svg-icons";
+import { faLink, faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import {
@@ -22,7 +24,30 @@ import {
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-function SharingOptionsBar({ linkToShare }) {
+import Link from "next/link";
+
+const MyLink = forwardRef((props, ref) => {
+  let { href, active, children, ...rest } = props;
+  return (
+    <Link href={href}>
+      <a
+        ref={ref}
+        className={`block rounded-md px-2 py-2 text-md
+        hover:bg-yellow-400
+        hover:text-violet-900  
+        text-center                   
+    ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
+`}
+        {...rest}
+      >
+        {children}
+      </a>
+    </Link>
+  );
+});
+MyLink.displayName = "MyLink";
+
+function SharingOptionsBar({ linkToShare, localLink }) {
   return (
     <section className="flex justify-evenly ">
       <button
@@ -31,7 +56,9 @@ function SharingOptionsBar({ linkToShare }) {
                   text-violet-800
                   font-semibold
                   shadow-md
-                  shadow-darkPurple"
+                  shadow-darkPurple
+                  hover:text-violet-200
+                  hover:bg-darkPurple"
         onClick={() => {
           navigator.clipboard.writeText(linkToShare);
           toast.success("link saved to clipboard");
@@ -44,56 +71,98 @@ function SharingOptionsBar({ linkToShare }) {
         Copy link
       </button>
 
-      <EmailShareButton
-        url={linkToShare}
-        subject={"Link from Pet Profile Tailor"}
+      <MyLink
+        className="bg-amber-300 px-4 py-2
+        rounded-full
+        text-violet-800
+        font-semibold
+        shadow-md
+        shadow-darkPurple
+        hover:text-violet-200
+        hover:bg-darkPurple"
+        href={localLink}
       >
-        <EmailIcon
-          size={40}
-          round
+        <FontAwesomeIcon
+          icon={faPersonRunning}
+          className="mr-2"
         />
-      </EmailShareButton>
+        Go To Link
+      </MyLink>
 
-      <FacebookShareButton
-        url={linkToShare}
-        hashtag={"#PetProfileTailor"}
+      <div
+        className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  
+      
+      ring-offset-2 ring-offset-indigo-600 
+      
+      focus-within:ring-2 focus-within:ring-indigo-200 focus-within:bg-indigo-800"
       >
-        <FacebookIcon
-          size={40}
-          round
-        />
-      </FacebookShareButton>
+        <EmailShareButton
+          url={linkToShare}
+          subject={"Link from Pet Profile Tailor"}
+        >
+          <EmailIcon
+            size={40}
+            round
+          />
+        </EmailShareButton>
+      </div>
 
-      <TwitterShareButton url={linkToShare}>
-        <TwitterIcon
-          size={40}
-          round
-        />
-      </TwitterShareButton>
+      <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
+        <FacebookShareButton
+          url={linkToShare}
+          hashtag={"#PetProfileTailor"}
+        >
+          <span className="focus:ring focus:ring-violet-300">
+            <FacebookIcon
+              size={40}
+              round
+            />
+          </span>
+        </FacebookShareButton>
+      </div>
 
-      <RedditShareButton url={linkToShare}>
-        <RedditIcon
-          size={40}
-          round
-        />
-      </RedditShareButton>
+      <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
+        <TwitterShareButton url={linkToShare}>
+          <TwitterIcon
+            size={40}
+            round
+          />
+        </TwitterShareButton>
+      </div>
 
-      <TumblrShareButton url={linkToShare}>
-        <TumblrIcon
-          size={40}
-          round
-        />
-      </TumblrShareButton>
+      <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
+        <RedditShareButton url={linkToShare}>
+          <RedditIcon
+            size={40}
+            round
+          />
+        </RedditShareButton>
+      </div>
 
-      <WhatsappShareButton
-        url={linkToShare}
-        separator=":: "
+      <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
+        <TumblrShareButton url={linkToShare}>
+          <TumblrIcon
+            size={40}
+            round
+          />
+        </TumblrShareButton>
+      </div>
+
+      <div
+        className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700     
+        ring-offset-2 ring-offset-indigo-600   
+      focus-within:ring-2 focus-within:ring-indigo-200  focus-within:bg-indigo-800"
       >
-        <WhatsappIcon
-          size={40}
-          round
-        />
-      </WhatsappShareButton>
+        <WhatsappShareButton
+          url={linkToShare}
+          separator=":: "
+        >
+          <WhatsappIcon
+            size={40}
+            round
+          />
+        </WhatsappShareButton>
+      </div>
     </section>
   );
 }

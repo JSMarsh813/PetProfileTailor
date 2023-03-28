@@ -66,7 +66,7 @@ export default function UsersFollowingList({
                           <Image
                             src={person.profileimage}
                             className="rounded-2xl h-16"
-                            alt="users profile image"
+                            alt=""
                             width={100}
                             height={100}
                             layout="responsive"

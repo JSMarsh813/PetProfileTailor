@@ -41,26 +41,15 @@ const NavBarNames = () => {
 
           <AddItemsDropDownMenu />
 
-          <NavBarLink href="/batsignal">
+          <NavBarLink href="/community">
             <img
               className="h-5 inline-block invert"
               src="/batsignal.png"
-              alt="cute white bat logo"
+              alt=""
               layout="responsive"
             />
             Community
           </NavBarLink>
-
-          {/* <NavBarLink href="/batsignal">
-            <img
-              className="h-6 inline-block invert mr-1"
-              src="/noun-robot-dog.png"
-              alt="cute white bat logo"
-              layout="responsive"
-            />
-            Ask Byte
-          </NavBarLink> */}
-          {/* robot dog by Amethyst Studio from <a href="https://thenounproject.com/browse/icons/term/robot-dog/" target="_blank" title="robot dog Icons">Noun Project</a> */}
         </ul>
       </section>
     </div>

@@ -173,13 +173,13 @@ focus-visible:ring-opacity-75"
         <Menu.Item>
           {({ active }) => (
             <MyLink
-              href="/batsignal"
+              href="/community"
               active={active}
             >
               <img
                 className={`h-5 mr-1 inline-block ${active ? "" : "invert"}`}
                 src="/batsignal.png"
-                alt="bat logo, created by Megan Mitchell from Noun Project"
+                alt=""
               />
               Community
             </MyLink>

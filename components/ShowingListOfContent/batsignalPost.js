@@ -63,7 +63,8 @@ function BatsignalPost({
 
   //for showing share buttons
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
-  let linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/post/${post._id}`;
+  const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/post/${post._id}`;
+  const localLink = `/post/${post._id}`;
 
   let replyComments = "";
   if (postsCommentsFromFetch) {
@@ -80,7 +81,6 @@ function BatsignalPost({
       "/api/individualbatsignalcomments/commentscontainingpostid/" + postId
     );
     const data = await response.json();
-    console.log(data);
     setPostsCommentsFromFetch(data);
   };
 
@@ -127,6 +127,7 @@ function BatsignalPost({
           setItemEditedFunction={setItemEditedFunction}
         />
       )}
+      {console.log(tagListProp)}
 
       {showDeleteConfirmation && (
         <DeletePostNotification
@@ -160,15 +161,12 @@ function BatsignalPost({
           {image.length != 0 && (
             <div className="md:flex-shrink-0 pt-4">
               <img
-                src={image}
-                alt=""
+                src={post.image}
+                alt={post.alttext}
                 className="max-w-full mx-auto h-96 rounded-lg rounded-b-none"
-                height={100}
-                width={100}
               />
             </div>
           )}
-
           <p className="text-sm py-2 px-2 mr-1">{paragraphText}</p>
 
           <PostersImageUsernameProfileName
@@ -210,7 +208,12 @@ function BatsignalPost({
         </section>
 
         {/* SHARING OPTIONS SECTION */}
-        {shareSectionShowing && <SharingOptionsBar linkToShare={linkToShare} />}
+        {shareSectionShowing && (
+          <SharingOptionsBar
+            linkToShare={linkToShare}
+            localLink={localLink}
+          />
+        )}
 
         {/* ######## POST'S COMMENTS SECTION ###########*/}
 

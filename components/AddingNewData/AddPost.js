@@ -24,6 +24,8 @@ function AddPost({
   //turning file into a url so it can be previewed by the user BEFORE being submitted to cloudinary
   const [imagePreview, setImagePreview] = useState();
 
+  const [altText, setAltText] = useState("");
+
   useEffect(() => {
     setCreatedBy(sessionFromServer ? sessionFromServer.user._id : "");
   }, [sessionFromServer]);
@@ -92,6 +94,7 @@ function AddPost({
       description: description,
       createdby: createdby.toString(),
       taglist: tagList,
+      alttext: altText,
     };
 
     console.log(postSubmission);
@@ -138,7 +141,7 @@ function AddPost({
           onChange={(e) => setDescription(e.target.value)}
           required
           maxLength="2000"
-          placeholder="Describe everything about this post here (required)"
+          placeholder="Add a description (required)"
         ></textarea>
 
         <span className="text-white">
@@ -153,7 +156,9 @@ function AddPost({
               className="text-3xl text-yellow-300 mr-2 mt-2 align-middle inline-block
                                    hover-text-white"
             />
-            <span className="text-white"> Attach an Image (optional)</span>
+            <span className="text-white">
+              Click here to attach an image (optional)
+            </span>
           </label>
           <input
             onChange={handleImageAttachment}
@@ -163,6 +168,18 @@ function AddPost({
             type="file"
           ></input>
         </div>
+
+        <label htmlFor="addAltText">
+          <span className="text-white">Add alt text for attached image</span>
+        </label>
+        <input
+          className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple mt-2"
+          id="addAltText"
+          placeholder="Please add alt text if the image is not purely decorative (optional)"
+          onChange={(e) => setAltText(e.target.value)}
+          maxLength="80"
+          type="text"
+        />
 
         {/* ##### ATTACHING TAGS  ######*/}
         <label

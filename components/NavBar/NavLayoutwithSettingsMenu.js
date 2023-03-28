@@ -77,12 +77,13 @@ export default function NavLayoutwithSettingsMenu({
 
             {/* Name disappears at smaller screen sizes */}
 
-            <span
+            <MyLink
               className="text-lg font-extrabold text-yellow-300 
-              lg:block mx-auto ml-2"
+             lg:block mx-auto ml-2 hover:text-violet-100"
+              href="/"
             >
               PetProfileTailor
-            </span>
+            </MyLink>
 
             <NavBarNames />
 
@@ -112,7 +113,7 @@ export default function NavLayoutwithSettingsMenu({
                       <Image
                         src={profileImage}
                         layout="fill"
-                        alt="users profile image"
+                        alt=""
                         className="ml-3 rounded-full inline relative"
                         unoptimized
                       />

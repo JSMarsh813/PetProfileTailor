@@ -237,7 +237,7 @@ function ProfilePage({
                     <div className="relative">
                       <img
                         src={userData.profileimage}
-                        alt="users profile image"
+                        alt=""
                         className="rounded-full border-4 border-amber-300 align-middle -mt-16 h-36"
                       />
                     </div>

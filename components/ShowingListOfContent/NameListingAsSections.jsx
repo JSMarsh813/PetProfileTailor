@@ -38,7 +38,8 @@ export default function NameListingAsSections({
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
-  let linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
+  const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
+  const localLink = `/name/${name.name}`;
 
   // ##for the delete notification button #####
 
@@ -109,6 +110,7 @@ export default function NameListingAsSections({
                     items-center justify-items-center"
       >
         {/* ###### LIKES SECTION #### */}
+        {console.log(name)}
         <div>
           <LikesButtonAndLikesLogic
             data={name}
@@ -149,7 +151,7 @@ export default function NameListingAsSections({
               className="rounded-2xl"
               width={80}
               height={80}
-              alt="users profile image"
+              alt=""
             />
 
             <div>
@@ -163,7 +165,7 @@ export default function NameListingAsSections({
               <div className="my-2">
                 <EditButton
                   className="ml-2 mr-6"
-                  setShowEditPage={updateEditState}
+                  onupdateEditState={updateEditState}
                 />
                 <DeleteButton onupdateDeleteState={updateDeleteState} />
               </div>
@@ -194,7 +196,10 @@ export default function NameListingAsSections({
 
       {shareSectionShowing && (
         <section className="bg-violet-900 py-2">
-          <SharingOptionsBar linkToShare={linkToShare} />
+          <SharingOptionsBar
+            linkToShare={linkToShare}
+            localLink={localLink}
+          />
         </section>
       )}
 
