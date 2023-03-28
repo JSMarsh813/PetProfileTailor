@@ -23,13 +23,12 @@ border-y-4 border-darkPurple  "
             Welcome to <br /> Pet Profile Tailor!
           </h1>
           <p className="mb-5 text-xl">
-            Naming your new pet or creating engaging pet profiles for adoptable
-            pets can feel ruff! We&apos;ve been there! And we&apos;re here to
-            help.
+            Naming your new pet or creating engaging profiles for adoptable pets
+            can feel ruff! We&apos;ve been there! And we&apos;re here to help.
           </p>
           <p className="mb-5 text-xl">
-            Pet profile tailor is a community powered assistant which assists
-            you finding that perfect name or creating pet profiles which are:
+            Pet profile tailor is a community powered assistant which helps you
+            find that perfect name or create pet profiles which are:
           </p>
 
           <section className="w-full flex justify-center gap-3">

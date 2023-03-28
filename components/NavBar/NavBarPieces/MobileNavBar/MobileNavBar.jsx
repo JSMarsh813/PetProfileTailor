@@ -5,6 +5,7 @@ import { faTags, faIgloo, faIdCard } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { forwardRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const MyLink = forwardRef((props, ref) => {
   let { href, active, children, ...rest } = props;
@@ -176,11 +177,15 @@ focus-visible:ring-opacity-75"
               href="/community"
               active={active}
             >
-              <img
-                className={`h-5 mr-1 inline-block ${active ? "" : "invert"}`}
-                src="/batsignal.png"
-                alt=""
-              />
+              <div className="mx-auto inline-block w-9">
+                <Image
+                  className={`${active ? "" : "invert"}`}
+                  src="/batsignal.png"
+                  width={40}
+                  height={20}
+                  alt=""
+                />
+              </div>
               Community
             </MyLink>
           )}

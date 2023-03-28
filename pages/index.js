@@ -64,8 +64,8 @@ function HomePage({ sessionFromServer }) {
           image="/chamil.jpg"
           listOfText={[
             "Find eye-catching pet names you wouldn't find on regular name sites",
-            "Easily sort by personality, species, and characteristics",
-            "Find names matching themes such as Christmas, just in time for your adoption event!",
+            "Easily sort by personality, species, physical traits, and more",
+            "Find names for themes such as Christmas, just in time for your adoption event!",
           ]}
           buttonTextLeft="Search for Names"
           buttonTextLeftLink="/fetchnames"
@@ -82,8 +82,9 @@ function HomePage({ sessionFromServer }) {
           image="/obviousplant.webp"
           listOfText={[
             "Engaging and creative descriptions",
-            " Honest and engaging wording for problem behaviors",
-            "Easily sort by personality, species, and characteristics",
+            "Honest and engaging wording for problem behaviors",
+            "Easily sort by personality, species, physical traits, and more",
+            ,
           ]}
           buttonTextLeft="Search Descriptions"
           buttonTextLeftLink="/fetchdescriptions"
@@ -99,10 +100,10 @@ function HomePage({ sessionFromServer }) {
         <MediaObjectLeft
           image="/profile.png"
           listOfText={[
-            "Save your favorite names, behaviors and inspiration posts for easy access",
-            "Add new names, behaviors, and inspiration posts",
-            "Can add comments and like posts",
-            "Can follow other users",
+            "Save your favorite names, descriptions, posts and comments for easy access",
+            "Add new names, descriptions and posts",
+            "Add comments and like posts",
+            "Follow other users",
           ]}
           buttonTextLeft="Sign Up"
           buttonTextLeftLink="/register"
@@ -118,12 +119,11 @@ function HomePage({ sessionFromServer }) {
         <MediaObjectRight
           image="/freepikhalloween.avif"
           listOfText={[
-            "Do you want to help pets get adopted but you can't volunteer or foster?",
-            "Excellent, you're barking up the right tree!",
-            "Sign up to add names or behavior descriptions. Animal welfare professionals can use your contributions to create creative and tailored pet profiles to help pets get adopted! ",
-            "Or check out our bat signal and play yard area where other users are asking for your help with names and other ideas!",
+            "Do you want to help pets get adopted but you can't volunteer or foster? Excellent, you're barking up the right tree!",
+            "Sign up to add names or descriptions. Animal welfare professionals can use your contributions to create creative and tailored pet profiles to help pets get adopted! ",
+            "Or check out our play yard (community) where other users are asking for your help with names and other ideas!",
           ]}
-          buttonTextLeft="Check Out Batsignal & Play Yard"
+          buttonTextLeft="Check Out Our Play Yard"
           buttonTextLeftLink="/community"
           buttonTextRight="Sign Up"
           buttonTextRightLink="/register"

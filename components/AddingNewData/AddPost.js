@@ -170,7 +170,7 @@ function AddPost({
         </div>
 
         <label htmlFor="addAltText">
-          <span className="text-white">Add alt text for attached image</span>
+          <span className="text-white">Add alt text</span>
         </label>
         <input
           className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple mt-2"

@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     // return res.status(400).send({ message: `${req.method} not supported` });
 
     //createdby doesn't seem necessary
-    const { image, title, description, createdby, taglist, postid } =
+    const { image, title, description, createdby, taglist, postid, alttext } =
       req.body.postSubmission;
 
     console.log(req.body.postSubmission);
@@ -44,6 +44,11 @@ export default async function handler(req, res) {
     if (image) {
       toUpdatePost.image = image;
     }
+
+    if (alttext) {
+      toUpdatePost.alttext = alttext;
+    }
+
     if (title) {
       toUpdatePost.title = title;
     }

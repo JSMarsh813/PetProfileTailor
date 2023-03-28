@@ -6,7 +6,6 @@ import SingleComment from "../../components/ShowingListOfContent/SingleComment";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import NameListingAsSections from "../../components/ShowingListOfContent/NameListingAsSections";
-import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faEnvelope } from "@fortawesome/free-solid-svg-icons";

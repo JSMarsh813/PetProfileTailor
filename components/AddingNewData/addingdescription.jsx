@@ -55,26 +55,22 @@ function NewDescriptionWithTagsData({
   }
 
   return (
-    <div
-      style={{ width: "700px" }}
-      className="mx-auto"
-    >
+    <div className="mx-auto mx-2">
       <section className="my-6 text-white">
         <p> Add a description with one or more tags. </p>
 
         <h6 className="mt-4 ml-4"> Example: </h6>
-        <div className="w-80 mx-auto">
+        <div className="w-72 md:w-96 mx-auto">
           <Image
-            className="w-80 ml-6
-                mb-4"
+            className="mb-4"
             src="/addingdescriptionexample.jpg"
-            width={100}
-            height={100}
+            width={90}
+            height={90}
             layout="responsive"
             alt="Poster of an old large dog sitting patiently which says: I like to sleep through the night. I'll bet you do, too. Because I'm a grown-ass adult. Get a dog who gets you. Adopt adult. APA adoption center"
           />
         </div>
-        <p className="ml-6">
+        <p className="md:ml-6">
           This description could have tags like: senior, funny, quiet,
           well-behaved.
         </p>

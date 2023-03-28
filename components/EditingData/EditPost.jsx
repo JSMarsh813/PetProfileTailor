@@ -21,6 +21,7 @@ export default function EditPost({
   const [description, setDescription] = useState(post.description);
   const [tagList, setTags] = useState(post.taglist);
   const [createdby, setCreatedBy] = useState({});
+  const [altText, setAltText] = useState("");
 
   //image we attached, waiting to upload to cloudinary
   const [imageToCloudinary, setImageToCloudinary] = useState("");
@@ -94,6 +95,7 @@ export default function EditPost({
       createdby: createdby.toString(),
       taglist: tagList,
       postid: post._id,
+      alttext: altText,
     };
     console.log(postSubmission);
 
@@ -155,7 +157,6 @@ export default function EditPost({
                   />
 
                   <span className="text-white">
-                    {" "}
                     {`${80 - title.length}/80 characters left`}
                   </span>
 
@@ -171,7 +172,6 @@ export default function EditPost({
                     value={description}
                   ></textarea>
                   <span className="text-white">
-                    {" "}
                     {`${1000 - description.length}/1000 characters left`}
                   </span>
 
@@ -184,7 +184,6 @@ export default function EditPost({
                                    hover:text-white"
                       />
                       <span className="text-white">
-                        {" "}
                         Attach an Image (optional)
                       </span>
                     </label>
@@ -196,6 +195,19 @@ export default function EditPost({
                       type="file"
                     ></input>
                   </div>
+
+                  <label htmlFor="addAltText">
+                    <span className="text-white">Add alt text</span>
+                  </label>
+                  <input
+                    className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple mt-2"
+                    id="addAltText"
+                    placeholder="Please add alt text if the image is not purely decorative (optional)"
+                    value={post.alttext}
+                    onChange={(e) => setAltText(e.target.value)}
+                    maxLength="80"
+                    type="text"
+                  />
 
                   {/* ##### ATTACHING TAGS  ######*/}
                   <label

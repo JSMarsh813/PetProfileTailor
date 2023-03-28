@@ -62,30 +62,27 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   }
 
   return (
-    <div
-      style={{ width: "700px" }}
-      className="mx-auto"
-    >
-      <section className="my-6">
+    <div className="mx-auto mx-2">
+      <section className="mx-auto">
         <p> Add a name with one or more tags. </p>
 
-        <h6 className="mt-4 ml-4"> Example: A dog named batman </h6>
+        <h6 className="mt-4"> Example: A dog named batman </h6>
         <div className="w-52 mx-auto">
           <Image
-            className=" ml-6 rounded mb-4"
+            className="rounded mb-4"
             src="/batdog.jpg"
-            width={100}
-            height={100}
+            width={80}
+            height={90}
             layout="responsive"
             alt="Image of a pug with a stern batman mask on"
           />
         </div>
-        <p className="ml-6">
+        <p className="">
           Batman could have the tags: comics, superheroes, batman, male, edgy
         </p>
 
         <section className="text-center mt-4">
-          <h4 className="font-semibold text-lg"> Check if a name exists: </h4>
+          {/* <h4 className="font-semibold text-lg"> Check if a name exists: </h4>
 
           <input
             type="text"
@@ -109,8 +106,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
               className="mx-2
                                    text-yellow-200"
             >
-              {" "}
-              Search{" "}
+              Search
             </span>
           </button>
           <span className="block">
@@ -141,7 +137,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             <span className="block">
               Success! {nameCheck} does NOT exist yet.
             </span>
-          )}
+          )} */}
         </section>
 
         <form onSubmit={handleNameSubmission}>

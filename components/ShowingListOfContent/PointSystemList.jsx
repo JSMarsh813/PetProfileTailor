@@ -25,23 +25,21 @@ export default function PointSystemList({
 
   //##############POINTS###########
 
-  const [namesLikedPoints, setNamesLikedPoints] = useState("loading");
+  const [namesLikedPoints, setNamesLikedPoints] = useState(0);
 
-  const [namesAddedPoints, setNamesAddedPoints] = useState("loading");
+  const [namesAddedPoints, setNamesAddedPoints] = useState(0);
 
-  const [commentsLikedPoints, setCommentsLikedPoints] = useState("loading");
+  const [commentsLikedPoints, setCommentsLikedPoints] = useState(0);
 
-  const [postsAddedPoints, setPostsAddedPoints] = useState("loading");
+  const [postsAddedPoints, setPostsAddedPoints] = useState(0);
 
-  const [postsLikedPoints, setpostsLikedPoints] = useState("loading");
+  const [postsLikedPoints, setpostsLikedPoints] = useState(0);
 
-  const [commentsAddedPoints, setCommentsAddedPoints] = useState("loading");
+  const [commentsAddedPoints, setCommentsAddedPoints] = useState(0);
 
-  const [descriptionsLikedPoints, setDescriptionsLikedPoints] =
-    useState("loading");
+  const [descriptionsLikedPoints, setDescriptionsLikedPoints] = useState(0);
 
-  const [descriptionsAddedPoints, setDescriptionsAddedPoints] =
-    useState("loading");
+  const [descriptionsAddedPoints, setDescriptionsAddedPoints] = useState(0);
 
   const [totalPoints, setTotalPoints] = useState();
 
