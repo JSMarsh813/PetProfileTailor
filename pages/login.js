@@ -229,6 +229,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     <GeneralButton
                       text="sign in"
                       className="ml-2 mb-2 text-center"
+                      type="submit"
                     />
                   </form>
 
