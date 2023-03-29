@@ -67,7 +67,7 @@ export default function NavLayoutwithSettingsMenu({
               >
                 <FontAwesomeIcon
                   icon={faBars}
-                  className="text-xl text-violet-100 "
+                  className="text-xl text-violet-100 hover:text-yellow-300"
                   aria-hidden="true"
                 />
               </Menu.Button>
@@ -106,9 +106,11 @@ export default function NavLayoutwithSettingsMenu({
                   focus:outline-none 
                   focus-visible:ring-2 
                   focus-visible:ring-white 
-                  focus-visible:ring-opacity-75"
+                  focus-visible:ring-opacity-75
+                  
+                  hover:text-violet-100"
                   >
-                    <span className="text-lg font-bold"> {userName} </span>
+                    <span className="text-lg font-bold">{userName}</span>
                     <div className="ml-3 h-8 w-8 relative">
                       <Image
                         src={profileImage}

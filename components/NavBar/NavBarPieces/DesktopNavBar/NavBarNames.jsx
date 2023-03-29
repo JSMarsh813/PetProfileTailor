@@ -15,7 +15,10 @@ const NavBarNames = () => {
 
       <section className="hidden xl:flex desktop-menu ">
         <ul className="">
-          <NavBarLink href="/">
+          <NavBarLink
+            href="/"
+            className=""
+          >
             <FontAwesomeIcon
               icon={faIgloo}
               className="text-xl mr-1 text-white"

@@ -58,8 +58,8 @@ function AddNewNameWithTags({ tagList, sessionFromServer }) {
         title2="Name"
       />
 
-      <div className="mx-auto mt-4 ">
-        {status != "authenticated" && (
+      <div className="mx-auto mt-4 md:px-4">
+        {!sessionFromServer && (
           <div className="bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 text-center">
             To avoid spam, users must sign in to add names
           </div>

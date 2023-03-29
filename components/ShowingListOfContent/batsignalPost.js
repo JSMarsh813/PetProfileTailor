@@ -163,7 +163,7 @@ function BatsignalPost({
               <img
                 src={post.image}
                 alt={post.alttext}
-                className="max-w-full mx-auto h-96 rounded-lg rounded-b-none"
+                className="max-w-full mx-auto max-h-96 rounded-lg rounded-b-none"
               />
             </div>
           )}

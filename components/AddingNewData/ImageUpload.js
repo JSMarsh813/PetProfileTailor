@@ -120,6 +120,7 @@ function ImageUpload({ sessionFromServer }) {
                 src={imagePreview}
                 width={300}
                 height={300}
+                alt=""
               />
               <FontAwesomeIcon
                 icon={faCircleXmark}
