@@ -173,10 +173,7 @@ focus-visible:ring-opacity-75"
 
         <Menu.Item>
           {({ active }) => (
-            <MyLink
-              href="/community"
-              active={active}
-            >
+            <MyLink href="/community">
               <div className="mx-auto inline-block w-9">
                 <Image
                   className={`${active ? "" : "invert"}`}
