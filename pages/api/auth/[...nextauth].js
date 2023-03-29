@@ -1,6 +1,6 @@
 import bcryptjs from "bcryptjs";
 import NextAuth from "next-auth";
-// import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
