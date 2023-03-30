@@ -163,7 +163,7 @@ export const authOptions = {
           attachments: [
             {
               filename: "buttonpressdog.gif",
-              path: process.cwd() + `/public/buttonpressdog.gif`,
+              path: path.join(process.cwd(), `/public/buttonpressdog.gif`),
               cid: "unique@nodemailer.com", //same cid value as in the html img src
             },
           ],
