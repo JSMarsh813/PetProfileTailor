@@ -8,7 +8,7 @@ import User from "../../../models/User";
 import { createTransport } from "nodemailer";
 // import NameTag from "../../../models/NameTag";
 import db from "../../../utils/db";
-
+import path from "path";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../auth/lib/mongodb";
 
