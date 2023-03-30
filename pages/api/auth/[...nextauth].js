@@ -71,9 +71,13 @@ function html({ url, host, theme }) {
       </span>
 
       <p style="padding: 10px 5px; border-bottom: 10px solid #301934">
-      Click on the button. Then click on the downward arrow next to your user profile to activate the dropdown menu. Click on settings.
+      Click on the sign in button above. Then click on the downwards arrow next to your user profile image. Click on settings.
       </p>
 
+      <img src="cid:instructions"
+      style="display: inline-block; margin: auto"
+      alt=""/>
+     </td>
 
     </div>
 
@@ -165,6 +169,14 @@ export const authOptions = {
               filename: "buttonpressdog.gif",
               path: path.join(process.cwd(), `/public/buttonpressdog.gif`),
               cid: "unique@nodemailer.com", //same cid value as in the html img src
+            },
+            {
+              filename: "settingsinstructions.png",
+              path: path.join(
+                process.cwd(),
+                `/public/settingsinstructions.png`
+              ),
+              cid: "instructions", //same cid value as in the html img src
             },
           ],
         });
