@@ -11,7 +11,6 @@ import db from "../../../utils/db";
 
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../auth/lib/mongodb";
-const path = require("path");
 
 function html({ url, host, theme }) {
   const escapedHost = host.replace(/\./g, "&#8203;.");

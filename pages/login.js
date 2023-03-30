@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
@@ -52,14 +52,12 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
     profileImage = sessionFromServer.user.profileimage;
   }
   //end of section for nav menu
-  // const [redirectToSettings, setRedirectToSettings] = useState(false);
 
   useEffect(() => {
     if (session?.user) {
-      router.push("/dashboard");
+      router.push(redirect || "/dashboard");
     }
-  }, [router, session]);
-  // redirect
+  }, [router, session, redirect]);
   //if the session exists, then the user is already signed in. So if this is true, push back to the homepage
   //we need to use router (line 8) to redirect user
 
@@ -235,38 +233,15 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     />
                   </form>
 
-                  {/* <label
-                    className="form-check-label inline-block text-violet-100 flex justify-center"
-                    htmlFor="exampleCheck2"
-                  >
-                    <input
-                      type="checkbox"
-                      value={redirectToSettings}
-                      className="form-check-input appearance-none h-4 w-4 rounded-sm checked:bg-blue-600 checked:border-blue-600 
-                      focus:outline-none transition duration-200 mt-1 mr-2 cursor-pointer"
-                      id="redirectToSettings"
-                      onClick={() => setRedirectToSettings(!redirectToSettings)}
-                    />
-                    Reset my password
-                  </label> */}
-
                   <div className="flex mt-2">
                     <MagicRabbitSVG />
-                    <p className="text-center">
+                    <p className="text-center rounded-lg">
                       We&apos;ll email you a magic link so you can sign in
-                      without a password!
+                      without a password.
                     </p>
 
-                    <NounBlackCatIcon />
+                    <NounBlackCatIcon fill="purple" />
                   </div>
-
-                  {/* <h6 className="text-center font-semibold">
-                    Want to reset your password?
-                  </h6>
-                  <p className="text-center">
-                    Click "reset my password" and the magic link will send you
-                    to settings
-                  </p> */}
                 </section>
 
                 <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"></div>
