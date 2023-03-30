@@ -11,6 +11,7 @@ import db from "../../../utils/db";
 
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../auth/lib/mongodb";
+const path = require("path");
 
 function html({ url, host, theme }) {
   const escapedHost = host.replace(/\./g, "&#8203;.");
@@ -32,15 +33,25 @@ function html({ url, host, theme }) {
     style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
     <tr>
       <td align="center"
-        style="padding: 10px 0px; font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+        style="padding: 10px 0px; font-size: 26px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
         Tap the button below to sign into <strong>${escapedHost}</strong>!
     
       </td>
     </tr>
     <tr>
-      <td align="center" style="padding: 40px 0;">
+     <td  align="center" >
+    <img src="cid:unique@nodemailer.com"
+       style="display: inline-block; margin: auto"
+       alt="gif of a dog pressing a red button that turns a lightbulb green"/>
+      </td>
+</tr>
+    <tr>
+      <td align="center" style="padding: 20px 0;">
         <table border="0" cellspacing="0" cellpadding="0">
+   
           <tr>
+      
+
             <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${url}"
                 target="_blank"
               
@@ -52,29 +63,33 @@ function html({ url, host, theme }) {
     </tr>
   
     <tr>
-    <td align="center"
-    bgcolor="${color.lightBackground}"
-      style="padding: 10px 0px; font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #fff;">
-
-      <span style="padding: 10px 0px">
+    <td bgColor="#301934"; style="border:solid 20px #301934; padding-top:20px; padding-bottom:10px">
+    <div align="center"
+   style="background:#301934;border: 20px; font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #fff;">     
+      
+      <span style="padding: 20px 5px">
       Want to change your password?
       </span>
 
-      <p style="padding: 10px 0px">
-      Click on the button. Then click on the downward arrow next to your user profile to activate the dropdown. Click on settings.
+      <p style="padding: 10px 5px; border-bottom: 10px solid #301934">
+      Click on the button. Then click on the downward arrow next to your user profile to activate the dropdown menu. Click on settings.
       </p>
 
 
-    </td>
+    </div>
+
+    <p align="center"
+    style="padding: 10px 0px 0px 0px; font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #fff;
+    bgColor=#000033; border-top: 2px solid #fff"
+    >
+
+    If you did not request this email you can safely ignore it.
+    </p>
+  </td>
   </tr>
 
-    <tr>
-      <td align="center"
-        style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-   
-        If you did not request this email you can safely ignore it.
-      </td>
-    </tr>
+  
+    
   </table>
 </body>
 `;
@@ -146,6 +161,13 @@ export const authOptions = {
           subject: `Sign in to ${host}`,
           text: text({ url, host }),
           html: html({ url, host, email }),
+          attachments: [
+            {
+              filename: "buttonpressdog.gif",
+              path: process.cwd() + `/public/buttonpressdog.gif`,
+              cid: "unique@nodemailer.com", //same cid value as in the html img src
+            },
+          ],
         });
       },
     }),
