@@ -13,6 +13,7 @@ function AddPost({
   sessionFromServer,
   setSizeFunction,
   size,
+  setAddingPostFunction,
 }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -205,9 +206,13 @@ function AddPost({
         />
 
         <div className="buttons flex">
-          <button className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-white ml-auto">
+          <button
+            className="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-white ml-auto"
+            onClick={() => setAddingPostFunction()}
+          >
             Cancel
           </button>
+
           <button
             className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
             onClick={handlePostCreate}

@@ -112,6 +112,10 @@ export default function Community({ sessionFromServer }) {
     setItemEdited(!itemEdited);
   }
 
+  function setAddingPostFunction() {
+    setAddingPost(!addingPost);
+  }
+
   // ########## End of section for passing state into components as functions ####
 
   const handleFilterChange = (e) => {
@@ -212,7 +216,7 @@ export default function Community({ sessionFromServer }) {
               just chat!
             </p>
             <GeneralButton
-              text="Add a Post"
+              text={` ${!addingPost ? "Add a new post" : "Cancel"}`}
               className="ml-2 mt-2"
               onClick={() => {
                 setAddingPost(!addingPost);
@@ -228,6 +232,7 @@ export default function Community({ sessionFromServer }) {
           sessionFromServer={sessionFromServer}
           setSizeFunction={setSizeFunction}
           size={size}
+          setAddingPostFunction={setAddingPostFunction}
         />
       )}
 

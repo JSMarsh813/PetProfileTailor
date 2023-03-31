@@ -66,7 +66,7 @@ function AddComment({
     <div className="border-b-2 border-violet-100 justify-center shadow-lg mb-4 w-full">
       <form className="w-full bg-violet-900 rounded-lg px-4 pt-2 mb-4 pb-2">
         <GeneralButton
-          text="Add a new comment"
+          text={` ${!showCommentForm ? "Add a new comment" : "Cancel"}`}
           onClick={() => setShowCommentForm(!showCommentForm)}
           className=""
         />
