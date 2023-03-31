@@ -117,7 +117,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
     );
 
   const descriptions = data ? [].concat(...data) : [];
-  console.log(descriptions);
+  // console.log(descriptions);
   let isAtEnd = data && data[data.length - 1]?.length < 1;
 
   useEffect(() => {

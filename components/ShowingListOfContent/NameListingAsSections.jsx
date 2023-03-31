@@ -111,7 +111,7 @@ export default function NameListingAsSections({
                     items-center justify-items-center"
       >
         {/* ###### LIKES SECTION #### */}
-        {console.log(name)}
+
         <div>
           <LikesButtonAndLikesLogic
             data={name}
@@ -138,7 +138,6 @@ export default function NameListingAsSections({
 
         {/* ###### TAGS SECTION #### */}
         <span>{name.tags.map((names) => names.tag).join(", ")}</span>
-        {console.log(name.tags)}
 
         {/* ###### CREATEDBY SECTION #### */}
         <section>

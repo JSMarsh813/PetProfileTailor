@@ -137,7 +137,6 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
       fetcher
     );
 
-  console.log(error);
   const names = data ? [].concat(...data) : [];
 
   let isAtEnd = data && data[data.length - 1]?.length < 1;
