@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
+import dbConnect from "../config/connectmongodb";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
@@ -43,6 +44,8 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
 
   const router = useRouter();
   const { redirect } = router.query;
+
+dbConnect();
 
   let userName = "";
   let profileImage = "";
