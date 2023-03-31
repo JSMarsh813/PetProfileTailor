@@ -56,10 +56,10 @@ function NewDescriptionWithTagsData({
 
   return (
     <div className="mx-auto mx-2 md:px-4">
-      <section className="my-6 text-white">
+      <section className="my-6 text-white text-center">
         <p> Add a description with one or more tags. </p>
 
-        <h6 className="mt-4 ml-4"> Example: </h6>
+        <h6 className="mt-4 ml-4 text-center"> Example: </h6>
         <div className="w-72 md:w-96 mx-auto">
           <Image
             className="mb-4"
@@ -70,7 +70,7 @@ function NewDescriptionWithTagsData({
             alt="Poster of an old large dog sitting patiently which says: I like to sleep through the night. I'll bet you do, too. Because I'm a grown-ass adult. Get a dog who gets you. Adopt adult. APA adoption center"
           />
         </div>
-        <p className="md:ml-6">
+        <p className="md:ml-6 text-center">
           This description could have tags like: senior, funny, quiet,
           well-behaved.
         </p>

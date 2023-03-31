@@ -90,7 +90,7 @@ export default function DescriptionListingAsSections({
         />
 
         {/* ###### TAGS SECTION #### */}
-        <span className="text-amber-200 font-bold">Tags: </span>
+        <span className="text-amber-100 font-bold">Tags: </span>
         <p className="">{description.tags.map((tag) => tag.tag).join(",  ")}</p>
 
         <div className="text-center">
@@ -126,7 +126,7 @@ export default function DescriptionListingAsSections({
               process.env.NEXT_PUBLIC_BASE_FETCH_URL
             }profile/${description.createdby.profilename.toLowerCase()}`}
           >
-            <div className="inline flex flex-col">
+            <div className="inline flex flex-col text-amber-100">
               <span className=""> {description.createdby.name}</span>
               <span className="">@{description.createdby.profilename}</span>
             </div>

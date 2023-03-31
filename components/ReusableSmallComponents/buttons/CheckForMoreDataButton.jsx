@@ -17,7 +17,7 @@ export default function CheckForMoreDataButton({
             onClick={() => setSizeFunction(page + 1)}
           />
 
-          <p>
+          <p className="text-white">
             You have reached the end of the list! However you can click &quot;
             check more &quot; again to check for just-added data.
           </p>

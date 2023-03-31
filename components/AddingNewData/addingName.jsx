@@ -63,10 +63,10 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
 
   return (
     <div className="mx-auto mx-2">
-      <section className="mx-auto">
+      <section className="mx-auto text-center">
         <p> Add a name with one or more tags. </p>
 
-        <h6 className="mt-4"> Example: A dog named batman </h6>
+        <h6 className="mt-4 text-center"> Example: A dog named batman </h6>
         <div className="w-52 mx-auto">
           <Image
             className="rounded mb-4"
@@ -77,7 +77,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             alt="Image of a pug with a stern batman mask on"
           />
         </div>
-        <p className="">
+        <p className="text-center">
           Batman could have the tags: comics, superheroes, batman, male, edgy
         </p>
 
