@@ -6,7 +6,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import DisabledButton from "../../components/ReusableSmallComponents/buttons/DisabledButton";
 function AddPost({
   tagListProp,
   userId,
@@ -213,14 +213,22 @@ function AddPost({
             Cancel
           </button>
 
-          <button
-            className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
-            onClick={handlePostCreate}
-          >
-            Post
-          </button>
+          {sessionFromServer ? (
+            <button
+              className="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
+              onClick={handlePostCreate}
+            >
+              Post
+            </button>
+          ) : (
+            <DisabledButton text="submit (disabled)" />
+          )}
         </div>
-
+        {!sessionFromServer && (
+          <p className="text-center text-yellow-300 bg-red-700 p-2 border-2 border-yellow-300 mt-2">
+            Sign in to submit posts
+          </p>
+        )}
         <p className="text-white text-center py-4">
           Preview uploaded image(s) below before posting{" "}
         </p>
@@ -230,8 +238,6 @@ function AddPost({
           <div className="flex justify-center">
             <div className="relative w-content">
               <img
-                width={100}
-                height={100}
                 className="max-h-96 object-scale-down mx-auto block"
                 src={imagePreview}
               />
