@@ -276,7 +276,8 @@ function ProfilePage({
                 </div>
 
                 <div className="text-center">
-                  {sessionFromServer.user._id == userData._id ? (
+                  {userName != "" &&
+                  sessionFromServer.user._id == userData._id ? (
                     <EditBioProfileButton
                       setShowProfileEditPage={updateSetShowProfileEditPage}
                     />
