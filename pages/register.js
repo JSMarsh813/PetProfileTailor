@@ -114,14 +114,16 @@ export default function Register({ sessionFromServer }) {
         userName={userName}
       />
 
-      <Image
-        className="mx-auto h-60"
-        src="/welcometothepack.webp"
-        alt="picture of a dog high fiving and the text welcome to the pack"
-        layout="responsive"
-        width={100}
-        height={100}
-      />
+      <h1 className="flex justify-center text-3xl mb-1"> Register </h1>
+
+      <div className="flex justify-center">
+        <Image
+          src="/welcometothepack.webp"
+          alt=""
+          width={220}
+          height={220}
+        />
+      </div>
 
       <section className="text-center mt-2">
         <h4 className="font-semibold text-lg">
