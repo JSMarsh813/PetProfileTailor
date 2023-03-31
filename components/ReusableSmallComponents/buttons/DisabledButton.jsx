@@ -5,6 +5,8 @@ const DisabledButton = ({ text, className }) => {
              bg-gray-900 text-slate-300
              font-bold py-2 px-4 border-b-4 border-slate-100
              cursor-default  ${className}`}
+      type="submit"
+      disabled
     >
       {text}
     </button>

@@ -4,6 +4,9 @@ import { unstable_getServerSession } from "next-auth/next";
 import axios from "axios";
 import Select from "react-select";
 import NavLayoutwithSettingsMenu from "../components/NavBar/NavLayoutwithSettingsMenu";
+import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
+import DisabledButton from "../components/ReusableSmallComponents/buttons/DisabledButton";
+import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -90,19 +93,12 @@ export default function AddDescriptionTag({ sessionFromServer, categoryData }) {
           onChange={(e) => setNewDescriptionTag(e.target.value.toLowerCase())}
         />
 
-        <button
-          type="submit"
-          onClick={handleDescriptionTagSubmission}
-        >
-          Submit category
-        </button>
-
         {/* TAG AREA */}
         <label
           className="font-bold block mt-4 text-white"
           htmlFor="nameTags"
         >
-          Tags
+          Categories
         </label>
         <Select
           className="text-darkPurple mb-4"
@@ -118,6 +114,24 @@ export default function AddDescriptionTag({ sessionFromServer, categoryData }) {
             setCategoryList(opt.map((category) => category.value))
           }
         />
+
+        {sessionFromServer &&
+        sessionFromServer.user._id == "640178e6d9f774e804cb323d" ? (
+          <GeneralButton
+            text="Submit tag"
+            type="submit"
+            className="ml-2"
+            onClick={handleDescriptionTagSubmission}
+          />
+        ) : (
+          <div>
+            <DisabledButton text="Submit tag" />
+            <p className="text-yellow-300 bg-red-800 pl-2 py-2 mx-auto border-2 border-yellow-300 mt-2">
+              To protect data quality, only users with special permissions can
+              submit tags
+            </p>
+          </div>
+        )}
       </form>
     </div>
   );
