@@ -102,9 +102,8 @@ export default function UsersFollowersList({
                           className="rounded-full"
                           src="/kittentopuppy.webp"
                           alt="gif of a kitten climbing out of its cage into the excited puppies cage next to it"
-                          layout="responsive"
-                          width={100}
-                          height={100}
+                          width={300}
+                          height={300}
                         />
                       </div>
                     </div>
