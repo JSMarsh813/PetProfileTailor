@@ -79,7 +79,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
       if (result.error) {
         toast.error(result.error);
       } else {
-        toast.success("Successfully signed in! Sending to profile page");
+        toast.success("Successfully signed in! Sending to dashboard");
       }
     } catch (err) {
       toast.error(getError(err));

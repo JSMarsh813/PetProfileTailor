@@ -19,7 +19,7 @@ export default function CheckForMoreDataButton({
 
           <p className="text-white">
             You have reached the end of the list! However you can click &quot;
-            check more &quot; again to check for just-added data.
+            check for more &quot; again to check for just-added data.
           </p>
         </div>
       )}
