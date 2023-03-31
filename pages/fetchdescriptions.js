@@ -163,93 +163,92 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
         userName={userName}
       />
 
-      <section className="px-4 bg-violet-900 w-screen">
+      <section className="sm:px-4 bg-violet-900 w-screen">
         <PageTitleWithImages
           imgSrc="bg-[url('https://images.pexels.com/photos/1599452/pexels-photo-1599452.jpeg?auto=compress&cs=tinysrgb&w=400')]"
           title="Fetch "
           title2="Descriptions"
         />
+      </section>
+      <div className="flex max-w-screen">
+        <FilteringSidebar
+          className="min-w-24"
+          category={category}
+          handleFilterChange={handleFilterChange}
+          IsOpen={IsOpen}
+        />
 
-        <div className="flex max-w-screen">
-          <FilteringSidebar
-            className="min-w-24"
-            category={category}
-            handleFilterChange={handleFilterChange}
-            IsOpen={IsOpen}
+        {/*################# CONTENT DIV ################### */}
+
+        <div className="bg-darkPurple rounded-box ">
+          <GeneralButton
+            text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
+            onClick={() => SetIsOpen(!IsOpen)}
           />
 
-          {/*################# CONTENT DIV ################### */}
+          <Pagination
+            page={page}
+            itemsPerPage={itemsPerPage}
+            filteredListLastPage={filteredListLastPage}
+            isAtEnd={isAtEnd}
+            setItemsPerPageFunction={setItemsPerPageFunction}
+            setPageFunction={setPageFunction}
+            setSizeFunction={setSizeFunction}
+            size={size}
+            filterednameslength={filteredDescriptions.length}
+            setSortingLogicFunction={setSortingLogicFunction}
+          />
 
-          <div className="bg-darkPurple rounded-box ">
-            <GeneralButton
-              text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
-              onClick={() => SetIsOpen(!IsOpen)}
-            />
+          <section>
+            <section className="">
+              {isLoading && (
+                <div className="flex">
+                  <span className="text-white text-3xl my-20 mx-auto">
+                    Fetching data ...
+                  </span>
+                </div>
+              )}
 
-            <Pagination
-              page={page}
-              itemsPerPage={itemsPerPage}
-              filteredListLastPage={filteredListLastPage}
-              isAtEnd={isAtEnd}
-              setItemsPerPageFunction={setItemsPerPageFunction}
-              setPageFunction={setPageFunction}
-              setSizeFunction={setSizeFunction}
-              size={size}
-              filterednameslength={filteredDescriptions.length}
-              setSortingLogicFunction={setSortingLogicFunction}
-            />
-
-            <section>
-              <section className="">
-                {isLoading && (
-                  <div className="flex">
-                    <span className="text-white text-3xl my-20 mx-auto">
-                      Fetching data ...
-                    </span>
-                  </div>
-                )}
-
-                {filteredDescriptions
-                  .slice(
-                    page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
-                    page * itemsPerPage
-                  )
-                  .map((description) => {
-                    return (
-                      <DescriptionListingAsSections
-                        description={description}
-                        key={description._id}
-                        sessionFromServer={sessionFromServer}
-                        tagList={tagList}
-                        setItemEditedFunction={setItemEditedFunction}
-                      />
-                    );
-                  })}
-              </section>
+              {filteredDescriptions
+                .slice(
+                  page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
+                  page * itemsPerPage
+                )
+                .map((description) => {
+                  return (
+                    <DescriptionListingAsSections
+                      description={description}
+                      key={description._id}
+                      sessionFromServer={sessionFromServer}
+                      tagList={tagList}
+                      setItemEditedFunction={setItemEditedFunction}
+                    />
+                  );
+                })}
             </section>
+          </section>
 
-            <Pagination
-              page={page}
-              itemsPerPage={itemsPerPage}
-              filteredListLastPage={filteredListLastPage}
-              isAtEnd={isAtEnd}
-              setItemsPerPageFunction={setItemsPerPageFunction}
-              setPageFunction={setPageFunction}
-              setSizeFunction={setSizeFunction}
-              size={size}
-              filterednameslength={filteredDescriptions.length}
-              setSortingLogicFunction={setSortingLogicFunction}
-            />
+          <Pagination
+            page={page}
+            itemsPerPage={itemsPerPage}
+            filteredListLastPage={filteredListLastPage}
+            isAtEnd={isAtEnd}
+            setItemsPerPageFunction={setItemsPerPageFunction}
+            setPageFunction={setPageFunction}
+            setSizeFunction={setSizeFunction}
+            size={size}
+            filterednameslength={filteredDescriptions.length}
+            setSortingLogicFunction={setSortingLogicFunction}
+          />
 
-            <CheckForMoreData
-              page={page}
-              filteredListLastPage={filteredListLastPage}
-              setSizeFunction={setSizeFunction}
-              isAtEnd={isAtEnd}
-            />
-          </div>
+          <CheckForMoreData
+            page={page}
+            filteredListLastPage={filteredListLastPage}
+            setSizeFunction={setSizeFunction}
+            isAtEnd={isAtEnd}
+          />
         </div>
-      </section>
+      </div>
     </div>
   );
 }

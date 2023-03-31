@@ -112,7 +112,7 @@ function BatsignalPost({
 
   return (
     <div
-      className="mx-auto px-6 py-8
+      className="mx-auto sm:px-6 py-8 bg-darkPurple
              "
     >
       {/* above is the background of posts

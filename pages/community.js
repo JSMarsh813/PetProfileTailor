@@ -180,7 +180,7 @@ export default function BatSignal({ sessionFromServer }) {
   }, [itemEdited]);
 
   return (
-    <div className="pb-8 w-screen ">
+    <div>
       <Layout
         profileImage={profileImage}
         userName={userName}
@@ -192,60 +192,60 @@ export default function BatSignal({ sessionFromServer }) {
         title2="Play-yard"
       />
 
+      <div
+        className="mx-auto bg-violet-900 max-w-4xl text-center py-4 border-2 border-violet-400 border-dotted 
+                                    shadow-lg shadow-slate-900/100 pl-4"
+      >
+        <div className="flex">
+          <div className="my-auto">
+            <Image
+              className=" mx-auto rounded-full lg:h-20"
+              src="/batsignaldogsrunning.avif"
+              width={140}
+              height={120}
+              alt=""
+            />
+          </div>
+          <div className="my-auto">
+            <p className="w-full text-white text-xl mx-auto mt-2 sm:ml-4">
+              Come join us in the play yard! Ask for advice, share ideas, or
+              just chat!
+            </p>
+            <GeneralButton
+              text="Add a Post"
+              className="ml-2 mt-2"
+              onClick={() => {
+                setAddingPost(!addingPost);
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {addingPost && (
+        <AddPost
+          tagListProp={tagListProp}
+          sessionFromServer={sessionFromServer}
+          setSizeFunction={setSizeFunction}
+          size={size}
+        />
+      )}
+
       {/* posts section */}
-      <section className="flex w-full h-fit bg-darkPurple  rounded-box">
+      <div className="flex max-w-screen">
         <FilteringSidebar
           category={category}
           handleFilterChange={handleFilterChange}
           IsOpen={IsOpen}
         />
 
-        <section className="mb-0 w-full flex-1 border-2 border-violet-400 ">
+        <section className="flex-1 border-2 border-violet-400 ">
           {/* Button that toggles the filter div */}
           <GeneralButton
             className="rounded-l-none"
             text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
             onClick={() => SetIsOpen(!IsOpen)}
           />
-
-          <div
-            className="mx-auto bg-violet-900 max-w-4xl text-center py-4 border-2 border-violet-400 border-dotted 
-                                    shadow-lg shadow-slate-900/100 pl-4"
-          >
-            <div className="flex">
-              <div className="my-auto">
-                <Image
-                  className=" mx-auto rounded-full flex-none lg:h-20"
-                  src="/batsignaldogsrunning.avif"
-                  width={140}
-                  height={120}
-                  alt=""
-                />
-              </div>
-              <div className="my-auto">
-                <p className="w-full text-white text-xl mx-auto mt-2 ml-4">
-                  Come join us in the play yard! Ask for advice, share ideas, or
-                  just chat!
-                </p>
-                <GeneralButton
-                  text="Add a Post"
-                  className="ml-2 mt-2"
-                  onClick={() => {
-                    setAddingPost(!addingPost);
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-
-          {addingPost && (
-            <AddPost
-              tagListProp={tagListProp}
-              sessionFromServer={sessionFromServer}
-              setSizeFunction={setSizeFunction}
-              size={size}
-            />
-          )}
 
           <Pagination
             page={page}
@@ -306,7 +306,7 @@ export default function BatSignal({ sessionFromServer }) {
             isAtEnd={isAtEnd}
           />
         </section>
-      </section>
+      </div>
     </div>
   );
 }
