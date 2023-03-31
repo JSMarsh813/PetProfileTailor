@@ -48,6 +48,8 @@ const MyLink = forwardRef((props, ref) => {
 MyLink.displayName = "MyLink";
 
 function SharingOptionsBar({ linkToShare, localLink }) {
+  linkToShare = linkToShare.split(" ").join("%20");
+
   return (
     <section className="flex justify-evenly ">
       <button
