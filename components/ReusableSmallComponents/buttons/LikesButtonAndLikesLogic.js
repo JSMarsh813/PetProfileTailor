@@ -37,7 +37,10 @@ export default function LikesButtonAndLikesLogic({
 
     const putLikes = async () => {
       try {
-        const response = await axios.put(apiLink, { currentTargetedId });
+        const response = await axios.put(apiLink, {
+          currentTargetedId,
+          session,
+        });
 
         dataLiked == true
           ? setLikesCount((likesCount -= 1))

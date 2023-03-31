@@ -184,6 +184,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
   return (
     <div className="bg-violet-900">
+      {console.log(names)}
       <Layout
         profileImage={profileImage}
         userName={userName}
