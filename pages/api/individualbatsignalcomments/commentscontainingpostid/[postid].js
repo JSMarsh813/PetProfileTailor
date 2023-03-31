@@ -4,7 +4,7 @@
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "../../../../config/connectmongodb";
-
+import User from "../../../../models/User";
 import BatSignalComments from "../../../../models/BatSignalComment";
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 

@@ -41,7 +41,7 @@ function BatsignalPost({
 
   //for comments
   const [commentsShowing, SetCommentsShowing] = useState(false);
-  console.log(postsCommentsFromFetch);
+
   let rootComments = [];
 
   if (postsCommentsFromFetch) {
@@ -51,10 +51,9 @@ function BatsignalPost({
         comment.parentcommentid === null
     );
   }
-  console.log(`this is rootComments ${JSON.stringify(rootComments)}`);
 
   let amountOfComments = rootComments.length;
-  console.log(postsCommentsFromFetch);
+
   //for editing
   const [showEditPage, SetShowEditPage] = useState(false);
 
@@ -94,10 +93,6 @@ function BatsignalPost({
     // https://www.reddit.com/r/learnreactjs/comments/m99nbz/is_it_a_good_practice_to_pass_setstate_of_one/
   }
 
-  {
-    console.log(showEditPage);
-  }
-
   function updateDeleteState() {
     setShowDeleteConfirmation(true);
   }
@@ -127,7 +122,6 @@ function BatsignalPost({
           setItemEditedFunction={setItemEditedFunction}
         />
       )}
-      {console.log(tagListProp)}
 
       {showDeleteConfirmation && (
         <DeletePostNotification
