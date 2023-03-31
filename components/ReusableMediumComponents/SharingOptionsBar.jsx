@@ -133,7 +133,10 @@ function SharingOptionsBar({ linkToShare, localLink }) {
       </div>
 
       <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
-        <RedditShareButton url={linkToShare}>
+        <RedditShareButton
+          url={linkToShare}
+          title={linkToShare}
+        >
           <RedditIcon
             size={40}
             round
@@ -142,7 +145,10 @@ function SharingOptionsBar({ linkToShare, localLink }) {
       </div>
 
       <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
-        <TumblrShareButton url={linkToShare}>
+        <TumblrShareButton
+          url={linkToShare}
+          title={linkToShare}
+        >
           <TumblrIcon
             size={40}
             round
@@ -157,6 +163,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
       >
         <WhatsappShareButton
           url={linkToShare}
+          title={linkToShare}
           separator=":: "
         >
           <WhatsappIcon
