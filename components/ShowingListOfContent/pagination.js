@@ -55,8 +55,7 @@ export default function Pagination({
           <option value="5">5</option>
           <option value="15">15</option>
           <option value="30">30</option>
-          <option value="70">80</option>
-          <option value="100">100</option>
+          <option value="60">60</option>
         </select>
         <label
           className="text-white ml-2"
