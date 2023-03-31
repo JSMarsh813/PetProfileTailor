@@ -179,7 +179,7 @@ function BatsignalPost({
 
           <h4 className="text-base">Tags: {tagList}</h4>
 
-          <div className="flex border-y-2 border-slate-200 py-2 bg-violet-900 text-white">
+          <div className="flex border-y-2 border-slate-200 py-2 bg-violet-900 text-white justify-between">
             <SeeCommentsButton
               comments={amountOfComments}
               onupdateCommentShowState={updateCommentShowState}

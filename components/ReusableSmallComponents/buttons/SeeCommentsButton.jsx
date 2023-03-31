@@ -8,7 +8,7 @@ export default function SeeCommentsButton({
   onupdateCommentShowState,
 }) {
   return (
-    <label className="flex-1 inline ml-6">
+    <label className="flex-1 inline ml-2 sm:ml-6">
       <input
         className="hidden"
         type="button"

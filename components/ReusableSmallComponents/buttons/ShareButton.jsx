@@ -9,7 +9,7 @@ export default function ShareButton({
   shareIconStyling,
 }) {
   return (
-    <label className="flex-1 inline ml-6">
+    <label className="flex-1 inline ml-1 sm:ml-6">
       <input
         className="hidden"
         type="button"
@@ -18,7 +18,7 @@ export default function ShareButton({
 
       <FontAwesomeIcon
         icon={faShareFromSquare}
-        className={`text-2xl mr-2 inline flex-1 ${shareIconStyling}`}
+        className={`text-2xl sm:mr-2 inline flex-1 ${shareIconStyling}`}
       />
     </label>
   );

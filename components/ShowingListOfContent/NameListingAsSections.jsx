@@ -105,7 +105,7 @@ export default function NameListingAsSections({
             sm:grid-cols-3 lg:gap-3 
             border-b-2 border-amber-300
             bg-darkPurple
-                    text-purple-200 p-2  
+                    text-purple-200 sm:p-2  
                     
                     
                     items-center justify-items-center"
