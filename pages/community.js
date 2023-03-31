@@ -32,7 +32,7 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-export default function BatSignal({ sessionFromServer }) {
+export default function Community({ sessionFromServer }) {
   // #### Info for nav menu
   let userName = "";
   let profileImage = "";
