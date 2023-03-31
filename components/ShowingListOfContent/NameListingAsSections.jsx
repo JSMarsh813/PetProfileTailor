@@ -133,7 +133,7 @@ export default function NameListingAsSections({
 
         {/* ###### DESCRIPTION SECTION #### */}
         <span className="ml-4">
-          {name.description[0] == "" ? "no description" : name.description}
+          {name.description[0] == "" ? "no notes" : name.description}
         </span>
 
         {/* ###### TAGS SECTION #### */}

@@ -82,7 +82,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
         </p>
 
         <section className="text-center mt-4">
-          {/* <h4 className="font-semibold text-lg"> Check if a name exists: </h4>
+          <h4 className="font-semibold text-lg"> Check if a name exists: </h4>
 
           <input
             type="text"
@@ -137,7 +137,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             <span className="block">
               Success! {nameCheck} does NOT exist yet.
             </span>
-          )} */}
+          )}
         </section>
 
         <form onSubmit={handleNameSubmission}>
@@ -170,14 +170,14 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             className="font-bold block mt-4"
             htmlFor="nameDescription"
           >
-            Description (optional)
+            Notes (optional)
           </label>
           <textarea
             type="text"
             id="nameDescription"
             maxLength="500"
             className="text-darkPurple block w-full"
-            placeholder="optional description: please add anything that would be useful to know. Examples: the name's meaning, popular fictional or historical figures with this name, ect"
+            placeholder="optional. please add anything that would be useful to know. Examples: the name's meaning, popular fictional or historical figures with this name, ect"
             onChange={(e) => setDescription(e.target.value.trim())}
           ></textarea>
 

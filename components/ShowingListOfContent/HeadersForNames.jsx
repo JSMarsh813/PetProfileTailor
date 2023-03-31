@@ -12,7 +12,7 @@ export default function HeadersForNames() {
     >
       <span> Like </span>
       <span> Name </span>
-      <span> Description</span>
+      <span> Notes </span>
       <span> Tags </span>
       <span> Created By </span>
     </section>
