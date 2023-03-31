@@ -192,7 +192,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
       {/* {`this is data ${JSON.stringify(data)}`}
       {`this is filtered names ${JSON.stringify(filterednames)}`}
       {`this is names ${JSON.stringify(names)}`} */}
-      <section className="sm:px-4 bg-violet-900 w-screen">
+      <section className="sm:px-4 bg-violet-900">
         <PageTitleWithImages
           title="Fetch"
           title2="Names"

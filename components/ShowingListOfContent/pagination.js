@@ -43,7 +43,7 @@ export default function Pagination({
   };
 
   return (
-    <section className="pagination-navigation flex flex-row min-w-0 lg:flex-content bg-violet-800 place-content-between text-violet-900 font-bold pt-2 border-x-4 border-darkPurple">
+    <section className="pagination-navigation flex flex-row min-w-0 lg:flex-content bg-violet-800 place-content-between text-violet-900 font-bold pt-2 sm:border-x-4 border-darkPurple">
       {/* items per page */}
       <div className="my-auto">
         <select

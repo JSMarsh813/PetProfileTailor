@@ -101,7 +101,8 @@ export default function NameListingAsSections({
       <div
         className="grid 
             lg:grid-cols-5
-            grid-cols-3 gap-3 
+            grid-cols-2
+            sm:grid-cols-3 lg:gap-3 
             border-b-2 border-amber-300
             bg-darkPurple
                     text-purple-200 p-2  

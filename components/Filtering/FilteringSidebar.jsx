@@ -5,7 +5,7 @@ import React from "react";
 function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
   return (
     <div
-      className={`w-80 h-fit bg-violet-900 border-b-2 border-solid border-violet-400 rounded-box place-items-center ${
+      className={` h-fit bg-violet-900 border-b-2 border-solid border-violet-400 rounded-box place-items-center ${
         IsOpen ? "" : "hidden"
       }`}
     >
@@ -18,7 +18,7 @@ function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
               <>
                 {/* Category Name shows here ("species", "food") */}
                 <Disclosure.Button
-                  className="flex w-full justify-between rounded-lg rounded-r-none border-t-2 border-violet-300 bg-purple-100 px-4 py-2 text-left text-base font-medium text-purple-900 
+                  className="flex w-24 sm:w-32 lg:w-52 justify-between rounded-lg rounded-r-none border-t-2 border-violet-300 bg-purple-100 px-2 py-2 text-left text-base font-medium text-purple-900 
                  hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 "
                 >
                   <span>{category.category} </span>
