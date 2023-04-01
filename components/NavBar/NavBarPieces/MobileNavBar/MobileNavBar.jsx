@@ -32,8 +32,8 @@ function MobileNavBar() {
   return (
     <div>
       <Menu.Items
-        className="block px-4 py-2 text-sm text-white 
- absolute  
+        className="block text-sm text-white 
+        absolute  
  divide-y divide-gray-100 
  rounded-md bg-violet-800 shadow-lg ring-1 ring-black ring-opacity-5 
 
@@ -41,7 +41,7 @@ function MobileNavBar() {
  w-screen
  items-center
 border-4 border-transparent border-r-violet-400 
--left-4
+-left-2
 z-10
 
 focus:outline-none 

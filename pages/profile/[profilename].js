@@ -224,7 +224,7 @@ function ProfilePage({
 
       <div className="flex flex-col md:flex-row">
         {/* ############## BIO ############## */}
-        <section className="w-96 text-darkPurple ">
+        <section className=" sm:w-96 text-darkPurple ">
           <div className="px-2 ">
             <div
               className="relative flex flex-col min-w-0 break-words bg-purple-50 mb-6 shadow-xl rounded-lg mt-16

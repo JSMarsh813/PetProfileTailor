@@ -51,12 +51,12 @@ export default function NavLayoutwithSettingsMenu({
     <>
       <div className="flex flex-col justify-between bg-violet-900">
         <header>
-          <nav className="flex h-12 items-center px-4 justify-between shadow-md bg-violet-600 ">
+          <nav className="flex h-12 items-center pl-2 justify-between shadow-md bg-violet-600">
             {/* HAMBURGER MENU BUTTON */}
 
             <Menu
               as="div"
-              className="relative inline-block text-white bg-violet-700 z-10 xl:hidden"
+              className="relative inline-block text-white  z-10 xl:hidden pt-4"
             >
               {/* md:hidden makes it so the dropdown will be hidden if the screen is enlarged from a small screen. Important because the hamburger button disappears on medium screens */}
 
@@ -75,11 +75,10 @@ export default function NavLayoutwithSettingsMenu({
               <MobileNavBar />
             </Menu>
 
-            {/* Name disappears at smaller screen sizes */}
-
             <MyLink
               className="text-lg font-extrabold text-yellow-300 
-             lg:block mx-auto ml-2 hover:text-violet-100"
+              hidden  sm:block 
+              mx-auto ml-2 hover:text-violet-100"
               href="/"
             >
               PetProfileTailor
@@ -87,14 +86,14 @@ export default function NavLayoutwithSettingsMenu({
 
             <NavBarNames />
 
-            <div className="mr-4">
+            <div className="mr-2">
               {userName != "" ? (
                 <Menu
                   as="div"
                   className="relative inline-block text-left z-10"
                 >
                   <Menu.Button
-                    className="inline-flex justify-center px-4 
+                    className="inline-flex justify-center 
                   text-yellow-400 
                   
                   border-4 border-transparent 
@@ -110,7 +109,9 @@ export default function NavLayoutwithSettingsMenu({
                   
                   hover:text-violet-100"
                   >
-                    <span className="text-lg font-bold">{userName}</span>
+                    <span className="text-base font-bold sm:ml-2">
+                      {userName}
+                    </span>
                     <div className="ml-3 h-8 w-8 relative">
                       <Image
                         src={profileImage}

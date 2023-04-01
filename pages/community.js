@@ -211,7 +211,7 @@ export default function Community({ sessionFromServer }) {
             />
           </div>
           <div className="my-auto">
-            <p className="w-full text-white text-xl mx-auto mt-2 sm:ml-4">
+            <p className=" text-white text-xl mx-auto mt-2 sm:ml-4 pr-2">
               Come join us in the play yard! Ask for advice, share ideas, or
               just chat!
             </p>

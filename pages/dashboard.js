@@ -305,7 +305,7 @@ export default function Dashboard({
           <section className="favoriteNames">
             <div className="flow-root w-screen">
               <GeneralOpenCloseButton
-                text="Open Your Favorites Names List"
+                text="Favorites Names"
                 setStatus={setFavoritesListOpen}
                 styling="mb-2"
                 status={favoritesListOpen}
@@ -333,7 +333,7 @@ export default function Dashboard({
 
           <section className="favoriteDescriptions">
             <GeneralOpenCloseButton
-              text="Open Your Favorites Descriptions List"
+              text="Favorites Descriptions"
               setStatus={setFavDescriptionsOpen}
               styling="mb-2"
               status={favDescriptionsOpen}
@@ -353,7 +353,7 @@ export default function Dashboard({
 
           <section>
             <GeneralOpenCloseButton
-              text="View Your Favorite Comments From Posts"
+              text="Favorite Post Comments"
               setStatus={setFavCommentsOpen}
               styling="mb-2"
               status={favCommentsOpen}
@@ -374,7 +374,7 @@ export default function Dashboard({
 
           <section>
             <GeneralOpenCloseButton
-              text="View Your Favorite Posts"
+              text="Favorite Posts"
               setStatus={setFavPostsOpen}
               styling="mb-2"
               status={favPostsOpen}
