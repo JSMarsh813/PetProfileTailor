@@ -58,7 +58,7 @@ export default function NameListingAsSections({
   }
 
   //########## for comments
-  function updateCommentShowState() {
+  function onupdateCommentShowState() {
     SetCommentsShowing(!commentsShowing);
   }
 
@@ -125,7 +125,7 @@ export default function NameListingAsSections({
 
           <SeeCommentsButton
             comments={commentsFromFetch.length}
-            onupdateCommentShowState={updateCommentShowState}
+            onupdateCommentShowState={onupdateCommentShowState}
           />
         </div>
         {/* ###### NAME SECTION #### */}
