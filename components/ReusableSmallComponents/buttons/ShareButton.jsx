@@ -9,17 +9,23 @@ export default function ShareButton({
   shareIconStyling,
 }) {
   return (
-    <label className="flex-1 inline ml-1 sm:ml-6">
-      <input
-        className="hidden"
-        type="button"
-        onClick={onClickShowShares}
-      />
-
-      <FontAwesomeIcon
-        icon={faShareFromSquare}
-        className={`text-2xl sm:mr-2 inline flex-1 ${shareIconStyling}`}
-      />
-    </label>
+    <span>
+      <label
+        className="flex-1 inline ml-1 sm:ml-6"
+        htmlFor="sharebutton"
+      >
+        <input
+          className=""
+          type="button"
+          onClick={onClickShowShares}
+          tabindex="0"
+          id="sharebutton"
+        />
+        <FontAwesomeIcon
+          icon={faShareFromSquare}
+          className={`text-2xl sm:mr-2 inline flex-1 ${shareIconStyling}`}
+        />
+      </label>
+    </span>
   );
 }

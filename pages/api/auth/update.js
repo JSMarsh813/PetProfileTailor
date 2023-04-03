@@ -40,7 +40,7 @@ async function handler(req, res) {
   }
 
   await toUpdateUser.save();
-  await db.disconnect();
+
   res.send({
     message: "User updated",
   });

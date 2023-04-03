@@ -7,9 +7,10 @@ export default function EditButton({ onupdateEditState, className }) {
   return (
     <label className={`justify-self-start ${className}`}>
       <input
-        className="hidden"
+        className=""
         type="button"
         onClick={onupdateEditState}
+        tabindex="0"
       />
 
       <FontAwesomeIcon

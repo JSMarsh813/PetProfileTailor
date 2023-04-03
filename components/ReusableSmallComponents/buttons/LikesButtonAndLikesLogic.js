@@ -54,21 +54,22 @@ export default function LikesButtonAndLikesLogic({
   };
 
   return (
-    <label>
-      <input
-        style={{ display: "none" }}
-        type="checkbox"
-        checked={dataLiked}
-        onChange={handlelikes}
-      />
+    <span>
+      <label id="likesbutton">
+        <input
+          type="button"
+          onClick={handlelikes}
+          htmlFor="likesbutton"
+        />
 
-      <FontAwesomeIcon
-        icon={faHeart}
-        className={`${HeartIconStyling}`}
-        color={likesColor}
-      />
+        <FontAwesomeIcon
+          icon={faHeart}
+          className={`${HeartIconStyling}`}
+          color={likesColor}
+        />
 
-      <span className={`${HeartIconTextStyling}`}>{likesCount}</span>
-    </label>
+        <span className={`${HeartIconTextStyling}`}>{likesCount}</span>
+      </label>
+    </span>
   );
 }

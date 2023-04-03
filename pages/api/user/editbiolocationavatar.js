@@ -43,7 +43,6 @@ async function handler(req, res) {
   toUpdateUserBioLocationAvatar.location = location;
 
   await toUpdateUserBioLocationAvatar.save();
-  await db.disconnect();
 
   console.log(
     `this is toUpdateUserBioLocationAvatar2 ${toUpdateUserBioLocationAvatar}`

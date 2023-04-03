@@ -8,17 +8,24 @@ export default function SeeCommentsButton({
   onupdateCommentShowState,
 }) {
   return (
-    <label className="flex-1 inline ml-2 sm:ml-6">
+    <span>
       <input
-        className="hidden"
+        className=""
         type="button"
         onClick={onupdateCommentShowState}
+        tabindex="0"
+        id="likesbutton"
       />
-      <FontAwesomeIcon
-        icon={faCommentDots}
-        className="text-3xl mr-2"
-      />
-      <span className="text-xl">{comments}</span>
-    </label>
+      <label
+        className="flex-1 inline ml-2 sm:ml-6"
+        htmlFor="likesbutton"
+      >
+        <FontAwesomeIcon
+          icon={faCommentDots}
+          className="text-3xl mr-2"
+        />
+        <span className="text-xl">{comments}</span>
+      </label>
+    </span>
   );
 }

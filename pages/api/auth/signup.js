@@ -26,14 +26,14 @@ async function handler(req, res) {
   const existingEmail = await User.findOne({ email: email });
   if (existingEmail) {
     res.status(422).json({ message: "Email is already used!" });
-    await db.disconnect();
+
     return;
   }
 
   const existingUserProfile = await User.findOne({ profilename: profilename });
   if (existingUserProfile) {
     res.status(422).json({ message: "That profile name is already used!" });
-    await db.disconnect();
+
     return;
   }
 
@@ -45,8 +45,6 @@ async function handler(req, res) {
   });
 
   const user = await newUser.save();
-
-  await db.disconnect();
 
   res.status(201).send({
     message: "Created user!",

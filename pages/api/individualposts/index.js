@@ -59,7 +59,7 @@ export default async function handler(req, res) {
     toUpdatePost.taglist = taglist;
 
     await toUpdatePost.save();
-    await db.disconnect();
+
     res.send({
       message: "User updated",
     });

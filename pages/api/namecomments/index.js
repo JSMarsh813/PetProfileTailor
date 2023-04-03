@@ -35,8 +35,7 @@ export default async function handler(req, res) {
       toUpdateNameComment.description = description;
 
       await toUpdateNameComment.save();
-      await db.disconnect();
-      //  res.status(201).json(toUpdateNameComment)
+
       res.send({
         message: "Comment updated",
       });
@@ -67,9 +66,6 @@ export default async function handler(req, res) {
 
     const comment = await newComment.save();
     //create new user with .save from mongoose
-
-    await db.disconnect();
-    //disconnect from database then send a successful response
 
     res.status(201).send({
       message: "Created comment!",

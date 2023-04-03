@@ -20,7 +20,7 @@ async function handler(req, res) {
     : (toUpdateName.likedby = toUpdateName.likedby.concat(user));
 
   await toUpdateName.save();
-  // await db.disconnect();
+
   res.send({
     message: "Names likes updated",
   });

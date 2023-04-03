@@ -30,9 +30,6 @@ async function APINewPost(req, res) {
   const post = await newPost.save();
   //create new user with .save from mongoose
 
-  await db.disconnect();
-  //disconnect from database then send a successful response
-
   res.status(201).send({
     message: "Created post!",
 

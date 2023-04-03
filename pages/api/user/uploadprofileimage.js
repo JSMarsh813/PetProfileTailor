@@ -27,7 +27,7 @@ async function handler(req, res) {
   toUpdateUser.profileimage = newProfileImage;
 
   await toUpdateUser.save();
-  await db.disconnect();
+
   res.send({
     message: "Profile Image updated",
   });

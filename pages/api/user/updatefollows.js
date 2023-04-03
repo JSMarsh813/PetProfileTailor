@@ -51,7 +51,7 @@ async function handler(req, res) {
       ));
 
   await toUpdateUserFollowers.save();
-  await db.disconnect();
+
   res.send({
     message: "followers updated",
   });

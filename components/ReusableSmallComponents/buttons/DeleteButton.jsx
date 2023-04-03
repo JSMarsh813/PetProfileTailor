@@ -7,9 +7,10 @@ export default function DeleteButton({ onupdateDeleteState }) {
   return (
     <label className="justify-self-end">
       <input
-        className="hidden"
+        className=""
         type="button"
         onClick={onupdateDeleteState}
+        tabindex="0"
       />
 
       <FontAwesomeIcon

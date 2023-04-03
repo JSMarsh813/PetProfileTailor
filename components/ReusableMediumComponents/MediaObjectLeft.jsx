@@ -14,7 +14,7 @@ const MediaObject = ({
   imgheight,
 }) => {
   return (
-    <div className="flex justify-center w-screen my-6 flex-col md:flex-row">
+    <div className="flex justify-center  my-6 flex-col md:flex-row">
       <div
         className="self-center mr-12 
             shadow-lg shadow-slate-900/70

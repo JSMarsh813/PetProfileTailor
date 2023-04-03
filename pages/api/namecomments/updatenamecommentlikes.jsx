@@ -30,7 +30,7 @@ async function handler(req, res) {
     : (toUpdateComment.likedby = toUpdateComment.likedby.concat(user._id));
 
   await toUpdateComment.save();
-  await db.disconnect();
+
   res.send({
     message: "Comments likes updated",
   });

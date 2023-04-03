@@ -38,7 +38,7 @@ function HomePage({ sessionFromServer }) {
   //end of section for nav menu
 
   return (
-    <div className="w-fit bg-violet-900">
+    <div className=" bg-violet-900">
       <Layout
         profileImage={profileImage}
         userName={userName}
@@ -46,7 +46,7 @@ function HomePage({ sessionFromServer }) {
 
       <HeroTop />
 
-      <section className="w-full bg-violet-900 ~ h-24 flex place-items-center justify-center">
+      <section className="bg-violet-900 h-24 flex place-items-center justify-center">
         <h5 className="text-white text-2xl pr-2">Adoptions Ahoy!</h5>
 
         <Image

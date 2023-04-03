@@ -13,11 +13,9 @@ const handler = async (req, res) => {
 };
 const getHandler = async (req, res) => {
   await db.connect();
-  console.log(req.params);
+
   const individualname = await Names.findOne({ id: req.query._id });
 
-  await db.disconnect();
-  console.log(individualname);
   res.status(200).json(individualname);
 };
 
@@ -35,10 +33,9 @@ const putHandler = async (req, res) => {
     individualname.likedby = req.body.likedby;
 
     await Names.save();
-    await db.disconnect();
+
     res.send({ message: "Name updated successfully" });
   } else {
-    await db.disconnect();
     res.status(404).send({ message: "name not found" });
   }
 };

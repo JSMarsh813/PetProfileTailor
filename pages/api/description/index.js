@@ -45,7 +45,7 @@ export default async function handler(req, res) {
       toUpdateDescription.tags = tags;
 
       await toUpdateDescription.save();
-      // await db.disconnect();
+
       res.send({
         message: "Description Updated",
       });

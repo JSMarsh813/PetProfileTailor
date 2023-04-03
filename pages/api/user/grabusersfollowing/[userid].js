@@ -19,8 +19,6 @@ async function handler(req, res) {
     }).select("name followers name profileimage profilename bioblurb location");
 
     res.status(200).json(usersFollowing);
-
-    await db.disconnect();
   } catch (err) {
     res.status(500).json(err);
   }

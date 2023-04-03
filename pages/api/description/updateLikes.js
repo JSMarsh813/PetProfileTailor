@@ -38,7 +38,7 @@ async function handler(req, res) {
       ));
 
   await toUpdateDescription.save();
-  await db.disconnect();
+
   res.send({
     message: "Descriptions likes updated",
   });

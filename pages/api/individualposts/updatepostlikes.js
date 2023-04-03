@@ -65,7 +65,7 @@ async function handler(req, res) {
     : (toUpdatePost.likedby = toUpdatePost.likedby.concat(user._id));
 
   await toUpdatePost.save();
-  await db.disconnect();
+
   res.send({
     message: "Names likes updated",
   });
