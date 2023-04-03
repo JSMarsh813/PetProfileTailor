@@ -10,16 +10,12 @@ export default function ShareButton({
 }) {
   return (
     <span>
-      <label
-        className="flex-1 inline ml-1 sm:ml-6"
-        htmlFor="sharebutton"
-      >
+      <label className="flex-1 inline ml-1 sm:ml-6">
         <input
           className=""
           type="button"
           onClick={onClickShowShares}
           tabIndex="0"
-          id="sharebutton"
         />
         <FontAwesomeIcon
           icon={faShareFromSquare}
