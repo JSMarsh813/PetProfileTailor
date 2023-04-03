@@ -170,7 +170,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             className="font-bold block mt-4"
             htmlFor="nameDescription"
           >
-            Notes (optional)
+            Description (optional)
           </label>
           <textarea
             type="text"

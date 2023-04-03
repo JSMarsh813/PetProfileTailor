@@ -90,7 +90,7 @@ export default function EditName({
                   </span>
 
                   {/* ##### DESCRIPTION AREA ######*/}
-                  <h4 className="text-white"> Notes </h4>
+                  <h4 className="text-white"> Description </h4>
 
                   <textarea
                     className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}

@@ -8,7 +8,6 @@ export default function PageTitleWithImages({ imgSrc, title, title2 }) {
         backgroundPosition: "80%",
         backgroundImage: `url("/dogheaderfreewebheaders.jpg")`,
         height: "200px",
-        alt: "",
       }}
     >
       <h3

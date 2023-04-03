@@ -62,10 +62,6 @@ export default function NameListingAsSections({
     SetCommentsShowing(!commentsShowing);
   }
 
-  {
-    console.log(`this is comments showing ${commentsShowing}`);
-  }
-
   const handleFetchComments = async () => {
     const response = await fetch(
       "/api/names/commentscontainingnameid/" + name._id
@@ -137,7 +133,7 @@ export default function NameListingAsSections({
 
         {/* ###### DESCRIPTION SECTION #### */}
         <span className="ml-4">
-          {name.description[0] == "" ? "no notes" : name.description}
+          {name.description[0] == "" ? "no description" : name.description}
         </span>
 
         {/* ###### TAGS SECTION #### */}
