@@ -62,6 +62,10 @@ export default function NameListingAsSections({
     SetCommentsShowing(!commentsShowing);
   }
 
+  {
+    console.log(`this is comments showing ${commentsShowing}`);
+  }
+
   const handleFetchComments = async () => {
     const response = await fetch(
       "/api/names/commentscontainingnameid/" + name._id

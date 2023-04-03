@@ -18,7 +18,7 @@ export default function ShareButton({
           className=""
           type="button"
           onClick={onClickShowShares}
-          tabindex="0"
+          tabIndex="0"
           id="sharebutton"
         />
         <FontAwesomeIcon

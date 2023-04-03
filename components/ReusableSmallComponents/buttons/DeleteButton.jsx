@@ -10,7 +10,7 @@ export default function DeleteButton({ onupdateDeleteState }) {
         className=""
         type="button"
         onClick={onupdateDeleteState}
-        tabindex="0"
+        tabIndex="0"
       />
 
       <FontAwesomeIcon

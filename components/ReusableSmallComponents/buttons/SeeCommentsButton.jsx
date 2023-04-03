@@ -9,16 +9,12 @@ export default function SeeCommentsButton({
 }) {
   return (
     <span>
-      <label
-        className="flex-1 inline ml-2 sm:ml-6"
-        htmlFor="likesbutton"
-      >
+      <label className="">
         <input
-          className=""
+          className="flex-1 inline ml-1 sm:ml-6"
           type="button"
           onClick={onupdateCommentShowState}
-          tabindex="0"
-          id="likesbutton"
+          tabIndex="0"
         />
 
         <FontAwesomeIcon

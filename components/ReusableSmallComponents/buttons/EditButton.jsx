@@ -10,7 +10,7 @@ export default function EditButton({ onupdateEditState, className }) {
         className=""
         type="button"
         onClick={onupdateEditState}
-        tabindex="0"
+        tabIndex="0"
       />
 
       <FontAwesomeIcon
