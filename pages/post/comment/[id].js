@@ -4,12 +4,10 @@ import SingleComment from "../../../components/ShowingListOfContent/SingleCommen
 import { authOptions } from "../../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import NavLayoutwithSettingsMenu from "../../../components/NavBar/NavLayoutwithSettingsMenu";
-import PageTitleWithImage from "../../../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
 import dbConnect from "../../../config/connectmongodb";
 const ObjectId = require("mongodb").ObjectId;
 import Comments from "../../../models/BatSignalComment";
-import User from "../../../models/User";
 
 export const getServerSideProps = async (context) => {
   const sessionFromServer = await unstable_getServerSession(

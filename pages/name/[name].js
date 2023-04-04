@@ -9,7 +9,7 @@ import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSett
 
 import dbConnect from "../../config/connectmongodb";
 import Names from "../../models/Names";
-import User from "../../models/User";
+
 export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url
   const name = context.params.name;

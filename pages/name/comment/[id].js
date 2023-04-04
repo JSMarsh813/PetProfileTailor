@@ -9,7 +9,6 @@ import PageTitleWithImage from "../../../components/ReusableSmallComponents/Titl
 import dbConnect from "../../../config/connectmongodb";
 const ObjectId = require("mongodb").ObjectId;
 import Comments from "../../../models/namecomment";
-import User from "../../../models/User";
 
 export const getServerSideProps = async (context) => {
   const sessionFromServer = await unstable_getServerSession(
@@ -64,7 +63,8 @@ export default function GetAComment({
   userName,
   profileImage,
 }) {
-  let commentData2 = commentData[0];
+  let commentDataObject = commentData[0];
+
   //this allows us to grab the first and only object, out of the commentData array
 
   return (
@@ -81,7 +81,7 @@ export default function GetAComment({
 
       <SingleComment
         replyingtothisid={commentData.postid}
-        rootComment={commentData}
+        rootComment={commentDataObject}
         typeOfContentReplyingTo="name"
         sessionFromServer={sessionFromServer}
         apilink="/api/namecomments"

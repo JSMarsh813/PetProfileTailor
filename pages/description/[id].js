@@ -1,8 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu";
-import Namelisting from "../../components/ShowingListOfContent/Namelisting";
-import { authOptions } from "../api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
+import React from "react";
 import NameListingAsSections from "../../components/ShowingListOfContent/NameListingAsSections";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
@@ -12,7 +8,6 @@ import HeadersForDescriptions from "../../components/ShowingListOfContent/Header
 import dbConnect from "../../config/connectmongodb";
 import Descriptions from "../../models/description";
 import DescriptionTag from "../../models/descriptiontag";
-import User from "../../models/User";
 
 const ObjectId = require("mongodb").ObjectId;
 

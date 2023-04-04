@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu";
-import Namelisting from "../../components/ShowingListOfContent/Namelisting";
+
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import NameListingAsSections from "../../components/ShowingListOfContent/NameListingAsSections";
-import User from "../../models/User";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
