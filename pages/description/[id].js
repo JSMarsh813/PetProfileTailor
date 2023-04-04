@@ -4,30 +4,16 @@ import Namelisting from "../../components/ShowingListOfContent/Namelisting";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import NameListingAsSections from "../../components/ShowingListOfContent/NameListingAsSections";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faLocationDot,
-  faRankingStar,
-  faUserPlus,
-  faEnvelopeOpenText,
-  faEnvelope,
-} from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 import DescriptionListingAsSections from "../../components/ShowingListOfContent/DescriptionListingAsSections";
 import HeadersForDescriptions from "../../components/ShowingListOfContent/HeadersForDescriptions";
-import PageTitleWithImages from "../../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
-
 import dbConnect from "../../config/connectmongodb";
 import Descriptions from "../../models/description";
 import DescriptionTag from "../../models/descriptiontag";
+import User from "../../models/User";
+
 const ObjectId = require("mongodb").ObjectId;
 
 export const getServerSideProps = async (context) => {
