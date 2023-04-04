@@ -21,15 +21,18 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    blockedusers: {
-      type: Array,
-      default: [],
-    },
-    followers: {
-      type: Array,
-      default: [],
-      ref: "User",
-    },
+    blockedusers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    followers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     bioblurb: {
       type: String,
       default: "",

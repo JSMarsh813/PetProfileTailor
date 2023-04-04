@@ -13,7 +13,7 @@ const BatSignalCommentSchema = new mongoose.Schema(
       unique: false,
     },
     replyingtothisid: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       unique: false,
     },
@@ -32,13 +32,15 @@ const BatSignalCommentSchema = new mongoose.Schema(
       default: [],
     },
     parentcommentid: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       default: null,
     },
-    likedby: {
-      type: Array,
-      default: [],
-    },
+    likedby: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -21,10 +21,12 @@ const DescriptionSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    likedby: {
-      type: Array,
-      default: [],
-    },
+    likedby: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     tags: [
       {
         type: mongoose.Schema.Types.ObjectId,

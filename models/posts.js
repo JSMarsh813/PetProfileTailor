@@ -31,10 +31,12 @@ const PostSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    likedby: {
-      type: Array,
-      default: [],
-    },
+    likedby: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     taglist: {
       type: Array,
       required: true,

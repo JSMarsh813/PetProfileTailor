@@ -21,12 +21,12 @@ const NameSchema = new mongoose.Schema({
   comments: {
     type: Array,
   },
-  likedby: {
-    type: Array,
-    required: true,
-    default: [],
-    unique: false,
-  },
+  likedby: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   createdby: {
     type: mongoose.Schema.Types.ObjectId,
     required: false,
