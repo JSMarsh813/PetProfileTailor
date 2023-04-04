@@ -451,6 +451,8 @@ function ProfilePage({
                       rootComment={singleComment}
                       sessionFromServer={sessionFromServer}
                       typeOfContentReplyingTo="post"
+                      apilink="/api/individualbatsignalcomments"
+                      apilinklikes="/api/individualbatsignalcomments/updatecommentlikes"
                     />
                   ))}
                 </section>

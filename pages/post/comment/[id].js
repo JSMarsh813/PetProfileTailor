@@ -78,6 +78,8 @@ export default function GetAComment({
         rootComment={commentData2}
         typeOfContentReplyingTo="post"
         sessionFromServer={sessionFromServer}
+        apilink="/api/individualbatsignalcomments"
+        apilinklikes="/api/individualbatsignalcomments/updatecommentlikes"
       />
     </div>
   );

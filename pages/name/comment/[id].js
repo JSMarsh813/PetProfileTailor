@@ -79,10 +79,12 @@ export default function GetAComment({
       />
 
       <SingleComment
-        replyingtothisid={commentData2.postid}
-        rootComment={commentData2}
+        replyingtothisid={commentData.postid}
+        rootComment={commentData}
         typeOfContentReplyingTo="name"
         sessionFromServer={sessionFromServer}
+        apilink="/api/namecomments"
+        apilinklikes="/api/namecomments/updatenamecommentlikes"
       />
     </div>
   );

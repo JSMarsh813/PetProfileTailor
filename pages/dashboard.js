@@ -367,6 +367,8 @@ export default function Dashboard({
                     rootComment={comment}
                     sessionFromServer={sessionFromServer}
                     typeOfContentReplyingTo="post"
+                    apilink="/api/individualbatsignalcomments"
+                    apilinklikes="/api/individualbatsignalcomments/updatecommentlikes"
                   />
                 );
               })}

@@ -21,6 +21,8 @@ function CommentListing({
   sessionFromServer,
   typeOfContentReplyingTo,
   replyingtothiscontent,
+  apilink,
+  apilinklikes,
 }) {
   const [replying, setReplying] = useState(false);
 
@@ -51,10 +53,16 @@ function CommentListing({
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
   let linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
-  let apiLink = "/api/individualbatsignalcomments";
+
   const localLink = `/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
 
-  let linkToPost = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/${typeOfContentReplyingTo}/${rootComment.replyingtothiscontent}`;
+  let linkToPost = `${
+    process.env.NEXT_PUBLIC_BASE_FETCH_URL
+  }/${typeOfContentReplyingTo}/${
+    typeOfContentReplyingTo == "name"
+      ? rootComment.replyingtothiscontent
+      : replyingtothisid
+  }`;
 
   useEffect(() => {
     {
@@ -159,7 +167,8 @@ function CommentListing({
                 HeartIconStyling="text-xl"
                 HeartIconTextStyling="text-darkPurple ml-2"
                 session={sessionFromServer}
-                apiLink="/api/individualbatsignalcomments/updatecommentlikes"
+                apiLink={apilinklikes}
+                // "/api/individualbatsignalcomments/updatecommentlikes"
               />
 
               <ShareButton
@@ -182,7 +191,7 @@ function CommentListing({
                 rootComment={rootComment}
                 sessionFromServer={sessionFromServer}
                 changeCommentState={setCommentChanged}
-                apiLink={apiLink}
+                apiLink={apilink}
               />
             )}
 
@@ -193,7 +202,7 @@ function CommentListing({
                 changeCommentState={setCommentChanged}
                 commentId={rootComment._id}
                 commentCreatedBy={rootComment.createdby._id}
-                apiLink={apiLink}
+                apiLink={apilink}
               />
             )}
           </div>
@@ -203,7 +212,7 @@ function CommentListing({
               replyingtothisid={rootComment.replyingtothisid}
               parentcommentid={adjustedParentId}
               sessionFromServer={sessionFromServer}
-              apiLink={apiLink}
+              apiLink={apilink}
             />
           )}
         </div>

@@ -227,6 +227,7 @@ export default function NameListingAsSections({
                 sessionFromServer={sessionFromServer}
                 apiLink="/api/namecomments/"
                 likesApiLink="/api/namecomments/updatenamecommentlikes"
+                replyingtothiscontent={name.name}
               />
             );
           })}

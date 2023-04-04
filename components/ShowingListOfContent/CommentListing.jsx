@@ -25,6 +25,7 @@ function CommentListing({
   apiLink,
   likesApiLink,
   typeOfContentReplyingTo,
+  replyingtothiscontent,
 }) {
   const [replying, setReplying] = useState(false);
   const [commentParentId, setCommentParentId] = useState(null);
@@ -178,6 +179,7 @@ function CommentListing({
               replyingtothisid={rootComment.replyingtothisid}
               parentcommentid={adjustedParentId}
               sessionFromServer={sessionFromServer}
+              replyingtothiscontent={replyingtothiscontent}
             />
           )}
         </div>
