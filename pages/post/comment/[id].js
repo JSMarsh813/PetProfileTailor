@@ -62,7 +62,7 @@ export default function GetAComment({
   userName,
   profileImage,
 }) {
-  let commentData2 = commentData[0];
+  let commentDataObject = commentData[0];
   //this allows us to grab the first and only object, out of the commentData array
 
   return (
@@ -73,8 +73,8 @@ export default function GetAComment({
       />
 
       <SingleComment
-        replyingtothisid={commentData2.replyingtothisid}
-        rootComment={commentData2}
+        replyingtothisid={commentDataObject.replyingtothisid}
+        rootComment={commentDataObject}
         typeOfContentReplyingTo="post"
         sessionFromServer={sessionFromServer}
         apilink="/api/individualbatsignalcomments"
