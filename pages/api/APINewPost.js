@@ -6,7 +6,6 @@ async function APINewPost(req, res) {
     return;
   }
 
-  console.log(req.body);
   const { image, title, description, createdby, taglist, alttext } = req.body;
 
   if (!description || !taglist || !createdby) {

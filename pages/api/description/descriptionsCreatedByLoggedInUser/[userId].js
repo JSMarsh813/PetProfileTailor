@@ -8,8 +8,6 @@ export default async function handler(req, res) {
   const userId = req.query.userId;
   const method = req.method;
 
-  console.log(req.query);
-
   dbConnect(); //from config/mongo.js
 
   if (method === "GET") {

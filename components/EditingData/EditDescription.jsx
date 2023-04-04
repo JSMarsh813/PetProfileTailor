@@ -41,7 +41,6 @@ export default function EditName({
         descriptionSubmission,
       })
       .then((response) => {
-        console.log(response);
         //reloads page
         SetShowEditPage(false);
         setEditedFunction(true);

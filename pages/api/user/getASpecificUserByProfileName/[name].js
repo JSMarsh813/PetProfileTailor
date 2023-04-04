@@ -13,7 +13,6 @@ export default async function handler(req, res) {
 
   const method = req.method;
 
-  console.log(req.query);
   dbConnect(); //from config/mongo.js
 
   if (method === "GET") {

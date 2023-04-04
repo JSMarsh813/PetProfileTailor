@@ -17,12 +17,10 @@ export default async function editposts(req, res) {
   const { image, title, description, createdby, taglist, postid } =
     req.body.postSubmission;
 
-  console.log(req.body.postSubmission);
-
   await db.connect();
 
   const toUpdatePost = await Post.findById(postid);
-  console.log(toUpdatePost);
+
   if (image) {
     toUpdatePost.image = image;
   }

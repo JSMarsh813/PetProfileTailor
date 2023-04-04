@@ -76,7 +76,6 @@ export default function Postid({ sessionFromServer, postList }) {
 
   return (
     <div>
-      {console.log}
       <NavLayoutwithSettingsMenu
         profileImage={profileImage}
         userName={userName}

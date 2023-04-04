@@ -27,7 +27,6 @@ export default function EditBioAndProfile({
         bioSubmission,
       })
       .then((response) => {
-        console.log(response);
         //reloads page
         setProfileChange(true);
         setShowProfileEditPage(false);

@@ -4,8 +4,6 @@ import db from "../../../utils/db";
 const cloudinary = require("cloudinary").v2;
 
 async function handler(req, res) {
-  console.log(req.body);
-
   if (req.method !== "PUT") {
     return res.status(400).send({ message: `${req.method} not supported` });
   }

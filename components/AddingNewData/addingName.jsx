@@ -43,8 +43,6 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
       createdby: userId.toString(),
     };
 
-    console.log(nameSubmission);
-
     axios
       .post("/api/names", nameSubmission)
       .then((response) => {

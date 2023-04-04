@@ -8,7 +8,6 @@ export default async function getnamecount(req, res) {
 
   if (method === "GET") {
     try {
-      console.log("i'm inside getnamecount");
       const countOfNames = await Names.find();
       res.status(200).json(countOfNames);
     } catch (err) {

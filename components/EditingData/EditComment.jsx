@@ -25,7 +25,6 @@ export default function EditPost({
       // createdby: createdby.toString(),
       commentId: rootComment._id,
     };
-    console.log(commentSubmission);
 
     // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true
     // toast.success(`You successfully edited your post ${sessionFromServer.user.name}!`)
@@ -36,7 +35,6 @@ export default function EditPost({
         commentSubmission,
       })
       .then((response) => {
-        console.log(response);
         //reloads page
         changeCommentState(true);
         SetShowEditPage(false);

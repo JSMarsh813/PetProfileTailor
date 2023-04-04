@@ -27,8 +27,6 @@ export default async function handler(req, res) {
   if (method === "PUT") {
     const { description, commentId } = req.body.commentSubmission;
 
-    console.log(req.body.commentSubmission);
-
     try {
       const toUpdateBatSignalComment = await BatSignalComment.findById(
         commentId
@@ -83,8 +81,6 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
-      console.log(`request body is ${JSON.stringify(req.body.commentId)}`);
-
       let idToObjectId = mongoose.Types.ObjectId(req.body.commentId);
       const test = await BatSignalComment.deleteOne({ _id: idToObjectId });
       res.status(200).json({ success: true, msg: `Comment Deleted ${test}` });

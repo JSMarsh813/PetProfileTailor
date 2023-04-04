@@ -58,7 +58,6 @@ export const getServerSideProps = async (context) => {
     .populate({ path: "tags", select: ["tag"] });
 
   if (!descriptionData) {
-    console.log(descriptionData);
     return {
       notFound: true,
     };

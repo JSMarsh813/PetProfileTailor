@@ -54,7 +54,6 @@ function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
                           className="ml-3 min-w-0 flex-1 text-base text-violet-100 "
                         >
                           {option.tag}
-                          {/* {console.log(option)} */}
                         </label>
                       </div>
                     ))}

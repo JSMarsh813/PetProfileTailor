@@ -52,7 +52,6 @@ export const getServerSideProps = async (context) => {
       "followers",
       "name followers name profileimage profilename bioblurb location"
     );
-  console.log(userData);
 
   if (!userData.length) {
     return {
@@ -188,9 +187,6 @@ function ProfilePage({
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
   }
-
-  console.log(`this is userData ${JSON.stringify(userData.name)}`);
-  console.log(userName);
 
   const [showProfileEditPage, setShowProfileEditPage] = useState(false);
   const [profileChanged, setProfileChange] = useState(false);

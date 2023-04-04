@@ -87,7 +87,6 @@ function AddPost({
 
   const postSubmission = async (imageFromCloudinary) => {
     //need to pass image directly into this function, otherwise it'll try to grab from state to early and thus you'll get "" for the image
-    console.log(`hi from image ${imageFromCloudinary}`);
 
     const postSubmission = {
       image: imageFromCloudinary,
@@ -98,7 +97,6 @@ function AddPost({
       alttext: altText,
     };
 
-    console.log(postSubmission);
     axios
       .post("/api/APINewPost", postSubmission)
       .then((response) => {

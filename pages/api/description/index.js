@@ -25,14 +25,11 @@ export default async function handler(req, res) {
   }
 
   if (method === "PUT") {
-    console.log(
-      `this is inside the put request ${req.body.descriptionSubmission}`
-    );
     const { description, tags, notes, descriptionId, relatednames } =
       req.body.descriptionSubmission;
 
     const toUpdateDescription = await Description.findById(descriptionId);
-    console.log(toUpdateDescription);
+
     try {
       if (notes) {
         toUpdateDescription.notes = notes;
@@ -57,11 +54,10 @@ export default async function handler(req, res) {
   if (method === "POST") {
     const { description } = req.body;
     //tags, notes, createdby, relatednames
-    console.log(`this is description ${description}`);
+
     let existingDescriptionCheck = await Description.find({
       description: description,
     });
-    console.log(existingDescriptionCheck);
 
     if (existingDescriptionCheck && existingDescriptionCheck.length != 0) {
       res.status(409).json({
@@ -81,8 +77,6 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
-      console.log(`request body is ${JSON.stringify(req.body.itemId)}`);
-
       let idToObjectId = mongoose.Types.ObjectId(req.body.itemId);
 
       const test = await Description.deleteOne({ _id: idToObjectId });

@@ -4,8 +4,6 @@ import db from "../../../utils/db";
 const mongoose = require("mongoose");
 
 async function handler(req, res) {
-  // console.log(`this is request body ${(JSON.stringify(req))}`)
-  //nothing appearing ...
   if (req.method !== "PUT") {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
@@ -20,14 +18,13 @@ async function handler(req, res) {
 
   // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.
   const commentId = req.body.currentTargetedId; //!!!!
-  console.log(req.body);
+
   //{ currentTargetedNameId: '63abc7d5650d1659f0dd305e' }
 
-  console.log(`this is nameId ${commentId}`);
   // this is nameId 63abc7d5650d1659f0dd305e
 
   let idToObjectId = mongoose.Types.ObjectId(commentId);
-  console.log(idToObjectId);
+
   //result: new ObjectId("63b7fe4362bf243a197c505d")
 
   // change the string id into an objectId, so it can be compared to the name's object id in the MongoDB database.
@@ -41,7 +38,6 @@ async function handler(req, res) {
   // use the model we're updating,IndividualNames. Look through it to find the one document we're looking for with the name's id.
   const toUpdateComment = await IndividualComments.findById(idToObjectId);
 
-  console.log(`this is toupdatepost ${toUpdateComment}`);
   // result: this is toupdatename {
   //   _id: new ObjectId("63abc7d5650d1659f0dd305e"),
   //   name: 'donner',
@@ -51,7 +47,6 @@ async function handler(req, res) {
   //   __v: 0
   // }
 
-  console.log(`this is user._id ${user._id}`);
   //result: this is user._id 63a90c2e83e6366b179ffc40
 
   // now that we have the right name, lets check if it has the current user's id inside of it

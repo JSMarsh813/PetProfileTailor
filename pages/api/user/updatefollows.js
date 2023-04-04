@@ -5,8 +5,6 @@ import db from "../../../utils/db";
 const mongoose = require("mongoose");
 
 async function handler(req, res) {
-  // console.log(`this is request body ${(JSON.stringify(req))}`)
-  //nothing appearing ...
   if (req.method !== "PUT") {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
@@ -21,21 +19,14 @@ async function handler(req, res) {
 
   // the things we're sending to update. In this case, we're sending the descriptions id in the request and then writing the logic later to determine what to change the current array to.
   const userToFollowId = req.body.currentTargetedId; //!!!!
-  console.log(req.body);
-
-  console.log(`this is userToFollowId  ${userToFollowId}`);
 
   let idToObjectId = mongoose.Types.ObjectId(userToFollowId);
-  console.log(idToObjectId);
 
   await db.connect();
 
   // use the model we're updating,IndividualNames. Look through it to find the one document we're looking for with the Description's id.
   const toUpdateUserFollowers = await User.findById(idToObjectId);
 
-  console.log(`this is toupdatedescription ${toUpdateUserFollowers}`);
-
-  console.log(`this is user._id ${user._id}`);
   //result: this is user._id 63a90c2e83e6366b179ffc40
 
   // now that we have the right Description, lets check if it has the current user's id inside of it

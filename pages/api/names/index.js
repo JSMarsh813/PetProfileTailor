@@ -27,11 +27,10 @@ export default async function handler(req, res) {
   }
 
   if (method === "PUT") {
-    console.log(req.body.nameSubmission);
     const { description, name, tags, nameId } = req.body.nameSubmission;
 
     const toUpdateName = await Names.findById(nameId);
-    console.log(`222 this is to update name ${JSON.stringify(toUpdateName)}`);
+
     try {
       if (description) {
         toUpdateName.description = description;
@@ -54,7 +53,6 @@ export default async function handler(req, res) {
     const { name, description, tags, createdby } = req.body;
 
     let existingNameCheck = await Names.find({ name: name });
-    console.log(existingNameCheck);
 
     if (existingNameCheck && existingNameCheck.length != 0) {
       res.status(409).json({
@@ -74,8 +72,6 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
-      console.log(`request body is ${JSON.stringify(req.body.itemId)}`);
-
       let idToObjectId = mongoose.Types.ObjectId(req.body.itemId);
       const test = await Names.deleteOne({ _id: idToObjectId });
       res.status(200).json({ success: true, msg: `Name Deleted ${test}` });

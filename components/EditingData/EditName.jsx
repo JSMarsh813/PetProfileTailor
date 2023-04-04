@@ -32,7 +32,6 @@ export default function EditName({
         nameSubmission,
       })
       .then((response) => {
-        console.log(response);
         SetShowEditPage(false);
         setEditedFunction(true);
       })

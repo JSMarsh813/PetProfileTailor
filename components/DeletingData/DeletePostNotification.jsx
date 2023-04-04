@@ -22,7 +22,6 @@ export default function deletePostNotification({
           data: { postId },
         })
         .then((response) => {
-          console.log(response);
           //reloads page
           changePostState(true);
 
@@ -38,7 +37,6 @@ export default function deletePostNotification({
 
   return (
     <div>
-      {console.log(postId)}
       <div
         className="relative z-10"
         aria-labelledby="modal-title"

@@ -122,7 +122,6 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     sortingproperty
   ) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    // console.log(`this is pagesize ${pagesize}`);
 
     return `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/swr/swr?page=${
       pageIndex + 1
@@ -184,7 +183,6 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
   return (
     <div className="bg-violet-900">
-      {console.log(names)}
       <Layout
         profileImage={profileImage}
         userName={userName}

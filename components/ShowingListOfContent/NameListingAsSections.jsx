@@ -67,13 +67,12 @@ export default function NameListingAsSections({
       "/api/names/commentscontainingnameid/" + name._id
     );
     const data = await response.json();
-    // console.log(data);
+
     setCommentsFromFetch(data);
   };
 
   useEffect(() => {
     handleFetchComments();
-    // console.log(commentsFromFetch);
   }, []);
 
   //root comments

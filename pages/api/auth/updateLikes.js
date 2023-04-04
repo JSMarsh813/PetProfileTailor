@@ -12,7 +12,7 @@ async function handler(req, res) {
 
   await db.connect();
   const toUpdateName = await Names.findById(nameId);
-  console.log(`this is to update name ${toUpdateName}`);
+
   toUpdateName.likedby.includes(user)
     ? (toUpdateName.likedby = toUpdateName.likedby.filter(
         (userinlikedby) => userinlikedby != user

@@ -27,8 +27,6 @@ export default async function handler(req, res) {
   if (method === "PUT") {
     const { description, commentId } = req.body.commentSubmission;
 
-    console.log(req.body.commentSubmission);
-
     try {
       const toUpdateNameComment = await NameComment.findById(commentId);
 
@@ -48,7 +46,7 @@ export default async function handler(req, res) {
   if (method === "POST") {
     const { image, description, createdby, replyingtothisid, parentcommentid } =
       req.body;
-    console.log(req.body);
+
     if (!description || !replyingtothisid || !createdby) {
       res.status(422).json({
         message: "Validation error",
@@ -81,8 +79,6 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
-      console.log(`request body is ${JSON.stringify(req.body.commentId)}`);
-
       let idToObjectId = mongoose.Types.ObjectId(req.body.commentId);
       const test = await NameComment.deleteOne({ _id: idToObjectId });
       res.status(200).json({ success: true, msg: `Comment Deleted ${test}` });

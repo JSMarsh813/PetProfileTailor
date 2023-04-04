@@ -62,10 +62,9 @@ export default function Register({ sessionFromServer }) {
       "/api/user/getASpecificUserByProfileName/" + nameCheck
     );
     let nameData = await nameResponse.json();
-    console.log(nameData);
+
     setNamesThatExist(nameData);
     setNameCheckFunctionRun(true);
-    console.log(`this is names that exist ${JSON.stringify(namesThatExist)}`);
   }
 
   function resetData(e) {

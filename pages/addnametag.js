@@ -67,12 +67,11 @@ export default function AddNameTag({ sessionFromServer, categoryData }) {
       newtagid: newNameTagId,
       categoriesToUpdate: categoryList,
     };
-    console.log(addTagsToCategorySubmission);
+
     try {
       axios.put("/api/namecategories/edittags", {
         addTagsToCategorySubmission,
       });
-      console.log(`tag ${newNameTagId} added to categories! :) `);
     } catch (err) {
       console.log("tag not added to categories :(", err);
     }

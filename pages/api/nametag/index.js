@@ -4,7 +4,6 @@ import NameTag from "../../../models/NameTag";
 
 export default async function handler(req, res) {
   const { method } = req;
-  console.log(req.body);
 
   dbConnect(); //from config/mongo.js
 

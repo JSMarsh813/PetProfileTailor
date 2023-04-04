@@ -19,7 +19,7 @@ export const getServerSideProps = async (context) => {
     `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptioncategory`
   );
   let categoryData = await categoryList.json();
-  console.log(categoryData);
+
   return {
     props: {
       sessionFromServer: session,
@@ -68,12 +68,11 @@ export default function AddDescriptionTag({ sessionFromServer, categoryData }) {
       newtagid: newDescriptionTagId,
       categoriesToUpdate: categoryList,
     };
-    console.log(addTagsToCategorySubmission);
+
     try {
       axios.put("/api/descriptioncategory/edittags", {
         addTagsToCategorySubmission,
       });
-      console.log(`tag ${newDescriptionTagId} added to categories! :) `);
     } catch (err) {
       console.log("tag not added to categories :(", err);
     }

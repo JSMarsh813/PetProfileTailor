@@ -86,7 +86,6 @@ export default function EditPost({
 
   const postSubmission = async (image) => {
     //need to pass image directly into this function, otherwise it'll try to grab from state to early and thus you'll get "" for the image
-    console.log(`hi from image ${image}`);
 
     const postSubmission = {
       image: image,
@@ -97,7 +96,6 @@ export default function EditPost({
       postid: post._id,
       alttext: altText,
     };
-    console.log(postSubmission);
 
     await axios
       .put("/api/individualposts/", {

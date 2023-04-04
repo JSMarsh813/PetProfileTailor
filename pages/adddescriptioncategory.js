@@ -41,9 +41,7 @@ export default function AddCategory({ sessionFromServer }) {
 
     axios
       .post("/api/descriptioncategory", categorySubmission)
-      .then((response) => {
-        console.log(response);
-      })
+      .then((response) => {})
       .catch((error) => {
         console.log("this is error", error);
       });

@@ -7,7 +7,7 @@ import Names from "../../../../models/Names";
 export default async function handler(req, res) {
   const name = req.query.name;
   const method = req.method;
-  console.log(name);
+
   dbConnect(); //from config/mongo.js
 
   if (method === "GET") {

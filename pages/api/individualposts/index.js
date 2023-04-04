@@ -35,12 +35,10 @@ export default async function handler(req, res) {
     const { image, title, description, createdby, taglist, postid, alttext } =
       req.body.postSubmission;
 
-    console.log(req.body.postSubmission);
-
     await db.connect();
 
     const toUpdatePost = await IndividualPosts.findById(postid);
-    console.log(toUpdatePost);
+
     if (image) {
       toUpdatePost.image = image;
     }
@@ -78,8 +76,6 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
-      console.log(`request body is ${JSON.stringify(req.body.postId)}`);
-
       let idToObjectId = mongoose.Types.ObjectId(req.body.postId);
       const test = await IndividualPosts.deleteOne({ _id: idToObjectId });
       res.status(200).json({ success: true, msg: `Post Deleted ${test}` });

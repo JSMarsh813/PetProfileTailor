@@ -47,7 +47,7 @@ export default async function handler(req, res) {
   if (method === "POST") {
     try {
       const descriptiontag = await DescriptionTag.create(req.body);
-      console.log(descriptiontag);
+
       res.status(201).json(descriptiontag);
     } catch (err) {
       res.status(500).json(err);
