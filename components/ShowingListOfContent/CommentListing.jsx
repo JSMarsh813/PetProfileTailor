@@ -134,7 +134,7 @@ function CommentListing({
                 <div className="place-self-end mr-2">
                   <EditButton
                     className="mr-4"
-                    setShowEditPage={updateEditState}
+                    onupdateEditState={updateEditState}
                   />
 
                   <DeleteButton onupdateDeleteState={updateDeleteState} />
@@ -197,6 +197,7 @@ function CommentListing({
                   sessionFromServer={sessionFromServer}
                   apiLink={apiLink}
                   likesApiLink={likesApiLink}
+                  typeOfContentReplyingTo="name"
                 />
               </div>
             );

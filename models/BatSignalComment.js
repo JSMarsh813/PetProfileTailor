@@ -17,6 +17,11 @@ const BatSignalCommentSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
+    replyingtothiscontent: {
+      type: String,
+      required: false,
+      unique: false,
+    },
     createdby: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,

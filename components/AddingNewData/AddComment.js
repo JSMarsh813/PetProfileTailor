@@ -15,6 +15,7 @@ import axios from "axios";
 
 function AddComment({
   replyingtothisid,
+  replyingtothiscontent,
   parentcommentid,
   sessionFromServer,
   apiLink,
@@ -46,6 +47,7 @@ function AddComment({
       replyingtothisid: replyingtothisid,
       description: description,
       createdby: createdby.toString(),
+      replyingtothiscontent: replyingtothiscontent,
     };
 
     await axios

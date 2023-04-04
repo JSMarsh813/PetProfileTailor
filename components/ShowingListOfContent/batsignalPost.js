@@ -198,6 +198,7 @@ function BatsignalPost({
             parentcommentid={null}
             sessionFromServer={sessionFromServer}
             apiLink="/api/individualbatsignalcomments/"
+            replyingtothiscontent="post"
           />
         </section>
 

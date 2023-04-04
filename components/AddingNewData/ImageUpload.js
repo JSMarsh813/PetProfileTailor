@@ -62,7 +62,6 @@ function ImageUpload({ sessionFromServer }) {
         setImagePreview("");
       } else if (res.error) {
         toast.error(res.error);
-        console.log(res.error);
       } else {
         console.log("this is an error, check imageUpload component");
       }

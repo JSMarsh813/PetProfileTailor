@@ -28,7 +28,7 @@ export default function NameListingAsSections({
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   // ##### STATE FOR EDITS ####
-  const [showEditPage, SetShowEditPage] = useState(false);
+  const [showEditPage, setShowEditPage] = useState(false);
 
   //### STATE FOR COMMENTS ######
   const [commentsShowing, SetCommentsShowing] = useState(false);
@@ -48,8 +48,8 @@ export default function NameListingAsSections({
   }
 
   // ### for the edit notification button
-  function updateEditState() {
-    SetShowEditPage(true);
+  function onupdateEditState() {
+    setShowEditPage(!showEditPage);
   }
 
   //for shares
@@ -164,7 +164,7 @@ export default function NameListingAsSections({
               <div className="my-2">
                 <EditButton
                   className="ml-2 mr-6"
-                  onupdateEditState={updateEditState}
+                  onupdateEditState={onupdateEditState}
                 />
                 <DeleteButton onupdateDeleteState={updateDeleteState} />
               </div>
@@ -183,7 +183,7 @@ export default function NameListingAsSections({
 
           {showEditPage && (
             <EditName
-              SetShowEditPage={SetShowEditPage}
+              SetShowEditPage={setShowEditPage}
               name={name}
               sessionFromServer={sessionFromServer}
               tagList={tagList}
@@ -209,10 +209,14 @@ export default function NameListingAsSections({
             replyingtothisid={name._id}
             hasParent={null}
             sessionFromServer={sessionFromServer}
+            replyingtothiscontent={name.name}
           />
           {/* ######### showing comments #########*/}
 
           {rootComments.map((comment) => {
+            {
+              console.log(comment);
+            }
             return (
               <CommentListing
                 typeOfContentReplyingTo="name"

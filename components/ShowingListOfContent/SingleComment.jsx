@@ -20,6 +20,7 @@ function CommentListing({
   rootComment,
   sessionFromServer,
   typeOfContentReplyingTo,
+  replyingtothiscontent,
 }) {
   const [replying, setReplying] = useState(false);
 
@@ -53,7 +54,7 @@ function CommentListing({
   let apiLink = "/api/individualbatsignalcomments";
   const localLink = `/${typeOfContentReplyingTo}/comment/${rootComment._id}`;
 
-  let linkToPost = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/${typeOfContentReplyingTo}/${rootComment.replyingtothisid}`;
+  let linkToPost = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/${typeOfContentReplyingTo}/${rootComment.replyingtothiscontent}`;
 
   useEffect(() => {
     {
@@ -170,7 +171,7 @@ function CommentListing({
             {sessionFromServer &&
               rootComment.createdby._id == sessionFromServer.user._id && (
                 <div className="items-end flex gap-x-2">
-                  <EditButton setShowEditPage={updateEditState} />
+                  <EditButton onupdateEditState={updateEditState} />
                   <DeleteButton onupdateDeleteState={updateDeleteState} />
                 </div>
               )}
@@ -221,7 +222,7 @@ function CommentListing({
           navigator.clipboard.writeText(linkToPost);
           toast.success("link saved to clipboard");
         }}
-        text="link to related post"
+        text="link to related content"
       />
     </div>
   );

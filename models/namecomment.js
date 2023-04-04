@@ -17,6 +17,11 @@ const namecommentSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
+    replyingtothiscontent: {
+      type: String,
+      required: true,
+      unique: false,
+    },
     createdby: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
