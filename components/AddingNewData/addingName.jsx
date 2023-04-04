@@ -48,14 +48,23 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
       .then((response) => {
         setIsPending(false);
         toast.success(
-          `Successfully added name: ${newName}. Heres 5 treat points as thanks for your contribution ${sessionFromServer.user.name}!`
+          `Successfully added name: ${newName}. Heres 3 treat points as thanks for your contribution ${sessionFromServer.user.name}!`
         );
       })
       .catch((error) => {
         console.log("this is error", error);
         setNameExists(true);
         setIsPending(false);
-        toast.error(`Ruh Roh! ${newName} not added`);
+        if (error.response.status == 409) {
+          toast.error(
+            `Ruh Roh! The name ${newName} already exists!
+            `
+          );
+        } else {
+          toast.error(
+            `Ruh Roh! ${newName} not added. An error has occurred. Status code ${error.response.status}`
+          );
+        }
       });
   }
 

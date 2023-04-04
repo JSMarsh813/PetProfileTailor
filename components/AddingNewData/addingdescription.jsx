@@ -46,10 +46,13 @@ function NewDescriptionWithTagsData({
       .catch((error) => {
         console.log("this is error", error);
         setIsPending(false);
-        toast.error(`Ruh Roh! ${newDescription} not added`);
-
         if (error.response.status == 409) {
           setDescriptionExists(true);
+          toast.error(`Ruh Roh! ${newDescription} already exists`);
+        } else {
+          toast.error(
+            `Ruh Roh! ${newDescription} not added. An error has occurred. Status code ${error.response.status}`
+          );
         }
       });
   }
