@@ -8,6 +8,8 @@ import HeadersForDescriptions from "../../components/ShowingListOfContent/Header
 import dbConnect from "../../config/connectmongodb";
 import Descriptions from "../../models/description";
 import DescriptionTag from "../../models/descriptiontag";
+import { authOptions } from "../api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
 
 const ObjectId = require("mongodb").ObjectId;
 
