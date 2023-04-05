@@ -1,4 +1,3 @@
-import { getSession } from "next-auth/react";
 import IndividualPosts from "../../../models/posts";
 import db from "../../../utils/db";
 const mongoose = require("mongoose");
@@ -8,20 +7,16 @@ async function handler(req, res) {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const session = await getSession({ req });
-  if (!session) {
-    return res.status(401).send({ message: "signin required" });
-  }
+  // const session = await getSession({ req });
+  // if (!session) {
+  //   return res.status(401).send({ message: "signin required" });
+  // }
 
   //session info
-  const { user } = session;
+  const user = req.body.session;
 
   // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.
-  const nameId = req.body.currentTargetedId; //!!!!
-
-  //{ currentTargetedNameId: '63abc7d5650d1659f0dd305e' }
-
-  // this is nameId 63abc7d5650d1659f0dd305e
+  const nameId = req.body.currentTargetedId; //
 
   let idToObjectId = mongoose.Types.ObjectId(nameId);
 

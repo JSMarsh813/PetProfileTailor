@@ -1,4 +1,3 @@
-import { getSession } from "next-auth/react";
 import Names from "../../../models/Names";
 import db from "../../../utils/db";
 

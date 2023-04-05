@@ -1,5 +1,3 @@
-import React from "react";
-import { getSession } from "next-auth/react";
 import Post from "../../../models/posts";
 import db from "../../../utils/db";
 

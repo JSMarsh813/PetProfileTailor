@@ -1,4 +1,3 @@
-import { getSession } from "next-auth/react";
 import IndividualComments from "../../../models/BatSignalComment";
 import db from "../../../utils/db";
 const mongoose = require("mongoose");
@@ -14,7 +13,7 @@ async function handler(req, res) {
   }
 
   //session info
-  const { user } = session;
+  const user = req.body.session;
 
   // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.
   const commentId = req.body.currentTargetedId; //!!!!

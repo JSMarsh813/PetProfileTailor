@@ -1,4 +1,3 @@
-import { getSession } from "next-auth/react";
 import NameComment from "../../../models/namecomment";
 import db from "../../../utils/db";
 const mongoose = require("mongoose");
@@ -8,12 +7,7 @@ async function handler(req, res) {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const session = await getSession({ req });
-  if (!session) {
-    return res.status(401).send({ message: "signin required" });
-  }
-
-  const { user } = session;
+  const user = req.body.session;
 
   const commentId = req.body.currentTargetedId;
 
