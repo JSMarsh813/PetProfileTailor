@@ -10,6 +10,7 @@ import Image from "next/image";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import WideCenteredHeading from "../components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
+import dbConnect from "../config/connectmongodb";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -17,6 +18,8 @@ export const getServerSideProps = async (context) => {
     context.res,
     authOptions
   );
+
+  dbConnect();
 
   return {
     props: {
