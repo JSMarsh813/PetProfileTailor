@@ -7,11 +7,6 @@ async function handler(req, res) {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const session = await getSession({ req });
-  if (!session) {
-    return res.status(401).send({ message: "signin required" });
-  }
-
   //session info
   const user = req.body.session;
 
