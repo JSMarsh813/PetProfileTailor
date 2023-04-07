@@ -13,7 +13,10 @@ export default function LikesButtonAndLikesLogic({
   HeartIconStyling,
   HeartIconTextStyling,
 }) {
-  let [likesCount, setLikesCount] = useState(data.likedby.length);
+  let [likesCount, setLikesCount] = useState(
+    data.likedby == [] ? 0 : data.likedby.length
+  );
+
   const [dataLiked, setdataLiked] = useState(false);
   let likesColor = dataLiked ? "red" : "#87ceeb";
   let currentTargetedId = data._id;
@@ -23,7 +26,6 @@ export default function LikesButtonAndLikesLogic({
     if (session) {
       userId = session.user._id;
     }
-
     data.likedby.includes(userId) ? setdataLiked(true) : setdataLiked(false);
   }, [userId]);
 

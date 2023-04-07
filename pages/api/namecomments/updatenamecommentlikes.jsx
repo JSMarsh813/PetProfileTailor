@@ -7,7 +7,7 @@ async function handler(req, res) {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const user = req.body.session;
+  const user = req.body.session.user;
 
   const commentId = req.body.currentTargetedId;
 

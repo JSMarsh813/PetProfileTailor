@@ -29,6 +29,8 @@ import DescriptionTag from "../../models/descriptiontag";
 import IndividualPosts from "../../models/posts";
 import User from "../../models/User";
 
+// const ObjectId = require("mongodb").ObjectId;
+
 export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url
   const usersProfileName = context.params.profilename;
@@ -115,7 +117,9 @@ export const getServerSideProps = async (context) => {
 
     //USERS FAVED NAMES //
 
-    const likedNames = await Names.find({ likedby: userId });
+    const likedNames = await Names.find({
+      likedby: userId,
+    });
 
     const postsLiked = await IndividualPosts.find({
       likedby: userId,

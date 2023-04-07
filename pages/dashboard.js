@@ -24,6 +24,8 @@ import Descriptions from "../models/description";
 import DescriptionTag from "../models/descriptiontag";
 import NameTag from "../models/NameTag";
 
+// const ObjectId = require("mongodb").ObjectId;
+
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
@@ -50,6 +52,7 @@ export const getServerSideProps = async (context) => {
     })
     .populate({ path: "tags" });
 
+  console.log(likedNames);
   //NAMES ADDED BY USER //
 
   const namesCreated = await Names.find({ createdby: UserId }).populate({

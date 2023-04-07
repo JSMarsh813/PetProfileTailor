@@ -8,7 +8,7 @@ async function handler(req, res) {
   }
 
   //session info
-  const user = req.body.session;
+  const user = req.body.session.user;
 
   // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.
   const commentId = req.body.currentTargetedId; //!!!!

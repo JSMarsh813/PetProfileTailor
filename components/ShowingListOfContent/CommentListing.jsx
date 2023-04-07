@@ -116,6 +116,7 @@ function CommentListing({
                 }}
               ></FontAwesomeIcon>
 
+              {console.log(rootComment)}
               <LikesButtonAndLikesLogic
                 data={rootComment}
                 HeartIconStyling="text-2xl"
