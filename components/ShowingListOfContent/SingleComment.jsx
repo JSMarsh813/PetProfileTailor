@@ -206,6 +206,7 @@ function CommentListing({
               />
             )}
           </div>
+          {console.log(replyingtothiscontent)}
 
           {replying && (
             <AddComment
@@ -213,6 +214,7 @@ function CommentListing({
               parentcommentid={adjustedParentId}
               sessionFromServer={sessionFromServer}
               apiLink={apilink}
+              replyingtothiscontent={replyingtothiscontent}
             />
           )}
         </div>

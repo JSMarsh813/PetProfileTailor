@@ -64,6 +64,7 @@ export default function GetAComment({
   profileImage,
 }) {
   let commentDataObject = commentData[0];
+  const commentToValues = Object.values(commentDataObject);
 
   //this allows us to grab the first and only object, out of the commentData array
 
@@ -81,12 +82,13 @@ export default function GetAComment({
       />
 
       <SingleComment
-        replyingtothisid={commentData.postid}
+        replyingtothisid={commentToValues[0]}
         rootComment={commentDataObject}
         typeOfContentReplyingTo="name"
         sessionFromServer={sessionFromServer}
         apilink="/api/namecomments"
         apilinklikes="/api/namecomments/updatenamecommentlikes"
+        replyingtothiscontent={commentToValues[2]}
       />
     </div>
   );
