@@ -53,6 +53,7 @@ function ImageUpload({ sessionFromServer }) {
     try {
       let res = await axios.put("/api/user/uploadprofileimage", {
         newProfileImage: newProfileImage.toString(),
+        user: sessionFromServer,
       });
 
       if (res.status == 200) {
