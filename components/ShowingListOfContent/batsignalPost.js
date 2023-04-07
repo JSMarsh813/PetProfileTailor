@@ -129,7 +129,7 @@ function BatsignalPost({
           sessionFromServer={sessionFromServer}
           postId={post._id}
           postCreatedBy={post.createdby._id}
-          setItemEditedFunction={setItemEditedFunction}
+          changePostState={setItemEditedFunction}
         />
       )}
 
