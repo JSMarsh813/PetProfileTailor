@@ -176,7 +176,7 @@ function AddPost({
           id="addAltText"
           placeholder="Please add alt text if the image is not purely decorative (optional)"
           onChange={(e) => setAltText(e.target.value)}
-          maxLength="80"
+          maxLength="300"
           type="text"
         />
 

@@ -161,7 +161,9 @@ function BatsignalPost({
               />
             </div>
           )}
-          <p className="text-sm py-2 px-2 mr-1">{paragraphText}</p>
+          <p className="text-sm py-2 px-2 mr-1 whitespace-pre-line">
+            {paragraphText}
+          </p>
 
           <PostersImageUsernameProfileName
             postersProfileImage={postersProfileImage}
