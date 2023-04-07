@@ -8,7 +8,9 @@ async function handler(req, res) {
   }
 
   //session info
-  const { user } = req.body.session.user._id;
+  const user = req.body.user;
+
+  console.log(req.body);
 
   // no req is appearing in console...
 

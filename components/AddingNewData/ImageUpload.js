@@ -53,7 +53,7 @@ function ImageUpload({ sessionFromServer }) {
     try {
       let res = await axios.put("/api/user/uploadprofileimage", {
         newProfileImage: newProfileImage.toString(),
-        user: sessionFromServer,
+        user: sessionFromServer.user._id,
       });
 
       if (res.status == 200) {
@@ -63,7 +63,7 @@ function ImageUpload({ sessionFromServer }) {
         setSelectedImage("");
         setImagePreview("");
       } else if (res.error) {
-        toast.error(res.error);
+        toast.error(`An error occured ${JSON.stringify(res.error)}`);
       } else {
         console.log("this is an error, check imageUpload component");
       }
