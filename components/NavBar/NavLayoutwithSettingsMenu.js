@@ -19,6 +19,7 @@ export default function NavLayoutwithSettingsMenu({
   children,
   userName,
   profileImage,
+  sessionFromServer,
 }) {
   const [isHamBurgNavOpen, setisHamBurgNavOpen] = useState(false);
 
@@ -136,6 +137,19 @@ export default function NavLayoutwithSettingsMenu({
                           active={active}
                         >
                           dashboard
+                        </MyLink>
+                      )}
+                    </Menu.Item>
+
+                    <Menu.Item>
+                      {({ active }) => (
+                        <MyLink
+                          href={`${
+                            process.env.NEXT_PUBLIC_BASE_FETCH_URL
+                          }/profile/${sessionFromServer.user.name.toLowerCase()}`}
+                          active={active}
+                        >
+                          Profile
                         </MyLink>
                       )}
                     </Menu.Item>

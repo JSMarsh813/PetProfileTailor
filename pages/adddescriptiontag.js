@@ -82,6 +82,7 @@ export default function AddDescriptionTag({ sessionFromServer, categoryData }) {
       <NavLayoutwithSettingsMenu
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
       <form onSubmit={handleDescriptionTagSubmission}>
         <input

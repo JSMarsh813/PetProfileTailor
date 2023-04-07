@@ -83,6 +83,7 @@ export default function Postid({ sessionFromServer, description, tagList }) {
       <NavLayoutwithSettingsMenu
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <div className="mx-2">

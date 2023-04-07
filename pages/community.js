@@ -188,6 +188,7 @@ export default function Community({ sessionFromServer }) {
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <PageTitleWithImages

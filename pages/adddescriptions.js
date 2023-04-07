@@ -70,6 +70,7 @@ function AddDescriptions({ sessionFromServer, tagList, nameList }) {
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
       <PageTitleWithImages
         title="Add a"

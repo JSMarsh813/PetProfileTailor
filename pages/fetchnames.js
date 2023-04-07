@@ -186,6 +186,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
       {/* {`this is data ${JSON.stringify(data)}`}
       {`this is filtered names ${JSON.stringify(filterednames)}`}

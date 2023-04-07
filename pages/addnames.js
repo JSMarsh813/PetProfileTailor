@@ -50,6 +50,7 @@ function AddNewNameWithTags({ tagList, sessionFromServer }) {
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <PageTitleWithImages

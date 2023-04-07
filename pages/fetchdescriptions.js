@@ -161,6 +161,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <section className="sm:px-4 bg-violet-900 w-screen">

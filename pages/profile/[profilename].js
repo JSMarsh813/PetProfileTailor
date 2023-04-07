@@ -225,6 +225,7 @@ function ProfilePage({
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <p className="text-yellow-300 bg-red-600 text-center my-2">

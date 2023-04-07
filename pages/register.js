@@ -111,6 +111,7 @@ export default function Register({ sessionFromServer }) {
         title="Create Account"
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <h1 className="flex justify-center text-3xl mb-1"> Register </h1>

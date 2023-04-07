@@ -224,6 +224,7 @@ export default function Dashboard({
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <section>

@@ -52,6 +52,7 @@ export default function AddCategory({ sessionFromServer }) {
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <form onSubmit={handleCategorySubmission}>

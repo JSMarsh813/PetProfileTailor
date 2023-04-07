@@ -64,6 +64,7 @@ export default function Postid({ sessionFromServer, postList }) {
       <NavLayoutwithSettingsMenu
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <BatsignalPost

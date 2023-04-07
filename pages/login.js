@@ -94,6 +94,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
         title="Login"
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
       <div>
         <section className="h-fit">

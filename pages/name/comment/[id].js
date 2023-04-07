@@ -72,6 +72,7 @@ export default function GetAComment({
       <NavLayoutwithSettingsMenu
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <PageTitleWithImage

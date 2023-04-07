@@ -34,6 +34,7 @@ export default function FetchUsers({ sessionFromServer }) {
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <div>lookup user by: user name</div>

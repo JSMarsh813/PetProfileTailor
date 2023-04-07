@@ -81,6 +81,7 @@ export default function AddNameTag({ sessionFromServer, categoryData }) {
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
       <form
         className="mx-2"

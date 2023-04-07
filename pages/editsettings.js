@@ -70,6 +70,7 @@ export default function ProfileScreen({ sessionFromServer }) {
         title="Profile"
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <div className="h-40 w-40 mx-auto mb-4">

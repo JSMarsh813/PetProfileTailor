@@ -45,6 +45,7 @@ function HomePage({ sessionFromServer }) {
       <Layout
         profileImage={profileImage}
         userName={userName}
+        sessionFromServer={sessionFromServer}
       />
 
       <HeroTop />
