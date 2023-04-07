@@ -62,6 +62,9 @@ export default function UsersFollowersList({
             
             items-center justify-items-center"
                         >
+                          {console.log(
+                            `our follower ${JSON.stringify(follower)}`
+                          )}
                           {/* ###### PROFILE IMAGE #### */}
                           <Image
                             src={follower.profileimage}
@@ -82,11 +85,21 @@ export default function UsersFollowersList({
 
                           <p>{follower.bioblurb}</p>
 
+                          {console.log(follower._id)}
+
+                          {console.log(sessionFromServer.user._id)}
+
                           <section>
-                            <FollowButton
-                              data={userData}
-                              session={sessionFromServer}
-                            />
+                            {console.log(
+                              follower._id == sessionFromServer.user._id
+                            )}
+
+                            {!(follower._id == sessionFromServer.user._id) && (
+                              <FollowButton
+                                data={follower}
+                                session={sessionFromServer}
+                              />
+                            )}
                           </section>
                         </section>
                       </a>

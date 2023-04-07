@@ -16,6 +16,9 @@ export default function FollowButton({
   const [userFollowed, setUserFollowed] = useState(false);
   let userToFollowId = data._id;
   let userId = "";
+  {
+    console.log(data._id);
+  }
 
   useEffect(() => {
     if (session) {
@@ -53,6 +56,7 @@ export default function FollowButton({
 
   return (
     <>
+      {data._id == userId && <span>its you </span>}
       {userFollowed ? (
         <label
           className="justify-self-end

@@ -52,9 +52,9 @@ export const getServerSideProps = async (context) => {
     .select("name followers name profileimage profilename bioblurb location")
     .populate(
       "followers",
-      "name followers name profileimage profilename bioblurb location"
+      "_id name followers name profileimage profilename bioblurb location"
     );
-
+  //
   if (!userData.length) {
     return {
       notFound: true,
@@ -513,6 +513,7 @@ function ProfilePage({
               />
             )}
 
+            {console.log(userData)}
             {showFollowersList && (
               <UsersFollowersList
                 userData={userData}
