@@ -15,6 +15,7 @@ function ImageUpload({ sessionFromServer }) {
   const [newProfileImage, setNewProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState();
 
+  console.log(sessionFromServer);
   const handleImageAttachment = (e) => {
     e.preventDefault();
     setSelectedImage(e.target.files[0]);
