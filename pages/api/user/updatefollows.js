@@ -1,5 +1,3 @@
-import { getSession } from "next-auth/react";
-
 import User from "../../../models/User";
 import db from "../../../utils/db";
 const mongoose = require("mongoose");
@@ -9,17 +7,7 @@ async function handler(req, res) {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const session = await getSession({ req });
-  if (!session) {
-    return res.status(401).send({ message: "signin required" });
-  }
-
-  //session info
-  const { user } = session;
-
-  // the things we're sending to update. In this case, we're sending the descriptions id in the request and then writing the logic later to determine what to change the current array to.
-  const userToFollowId = req.body.currentTargetedId; //!!!!
-
+  const { userId, userToFollowId, userFollowed } = req.body;
   let idToObjectId = mongoose.Types.ObjectId(userToFollowId);
 
   await db.connect();
@@ -33,13 +21,14 @@ async function handler(req, res) {
   //if true, lets filter the user out
   //  if false, lets add the user to the Description object's likedby property
 
-  toUpdateUserFollowers.followers.includes(user._id)
+  let clickingUserObjectId = mongoose.Types.ObjectId(userId);
+
+  userFollowed
     ? (toUpdateUserFollowers.followers = toUpdateUserFollowers.followers.filter(
-        (userinfollowers) => userinfollowers != user._id
+        (userinfollowers) => userinfollowers != userId
       ))
-    : (toUpdateUserFollowers.followers = toUpdateUserFollowers.followers.concat(
-        user._id
-      ));
+    : (toUpdateUserFollowers.followers =
+        toUpdateUserFollowers.followers.concat(userId));
 
   await toUpdateUserFollowers.save();
 

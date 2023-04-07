@@ -47,24 +47,18 @@ export default function ProfileScreen({ sessionFromServer }) {
   useEffect(() => {
     setValue("name", sessionFromServer.user.name);
     setValue("email", sessionFromServer.user.email);
+    setValue("userid", sessionFromServer.user._id);
   }, [sessionFromServer.user, setValue]);
 
-  const submitHandler = async ({ name, email, password }) => {
+  const submitHandler = async ({ name, email, password, userid }) => {
     try {
       await axios.put("/api/auth/update", {
         name,
         email,
         password,
-      });
-      const result = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
+        userid,
       });
       toast.success("Profile updated successfully");
-      if (result.error) {
-        toast.error(result.error);
-      }
     } catch (err) {
       toast.error(getError(err));
     }

@@ -136,8 +136,13 @@ export const getServerSideProps = async (context) => {
     //### FOLLOWING LIST, followers is grabbed from userData
 
     let usersFollowing = await User.find({
-      followers: userId.toString(),
-    }).select("name followers name profileimage profilename bioblurb location");
+      followers: userId,
+    })
+      .select("name followers name profileimage profilename bioblurb location")
+      .populate(
+        "followers",
+        "name followers name profileimage profilename bioblurb location"
+      );
 
     return {
       props: {
@@ -222,6 +227,10 @@ function ProfilePage({
         userName={userName}
       />
 
+      <p className="text-yellow-300 bg-red-600 text-center my-2">
+        Profile pages do not currently have SWR, so you will need to refresh to
+        see the changes you make
+      </p>
       <div className="flex flex-col md:flex-row">
         {/* ############## BIO ############## */}
         <section className=" sm:w-96 text-darkPurple ">

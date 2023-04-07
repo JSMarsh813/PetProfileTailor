@@ -69,7 +69,6 @@ export default function UsersFollowersList({
                             alt=""
                             width={100}
                             height={100}
-                            layout="responsive"
                           />
                           {/* ###### PROFILE name, profile and bioblurb #### */}
                           <section>

@@ -10,11 +10,9 @@ async function handler(req, res) {
   //session info
   const user = req.body.user;
 
-  console.log(req.body);
-
   // no req is appearing in console...
 
-  const { newProfileImage } = req.body.newProfileImage;
+  const newProfileImage = req.body.newProfileImage;
 
   await db.connect();
   const toUpdateUser = await User.findById(user);

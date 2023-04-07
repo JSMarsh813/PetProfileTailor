@@ -14,27 +14,33 @@ export default function FollowButton({
   FollowTextStyling,
 }) {
   const [userFollowed, setUserFollowed] = useState(false);
-  let currentTargetedId = data._id;
+  let userToFollowId = data._id;
   let userId = "";
-  console.log(data);
 
   useEffect(() => {
     if (session) {
       userId = session.user._id;
     }
 
-    data.followers.includes(userId)
+    let searchingInFollowers = data.followers.find(
+      (follower) => follower._id == userId
+    );
+    console.log(searchingInFollowers);
+    searchingInFollowers != undefined
       ? setUserFollowed(true)
       : setUserFollowed(false);
   }, [userId]);
 
   const handleFollows = (e) => {
     !session && toast.error("Please sign in to follow users");
+    let userId = session.user._id;
 
     const putFollows = async () => {
       try {
         const response = await axios.put("/api/user/updatefollows/", {
-          currentTargetedId,
+          userToFollowId,
+          userId,
+          userFollowed,
         });
 
         setUserFollowed(!userFollowed);
