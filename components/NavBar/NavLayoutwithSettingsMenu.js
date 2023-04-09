@@ -141,18 +141,20 @@ export default function NavLayoutwithSettingsMenu({
                       )}
                     </Menu.Item>
 
-                    <Menu.Item>
-                      {({ active }) => (
-                        <MyLink
-                          href={`${
-                            process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                          }/profile/${sessionFromServer.user.profilename.toLowerCase()}`}
-                          active={active}
-                        >
-                          Profile
-                        </MyLink>
-                      )}
-                    </Menu.Item>
+                    {sessionFromServer.user.profilename && (
+                      <Menu.Item>
+                        {({ active }) => (
+                          <MyLink
+                            href={`${
+                              process.env.NEXT_PUBLIC_BASE_FETCH_URL
+                            }/profile/${sessionFromServer.user.profilename.toLowerCase()}`}
+                            active={active}
+                          >
+                            Profile
+                          </MyLink>
+                        )}
+                      </Menu.Item>
+                    )}
 
                     <Menu.Item>
                       {({ active }) => (
