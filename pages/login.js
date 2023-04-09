@@ -121,7 +121,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
 
                   {/* <!-- Email input --> */}
                   <div className="mb-6">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="signinemail">Email</label>
                     <input
                       type="email"
                       {...register("email", {
@@ -133,7 +133,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                         },
                       })}
                       className="w-full text-darkPurple"
-                      id="email"
+                      id="signinemail"
                       autoFocus
                     ></input>
 
@@ -224,7 +224,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
 
                     <input
                       type="email"
-                      id="email"
+                      id="magiclinkemail"
                       name="email"
                       className="w-2/3 text-darkPurple "
                     />
