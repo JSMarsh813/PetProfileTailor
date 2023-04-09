@@ -261,7 +261,7 @@ export default function Dashboard({
                         <Link
                           href={`${
                             process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                          }/profile/${sessionFromServer.user.name.toLowerCase()}`}
+                          }/profile/${sessionFromServer.user.profilename.toLowerCase()}`}
                         >
                           profile link/ edit contributions
                         </Link>

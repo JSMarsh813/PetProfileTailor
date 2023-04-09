@@ -146,7 +146,7 @@ export default function NavLayoutwithSettingsMenu({
                         <MyLink
                           href={`${
                             process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                          }/profile/${sessionFromServer.user.name.toLowerCase()}`}
+                          }/profile/${sessionFromServer.user.profilename.toLowerCase()}`}
                           active={active}
                         >
                           Profile
