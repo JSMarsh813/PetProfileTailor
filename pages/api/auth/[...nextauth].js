@@ -134,6 +134,7 @@ export const authOptions = {
           return {
             _id: user._id,
             name: user.name,
+            profilename: user.profilename,
             email: user.email,
             profileimage: user.profileimage,
           };
