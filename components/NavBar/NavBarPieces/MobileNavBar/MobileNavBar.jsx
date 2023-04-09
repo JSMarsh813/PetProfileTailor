@@ -52,7 +52,7 @@ focus-visible:ring-opacity-75"
         <Menu.Item>
           {({ active }) => (
             <MyLink
-              href="/"
+              href={`/`}
               active={active}
             >
               <FontAwesomeIcon
@@ -80,7 +80,7 @@ focus-visible:ring-opacity-75"
         <Menu.Item>
           {({ active }) => (
             <MyLink
-              href="/fetchnames"
+              href={`/fetchnames`}
               active={active}
             >
               <FontAwesomeIcon
@@ -98,7 +98,7 @@ focus-visible:ring-opacity-75"
         <Menu.Item>
           {({ active }) => (
             <MyLink
-              href="/fetchdescriptions"
+              href={`/fetchdescriptions`}
               active={active}
             >
               <FontAwesomeIcon
@@ -127,7 +127,7 @@ focus-visible:ring-opacity-75"
         <Menu.Item>
           {({ active }) => (
             <MyLink
-              href="/addnames"
+              href={`/addnames`}
               active={active}
             >
               <FontAwesomeIcon
@@ -145,7 +145,7 @@ focus-visible:ring-opacity-75"
         <Menu.Item>
           {({ active }) => (
             <MyLink
-              href="/adddescriptions"
+              href={`/adddescriptions`}
               active={active}
             >
               <FontAwesomeIcon
@@ -173,7 +173,7 @@ focus-visible:ring-opacity-75"
 
         <Menu.Item>
           {({ active }) => (
-            <MyLink href="/community">
+            <MyLink href={`/community`}>
               <div className="mx-auto inline-block w-9">
                 <Image
                   className={`${active ? "" : "invert"}`}

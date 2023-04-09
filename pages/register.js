@@ -51,11 +51,11 @@ export default function Register({ sessionFromServer }) {
   const router = useRouter();
   const { redirect } = router.query;
 
-  useEffect(() => {
-    if (session?.user) {
-      router.push("/");
-    }
-  }, [router, session, redirect]);
+  // useEffect(() => {
+  //   if (session?.user) {
+  //     router.push("/");
+  //   }
+  // }, [router, session, redirect]);
 
   async function checkIfNameExists() {
     let nameResponse = await fetch(
@@ -97,9 +97,9 @@ export default function Register({ sessionFromServer }) {
       if (result.error) {
         toast.error(result.error);
       } else {
-        toast.success("Successfully signed up! Sending to profile page");
+        toast.success("Successfully signed up! Sending to dashboard");
 
-        router.push("/");
+        router.push("/dashboard");
       }
     } catch (err) {
       toast.error(getError(err));

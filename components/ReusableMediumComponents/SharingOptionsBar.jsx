@@ -82,7 +82,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
         shadow-darkPurple
         hover:text-violet-200
         hover:bg-darkPurple"
-        href={localLink}
+        href={`${localLink}`}
       >
         <FontAwesomeIcon
           icon={faPersonRunning}

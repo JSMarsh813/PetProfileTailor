@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 import DescriptionListingAsSections from "../../components/ShowingListOfContent/DescriptionListingAsSections";
 import HeadersForDescriptions from "../../components/ShowingListOfContent/HeadersForDescriptions";
-import dbConnect from "../../config/connectmongodb";
+import dbConnect from "../../utils/db";
 import Descriptions from "../../models/description";
 import DescriptionTag from "../../models/descriptiontag";
 import { authOptions } from "../api/auth/[...nextauth]";
@@ -29,8 +29,7 @@ export const getServerSideProps = async (context) => {
   // );
   // let descriptionData = await descriptionResponse.json();
 
-  dbConnect();
-
+  dbConnect.connect();
   const descriptionId = ObjectId(context.params.id);
 
   let descriptionData = await Descriptions.findById(descriptionId)

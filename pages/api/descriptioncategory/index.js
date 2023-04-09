@@ -1,11 +1,11 @@
-import dbConnect from "../../../config/connectmongodb";
+import dbConnect from "../../../utils/db";
 import Category from "../../../models/descriptioncategory";
 import descriptiontag from "../../../models/descriptiontag";
 
 export default async function handler(req, res) {
   const { method } = req;
 
-  dbConnect();
+  dbConnect.connect();
 
   if (method === "GET") {
     try {

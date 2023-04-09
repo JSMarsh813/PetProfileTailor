@@ -18,9 +18,18 @@ async function connect() {
     await mongoose.disconnect();
   }
   console.log(source);
-  const db = mongoose.connect(source);
-  console.log("new connection");
-  connection.isConnected = db.connections[0].readyState;
+  try {
+    const db = await mongoose.connect(source, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log("new connection");
+    connection.isConnected = db.connections[0].readyState;
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
 }
 
 async function disconnect() {

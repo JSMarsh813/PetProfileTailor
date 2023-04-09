@@ -7,7 +7,8 @@ import { unstable_getServerSession } from "next-auth/next";
 
 import AddingDescription from "../components/AddingNewData/addingdescription";
 
-import dbConnect from "../config/connectmongodb";
+import dbConnect from "../utils/db";
+
 import Names from "../models/Names";
 import DescriptionTag from "../models/descriptiontag";
 
@@ -18,7 +19,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  dbConnect();
+  dbConnect.connect();
 
   //grabbing Tags for description edit function
 

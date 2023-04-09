@@ -7,7 +7,7 @@ import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections";
 
-import dbConnect from "../config/connectmongodb";
+import dbConnect from "../utils/db";
 import Category from "../models/descriptioncategory";
 import DescriptionTag from "../models/descriptiontag";
 
@@ -24,7 +24,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  dbConnect();
+  dbConnect.connect();
 
   let data = await Category.find().populate("tags");
 

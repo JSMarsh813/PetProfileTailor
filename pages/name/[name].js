@@ -7,7 +7,7 @@ import NameListingAsSections from "../../components/ShowingListOfContent/NameLis
 
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
-import dbConnect from "../../config/connectmongodb";
+import dbConnect from "../../utils/db";
 import Names from "../../models/Names";
 
 export const getServerSideProps = async (context) => {
@@ -22,7 +22,7 @@ export const getServerSideProps = async (context) => {
 
   const UserId = session ? session.user._id : "";
 
-  dbConnect();
+  dbConnect.connect();
 
   const nameData = await Names.find({ name: name })
     .populate({

@@ -9,7 +9,7 @@ import AddPost from "../components/AddingNewData/AddPost";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import Image from "next/image";
 
-import dbConnect from "../config/connectmongodb";
+import dbConnect from "../utils/db";
 import Pagination from "../components/ShowingListOfContent/pagination";
 
 import useSWRInfinite from "swr/infinite";
@@ -23,7 +23,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  dbConnect();
+  dbConnect.connect();
 
   return {
     props: {

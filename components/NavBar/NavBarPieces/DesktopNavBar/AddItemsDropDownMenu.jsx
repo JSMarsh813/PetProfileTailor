@@ -72,7 +72,7 @@ export default function DropDownMenu() {
         <Menu.Item>
           {({ active }) => (
             <MyLink
-              href="/addnames"
+              href={`/addnames`}
               active={active}
             >
               <FontAwesomeIcon
@@ -90,7 +90,7 @@ export default function DropDownMenu() {
         <Menu.Item>
           {({ active }) => (
             <MyLink
-              href="/adddescriptions"
+              href={`/adddescriptions`}
               active={active}
             >
               <FontAwesomeIcon

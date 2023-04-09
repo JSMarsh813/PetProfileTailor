@@ -5,7 +5,7 @@ import { authOptions } from "../../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import NavLayoutwithSettingsMenu from "../../../components/NavBar/NavLayoutwithSettingsMenu";
 
-import dbConnect from "../../../config/connectmongodb";
+import dbConnect from "../../../utils/db";
 const ObjectId = require("mongodb").ObjectId;
 import Comments from "../../../models/BatSignalComment";
 
@@ -26,7 +26,7 @@ export const getServerSideProps = async (context) => {
 
   const id = context.params.id;
   const commentId = ObjectId(id);
-  dbConnect();
+  dbConnect.connect();
 
   // let commentResponse = await fetch(
   //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/comment/batsignalpostcomment/getaspecificcommentbyid/` +

@@ -8,7 +8,7 @@ import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
-import dbConnect from "../config/connectmongodb";
+import dbConnect from "../utils/db";
 import NameTag from "../models/NameTag";
 
 export const getServerSideProps = async (context) => {
@@ -18,7 +18,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  dbConnect();
+  dbConnect.connect();
 
   const tagData = await NameTag.find();
 

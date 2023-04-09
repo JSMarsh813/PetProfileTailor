@@ -20,7 +20,7 @@ import EditBioProfileButton from "../../components/ReusableSmallComponents/butto
 import UsersFollowersList from "../../components/ShowingListOfContent/UsersFollowersList";
 import UsersFollowingList from "../../components/ShowingListOfContent/UsersFollowingList";
 
-import dbConnect from "../../config/connectmongodb";
+import dbConnect from "../../utils/db";
 import Names from "../../models/Names";
 import BatSignalComments from "../../models/BatSignalComment";
 import NameTag from "../../models/NameTag";
@@ -46,7 +46,7 @@ export const getServerSideProps = async (context) => {
   //     id
   // );
   // let userData = await userResponse.json();
-  dbConnect();
+  dbConnect.connect();
 
   const userData = await User.find({ profilename: usersProfileName })
     .select("name followers name profileimage profilename bioblurb location")

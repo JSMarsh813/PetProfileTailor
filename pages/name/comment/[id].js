@@ -6,7 +6,7 @@ import { unstable_getServerSession } from "next-auth/next";
 import NavLayoutwithSettingsMenu from "../../../components/NavBar/NavLayoutwithSettingsMenu";
 import PageTitleWithImage from "../../../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
-import dbConnect from "../../../config/connectmongodb";
+import dbConnect from "../../../utils/db";
 const ObjectId = require("mongodb").ObjectId;
 import Comments from "../../../models/namecomment";
 
@@ -25,7 +25,7 @@ export const getServerSideProps = async (context) => {
     profileImage = sessionFromServer.user.profileimage;
   }
 
-  dbConnect();
+  dbConnect.connect();
 
   const id = context.params.id;
   // let commentResponse = await fetch(

@@ -1,4 +1,4 @@
-import dbConnect from "../../../../config/connectmongodb";
+import dbConnect from "../../../../utils/db";
 const ObjectId = require("mongodb").ObjectId;
 import Posts from "../../../../models/posts";
 
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   const postId = ObjectId(req.query.id);
   const method = req.method;
 
-  dbConnect();
+  dbConnect.connect();
 
   if (method === "GET") {
     try {

@@ -1,4 +1,4 @@
-import dbConnect from "../../../../../config/connectmongodb";
+import dbConnect from "../../../../../utils/db";
 const ObjectId = require("mongodb").ObjectId;
 import Comments from "../../../../../models/BatSignalComment";
 
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   const method = req.method;
 
-  dbConnect();
+  dbConnect.connect();
 
   if (method === "GET") {
     try {

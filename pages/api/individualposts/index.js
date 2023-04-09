@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import dbConnect from "../../../config/connectmongodb";
+import dbConnect from "../../../utils/db";
 import db from "../../../utils/db";
 const mongoose = require("mongoose");
 
@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const { method } = req;
 
   if (method === "GET") {
-    dbConnect(); //from config/mongo.js
+    dbConnect.connect();
     try {
       const individualPosts = await IndividualPosts.find()
         .populate({

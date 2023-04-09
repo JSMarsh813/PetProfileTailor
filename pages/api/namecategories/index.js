@@ -1,4 +1,4 @@
-import dbConnect from "../../../config/connectmongodb";
+import dbConnect from "../../../utils/db";
 import Category from "../../../models/nameCategory";
 import NameTag from "../../../models/NameTag";
 
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   const { method } = req;
   const newcategory = req.body;
 
-  dbConnect();
+  dbConnect.connect();
 
   if (method === "GET") {
     try {

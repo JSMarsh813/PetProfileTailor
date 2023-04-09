@@ -9,7 +9,7 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
 
-import dbConnect from "../config/connectmongodb";
+import dbConnect from "../utils/db";
 import Category from "../models/nameCategory";
 import NameTag from "../models/NameTag";
 
@@ -28,7 +28,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  dbConnect();
+  dbConnect.connect();
 
   //grabbing category's
 

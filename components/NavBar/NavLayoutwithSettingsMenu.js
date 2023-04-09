@@ -80,7 +80,7 @@ export default function NavLayoutwithSettingsMenu({
               className="text-lg font-extrabold text-yellow-300 
               hidden  sm:block 
               mx-auto ml-2 hover:text-violet-100"
-              href="/"
+              href={`/`}
             >
               PetProfileTailor
             </MyLink>
@@ -133,7 +133,7 @@ export default function NavLayoutwithSettingsMenu({
                     <Menu.Item>
                       {({ active }) => (
                         <MyLink
-                          href="/dashboard"
+                          href={`/dashboard`}
                           active={active}
                         >
                           dashboard
@@ -157,7 +157,7 @@ export default function NavLayoutwithSettingsMenu({
                     <Menu.Item>
                       {({ active }) => (
                         <MyLink
-                          href="/editsettings"
+                          href={`/editsettings`}
                           active={active}
                         >
                           Edit Settings
@@ -168,7 +168,7 @@ export default function NavLayoutwithSettingsMenu({
                     <Menu.Item>
                       {({ active }) => (
                         <MyLink
-                          href="/"
+                          href={`/`}
                           active={active}
                           onClick={logoutClickHandler}
                         >

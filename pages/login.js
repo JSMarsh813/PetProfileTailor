@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import dbConnect from "../config/connectmongodb";
+import dbConnect from "../utils/db";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
@@ -28,7 +28,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
   const csrfToken = await getCsrfToken(context);
-  dbConnect();
+  dbConnect.connect();
 
   return {
     props: {
@@ -57,7 +57,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
 
   useEffect(() => {
     if (session?.user) {
-      router.push(redirect || "/dashboard");
+      router.push("/dashboard");
     }
   }, [router, session, redirect]);
   //if the session exists, then the user is already signed in. So if this is true, push back to the homepage
@@ -257,7 +257,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     icon={faPaw}
                   />
                   Don&apos;t have an account? Welcome! &nbsp;
-                  <Link href={`/register?redirect=${redirect || "/"}`}>
+                  <Link href={`/register`}>
                     <a className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
                       Register by clicking here
                     </a>

@@ -16,7 +16,7 @@ import DashboardChartForFavDescriptions from "../components/ShowingListOfContent
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 
-import dbConnect from "../config/connectmongodb";
+import dbConnect from "../utils/db";
 import Names from "../models/Names";
 import IndividualPosts from "../models/posts";
 import BatSignalComments from "../models/BatSignalComment";
@@ -41,7 +41,7 @@ export const getServerSideProps = async (context) => {
   // );
   // let nameData = await nameResponse.json();
 
-  dbConnect();
+  dbConnect.connect();
 
   //USERS FAVED NAMES //
 

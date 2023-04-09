@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import dbConnect from "../../../config/connectmongodb";
+import dbConnect from "../../../utils/db";
 const mongoose = require("mongoose");
 import Description from "../../../models/description";
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
@@ -7,7 +7,7 @@ import Description from "../../../models/description";
 export default async function handler(req, res) {
   const { method } = req;
 
-  dbConnect();
+  dbConnect.connect();
 
   if (method === "GET") {
     try {

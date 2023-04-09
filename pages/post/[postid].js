@@ -7,7 +7,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
-import dbConnect from "../../config/connectmongodb";
+import dbConnect from "../../utils/db";
 const ObjectId = require("mongodb").ObjectId;
 import Posts from "../../models/posts";
 
@@ -27,7 +27,7 @@ export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url
   const id = context.params.postid;
   const postId = ObjectId(id);
-  dbConnect();
+  dbConnect.connect();
 
   const postData = await Posts.findById(postId).populate({
     path: "createdby",

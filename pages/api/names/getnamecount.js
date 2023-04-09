@@ -1,10 +1,10 @@
-import dbConnect from "../../../config/connectmongodb";
+import dbConnect from "../../../utils/db";
 import Names from "../../../models/Names";
 
 export default async function getnamecount(req, res) {
   const method = req.method;
 
-  dbConnect();
+  dbConnect.connect();
 
   if (method === "GET") {
     try {

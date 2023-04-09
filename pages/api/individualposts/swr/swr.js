@@ -1,4 +1,4 @@
-import dbConnect from "../../../../config/connectmongodb";
+import dbConnect from "../../../../utils/db";
 import Posts from "../../../../models/posts";
 import Users from "../../../../models/User";
 
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   let sortlogic = {};
   sortlogic[sortingproperty] = parseInt(sortingvalue);
 
-  dbConnect();
+  dbConnect.connect();
 
   if (method === "GET") {
     try {

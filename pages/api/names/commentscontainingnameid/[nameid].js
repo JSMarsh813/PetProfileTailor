@@ -3,14 +3,14 @@
 //names.filter(name=>name.likedby.includes(userId))
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import dbConnect from "../../../../config/connectmongodb";
+import dbConnect from "../../../../utils/db";
 import User from "../../../../models/User";
 import NameComments from "../../../../models/namecomment";
 export default async function handler(req, res) {
   const nameid = req.query.nameid;
   const method = req.method;
 
-  dbConnect(); //from config/mongo.js
+  dbConnect.connect();
 
   if (method === "GET") {
     try {

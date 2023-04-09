@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import dbConnect from "../../../config/connectmongodb";
+import dbConnect from "../../../utils/db";
 const mongoose = require("mongoose");
 import Names from "../../../models/Names";
 
@@ -9,8 +9,7 @@ import tags from "../../../models/NameTag";
 
 export default async function handler(req, res) {
   const { method } = req;
-
-  dbConnect(); //from config/mongo.js
+  dbConnect.connect();
 
   if (method === "GET") {
     try {
