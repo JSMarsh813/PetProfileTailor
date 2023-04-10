@@ -27,7 +27,7 @@ export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url
   const id = context.params.postid;
   const postId = ObjectId(id);
-  dbConnect.connect();
+  await dbConnect.connect();
 
   const postData = await Posts.findById(postId).populate({
     path: "createdby",

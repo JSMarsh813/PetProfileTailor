@@ -28,7 +28,8 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
   const csrfToken = await getCsrfToken(context);
-  dbConnect.connect();
+
+  await dbConnect.connect();
 
   return {
     props: {

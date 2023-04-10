@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const { method } = req;
 
   if (method === "GET") {
-    dbConnect.connect();
+    await dbConnect.connect();
     try {
       const individualPosts = await IndividualPosts.find()
         .populate({

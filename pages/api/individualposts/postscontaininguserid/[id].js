@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   const userId = req.query.id;
   const method = req.method;
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   if (method === "GET") {
     try {

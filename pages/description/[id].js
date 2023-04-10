@@ -29,7 +29,7 @@ export const getServerSideProps = async (context) => {
   // );
   // let descriptionData = await descriptionResponse.json();
 
-  dbConnect.connect();
+  await dbConnect.connect();
   const descriptionId = ObjectId(context.params.id);
 
   let descriptionData = await Descriptions.findById(descriptionId)

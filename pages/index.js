@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   return {
     props: {

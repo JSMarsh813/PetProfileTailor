@@ -26,7 +26,7 @@ export const getServerSideProps = async (context) => {
 
   const id = context.params.id;
   const commentId = ObjectId(id);
-  dbConnect.connect();
+  await dbConnect.connect();
 
   // let commentResponse = await fetch(
   //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/comment/batsignalpostcomment/getaspecificcommentbyid/` +

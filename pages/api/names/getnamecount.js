@@ -4,7 +4,7 @@ import Names from "../../../models/Names";
 export default async function getnamecount(req, res) {
   const method = req.method;
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   if (method === "GET") {
     try {

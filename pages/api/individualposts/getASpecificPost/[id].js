@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   const postId = ObjectId(req.query.id);
   const method = req.method;
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   if (method === "GET") {
     try {

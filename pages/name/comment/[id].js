@@ -25,7 +25,7 @@ export const getServerSideProps = async (context) => {
     profileImage = sessionFromServer.user.profileimage;
   }
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   const id = context.params.id;
   // let commentResponse = await fetch(

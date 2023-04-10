@@ -19,7 +19,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   //grabbing Tags for description edit function
 

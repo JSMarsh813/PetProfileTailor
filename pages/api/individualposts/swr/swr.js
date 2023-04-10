@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   let sortlogic = {};
   sortlogic[sortingproperty] = parseInt(sortingvalue);
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   if (method === "GET") {
     try {

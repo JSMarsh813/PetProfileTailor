@@ -41,7 +41,7 @@ export const getServerSideProps = async (context) => {
   // );
   // let nameData = await nameResponse.json();
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   //USERS FAVED NAMES //
 

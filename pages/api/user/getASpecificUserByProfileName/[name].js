@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   const profilename = req.query.name;
 
   const method = req.method;
-  dbConnect.connect();
+  await dbConnect.connect();
 
   if (method === "GET") {
     try {

@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   const { method } = req;
   const { newtagid, categoriesToUpdate } = req.body.addTagsToCategorySubmission;
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   if (method === "PUT") {
     try {

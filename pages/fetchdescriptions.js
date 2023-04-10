@@ -24,7 +24,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   let data = await Category.find().populate("tags");
 

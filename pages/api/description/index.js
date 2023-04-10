@@ -7,7 +7,7 @@ import Description from "../../../models/description";
 export default async function handler(req, res) {
   const { method } = req;
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   if (method === "GET") {
     try {

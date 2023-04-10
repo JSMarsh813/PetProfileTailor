@@ -22,7 +22,7 @@ export const getServerSideProps = async (context) => {
 
   const UserId = session ? session.user._id : "";
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   const nameData = await Names.find({ name: name })
     .populate({

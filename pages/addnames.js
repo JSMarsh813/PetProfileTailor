@@ -18,7 +18,7 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   const tagData = await NameTag.find();
 

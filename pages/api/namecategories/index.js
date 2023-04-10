@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   const { method } = req;
   const newcategory = req.body;
 
-  dbConnect.connect();
+  await dbConnect.connect();
 
   if (method === "GET") {
     try {

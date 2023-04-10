@@ -46,7 +46,7 @@ export const getServerSideProps = async (context) => {
   //     id
   // );
   // let userData = await userResponse.json();
-  dbConnect.connect();
+  await dbConnect.connect();
 
   const userData = await User.find({ profilename: usersProfileName })
     .select("name followers name profileimage profilename bioblurb location")
