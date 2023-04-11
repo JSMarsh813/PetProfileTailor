@@ -9,7 +9,8 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 import ListWithPawPrintIcon from "../components/ReusableSmallComponents/ListWithPawPrintIcon";
 import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
+import PawPrintIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
 
 export const getInitialProps = async () => {
   await dbConnect.connect();
@@ -85,21 +86,37 @@ export default function Custom404({ sessionFromServer }) {
         />
 
         <li>
-          <FontAwesomeIcon
-            icon={faEnvelope}
-            className="mr-2"
-          />
-          <button
-            type="button"
-            onClick={() => Router.push("mailto:petprofiletailor@gmail.com")}
-          >
-            Email Us
-          </button>
+          <h4>
+            <PawPrintIcon /> Or contact me directly:
+          </h4>
+
+          <span className="block">
+            <FontAwesomeIcon
+              icon={faEnvelope}
+              className="mr-2"
+            />
+            <button
+              type="button"
+              onClick={() => Router.push("mailto:petprofiletailor@gmail.com")}
+            >
+              Email
+            </button>
+          </span>
+
+          <span className="block">
+            <a href="https://twitter.com/Janetthedev">
+              <FontAwesomeIcon
+                icon={faMessage}
+                className="mr-2"
+              />
+              Twitter
+            </a>
+          </span>
         </li>
 
         <ListWithPawPrintIcon
           className="mb-6"
-          text="You may want to return to our login page"
+          text="Or return to our login page"
         />
 
         <li className="h-16">

@@ -9,7 +9,8 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 import ListWithPawPrintIcon from "../components/ReusableSmallComponents/ListWithPawPrintIcon";
 import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faTwitter } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
+import PawPrintIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
 
 export const getInitialProps = async () => {
   await dbConnect.connect();
@@ -52,7 +53,6 @@ export default function Custom404({ sessionFromServer }) {
   return (
     <>
       <NavBar
-        title="Login"
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
@@ -63,17 +63,17 @@ export default function Custom404({ sessionFromServer }) {
         title2="Server Error"
       />
       <p className="text-center text-white">
-        Ruh-roh! Our server had an error.
+        Ruh-roh! Unfortunately our server got distracted hunting "mice" 😿.
       </p>
 
       <div className="w-60 mx-auto my-4 ">
         <Image
           className="mb-4 rounded-full"
-          src="/404.gif"
+          src="/server.gif"
           width={90}
           height={90}
           layout="responsive"
-          alt="gif of a dog and their owner which is hiding behind a blanket, the blanket falls and the owner is not there. The dog looks very confused"
+          alt=""
         />
       </div>
 
@@ -81,33 +81,37 @@ export default function Custom404({ sessionFromServer }) {
         <ListWithPawPrintIcon text=" You can try to reload the page to see if the error resolves" />
 
         <li>
-          <FontAwesomeIcon
-            icon={faEnvelope}
-            className="mr-2"
-          />
-          <button
-            type="button"
-            onClick={() => Router.push("mailto:petprofiletailor@gmail.com")}
-          >
-            Email Us
-          </button>
+          <h4>
+            <PawPrintIcon /> Or contact me directly:
+          </h4>
+
+          <span className="block">
+            <FontAwesomeIcon
+              icon={faEnvelope}
+              className="mr-2"
+            />
+            <button
+              type="button"
+              onClick={() => Router.push("mailto:petprofiletailor@gmail.com")}
+            >
+              Email
+            </button>
+          </span>
+
+          <span className="block">
+            <a href="https://twitter.com/Janetthedev">
+              <FontAwesomeIcon
+                icon={faMessage}
+                className="mr-2"
+              />
+              Twitter
+            </a>
+          </span>
         </li>
 
-        <li>
-          <FontAwesomeIcon
-            icon={faTwitter}
-            className="mr-2"
-          />
-          <button
-            type="button"
-            onClick={() => Router.push("mailto:petprofiletailor@gmail.com")}
-          >
-            Send Me a Message On Twitter
-          </button>
-        </li>
         <ListWithPawPrintIcon
           className="mb-6"
-          text="You may want to return to our login page"
+          text="Or return to our login page"
         />
         <li className="h-16">
           <MyLink
