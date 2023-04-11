@@ -1,9 +1,9 @@
 import React from "react";
-import { forwardRef } from "react";
 import NavBar from "../components/NavBar/NavLayoutwithSettingsMenu";
-import dbConnect from "../utils/db";
+// import dbConnect from "../utils/db";
 import Link from "next/link";
 import Image from "next/image";
+import { forwardRef } from "react";
 import { getSession } from "next-auth/react";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import ListWithPawPrintIcon from "../components/ReusableSmallComponents/ListWithPawPrintIcon";
@@ -13,7 +13,6 @@ import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
 
 export const getInitialProps = async () => {
-  await dbConnect.connect();
   const session = await getSession();
 
   return {
@@ -80,10 +79,7 @@ export default function Custom404({ sessionFromServer }) {
       </div>
 
       <ul className="text-center text-white bg-darkPurple max-w-4xl mx-auto h-fit pt-4 sm:px-2">
-        <ListWithPawPrintIcon
-          text="  If you reached this page by typing in an address, please verify that
-         the spelling is correct and try to reload the page."
-        />
+        <ListWithPawPrintIcon text=" You can try to reload the page to see if the error resolves" />
 
         <li>
           <h4>
@@ -118,7 +114,6 @@ export default function Custom404({ sessionFromServer }) {
           className="mb-6"
           text="Or return to our login page"
         />
-
         <li className="h-16">
           <MyLink
             className="bg-yellow-300 text-violet-800  font-bold py-3 px-4 border-b-4 border-yellow-100    

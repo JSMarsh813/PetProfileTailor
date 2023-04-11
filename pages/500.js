@@ -1,7 +1,7 @@
 import React from "react";
 import { forwardRef } from "react";
 import NavBar from "../components/NavBar/NavLayoutwithSettingsMenu";
-import dbConnect from "../utils/db";
+
 import Link from "next/link";
 import Image from "next/image";
 import { getSession } from "next-auth/react";
@@ -13,7 +13,6 @@ import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
 
 export const getInitialProps = async () => {
-  await dbConnect.connect();
   const session = await getSession();
 
   return {
