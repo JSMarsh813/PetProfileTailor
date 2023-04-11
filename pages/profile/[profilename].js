@@ -33,7 +33,7 @@ import User from "../../models/User";
 
 export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url
-  const usersProfileName = context.params.profilename;
+  const usersProfileName = context.params.profilename.toLowerCase();
 
   const session = await unstable_getServerSession(
     context.req,

@@ -40,7 +40,7 @@ async function handler(req, res) {
   const newUser = new User({
     name,
     email,
-    profilename,
+    profilename: profilename.toLowerCase(),
     password: bcryptjs.hashSync(password),
   });
 

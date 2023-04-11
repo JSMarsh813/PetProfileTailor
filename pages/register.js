@@ -86,7 +86,7 @@ export default function Register({ sessionFromServer }) {
         name,
         email,
         password,
-        profilename,
+        profilename: profilename.toLowerCase(),
       });
 
       const result = await signIn("credentials", {
