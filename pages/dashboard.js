@@ -33,126 +33,135 @@ export const getServerSideProps = async (context) => {
     authOptions
   );
 
-  const UserId = await session.user._id;
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  } else {
+    const UserId = await session.user._id;
 
-  //namelist not used so nameData not needed?
-  // let nameResponse = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
-  // );
-  // let nameData = await nameResponse.json();
+    //namelist not used so nameData not needed?
+    // let nameResponse = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names`
+    // );
+    // let nameData = await nameResponse.json();
 
-  await dbConnect.connect();
+    await dbConnect.connect();
 
-  //USERS FAVED NAMES //
+    //USERS FAVED NAMES //
 
-  const likedNames = await Names.find({ likedby: UserId })
-    .populate({
+    const likedNames = await Names.find({ likedby: UserId })
+      .populate({
+        path: "createdby",
+        select: ["name", "profilename", "profileimage"],
+      })
+      .populate({ path: "tags" });
+
+    console.log(likedNames);
+    //NAMES ADDED BY USER //
+
+    const namesCreated = await Names.find({ createdby: UserId }).populate({
       path: "createdby",
       select: ["name", "profilename", "profileimage"],
-    })
-    .populate({ path: "tags" });
-
-  console.log(likedNames);
-  //NAMES ADDED BY USER //
-
-  const namesCreated = await Names.find({ createdby: UserId }).populate({
-    path: "createdby",
-    select: ["name", "profilename", "profileimage"],
-  });
-
-  //POSTS ADDED BY USER
-
-  const postData = await IndividualPosts.find({
-    createdby: UserId,
-  }).populate({
-    path: "createdby",
-    select: ["name", "profilename", "profileimage"],
-  });
-
-  //POSTS LIKED BY USER
-
-  const postsLiked = await IndividualPosts.find({
-    likedby: UserId,
-  }).populate({
-    path: "createdby",
-    select: ["name", "profilename", "profileimage"],
-  });
-
-  //COMMENTS ADDED BY USER
-
-  const UsersCommentData = await BatSignalComments.find({
-    createdby: UserId,
-  }).populate({
-    path: "createdby",
-    select: ["name", "profilename", "profileimage"],
-  });
-
-  //COMMENTS LIKED BY USER
-
-  const likedComments = await BatSignalComments.find({
-    likedby: UserId,
-  }).populate({
-    path: "createdby",
-    select: ["name", "profilename", "profileimage"],
-  });
-
-  //grabbing DESCRIPTIONS added by user
-
-  const createdDescriptions = await Descriptions.find({
-    createdby: UserId,
-  }).populate({
-    path: "createdby",
-    select: ["name", "profilename", "profileimage"],
-  });
-
-  //grabbing DESCRIPTIONS liked by user
-  const likedDescriptions = await Descriptions.find({
-    likedby: UserId,
-  })
-    .populate({
-      path: "createdby",
-      select: ["name", "profilename", "profileimage"],
-    })
-    .populate({
-      path: "tags",
     });
 
-  //grabbing Tags for description edit function
+    //POSTS ADDED BY USER
 
-  const descriptionTagData = await DescriptionTag.find();
+    const postData = await IndividualPosts.find({
+      createdby: UserId,
+    }).populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    });
 
-  let descriptionTagListProp = descriptionTagData
-    .map((tag) => tag)
-    .reduce((sum, value) => sum.concat(value), []);
+    //POSTS LIKED BY USER
 
-  const NameTagListProp = await NameTag.find();
+    const postsLiked = await IndividualPosts.find({
+      likedby: UserId,
+    }).populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    });
 
-  return {
-    props: {
-      sessionFromServer: session,
-      namesCreated: JSON.parse(JSON.stringify(namesCreated)),
+    //COMMENTS ADDED BY USER
 
-      favNames: JSON.parse(JSON.stringify(likedNames)),
+    const UsersCommentData = await BatSignalComments.find({
+      createdby: UserId,
+    }).populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    });
 
-      postsCreated: JSON.parse(JSON.stringify(postData)),
+    //COMMENTS LIKED BY USER
 
-      postsLiked: JSON.parse(JSON.stringify(postsLiked)),
+    const likedComments = await BatSignalComments.find({
+      likedby: UserId,
+    }).populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    });
 
-      commentsCreated: JSON.parse(JSON.stringify(UsersCommentData)),
+    //grabbing DESCRIPTIONS added by user
 
-      likedComments: JSON.parse(JSON.stringify(likedComments)),
+    const createdDescriptions = await Descriptions.find({
+      createdby: UserId,
+    }).populate({
+      path: "createdby",
+      select: ["name", "profilename", "profileimage"],
+    });
 
-      likedDescriptions: JSON.parse(JSON.stringify(likedDescriptions)),
+    //grabbing DESCRIPTIONS liked by user
+    const likedDescriptions = await Descriptions.find({
+      likedby: UserId,
+    })
+      .populate({
+        path: "createdby",
+        select: ["name", "profilename", "profileimage"],
+      })
+      .populate({
+        path: "tags",
+      });
 
-      createdDescriptions: JSON.parse(JSON.stringify(createdDescriptions)),
+    //grabbing Tags for description edit function
 
-      descriptionTagListProp: JSON.parse(
-        JSON.stringify(descriptionTagListProp)
-      ),
+    const descriptionTagData = await DescriptionTag.find();
 
-      NameTagListProp: JSON.parse(JSON.stringify(NameTagListProp)),
-    },
-  };
+    let descriptionTagListProp = descriptionTagData
+      .map((tag) => tag)
+      .reduce((sum, value) => sum.concat(value), []);
+
+    const NameTagListProp = await NameTag.find();
+
+    return {
+      props: {
+        sessionFromServer: session,
+        namesCreated: JSON.parse(JSON.stringify(namesCreated)),
+
+        favNames: JSON.parse(JSON.stringify(likedNames)),
+
+        postsCreated: JSON.parse(JSON.stringify(postData)),
+
+        postsLiked: JSON.parse(JSON.stringify(postsLiked)),
+
+        commentsCreated: JSON.parse(JSON.stringify(UsersCommentData)),
+
+        likedComments: JSON.parse(JSON.stringify(likedComments)),
+
+        likedDescriptions: JSON.parse(JSON.stringify(likedDescriptions)),
+
+        createdDescriptions: JSON.parse(JSON.stringify(createdDescriptions)),
+
+        descriptionTagListProp: JSON.parse(
+          JSON.stringify(descriptionTagListProp)
+        ),
+
+        NameTagListProp: JSON.parse(JSON.stringify(NameTagListProp)),
+      },
+    };
+  }
 };
 
 export default function Dashboard({
@@ -169,14 +178,6 @@ export default function Dashboard({
   NameTagListProp,
 }) {
   const [favoritesListOpen, setFavoritesListOpen] = useState(false);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!sessionFromServer) {
-      router.push("/login");
-    }
-  }, [router, sessionFromServer]);
 
   const [favCommentsOpen, setFavCommentsOpen] = useState(false);
 

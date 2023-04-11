@@ -31,18 +31,26 @@ export const getServerSideProps = async (context) => {
 
   await dbConnect.connect();
 
-  return {
-    props: {
-      sessionFromServer: session,
-      csrfToken,
-    },
-  };
+  if (session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/dashboard",
+      },
+    };
+  } else {
+    return {
+      props: {
+        sessionFromServer: session,
+        csrfToken,
+      },
+    };
+  }
 };
 
 export default function LoginScreen({ sessionFromServer, csrfToken }) {
-  //grab data from useSession and rename data to session
-
   const { data: session } = useSession();
+  //useSession needed in order to grab session after the page is loaded, aka so we can grab session once we login
 
   const router = useRouter();
   const { redirect } = router.query;
