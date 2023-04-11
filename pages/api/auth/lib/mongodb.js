@@ -1,5 +1,4 @@
 // This approach is taken from https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
-//https://hevodata.com/learn/next-js-mongodb-connection/
 
 import { MongoClient } from "mongodb";
 
@@ -11,15 +10,6 @@ const options = {
 
 let client;
 let clientPromise;
-
-const mongoConnect = async () => {
-  try {
-    clientPromise = await client.connect();
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-};
 
 if (!process.env.MONGODB_URI) {
   throw new Error("Add Mongo URI to .env.local");
@@ -33,7 +23,7 @@ if (process.env.NODE_ENV === "development") {
   clientPromise = global._mongoClientPromise;
 } else {
   client = new MongoClient(uri, options);
-  mongoConnect();
+  clientPromise = client.connect();
 }
 
 export default clientPromise;
