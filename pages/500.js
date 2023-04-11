@@ -9,7 +9,7 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 import ListWithPawPrintIcon from "../components/ReusableSmallComponents/ListWithPawPrintIcon";
 import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faTwitter } from "@fortawesome/free-solid-svg-icons";
 
 export const getInitialProps = async () => {
   await dbConnect.connect();
@@ -59,12 +59,11 @@ export default function Custom404({ sessionFromServer }) {
       />
 
       <PageTitleWithImages
-        title="404"
-        title2="Page Not Found"
+        title="500"
+        title2="Server Error"
       />
       <p className="text-center text-white">
-        Ruh-roh! We can't seem to find that page 😿. It may have expired or been
-        removed.
+        Ruh-roh! Our server had an error.
       </p>
 
       <div className="w-60 mx-auto my-4 ">
@@ -79,10 +78,7 @@ export default function Custom404({ sessionFromServer }) {
       </div>
 
       <ul className="text-center text-white bg-darkPurple max-w-4xl mx-auto h-fit pt-4 sm:px-2">
-        <ListWithPawPrintIcon
-          text="  If you reached this page by typing in an address, please verify that
-         the spelling is correct and try to reload the page."
-        />
+        <ListWithPawPrintIcon text=" You can try to reload the page to see if the error resolves" />
 
         <li>
           <FontAwesomeIcon
@@ -97,11 +93,22 @@ export default function Custom404({ sessionFromServer }) {
           </button>
         </li>
 
+        <li>
+          <FontAwesomeIcon
+            icon={faTwitter}
+            className="mr-2"
+          />
+          <button
+            type="button"
+            onClick={() => Router.push("mailto:petprofiletailor@gmail.com")}
+          >
+            Send Me a Message On Twitter
+          </button>
+        </li>
         <ListWithPawPrintIcon
           className="mb-6"
           text="You may want to return to our login page"
         />
-
         <li className="h-16">
           <MyLink
             className="bg-yellow-300 text-violet-800  font-bold py-3 px-4 border-b-4 border-yellow-100    
