@@ -24,7 +24,11 @@ if (process.env.NODE_ENV === "development") {
   clientPromise = global._mongoClientPromise;
 } else {
   client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+  try {
+    clientPromise = await client.connect();
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export default clientPromise;

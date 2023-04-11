@@ -112,7 +112,7 @@ export default function Custom404({ sessionFromServer }) {
 
         <ListWithPawPrintIcon
           className="mb-6"
-          text="Or return to our login page"
+          text="Or return to the login or dashboard page"
         />
         <li className="h-16">
           <MyLink
@@ -122,7 +122,7 @@ export default function Custom404({ sessionFromServer }) {
           "
             href={`/login`}
           >
-            Login
+            Login/dashboard
           </MyLink>
         </li>
       </ul>
