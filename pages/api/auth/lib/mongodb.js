@@ -12,6 +12,15 @@ const options = {
 let client;
 let clientPromise;
 
+const mongoConnect = async () => {
+  try {
+    clientPromise = await client.connect();
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 if (!process.env.MONGODB_URI) {
   throw new Error("Add Mongo URI to .env.local");
 }
@@ -24,11 +33,7 @@ if (process.env.NODE_ENV === "development") {
   clientPromise = global._mongoClientPromise;
 } else {
   client = new MongoClient(uri, options);
-  try {
-    clientPromise = await client.connect();
-  } catch (e) {
-    console.log(e);
-  }
+  mongoConnect();
 }
 
 export default clientPromise;
