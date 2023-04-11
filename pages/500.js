@@ -63,7 +63,8 @@ export default function Custom404({ sessionFromServer }) {
         title2="Server Error"
       />
       <p className="text-center text-white">
-        Ruh-roh! Unfortunately our server got distracted hunting "mice" 😿.
+        Ruh-roh! Unfortunately our server got distracted hunting a
+        &quot;mouse&quot; 😿.
       </p>
 
       <div className="w-60 mx-auto my-4 ">

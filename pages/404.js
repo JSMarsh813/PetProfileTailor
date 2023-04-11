@@ -64,8 +64,8 @@ export default function Custom404({ sessionFromServer }) {
         title2="Page Not Found"
       />
       <p className="text-center text-white">
-        Ruh-roh! We can't seem to find that page 😿. It may have expired or been
-        removed.
+        Ruh-roh! We can&apos;t seem to find that page 😿. It may have expired or
+        been removed.
       </p>
 
       <div className="w-60 mx-auto my-4 ">
