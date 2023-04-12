@@ -15,14 +15,19 @@ async function connect() {
       console.log("use previous connection");
       return;
     }
-    await mongoose.disconnect();
+    // await mongoose.disconnect();
   }
   console.log(source);
+
   try {
-    const db = await mongoose.connect(source, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const db = await mongoose
+      .connect(source, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .catch(console.error);
+    //MongoParseError: option usecreateindex is not supported
+    //https://github.com/Automattic/mongoose/issues/9894
 
     console.log("new connection");
     connection.isConnected = db.connections[0].readyState;
