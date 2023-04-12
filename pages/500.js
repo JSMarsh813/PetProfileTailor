@@ -27,7 +27,7 @@ const MyLink = forwardRef((props, ref) => {
 });
 MyLink.displayName = "MyLink";
 
-export default function Custom404({}) {
+export default function Custom404() {
   //grab data from Session and rename data to session
   const { data: sessionFromServer, status } = useSession();
 
