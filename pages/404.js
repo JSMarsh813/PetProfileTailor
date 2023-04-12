@@ -4,23 +4,13 @@ import NavBar from "../components/NavBar/NavLayoutwithSettingsMenu";
 import Link from "next/link";
 import Image from "next/image";
 import { forwardRef } from "react";
-import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import ListWithPawPrintIcon from "../components/ReusableSmallComponents/ListWithPawPrintIcon";
 import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
-
-export const getInitialProps = async () => {
-  const session = await getSession();
-
-  return {
-    props: {
-      sessionFromServer: session,
-    },
-  };
-};
 
 const MyLink = forwardRef((props, ref) => {
   let { href, active, children, ...rest } = props;
@@ -37,8 +27,9 @@ const MyLink = forwardRef((props, ref) => {
 });
 MyLink.displayName = "MyLink";
 
-export default function Custom404({ sessionFromServer }) {
+export default function Custom404({}) {
   //grab data from Session and rename data to session
+  const { data: sessionFromServer, status } = useSession();
 
   let userName = "";
   let profileImage = "";
