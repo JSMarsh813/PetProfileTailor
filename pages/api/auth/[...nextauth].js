@@ -114,7 +114,6 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account, email }) {
-      //{ verificationRequest: true }
       console.log(JSON.stringify(user.email));
       await db.connect();
       const userExists = await User.findOne({
@@ -124,10 +123,7 @@ export const authOptions = {
       if (userExists) {
         return true;
       } else {
-        // Return false to display a default error message
         return "/register";
-        // Or you can return a URL to redirect to:
-        // return '/unauthorized'
       }
     },
     jwt({ token, user }) {
