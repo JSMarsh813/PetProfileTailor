@@ -11,6 +11,7 @@ import db from "../../../utils/db";
 import path from "path";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../auth/lib/mongodb";
+import { ConnectionClosedEvent } from "mongodb";
 
 function html({ url, host, theme }) {
   const escapedHost = host.replace(/\./g, "&#8203;.");
@@ -112,6 +113,23 @@ export const authOptions = {
     //https://github.com/nextauthjs/next-auth/issues/3970
   },
   callbacks: {
+    async signIn({ user, account, email }) {
+      //{ verificationRequest: true }
+      console.log(JSON.stringify(user.email));
+      await db.connect();
+      const userExists = await User.findOne({
+        email: user.email,
+      });
+      console.log(userExists);
+      if (userExists) {
+        return true;
+      } else {
+        // Return false to display a default error message
+        return "/register";
+        // Or you can return a URL to redirect to:
+        // return '/unauthorized'
+      }
+    },
     jwt({ token, user }) {
       if (user) token = user;
       return token;
