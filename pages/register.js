@@ -152,8 +152,7 @@ export default function Register({ sessionFromServer }) {
             className="mx-2
                                    text-yellow-200"
           >
-            {" "}
-            Search{" "}
+            Search
           </span>
         </button>
         <span className="block">

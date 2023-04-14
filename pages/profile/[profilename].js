@@ -204,6 +204,8 @@ function ProfilePage({
 
   const [showFollowingList, setShowFollowingList] = useState(false);
 
+  const [nameEdited, setNameEdited] = useState(false);
+
   function updateSetShowProfileEditPage() {
     setShowProfileEditPage(!showProfileEditPage);
   }
@@ -218,6 +220,10 @@ function ProfilePage({
 
   function showfollowingListFunction() {
     setShowFollowingList(!showFollowingList);
+  }
+
+  function setNameEditedFunction() {
+    setNameEdited(!nameEdited);
   }
 
   return (
@@ -390,6 +396,7 @@ function ProfilePage({
                           key={name._id}
                           sessionFromServer={sessionFromServer}
                           tagList={nameTagList}
+                          setNameEditedFunction={setNameEditedFunction}
                         />
                       );
                     })}
