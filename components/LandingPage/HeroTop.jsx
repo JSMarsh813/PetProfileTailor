@@ -10,7 +10,7 @@ const HeroTop = () => {
   return (
     <div
       className="hero min-h-fit font-serif 
-border-y-4 border-darkPurple  "
+border-y-4 border-darkPurple"
       style={{
         backgroundImage: `url("/pugs.webp")`,
         fontFamily: "Comfortaa",
@@ -31,16 +31,16 @@ border-y-4 border-darkPurple  "
             find that perfect name or create pet profiles which are:
           </p>
 
-          <section className="w-full flex justify-center gap-3">
+          <section className="flex justify-center gap-3 flex-wrap">
             <div className="flex-1">
               <FontAwesomeIcon
                 icon={faBullseye}
-                className="text-4xl"
+                className="text-2xl"
                 color="yellow"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 font-black text-lg h-16
+                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 font-black text-base h-16
                            
                            hover:text-yellow-300"
               >
@@ -51,12 +51,12 @@ border-y-4 border-darkPurple  "
             <div className="flex-1">
               <FontAwesomeIcon
                 icon={faFaceGrinWink}
-                className="text-4xl fa-bounce"
+                className="text-2xl fa-bounce"
                 color="yellow"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 text-lg h-16
+                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 text-base h-16
                             
                             hover:text-yellow-300"
               >
@@ -67,11 +67,11 @@ border-y-4 border-darkPurple  "
             <div className="flex-1">
               <FontAwesomeIcon
                 icon={faUserTie}
-                className="text-4xl"
+                className="text-2xl"
                 color="yellow"
               />
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300  text-violet-900 text-lg h-16
+                className="btn btn-primary w-full mt-2 bg-yellow-300  text-violet-900 text-base h-16
                                
                                hover:text-yellow-300"
               >

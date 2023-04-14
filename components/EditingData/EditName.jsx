@@ -34,6 +34,7 @@ export default function EditName({
       .then((response) => {
         SetShowEditPage(false);
         setEditedFunction(true);
+        toast.success(`Successfully edited name!`);
       })
       .catch((error) => {
         console.log("there was an error when sending your edits", error);

@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from "react";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faCommentDots,
-  faShareFromSquare,
-  faFaceGrinWink,
-  faUserTie,
-  faCircleChevronDown,
-  faClock,
-} from "@fortawesome/free-solid-svg-icons";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 
