@@ -521,7 +521,6 @@ function ProfilePage({
               />
             )}
 
-            {console.log(userData)}
             {showFollowersList && (
               <UsersFollowersList
                 userData={userData}
