@@ -114,25 +114,28 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account, email }) {
-      console.log(JSON.stringify(user.email));
       await db.connect();
       const userExists = await User.findOne({
         email: user.email,
       });
-      console.log(userExists);
+
       if (userExists) {
         return true;
       } else {
         return "/register";
       }
     },
-    jwt({ token, user }) {
-      if (user) token = user;
+    async jwt({ token, user }) {
+      if (user) {
+        token = user;
+      }
       return token;
     },
-    session({ session, token }) {
+    async session({ session, token }) {
       //used to be session, user, token
-      session.user = token;
+      if (token) {
+        session.user = token;
+      }
       return session;
     },
   },
