@@ -51,6 +51,14 @@ function HomePage({ sessionFromServer }) {
     setImpactfulClicked(!impactfulClicked);
   }
 
+  function updateFunState() {
+    setfunClicked(!funClicked);
+  }
+
+  function updateTailorState() {
+    setTailorClicked(!tailorClicked);
+  }
+
   return (
     <div className=" bg-violet-900">
       <Layout
@@ -59,30 +67,46 @@ function HomePage({ sessionFromServer }) {
         sessionFromServer={sessionFromServer}
       />
 
-      <HeroTop updateImpactfulState={updateImpactfulState} />
+      <HeroTop
+        updateImpactfulState={updateImpactfulState}
+        updateFunState={updateFunState}
+        updateTailorState={updateTailorState}
+      />
 
       {impactfulClicked && (
-        <YoutubeEmbed
-          embedId="y5cx0MeHuE8"
-          styling="aspect-video"
-          title="Fishtopher the cat gets adopted after going viral"
-        />
+        <div className="relative">
+          <YoutubeEmbed
+            embedId="y5cx0MeHuE8"
+            styling="aspect-video"
+            title="Fishtopher the cat gets adopted after going viral"
+            showVideoFunction={() => updateImpactfulState()}
+            key="y5cx0MeHuE8"
+          />
+        </div>
       )}
 
       {funClicked && (
-        <YoutubeEmbed
-          embedId="_7SMbp-W6sM"
-          styling=""
-          title="Woman Writes Hilariously Honest Adoption Post For Her Wild Foster Dog | The Dodo Adopt Me!"
-        />
+        <div className="relative">
+          <YoutubeEmbed
+            embedId="_7SMbp-W6sM"
+            styling="aspect-video"
+            title="Woman Writes Hilariously Honest Adoption Post For Her Wild Foster Dog | The Dodo Adopt Me!"
+            showVideoFunction={() => updateFunState()}
+            key="_7SMbp-W6sM"
+          />
+        </div>
       )}
 
       {tailorClicked && (
-        <YoutubeEmbed
-          embedId="T_lAGw4lpiM"
-          styling=""
-          title="Woman's Brutally Honest Pet Adoption Ad Goes Viral"
-        />
+        <div className="relative">
+          <YoutubeEmbed
+            embedId="T_lAGw4lpiM"
+            styling="aspect-video"
+            title="Woman's Brutally Honest Pet Adoption Ad Goes Viral"
+            showVideoFunction={() => updateTailorState()}
+            key="T_lAGw4lpiM"
+          />
+        </div>
       )}
 
       <section className="bg-violet-900 h-24 flex place-items-center justify-center">
