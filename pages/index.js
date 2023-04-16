@@ -12,6 +12,8 @@ import { unstable_getServerSession } from "next-auth/next";
 import WideCenteredHeading from "../components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 
 import dbConnect from "../utils/db";
+import YoutubeEmbed from "../components/ShowingListOfContent/YoutubeEmbed";
+import { useState } from "react";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -41,6 +43,14 @@ function HomePage({ sessionFromServer }) {
   }
   //end of section for nav menu
 
+  const [impactfulClicked, setImpactfulClicked] = useState(false);
+  const [funClicked, setfunClicked] = useState(false);
+  const [tailorClicked, setTailorClicked] = useState(false);
+
+  function updateImpactfulState() {
+    setImpactfulClicked(!impactfulClicked);
+  }
+
   return (
     <div className=" bg-violet-900">
       <Layout
@@ -49,7 +59,31 @@ function HomePage({ sessionFromServer }) {
         sessionFromServer={sessionFromServer}
       />
 
-      <HeroTop />
+      <HeroTop updateImpactfulState={updateImpactfulState} />
+
+      {impactfulClicked && (
+        <YoutubeEmbed
+          embedId="y5cx0MeHuE8"
+          styling="aspect-video"
+          title="Fishtopher the cat gets adopted after going viral"
+        />
+      )}
+
+      {funClicked && (
+        <YoutubeEmbed
+          embedId="_7SMbp-W6sM"
+          styling=""
+          title="Woman Writes Hilariously Honest Adoption Post For Her Wild Foster Dog | The Dodo Adopt Me!"
+        />
+      )}
+
+      {tailorClicked && (
+        <YoutubeEmbed
+          embedId="T_lAGw4lpiM"
+          styling=""
+          title="Woman's Brutally Honest Pet Adoption Ad Goes Viral"
+        />
+      )}
 
       <section className="bg-violet-900 h-24 flex place-items-center justify-center">
         <h5 className="text-white text-2xl pr-2">Adoptions Ahoy!</h5>

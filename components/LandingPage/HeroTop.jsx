@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-const HeroTop = () => {
+const HeroTop = ({ updateImpactfulState }) => {
   return (
     <div
       className="hero min-h-fit font-serif 
@@ -43,6 +43,7 @@ border-y-4 border-darkPurple"
                 className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 font-black text-base h-16
                            
                            hover:text-yellow-300"
+                onClick={updateImpactfulState}
               >
                 Impactful
               </button>
