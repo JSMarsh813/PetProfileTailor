@@ -9,14 +9,25 @@ import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 
+import Head from "next/head";
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider
       session={session}
       limit={1}
     >
+      <Head>
+        <title>
+          Improve Adoption Rates by Creating Impactful, Fun, and Tailor-Fitted
+          Pet Adoption Profiles!
+        </title>
+        <meta
+          name="Pet Profile Tailor"
+          content="Pet profile tailor is a community powered assistant which helps you find the perfect pet name or create pet profiles which are impactful, fun, and tailor fitted. Animal welfare professionals can use the community submitted names or descriptions to create engaging pet profiles to improve adoption rates! "
+        />
+      </Head>
       <Component {...pageProps} />
-
       <ToastContainer />
       <footer className="text-white py-4 px-4 bg-darkPurple border-t-2 border-violet-400 mt-4 flex">
         <div className="flex-1">
