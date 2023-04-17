@@ -50,7 +50,7 @@ export default function UsersFollowersList({
                         key={follower._id}
                         href={`${
                           process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                        }/profile/${follower.name.toLowerCase()}`}
+                        }/profile/${follower.profilename.toLowerCase()}`}
                       >
                         <section
                           className="grid 
@@ -62,9 +62,6 @@ export default function UsersFollowersList({
             
             items-center justify-items-center"
                         >
-                          {console.log(
-                            `our follower ${JSON.stringify(follower)}`
-                          )}
                           {/* ###### PROFILE IMAGE #### */}
                           <Image
                             src={follower.profileimage}
@@ -85,15 +82,7 @@ export default function UsersFollowersList({
 
                           <p>{follower.bioblurb}</p>
 
-                          {console.log(follower._id)}
-
-                          {console.log(sessionFromServer.user._id)}
-
                           <section>
-                            {console.log(
-                              follower._id == sessionFromServer.user._id
-                            )}
-
                             {!(follower._id == sessionFromServer.user._id) && (
                               <FollowButton
                                 data={follower}

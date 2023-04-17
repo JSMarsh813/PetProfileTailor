@@ -50,7 +50,7 @@ export default function UsersFollowingList({
                         key={person._id}
                         href={`${
                           process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                        }/profile/${person.name.toLowerCase()}`}
+                        }/profile/${person.profilename.toLowerCase()}`}
                       >
                         <section
                           className="grid 
@@ -78,6 +78,7 @@ export default function UsersFollowingList({
                           </section>
 
                           <p>{person.bioblurb}</p>
+                          {/* makes it so you can't follow yourself */}
                           {!(person._id == sessionFromServer.user._id) && (
                             <section>
                               <FollowButton

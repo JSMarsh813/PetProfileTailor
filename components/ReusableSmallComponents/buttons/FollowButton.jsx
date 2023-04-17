@@ -16,9 +16,6 @@ export default function FollowButton({
   const [userFollowed, setUserFollowed] = useState(false);
   let userToFollowId = data._id;
   let userId = "";
-  {
-    console.log(data._id);
-  }
 
   useEffect(() => {
     if (session) {
@@ -26,9 +23,9 @@ export default function FollowButton({
     }
 
     let searchingInFollowers = data.followers.find(
-      (follower) => follower._id == userId
+      (follower) => follower._id == userId || follower == userId
     );
-    console.log(searchingInFollowers);
+
     searchingInFollowers != undefined
       ? setUserFollowed(true)
       : setUserFollowed(false);
