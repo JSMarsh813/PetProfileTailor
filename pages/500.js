@@ -11,6 +11,7 @@ import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
+import GifHover from "../components/ReusableSmallComponents/GifHover";
 
 const MyLink = forwardRef((props, ref) => {
   let { href, active, children, ...rest } = props;
@@ -57,16 +58,16 @@ export default function Custom404() {
         &quot;mouse&quot; 😿.
       </p>
 
-      <div className="w-60 mx-auto my-4 ">
-        <Image
-          className="mb-4 rounded-full"
-          src="/server.gif"
-          width={90}
-          height={90}
-          layout="responsive"
-          alt=""
-        />
-      </div>
+      <GifHover
+        divStyling="w-60 mx-auto my-4"
+        className="mb-4 rounded-full"
+        layout="responsive"
+        gifSrc="/server.gif"
+        stillImageSrc="/server.png"
+        alt="a man has his hand on a computer mouse, his pet weasel then jumps over and begins to wrestle his hand"
+        width={300}
+        height={300}
+      />
 
       <ul className="text-center text-white bg-darkPurple max-w-4xl mx-auto h-fit pt-4 sm:px-2">
         <ListWithPawPrintIcon text=" You can try to reload the page to see if the error resolves" />

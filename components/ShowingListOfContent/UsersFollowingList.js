@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import FollowButton from "../ReusableSmallComponents/buttons/FollowButton";
 import Image from "next/image";
+import ProfileImage from "../ReusableSmallComponents/ProfileImage";
+import GifHover from "../ReusableSmallComponents/GifHover";
 
 export default function UsersFollowingList({
   setShowUsersListPage,
@@ -63,13 +65,16 @@ export default function UsersFollowingList({
             items-center justify-items-center"
                         >
                           {/* ###### PROFILE IMAGE #### */}
-                          <Image
-                            src={person.profileimage}
+
+                          <ProfileImage
+                            divStyling="w-16"
+                            profileImage={person.profileimage}
+                            layout="responsive"
                             className="rounded-2xl h-16"
-                            alt=""
                             width={100}
                             height={100}
                           />
+
                           {/* ###### PROFILE name, profile and bioblurb #### */}
                           <section>
                             <span className="block"> {person.name}</span>
@@ -96,15 +101,16 @@ export default function UsersFollowingList({
 
                       <p> Lets find some friends! </p>
 
-                      <div className="w-60 mx-auto py-6">
-                        <Image
-                          className="rounded-full"
-                          src="/kittentopuppy.webp"
-                          alt="gif of a kitten climbing out of its cage into the excited puppies cage next to it"
-                          width={300}
-                          height={300}
-                        />
-                      </div>
+                      <GifHover
+                        divStyling="w-60 mx-auto py-6"
+                        className="rounded-full"
+                        layout="responsive"
+                        gifSrc="/kittentopuppy.webp"
+                        stillImageSrc="/kittentopuppy.png"
+                        alt="gif of a kitten climbing out of its cage into the excited puppies cage next to it"
+                        width={300}
+                        height={300}
+                      />
                     </div>
                   )}
                 </div>

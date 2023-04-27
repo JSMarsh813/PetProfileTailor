@@ -8,6 +8,7 @@ import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import Image from "next/image";
+import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 
 export default function DescriptionListingAsSections({
   description,
@@ -113,13 +114,15 @@ export default function DescriptionListingAsSections({
         <section className="flex gap-1.5 place-items-center  bg-violet-700 p-4 border-2 border-amber-200 border-dotted ">
           <span className="text-amber-200 font-bold">Shared by: </span>
 
-          <Image
-            src={description.createdby.profileimage}
+          <ProfileImage
+            divStyling="w-12 mr-2"
+            profileImage={description.createdby.profileimage}
+            layout="responsive"
             className="rounded-2xl h-16 inline"
             width={80}
             height={80}
-            alt=""
           />
+
           <a
             className=""
             href={`${

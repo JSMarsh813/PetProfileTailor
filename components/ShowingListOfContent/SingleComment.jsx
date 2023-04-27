@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import Image from "next/image";
+import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 
 function CommentListing({
   replyingtothisid,
@@ -114,16 +115,14 @@ function CommentListing({
                 border-2 border-violet-300}`}
     >
       <div className="flex flex-row bg-violet-50 p-2 ml-6 ">
-        <div className="w-16">
-          <Image
-            className="w-12 h-12 border-2 border-gray-300 rounded-full"
-            alt=""
-            src={postersProfileImage}
-            width={100}
-            height={100}
-            display="responsive"
-          />
-        </div>
+        <ProfileImage
+          divStyling="w-16"
+          profileImage={postersProfileImage}
+          layout="responsive"
+          className="w-12 h-12 border-2 border-gray-300 rounded-full"
+          width={100}
+          height={100}
+        />
 
         <div className="w-full mt-1">
           <div className="flex items-center  px-2 font-bold  text-black leading-tight">

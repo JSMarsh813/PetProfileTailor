@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import {
   faBullseye,
   faFaceGrinWink,
@@ -11,14 +12,25 @@ const HeroTop = ({
   updateFunState,
   updateTailorState,
 }) => {
+  const [hover, setHover] = useState(false);
+  const handleMouseEnterForImage = () => {
+    setHover(true);
+  };
+
+  const handleMouseLeaveForImage = () => {
+    setHover(false);
+  };
+
   return (
     <div
       className="hero min-h-fit font-serif 
 border-y-4 border-darkPurple"
       style={{
-        backgroundImage: `url("/pugs.webp")`,
+        backgroundImage: `url(${hover ? "/pugStillImage.png" : "/pugs.webp"})`,
         fontFamily: "Comfortaa",
       }}
+      onMouseEnter={handleMouseEnterForImage}
+      onMouseLeave={handleMouseLeaveForImage}
     >
       <div className="hero-overlay bg-opacity-80"></div>
       <div className="hero-content text-center text-neutral-content mb-10">

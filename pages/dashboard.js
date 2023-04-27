@@ -23,6 +23,7 @@ import BatSignalComments from "../models/BatSignalComment";
 import Descriptions from "../models/description";
 import DescriptionTag from "../models/descriptiontag";
 import NameTag from "../models/NameTag";
+import ProfileImage from "../components/ReusableSmallComponents/ProfileImage";
 
 // const ObjectId = require("mongodb").ObjectId;
 
@@ -268,12 +269,14 @@ export default function Dashboard({
                         </Link>
                       </button>
                     </div>
-                    <Image
+
+                    <ProfileImage
+                      divStyling="w-44"
+                      profileImage={profileImage}
+                      layout="responsive"
                       className="ml-3  h-32 rounded-full inline border-2 border-yellow-300 shadow-xl"
-                      src={profileImage}
                       width={200}
                       height={200}
-                      alt=""
                     />
                   </section>
 

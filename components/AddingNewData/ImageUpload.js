@@ -80,8 +80,8 @@ function ImageUpload({ sessionFromServer }) {
       </h1>
 
       <p className="mb-4  text-center">
-        {" "}
-        Choose an image. Accepted formats are .jpg, jpeg, .png and .gif.{" "}
+        Choose an image. Accepted formats are .jpg, jpeg, and .png and .gif.
+        Gifs will appear as a still image until they are hovered over.
       </p>
 
       <input
@@ -93,7 +93,6 @@ function ImageUpload({ sessionFromServer }) {
 
       <div>
         <p className="mb-4">
-          {" "}
           Please choose an image to make the upload button clickable
         </p>
 

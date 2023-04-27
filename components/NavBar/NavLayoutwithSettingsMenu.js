@@ -14,6 +14,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { forwardRef } from "react";
+import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 
 export default function NavLayoutwithSettingsMenu({
   children,
@@ -113,15 +114,12 @@ export default function NavLayoutwithSettingsMenu({
                     <span className="text-base font-bold sm:ml-2">
                       {userName}
                     </span>
-                    <div className="ml-3 h-8 w-8 relative">
-                      <Image
-                        src={profileImage}
-                        layout="fill"
-                        alt=""
-                        className="ml-3 rounded-full inline relative"
-                        unoptimized
-                      />
-                    </div>
+
+                    <ProfileImage
+                      divStyling={"ml-3 h-8 w-8 relative"}
+                      profileImage={profileImage}
+                      className="ml-3 rounded-full inline relative"
+                    />
 
                     <ChevronDownIcon
                       className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-amber-300"

@@ -11,6 +11,7 @@ import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsBut
 import CommentListing from "../ShowingListOfContent/CommentListing";
 import AddComment from "../AddingNewData/AddComment";
 import Image from "next/image";
+import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 
 export default function NameListingAsSections({
   name,
@@ -145,12 +146,13 @@ export default function NameListingAsSections({
               process.env.NEXT_PUBLIC_BASE_FETCH_URL
             }/profile/${name.createdby.profilename.toLowerCase()}`}
           >
-            <Image
-              src={name.createdby.profileimage}
+            <ProfileImage
+              divStyling="w-12 mr-2"
+              profileImage={name.createdby.profileimage}
+              layout="responsive"
               className="rounded-2xl"
               width={80}
               height={80}
-              alt=""
             />
 
             <div>
