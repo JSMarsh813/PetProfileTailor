@@ -1,45 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pet Profile Tailor
 
-## Getting Started
+## Inspiration Behind and Introduction to Project:
 
-First, run the development server:
+I worked as an adoption counselor in animal shelters for ~5 years and although pet profiles are vital to catch adopters attention and boost adoption rates, there's only so much creativity a person can have at the crack of dawn. Coffee can only do so much 😛 
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+So I was inspired to create this site which empowers animal lovers to help adoption counselors create impactful, fun, and tailor-fitted adoption profiles! After signing up, users can submit new names and descriptions,save favorites and follow other users. Users can easily search and filter through community submitted names and descriptions.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[PPT1-1.webm](https://user-images.githubusercontent.com/101692334/233764485-49bfb68f-8504-4c31-855e-a74ba5a19b25.webm)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+[PPT1-3.webm](https://user-images.githubusercontent.com/101692334/233764888-1dd7e3b2-1208-481c-9de1-8d591e312373.webm)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## How It's Made:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Next.js, React, Next-Auth, JavaScript, Tailwindcss, CSS, HTML5, MongoDB, Mongoose, Cloudinary, Node Mailer, SendGrid, SWR
 
-## Learn More
+##Optimizations:
 
-To learn more about Next.js, take a look at the following resources:
+## Potential Future Optimizations:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Add SWR to the profile pages
+2. Although it currently works for keyboard users, I want to improve the accessiblity for screenreaders
+3. Add BYTE, a virtual chat gpt dog that helps people find names or built pet profiles
+4. Add a messaging feature
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-How It's Made:
-
-Optimizations:
-
-Potential Future Optimizations:
-
-########### Lessons Learned
+## Lessons Learned
 
 1. Problem:
 
