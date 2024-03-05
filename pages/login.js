@@ -194,12 +194,11 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     {/* <!-- Forgot Password Link --> */}
                     <div>
                       <span> Forgot Password? </span>
-                      <a
-                        href="/forgotpassword"
-                        className="font-semibold text-violet-800 bg-yellow-300 p-2 rounded hover:bg-blue-400 hover:text-white"
-                      >
-                        Click here
-                      </a>
+                      <Link href="/forgotpassword">
+                        <span className="font-semibold text-violet-800 bg-yellow-300 p-2 rounded hover:bg-blue-400 hover:text-white">
+                          Click Here
+                        </span>
+                      </Link>
                     </div>
                   </div>
 
