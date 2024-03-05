@@ -46,8 +46,16 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "https://placekitten.com/300/300",
     },
+    passwordresettoken: {
+      type: String,
+      required: false,
+    },
+    resettokenexpires: {
+      type: Date,
+      required: false,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
