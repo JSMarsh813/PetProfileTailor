@@ -26,6 +26,7 @@ function html({ url, host, theme }) {
     buttonText: "#553c9a",
     lightBackground: "#6237A0",
   };
+  //url will be  https://u32281321.ct.sendgrid.net/ls/click?upn=km2wS9gGLS21G4zAhFatKE-2BJ7NrexSIBldeWIGo02tbAvkxEvim4iBZUI1gau5eiWMS92SmeHcdsFXKruncbmNDiosUNK-2BFFkbfs1fGgVMPyDYWtx65QAO2fJ7Kd9GV13PEZbVFBezREnmgA7P7br3lMHiQxYtw4n1vXBAE9f0K17-2BWurYJlrgoXtyPfilpaU8WMQcZJ1GyICq-2FKSRHxF7yLUqZHuqXJYOFNZBbV0BD4NXi0kGmU-2FUO46VEwpjMtTT2GUNZ4zqjomcoF9J1LbR2Gud2zf30d85jWbBFtRmOFOMz5XVVAbFXsqhMD-2BfMdoFd7_IhdrsEjW6Q2PibUpilKNtoR7miOY5hugQQFyEeK8OHfmBv-2BAOWr01Fp2eVHzKfsvLw-2BYIh-2FruwCrxRvDcw2mfW7mnjew5BEHEP2ti-2BvBTeqpmP5Obo-2Bpc3XmQGXvTEMil1FqNby9faTX0Ruhv3nTU4TJLhP269KxcwDIkhjs0EiGXhjk-2BN9V-2FTodmGmOvE2fX-2BqV3sRX-2FD1LX2aiLO2DYV69TD0AeJewaXsB16J75J4-3D
 
   return `
 <body style="background: ${color.background};">
@@ -114,13 +115,14 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account, email }) {
+      //checking if the email exists in the database, if it does, send magic link
       await db.connect();
       const userExists = await User.findOne({
-        email: user.email,
+        email: user.email, //the user object has an email property, which contains the email the user entered.
       });
 
       if (userExists) {
-        return true;
+        return true; //if the email exists in the User collection, email them a magic login link
       } else {
         return "/register";
       }
@@ -141,6 +143,7 @@ export const authOptions = {
   },
   providers: [
     CredentialsProvider({
+      // if email and password match, sign in
       async authorize(credentials) {
         await db.connect();
         const user = await User.findOne({
@@ -160,6 +163,11 @@ export const authOptions = {
       },
     }),
     EmailProvider({
+      //logic for the magic link,  database is required to create a magic link. I'm using mongoDB
+      //host, port, user, pass are all generated from Sendgrid's Web API
+
+      //this will send a verfication token to mongoDB in the verification_tokens collection AND to the email link the users given
+
       server: {
         host: process.env.EMAIL_SERVER_HOST,
         port: process.env.EMAIL_SERVER_PORT,
@@ -169,9 +177,11 @@ export const authOptions = {
         },
       },
       from: process.env.EMAIL_FROM,
+      //sendVerificationRequest allows us to customize the magic link's email https://next-auth.js.org/providers/email#customising-emails, under the hood its using the nodemailer package
       async sendVerificationRequest({
         identifier: email,
         url,
+        //provider grabs the "server" and "from" object from the outer function directly above this inner function
         provider: { server, from },
       }) {
         const { host } = new URL(url);
@@ -181,7 +191,9 @@ export const authOptions = {
           from,
           subject: `Sign in to ${host}`,
           text: text({ url, host }),
+          //is calling the text function, which has the fallback for email clients that don't render html
           html: html({ url, host, email }),
+          //is calling the html function which has the email's personalized html code
           attachments: [
             {
               filename: "buttonpressdog.gif",
@@ -192,7 +204,7 @@ export const authOptions = {
               filename: "settingsinstructions.png",
               path: path.join(
                 process.cwd(),
-                `/public/settingsinstructions.png`
+                `/public/settingsinstructions.png`,
               ),
               cid: "instructions", //same cid value as in the html img src
             },

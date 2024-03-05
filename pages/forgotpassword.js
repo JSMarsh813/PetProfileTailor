@@ -12,7 +12,7 @@ import { faPaw } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import dbConnect from "../utils/db";
-import { authOptions } from "../pages/api/auth/[...nextauth]";
+import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 
@@ -48,7 +48,7 @@ export const getServerSideProps = async (context) => {
   }
 };
 
-export default function LoginScreen({ sessionFromServer, csrfToken }) {
+export default function ForgotPassword({ sessionFromServer, csrfToken }) {
   const { data: session } = useSession();
   //useSession needed in order to grab session after the page is loaded, aka so we can grab session once we login
 
@@ -100,7 +100,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
   return (
     <div>
       <Layout
-        title="Login"
+        title="Forgot Password"
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
@@ -108,11 +108,11 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
       <div>
         <section className="h-fit">
           <div className="px-6 h-full text-gray-100">
-            <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h- g-6">
-              <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
+            <div className="flex justify-center items-center flex-wrap ">
+              <div className=" xl:w-4/12 lg:w-4/12 md:w-5/12 mb-12 ">
                 <Image
-                  src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg"
-                  className="w-full rounded-full shadow-lg border-2 border-yellow-300 border-dashed"
+                  src="/lostpasswordsquirrel.jpg"
+                  className="w-full rounded-full shadow-lg"
                   width={200}
                   height={200}
                   layout="responsive"
@@ -121,12 +121,15 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                 />
               </div>
 
-              <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+              <div className="ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
                 <form
                   className="mx-auto max-w-screen-md"
                   onSubmit={handleSubmit(submitHandler)}
                 >
-                  <div className="text-center text-2xl mb-4"> Login </div>
+                  <div className="text-center text-2xl mb-4">
+                    {" "}
+                    Forgot Password{" "}
+                  </div>
 
                   {/* <!-- Email input --> */}
                   <div className="mb-6">
@@ -149,58 +152,6 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     {errors.email && (
                       <div className="text-red-500">{errors.email.message}</div>
                     )}
-                  </div>
-
-                  {/* <!-- Password input --> */}
-                  <div className="mb-4">
-                    <label htmlFor="password">Password</label>
-
-                    <input
-                      type="password"
-                      {...register("password", {
-                        required: "Please enter password",
-                        minLength: {
-                          value: 6,
-                          message: "password is more than 5 chars",
-                        },
-                      })}
-                      className="w-full text-darkPurple"
-                      id="password"
-                      autoFocus
-                    ></input>
-
-                    {errors.password && (
-                      <div className="text-red-500 ">
-                        {errors.password.message}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* <!-- Remember Me Toggle Checkbox --> */}
-                  <div className="flex justify-between items-center mb-6">
-                    {/*       
-      <div className="form-group form-check">
-              <input
-                type="checkbox"
-                className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                id="exampleCheck2"
-              />
-
-              <label className="form-check-label inline-block text-gray-100" htmlFor="exampleCheck2">
-                Remember me on this computer
-              </label>
-      </div> */}
-
-                    {/* <!-- Forgot Password Link --> */}
-                    <div>
-                      <span> Forgot Password? </span>
-                      <a
-                        href="/forgotpassword"
-                        className="font-semibold text-violet-800 bg-yellow-300 p-2 rounded hover:bg-blue-400 hover:text-white"
-                      >
-                        Click here
-                      </a>
-                    </div>
                   </div>
 
                   {/* <!-- Login Button --> */}
