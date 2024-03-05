@@ -54,7 +54,7 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
   //useSession needed in order to grab session after the page is loaded, aka so we can grab session once we login
 
   const [error, setError] = useState("");
-  const [verified, setVerified] = useState("");
+  const [verifiedapiran, setVerifiedapiran] = useState("");
   const [user, setUser] = useState(null);
   const router = useRouter();
   const { redirect } = router.query;
@@ -67,6 +67,36 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
     profileImage = sessionFromServer.user.profileimage;
   }
   //end of section for nav menu
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        let res = await fetch("/api/verifyresetpasstoken", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token,
+          }),
+        });
+        if (res.status === 400) {
+          setError("Invalid Token or has Expired");
+          setVerifiedapiran(true);
+        }
+        if (res.status === 200) {
+          setError("");
+          setVerifiedapiran(true);
+          const userData = await res.json();
+          setUser(userData);
+        }
+      } catch (error) {
+        setError("Error, try again");
+        console.log(error);
+      }
+    };
+    verifyToken();
+  }, [token]);
 
   useEffect(() => {
     if (session?.user) {
