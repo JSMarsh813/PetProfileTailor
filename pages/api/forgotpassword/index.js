@@ -49,7 +49,6 @@ export default async function handler(req, res) {
     return;
   } catch (error) {
     res.status(500).json(error);
-    return;
   }
 
   //WILL NEED TO CHANGE LATER so its no longer looking at local host
