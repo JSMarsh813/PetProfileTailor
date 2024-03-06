@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import { getError } from "../utils/error";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
@@ -52,7 +51,8 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
   const { data: session } = useSession();
   //useSession needed in order to grab session after the page is loaded, aka so we can grab session once we login
 
-  const [error, setError] = useState("test");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
   const router = useRouter();
   const { redirect } = router.query;
 
@@ -82,7 +82,7 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
     const email = e.target[0].value;
 
     if (!isValidEmail(email)) {
-      setError("Email is invalid");
+      setMessage("Email is invalid");
       return;
     }
 
@@ -96,34 +96,26 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
           email,
         }),
       });
-      if (res.status === 400) {
-        setError("User with this email is not registered");
+      //for safety, we won't give any hints if this email exists in the database or not
+      if (res.status === 404 || res.status == 200) {
+        setMessage(
+          "If an account is registered to this email, a reset password link will be sent to this email",
+        );
+        setError(false);
+      } else {
+        setError(true);
+        setMessage(
+          "Error reaching api path for forgot password, refresh page and try again",
+        );
       }
-      if (res.status === 200) {
-        setError("");
-        router.push("/login");
-      }
-    } catch (error) {
-      setError("Error, try again");
-      console.log(error);
+    } catch (message) {
+      setMessage(
+        "Error reaching api path for forgot password, refresh page and try again",
+      );
+      setError(true);
+      console.log(message);
     }
   };
-  //   try {
-  //     //import signIn on line 3 from nextAuth, which will be handled in the nextauth.js handler
-  //     const result = await signIn("credentials", {
-  //       redirect: false,
-  //       //gets rid of callback url @10:20 https://www.youtube.com/watch?v=EFucgPdjeNg&t=594s&ab_channel=FullStackNiraj
-  //       email,
-  //     });
-  //     if (result.error) {
-  //       toast.error(result.error);
-  //     } else {
-  //       toast.success("Successfully signed in! Sending to dashboard");
-  //     }
-  //   } catch (err) {
-  //     toast.error(getError(err));
-  //   }
-  // };
 
   return (
     <div>
@@ -137,7 +129,7 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
         <section className="h-fit">
           <div className="px-6 h-full text-gray-100">
             <div className="flex justify-center items-center flex-wrap ">
-              <div className=" xl:w-4/12 lg:w-4/12 md:w-5/12 mb-12 ">
+              <div className=" xl:w-3/12 lg:w-3/12 w-4/12 lg:my-12  mr-10">
                 <Image
                   src="/lostpasswordsquirrel.jpg"
                   className="w-full rounded-full shadow-lg"
@@ -149,13 +141,12 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
                 />
               </div>
 
-              <div className="ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+              <div className="xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 mt-2">
                 <form
                   className="mx-auto max-w-screen-md"
                   onSubmit={handleSubmit}
                 >
                   <div className="text-center text-2xl mb-4">
-                    {" "}
                     Forgot Password{" "}
                   </div>
 
@@ -169,7 +160,18 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
                       required
                     />
 
-                    {error && <div className="text-red-500">{error}</div>}
+                    {message && (
+                      <div
+                        className={`text-black ${
+                          error ? "bg-red-300" : "bg-green-300"
+                        } rounded-lg p-2 border-4 ${
+                          error ? "border-red-700" : "border-green-700"
+                        }`}
+                        role="alert"
+                      >
+                        {message}
+                      </div>
+                    )}
                   </div>
 
                   {/* <!-- Login Button --> */}

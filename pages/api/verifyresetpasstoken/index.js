@@ -13,18 +13,21 @@ export default async function handler(req, res) {
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
   //check if theres a user with this token in the database
+  console.log(`this is hashedToken ${hashedToken}`);
+
   const user = await User.findOne({
-    resetToken: hashedToken,
-    resetTokenExpiry: { $gt: Date.now() },
+    passwordresettoken: hashedToken,
+    resettokenexpires: { $gt: Date.now() },
   });
+
+  console.log(`this is USER ${JSON.stringify(user)}`);
 
   if (user == null || !user) {
     res.status(404).json({
       message: "Invalid token or token has expired",
     });
     return;
+  } else {
+    res.status(200).json(user);
   }
-  res.status(200).json({
-    message: `password has been reset for ${JSON.stringify(user)}`,
-  });
 }

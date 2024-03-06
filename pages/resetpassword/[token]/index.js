@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 import Layout from "../../../components/NavBar/NavLayoutwithSettingsMenu";
 import { getError } from "../../../utils/error";
 import { toast } from "react-toastify";
@@ -56,6 +57,9 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
   const [error, setError] = useState("");
   const [verifiedapiran, setVerifiedapiran] = useState("");
   const [user, setUser] = useState(null);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [userid, setId] = useState(null);
   const router = useRouter();
   const { redirect } = router.query;
 
@@ -80,8 +84,9 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
             token,
           }),
         });
-        if (res.status === 400) {
-          setError("Invalid Token or has Expired");
+        console.log(res);
+        if (res.status === 404) {
+          setError("Invalid reset token or token has expired");
           setVerifiedapiran(true);
         }
         if (res.status === 200) {
@@ -89,6 +94,9 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
           setVerifiedapiran(true);
           const userData = await res.json();
           setUser(userData);
+          setName(userData.name);
+          setEmail(userData.email);
+          setId(userData._id);
         }
       } catch (error) {
         setError("Error, try again");
@@ -109,29 +117,27 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const password = e.target[0].value;
+    console.log(email);
 
-    //     try {
-    //       let res = await fetch("/api/resetpassword", {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //           password,
-    //         }),
-    //       });
-    //       if (res.status === 400) {
-    //         setError("User with this email is not registered");
-    //       }
-    //       if (res.status === 200) {
-    //         setError("");
-    //         router.push("/login");
-    //       }
-    //     } catch (error) {
-    //       setError("Error, try again");
-    //       console.log(error);
-    //     }
-    //   };
+    try {
+      let res = await axios.put("/api/auth/update", {
+        name,
+        email,
+        password,
+        userid,
+      });
+      if (res.status === 400) {
+        setError("User with this email is not registered");
+      }
+      if (res.status === 200) {
+        setError("");
+        toast.success("Profile updated successfully");
+        router.push("/login");
+      }
+    } catch (error) {
+      setError("Error, try again");
+      console.log(error);
+    }
   };
 
   return (

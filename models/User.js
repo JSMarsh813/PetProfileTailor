@@ -56,6 +56,10 @@ const UserSchema = new mongoose.Schema(
     },
   },
   { timestamps: true },
+  {
+    strict: true,
+    strictQuery: false, // Turn off strict mode for query filters
+  },
 );
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);

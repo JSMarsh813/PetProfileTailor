@@ -34,12 +34,14 @@ export default async function handler(req, res) {
   existingUser.passwordresettoken = databaseResetPasswordToken;
   existingUser.resettokenexpires = passwordResetExpires;
 
-  console.log(existingUser);
-
   // await existingUser.save();
   // res.send({
   //   message: "email is sent for resetting password",
   // });
+
+  //WILL NEED TO CHANGE LATER so its no longer looking at local host
+  const resetUrl = `localhost:3000/resetpassword/${emailResetPasswordToken}`;
+  console.log(resetUrl);
 
   try {
     await existingUser.save();
@@ -50,10 +52,6 @@ export default async function handler(req, res) {
   } catch (error) {
     res.status(500).json(error);
   }
-
-  //WILL NEED TO CHANGE LATER so its no longer looking at local host
-  const resetUrl = `localhost:3000/reset-password/${emailResetPasswordToken}`;
-  console.log(resetUrl);
 
   const body = "Reset Password by clicking on the following url: " + resetUrl;
   // const msg = {
