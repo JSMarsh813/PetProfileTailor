@@ -136,7 +136,7 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
                   width={200}
                   height={200}
                   layout="responsive"
-                  alt="A guinea pig looks at the screen calmly as it sits on a keyboard"
+                  alt="A squirrel with a poofy tail looking suprised"
                   unoptimized
                 />
               </div>
@@ -149,6 +149,11 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
                   <div className="text-center text-2xl mb-4">
                     Forgot Password{" "}
                   </div>
+
+                  <p className="pb-4">
+                    Aww nuts! Forgot your password? Don't worry you can reset it
+                    here.
+                  </p>
 
                   {/* <!-- Email input --> */}
                   <div className="mb-6">

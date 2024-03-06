@@ -54,12 +54,14 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
   const { data: session } = useSession();
   //useSession needed in order to grab session after the page is loaded, aka so we can grab session once we login
 
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
   const [verifiedapiran, setVerifiedapiran] = useState("");
   const [user, setUser] = useState(null);
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [userid, setId] = useState(null);
+
   const router = useRouter();
   const { redirect } = router.query;
 
@@ -71,6 +73,14 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
     profileImage = sessionFromServer.user.profileimage;
   }
   //end of section for nav menu
+
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -86,12 +96,14 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
         });
         console.log(res);
         if (res.status === 404) {
-          setError("Invalid reset token or token has expired");
+          setMessage("Invalid reset token or token has expired");
+          setError(true);
           setVerifiedapiran(true);
         }
         if (res.status === 200) {
-          setError("");
+          setMessage("");
           setVerifiedapiran(true);
+          setError(false);
           const userData = await res.json();
           setUser(userData);
           setName(userData.name);
@@ -99,7 +111,8 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
           setId(userData._id);
         }
       } catch (error) {
-        setError("Error, try again");
+        setMessage("Error, try again");
+        setError(true);
         console.log(error);
       }
     };
@@ -114,28 +127,37 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
   //if the session exists, then the user is already signed in. So if this is true, push back to the homepage
   //we need to use router (line 8) to redirect user
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const password = e.target[0].value;
-    console.log(email);
-
+  const submitHandler = async ({ password }) => {
     try {
+      console.log(password);
       let res = await axios.put("/api/auth/update", {
         name,
         email,
         password,
         userid,
       });
+      if (res.status === 422) {
+        setMessage(
+          "There was an error with validating the name, email or userid of this account",
+        );
+        setError(true);
+      }
       if (res.status === 400) {
-        setError("User with this email is not registered");
+        setMessage(
+          "There was an unexpected error in the request method of the update API route for the reset password page",
+        );
+        setError(true);
       }
       if (res.status === 200) {
-        setError("");
-        toast.success("Profile updated successfully");
+        setMessage("Password updated successfully");
+        setError(false);
         router.push("/login");
       }
     } catch (error) {
-      setError("Error, try again");
+      setMessage(
+        "There was an error with api route `auth update` for resetting your password, try again. If error persists contact us and send this error message",
+      );
+      setError(true);
       console.log(error);
     }
   };
@@ -167,7 +189,7 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
               <div className="ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
                 <form
                   className="mx-auto max-w-screen-md"
-                  onSubmit={handleSubmit}
+                  onSubmit={handleSubmit(submitHandler)}
                 >
                   <div className="text-center text-2xl mb-4">
                     Reset Password{" "}
@@ -178,14 +200,64 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
                     <label htmlFor="newpassword">Password</label>
                     <input
                       type="password"
-                      disabled={error.length > 0}
+                      disabled={error}
                       //this way if the tokens expired ect, they can't enter a password
-                      className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
+                      className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black disabled:bg-red-900 disabled:placeholder-white"
                       placeholder="password"
                       required
+                      id="password"
+                      {...register("password", {
+                        minLength: {
+                          value: 6,
+                          message: "password is more than 5 chars",
+                        },
+                      })}
                     />
 
-                    {error && <div className="text-red-500">{error}</div>}
+                    <div className="mb-4">
+                      <label
+                        htmlFor="confirmPassword"
+                        className="text-white"
+                      >
+                        Confirm New Password
+                      </label>
+                      <input
+                        className="w-full text-darkPurple"
+                        type="password"
+                        id="confirmPassword"
+                        {...register("confirmPassword", {
+                          validate: (value) => value === getValues("password"),
+                          minLength: {
+                            value: 6,
+                            message: "confirm password is more than 5 chars",
+                          },
+                        })}
+                      />
+                      {errors.confirmPassword && (
+                        <div className="text-red-500 ">
+                          {errors.confirmPassword.message}
+                        </div>
+                      )}
+                      {errors.confirmPassword &&
+                        errors.confirmPassword.type === "validate" && (
+                          <div className="text-red-500 ">
+                            Password do not match
+                          </div>
+                        )}
+                    </div>
+
+                    {message && (
+                      <div
+                        className={`text-black ${
+                          error ? "bg-red-300" : "bg-green-300"
+                        } rounded-lg p-2 border-4 ${
+                          error ? "border-red-700" : "border-green-700"
+                        }`}
+                        role="alert"
+                      >
+                        {message}
+                      </div>
+                    )}
                   </div>
 
                   {/* <!-- Login Button --> */}
