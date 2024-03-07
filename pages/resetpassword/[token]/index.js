@@ -61,6 +61,7 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [userid, setId] = useState(null);
+  const [passwordstate, setPasswordState] = useState(null);
 
   const router = useRouter();
   const { redirect } = router.query;
@@ -78,7 +79,6 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
     handleSubmit,
     register,
     getValues,
-    setValue,
     formState: { errors },
   } = useForm();
 
@@ -129,7 +129,6 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
 
   const submitHandler = async ({ password }) => {
     try {
-      console.log(password);
       let res = await axios.put("/api/auth/update", {
         name,
         email,
@@ -151,14 +150,41 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
       if (res.status === 200) {
         setMessage("Password updated successfully");
         setError(false);
-        router.push("/login");
+        setPasswordState(password);
       }
+      // router.push("/login");
     } catch (error) {
       setMessage(
         "There was an error with api route `auth update` for resetting your password, try again. If error persists contact us and send this error message",
       );
       setError(true);
       console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (passwordstate != null) {
+      loginAfterPasswordChange();
+    }
+  }, [passwordstate]);
+
+  const loginAfterPasswordChange = async () => {
+    try {
+      //import signIn on line 3 from nextAuth, which will be handled in the nextauth.js handler
+      console.log(`this is password ${passwordstate}`);
+      const result = await signIn("credentials", {
+        redirect: false,
+        //gets rid of callback url @10:20 https://www.youtube.com/watch?v=EFucgPdjeNg&t=594s&ab_channel=FullStackNiraj
+        email,
+        password: passwordstate,
+      });
+      if (result.error) {
+        toast.error(result.error);
+      } else {
+        toast.success("Successfully signed in! Sending to dashboard");
+      }
+    } catch (err) {
+      toast.error(getError(err));
     }
   };
 
