@@ -219,7 +219,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
 
                 <section className="bg-darkPurple p-2 ">
                   <h4 className="text-center mb-2 pb-2 font-semibold border-b-2 border-white">
-                    Sign in with a magic Link
+                    Login with a magic link (for current users)
                   </h4>
 
                   <form
@@ -250,12 +250,17 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   <div className="flex mt-2">
                     <MagicRabbitSVG />
                     <p className="text-center rounded-lg">
-                      We&apos;ll email you a magic link so you can sign in
-                      without a password.
+                      Sign in without a password! We&apos;ll send a magic link
+                      to this email, so you can click the link to sign in.
                     </p>
 
                     <NounBlackCatIcon fill="purple" />
                   </div>
+
+                  <p className="text-center rounded-lg">
+                    <strong> No email? </strong> Please check for typos and
+                    check your spam folder.
+                  </p>
                 </section>
 
                 <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"></div>
