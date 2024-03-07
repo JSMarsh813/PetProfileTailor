@@ -151,8 +151,8 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
                   </div>
 
                   <p className="pb-4">
-                    Aww nuts! Forgot your password? Don't worry you can reset it
-                    here.
+                    Aww nuts! Forgot your password? Don&apost worry you can
+                    reset it here.
                   </p>
 
                   {/* <!-- Email input --> */}
