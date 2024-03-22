@@ -73,31 +73,6 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
   //if the session exists, then the user is already signed in. So if this is true, push back to the homepage
   //we need to use router (line 8) to redirect user
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const submitHandler = async ({ email, password }) => {
-    try {
-      //import signIn on line 3 from nextAuth, which will be handled in the nextauth.js handler
-      const result = await signIn("credentials", {
-        redirect: false,
-        //gets rid of callback url @10:20 https://www.youtube.com/watch?v=EFucgPdjeNg&t=594s&ab_channel=FullStackNiraj
-        email,
-        password,
-      });
-      if (result.error) {
-        toast.error(result.error);
-      } else {
-        toast.success("Successfully signed in! Sending to dashboard");
-      }
-    } catch (err) {
-      toast.error(getError(err));
-    }
-  };
-
   return (
     <div>
       <Layout

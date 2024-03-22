@@ -31,21 +31,12 @@ export const getServerSideProps = async (context) => {
 
   await dbConnect.connect();
 
-  if (session) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/dashboard",
-      },
-    };
-  } else {
-    return {
-      props: {
-        sessionFromServer: session,
-        csrfToken,
-      },
-    };
-  }
+  return {
+    props: {
+      sessionFromServer: session,
+      csrfToken,
+    },
+  };
 };
 
 export default function LoginScreen({ sessionFromServer, csrfToken }) {
