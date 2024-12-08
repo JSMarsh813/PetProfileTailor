@@ -65,14 +65,13 @@ export default function ProfileScreen({ sessionFromServer }) {
   };
 
   return (
-    <div className="w-full">
+    (<div className="w-full">
       <Layout
         title="Profile"
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-
       <div className="h-40 w-40 mx-auto mb-4">
         <Image
           className="rounded-full"
@@ -84,7 +83,6 @@ export default function ProfileScreen({ sessionFromServer }) {
           alt="Image of a small dog looking relaxed and wearing sunglasses"
         />
       </div>
-
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
@@ -197,9 +195,8 @@ export default function ProfileScreen({ sessionFromServer }) {
           <GeneralButton text="Update Profile" />
         </div>
       </form>
-
       <ImageUpload sessionFromServer={sessionFromServer} />
-    </div>
+    </div>)
   );
 }
 

@@ -31,20 +31,20 @@ export default function NavLayoutwithSettingsMenu({
   const MyLink = forwardRef((props, ref) => {
     let { href, active, children, ...rest } = props;
     return (
-      <Link href={href}>
-        <a
-          ref={ref}
-          className={`block rounded-md px-2 py-2 text-md
-          hover:bg-yellow-400
-          hover:text-violet-900  
-          text-center                   
-      ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
-  `}
-          {...rest}
-        >
-          {children}
-        </a>
-      </Link>
+      (<Link
+        href={href}
+        ref={ref}
+        className={`block rounded-md px-2 py-2 text-md
+        hover:bg-yellow-400
+        hover:text-violet-900  
+        text-center                   
+    ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
+`}
+        {...rest}>
+
+        {children}
+
+      </Link>)
     );
   });
   MyLink.displayName = "MyLink";

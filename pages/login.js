@@ -89,7 +89,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
   };
 
   return (
-    <div>
+    (<div>
       <Layout
         title="Login"
         profileImage={profileImage}
@@ -185,7 +185,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     {/* <!-- Forgot Password Link --> */}
                     <div>
                       <span> Forgot Password? </span>
-                      <Link href="/forgotpassword">
+                      <Link href="/forgotpassword" legacyBehavior>
                         <span className="font-semibold text-violet-800 bg-yellow-300 p-2 rounded hover:bg-blue-400 hover:text-white">
                           Click Here
                         </span>
@@ -264,10 +264,12 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     icon={faPaw}
                   />
                   Don&apos;t have an account? Welcome! &nbsp;
-                  <Link href={`/register`}>
-                    <a className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
+                  <Link
+                    href={`/register`}
+                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
+                    
                       Register by clicking here
-                    </a>
+                    
                   </Link>
                 </p>
 
@@ -295,6 +297,6 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
           </div>
         </section>
       </div>
-    </div>
+    </div>)
   );
 }

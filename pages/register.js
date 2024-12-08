@@ -106,16 +106,14 @@ export default function Register({ sessionFromServer }) {
     }
   };
   return (
-    <div className="bg-violet-900 h-fit text-white">
+    (<div className="bg-violet-900 h-fit text-white">
       <Layout
         title="Create Account"
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-
       <h1 className="flex justify-center text-3xl mb-1"> Register </h1>
-
       <div className="flex justify-center">
         <Image
           src="/welcometothepack.webp"
@@ -124,7 +122,6 @@ export default function Register({ sessionFromServer }) {
           height={220}
         />
       </div>
-
       <section className="text-center mt-2">
         <h4 className="font-semibold text-lg">
           Check if a profile name is available
@@ -286,6 +283,6 @@ export default function Register({ sessionFromServer }) {
 
         <GeneralButton text="register" />
       </form>
-    </div>
+    </div>)
   );
 }
