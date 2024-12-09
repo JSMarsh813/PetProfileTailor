@@ -80,9 +80,12 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             src="/batdog.jpg"
             width={80}
             height={90}
-            layout="responsive"
             alt="Image of a pug with a stern batman mask on"
-          />
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto"
+            }} />
         </div>
         <p className="text-center">
           Batman could have the tags: comics, superheroes, batman, male, edgy

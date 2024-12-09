@@ -106,10 +106,13 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   className="w-full rounded-full shadow-lg border-2 border-yellow-300 border-dashed"
                   width={200}
                   height={200}
-                  layout="responsive"
                   alt="A guinea pig looks at the screen calmly as it sits on a keyboard"
                   unoptimized
-                />
+                  sizes="100vw"
+                  style={{
+                    width: "100%",
+                    height: "auto"
+                  }} />
               </div>
 
               <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">

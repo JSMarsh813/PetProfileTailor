@@ -76,12 +76,15 @@ export default function ProfileScreen({ sessionFromServer }) {
         <Image
           className="rounded-full"
           src="/sunglasseseditsettingsdog.jpg"
-          layout="responsive"
           width={160}
           height={160}
-          objectFit="cover"
           alt="Image of a small dog looking relaxed and wearing sunglasses"
-        />
+          sizes="100vw"
+          style={{
+            width: "100%",
+            height: "auto",
+            objectFit: "cover"
+          }} />
       </div>
       <form
         className="mx-auto max-w-screen-md"

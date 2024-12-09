@@ -21,7 +21,7 @@ export default function GifHover({
   };
 
   return (
-    <div className={divStyling}>
+    (<div className={divStyling}>
       <Image
         src={hover ? gifSrc : stillImageSrc}
         layout={!layout ? "fill" : layout}
@@ -32,7 +32,10 @@ export default function GifHover({
         unoptimized
         onMouseEnter={handleMouseEnterForImage}
         onMouseLeave={handleMouseLeaveForImage}
-      />
-    </div>
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
+    </div>)
   );
 }

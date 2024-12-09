@@ -74,23 +74,20 @@ function ImageUpload({ sessionFromServer }) {
   };
 
   return (
-    <div className="mx-auto max-w-screen-md text-white ">
+    (<div className="mx-auto max-w-screen-md text-white ">
       <h1 className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-700 font-semibold">
         Change Your Avatar{" "}
       </h1>
-
       <p className="mb-4  text-center">
         Choose an image. Accepted formats are .jpg, jpeg, and .png and .gif.
         Gifs will appear as a still image until they are hovered over.
       </p>
-
       <input
         onChange={handleImageAttachment}
         accept=".jpg, .png, .jpeg, .gif"
         className="fileInput mb-4"
         type="file"
       ></input>
-
       <div>
         <p className="mb-4">
           Please choose an image to make the upload button clickable
@@ -121,7 +118,10 @@ function ImageUpload({ sessionFromServer }) {
                 width={300}
                 height={300}
                 alt=""
-              />
+                style={{
+                  maxWidth: "100%",
+                  height: "auto"
+                }} />
               <FontAwesomeIcon
                 icon={faCircleXmark}
                 onClick={() => {
@@ -139,7 +139,7 @@ function ImageUpload({ sessionFromServer }) {
           log out and log back in{" "}
         </p>
       </div>
-    </div>
+    </div>)
   );
 }
 

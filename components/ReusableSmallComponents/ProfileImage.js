@@ -25,7 +25,7 @@ export default function ProfileImage({
     : profileImageString.replace(".gif", ".jpg");
 
   return (
-    <div className={divStyling}>
+    (<div className={divStyling}>
       <Image
         src={hoverProfileImage}
         layout={!layout ? "fill" : layout}
@@ -36,7 +36,10 @@ export default function ProfileImage({
         unoptimized
         onMouseEnter={handleMouseEnterForImage}
         onMouseLeave={handleMouseLeaveForImage}
-      />
-    </div>
+        style={{
+          maxWidth: "100%",
+          height: "auto"
+        }} />
+    </div>)
   );
 }

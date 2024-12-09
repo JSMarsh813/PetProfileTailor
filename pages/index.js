@@ -60,19 +60,17 @@ function HomePage({ sessionFromServer }) {
   }
 
   return (
-    <div className=" bg-violet-900">
+    (<div className=" bg-violet-900">
       <Layout
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-
       <HeroTop
         updateImpactfulState={updateImpactfulState}
         updateFunState={updateFunState}
         updateTailorState={updateTailorState}
       />
-
       {impactfulClicked && (
         <YoutubeEmbed
           embedId="y5cx0MeHuE8"
@@ -82,7 +80,6 @@ function HomePage({ sessionFromServer }) {
           key="y5cx0MeHuE8"
         />
       )}
-
       {funClicked && (
         <YoutubeEmbed
           embedId="_7SMbp-W6sM"
@@ -92,7 +89,6 @@ function HomePage({ sessionFromServer }) {
           key="_7SMbp-W6sM"
         />
       )}
-
       {tailorClicked && (
         <YoutubeEmbed
           embedId="T_lAGw4lpiM"
@@ -102,7 +98,6 @@ function HomePage({ sessionFromServer }) {
           key="T_lAGw4lpiM"
         />
       )}
-
       <section className="bg-violet-900 h-24 flex place-items-center justify-center">
         <h5 className="text-white text-2xl pr-2">Adoptions Ahoy!</h5>
 
@@ -111,9 +106,11 @@ function HomePage({ sessionFromServer }) {
           height={110}
           src="/smallpirate.webp"
           alt="image of a guinea pig wearing a tiny pirate hat"
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
       </section>
-
       <section className="landingNamesSection bg-violet-900">
         <WideCenteredHeading heading="Find the Purrfect Name" />
 
@@ -131,7 +128,6 @@ function HomePage({ sessionFromServer }) {
           imgheight="330"
         />
       </section>
-
       <section className="landingDescriptionsSection bg-violet-900">
         <WideCenteredHeading heading="Find Tailor-fit Descriptions" />
 
@@ -149,7 +145,6 @@ function HomePage({ sessionFromServer }) {
           imgheight="113"
         />
       </section>
-
       <section className="landingSignUpSection">
         <WideCenteredHeading heading="Create a free profile to access extra features" />
 
@@ -168,7 +163,6 @@ function HomePage({ sessionFromServer }) {
           imgheight="508"
         />
       </section>
-
       <section className="LandingWantToHelpSection">
         <WideCenteredHeading heading="Psst...Want To Help Some Pets 😸🐹?" />
 
@@ -188,7 +182,7 @@ function HomePage({ sessionFromServer }) {
           alttext="picture of a cute white pomeranian sitting and lifting a paw up. Its wearing a black mask and a black cape, its tongue is sticking out in a relaxed manner."
         />
       </section>
-    </div>
+    </div>)
   );
 }
 

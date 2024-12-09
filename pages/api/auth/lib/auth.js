@@ -1,4 +1,6 @@
 import { hash, compare } from "bcryptjs";
+import NextAuth from "next-auth";
+import Resend from "next-auth/providers/resend";
 
 export async function hashPassword(password) {
   const hashedPassword = await hash(password, 12);

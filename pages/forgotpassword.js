@@ -135,10 +135,13 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
                   className="w-full rounded-full shadow-lg"
                   width={200}
                   height={200}
-                  layout="responsive"
                   alt="A squirrel with a poofy tail looking suprised"
                   unoptimized
-                />
+                  sizes="100vw"
+                  style={{
+                    width: "100%",
+                    height: "auto"
+                  }} />
               </div>
 
               <div className="xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 mt-2">

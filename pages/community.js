@@ -184,19 +184,17 @@ export default function Community({ sessionFromServer }) {
   }, [itemEdited]);
 
   return (
-    <div>
+    (<div>
       <Layout
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-
       <PageTitleWithImages
         imgSrc="bg-[url('https://images.wagwalkingweb.com/media/daily_wag/blog_articles/hero/1602871850.792525/best-dog-halloween-costumes-of-2018.jpg')]"
         title="Batsignal &"
         title2="Play-yard"
       />
-
       <div
         className="mx-auto bg-violet-900 max-w-4xl text-center py-4 border-2 border-violet-400 border-dotted 
                                     shadow-lg shadow-slate-900/100 pl-4"
@@ -209,7 +207,10 @@ export default function Community({ sessionFromServer }) {
               width={140}
               height={120}
               alt=""
-            />
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
           </div>
           <div className="my-auto">
             <p className=" text-white text-xl mx-auto mt-2 sm:ml-4 pr-2">
@@ -226,7 +227,6 @@ export default function Community({ sessionFromServer }) {
           </div>
         </div>
       </div>
-
       {addingPost && (
         <AddPost
           tagListProp={tagListProp}
@@ -236,7 +236,6 @@ export default function Community({ sessionFromServer }) {
           setAddingPostFunction={setAddingPostFunction}
         />
       )}
-
       {/* posts section */}
       <div className="flex max-w-screen">
         <FilteringSidebar
@@ -313,6 +312,6 @@ export default function Community({ sessionFromServer }) {
           />
         </section>
       </div>
-    </div>
+    </div>)
   );
 }

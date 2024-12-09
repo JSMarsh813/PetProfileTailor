@@ -120,7 +120,10 @@ export default function Register({ sessionFromServer }) {
           alt=""
           width={220}
           height={220}
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
       </div>
       <section className="text-center mt-2">
         <h4 className="font-semibold text-lg">

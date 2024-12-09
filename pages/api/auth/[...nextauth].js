@@ -1,17 +1,20 @@
 import bcryptjs from "bcryptjs";
 import NextAuth from "next-auth";
+import { NextApiRequest, NextApiResponse } from "next";
+import { Resend } from "resend";
 import { NextAuthOptions } from "next-auth";
-
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import User from "../../../models/User";
 import { createTransport } from "nodemailer";
+import { sendVerificationRequest } from "../auth/lib/resend";
 // import NameTag from "../../../models/NameTag";
 import db from "../../../utils/db";
 import path from "path";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../auth/lib/mongodb";
 import { ConnectionClosedEvent } from "mongodb";
+import { EmailTemplate } from "../../../components/EmailTemplates/email-template";
 
 function html({ url, host, theme }) {
   const escapedHost = host.replace(/\./g, "&#8203;.");
@@ -104,7 +107,6 @@ function html({ url, host, theme }) {
 function text({ url, host }) {
   return `Sign in to ${host}\n${url}\n\n`;
 }
-
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   session: {
@@ -236,8 +238,8 @@ export const authOptions = {
         const { host } = new URL(url);
         const transport = createTransport(server);
         await transport.sendMail({
-          to: email,
-          from,
+          to: ["janetspellman13@gmail.com"],
+          from: "onboarding@resend.dev",
           subject: `Sign in to ${host}`,
           text: text({ url, host }),
           //is calling the text function, which has the fallback for email clients that don't render html
@@ -261,6 +263,58 @@ export const authOptions = {
         });
       },
     }),
+
+    //
+    //    EmailProvider({
+    //logic for the magic link,  database is required to create a magic link. I'm using mongoDB
+    //host, port, user, pass are all generated from Sendgrid's Web API
+
+    //this will send a verfication token to mongoDB in the verification_tokens collection AND to the email link the users given
+
+    //    server: {
+    //       host: process.env.EMAIL_SERVER_HOST,
+    //       port: process.env.EMAIL_SERVER_PORT,
+    //       auth: {
+    //         user: process.env.EMAIL_SERVER_USER,
+    //         pass: process.env.EMAIL_SERVER_PASSWORD,
+    //       },
+    //     },
+    //from: process.env.EMAIL_FROM,
+    //sendVerificationRequest allows us to customize the magic link's email https://next-auth.js.org/providers/email#customising-emails, under the hood its using the nodemailer package
+    //     async sendVerificationRequest({
+    //     identifier: email,
+    //      url,
+    //provider grabs the "server" and "from" object from the outer function directly above this inner function
+    //    provider: { server, from },
+    //  }) {
+    //    const { host } = new URL(url);
+    //     const transport = createTransport(server);
+    //     await transport.sendMail({
+    //       to: email,
+    //       from: "no-reply@tailoredpetnames.com",
+    //       subject: `Sign in to ${host}`,
+    //       text: text({ url, host }),
+    //       //is calling the text function, which has the fallback for email clients that don't render html
+    //       html: html({ url, host, email }),
+    //       //is calling the html function which has the email's personalized html code
+    //       attachments: [
+    //         {
+    //           filename: "buttonpressdog.gif",
+    //           path: path.join(process.cwd(), `/public/buttonpressdog.gif`),
+    //           cid: "unique@nodemailer.com", //same cid value as in the html img src
+    //         },
+    //         {
+    //           filename: "settingsinstructions.png",
+    //           path: path.join(
+    //             process.cwd(),
+    //             `/public/settingsinstructions.png`,
+    //           ),
+    //           cid: "instructions", //same cid value as in the html img src
+    //         },
+    //       ],
+    //     });
+    //   },
+    // })
   ],
 };
 

@@ -58,7 +58,7 @@ function NewDescriptionWithTagsData({
   }
 
   return (
-    <div className="mx-auto mx-2 md:px-4">
+    (<div className="mx-auto mx-2 md:px-4">
       <section className="my-6 text-white text-center">
         <p> Add a description with one or more tags. </p>
 
@@ -69,9 +69,12 @@ function NewDescriptionWithTagsData({
             src="/addingdescriptionexample.jpg"
             width={90}
             height={90}
-            layout="responsive"
             alt="Poster of an old large dog sitting patiently which says: I like to sleep through the night. I'll bet you do, too. Because I'm a grown-ass adult. Get a dog who gets you. Adopt adult. APA adoption center"
-          />
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto"
+            }} />
         </div>
         <p className="md:ml-6 text-center">
           This description could have tags like: senior, funny, quiet,
@@ -220,7 +223,7 @@ function NewDescriptionWithTagsData({
           )}
         </form>
       </section>
-    </div>
+    </div>)
   );
 }
 

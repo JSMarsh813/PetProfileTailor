@@ -1,4 +1,3 @@
-import React from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
@@ -16,7 +15,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   await dbConnect.connect();

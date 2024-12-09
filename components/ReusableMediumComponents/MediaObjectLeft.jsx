@@ -14,7 +14,7 @@ const MediaObject = ({
   imgheight,
 }) => {
   return (
-    <div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
+    (<div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
       <div
         className="self-center 
             shadow-lg shadow-slate-900/70
@@ -26,9 +26,11 @@ const MediaObject = ({
           width={imgwidth}
           height={imgheight}
           alt={alttext}
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
       </div>
-
       <div
         className="max-w-1/2  mr-8 self-center 
   "
@@ -61,7 +63,7 @@ const MediaObject = ({
           )}
         </div>
       </div>
-    </div>
+    </div>)
   );
 };
 export default MediaObject;

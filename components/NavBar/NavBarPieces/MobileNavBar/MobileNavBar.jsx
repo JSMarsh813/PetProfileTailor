@@ -30,7 +30,7 @@ MyLink.displayName = "MyLink";
 
 function MobileNavBar() {
   return (
-    <div>
+    (<div>
       <Menu.Items
         className="block text-sm text-white 
         absolute  
@@ -181,14 +181,17 @@ focus-visible:ring-opacity-75"
                   width={40}
                   height={20}
                   alt=""
-                />
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
               </div>
               Community
             </MyLink>
           )}
         </Menu.Item>
       </Menu.Items>
-    </div>
+    </div>)
   );
 }
 
