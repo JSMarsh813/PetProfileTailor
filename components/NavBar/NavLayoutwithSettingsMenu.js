@@ -82,7 +82,7 @@ export default function NavLayoutwithSettingsMenu({
               mx-auto ml-2 hover:text-violet-100"
               href={`/`}
             >
-              PetProfileTailor
+              TailoredPetNames
             </MyLink>
 
             <NavBarNames />
