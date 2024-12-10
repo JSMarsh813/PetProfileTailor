@@ -219,6 +219,8 @@ export const authOptions = {
     }),
     EmailProvider({
       // this allows us to add to the email provider object
+      // however some provider properties aren't editable here
+      //for example the callbackurl for the magiclink login (the verifyRequest page), can't be changed here, you have to jump down to the pages section to overwrite next-auth's default callbackUrl to the verify reuqest page for email/magic link login
       // provider: {
       //   id: 'email',
       //   type: 'email',
@@ -227,7 +229,6 @@ export const authOptions = {
       //   from: 'no-reply@tailoredpetnames.com',
       //   maxAge: 86400,
       //   sendVerificationRequest: [AsyncFunction: sendVerificationRequest],
-      //   callBackUrl: '/magiclink',
       //   signinUrl: 'http://localhost:3000/api/auth/signin/email',
       //   callbackUrl: 'http://localhost:3000/api/auth/callback/email'
       // },
