@@ -23,8 +23,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           Pet Adoption Profiles!
         </title>
         <meta
-          name="Pet Profile Tailor"
-          content="Pet profile tailor is a community powered assistant which helps you find the perfect pet name or create pet profiles which are impactful, fun, and tailor fitted. Animal welfare professionals can use the community submitted names or descriptions to create engaging pet profiles to improve adoption rates! "
+          name="Tailored Pet Names"
+          content="Tailored Pet Names is a community powered assistant which helps you find the perfect pet name or create pet profiles which are impactful, fun, and tailor fitted. Animal welfare professionals can use the community submitted names or descriptions to create engaging pet profiles to improve adoption rates!"
         />
       </Head>
       <Component {...pageProps} />
