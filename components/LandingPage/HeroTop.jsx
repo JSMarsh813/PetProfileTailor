@@ -36,14 +36,14 @@ border-y-4 border-darkPurple"
       <div className="hero-content text-center text-neutral-content mb-10">
         <div className="max-w-xl text-white">
           <h1 className="mb-5 text-5xl text-yellow-300 font-black">
-            Welcome to <br /> Pet Profile Tailor!
+            Welcome to <br /> Tailored Pet Names!
           </h1>
           <p className="mb-5 text-xl">
             Naming your new pet or creating engaging profiles for adoptable pets
             can feel ruff! We&apos;ve been there! And we&apos;re here to help.
           </p>
           <p className="mb-5 text-xl">
-            Pet profile tailor is a community powered assistant which helps you
+            Tailored Pet Names is a community powered assistant which helps you
             find that perfect name or create pet profiles which are:
           </p>
 
