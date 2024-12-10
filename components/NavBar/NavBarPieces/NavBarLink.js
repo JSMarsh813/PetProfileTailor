@@ -12,7 +12,7 @@ export default function NavBarLink(props) {
   //https://prismic.io/blog/nextjs-accessibility
 
   return (
-    <li
+    (<li
       className="inline-flex px-2 py-2 text-sm font-bold text-white 
     border-4 border-transparent border-r-violet-400 
             
@@ -26,9 +26,9 @@ export default function NavBarLink(props) {
     focus-visible:ring-opacity-75"
     >
       {isActive && <span className="visually-hidden">Current page: </span>}
-      <Link href={href}>
-        <a aria-current={isActive}>{props.children}</a>
+      <Link href={href} aria-current={isActive}>
+        {props.children}
       </Link>
-    </li>
+    </li>)
   );
 }

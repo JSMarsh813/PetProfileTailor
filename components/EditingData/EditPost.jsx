@@ -113,7 +113,7 @@ export default function EditPost({
   };
 
   return (
-    <div>
+    (<div>
       <div
         className="relative z-10"
         aria-labelledby="modal-title"
@@ -243,9 +243,12 @@ export default function EditPost({
                           src={imagePreview}
                           width={100}
                           height={100}
-                          layout="responsive"
                           alt=""
-                        />
+                          sizes="100vw"
+                          style={{
+                            width: "100%",
+                            height: "auto"
+                          }} />
                         <FontAwesomeIcon
                           icon={faCircleXmark}
                           onClick={() => {
@@ -287,6 +290,6 @@ export default function EditPost({
           </div>
         </div>
       </div>
-    </div>
+    </div>)
   );
 }

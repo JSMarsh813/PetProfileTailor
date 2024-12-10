@@ -34,7 +34,7 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       sessionFromServer: session,
-      csrfToken,
+      csrfToken: csrfToken,
     },
   };
 };
@@ -94,6 +94,8 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
         title="Login"
         profileImage={profileImage}
         userName={userName}
+        height="200px"
+        width="200px"
         sessionFromServer={sessionFromServer}
       />
       <div>
@@ -106,9 +108,13 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   className="w-full rounded-full shadow-lg border-2 border-yellow-300 border-dashed"
                   width={200}
                   height={200}
-                  layout="responsive"
                   alt="A guinea pig looks at the screen calmly as it sits on a keyboard"
                   unoptimized
+                  sizes="100vw"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                  }}
                 />
               </div>
 
@@ -185,7 +191,10 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     {/* <!-- Forgot Password Link --> */}
                     <div>
                       <span> Forgot Password? </span>
-                      <Link href="/forgotpassword">
+                      <Link
+                        href="/forgotpassword"
+                        legacyBehavior
+                      >
                         <span className="font-semibold text-violet-800 bg-yellow-300 p-2 rounded hover:bg-blue-400 hover:text-white">
                           Click Here
                         </span>
@@ -264,10 +273,11 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     icon={faPaw}
                   />
                   Don&apos;t have an account? Welcome! &nbsp;
-                  <Link href={`/register`}>
-                    <a className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
-                      Register by clicking here
-                    </a>
+                  <Link
+                    href={`/register`}
+                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out"
+                  >
+                    Register by clicking here
                   </Link>
                 </p>
 

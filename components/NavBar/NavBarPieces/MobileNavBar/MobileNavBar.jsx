@@ -10,27 +10,27 @@ import Image from "next/image";
 const MyLink = forwardRef((props, ref) => {
   let { href, active, children, ...rest } = props;
   return (
-    <Link href={href}>
-      <a
-        ref={ref}
-        className={`block rounded-md px-2 py-2 text-md
-        hover:bg-yellow-400
-        hover:text-violet-900  
-        text-center                   
-    ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
+    (<Link
+      href={href}
+      ref={ref}
+      className={`block rounded-md px-2 py-2 text-md
+      hover:bg-yellow-400
+      hover:text-violet-900  
+      text-center                   
+  ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
 `}
-        {...rest}
-      >
-        {children}
-      </a>
-    </Link>
+      {...rest}>
+
+      {children}
+
+    </Link>)
   );
 });
 MyLink.displayName = "MyLink";
 
 function MobileNavBar() {
   return (
-    <div>
+    (<div>
       <Menu.Items
         className="block text-sm text-white 
         absolute  
@@ -181,14 +181,17 @@ focus-visible:ring-opacity-75"
                   width={40}
                   height={20}
                   alt=""
-                />
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
               </div>
               Community
             </MyLink>
           )}
         </Menu.Item>
       </Menu.Items>
-    </div>
+    </div>)
   );
 }
 

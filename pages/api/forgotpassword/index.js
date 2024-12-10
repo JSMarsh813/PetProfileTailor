@@ -3,7 +3,10 @@ import User from "../../../models/User";
 import db from "../../../utils/db";
 import crypto from "crypto";
 import { NextResponse } from "next/server";
-import sgMail from "@sendgrid/mail";
+import { Resend } from "resend";
+const resend = new Resend(process.env.RESEND_API_KEY);
+import { ResetPasswordEmail } from "../../../components/EmailTemplates/reset-password-template";
+
 //crypto is a native node.js package
 
 export default async function handler(req, res) {
@@ -34,71 +37,26 @@ export default async function handler(req, res) {
   existingUser.passwordresettoken = databaseResetPasswordToken;
   existingUser.resettokenexpires = passwordResetExpires;
 
-  // await existingUser.save();
-  // res.send({
-  //   message: "email is sent for resetting password",
-  // });
-
-  //WILL NEED TO CHANGE LATER so its no longer looking at local host
-  const resetUrl = `localhost:3000/resetpassword/${emailResetPasswordToken}`;
-  console.log(resetUrl);
+  const resetUrl = `${process.env.NEXTAUTH_URL}/resetpassword/${emailResetPasswordToken}`;
+  const userName = existingUser.profilename;
 
   try {
     await existingUser.save();
+    await resend.emails.send({
+      from: `${process.env.RESEND_EMAIL_FROM}`,
+      to: email,
+      subject: "Reset Password",
+      react: ResetPasswordEmail({
+        userFirstname: userName,
+        resetPasswordLink: resetUrl,
+      }),
+    });
+
     res.status(200).json({
-      message: "email is sent for resetting password",
+      message: "Password reset email was sent",
     });
     return;
   } catch (error) {
     res.status(500).json(error);
   }
-
-  const body = "Reset Password by clicking on the following url: " + resetUrl;
-  // const msg = {
-  //   to: email,
-  //   from: "petprofiletailor@gmail.com",
-  //   subject: "Reset Password",
-  //   text: body,
-  // };
-  // sgMail.setApiKey(process.env.SENDGRID_API_KEY_RESET_PASSWORD || "");
-  // // ||"" for validation
-  // sgMail
-  //   .send(msg)
-  //   .then(() => {
-  //     res.status(200).json({
-  //       message: "Reset password sent",
-  //     });
-  //     return;
-  //   })
-  //   .catch(async (error) => {
-  //     existingUser.passwordResetToken = undefined;
-  //     existingUser.resetTokenExpires = undefined;
-  //     await existingUser.save();
-
-  //     res.status(400).json({
-  //       message: "Failed sending email, try again",
-  //     });
-  //     return;
-  //   });
-
-  // try {
-  //   await existingUser.save();
-  //   res.status(200).json({
-  //     message: "email is sent for resetting password",
-  //   });
-  //   return;
-  // } catch (error) {
-  //   res.status(500).json(error);
-  //   return;
-  // }
-
-  //https://www.youtube.com/watch?v=sO5df9FVIT8&list=PLIcotye6qKVORDtJeGNfCF6_Xs5-YwJTm&index=1 18ish minutes in
-
-  //   res.status(201).send({
-  //     message: "Created user!",
-  //     _id: user._id,
-  //     profilename: user.profilename,
-  //     name: user.name,
-  //     email: user.email,
-  //   });
 }

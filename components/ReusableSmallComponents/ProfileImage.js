@@ -5,8 +5,8 @@ export default function ProfileImage({
   profileImage,
   className,
   layout,
-  width,
-  height,
+  width = "200",
+  height = "200",
   divStyling,
 }) {
   const [hover, setHover] = useState(false);
@@ -19,7 +19,6 @@ export default function ProfileImage({
   };
 
   const profileImageString = profileImage;
-
   const hoverProfileImage = hover
     ? profileImageString
     : profileImageString.replace(".gif", ".jpg");
@@ -28,7 +27,6 @@ export default function ProfileImage({
     <div className={divStyling}>
       <Image
         src={hoverProfileImage}
-        layout={!layout ? "fill" : layout}
         alt=""
         className={className}
         width={width}

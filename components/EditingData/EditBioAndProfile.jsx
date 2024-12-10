@@ -38,7 +38,7 @@ export default function EditBioAndProfile({
       });
   };
   return (
-    <div>
+    (<div>
       <div
         className="relative z-10"
         aria-labelledby="modal-title"
@@ -108,9 +108,12 @@ export default function EditBioAndProfile({
                     className="h-28 w-scale mx-auto"
                     width={100}
                     height={100}
-                    layout="responsive"
                     alt=""
-                  />
+                    sizes="100vw"
+                    style={{
+                      width: "100%",
+                      height: "auto"
+                    }} />
 
                   <ImageUpload sessionFromServer={sessionFromServer} />
                 </div>
@@ -144,6 +147,6 @@ export default function EditBioAndProfile({
           </div>
         </div>
       </div>
-    </div>
+    </div>)
   );
 }

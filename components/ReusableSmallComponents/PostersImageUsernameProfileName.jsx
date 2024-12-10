@@ -12,11 +12,11 @@ export default function PostersImageUsernameProfileName({
   showtime,
 }) {
   return (
-    <Link
+    (<Link
       href={`${
         process.env.NEXT_PUBLIC_BASE_FETCH_URL
       }/profile/${profileName.toLowerCase()}`}
-    >
+      legacyBehavior>
       <div className="author flex items-center -ml-3 my-3">
         <ProfileImage
           divStyling="w-12 mr-2"
@@ -44,6 +44,6 @@ export default function PostersImageUsernameProfileName({
           {postDate && showtime == true && <ShowTime postDate={postDate} />}
         </h2>
       </div>
-    </Link>
+    </Link>)
   );
 }

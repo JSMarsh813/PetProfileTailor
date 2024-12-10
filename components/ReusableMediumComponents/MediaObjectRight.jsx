@@ -14,7 +14,7 @@ const MediaObjectRight = ({
   imgheight,
 }) => {
   return (
-    <div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
+    (<div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
       <div
         className="max-w-md ml-4 mr-8 self-center 
     "
@@ -45,7 +45,6 @@ const MediaObjectRight = ({
           )}
         </div>
       </div>
-
       <div
         className="self-center w-80  shadow-xl shadow-slate-900/70
         border-b-8  border-r-8 border-amber-300 "
@@ -55,11 +54,14 @@ const MediaObjectRight = ({
           width={imgwidth}
           height={imgheight}
           src={image}
-          layout="responsive"
           alt={alttext}
-        />
+          sizes="100vw"
+          style={{
+            width: "100%",
+            height: "auto"
+          }} />
       </div>
-    </div>
+    </div>)
   );
 };
 export default MediaObjectRight;

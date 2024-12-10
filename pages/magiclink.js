@@ -74,7 +74,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
   //we need to use router (line 8) to redirect user
 
   return (
-    <div>
+    (<div>
       <Layout
         title="Magic Link Message"
         profileImage={profileImage}
@@ -122,10 +122,12 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     icon={faPaw}
                   />
                   Don&apos;t have an account? Welcome! &nbsp;
-                  <Link href={`/register`}>
-                    <a className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
+                  <Link
+                    href={`/register`}
+                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
+                    
                       Register by clicking here
-                    </a>
+                    
                   </Link>
                 </p>
 
@@ -153,6 +155,6 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
           </div>
         </section>
       </div>
-    </div>
+    </div>)
   );
 }

@@ -69,7 +69,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   }
 
   return (
-    <div className="mx-auto mx-2">
+    (<div className="mx-auto mx-2">
       <section className="mx-auto text-center">
         <p> Add a name with one or more tags. </p>
 
@@ -80,9 +80,12 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             src="/batdog.jpg"
             width={80}
             height={90}
-            layout="responsive"
             alt="Image of a pug with a stern batman mask on"
-          />
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto"
+            }} />
         </div>
         <p className="text-center">
           Batman could have the tags: comics, superheroes, batman, male, edgy
@@ -132,7 +135,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
                 href={`${
                   process.env.NEXT_PUBLIC_BASE_FETCH_URL
                 }/name/${namesThatExist[0].name.toLowerCase()}`}
-              >
+                legacyBehavior>
                 <GeneralButton
                   className="ml-12 my-4"
                   text={`Link to ${namesThatExist[0].name}'s page`}
@@ -244,7 +247,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           )}
         </form>
       </section>
-    </div>
+    </div>)
   );
 }
 

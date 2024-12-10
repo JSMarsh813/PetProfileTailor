@@ -189,7 +189,7 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
   };
 
   return (
-    <div>
+    (<div>
       <Layout
         title="Reset Password"
         profileImage={profileImage}
@@ -206,10 +206,13 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
                   className="w-full rounded-full shadow-lg"
                   width={200}
                   height={200}
-                  layout="responsive"
                   alt="A guinea pig looks at the screen calmly as it sits on a keyboard"
                   unoptimized
-                />
+                  sizes="100vw"
+                  style={{
+                    width: "100%",
+                    height: "auto"
+                  }} />
               </div>
 
               <div className="ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
@@ -307,10 +310,12 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
                     icon={faPaw}
                   />
                   Don&apos;t have an account? Welcome! &nbsp;
-                  <Link href={`/register`}>
-                    <a className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
+                  <Link
+                    href={`/register`}
+                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
+                    
                       Register by clicking here
-                    </a>
+                    
                   </Link>
                 </p>
               </div>
@@ -318,6 +323,6 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
           </div>
         </section>
       </div>
-    </div>
+    </div>)
   );
 }
