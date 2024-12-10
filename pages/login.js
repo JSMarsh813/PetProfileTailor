@@ -34,7 +34,7 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       sessionFromServer: session,
-      csrfToken,
+      csrfToken: csrfToken,
     },
   };
 };
@@ -89,11 +89,13 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
   };
 
   return (
-    (<div>
+    <div>
       <Layout
         title="Login"
         profileImage={profileImage}
         userName={userName}
+        height="200px"
+        width="200px"
         sessionFromServer={sessionFromServer}
       />
       <div>
@@ -111,8 +113,9 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   sizes="100vw"
                   style={{
                     width: "100%",
-                    height: "auto"
-                  }} />
+                    height: "auto",
+                  }}
+                />
               </div>
 
               <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
@@ -188,7 +191,10 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                     {/* <!-- Forgot Password Link --> */}
                     <div>
                       <span> Forgot Password? </span>
-                      <Link href="/forgotpassword" legacyBehavior>
+                      <Link
+                        href="/forgotpassword"
+                        legacyBehavior
+                      >
                         <span className="font-semibold text-violet-800 bg-yellow-300 p-2 rounded hover:bg-blue-400 hover:text-white">
                           Click Here
                         </span>
@@ -269,10 +275,9 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   Don&apos;t have an account? Welcome! &nbsp;
                   <Link
                     href={`/register`}
-                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
-                    
-                      Register by clicking here
-                    
+                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out"
+                  >
+                    Register by clicking here
                   </Link>
                 </p>
 
@@ -300,6 +305,6 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
           </div>
         </section>
       </div>
-    </div>)
+    </div>
   );
 }

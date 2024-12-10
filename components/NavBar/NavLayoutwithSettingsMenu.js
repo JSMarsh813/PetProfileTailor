@@ -31,7 +31,7 @@ export default function NavLayoutwithSettingsMenu({
   const MyLink = forwardRef((props, ref) => {
     let { href, active, children, ...rest } = props;
     return (
-      (<Link
+      <Link
         href={href}
         ref={ref}
         className={`block rounded-md px-2 py-2 text-md
@@ -40,11 +40,10 @@ export default function NavLayoutwithSettingsMenu({
         text-center                   
     ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
 `}
-        {...rest}>
-
+        {...rest}
+      >
         {children}
-
-      </Link>)
+      </Link>
     );
   });
   MyLink.displayName = "MyLink";
@@ -184,8 +183,7 @@ export default function NavLayoutwithSettingsMenu({
                   className="relative inline-block text-left z-10"
                 >
                   <Menu.Button
-                    className="inline-flex justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white
-                text-yellow-400 font-extrabold
+                    className="inline-flex justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium         text-yellow-400
                 
                 border-4 border-transparent 
                 

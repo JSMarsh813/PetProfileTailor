@@ -25,7 +25,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   await dbConnect.connect();
@@ -119,7 +119,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     previousPageData,
     pagesize,
     sortingvalue,
-    sortingproperty
+    sortingproperty,
   ) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
 
@@ -133,7 +133,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
     useSWRInfinite(
       (...args) => getKey(...args, PAGE_SIZE, sortingvalue, sortingproperty),
-      fetcher
+      fetcher,
     );
 
   const names = data ? [].concat(...data) : [];
@@ -163,9 +163,9 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     setFilteredNames(
       names.filter((names) =>
         currenttags.every((selectedtag) =>
-          names.tags.map(({ tag }) => tag).includes(selectedtag)
-        )
-      )
+          names.tags.map(({ tag }) => tag).includes(selectedtag),
+        ),
+      ),
     );
   }, [tagFilters, data]);
   // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
@@ -241,7 +241,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
               {filterednames
                 .slice(
                   page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
-                  page * itemsPerPage
+                  page * itemsPerPage,
                 )
                 .map((name) => {
                   return (

@@ -1,3 +1,4 @@
+import React from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 

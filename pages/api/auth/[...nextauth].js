@@ -7,7 +7,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
 import User from "../../../models/User";
 import { createTransport } from "nodemailer";
-import { sendVerificationRequest } from "../auth/lib/resend";
 // import NameTag from "../../../models/NameTag";
 import db from "../../../utils/db";
 import path from "path";
@@ -15,6 +14,10 @@ import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../auth/lib/mongodb";
 import { ConnectionClosedEvent } from "mongodb";
 import { EmailTemplate } from "../../../components/EmailTemplates/email-template";
+import nodemailer from "nodemailer";
+import { MagicLinkTemplate } from "../../../components/EmailTemplates/magic-link-template";
+
+import { sendVerificationRequest } from "../auth/utils/send-verification-request";
 
 function html({ url, host, theme }) {
   const escapedHost = host.replace(/\./g, "&#8203;.");
@@ -167,13 +170,15 @@ export const authOptions = {
         //   },
         // };
       } else if (userExists && account.provider == "email") {
-        return "/magiclink";
-      } else {
-        //#################### PASSWORD LOGIN INCORRECT
-        //incorrect password gives proper "invalid email or password error message"
-        //because if you look at providers... CredentialsProvider... if (user && bcryptjs.compareSync(credentials.password, user.password) is untrue then
-        //then throw new Error("Invalid email or password");
+        //if the email exists in the database
+        //this them jumps down to the EmailProvider logic, which we set up to work with resend
+        //it then runs sendVerificationRequest logic stored in auth/utils
+        //the async sendVerificationRequest function says "hey lets use resend to send an email with a magic link inside it"
 
+        return true;
+
+        //  https://next-auth.js.org/providers/email#customizing-emails
+      } else {
         //incorrect email to magic links (aka email not found in the database) sends to /magiclnk
         return "/magiclink";
       }
@@ -215,10 +220,8 @@ export const authOptions = {
     }),
     EmailProvider({
       //logic for the magic link,  database is required to create a magic link. I'm using mongoDB
-      //host, port, user, pass are all generated from Sendgrid's Web API
-
       //this will send a verfication token to mongoDB in the verification_tokens collection AND to the email link the users given
-
+      //server sets up our connection with resend, we use the env variables that resend gave us
       server: {
         host: process.env.EMAIL_SERVER_HOST,
         port: process.env.EMAIL_SERVER_PORT,
@@ -227,94 +230,10 @@ export const authOptions = {
           pass: process.env.EMAIL_SERVER_PASSWORD,
         },
       },
-      from: process.env.EMAIL_FROM,
+      from: process.env.RESEND_EMAIL_FROM,
       //sendVerificationRequest allows us to customize the magic link's email https://next-auth.js.org/providers/email#customising-emails, under the hood its using the nodemailer package
-      async sendVerificationRequest({
-        identifier: email,
-        url,
-        //provider grabs the "server" and "from" object from the outer function directly above this inner function
-        provider: { server, from },
-      }) {
-        const { host } = new URL(url);
-        const transport = createTransport(server);
-        await transport.sendMail({
-          to: ["janetspellman13@gmail.com"],
-          from: "onboarding@resend.dev",
-          subject: `Sign in to ${host}`,
-          text: text({ url, host }),
-          //is calling the text function, which has the fallback for email clients that don't render html
-          html: html({ url, host, email }),
-          //is calling the html function which has the email's personalized html code
-          attachments: [
-            {
-              filename: "buttonpressdog.gif",
-              path: path.join(process.cwd(), `/public/buttonpressdog.gif`),
-              cid: "unique@nodemailer.com", //same cid value as in the html img src
-            },
-            {
-              filename: "settingsinstructions.png",
-              path: path.join(
-                process.cwd(),
-                `/public/settingsinstructions.png`,
-              ),
-              cid: "instructions", //same cid value as in the html img src
-            },
-          ],
-        });
-      },
+      sendVerificationRequest,
     }),
-
-    //
-    //    EmailProvider({
-    //logic for the magic link,  database is required to create a magic link. I'm using mongoDB
-    //host, port, user, pass are all generated from Sendgrid's Web API
-
-    //this will send a verfication token to mongoDB in the verification_tokens collection AND to the email link the users given
-
-    //    server: {
-    //       host: process.env.EMAIL_SERVER_HOST,
-    //       port: process.env.EMAIL_SERVER_PORT,
-    //       auth: {
-    //         user: process.env.EMAIL_SERVER_USER,
-    //         pass: process.env.EMAIL_SERVER_PASSWORD,
-    //       },
-    //     },
-    //from: process.env.EMAIL_FROM,
-    //sendVerificationRequest allows us to customize the magic link's email https://next-auth.js.org/providers/email#customising-emails, under the hood its using the nodemailer package
-    //     async sendVerificationRequest({
-    //     identifier: email,
-    //      url,
-    //provider grabs the "server" and "from" object from the outer function directly above this inner function
-    //    provider: { server, from },
-    //  }) {
-    //    const { host } = new URL(url);
-    //     const transport = createTransport(server);
-    //     await transport.sendMail({
-    //       to: email,
-    //       from: "no-reply@tailoredpetnames.com",
-    //       subject: `Sign in to ${host}`,
-    //       text: text({ url, host }),
-    //       //is calling the text function, which has the fallback for email clients that don't render html
-    //       html: html({ url, host, email }),
-    //       //is calling the html function which has the email's personalized html code
-    //       attachments: [
-    //         {
-    //           filename: "buttonpressdog.gif",
-    //           path: path.join(process.cwd(), `/public/buttonpressdog.gif`),
-    //           cid: "unique@nodemailer.com", //same cid value as in the html img src
-    //         },
-    //         {
-    //           filename: "settingsinstructions.png",
-    //           path: path.join(
-    //             process.cwd(),
-    //             `/public/settingsinstructions.png`,
-    //           ),
-    //           cid: "instructions", //same cid value as in the html img src
-    //         },
-    //       ],
-    //     });
-    //   },
-    // })
   ],
 };
 

@@ -5,8 +5,8 @@ export default function ProfileImage({
   profileImage,
   className,
   layout,
-  width,
-  height,
+  width = "200",
+  height = "200",
   divStyling,
 }) {
   const [hover, setHover] = useState(false);
@@ -19,16 +19,14 @@ export default function ProfileImage({
   };
 
   const profileImageString = profileImage;
-
   const hoverProfileImage = hover
     ? profileImageString
     : profileImageString.replace(".gif", ".jpg");
 
   return (
-    (<div className={divStyling}>
+    <div className={divStyling}>
       <Image
         src={hoverProfileImage}
-        layout={!layout ? "fill" : layout}
         alt=""
         className={className}
         width={width}
@@ -36,10 +34,7 @@ export default function ProfileImage({
         unoptimized
         onMouseEnter={handleMouseEnterForImage}
         onMouseLeave={handleMouseLeaveForImage}
-        style={{
-          maxWidth: "100%",
-          height: "auto"
-        }} />
-    </div>)
+      />
+    </div>
   );
 }
