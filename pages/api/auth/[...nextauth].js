@@ -176,7 +176,6 @@ export const authOptions = {
         //the async sendVerificationRequest function says "hey lets use resend to send an email with a magic link inside it"
 
         return true;
-
         //  https://next-auth.js.org/providers/email#customizing-emails
       } else {
         //incorrect email to magic links (aka email not found in the database) sends to /magiclnk
@@ -219,6 +218,20 @@ export const authOptions = {
       },
     }),
     EmailProvider({
+      // this allows us to add to the email provider object
+      // provider: {
+      //   id: 'email',
+      //   type: 'email',
+      //   name: 'Email',
+      //   server: { host: 'smtp.resend.com', port: '465', auth: [Object] },
+      //   from: 'no-reply@tailoredpetnames.com',
+      //   maxAge: 86400,
+      //   sendVerificationRequest: [AsyncFunction: sendVerificationRequest],
+      //   callBackUrl: '/magiclink',
+      //   signinUrl: 'http://localhost:3000/api/auth/signin/email',
+      //   callbackUrl: 'http://localhost:3000/api/auth/callback/email'
+      // },
+
       //logic for the magic link,  database is required to create a magic link. I'm using mongoDB
       //this will send a verfication token to mongoDB in the verification_tokens collection AND to the email link the users given
       //server sets up our connection with resend, we use the env variables that resend gave us
@@ -235,6 +248,11 @@ export const authOptions = {
       sendVerificationRequest,
     }),
   ],
+  //overwrite the default pages with personalize pages
+  //https://next-auth.js.org/configuration/pages
+  pages: {
+    verifyRequest: "/magiclink",
+  },
 };
 
 export default NextAuth(authOptions);
