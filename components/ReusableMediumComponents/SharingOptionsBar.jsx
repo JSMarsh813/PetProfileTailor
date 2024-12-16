@@ -29,7 +29,7 @@ import Link from "next/link";
 const MyLink = forwardRef((props, ref) => {
   let { href, active, children, ...rest } = props;
   return (
-    (<Link
+    <Link
       href={href}
       ref={ref}
       className={`block rounded-md px-2 py-2 text-md
@@ -38,11 +38,10 @@ const MyLink = forwardRef((props, ref) => {
       text-center                   
   ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
 `}
-      {...rest}>
-
+      {...rest}
+    >
       {children}
-
-    </Link>)
+    </Link>
   );
 });
 MyLink.displayName = "MyLink";
@@ -112,7 +111,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
       <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
         <FacebookShareButton
           url={linkToShare}
-          hashtag={"#PetProfileTailor"}
+          hashtag={"#tailoredPetNames"}
         >
           <span className="focus:ring focus:ring-violet-300">
             <FacebookIcon

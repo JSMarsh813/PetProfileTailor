@@ -1,8 +1,8 @@
-# Pet Profile Tailor
+# Tailored Pet Names
 
 ## Inspiration Behind and Introduction to Project:
 
-I worked as an adoption counselor in animal shelters for ~5 years and although pet profiles are vital to catch adopters attention and boost adoption rates, there's only so much creativity a person can have at the crack of dawn. Coffee can only do so much 😛 
+I worked as an adoption counselor in animal shelters for ~5 years and although pet profiles are vital to catch adopters attention and boost adoption rates, there's only so much creativity a person can have at the crack of dawn. Coffee can only do so much 😛
 
 So I was inspired to create this site which empowers animal lovers to help adoption counselors create impactful, fun, and tailor-fitted adoption profiles! After signing up, users can submit new names and descriptions,save favorites and follow other users. Users can easily search and filter through community submitted names and descriptions.
 

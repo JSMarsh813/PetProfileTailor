@@ -31,7 +31,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   if (!session) {
@@ -156,7 +156,7 @@ export const getServerSideProps = async (context) => {
         createdDescriptions: JSON.parse(JSON.stringify(createdDescriptions)),
 
         descriptionTagListProp: JSON.parse(
-          JSON.stringify(descriptionTagListProp)
+          JSON.stringify(descriptionTagListProp),
         ),
 
         NameTagListProp: JSON.parse(JSON.stringify(NameTagListProp)),
@@ -311,11 +311,11 @@ export default function Dashboard({
           {/* ############# FAVORITE NAMES LIST ############ */}
 
           <section className="favoriteNames">
-            <div className="flow-root w-screen">
+            <div className="">
               <GeneralOpenCloseButton
                 text="Favorites Names"
                 setStatus={setFavoritesListOpen}
-                styling="mb-2"
+                styling="mb-2 w-96"
                 status={favoritesListOpen}
               />
             </div>
@@ -343,7 +343,7 @@ export default function Dashboard({
             <GeneralOpenCloseButton
               text="Favorites Descriptions"
               setStatus={setFavDescriptionsOpen}
-              styling="mb-2"
+              styling="mb-2 w-96"
               status={favDescriptionsOpen}
             />
 
@@ -363,7 +363,7 @@ export default function Dashboard({
             <GeneralOpenCloseButton
               text="Favorite Post Comments"
               setStatus={setFavCommentsOpen}
-              styling="mb-2"
+              styling="mb-2 w-96"
               status={favCommentsOpen}
             />
 
@@ -386,7 +386,7 @@ export default function Dashboard({
             <GeneralOpenCloseButton
               text="Favorite Posts"
               setStatus={setFavPostsOpen}
-              styling="mb-2"
+              styling="mb-2 w-96"
               status={favPostsOpen}
             />
 

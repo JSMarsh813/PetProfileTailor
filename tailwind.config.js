@@ -15,8 +15,13 @@ module.exports = {
       },
       colors: {
         darkPurple: "#140223",
+        accent: "",
+        mainColor: "",
+        secondaryColor: "",
+        darkBackground: "",
         //22043b
       },
+      fontFamily: {},
       width: {
         "30rem": "40rem",
       },
