@@ -27,15 +27,14 @@ export const ResetPasswordEmail = ({
       <Head />
       <Preview> Reset your password</Preview>
       <Body style={main}>
-        <Container style={container}>
-          <EmailHeaderTemplate
-            headerText="Password Reset"
-            imgLink="https://media1.tenor.com/m/RFMH39za-H4AAAAd/press-the-pack.gif"
-            imgAltText="dog looking back and forth with question marks around them"
-          ></EmailHeaderTemplate>
-        </Container>
+        <EmailHeaderTemplate
+          headerText="Password Reset"
+          imgLink="https://media1.tenor.com/m/RFMH39za-H4AAAAd/press-the-pack.gif"
+          imgAltText="dog looking back and forth with question marks around them"
+        ></EmailHeaderTemplate>
 
         <Container style={container}>
+          {/* needs to be in a container, so the text does not spill out to the left and right */}
           <Section style={body}>
             <Text style={paragraph}>Hi {userFirstname},</Text>
             <Text style={paragraph}>
@@ -79,19 +78,16 @@ const main = {
 
 const container = {
   margin: "0 auto",
-
   textAlign: "center" as "center",
 };
 
 const body = {
   margin: "24px 0",
-  fontSize: "16px",
   fontWeight: "300",
   color: "#404040",
-  lineHeight: "26px",
 };
 
-//to override the default text style, setting fontsize in higher up element won't override the default text formatting
+//to override the default text style, setting fontsize in the parent elements won't override the default text formatting
 const paragraph = {
   fontSize: "16px",
   lineHeight: "26px",

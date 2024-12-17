@@ -27,12 +27,9 @@ export const EmailHeaderTemplate = ({
       alt={imgAltText}
       style={{
         margin: "0 auto",
-        borderRadius: "30%",
         border: "2px solid white",
         //horizontally centers alt text
         textAlign: "center",
-        //vertically centers alt text
-        lineHeight: "150px",
         color: "white",
       }}
     />
@@ -52,7 +49,7 @@ EmailHeaderTemplate.PreviewProps = {
 
 const container = {
   margin: "0 auto",
-  backgroundColor: "rgba(124,58,237,1)",
+  backgroundColor: "rgba(80,30,200,1)",
   fontFamily:
     "'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif",
   textAlign: "center" as "center",

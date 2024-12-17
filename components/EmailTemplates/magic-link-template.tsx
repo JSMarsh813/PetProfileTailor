@@ -72,13 +72,11 @@ const container = {
 
 const body = {
   margin: "24px 0",
-  fontSize: "16px",
   fontWeight: "300",
   color: "#404040",
-  lineHeight: "26px",
 };
 
-//to override the default text style, setting fontsize in higher up element won't override the default text formatting
+//to override the default text style, setting fontsize in the parent elements won't override the default text formatting
 const paragraph = {
   fontSize: "16px",
   lineHeight: "26px",
