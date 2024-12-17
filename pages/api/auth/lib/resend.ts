@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { SendVerificationRequestParams } from "next-auth/providers";
-import { EmailTemplate } from "../../../../components/EmailTemplates/email-template";
+import { EmailTemplate } from "../../../../components/EmailTemplates/email-header-template";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
