@@ -1,5 +1,5 @@
 import Select from "react-select";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 
@@ -18,6 +18,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   const [namesThatExist, setNamesThatExist] = useState([]);
   const [nameCheck, setNameCheck] = useState("");
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
+  const [inputError, setInputError] = useState(false);
 
   async function checkIfNameExists() {
     let nameResponse = await fetch("/api/names/findonenamebyname/" + nameCheck);
@@ -25,6 +26,14 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
     setNamesThatExist(nameData);
     setNameCheckFunctionRun(true);
   }
+
+  // useEffect(() => {
+  //   const textInput = document.querySelector('input[type="text"]');
+  //   textInput.addEventListener("change", (e) => {
+  //     const isValid = e.target.checkValidity();
+  //     console.log(isValid);
+  //   });
+  // }, []);
 
   function resetData(e) {
     setNameCheck(e.target.value.toLowerCase());
@@ -69,7 +78,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   }
 
   return (
-    (<div className="mx-auto mx-2">
+    <div className="mx-auto mx-2">
       <section className="mx-auto text-center">
         <p> Add a name with one or more tags. </p>
 
@@ -84,8 +93,9 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             sizes="100vw"
             style={{
               width: "100%",
-              height: "auto"
-            }} />
+              height: "auto",
+            }}
+          />
         </div>
         <p className="text-center">
           Batman could have the tags: comics, superheroes, batman, male, edgy
@@ -100,6 +110,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             value={nameCheck}
             maxLength="40"
             onChange={(e) => resetData(e)}
+            // pattern="a-z0-9áéíóúñü!~`@#$&()=?<>,:^*_|]{2,40}"
           />
 
           <button
@@ -135,7 +146,8 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
                 href={`${
                   process.env.NEXT_PUBLIC_BASE_FETCH_URL
                 }/name/${namesThatExist[0].name.toLowerCase()}`}
-                legacyBehavior>
+                legacyBehavior
+              >
                 <GeneralButton
                   className="ml-12 my-4"
                   text={`Link to ${namesThatExist[0].name}'s page`}
@@ -164,6 +176,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             className="text-darkPurple"
             placeholder="enter a name to add"
             onChange={(e) => setNewName(e.target.value.toLowerCase())}
+            // pattern="a-z0-9áéíóúñü!~`@#$&()=?<>,:^*_|]{2,40}"
             maxLength="40"
             disabled={sessionFromServer ? "" : "disabled"}
             onClick={(e) => setNameExists(false)}
@@ -247,7 +260,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           )}
         </form>
       </section>
-    </div>)
+    </div>
   );
 }
 

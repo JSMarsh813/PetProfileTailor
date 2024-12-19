@@ -13,7 +13,6 @@ import path from "path";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../auth/lib/mongodb";
 import { ConnectionClosedEvent } from "mongodb";
-import { EmailTemplate } from "../../../components/EmailTemplates/email-template";
 import nodemailer from "nodemailer";
 import { MagicLinkTemplate } from "../../../components/EmailTemplates/magic-link-template";
 
