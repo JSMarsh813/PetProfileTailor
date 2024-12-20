@@ -189,7 +189,7 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
   };
 
   return (
-    (<div>
+    <div>
       <Layout
         title="Reset Password"
         profileImage={profileImage}
@@ -211,8 +211,9 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
                   sizes="100vw"
                   style={{
                     width: "100%",
-                    height: "auto"
-                  }} />
+                    height: "auto",
+                  }}
+                />
               </div>
 
               <div className="ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
@@ -231,7 +232,7 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
                       type="password"
                       disabled={error}
                       //this way if the tokens expired ect, they can't enter a password
-                      className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black disabled:bg-red-900 disabled:placeholder-white"
+                      className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black disabled:bg-errorBackgroundColor disabled:placeholder-errorTextColor"
                       placeholder="password"
                       required
                       id="password"
@@ -312,10 +313,9 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
                   Don&apos;t have an account? Welcome! &nbsp;
                   <Link
                     href={`/register`}
-                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
-                    
-                      Register by clicking here
-                    
+                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out"
+                  >
+                    Register by clicking here
                   </Link>
                 </p>
               </div>
@@ -323,6 +323,6 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
           </div>
         </section>
       </div>
-    </div>)
+    </div>
   );
 }

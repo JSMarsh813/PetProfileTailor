@@ -22,7 +22,7 @@ module.exports = {
 
         errorBackgroundColor: "rgb(30 41 59 / var(--tw-bg-opacity, 1))",
         errorTextColor: "rgb(255 255 255 / var(--tw-bg-opacity, 1))",
-        errorBorderColor: "rgb(255 255 255 / var(--tw-bg-opacity, 1))",
+        errorBorderColor: "rgb(241 245 249 / var(--tw-bg-opacity, 1))",
 
         buttonBackgroundColor: "",
         buttonTextColor: "",

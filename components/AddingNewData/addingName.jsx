@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import WarningMessage from "../ReusableSmallComponents/buttons/WarningMessage";
 
 function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   const [newName, setNewName] = useState("");
@@ -18,7 +19,8 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   const [namesThatExist, setNamesThatExist] = useState([]);
   const [nameCheck, setNameCheck] = useState("");
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
-  const [inputError, setInputError] = useState(null);
+  const [nameCheckInvalidInput, setNameCheckInvalidInput] = useState(null);
+  const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
   //regex will return null if none of the characters are invalid, so start with null to begin with
 
   async function checkIfNameExists() {
@@ -28,13 +30,20 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
     setNameCheckFunctionRun(true);
   }
 
-  useEffect(() => {
+  function regexInvalidInput(stringToCheck) {
     let regexForInvalidCharacters = /[^a-z\d&'-áéíóúñü]+/;
-    let invalidCharacters = nameCheck.match(regexForInvalidCharacters);
-    //if no invalid characters, match gives us null
-    console.log(`this is ${invalidCharacters}`);
-    setInputError(invalidCharacters);
+    return stringToCheck.match(regexForInvalidCharacters);
+  }
+
+  //client side validation for "check if name already exists" section
+  useEffect(() => {
+    setNameCheckInvalidInput(regexInvalidInput(nameCheck));
   }, [nameCheck]);
+
+  //client side validation for name submission section
+  useEffect(() => {
+    setNewNameInvalidInput(regexInvalidInput(newName));
+  }, [newName]);
 
   function resetData(e) {
     setNameCheck(e.target.value.toLowerCase());
@@ -104,12 +113,15 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
 
         <h4 className="mt-4 underline font-bold"> Submission Guidelines </h4>
         <ul className="">
-          <li className="block"> Names can only be in lowercase</li>
+          <li className="block">
+            Names will automatically be converted to lowercase
+          </li>
 
           <li>
             <strong> Valid characters: </strong> a-z áéíóúñü 0-9 &&apos;-
           </li>
-          <li>names must be between 2-40 characters long</li>
+          <li> must be 2-40 characters</li>
+          <li>buttons will turn on when this criteria is met</li>
         </ul>
 
         <section className="text-center mt-4">
@@ -128,14 +140,18 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             className="inline-block bg-yellow-300 text-purple-600 p-2 border-2 border-yellow-200  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
             onClick={() => checkIfNameExists()}
             disabled={
-              inputError !== null || nameCheck.length < 2 ? "disabled" : ""
+              nameCheckInvalidInput !== null || nameCheck.length < 2
+                ? "disabled"
+                : ""
             }
           >
             <FontAwesomeIcon
               icon={faSearch}
               className="text-2xl"
               color={
-                inputError !== null || nameCheck.length < 2 ? "white" : "purple"
+                nameCheckInvalidInput !== null || nameCheck.length < 2
+                  ? "white"
+                  : "purple"
               }
             />
 
@@ -171,9 +187,12 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
               </Link>
             </p>
           )}
-          {inputError !== null && (
-            <span>{inputError} is not a valid character</span>
+          {nameCheckInvalidInput !== null && (
+            <WarningMessage
+              message={`${nameCheckInvalidInput} is not a valid character`}
+            />
           )}
+
           {nameCheckFunctionRun && !namesThatExist.length && (
             <span className="block">
               Success! {nameCheck} does NOT exist yet.
@@ -200,6 +219,12 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             maxLength="40"
             disabled={sessionFromServer ? "" : "disabled"}
           ></input>
+
+          {newNameInvalidInput !== null && (
+            <WarningMessage
+              message={`${newNameInvalidInput} is not a valid character`}
+            />
+          )}
 
           <span className="block">
             {`${40 - newName.length}/40 characters left`}
@@ -249,12 +274,15 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
               className={`font-bold py-2 px-4 border-b-4 mt-2 rounded mt-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-white                     hover:border-blue-500
                     disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"             `}
               disabled={
-                sessionFromServer && newName.length >= 2 ? "" : "disabled"
+                !sessionFromServer &&
+                newNameInvalidInput !== null &&
+                newName.length < 2
+                  ? ""
+                  : "disabled"
               }
               onClick={handleNameSubmission}
             >
               Add name
-              {(!sessionFromServer || newName.length < 2) && "(disabled)"}
             </button>
           )}
 
@@ -269,9 +297,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           )}
 
           {!sessionFromServer && (
-            <span className="mt-4 bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 block text-center">
-              Please sign in to submit a name{" "}
-            </span>
+            <WarningMessage message="please sign in to submit a name" />
           )}
         </form>
       </section>

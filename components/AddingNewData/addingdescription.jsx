@@ -40,7 +40,7 @@ function NewDescriptionWithTagsData({
       .then((response) => {
         setIsPending(false);
         toast.success(
-          `Successfully added description: ${newDescription}. Heres 3 treat points as thanks for your contribution ${sessionFromServer.user.name}!`
+          `Successfully added description: ${newDescription}. Heres 3 treat points as thanks for your contribution ${sessionFromServer.user.name}!`,
         );
       })
       .catch((error) => {
@@ -51,14 +51,14 @@ function NewDescriptionWithTagsData({
           toast.error(`Ruh Roh! ${newDescription} already exists`);
         } else {
           toast.error(
-            `Ruh Roh! ${newDescription} not added. An error has occurred. Status code ${error.response.status}`
+            `Ruh Roh! ${newDescription} not added. An error has occurred. Status code ${error.response.status}`,
           );
         }
       });
   }
 
   return (
-    (<div className="mx-auto mx-2 md:px-4">
+    <div className="mx-auto mx-2 md:px-4">
       <section className="my-6 text-white text-center">
         <p> Add a description with one or more tags. </p>
 
@@ -73,13 +73,19 @@ function NewDescriptionWithTagsData({
             sizes="100vw"
             style={{
               width: "100%",
-              height: "auto"
-            }} />
+              height: "auto",
+            }}
+          />
         </div>
         <p className="md:ml-6 text-center">
           This description could have tags like: senior, funny, quiet,
           well-behaved.
         </p>
+
+        <h4 className="mt-4 underline font-bold"> Submission Guidelines </h4>
+        <ul className="">
+          <li> Descriptions must be between 10-4000 characters long</li>
+        </ul>
 
         <form onSubmit={handleDescriptionSubmission}>
           {/* needs label and value for Select to work  */}
@@ -94,7 +100,8 @@ function NewDescriptionWithTagsData({
           <textarea
             type="text"
             id="nameDescription"
-            className="text-darkPurple block w-full"
+            className="text-darkPurple block w-full disabled:bg-errorBackgroundColor
+disabled:text-errorTextColor "
             placeholder="enter a description to add"
             onChange={(e) => setNewDescription(e.target.value.toLowerCase())}
             maxLength="4000"
@@ -120,7 +127,8 @@ function NewDescriptionWithTagsData({
           <textarea
             type="text"
             id="noteinput"
-            className="text-darkPurple block w-full"
+            className="text-darkPurple block w-full disabled:bg-errorBackgroundColor
+disabled:text-errorTextColor"
             maxLength="800"
             placeholder="(Optional) enter any notes to add. For example, explaining if it has any references to shows/popular culture, ect."
             onChange={(e) => setNotes(e.target.value.toLowerCase())}
@@ -137,7 +145,8 @@ function NewDescriptionWithTagsData({
           </label>
 
           <Select
-            className="text-darkPurple mb-4"
+            className="text-darkPurple mb-4 disabled:bg-errorBackgroundColor
+disabled:text-errorTextColor"
             id="descriptionTags"
             options={tagList.map((opt, index) => ({
               label: opt.tag,
@@ -145,6 +154,7 @@ function NewDescriptionWithTagsData({
             }))}
             isMulti
             isSearchable
+            disabled
             placeholder="If you type in the tags field, it will filter the tags"
             onChange={(opt) => setTags(opt.map((tag) => tag.value))}
           />
@@ -157,10 +167,13 @@ function NewDescriptionWithTagsData({
             Related Names
           </label>
           <input
-            className="text-darkPurple mb-4"
+            className="text-darkPurple mb-4 
+disabled:bg-errorBackgroundColor
+disabled:text-errorTextColor"
             id="relatedNames"
             type="text"
             value={relatedNames}
+            disabled={sessionFromServer ? "" : "disabled"}
             onChange={(e) =>
               setRelatedNames(e.target.value.toLowerCase().trim())
             }
@@ -193,13 +206,14 @@ function NewDescriptionWithTagsData({
           {!isPending && (
             <button
               className={`font-bold py-2 px-4 border-b-4 mt-2 rounded     
-
-                ${
-                  sessionFromServer
-                    ? "mt-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-white                     hover:border-blue-500"
-                    : "bg-slate-800"
-                }`}
-              disabled={sessionFromServer ? "" : "disabled"}
+                disabled:bg-errorBackgroundColor disabled:text-errorTextColor           
+                   mt-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-white                     hover:border-blue-500
+               `}
+              disabled={
+                !sessionFromServer || newDescription.length < 10
+                  ? "disabled"
+                  : ""
+              }
               onClick={handleDescriptionSubmission}
             >
               Add description {!sessionFromServer && "(disabled)"}
@@ -223,7 +237,7 @@ function NewDescriptionWithTagsData({
           )}
         </form>
       </section>
-    </div>)
+    </div>
   );
 }
 
