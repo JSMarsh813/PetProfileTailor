@@ -215,6 +215,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             id="nameInput"
             className="text-darkPurple"
             placeholder="enter a name to add"
+            value={newName}
             onChange={(e) => setNewName(e.target.value.toLowerCase())}
             maxLength="40"
             disabled={sessionFromServer ? "" : "disabled"}
@@ -274,11 +275,11 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
               className={`font-bold py-2 px-4 border-b-4 mt-2 rounded mt-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-white                     hover:border-blue-500
                     disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"             `}
               disabled={
-                !sessionFromServer &&
-                newNameInvalidInput !== null &&
+                !sessionFromServer ||
+                newNameInvalidInput !== null ||
                 newName.length < 2
-                  ? ""
-                  : "disabled"
+                  ? "disabled"
+                  : ""
               }
               onClick={handleNameSubmission}
             >
