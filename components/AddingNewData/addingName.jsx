@@ -125,7 +125,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           />
 
           <button
-            className="inline-block bg-yellow-300 text-purple-600 p-2 border-2 border-yellow-200  disabled:bg-slate-800  disabled:text-white"
+            className="inline-block bg-yellow-300 text-purple-600 p-2 border-2 border-yellow-200  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
             onClick={() => checkIfNameExists()}
             disabled={
               inputError !== null || nameCheck.length < 2 ? "disabled" : ""
@@ -247,20 +247,20 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           {!isPending && (
             <button
               className={`font-bold py-2 px-4 border-b-4 mt-2 rounded mt-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-white                     hover:border-blue-500
-                    disabled:bg-slate-800  disabled:text-white              `}
+                    disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"             `}
               disabled={
                 sessionFromServer && newName.length >= 2 ? "" : "disabled"
               }
               onClick={handleNameSubmission}
             >
-              Add name{" "}
+              Add name
               {(!sessionFromServer || newName.length < 2) && "(disabled)"}
             </button>
           )}
 
           {isPending && (
             <button
-              className="btn"
+              className="btn  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
               disabled
             >
               {" "}

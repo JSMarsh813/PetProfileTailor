@@ -19,6 +19,15 @@ module.exports = {
         mainColor: "",
         secondaryColor: "",
         darkBackground: "",
+
+        errorBackgroundColor: "rgb(30 41 59 / var(--tw-bg-opacity, 1))",
+        errorTextColor: "rgb(255 255 255 / var(--tw-bg-opacity, 1))",
+        errorBorderColor: "rgb(255 255 255 / var(--tw-bg-opacity, 1))",
+
+        buttonBackgroundColor: "",
+        buttonTextColor: "",
+        buttonBorderColor: "",
+
         //22043b
       },
       fontFamily: {},
