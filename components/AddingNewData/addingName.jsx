@@ -18,7 +18,8 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   const [namesThatExist, setNamesThatExist] = useState([]);
   const [nameCheck, setNameCheck] = useState("");
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
-  const [inputError, setInputError] = useState(false);
+  const [inputError, setInputError] = useState(null);
+  //regex will return null if none of the characters are invalid, so start with null to begin with
 
   async function checkIfNameExists() {
     let nameResponse = await fetch("/api/names/findonenamebyname/" + nameCheck);
@@ -27,13 +28,13 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
     setNameCheckFunctionRun(true);
   }
 
-  // useEffect(() => {
-  //   const textInput = document.querySelector('input[type="text"]');
-  //   textInput.addEventListener("change", (e) => {
-  //     const isValid = e.target.checkValidity();
-  //     console.log(isValid);
-  //   });
-  // }, []);
+  useEffect(() => {
+    let regexForInvalidCharacters = /[^a-z\d&'-áéíóúñü]+/;
+    let invalidCharacters = nameCheck.match(regexForInvalidCharacters);
+    //if no invalid characters, match gives us null
+    console.log(`this is ${invalidCharacters}`);
+    setInputError(invalidCharacters);
+  }, [nameCheck]);
 
   function resetData(e) {
     setNameCheck(e.target.value.toLowerCase());
@@ -101,6 +102,16 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           Batman could have the tags: comics, superheroes, batman, male, edgy
         </p>
 
+        <h4 className="mt-4 underline font-bold"> Submission Guidelines </h4>
+        <ul className="">
+          <li className="block"> Names can only be in lowercase</li>
+
+          <li>
+            <strong> Valid characters: </strong> a-z áéíóúñü 0-9 &&apos;-
+          </li>
+          <li>names must be between 2-40 characters long</li>
+        </ul>
+
         <section className="text-center mt-4">
           <h4 className="font-semibold text-lg"> Check if a name exists: </h4>
 
@@ -108,24 +119,29 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             type="text"
             className="text-darkPurple"
             value={nameCheck}
+            id="checkNameExists"
             maxLength="40"
             onChange={(e) => resetData(e)}
-            // pattern="a-z0-9áéíóúñü!~`@#$&()=?<>,:^*_|]{2,40}"
           />
 
           <button
-            className="inline-block bg-darkPurple p-2 border-2 border-yellow-200"
+            className="inline-block bg-yellow-300 text-purple-600 p-2 border-2 border-yellow-200  disabled:bg-slate-800  disabled:text-white"
             onClick={() => checkIfNameExists()}
+            disabled={
+              inputError !== null || nameCheck.length < 2 ? "disabled" : ""
+            }
           >
             <FontAwesomeIcon
               icon={faSearch}
               className="text-2xl"
-              color="yellow"
+              color={
+                inputError !== null || nameCheck.length < 2 ? "white" : "purple"
+              }
             />
 
             <span
               className="mx-2
-                                   text-yellow-200"
+                                   text-purple"
             >
               Search
             </span>
@@ -155,12 +171,17 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
               </Link>
             </p>
           )}
+          {inputError !== null && (
+            <span>{inputError} is not a valid character</span>
+          )}
           {nameCheckFunctionRun && !namesThatExist.length && (
             <span className="block">
               Success! {nameCheck} does NOT exist yet.
             </span>
           )}
         </section>
+
+        <hr className="mt-4" />
 
         <form onSubmit={handleNameSubmission}>
           {/* needs label and value for Select to work  */}
@@ -176,17 +197,13 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             className="text-darkPurple"
             placeholder="enter a name to add"
             onChange={(e) => setNewName(e.target.value.toLowerCase())}
-            // pattern="a-z0-9áéíóúñü!~`@#$&()=?<>,:^*_|]{2,40}"
             maxLength="40"
             disabled={sessionFromServer ? "" : "disabled"}
-            onClick={(e) => setNameExists(false)}
           ></input>
 
           <span className="block">
-            {`${40 - newName.length}/40 characters left`}{" "}
+            {`${40 - newName.length}/40 characters left`}
           </span>
-
-          <span className="block">Note: Names are saved in lowercase</span>
 
           {/* setDescription */}
           <label
@@ -229,17 +246,15 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
 
           {!isPending && (
             <button
-              className={`font-bold py-2 px-4 border-b-4 mt-2 rounded     
-
-                ${
-                  sessionFromServer
-                    ? "mt-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-white                     hover:border-blue-500"
-                    : "bg-slate-800"
-                }`}
-              disabled={sessionFromServer ? "" : "disabled"}
+              className={`font-bold py-2 px-4 border-b-4 mt-2 rounded mt-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-white                     hover:border-blue-500
+                    disabled:bg-slate-800  disabled:text-white              `}
+              disabled={
+                sessionFromServer && newName.length >= 2 ? "" : "disabled"
+              }
               onClick={handleNameSubmission}
             >
-              Add name {!sessionFromServer && "(disabled)"}
+              Add name{" "}
+              {(!sessionFromServer || newName.length < 2) && "(disabled)"}
             </button>
           )}
 
