@@ -31,7 +31,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   }
 
   function regexInvalidInput(stringToCheck) {
-    let regexForInvalidCharacters = /[^a-z\d&'-áéíóúñü]+/;
+    let regexForInvalidCharacters = /[^a-z\d&'-]+/;
     return stringToCheck.match(regexForInvalidCharacters);
   }
 
