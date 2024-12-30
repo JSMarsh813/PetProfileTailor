@@ -2,7 +2,7 @@
 import dbConnect from "../../../utils/db";
 const mongoose = require("mongoose");
 import Names from "../../../models/Names";
-
+import regexInvalidInput from "../../../utils/stringManipulation/check-for-valid-names";
 // eslint-disable-next-line no-unused-vars
 import tags from "../../../models/NameTag";
 //necessary or the tags won't populate
@@ -53,10 +53,18 @@ export default async function handler(req, res) {
 
     let existingNameCheck = await Names.find({ name: name });
 
+    let checkForInvalidInput = regexInvalidInput(name);
+    console.log(checkForInvalidInput);
+
     if (existingNameCheck && existingNameCheck.length != 0) {
       res.status(409).json({
-        message: "Name already exists",
+        message: `Ruh Roh! The name ${name} already exists`,
         existingName: existingNameCheck,
+      });
+      return;
+    } else if (checkForInvalidInput.length) {
+      res.status(400).json({
+        message: `Ruh Roh! The name ${name} has invalid character(s) ${checkForInvalidInput}`,
       });
       return;
     } else {

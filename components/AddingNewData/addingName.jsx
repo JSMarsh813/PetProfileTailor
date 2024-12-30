@@ -9,6 +9,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import WarningMessage from "../ReusableSmallComponents/buttons/WarningMessage";
+import regexInvalidInput from "../../utils/stringManipulation/check-for-valid-names";
 
 function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   const [newName, setNewName] = useState("");
@@ -28,11 +29,6 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
     let nameData = await nameResponse.json();
     setNamesThatExist(nameData);
     setNameCheckFunctionRun(true);
-  }
-
-  function regexInvalidInput(stringToCheck) {
-    let regexForInvalidCharacters = /[^a-z\d&'-]+/;
-    return stringToCheck.match(regexForInvalidCharacters);
   }
 
   //client side validation for "check if name already exists" section
@@ -74,11 +70,11 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
         console.log("this is error", error);
         setNameExists(true);
         setIsPending(false);
+
         if (error.response.status == 409) {
-          toast.error(
-            `Ruh Roh! The name ${newName} already exists!
-            `,
-          );
+          toast.error(`${error.response.data.message}!`);
+        } else if (error.response.status == 400) {
+          toast.error(`${error.response.data.message}`);
         } else {
           toast.error(
             `Ruh Roh! ${newName} not added. An error has occurred. Status code ${error.response.status}`,
@@ -118,7 +114,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           </li>
 
           <li>
-            <strong> Valid characters: </strong> a-z áéíóúñü 0-9 &&apos;-
+            <strong> Valid characters: </strong> a-z 0-9 &&apos;-
           </li>
           <li> must be 2-40 characters</li>
           <li>buttons will turn on when this criteria is met</li>
