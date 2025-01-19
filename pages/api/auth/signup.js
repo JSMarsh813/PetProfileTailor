@@ -11,9 +11,7 @@ async function handler(req, res) {
     !name ||
     !email ||
     !profilename ||
-    !email.includes("@") ||
-    !password ||
-    password.trim().length < 5
+    !email.includes("@")
   ) {
     res.status(422).json({
       message: "Validation error",
@@ -21,9 +19,17 @@ async function handler(req, res) {
     return;
   }
 
+  if (password.length && password.trim().length < 5) {
+    res.status(422).json({
+      message: "Invalid Password length",
+    });
+    return;
+  }
+
   await db.connect();
 
   const existingEmail = await User.findOne({ email: email });
+
   if (existingEmail) {
     res.status(422).json({ message: "Email is already used!" });
 
@@ -37,12 +43,17 @@ async function handler(req, res) {
     return;
   }
 
+  // !password?
+
   const newUser = new User({
     name,
     email,
     profilename: profilename.toLowerCase(),
     password: bcryptjs.hashSync(password),
   });
+
+
+)
 
   const user = await newUser.save();
 
