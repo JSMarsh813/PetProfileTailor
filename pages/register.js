@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   return {
@@ -59,7 +59,7 @@ export default function Register({ sessionFromServer }) {
 
   async function checkIfNameExists() {
     let nameResponse = await fetch(
-      "/api/user/getASpecificUserByProfileName/" + nameCheck
+      "/api/user/getASpecificUserByProfileName/" + nameCheck,
     );
     let nameData = await nameResponse.json();
 
@@ -106,7 +106,7 @@ export default function Register({ sessionFromServer }) {
     }
   };
   return (
-    (<div className="bg-violet-900 h-fit text-white">
+    <div className="bg-violet-900 h-fit text-white">
       <Layout
         title="Create Account"
         profileImage={profileImage}
@@ -122,8 +122,9 @@ export default function Register({ sessionFromServer }) {
           height={220}
           style={{
             maxWidth: "100%",
-            height: "auto"
-          }} />
+            height: "auto",
+          }}
+        />
       </div>
       <section className="text-center mt-2">
         <h4 className="font-semibold text-lg">
@@ -205,7 +206,7 @@ export default function Register({ sessionFromServer }) {
 
         <div className="mb-4">
           <label htmlFor="name">
-            Profile Name (this CAN&apos;t be changed later,30 characters max)
+            Profile Name (this CAN&apos;T be changed later, 30 characters max)
           </label>
           <input
             type="text"
@@ -241,6 +242,14 @@ export default function Register({ sessionFromServer }) {
             <div className="text-red-500">{errors.email.message}</div>
           )}
         </div>
+
+        {/* <p>
+       
+          We recommend users add a password. However, if you do not want to add
+          a password you will be limited to the magic links login method
+          (signing in through a link sent to your email). If you decide against
+          adding a password, you can add a password in settings later{" "}
+        </p> */}
 
         <div className="mb-4">
           <label htmlFor="password">Password</label>
@@ -286,6 +295,6 @@ export default function Register({ sessionFromServer }) {
 
         <GeneralButton text="register" />
       </form>
-    </div>)
+    </div>
   );
 }
