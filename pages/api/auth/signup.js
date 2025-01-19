@@ -46,10 +46,10 @@ async function handler(req, res) {
     name,
     email,
     profilename: profilename.toLowerCase(),
-    ...(password.length && {password: bcryptjs.hashSync(password)}),
+    ...(password.length && { password: bcryptjs.hashSync(password) }),
   });
 
-  https://www.freecodecamp.org/news/how-to-conditionally-build-an-object-in-javascript-with-es6-e2c49022c448/
+  // https://www.freecodecamp.org/news/how-to-conditionally-build-an-object-in-javascript-with-es6-e2c49022c448/
 
   const user = await newUser.save();
 
