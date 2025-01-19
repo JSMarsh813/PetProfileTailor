@@ -7,14 +7,11 @@ async function handler(req, res) {
     return;
   }
   const { name, email, password, profilename } = req.body;
-  if (
-    !name ||
-    !email ||
-    !profilename ||
-    !email.includes("@")
-  ) {
+
+  if (!name || !email || !profilename || !email.includes("@")) {
     res.status(422).json({
-      message: "Validation error",
+      message:
+        "Validation error, please check the name, email, profilename and email fields",
     });
     return;
   }
@@ -51,9 +48,6 @@ async function handler(req, res) {
     profilename: profilename.toLowerCase(),
     password: bcryptjs.hashSync(password),
   });
-
-
-)
 
   const user = await newUser.save();
 
