@@ -77,7 +77,8 @@ export default function Register({ sessionFromServer }) {
     handleSubmit,
     register,
     getValues,
-    formState: { errors },
+    formState: { errors, dirtyFields },
+    watch,
   } = useForm();
 
   const submitHandler = async ({ name, email, password, profilename }) => {
@@ -96,6 +97,7 @@ export default function Register({ sessionFromServer }) {
       });
       if (result.error) {
         toast.error(result.error);
+        console.log(JSON.stringify(result))
       } else {
         toast.success("Successfully signed up! Sending to dashboard");
 
@@ -105,6 +107,9 @@ export default function Register({ sessionFromServer }) {
       toast.error(getError(err));
     }
   };
+
+  const passwordEntered = watch("password");
+
   return (
     <div className="bg-violet-900 h-fit text-white">
       <Layout
@@ -186,9 +191,10 @@ export default function Register({ sessionFromServer }) {
 
         <div className="mb-4">
           <label htmlFor="name">
-            {" "}
-            UserName (this can be changed later, 30 characters max)
+            
+            UserName (this <strong> can </strong> be changed later, 30 characters max)
           </label>
+       
           <input
             type="text"
             className="w-full text-darkPurple"
@@ -206,7 +212,7 @@ export default function Register({ sessionFromServer }) {
 
         <div className="mb-4">
           <label htmlFor="name">
-            Profile Name (this CAN&apos;T be changed later, 30 characters max)
+            Profile Name (this <strong>CAN&apos;T</strong> be changed later, 30 characters max)
           </label>
           <input
             type="text"
@@ -242,22 +248,13 @@ export default function Register({ sessionFromServer }) {
             <div className="text-red-500">{errors.email.message}</div>
           )}
         </div>
-
-        {/* <p>
-       
-          We recommend users add a password. However, if you do not want to add
-          a password you will be limited to the magic links login method
-          (signing in through a link sent to your email). If you decide against
-          adding a password, you can add a password in settings later{" "}
-        </p> */}
-
+        
         <div className="mb-4">
           <label htmlFor="password">Password</label>
           <input
             type="password"
             {...register("password", {
-              required: "Please enter password",
-              minLength: { value: 6, message: "password is more than 5 chars" },
+              minLength: { value: 6, message: "password must be more than 5 chars" },
             })}
             className="w-full text-darkPurple"
             id="password"
@@ -267,6 +264,10 @@ export default function Register({ sessionFromServer }) {
             <div className="text-red-500 ">{errors.password.message}</div>
           )}
         </div>
+
+      
+       { passwordEntered  && (<span>"this field is required"</span>)}
+
         <div className="mb-4">
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
@@ -274,7 +275,8 @@ export default function Register({ sessionFromServer }) {
             type="password"
             id="confirmPassword"
             {...register("confirmPassword", {
-              required: "Please enter confirm password",
+              required: passwordEntered&&"this field is required",
+              //the confirm password field is required if the password field has input in it
               validate: (value) => value === getValues("password"),
               minLength: {
                 value: 6,
@@ -289,9 +291,22 @@ export default function Register({ sessionFromServer }) {
           )}
           {errors.confirmPassword &&
             errors.confirmPassword.type === "validate" && (
-              <div className="text-red-500 ">Password do not match</div>
+              <div className="text-red-500 ">Passwords do not match</div>
             )}
         </div>
+ 
+        <h3 className="mb-4"> Note for Magic Link Users </h3>
+          <p className="mb-4"> 
+          We recommend all users add a password, so you will not be locked out of your account if you lose access to your email. 
+          </p>
+
+          <p className="mb-4"> 
+          However, if you decide against adding a password you will be limited to the magic links login method (signing in through a link sent to your email). </p>
+
+          <p className="mb-4">
+          If you decide you want to add a password later, you can add a password in settings
+          </p>
+         
 
         <GeneralButton text="register" />
       </form>
