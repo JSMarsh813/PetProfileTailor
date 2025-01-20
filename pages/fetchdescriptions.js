@@ -21,7 +21,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   await dbConnect.connect();
@@ -53,7 +53,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   }
   // ##### end of section for nav menu
 
-  const [IsOpen, SetIsOpen] = useState(true);
+  const [IsOpen, SetIsOpen] = useState(false);
   const [tagFilters, setTagFiltersState] = useState([]);
   const [filteredDescriptions, setFilteredDescriptions] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -113,7 +113,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
     useSWRInfinite(
       (...args) => getKey(...args, PAGE_SIZE, sortingvalue, sortingproperty),
-      fetcher
+      fetcher,
     );
 
   const descriptions = data ? [].concat(...data) : [];
@@ -136,9 +136,9 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
     setFilteredDescriptions(
       descriptions.filter((description) =>
         currenttags.every((selectedtag) =>
-          description.tags.map(({ tag }) => tag).includes(selectedtag)
-        )
-      )
+          description.tags.map(({ tag }) => tag).includes(selectedtag),
+        ),
+      ),
     );
   }, [tagFilters, data]);
 
@@ -213,7 +213,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
               {filteredDescriptions
                 .slice(
                   page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
-                  page * itemsPerPage
+                  page * itemsPerPage,
                 )
                 .map((description) => {
                   return (

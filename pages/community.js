@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   await dbConnect.connect();
@@ -43,7 +43,7 @@ export default function Community({ sessionFromServer }) {
   }
   // ##### end of section for nav menu
 
-  const [IsOpen, SetIsOpen] = useState(true);
+  const [IsOpen, SetIsOpen] = useState(false);
   const [tagFilters, setFiltersState] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -142,7 +142,7 @@ export default function Community({ sessionFromServer }) {
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
     useSWRInfinite(
       (...args) => getKey(...args, PAGE_SIZE, sortingvalue, sortingproperty),
-      fetcher
+      fetcher,
     );
 
   const posts = data ? [].concat(...data) : [];
@@ -163,8 +163,8 @@ export default function Community({ sessionFromServer }) {
 
     setFilteredPosts(
       posts.filter((post) =>
-        currenttags.every((tag) => post.taglist.includes(tag))
-      )
+        currenttags.every((tag) => post.taglist.includes(tag)),
+      ),
     );
   }, [tagFilters, data]);
   // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
@@ -184,7 +184,7 @@ export default function Community({ sessionFromServer }) {
   }, [itemEdited]);
 
   return (
-    (<div>
+    <div>
       <Layout
         profileImage={profileImage}
         userName={userName}
@@ -209,8 +209,9 @@ export default function Community({ sessionFromServer }) {
               alt=""
               style={{
                 maxWidth: "100%",
-                height: "auto"
-              }} />
+                height: "auto",
+              }}
+            />
           </div>
           <div className="my-auto">
             <p className=" text-white text-xl mx-auto mt-2 sm:ml-4 pr-2">
@@ -276,7 +277,7 @@ export default function Community({ sessionFromServer }) {
           {filteredPosts
             .slice(
               page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
-              page * itemsPerPage
+              page * itemsPerPage,
             )
             .map((post) => {
               return (
@@ -312,6 +313,6 @@ export default function Community({ sessionFromServer }) {
           />
         </section>
       </div>
-    </div>)
+    </div>
   );
 }
