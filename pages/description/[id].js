@@ -4,7 +4,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
 import DescriptionListingAsSections from "../../components/ShowingListOfContent/DescriptionListingAsSections";
-import HeadersForDescriptions from "../../components/ShowingListOfContent/HeadersForDescriptions";
 import dbConnect from "../../utils/db";
 import Descriptions from "../../models/description";
 import DescriptionTag from "../../models/descriptiontag";
@@ -20,7 +19,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   // let descriptionResponse = await fetch(
@@ -86,8 +85,6 @@ export default function Postid({ sessionFromServer, description, tagList }) {
       />
 
       <div className="mx-2">
-        <HeadersForDescriptions />
-
         <DescriptionListingAsSections
           description={description}
           key={description._id}

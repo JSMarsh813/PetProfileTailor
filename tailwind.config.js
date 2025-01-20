@@ -17,7 +17,7 @@ module.exports = {
         darkPurple: "#140223",
         accent: "",
         mainColor: "",
-        secondaryColor: "",
+        secondaryColor: "rgb(243 232 255 / var(--tw-bg-opacity, 1))",
         darkBackground: "",
 
         errorBackgroundColor: "rgb(30 41 59 / var(--tw-bg-opacity, 1))",

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-export default function ShowTime({ postDate }) {
+export default function ShowTime({ postDate, styling }) {
   //  #########   FORMATTING DATE  #################
   const dateFormatter = new Intl.DateTimeFormat(undefined, {
     dateStyle: "medium",
@@ -16,10 +16,11 @@ export default function ShowTime({ postDate }) {
   let formattedPostDate = dateFormatter.format(Date.parse(postDate));
 
   return (
-    <span>
+    <span suppressHydrationWarning>
+      {/* suppressHydrationWarning for date difference between the us server and the browser set in spanish */}
       <FontAwesomeIcon
         icon={faClock}
-        className="mx-2"
+        className={`mx-2 ${styling}`}
       ></FontAwesomeIcon>
       {formattedPostDate}
     </span>

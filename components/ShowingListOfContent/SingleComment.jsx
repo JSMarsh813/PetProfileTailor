@@ -15,6 +15,7 @@ import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import Image from "next/image";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
+import ShowTime from "./../ReusableSmallComponents/ShowTime";
 
 function CommentListing({
   replyingtothisid,
@@ -32,11 +33,11 @@ function CommentListing({
   const [postersName, setPostersName] = useState(rootComment.createdby.name);
 
   const [postersProfileImage, setPostersProfileImage] = useState(
-    rootComment.createdby.profileimage
+    rootComment.createdby.profileimage,
   );
 
   const [postersProfileName, setProfileName] = useState(
-    rootComment.createdby.profilename
+    rootComment.createdby.profilename,
   );
 
   const [adjustedParentId, setAdjustedParentId] = useState("");
@@ -75,16 +76,6 @@ function CommentListing({
 
     //otherwise we are not one level deep/this is the first reply. So we can grab this comments id as the parentcommentid
   }, []);
-
-  //  #########   FORMATTING DATE  #################
-  const dateFormatter = new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
-
-  let formattedPostDate = dateFormatter.format(
-    Date.parse(rootComment.createdAt)
-  );
 
   function updateEditState() {
     SetShowEditPage(true);
@@ -138,13 +129,10 @@ function CommentListing({
               </span>
             </a>
 
-            <span className="mt-2 ml-2 text-xs font-normal text-gray-500">
-              <FontAwesomeIcon
-                icon={faClock}
-                className="mx-2"
-              ></FontAwesomeIcon>
-              {formattedPostDate}
-            </span>
+            <ShowTime
+              postDate={rootComment.createdAt}
+              styling="text-xs font-normal text-gray-500"
+            />
           </div>
 
           <p className=" px-2 ml-2 text-sm font-medium leading-loose text-gray-600 text-left">

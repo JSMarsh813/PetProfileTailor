@@ -1,6 +1,5 @@
 import React from "react";
 import DescriptionListingAsSections from "./DescriptionListingAsSections";
-import HeadersForCategories from "./HeadersForDescriptions";
 
 export default function DashboardChartForFavDescriptions({
   likedDescriptions,
@@ -10,8 +9,6 @@ export default function DashboardChartForFavDescriptions({
 }) {
   return (
     <div className="bg-darkPurple">
-      <HeadersForCategories />
-
       {likedDescriptions.map((description) => {
         return (
           <DescriptionListingAsSections

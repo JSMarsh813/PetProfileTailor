@@ -65,7 +65,7 @@ export default function NameListingAsSections({
 
   const handleFetchComments = async () => {
     const response = await fetch(
-      "/api/names/commentscontainingnameid/" + name._id
+      "/api/names/commentscontainingnameid/" + name._id,
     );
     const data = await response.json();
 
@@ -83,7 +83,7 @@ export default function NameListingAsSections({
     rootComments = commentsFromFetch.filter(
       (comment) =>
         comment.replyingtothisid === name._id &&
-        comment.parentcommentid === null
+        comment.parentcommentid === null,
     );
   }
 
@@ -92,27 +92,27 @@ export default function NameListingAsSections({
 
   if (commentsFromFetch) {
     replyComments = commentsFromFetch.filter(
-      (comment) => comment.parentcommentid != null
+      (comment) => comment.parentcommentid != null,
     );
   }
 
   return (
     <div className="text-base">
       <div
-        className="grid 
-            lg:grid-cols-5
-            grid-cols-2
-            sm:grid-cols-3 lg:gap-3 
-            border-b-2 border-amber-300
+        className="grid  grid-cols-1
+         space-between
+        
+            xl:grid-cols-5           
+           lg:gap-3 
+            border-b-4 border-amber-300
             bg-darkPurple
-                    text-purple-200 sm:p-2  
-                    
-                    
-                    items-center justify-items-center"
+                    text-purple-200 sm:p-2 
+                  justify-items-center"
+        //  items-center
       >
         {/* ###### LIKES SECTION #### */}
 
-        <div>
+        <div className="w-full flex justify-evenly mt-2">
           <LikesButtonAndLikesLogic
             data={name}
             HeartIconStyling="text-2xl"
@@ -129,25 +129,30 @@ export default function NameListingAsSections({
           />
         </div>
         {/* ###### NAME SECTION #### */}
-        <span className=""> {name.name} </span>
+        <span className="py-2 font-bold"> {name.name} </span>
 
         {/* ###### DESCRIPTION SECTION #### */}
-        <span className="ml-4">
+        <span className="pb-2">
           {name.description[0] == "" ? "no description" : name.description}
         </span>
 
         {/* ###### TAGS SECTION #### */}
-        <span>{name.tags.map((names) => names.tag).join(", ")}</span>
+        <span className="pb-2">
+          {name.tags.map((names) => names.tag).join(", ")}
+        </span>
 
         {/* ###### CREATEDBY SECTION #### */}
-        <section>
+        <section
+          className="w-full grid grid-cols-1
+         justify-items-center bg-violet-900  py-2"
+        >
           <a
             href={`${
               process.env.NEXT_PUBLIC_BASE_FETCH_URL
-            }/profile/${name.createdby.profilename.toLowerCase()}`}
+            }profile/${name.createdby.profilename.toLowerCase()}`}
           >
             <ProfileImage
-              divStyling="w-12 mr-2"
+              divStyling="w-12 mx-auto"
               profileImage={name.createdby.profileimage}
               layout="responsive"
               className="rounded-2xl"
@@ -160,10 +165,10 @@ export default function NameListingAsSections({
               <span> @{name.createdby.profilename}</span>
             </div>
           </a>
-
+          <span></span>
           {sessionFromServer &&
-            name.createdby._id == sessionFromServer.user._id && (
-              <div className="my-2">
+            name.createdby._id == sessionFromServer.user.id && (
+              <div className="my-2 flex w-full justify-around">
                 <EditButton
                   className="ml-2 mr-6"
                   onupdateEditState={onupdateEditState}
