@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema(
     accountstatus: {
       type: String,
       required: true,
-      default: "pending",
+      default: "active",
     },
     bioblurb: {
       type: String,
