@@ -55,6 +55,7 @@ export default async function handler(req, res) {
             likedby: 1,
             length: { $size: "$likedby" },
             alttext: 1,
+            createdAt: 1,
           },
         },
       ]);
