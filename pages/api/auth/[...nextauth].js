@@ -18,97 +18,6 @@ import { MagicLinkTemplate } from "../../../components/EmailTemplates/magic-link
 
 import { sendVerificationRequest } from "../auth/utils/send-verification-request";
 
-function html({ url, host, theme }) {
-  const escapedHost = host.replace(/\./g, "&#8203;.");
-
-  const brandColor = theme ? theme.brandColor : "#4a148c";
-  const color = {
-    background: "#fff",
-    text: "#310047",
-    mainBackground: "#fff",
-    buttonBackground: "#fff176",
-    buttonBorder: "#553c9a",
-    buttonText: "#553c9a",
-    lightBackground: "#6237A0",
-  };
-  //url will be  https://u32281321.ct.sendgrid.net/ls/click?upn=km2wS9gGLS21G4zAhFatKE-2BJ7NrexSIBldeWIGo02tbAvkxEvim4iBZUI1gau5eiWMS92SmeHcdsFXKruncbmNDiosUNK-2BFFkbfs1fGgVMPyDYWtx65QAO2fJ7Kd9GV13PEZbVFBezREnmgA7P7br3lMHiQxYtw4n1vXBAE9f0K17-2BWurYJlrgoXtyPfilpaU8WMQcZJ1GyICq-2FKSRHxF7yLUqZHuqXJYOFNZBbV0BD4NXi0kGmU-2FUO46VEwpjMtTT2GUNZ4zqjomcoF9J1LbR2Gud2zf30d85jWbBFtRmOFOMz5XVVAbFXsqhMD-2BfMdoFd7_IhdrsEjW6Q2PibUpilKNtoR7miOY5hugQQFyEeK8OHfmBv-2BAOWr01Fp2eVHzKfsvLw-2BYIh-2FruwCrxRvDcw2mfW7mnjew5BEHEP2ti-2BvBTeqpmP5Obo-2Bpc3XmQGXvTEMil1FqNby9faTX0Ruhv3nTU4TJLhP269KxcwDIkhjs0EiGXhjk-2BN9V-2FTodmGmOvE2fX-2BqV3sRX-2FD1LX2aiLO2DYV69TD0AeJewaXsB16J75J4-3D
-
-  return `
-<body style="background: ${color.background};">
-  <table width="100%" border="0" cellspacing="20" cellpadding="0"
-    style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
-    <tr>
-      <td align="center"
-        style="padding: 10px 0px; font-size: 26px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        Tap the button below to sign into <strong>${escapedHost}</strong>!
-    
-      </td>
-    </tr>
-    <tr>
-     <td  align="center" >
-    <img src="cid:unique@nodemailer.com"
-       style="display: inline-block; margin: auto"
-       alt="gif of a dog pressing a red button that turns a lightbulb green"/>
-      </td>
-</tr>
-    <tr>
-      <td align="center" style="padding: 20px 0;">
-        <table border="0" cellspacing="0" cellpadding="0">
-   
-          <tr>
-      
-
-            <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${url}"
-                target="_blank"
-              
-                style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 20px 40px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">Sign
-                in</a></td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  
-    <tr>
-    <td bgColor="#301934"; style="border:solid 20px #301934; padding-top:20px; padding-bottom:10px">
-    <div align="center"
-   style="background:#301934;border: 20px; font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #fff;">     
-      
-      <span style="padding: 20px 5px">
-      Want to change your password?
-      </span>
-
-      <p style="padding: 10px 5px; border-bottom: 10px solid #301934">
-      Click on the sign in button above. Then click on the downwards arrow next to your user profile image. Click on settings.
-      </p>
-
-      <img src="cid:instructions"
-      style="display: inline-block; margin: auto"
-      alt=""/>
-     </td>
-
-    </div>
-
-    <p align="center"
-    style="padding: 10px 0px 0px 0px; font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #fff;
-    bgColor=#000033; border-top: 2px solid #fff"
-    >
-
-    If you did not request this email you can safely ignore it.
-    </p>
-  </td>
-  </tr>
-
-  
-    
-  </table>
-</body>
-`;
-}
-
-/** Email Text body (fallback for email clients that don't render HTML, e.g. feature phones) */
-function text({ url, host }) {
-  return `Sign in to ${host}\n${url}\n\n`;
-}
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
   session: {
@@ -149,7 +58,7 @@ export const authOptions = {
 
       if (userExists && account.provider == "credentials") {
         return true;
-        // return "/magiclink" or "/dashbaord "led to "url constructor /magiclink is not a valid url" error
+        // return "/magiclink" or "/dashboard "led to "url constructor /magiclink is not a valid url" error
         // if the email exists in the User collection, email them a magic login link
 
         //if login pages const result = await signIn("credentials", {  redirect: callbackUrl:"dashboard"  &&& above is return true && auto redirect logic taken out of login page

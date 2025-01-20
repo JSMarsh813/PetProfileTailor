@@ -51,11 +51,11 @@ export default function Register({ sessionFromServer }) {
   const router = useRouter();
   const { redirect } = router.query;
 
-  // useEffect(() => {
-  //   if (session?.user) {
-  //     router.push("/");
-  //   }
-  // }, [router, session, redirect]);
+  useEffect(() => {
+    if (session?.user) {
+      router.push("/");
+    }
+  }, [router, session, redirect]);
 
   async function checkIfNameExists() {
     let nameResponse = await fetch(
@@ -77,7 +77,7 @@ export default function Register({ sessionFromServer }) {
     handleSubmit,
     register,
     getValues,
-    formState: { errors, dirtyFields },
+    formState: { errors },
     watch,
   } = useForm();
 
@@ -90,14 +90,34 @@ export default function Register({ sessionFromServer }) {
         profilename: profilename.toLowerCase(),
       });
 
+      if (password === "") {
+        const magicLinkSignUp = await signIn("email", {
+          redirect: false,
+          email,
+        });
+
+        if (magicLinkSignUp.error) {
+          toast.error(magicLinkSignUp.error);
+          console.log(JSON.stringify(magicLinkSignUp));
+        } else {
+          toast.success(
+            "Successfully signed up! A magic link has been sent to your email",
+          );
+
+          router.push("/magiclink");
+        }
+        return;
+      }
+
       const result = await signIn("credentials", {
         redirect: false,
         email,
         password,
       });
+
       if (result.error) {
         toast.error(result.error);
-        console.log(JSON.stringify(result))
+        console.log(JSON.stringify(result));
       } else {
         toast.success("Successfully signed up! Sending to dashboard");
 
@@ -191,10 +211,10 @@ export default function Register({ sessionFromServer }) {
 
         <div className="mb-4">
           <label htmlFor="name">
-            
-            UserName (this <strong> can </strong> be changed later, 30 characters max)
+            User Name (this <strong> can </strong> be changed later, 30
+            characters max)
           </label>
-       
+
           <input
             type="text"
             className="w-full text-darkPurple"
@@ -208,25 +228,33 @@ export default function Register({ sessionFromServer }) {
           {errors.name && (
             <div className="text-red-500">{errors.name.message}</div>
           )}
+          <span> Valid Characters: any </span>
         </div>
 
         <div className="mb-4">
-          <label htmlFor="name">
-            Profile Name (this <strong>CAN&apos;T</strong> be changed later, 30 characters max)
+          <label htmlFor="profilename">
+            Profile Name (this <strong>CAN&apos;T</strong> be changed later, it
+            will be unique to you, 30 characters max)
           </label>
+
           <input
             type="text"
-            className="w-full text-darkPurple"
+            className="w-full text-darkPurple lowercase"
             maxLength="30"
-            id="name"
+            id="profilename"
             autoFocus
             {...register("profilename", {
               required: "Please enter a profilename",
+              validate: (value) =>
+                value.match(/[^a-z\d&'-]+/) == null ||
+                `invalid characters entered ${value.match(/[^a-z\d&'-]+/g)}`,
             })}
           />
 
-          {errors.name && (
-            <div className="text-red-500">{errors.name.message}</div>
+          <span> Valid Characters: a-z, numbers, &, &apos; and - </span>
+
+          {errors.profilename && (
+            <div className="text-red-500">{errors.profilename.message}</div>
           )}
         </div>
 
@@ -248,39 +276,45 @@ export default function Register({ sessionFromServer }) {
             <div className="text-red-500">{errors.email.message}</div>
           )}
         </div>
-        
+
         <div className="mb-4">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">
+            Password (recommended but not required for magic link users)
+          </label>
           <input
             type="password"
             {...register("password", {
-              minLength: { value: 6, message: "password must be more than 5 chars" },
+              minLength: {
+                value: 6,
+                message: "password must be more than 5 chars",
+              },
             })}
             className="w-full text-darkPurple"
             id="password"
             autoFocus
           ></input>
+
           {errors.password && (
             <div className="text-red-500 ">{errors.password.message}</div>
           )}
         </div>
 
-      
-       { passwordEntered  && (<span>"this field is required"</span>)}
-
         <div className="mb-4">
+          <span> {console.log(passwordEntered != "")}</span>
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             className="w-full text-darkPurple"
             type="password"
             id="confirmPassword"
             {...register("confirmPassword", {
-              required: passwordEntered&&"this field is required",
-              //the confirm password field is required if the password field has input in it
-              validate: (value) => value === getValues("password"),
+              required: passwordEntered && "this field is required",
+              // if the password field has input in it (its truthy), the confirm password field is required. Because it defaults to true. And the second statement shows
+
+              validate: (value) =>
+                value === getValues("password") || "Passwords do not match",
               minLength: {
                 value: 6,
-                message: "confirm password is more than 5 chars",
+                message: "Confirm password must be more than 5 chars",
               },
             })}
           />
@@ -289,24 +323,32 @@ export default function Register({ sessionFromServer }) {
               {errors.confirmPassword.message}
             </div>
           )}
-          {errors.confirmPassword &&
-            errors.confirmPassword.type === "validate" && (
-              <div className="text-red-500 ">Passwords do not match</div>
-            )}
         </div>
- 
-        <h3 className="mb-4"> Note for Magic Link Users </h3>
-          <p className="mb-4"> 
-          We recommend all users add a password, so you will not be locked out of your account if you lose access to your email. 
-          </p>
 
-          <p className="mb-4"> 
-          However, if you decide against adding a password you will be limited to the magic links login method (signing in through a link sent to your email). </p>
+        <section className="bg-darkPurple p-2 mb-2 ">
+          <h3 className="mb-4 border-b-2 border-white pb-2 font-bold">
+            Notes for magic link users (logging in with an email link, not a
+            password)
+          </h3>
+          <p className="mb-4">
+            We <strong> recommend </strong>magic link users also add a password.
+            This way you will not be locked out of your account if you lose
+            access to your email. However, we do not require this.
+          </p>
 
           <p className="mb-4">
-          If you decide you want to add a password later, you can add a password in settings
+            To access their new account,{" "}
+            <strong>
+              magic link users will have to click the link sent to their email.
+            </strong>{" "}
+            This is done to ensure there were no typos in the email.
           </p>
-         
+
+          <p className="mb-4">
+            If you decide you want to add a password later,
+            <strong> you can add a password in settings </strong>
+          </p>
+        </section>
 
         <GeneralButton text="register" />
       </form>
