@@ -173,7 +173,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
               <Link
                 href={`${
                   process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                }/name/${namesThatExist[0].name.toLowerCase()}`}
+                }name/${namesThatExist[0].name.toLowerCase()}`}
                 legacyBehavior
               >
                 <GeneralButton

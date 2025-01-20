@@ -134,7 +134,7 @@ export default function Community({ sessionFromServer }) {
 
     return `${
       process.env.NEXT_PUBLIC_BASE_FETCH_URL
-    }/api/individualposts/swr/swr?page=${
+    }api/individualposts/swr/swr?page=${
       pageIndex + 1
     }&limit=${pagesize}&sortingvalue=${sortingvalue}&sortingproperty=${sortingproperty}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
   };
@@ -147,9 +147,6 @@ export default function Community({ sessionFromServer }) {
 
   const posts = data ? [].concat(...data) : [];
 
-  {
-    console.log(posts);
-  }
   let isAtEnd = data && data[data.length - 1]?.length < 1;
 
   useEffect(() => {

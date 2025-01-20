@@ -15,7 +15,7 @@ export default function PostersImageUsernameProfileName({
     <Link
       href={`${
         process.env.NEXT_PUBLIC_BASE_FETCH_URL
-      }/profile/${profileName.toLowerCase()}`}
+      }profile/${profileName.toLowerCase()}`}
       legacyBehavior
     >
       <div className="author flex items-center -ml-3 my-3">

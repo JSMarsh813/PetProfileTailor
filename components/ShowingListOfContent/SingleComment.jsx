@@ -60,7 +60,7 @@ function CommentListing({
 
   let linkToPost = `${
     process.env.NEXT_PUBLIC_BASE_FETCH_URL
-  }/${typeOfContentReplyingTo}/${
+  }${typeOfContentReplyingTo}/${
     typeOfContentReplyingTo == "name"
       ? rootComment.replyingtothiscontent
       : replyingtothisid
@@ -120,7 +120,7 @@ function CommentListing({
             <a
               href={`${
                 process.env.NEXT_PUBLIC_BASE_FETCH_URL
-              }/profile/${postersProfileName.toLowerCase()}`}
+              }profile/${postersProfileName.toLowerCase()}`}
             >
               <span className="text-base">{postersName}</span>
 

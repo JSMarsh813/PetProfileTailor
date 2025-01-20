@@ -105,7 +105,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
 
     return `${
       process.env.NEXT_PUBLIC_BASE_FETCH_URL
-    }/api/description/swr/swr?page=${
+    }api/description/swr/swr?page=${
       pageIndex + 1
     }&limit=${pagesize}&sortingvalue=${sortingvalue}&sortingproperty=${sortingproperty}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
   };

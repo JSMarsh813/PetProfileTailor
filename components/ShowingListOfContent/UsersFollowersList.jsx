@@ -52,7 +52,7 @@ export default function UsersFollowersList({
                         key={follower._id}
                         href={`${
                           process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                        }/profile/${follower.profilename.toLowerCase()}`}
+                        }profile/${follower.profilename.toLowerCase()}`}
                       >
                         <section
                           className="grid 
