@@ -110,10 +110,7 @@ function BatsignalPost({
       className="mx-auto sm:px-6 py-8 bg-darkPurple
              "
     >
-      <span className="bg-white">
-        {" "}
-        {`this is postDate ${JSON.stringify(post)}`}{" "}
-      </span>
+      <span className="bg-white"></span>
       {/* above is the background of posts
                 below is the start of the post squares */}
       {showEditPage && (
