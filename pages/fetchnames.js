@@ -63,7 +63,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   // ##### end of section for nav menu
 
   const [itemsPerPage, setItemsPerPage] = useState(5);
-  const [IsOpen, setIsOpen] = useState(true);
+  const [IsOpen, setIsOpen] = useState(false);
   const [tagFilters, setTagFiltersState] = useState([]);
   const [filterednames, setFilteredNames] = useState([]);
   const [page, setPage] = useState(1);
