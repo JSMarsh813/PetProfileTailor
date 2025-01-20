@@ -33,6 +33,11 @@ const UserSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    accountstatus: {
+      type: String,
+      required: true,
+      default: "pending",
+    },
     bioblurb: {
       type: String,
       default: "",
