@@ -38,7 +38,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   // let userResponse = await fetch(
@@ -52,7 +52,7 @@ export const getServerSideProps = async (context) => {
     .select("name followers name profileimage profilename bioblurb location")
     .populate(
       "followers",
-      "_id name followers name profileimage profilename bioblurb location"
+      "_id name followers name profileimage profilename bioblurb location",
     );
   //
   if (!userData.length) {
@@ -81,10 +81,12 @@ export const getServerSideProps = async (context) => {
 
     const UsersCommentData = await BatSignalComments.find({
       createdby: userId,
-    }).populate({
-      path: "createdby",
-      select: ["name", "profilename", "profileimage"],
     });
+    // commented out since i'm taking comments off the profile page
+    // .populate({
+    //   path: "createdby",
+    //   select: ["name", "profilename", "profileimage"],
+    // });
 
     //##### grabbing Tags for name edit function
 
@@ -141,7 +143,7 @@ export const getServerSideProps = async (context) => {
       .select("name followers name profileimage profilename bioblurb location")
       .populate(
         "followers",
-        "name followers name profileimage profilename bioblurb location"
+        "name followers name profileimage profilename bioblurb location",
       );
 
     return {
@@ -445,7 +447,7 @@ function ProfilePage({
           </section>
           {/* ###############  COMMENTS SECTION ############ */}
 
-          <section className="my-2">
+          {/* <section className="my-2">
             <h2
               className="w-full text-center font-semibold text-amber-300 
             text-xl
@@ -479,7 +481,7 @@ function ProfilePage({
                 </section>
               )}
             </div>
-          </section>
+          </section> */}
 
           {/* ############## DESCRIPTIONS ADDED ##############*/}
           <section className="my-2">

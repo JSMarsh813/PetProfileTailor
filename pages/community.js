@@ -147,6 +147,9 @@ export default function Community({ sessionFromServer }) {
 
   const posts = data ? [].concat(...data) : [];
 
+  {
+    console.log(posts);
+  }
   let isAtEnd = data && data[data.length - 1]?.length < 1;
 
   useEffect(() => {

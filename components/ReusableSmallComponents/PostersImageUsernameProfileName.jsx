@@ -20,7 +20,7 @@ export default function PostersImageUsernameProfileName({
     >
       <div className="author flex items-center -ml-3 my-3">
         <ProfileImage
-          divStyling="w-12 mr-2"
+          divStyling="w-12 mr-6"
           profileImage={postersProfileImage}
           layout="responsive"
           className="object-cover rounded-full mx-4 shadow"
@@ -42,7 +42,8 @@ export default function PostersImageUsernameProfileName({
           >
             @{profileName}
           </a>
-          {postDate && showtime == true && <ShowTime postDate={postDate} />}
+
+          {postDate && <ShowTime postDate={postDate} />}
         </h2>
       </div>
     </Link>

@@ -48,7 +48,7 @@ function BatsignalPost({
     rootComments = postsCommentsFromFetch.filter(
       (comment) =>
         comment.replyingtothisid === post._id &&
-        comment.parentcommentid === null
+        comment.parentcommentid === null,
     );
   }
 
@@ -68,7 +68,7 @@ function BatsignalPost({
   let replyComments = "";
   if (postsCommentsFromFetch) {
     replyComments = postsCommentsFromFetch.filter(
-      (comment) => comment.parentcommentid != null
+      (comment) => comment.parentcommentid != null,
     );
   }
   //for likes
@@ -77,7 +77,7 @@ function BatsignalPost({
 
   const handleFetchPosts = async () => {
     const response = await fetch(
-      "/api/individualbatsignalcomments/commentscontainingpostid/" + postId
+      "/api/individualbatsignalcomments/commentscontainingpostid/" + postId,
     );
     const data = await response.json();
     setPostsCommentsFromFetch(data);
@@ -110,6 +110,10 @@ function BatsignalPost({
       className="mx-auto sm:px-6 py-8 bg-darkPurple
              "
     >
+      <span className="bg-white">
+        {" "}
+        {`this is postDate ${JSON.stringify(post)}`}{" "}
+      </span>
       {/* above is the background of posts
                 below is the start of the post squares */}
       {showEditPage && (
