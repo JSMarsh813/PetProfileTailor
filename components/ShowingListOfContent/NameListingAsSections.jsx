@@ -104,7 +104,7 @@ export default function NameListingAsSections({
          space-between
         
             xl:grid-cols-6          
-           xl:gap-3 
+           
             border-b-4 border-amber-300
             bg-darkPurple
                     text-purple-200 sm:p-2 
@@ -163,15 +163,15 @@ export default function NameListingAsSections({
               height={80}
             />
 
-            <div>
-              <span> {name.createdby.name}</span>
+            <div className="xl:grid">
+              <span className="mx-auto"> {name.createdby.name}</span>
               <span> @{name.createdby.profilename}</span>
             </div>
           </a>
 
           {sessionFromServer &&
             name.createdby._id == sessionFromServer.user.id && (
-              <div className="my-2 flex w-full justify-around">
+              <div className="my-2 flex w-full justify-around ">
                 <EditButton
                   className="ml-2 mr-6"
                   onupdateEditState={onupdateEditState}
@@ -202,14 +202,16 @@ export default function NameListingAsSections({
           )}
         </section>
 
-        <FlagButtonAndLogic
-          data={name}
-          FlagIconStyling="text-3xl my-auto pt-4"
-          FlagIconTextStyling="ml-2 inline-block pb-4"
-          currentTargetedId={currentTargetedId}
-          session={sessionFromServer}
-          apiLink="/api/auth/updateFlagged"
-        />
+        <div className="w-full bg-violet-900 flex justify-center">
+          <FlagButtonAndLogic
+            data={name}
+            FlagIconStyling="text-3xl my-auto mx-auto pt-4"
+            FlagIconTextStyling="ml-2 inline-block pb-4"
+            currentTargetedId={currentTargetedId}
+            session={sessionFromServer}
+            apiLink="/api/auth/updateFlagged"
+          />
+        </div>
       </div>
 
       {shareSectionShowing && (
