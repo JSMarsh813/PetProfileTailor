@@ -123,7 +123,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   ) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
 
-    return `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/names/swr/swr?page=${
+    return `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}api/names/swr/swr?page=${
       pageIndex + 1
     }
     &limit=${pagesize}
