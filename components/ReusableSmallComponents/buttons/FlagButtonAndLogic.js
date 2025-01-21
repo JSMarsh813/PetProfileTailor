@@ -22,13 +22,13 @@ export default function FlagButtonAndLogic({
   const [dataFlagged, setDataFlagged] = useState(false);
   let flaggedColor = dataFlagged ? "red" : "#87ceeb";
   let currentTargetedId = data._id;
-  let [userId, setUserId] = useState("");
+  let userId = "";
 
   console.log(dataFlagged);
 
   useEffect(() => {
     if (session) {
-      setUserId(session.user._id);
+      userId = session.user._id;
     }
 
     data.flaggedby.includes(userId)

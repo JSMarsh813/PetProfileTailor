@@ -180,7 +180,9 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   useEffect(() => {
     mutate();
   }, [nameEdited]);
-
+  {
+    console.log(names);
+  }
   return (
     <div className="bg-violet-900">
       <Layout
