@@ -137,7 +137,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     );
 
   const names = data ? [].concat(...data) : [];
-
+  console.log(names);
   let isAtEnd = data && data[data.length - 1]?.length < 1;
 
   useEffect(() => {

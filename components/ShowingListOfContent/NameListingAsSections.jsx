@@ -103,8 +103,8 @@ export default function NameListingAsSections({
         className="grid  grid-cols-1
          space-between
         
-            xl:grid-cols-5           
-           lg:gap-3 
+            xl:grid-cols-6          
+           xl:gap-3 
             border-b-4 border-amber-300
             bg-darkPurple
                     text-purple-200 sm:p-2 
@@ -116,12 +116,13 @@ export default function NameListingAsSections({
         <div className="w-full flex justify-evenly mt-2">
           <LikesButtonAndLikesLogic
             data={name}
-            HeartIconStyling="text-2xl"
+            HeartIconStyling="text-3xl ml-2"
             HeartIconTextStyling="ml-2"
             currentTargetedId={currentTargetedId}
             session={sessionFromServer}
             apiLink="/api/auth/updateLikes"
           />
+
           <ShareButton onClickShowShares={onClickShowShares} />
 
           <SeeCommentsButton
@@ -131,16 +132,7 @@ export default function NameListingAsSections({
         </div>
         {/* ###### NAME SECTION #### */}
         <div className="py-4">
-          <span className="font-bold"> {name.name} </span>
-
-          <FlagButtonAndLogic
-            data={name}
-            FlagIconStyling="text-2xl"
-            FlagIconTextStyling="ml-2"
-            currentTargetedId={currentTargetedId}
-            session={sessionFromServer}
-            // apiLink="/api/auth/updateLikes"
-          />
+          <span className="font-bold mx-auto"> {name.name} </span>
         </div>
         {/* ###### DESCRIPTION SECTION #### */}
         <span className="pb-2">
@@ -176,7 +168,7 @@ export default function NameListingAsSections({
               <span> @{name.createdby.profilename}</span>
             </div>
           </a>
-          <span></span>
+
           {sessionFromServer &&
             name.createdby._id == sessionFromServer.user.id && (
               <div className="my-2 flex w-full justify-around">
@@ -209,6 +201,15 @@ export default function NameListingAsSections({
             />
           )}
         </section>
+
+        <FlagButtonAndLogic
+          data={name}
+          FlagIconStyling="text-3xl my-auto pt-4"
+          FlagIconTextStyling="ml-2 inline-block pb-4"
+          currentTargetedId={currentTargetedId}
+          session={sessionFromServer}
+          apiLink="/api/auth/updateFlagged"
+        />
       </div>
 
       {shareSectionShowing && (

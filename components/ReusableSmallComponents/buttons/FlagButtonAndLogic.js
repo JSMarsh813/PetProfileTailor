@@ -13,19 +13,24 @@ export default function FlagButtonAndLogic({
   FlagIconStyling,
   FlagIconTextStyling,
 }) {
-  let [flaggedCount, setflaggedCount] = useState(
+  console.log(data);
+
+  let [flaggedCount, setFlaggedCount] = useState(
     data.flaggedby == [] ? 0 : data.flaggedby.length,
   );
 
   const [dataFlagged, setDataFlagged] = useState(false);
   let flaggedColor = dataFlagged ? "red" : "#87ceeb";
   let currentTargetedId = data._id;
-  let userId = "";
+  let [userId, setUserId] = useState("");
+
+  console.log(dataFlagged);
 
   useEffect(() => {
     if (session) {
-      userId = session.user._id;
+      setUserId(session.user._id);
     }
+
     data.flaggedby.includes(userId)
       ? setDataFlagged(true)
       : setDataFlagged(false);
@@ -34,12 +39,12 @@ export default function FlagButtonAndLogic({
   const handleflagged = (e) => {
     {
       !session &&
-        toast.error("Please sign in to like", {
+        toast.error("Please sign in to flag", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
     }
 
-    const putflagged = async () => {
+    const putFlagged = async () => {
       try {
         const response = await axios.put(apiLink, {
           currentTargetedId,
@@ -47,14 +52,14 @@ export default function FlagButtonAndLogic({
         });
 
         dataFlagged == true
-          ? setflaggedCount((flaggedCount -= 1))
-          : setflaggedCount((flaggedCount += 1));
+          ? setFlaggedCount((flaggedCount -= 1))
+          : setFlaggedCount((flaggedCount += 1));
         setDataFlagged(!dataFlagged);
       } catch (err) {
         console.log("something went wrong :(", err);
       }
     };
-    putflagged();
+    putFlagged();
   };
 
   return (

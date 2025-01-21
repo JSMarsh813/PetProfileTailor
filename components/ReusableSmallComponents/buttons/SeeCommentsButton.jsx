@@ -11,7 +11,7 @@ export default function SeeCommentsButton({
     <span>
       <label className="">
         <input
-          className="flex-1 inline ml-1 sm:ml-6"
+          className="flex-1 inline ml-1"
           type="button"
           onClick={onupdateCommentShowState}
           tabIndex="0"
