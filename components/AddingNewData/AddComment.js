@@ -16,7 +16,7 @@ function AddComment({
   const [image, setImage] = useState([]);
 
   useEffect(() => {
-    setCreatedBy(sessionFromServer ? sessionFromServer.user._id : "");
+    setCreatedBy(sessionFromServer ? sessionFromServer.user.id : "");
   }, [sessionFromServer]);
 
   const commentSubmission = async (e) => {

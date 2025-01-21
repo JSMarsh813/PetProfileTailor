@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
+import FlagButtonAndLogic from "../ReusableSmallComponents/buttons/FlagButtonAndLogic";
 import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import { useRouter } from "next/router";
@@ -129,8 +130,18 @@ export default function NameListingAsSections({
           />
         </div>
         {/* ###### NAME SECTION #### */}
-        <span className="py-2 font-bold"> {name.name} </span>
+        <div className="py-4">
+          <span className="font-bold"> {name.name} </span>
 
+          <FlagButtonAndLogic
+            data={name}
+            FlagIconStyling="text-2xl"
+            FlagIconTextStyling="ml-2"
+            currentTargetedId={currentTargetedId}
+            session={sessionFromServer}
+            // apiLink="/api/auth/updateLikes"
+          />
+        </div>
         {/* ###### DESCRIPTION SECTION #### */}
         <span className="pb-2">
           {name.description[0] == "" ? "no description" : name.description}
