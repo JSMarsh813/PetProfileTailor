@@ -28,7 +28,7 @@ export default function DescriptionListingAsSections({
   //############## STATE FOR LIKES #######
 
   let [currentTargetedId, setCurrentTargetedDescriptionId] = useState(
-    description._id
+    description._id,
   );
 
   //##### STATE FOR DELETIONS ######
@@ -66,7 +66,7 @@ export default function DescriptionListingAsSections({
       </p>
 
       {/* ###### NOTES SECTION #### */}
-      <p className="max-w-12 whitespace-pre-wrap break-all">
+      <p className="whitespace-pre-wrap break-all">
         <span className="text-amber-200 font-bold">notes: </span>
         {description.notes == "" ? "no notes" : description.notes}
       </p>

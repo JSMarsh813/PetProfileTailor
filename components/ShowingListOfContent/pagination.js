@@ -45,7 +45,7 @@ export default function Pagination({
   return (
     <section className="pagination-navigation grid grid-rows-1 min-w-0  bg-violet-800 text-violet-900 font-bold pt-2 sm:border-x-4 border-darkPurple">
       {/* sorting logic*/}
-      <div className="inline my-auto pb-3 ">
+      <div className="inline  my-auto pb-3 ">
         {/* wrapping the selects in sections & inline-block keeps the per page and sort by labels from wrapping weirdly at smaller sizes */}
 
         {/* Per page */}
@@ -91,7 +91,7 @@ export default function Pagination({
       </div>
 
       {/* PAGINATION ARROWS */}
-      <div className=" flex justify-center mb-3 border-t-2 b-white pt-3">
+      <div className="flex justify-center mb-3 border-t-2 b-white pt-3">
         <button
           className="prevpage "
           aria-label="prevpage"
