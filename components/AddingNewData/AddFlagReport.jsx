@@ -4,32 +4,22 @@ import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import CheckboxWithLabelAndDescription from "../FormComponents/CheckboxWithLabelAndDescription";
 import { Checkbox, Label, Description, Field } from "@headlessui/react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { Heading } from "@react-email/components";
 
 function AddFlagReport({
   contentType,
-  contentId,
-  flaggedby,
-  replyingtothiscontent,
-  sessionFromServer,
-  apiLink,
+  flaggedByUser,
+  contentInfo,
+  flagApiLink,
+  toggleFlagForm,
+  setToggleFlagForm,
+  setFlaggedCount,
+  flaggedCount,
+  setDataFlagged,
 }) {
-  const [showFlagForm, setShowFlagForm] = useState(false);
   const [description, setDescription] = useState("");
-  const [createdby, setCreatedBy] = useState();
-  const [enabled, setEnabled] = useState(false);
+
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
-
-  const {
-    register,
-    getValues,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => console.log(data);
 
   const handleFlagCategoriesState = (e) => {
     const { value, checked } = e.target;
@@ -38,39 +28,43 @@ function AddFlagReport({
       ? setFlagCategoriesState([...flagCategoriesState, value])
       : setFlagCategoriesState(
           flagCategoriesState.filter((flagTitle) => flagTitle != value),
-          { ...register("flagCategories") },
         );
   };
 
-  useEffect(() => {
-    setCreatedBy(sessionFromServer ? sessionFromServer.user.id : "");
-  }, [sessionFromServer]);
+  console.log(`this is flaggedby info ${JSON.stringify(flaggedByUser)}`);
 
   const flagSubmission = async (e) => {
     e.preventDefault();
 
-    if (!flagCategoriesState) {
+    if (flagCategoriesState.length === 0) {
       toast.error(
         `Ruh Roh! You must click 1 or more of the checkboxes for flag type`,
       );
       return;
     }
-    if (createdby == "") {
+    if (flaggedByUser == "") {
       toast.error(`Ruh Roh! You must be signed in to flag content`);
       return;
     }
 
+    if (contentInfo.createdby._id === flaggedByUser) {
+      toast.warn(`Ruh Roh! Nice try but you can't flag your own submission :)`);
+      return;
+    }
+
     const flagSubmission = {
-      contentType: "name",
-      contentId: "",
-      flagCategories: flagCategoriesState,
+      flaggedbyuser: flaggedByUser,
+      createdbyuser: contentInfo.createdby._id,
+      contenttype: contentType,
+      contentid: contentInfo._id,
+      flagcategories: flagCategoriesState,
       comments: additionalCommentsState,
-      createdby: createdby.toString(),
-      flaggedby: "blank",
     };
+
     console.log(`this is flagSubmission ${JSON.stringify(flagSubmission)}`);
+
     await axios
-      .post(apiLink, flagSubmission)
+      .post(flagApiLink, flagSubmission)
       .then((response) => {
         toast.success(
           `Thank you for your report! Report for BLANK successfully sent`,
@@ -79,27 +73,37 @@ function AddFlagReport({
       .catch((error) => {
         console.log("this is an error", error);
 
-        toast.error(`Ruh Roh! flag not added`);
+        toast.error(
+          `Ruh Roh! an error occured ${error} ${JSON.stringify(
+            flagSubmission,
+          )}`,
+        );
       });
   };
 
+  function cancelFlagFormAndRevertFlagState() {
+    setToggleFlagForm(!toggleFlagForm);
+    setFlaggedCount((flaggedCount -= 1));
+    setDataFlagged(false);
+  }
+
   return (
-    <form
-      className="w-full bg-violet-900 rounded-lg px-4 pt-2 mb-4 pb-2"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className="w-full bg-violet-900 rounded-lg px-4 pt-2 mb-4 pb-2">
       <GeneralButton
-        text={` ${!showFlagForm ? "Add a new flag" : "Cancel"}`}
-        onClick={() => setShowFlagForm(!showFlagForm)}
-        className=""
+        text="Cancel"
+        onClick={() => cancelFlagFormAndRevertFlagState()}
       />
 
-      <div className={`-mx-3 mb-6 ${showFlagForm ? "" : "hidden"}`}>
+      <span className="text-white ml-2">
+        ← Made a goof? No worries just click cancel
+      </span>
+
+      <div className={`-mx-3 mb-6`}>
         {/* Area to Type a comment  */}
 
         <div className="w-full px-3 mb-2 text-white">
           <h2 className="text-center text-xl ">
-            Flag NAME for edits or inappropriate content
+            Flag for edits or inappropriate content
           </h2>
           <p className="text-center mt-3">
             Thank you for taking the time to help improve our community powered
@@ -191,7 +195,7 @@ function AddFlagReport({
               className="bg-violet-100 rounded border  border-gray-400 leading-normal text-black w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white mt-2"
               name="body"
               required
-              maxLength="700"
+              maxLength="500"
               placeholder="Optional"
             ></textarea>
           </Field>

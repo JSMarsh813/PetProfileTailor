@@ -13,6 +13,7 @@ import CommentListing from "../ShowingListOfContent/CommentListing";
 import AddComment from "../AddingNewData/AddComment";
 import Image from "next/image";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
+import AddFlagReport from "../AddingNewData/AddFlagReport";
 
 export default function NameListingAsSections({
   name,
@@ -39,6 +40,21 @@ export default function NameListingAsSections({
 
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
+
+  //STATE FOR FLAG COUNT AND COLOR AND FORM
+  let [flaggedCount, setFlaggedCount] = useState(
+    name.flaggedby == [] ? 0 : name.flaggedby.length,
+  );
+
+  const [dataFlagged, setDataFlagged] = useState(false);
+
+  const [toggleFlagForm, setToggleFlagForm] = useState(false);
+
+  //  Toggling Flag Form
+  function onClickToggleFlagForm() {
+    setToggleFlagForm(!toggleFlagForm);
+  }
+  //SHARING
 
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
   const localLink = `/name/${name.name}`;
@@ -210,9 +226,32 @@ export default function NameListingAsSections({
             currentTargetedId={currentTargetedId}
             session={sessionFromServer}
             apiLink="/api/auth/updateFlagged"
+            setToggleFlagForm={setToggleFlagForm}
+            toggleFlagForm={toggleFlagForm}
+            flaggedCount={flaggedCount}
+            onClickToggleFlagForm={onClickToggleFlagForm}
+            setFlaggedCount={setFlaggedCount}
+            dataFlagged={dataFlagged}
+            setDataFlagged={setDataFlagged}
           />
         </div>
       </div>
+      {/* ###### END OF LISTING #### */}
+
+      {/* ###### TOGGLES SECTION, pops up underneath listing #### */}
+      {toggleFlagForm && (
+        <AddFlagReport
+          contentType="name"
+          contentInfo={name}
+          flaggedByUser={sessionFromServer.user.id}
+          toggleFlagForm={toggleFlagForm}
+          setToggleFlagForm={setToggleFlagForm}
+          setFlaggedCount={setFlaggedCount}
+          flaggedCount={flaggedCount}
+          flagApiLink="/api/flag/flagreportsubmission/"
+          setDataFlagged={setDataFlagged}
+        />
+      )}
 
       {shareSectionShowing && (
         <section className="bg-violet-900 py-2">

@@ -12,14 +12,12 @@ export default function FlagButtonAndLogic({
   apiLink,
   FlagIconStyling,
   FlagIconTextStyling,
+  onClickToggleFlagForm,
+  flaggedCount,
+  setFlaggedCount,
+  dataFlagged,
+  setDataFlagged,
 }) {
-  console.log(data);
-
-  let [flaggedCount, setFlaggedCount] = useState(
-    data.flaggedby == [] ? 0 : data.flaggedby.length,
-  );
-
-  const [dataFlagged, setDataFlagged] = useState(false);
   let flaggedColor = dataFlagged ? "red" : "#87ceeb";
   let currentTargetedId = data._id;
   let userId = "";
@@ -36,13 +34,14 @@ export default function FlagButtonAndLogic({
       : setDataFlagged(false);
   }, [userId]);
 
-  const handleflagged = (e) => {
-    {
-      !session &&
-        toast.error("Please sign in to flag", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
+  const handleFlagged = (e) => {
+    if (!session) {
+      toast.error("Please sign in to flag", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      return;
     }
+    onClickToggleFlagForm();
 
     const putFlagged = async () => {
       try {
@@ -67,7 +66,7 @@ export default function FlagButtonAndLogic({
       <label id="flaggedbutton">
         <input
           type="button"
-          onClick={handleflagged}
+          onClick={handleFlagged}
           htmlFor="flaggedbutton"
         />
 
