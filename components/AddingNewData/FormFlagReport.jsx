@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 import CheckboxWithLabelAndDescription from "../FormComponents/CheckboxWithLabelAndDescription";
-import { Checkbox, Label, Description, Field } from "@headlessui/react";
+import { Field } from "@headlessui/react";
 
 function AddFlagReport({
   contentType,
