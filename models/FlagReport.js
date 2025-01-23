@@ -37,6 +37,11 @@ const FlagReportSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    reviewed: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true },
 );
