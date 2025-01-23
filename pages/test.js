@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "../components/NavBar/NavLayoutwithSettingsMenu";
 // import dbConnect from "../utils/db";
 import { useSession } from "next-auth/react";
-import AddFlagReport from "../components/AddingNewData/AddFlagReport";
+import FormFlagReport from "../components/AddingNewData/FormFlagReport";
 
 export default function Custom404() {
   //grab data from Session and rename data to session
@@ -26,7 +26,7 @@ export default function Custom404() {
         sessionFromServer={sessionFromServer}
       />
 
-      <AddFlagReport />
+      <FormFlagReport />
     </>
   );
 }

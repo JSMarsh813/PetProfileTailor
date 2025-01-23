@@ -2,23 +2,19 @@ const mongoose = require("mongoose");
 
 const FlagReportSchema = new mongoose.Schema(
   {
+    contenttype: {
+      type: String,
+      required: true,
+      unique: false,
+    },
     contentid: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       unique: false,
     },
-    maincontent: {
-      type: String,
-      required: true,
-      unique: false,
-    },
-    secondarycontent: {
-      type: String,
-      required: true,
-      unique: false,
-    },
-    contenttype: {
-      type: String,
+    contentcopy: {
+      type: Array,
+      default: [],
       required: true,
       unique: false,
     },
@@ -27,20 +23,20 @@ const FlagReportSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    comments: {
-      type: String,
-      required: false,
+    flaggedbyuser: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
     flagcategories: {
       type: Array,
+      required: true,
       default: [],
     },
-    flaggedbyusers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+    reportcomments: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true },
 );

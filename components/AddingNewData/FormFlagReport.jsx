@@ -9,17 +9,18 @@ function AddFlagReport({
   contentType,
   flaggedByUser,
   contentInfo,
-  flagApiLink,
-  toggleFlagForm,
-  setToggleFlagForm,
+  apiflagReportSubmission,
+  apiaddUserToFlaggedByArray,
+  flagFormIsToggled,
+  setFlagFormIsToggled,
   setFlaggedCount,
   flaggedCount,
-  setDataFlagged,
+  setFlagIconClickedByNewUser,
 }) {
   const [description, setDescription] = useState("");
-
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
+  let contentCopy = [contentInfo.name, contentInfo.description];
 
   const handleFlagCategoriesState = (e) => {
     const { value, checked } = e.target;
@@ -31,9 +32,7 @@ function AddFlagReport({
         );
   };
 
-  console.log(`this is flaggedby info ${JSON.stringify(flaggedByUser)}`);
-
-  const flagSubmission = async (e) => {
+  const handleSubmitReport = async (e) => {
     e.preventDefault();
 
     if (flagCategoriesState.length === 0) {
@@ -52,58 +51,75 @@ function AddFlagReport({
       return;
     }
 
-    const flagSubmission = {
-      flaggedbyuser: flaggedByUser,
-      createdbyuser: contentInfo.createdby._id,
+    const reportSubmission = {
       contenttype: contentType,
       contentid: contentInfo._id,
+      contentcopy: contentCopy,
+      createdbyuser: contentInfo.createdby._id,
+      flaggedbyuser: flaggedByUser,
       flagcategories: flagCategoriesState,
       comments: additionalCommentsState,
     };
 
-    console.log(`this is flagSubmission ${JSON.stringify(flagSubmission)}`);
+    const userAndNameId = {
+      contentid: contentInfo._id,
+      flaggedbyuser: flaggedByUser,
+    };
 
     await axios
-      .post(flagApiLink, flagSubmission)
+      .post(apiflagReportSubmission, reportSubmission)
       .then((response) => {
         toast.success(
-          `Thank you for your report! Report for BLANK successfully sent`,
+          `Thank you for your report! Report for ${response.data.message} successfully sent`,
         );
       })
+      .then(() => callApiToaddUserToNamesArray(userAndNameId))
+      .then(() => setFlagFormIsToggled(false))
+
       .catch((error) => {
         console.log("this is an error", error);
 
         toast.error(
           `Ruh Roh! an error occured ${error} ${JSON.stringify(
-            flagSubmission,
+            reportSubmission,
           )}`,
         );
       });
   };
 
+  function callApiToaddUserToNamesArray(userAndNameId) {
+    axios
+      .put(apiaddUserToFlaggedByArray, userAndNameId)
+      .then(toast.success(`your name has been added to the flaggedby array`));
+  }
+
   function cancelFlagFormAndRevertFlagState() {
-    setToggleFlagForm(!toggleFlagForm);
+    setFlagIconClickedByNewUser(false);
+    setFlagFormIsToggled(!flagFormIsToggled);
     setFlaggedCount((flaggedCount -= 1));
-    setDataFlagged(false);
   }
 
   return (
-    <form className="w-full bg-violet-900 rounded-lg px-4 pt-2 mb-4 pb-2">
-      <GeneralButton
-        text="Cancel"
-        onClick={() => cancelFlagFormAndRevertFlagState()}
-      />
+    <form className="w-full bg-violet-900 rounded-lg   mb-4 pb-2">
+      <div className="flex items-center justify-center py-6 bg-darkPurple pl-3">
+        <span className="text-white mr-2">
+          Woof? Did you mean to alert about this content? If not, no worries
+          just click cancel
+        </span>
 
-      <span className="text-white ml-2">
-        ← Made a goof? No worries just click cancel
-      </span>
+        <GeneralButton
+          text="Cancel"
+          className=""
+          onClick={() => cancelFlagFormAndRevertFlagState()}
+        />
+      </div>
 
       <div className={`-mx-3 mb-6`}>
         {/* Area to Type a comment  */}
 
-        <div className="w-full px-3 mb-2 text-white">
+        <div className="w-full px-3 mb-2 text-white px-4 pt-2">
           <h2 className="text-center text-xl ">
-            Flag for edits or inappropriate content
+            Report for Suggestions or Flagging Content
           </h2>
           <p className="text-center mt-3">
             Thank you for taking the time to help improve our community powered
@@ -208,7 +224,7 @@ function AddFlagReport({
               type="submit"
               className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
               value="Submit Report"
-              onClick={flagSubmission}
+              onClick={handleSubmitReport}
             ></input>
           </Field>
         </div>

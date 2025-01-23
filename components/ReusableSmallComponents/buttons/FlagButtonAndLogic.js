@@ -7,32 +7,27 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function FlagButtonAndLogic({
-  data,
   session,
-  apiLink,
+  userHasAlreadyReportedThis,
+  userIsTheCreator,
   FlagIconStyling,
   FlagIconTextStyling,
-  onClickToggleFlagForm,
+  setFlagFormIsToggled,
+  flagFormIsToggled,
   flaggedCount,
   setFlaggedCount,
-  dataFlagged,
-  setDataFlagged,
+  flagIconClickedByNewUser,
+  setFlagIconClickedByNewUser,
 }) {
-  let flaggedColor = dataFlagged ? "red" : "#87ceeb";
-  let currentTargetedId = data._id;
-  let userId = "";
+  let flaggedColor =
+    userHasAlreadyReportedThis || flagIconClickedByNewUser ? "red" : "#87ceeb";
 
-  console.log(dataFlagged);
-
-  useEffect(() => {
-    if (session) {
-      userId = session.user._id;
-    }
-
-    data.flaggedby.includes(userId)
-      ? setDataFlagged(true)
-      : setDataFlagged(false);
-  }, [userId]);
+  const toggleFlagColorAndNumber = () => {
+    flagIconClickedByNewUser == true
+      ? setFlaggedCount((flaggedCount -= 1))
+      : setFlaggedCount((flaggedCount += 1));
+    setFlagIconClickedByNewUser(!flagIconClickedByNewUser);
+  };
 
   const handleFlagged = (e) => {
     if (!session) {
@@ -41,24 +36,13 @@ export default function FlagButtonAndLogic({
       });
       return;
     }
-    onClickToggleFlagForm();
+    setFlagFormIsToggled(!flagFormIsToggled);
 
-    const putFlagged = async () => {
-      try {
-        const response = await axios.put(apiLink, {
-          currentTargetedId,
-          session,
-        });
-
-        dataFlagged == true
-          ? setFlaggedCount((flaggedCount -= 1))
-          : setFlaggedCount((flaggedCount += 1));
-        setDataFlagged(!dataFlagged);
-      } catch (err) {
-        console.log("something went wrong :(", err);
-      }
-    };
-    putFlagged();
+    if (userHasAlreadyReportedThis || userIsTheCreator) {
+      return;
+    } else {
+      toggleFlagColorAndNumber();
+    }
   };
 
   return (

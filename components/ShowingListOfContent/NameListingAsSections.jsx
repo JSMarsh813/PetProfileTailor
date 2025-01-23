@@ -3,7 +3,6 @@ import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesBu
 import FlagButtonAndLogic from "../ReusableSmallComponents/buttons/FlagButtonAndLogic";
 import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
-import { useRouter } from "next/router";
 import DeleteItemNotification from "../DeletingData/DeleteItemNotification";
 import EditName from "../EditingData/EditName";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
@@ -11,9 +10,9 @@ import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
 import CommentListing from "../ShowingListOfContent/CommentListing";
 import AddComment from "../AddingNewData/AddComment";
-import Image from "next/image";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
-import AddFlagReport from "../AddingNewData/AddFlagReport";
+import FormFlagReport from "../AddingNewData/FormFlagReport";
+import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 
 export default function NameListingAsSections({
   name,
@@ -21,7 +20,8 @@ export default function NameListingAsSections({
   tagList,
   setNameEditedFunction,
 }) {
-  const router = useRouter();
+  let userIsTheCreator = name.createdby._id === sessionFromServer.user.id;
+
   //############## STATE FOR LIKES #######
 
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
@@ -42,18 +42,23 @@ export default function NameListingAsSections({
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
   //STATE FOR FLAG COUNT AND COLOR AND FORM
-  let [flaggedCount, setFlaggedCount] = useState(
-    name.flaggedby == [] ? 0 : name.flaggedby.length,
+
+  const [flaggedCount, setFlaggedCount] = useState(name.flaggedby.length);
+
+  const [userHasAlreadyReportedThis, setUserHasAlreadyReportedThis] = useState(
+    name.flaggedby.includes(sessionFromServer.user.id),
   );
 
-  const [dataFlagged, setDataFlagged] = useState(false);
+  //flagIconClickedByNewUser:
+  // the only user that can toggle the report flag because they are
+  // 1. not the content's creator
+  // 2. haven't successfully submitted a report
+  const [flagIconClickedByNewUser, setFlagIconClickedByNewUser] = useState(
+    userHasAlreadyReportedThis,
+  );
 
-  const [toggleFlagForm, setToggleFlagForm] = useState(false);
+  const [flagFormIsToggled, setFlagFormIsToggled] = useState(false);
 
-  //  Toggling Flag Form
-  function onClickToggleFlagForm() {
-    setToggleFlagForm(!toggleFlagForm);
-  }
   //SHARING
 
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
@@ -225,33 +230,55 @@ export default function NameListingAsSections({
             FlagIconTextStyling="ml-2 inline-block pb-4"
             currentTargetedId={currentTargetedId}
             session={sessionFromServer}
-            apiLink="/api/auth/updateFlagged"
-            setToggleFlagForm={setToggleFlagForm}
-            toggleFlagForm={toggleFlagForm}
+            flagFormIsToggled={flagFormIsToggled}
+            setFlagFormIsToggled={setFlagFormIsToggled}
             flaggedCount={flaggedCount}
-            onClickToggleFlagForm={onClickToggleFlagForm}
             setFlaggedCount={setFlaggedCount}
-            dataFlagged={dataFlagged}
-            setDataFlagged={setDataFlagged}
+            flagIconClickedByNewUser={flagIconClickedByNewUser}
+            setFlagIconClickedByNewUser={setFlagIconClickedByNewUser}
+            userHasAlreadyReportedThis={userHasAlreadyReportedThis}
+            userIsTheCreator={userIsTheCreator}
           />
         </div>
       </div>
       {/* ###### END OF LISTING #### */}
 
       {/* ###### TOGGLES SECTION, pops up underneath listing #### */}
-      {toggleFlagForm && (
-        <AddFlagReport
-          contentType="name"
-          contentInfo={name}
-          flaggedByUser={sessionFromServer.user.id}
-          toggleFlagForm={toggleFlagForm}
-          setToggleFlagForm={setToggleFlagForm}
-          setFlaggedCount={setFlaggedCount}
-          flaggedCount={flaggedCount}
-          flagApiLink="/api/flag/flagreportsubmission/"
-          setDataFlagged={setDataFlagged}
+
+      {flagFormIsToggled && userIsTheCreator && (
+        <ToggeableAlert
+          text="You cannot flag your own content 😜"
+          setToggleState={setFlagFormIsToggled}
+          toggleState={flagFormIsToggled}
         />
       )}
+
+      {flagFormIsToggled && userHasAlreadyReportedThis && (
+        <ToggeableAlert
+          text="We are in the process of reviewing your report. This content cannot be
+          flagged again until the prior report is reviewed"
+          setToggleState={setFlagFormIsToggled}
+          toggleState={flagFormIsToggled}
+        />
+      )}
+
+      {!userIsTheCreator &&
+        !userHasAlreadyReportedThis &&
+        flagFormIsToggled && (
+          <FormFlagReport
+            contentType="name"
+            contentInfo={name}
+            flaggedByUser={sessionFromServer.user.id}
+            setFlagFormIsToggled={setFlagFormIsToggled}
+            flagFormIsToggled={flagFormIsToggled}
+            setFlaggedCount={setFlaggedCount}
+            flaggedCount={flaggedCount}
+            apiflagReportSubmission="/api/flag/flagreportsubmission/"
+            setFlagIconClickedByNewUser={setFlagIconClickedByNewUser}
+            apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
+            setUserHasAlreadyReportedThis={setUserHasAlreadyReportedThis}
+          />
+        )}
 
       {shareSectionShowing && (
         <section className="bg-violet-900 py-2">
@@ -274,9 +301,6 @@ export default function NameListingAsSections({
           {/* ######### showing comments #########*/}
 
           {rootComments.map((comment) => {
-            {
-              console.log(comment);
-            }
             return (
               <CommentListing
                 typeOfContentReplyingTo="name"
