@@ -46,10 +46,12 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   // #### Info for nav menu
   let userName = "";
   let profileImage = "";
+  let signedInUsersId = "";
 
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
+    signedInUsersId = sessionFromServer.user._id;
   }
   // ##### end of section for nav menu
 
@@ -220,7 +222,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
                     <DescriptionListingAsSections
                       description={description}
                       key={description._id}
-                      sessionFromServer={sessionFromServer}
+                      signedInUsersId={signedInUsersId}
                       tagList={tagList}
                       setItemEditedFunction={setItemEditedFunction}
                     />

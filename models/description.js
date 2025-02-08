@@ -34,11 +34,18 @@ const DescriptionSchema = new mongoose.Schema(
         ref: "descriptiontag",
       },
     ],
+    flaggedby: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      },
+    ],
     relatednames: {
       type: Array,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Description =

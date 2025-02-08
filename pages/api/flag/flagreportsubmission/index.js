@@ -34,7 +34,10 @@ export default async function handler(req, res) {
         message: `Report for ${contentcopy[0]} successfully submitted, thank you!`,
       });
     } catch (err) {
-      res.status(500).json(err);
+      console.log(err);
+      res.status(500).send({
+        message: `Report for ${contentcopy[0]} not submitted ${err} !`,
+      });
     }
   }
 

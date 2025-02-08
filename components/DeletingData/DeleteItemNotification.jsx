@@ -6,15 +6,15 @@ import { toast, ToastContainer } from "react-toastify";
 export default function DeleteNameNotification({
   setShowDeleteConfirmation,
   itemId,
-  sessionFromServer,
+  signedInUsersId,
   itemCreatedBy,
   deletionApiPath,
   setEditedFunction,
 }) {
   const handleItemDelete = async () => {
-    if (sessionFromServer.user._id != itemCreatedBy) {
+    if (signedInUsersId != itemCreatedBy) {
       toast.error(
-        "validation error, session id does not match items's creator's id"
+        "validation error, signedInUsersId does not match items's creator's id",
       );
       return;
     } else {

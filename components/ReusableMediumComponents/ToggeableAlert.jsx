@@ -3,12 +3,12 @@ import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 
 export default function ToggeableAlert({ text, setToggleState, toggleState }) {
   return (
-    <div className="flex text-white pl-2 border-x-2 border-b-2 border-white bg-violet-800 justify-center">
+    <div className="p-4 bg-red-700 text-white text-center">
       <p className="self-center">{text}</p>
 
       <GeneralButton
         text="Close"
-        className="mx-4"
+        className="mx-auto"
         onClick={() => setToggleState(!toggleState)}
       />
     </div>

@@ -9,6 +9,7 @@ function AddFlagReport({
   contentType,
   flaggedByUser,
   contentInfo,
+  copyOfContentForReport,
   apiflagReportSubmission,
   apiaddUserToFlaggedByArray,
   flagFormIsToggled,
@@ -16,11 +17,11 @@ function AddFlagReport({
   setFlaggedCount,
   flaggedCount,
   setFlagIconClickedByNewUser,
+  setUserHasAlreadyReportedThis,
 }) {
   const [description, setDescription] = useState("");
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
-  let contentCopy = [contentInfo.name, contentInfo.description];
 
   const handleFlagCategoriesState = (e) => {
     const { value, checked } = e.target;
@@ -54,12 +55,13 @@ function AddFlagReport({
     const reportSubmission = {
       contenttype: contentType,
       contentid: contentInfo._id,
-      contentcopy: contentCopy,
+      contentcopy: copyOfContentForReport,
       createdbyuser: contentInfo.createdby._id,
       flaggedbyuser: flaggedByUser,
       flagcategories: flagCategoriesState,
       comments: additionalCommentsState,
     };
+    console.log(reportSubmission);
 
     const userAndNameId = {
       contentid: contentInfo._id,
@@ -75,13 +77,14 @@ function AddFlagReport({
       })
       .then(() => callApiToaddUserToNamesArray(userAndNameId))
       .then(() => setFlagFormIsToggled(false))
+      .then(() => setUserHasAlreadyReportedThis(true))
 
       .catch((error) => {
         console.log("this is an error", error);
 
         toast.error(
-          `Ruh Roh! an error occured ${error} ${JSON.stringify(
-            reportSubmission,
+          `Ruh Roh! ${error.message} ${JSON.stringify(
+            error.response.data.message,
           )}`,
         );
       });
@@ -100,16 +103,18 @@ function AddFlagReport({
   }
 
   return (
-    <form className="w-full bg-violet-900 rounded-lg   mb-4 pb-2">
-      <div className="flex items-center justify-center py-6 bg-darkPurple pl-3">
-        <span className="text-white mr-2">
-          Woof? Did you mean to alert about this content? If not, no worries
-          just click cancel
-        </span>
+    <form className=" mx-auto bg-violet-900 rounded-lg w-[94vw]">
+      <div className="flex items-center justify-center py-6   bg-darkPurple">
+        <p className="text-white text-center ml-2">
+          <span> Woof?! </span>
+          <br />
+          Did you mean to give us an alert about this content? <br /> If not, no
+          worries just click cancel
+        </p>
 
         <GeneralButton
           text="Cancel"
-          className=""
+          className="mx-2"
           onClick={() => cancelFlagFormAndRevertFlagState()}
         />
       </div>
@@ -117,7 +122,7 @@ function AddFlagReport({
       <div className={`-mx-3 mb-6`}>
         {/* Area to Type a comment  */}
 
-        <div className="w-full px-3 mb-2 text-white px-4 pt-2">
+        <div className=" mb-2 text-white px-4 pt-2">
           <h2 className="text-center text-xl ">
             Report for Suggestions or Flagging Content
           </h2>

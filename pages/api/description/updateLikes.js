@@ -7,7 +7,7 @@ async function handler(req, res) {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const user = req.body.session.user._id;
+  const user = req.body.signedInUsersId;
 
   const descriptionId = req.body.currentTargetedId;
 
@@ -23,10 +23,10 @@ async function handler(req, res) {
 
   toUpdateDescription.likedby.includes(user._id)
     ? (toUpdateDescription.likedby = toUpdateDescription.likedby.filter(
-        (userinlikedby) => userinlikedby != user._id
+        (userinlikedby) => userinlikedby != user._id,
       ))
     : (toUpdateDescription.likedby = toUpdateDescription.likedby.concat(
-        user._id
+        user._id,
       ));
 
   await toUpdateDescription.save();

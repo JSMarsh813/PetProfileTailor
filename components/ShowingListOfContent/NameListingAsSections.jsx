@@ -13,16 +13,15 @@ import AddComment from "../AddingNewData/AddComment";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import FormFlagReport from "../AddingNewData/FormFlagReport";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
+import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 
 export default function NameListingAsSections({
   name,
-  sessionFromServer,
+  signedInUsersId,
   tagList,
   setNameEditedFunction,
 }) {
-  let userIsTheCreator = name.createdby._id === sessionFromServer.user.id;
-
-  //############## STATE FOR LIKES #######
+  let userIsTheCreator = name.createdby._id === signedInUsersId;
 
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
 
@@ -40,24 +39,6 @@ export default function NameListingAsSections({
 
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
-
-  //STATE FOR FLAG COUNT AND COLOR AND FORM
-
-  const [flaggedCount, setFlaggedCount] = useState(name.flaggedby.length);
-
-  const [userHasAlreadyReportedThis, setUserHasAlreadyReportedThis] = useState(
-    name.flaggedby.includes(sessionFromServer.user.id),
-  );
-
-  //flagIconClickedByNewUser:
-  // the only user that can toggle the report flag because they are
-  // 1. not the content's creator
-  // 2. haven't successfully submitted a report
-  const [flagIconClickedByNewUser, setFlagIconClickedByNewUser] = useState(
-    userHasAlreadyReportedThis,
-  );
-
-  const [flagFormIsToggled, setFlagFormIsToggled] = useState(false);
 
   //SHARING
 
@@ -140,7 +121,7 @@ export default function NameListingAsSections({
             HeartIconStyling="text-3xl ml-2"
             HeartIconTextStyling="ml-2"
             currentTargetedId={currentTargetedId}
-            session={sessionFromServer}
+            signedInUsersId={signedInUsersId}
             apiLink="/api/auth/updateLikes"
           />
 
@@ -190,21 +171,20 @@ export default function NameListingAsSections({
             </div>
           </a>
 
-          {sessionFromServer &&
-            name.createdby._id == sessionFromServer.user.id && (
-              <div className="my-2 flex w-full justify-around ">
-                <EditButton
-                  className="ml-2 mr-6"
-                  onupdateEditState={onupdateEditState}
-                />
-                <DeleteButton onupdateDeleteState={updateDeleteState} />
-              </div>
-            )}
+          {signedInUsersId && name.createdby._id == signedInUsersId && (
+            <div className="my-2 flex w-full justify-around ">
+              <EditButton
+                className="ml-2 mr-6"
+                onupdateEditState={onupdateEditState}
+              />
+              <DeleteButton onupdateDeleteState={updateDeleteState} />
+            </div>
+          )}
 
           {showDeleteConfirmation && (
             <DeleteItemNotification
               setShowDeleteConfirmation={setShowDeleteConfirmation}
-              sessionFromServer={sessionFromServer}
+              signedInUsersId={signedInUsersId}
               setEditedFunction={setNameEditedFunction}
               itemId={name._id}
               itemCreatedBy={name.createdby._id}
@@ -216,69 +196,26 @@ export default function NameListingAsSections({
             <EditName
               SetShowEditPage={setShowEditPage}
               name={name}
-              sessionFromServer={sessionFromServer}
+              signedInUsersId={signedInUsersId}
               tagList={tagList}
               setEditedFunction={setNameEditedFunction}
             />
           )}
         </section>
 
-        <div className="w-full bg-violet-900 flex justify-center">
-          <FlagButtonAndLogic
-            data={name}
-            FlagIconStyling="text-3xl my-auto mx-auto pt-4"
-            FlagIconTextStyling="ml-2 inline-block pb-4"
-            currentTargetedId={currentTargetedId}
-            session={sessionFromServer}
-            flagFormIsToggled={flagFormIsToggled}
-            setFlagFormIsToggled={setFlagFormIsToggled}
-            flaggedCount={flaggedCount}
-            setFlaggedCount={setFlaggedCount}
-            flagIconClickedByNewUser={flagIconClickedByNewUser}
-            setFlagIconClickedByNewUser={setFlagIconClickedByNewUser}
-            userHasAlreadyReportedThis={userHasAlreadyReportedThis}
-            userIsTheCreator={userIsTheCreator}
-          />
-        </div>
+        <FlaggingContentSection
+          userIsTheCreator={userIsTheCreator}
+          signedInUsersId={signedInUsersId}
+          currentTargetedId={currentTargetedId}
+          contentType="name"
+          content={name}
+          apiflagReportSubmission="/api/flag/flagreportsubmission/"
+          apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
+        />
       </div>
       {/* ###### END OF LISTING #### */}
 
       {/* ###### TOGGLES SECTION, pops up underneath listing #### */}
-
-      {flagFormIsToggled && userIsTheCreator && (
-        <ToggeableAlert
-          text="You cannot flag your own content 😜"
-          setToggleState={setFlagFormIsToggled}
-          toggleState={flagFormIsToggled}
-        />
-      )}
-
-      {flagFormIsToggled && userHasAlreadyReportedThis && (
-        <ToggeableAlert
-          text="We are in the process of reviewing your report. This content cannot be
-          flagged again until the prior report is reviewed"
-          setToggleState={setFlagFormIsToggled}
-          toggleState={flagFormIsToggled}
-        />
-      )}
-
-      {!userIsTheCreator &&
-        !userHasAlreadyReportedThis &&
-        flagFormIsToggled && (
-          <FormFlagReport
-            contentType="name"
-            contentInfo={name}
-            flaggedByUser={sessionFromServer.user.id}
-            setFlagFormIsToggled={setFlagFormIsToggled}
-            flagFormIsToggled={flagFormIsToggled}
-            setFlaggedCount={setFlaggedCount}
-            flaggedCount={flaggedCount}
-            apiflagReportSubmission="/api/flag/flagreportsubmission/"
-            setFlagIconClickedByNewUser={setFlagIconClickedByNewUser}
-            apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
-            setUserHasAlreadyReportedThis={setUserHasAlreadyReportedThis}
-          />
-        )}
 
       {shareSectionShowing && (
         <section className="bg-violet-900 py-2">
@@ -295,7 +232,7 @@ export default function NameListingAsSections({
             apiLink="/api/namecomments/"
             replyingtothisid={name._id}
             hasParent={null}
-            sessionFromServer={sessionFromServer}
+            signedInUsersId={signedInUsersId}
             replyingtothiscontent={name.name}
           />
           {/* ######### showing comments #########*/}
@@ -308,7 +245,7 @@ export default function NameListingAsSections({
                 rootComment={comment}
                 replies={replyComments}
                 replyingtothisid={comment.replyingtothisid}
-                sessionFromServer={sessionFromServer}
+                signedInUsersId={signedInUsersId}
                 apiLink="/api/namecomments/"
                 likesApiLink="/api/namecomments/updatenamecommentlikes"
                 replyingtothiscontent={name.name}

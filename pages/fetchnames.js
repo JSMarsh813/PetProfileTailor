@@ -55,10 +55,12 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
   let userName = "";
   let profileImage = "";
+  let signedInUsersId = "";
 
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
+    signedInUsersId = sessionFromServer.user._id;
   }
   // ##### end of section for nav menu
 
@@ -248,7 +250,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                     <NameListingAsSections
                       name={name}
                       key={name._id}
-                      sessionFromServer={sessionFromServer}
+                      signedInUsersId={signedInUsersId}
                       tagList={tagList}
                       setNameEditedFunction={setNameEditedFunction}
                     />

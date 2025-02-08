@@ -8,13 +8,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function LikesButtonAndLikesLogic({
   data,
-  session,
+  signedInUsersId,
   apiLink,
   HeartIconStyling,
   HeartIconTextStyling,
 }) {
   let [likesCount, setLikesCount] = useState(
-    data.likedby == [] ? 0 : data.likedby.length
+    data.likedby == [] ? 0 : data.likedby.length,
   );
 
   const [dataLiked, setdataLiked] = useState(false);
@@ -23,15 +23,15 @@ export default function LikesButtonAndLikesLogic({
   let userId = "";
 
   useEffect(() => {
-    if (session) {
-      userId = session.user._id;
+    if (signedInUsersId) {
+      userId = signedInUsersId;
     }
     data.likedby.includes(userId) ? setdataLiked(true) : setdataLiked(false);
   }, [userId]);
 
   const handlelikes = (e) => {
     {
-      !session &&
+      !signedInUsersId &&
         toast.error("Please sign in to like", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
@@ -41,7 +41,7 @@ export default function LikesButtonAndLikesLogic({
       try {
         const response = await axios.put(apiLink, {
           currentTargetedId,
-          session,
+          signedInUsersId,
         });
 
         dataLiked == true

@@ -1,4 +1,4 @@
-import Names from "../../../models/Names";
+import Descriptions from "../../../models/description";
 import db from "../../../utils/db";
 
 async function handler(req, res) {
@@ -6,19 +6,19 @@ async function handler(req, res) {
     return res.status(405).send({ message: `${req.method} not supported` });
   }
 
-  const nameId = req.body.contentid;
+  const descriptionId = req.body.contentid;
 
   const flaggedByUser = req.body.flaggedbyuser;
 
   await db.connect();
-  const nameContent = await Names.findById(nameId);
+  const descriptionContent = await Descriptions.findById(descriptionId);
 
-  nameContent.flaggedby.push(flaggedByUser);
+  descriptionContent.flaggedby.push(flaggedByUser);
 
-  await nameContent.save();
+  await descriptionContent.save();
 
   res.send({
-    message: "Flag for name updated",
+    message: "Flag for description updated",
   });
 }
 

@@ -7,7 +7,7 @@ import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 export default function EditName({
   SetShowEditPage,
   name,
-  sessionFromServer,
+  signedInUsersId,
   setToastMessage,
   tagList,
   setEditedFunction,
@@ -15,7 +15,7 @@ export default function EditName({
   const [description, setDescription] = useState(name.description);
   const [newName, setName] = useState(name.name);
   const [tags, setTags] = useState(
-    name.tags.map((tag) => ({ label: tag.tag, value: tag._id }))
+    name.tags.map((tag) => ({ label: tag.tag, value: tag._id })),
   );
 
   const nameSubmission = async () => {
@@ -133,7 +133,7 @@ export default function EditName({
                         opt.map((tag) => ({
                           label: tag.label,
                           value: tag.value,
-                        }))
+                        })),
                       )
                     }
                   />

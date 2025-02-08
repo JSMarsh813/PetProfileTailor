@@ -24,6 +24,7 @@ const NameSchema = new mongoose.Schema({
   flaggedby: [
     {
       type: mongoose.Schema.Types.ObjectId,
+      required: true,
       ref: "User",
     },
   ],

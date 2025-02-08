@@ -7,14 +7,14 @@ async function handler(req, res) {
   }
 
   const nameId = req.body.currentTargetedId;
-  const user = req.body.session.user._id;
+  const user = req.body.signedInUsersId;
 
   await db.connect();
   const toUpdateName = await Names.findById(nameId);
 
   toUpdateName.likedby.includes(user)
     ? (toUpdateName.likedby = toUpdateName.likedby.filter(
-        (userinlikedby) => userinlikedby != user
+        (userinlikedby) => userinlikedby != user,
       ))
     : (toUpdateName.likedby = toUpdateName.likedby.concat(user));
 

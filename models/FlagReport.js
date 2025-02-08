@@ -13,8 +13,8 @@ const FlagReportSchema = new mongoose.Schema(
       unique: false,
     },
     contentcopy: {
-      type: Array,
-      default: [],
+      type: Object,
+      default: {},
       required: true,
       unique: false,
     },

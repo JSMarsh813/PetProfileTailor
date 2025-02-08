@@ -5,9 +5,11 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GeneralButton from "./GeneralButton";
+import ToggeableAlert from "../../ReusableMediumComponents/ToggeableAlert";
 
 export default function FlagButtonAndLogic({
-  session,
+  signedInUsersId,
   userHasAlreadyReportedThis,
   userIsTheCreator,
   FlagIconStyling,
@@ -30,7 +32,7 @@ export default function FlagButtonAndLogic({
   };
 
   const handleFlagged = (e) => {
-    if (!session) {
+    if (!signedInUsersId) {
       toast.error("Please sign in to flag", {
         position: toast.POSITION.BOTTOM_CENTER,
       });
@@ -46,22 +48,41 @@ export default function FlagButtonAndLogic({
   };
 
   return (
-    <span>
-      <label id="flaggedbutton">
-        <input
-          type="button"
-          onClick={handleFlagged}
-          htmlFor="flaggedbutton"
-        />
+    <>
+      <div className="block text-center">
+        <label id="flaggedbutton">
+          <input
+            type="button"
+            onClick={handleFlagged}
+            htmlFor="flaggedbutton"
+          />
 
-        <FontAwesomeIcon
-          icon={faFlag}
-          className={`${FlagIconStyling}`}
-          color={flaggedColor}
-        />
+          <FontAwesomeIcon
+            icon={faFlag}
+            className={`${FlagIconStyling}`}
+            color={flaggedColor}
+          />
 
-        <span className={`${FlagIconTextStyling}`}>{flaggedCount}</span>
-      </label>
-    </span>
+          <span className={`${FlagIconTextStyling}`}>{flaggedCount}</span>
+        </label>
+      </div>
+
+      {flagFormIsToggled && userIsTheCreator && (
+        <ToggeableAlert
+          text="You cannot flag your own content 😜"
+          setToggleState={setFlagFormIsToggled}
+          toggleState={flagFormIsToggled}
+        />
+      )}
+
+      {flagFormIsToggled && userHasAlreadyReportedThis && (
+        <ToggeableAlert
+          text="We are in the process of reviewing your report. This content cannot be
+                flagged again until the prior report is reviewed"
+          setToggleState={setFlagFormIsToggled}
+          toggleState={flagFormIsToggled}
+        />
+      )}
+    </>
   );
 }

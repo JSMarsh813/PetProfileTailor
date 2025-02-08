@@ -7,16 +7,20 @@ import DeleteItemNotification from "../DeletingData/DeleteItemNotification";
 import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
+import FormFlagReport from "../AddingNewData/FormFlagReport";
 import Image from "next/image";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
+import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 
 export default function DescriptionListingAsSections({
   description,
-  sessionFromServer,
+  signedInUsersId,
   tagList,
   className,
   setItemEditedFunction,
 }) {
+  let userIsTheCreator = description.createdby._id === signedInUsersId;
+
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
@@ -86,7 +90,7 @@ export default function DescriptionListingAsSections({
           HeartIconStyling="text-2xl"
           HeartIconTextStyling="ml-2"
           currentTargetedId={currentTargetedId}
-          session={sessionFromServer}
+          signedInUsersId={signedInUsersId}
           apiLink="/api/description/updateLikes"
         />
 
@@ -97,16 +101,15 @@ export default function DescriptionListingAsSections({
         <div className="text-center">
           <ShareButton onClickShowShares={onClickShowShares} />
 
-          {sessionFromServer &&
-            description.createdby._id == sessionFromServer.user._id && (
-              <div className="grid grid-cols-2">
-                <EditButton
-                  className="ml-2 mr-6"
-                  onupdateEditState={updateEditState}
-                />
-                <DeleteButton onupdateDeleteState={updateDeleteState} />
-              </div>
-            )}
+          {signedInUsersId && description.createdby._id == signedInUsersId && (
+            <div className="grid grid-cols-2">
+              <EditButton
+                className="ml-2 mr-6"
+                onupdateEditState={updateEditState}
+              />
+              <DeleteButton onupdateDeleteState={updateDeleteState} />
+            </div>
+          )}
         </div>
 
         {/* ###### CREATEDBY SECTION #### */}
@@ -138,7 +141,7 @@ export default function DescriptionListingAsSections({
           {showDeleteConfirmation && (
             <DeleteItemNotification
               setShowDeleteConfirmation={setShowDeleteConfirmation}
-              sessionFromServer={sessionFromServer}
+              signedInUsersId={signedInUsersId}
               itemId={description._id}
               itemCreatedBy={description.createdby._id}
               deletionApiPath="/api/description/"
@@ -150,7 +153,7 @@ export default function DescriptionListingAsSections({
             <EditDescription
               SetShowEditPage={SetShowEditPage}
               description={description}
-              sessionFromServer={sessionFromServer}
+              signedInUsersId={signedInUsersId}
               tagList={tagList}
               setEditedFunction={setItemEditedFunction}
             />
@@ -173,6 +176,18 @@ export default function DescriptionListingAsSections({
           />
         </section>
       )}
+
+      <div className="w-full bg-violet-900 flex justify-center">
+        <FlaggingContentSection
+          userIsTheCreator={userIsTheCreator}
+          signedInUsersId={signedInUsersId}
+          currentTargetedId={currentTargetedId}
+          contentType="description"
+          content={description}
+          apiflagReportSubmission="/api/flag/flagreportsubmission/"
+          apiaddUserToFlaggedByArray="/api/flag/addToDescriptionsFlaggedByArray/"
+        />
+      </div>
     </div>
   );
 }
