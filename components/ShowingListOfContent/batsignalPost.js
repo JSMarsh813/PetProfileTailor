@@ -22,7 +22,11 @@ function BatsignalPost({
   tagListProp,
   setItemEditedFunction,
   signedInUsersId,
+  setDeleteThisContentId,
 }) {
+  let contentCreatedBy = post.createdby._id;
+  let userIsTheCreator = contentCreatedBy === signedInUsersId;
+
   const image = post.image;
   const title = post.title;
   const paragraphText = post.description;
@@ -39,7 +43,6 @@ function BatsignalPost({
   const showtime = true;
 
   const [postsCommentsFromFetch, setPostsCommentsFromFetch] = useState([]);
-  let userIsTheCreator = post.createdby._id === signedInUsersId;
 
   //for comments
   const [commentsShowing, SetCommentsShowing] = useState(false);
@@ -126,16 +129,6 @@ function BatsignalPost({
         />
       )}
 
-      {showDeleteConfirmation && (
-        <DeletePostNotification
-          setShowDeleteConfirmation={setShowDeleteConfirmation}
-          sessionFromServer={sessionFromServer}
-          postId={post._id}
-          postCreatedBy={post.createdby._id}
-          changePostState={setItemEditedFunction}
-        />
-      )}
-
       {/* WRAPPING POST AND POST'S COMMENT SECTION */}
 
       <div
@@ -147,7 +140,13 @@ function BatsignalPost({
             post.createdby._id == sessionFromServer.user._id && (
               <div className="grid grid-cols-2">
                 <EditButton onupdateEditState={updateEditState} />
-                <DeleteButton onupdateDeleteState={updateDeleteState} />
+                <DeleteButton
+                  signedInUsersId={signedInUsersId}
+                  contentId={post._id}
+                  setDeleteThisContentId={setDeleteThisContentId}
+                  contentCreatedBy={contentCreatedBy}
+                  apiLink="/api/individualposts/"
+                />
               </div>
             )}
 

@@ -8,6 +8,7 @@ import GeneralButton from "../components/ReusableSmallComponents/buttons/General
 import AddPost from "../components/AddingNewData/AddPost";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import Image from "next/image";
+import removeDeletedContent from "../components/DeletingData/RemoveDeletedContent";
 
 import dbConnect from "../utils/db";
 import Pagination from "../components/ShowingListOfContent/pagination";
@@ -54,6 +55,7 @@ export default function Community({ sessionFromServer }) {
   const [itemEdited, setItemEdited] = useState(false);
   const [sortingvalue, setSortingValue] = useState(-1);
   const [sortingproperty, setSortingProperty] = useState("_id");
+  const [deleteThisContentId, setDeleteThisContentId] = useState(null);
 
   const PAGE_SIZE = itemsPerPage;
   let filteredListLastPage = filteredPosts.length / itemsPerPage;
@@ -185,6 +187,21 @@ export default function Community({ sessionFromServer }) {
     mutate();
   }, [itemEdited]);
 
+  //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
+
+  useEffect(() => {
+    if (deleteThisContentId !== null) {
+      removeDeletedContent(
+        setFilteredPosts,
+        filteredPosts,
+        deleteThisContentId,
+        setDeleteThisContentId,
+      );
+    }
+  }, [deleteThisContentId]);
+
+  // ########### End of Section that allows the deleted content to be removed without having to refresh the page ####
+
   return (
     <div>
       <Layout
@@ -291,6 +308,7 @@ export default function Community({ sessionFromServer }) {
                   sessionFromServer={sessionFromServer}
                   tagListProp={tagListProp}
                   setItemEditedFunction={setItemEditedFunction}
+                  setDeleteThisContentId={setDeleteThisContentId}
                 />
               );
             })}
