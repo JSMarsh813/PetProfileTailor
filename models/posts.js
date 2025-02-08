@@ -22,6 +22,13 @@ const PostSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
+    flaggedby: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      },
+    ],
     createdby: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,

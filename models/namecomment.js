@@ -27,6 +27,13 @@ const namecommentSchema = new mongoose.Schema(
       required: false,
       ref: "User",
     },
+    flaggedby: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      },
+    ],
     shares: {
       type: Array,
       default: [],
@@ -42,7 +49,7 @@ const namecommentSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const namecomment =

@@ -15,7 +15,7 @@ export default function DeleteButton({ onupdateDeleteState }) {
 
       <FontAwesomeIcon
         icon={faTrashCan}
-        className="text-2xl justify-self-end text-rose-500"
+        className="text-3xl justify-self-end text-rose-500"
       />
     </label>
   );

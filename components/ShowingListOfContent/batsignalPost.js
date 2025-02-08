@@ -11,7 +11,7 @@ import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsBut
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import PostersImageUsernameProfileName from "../ReusableSmallComponents/PostersImageUsernameProfileName";
 import Image from "next/image";
-
+import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 import { useRouter } from "next/router";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 
@@ -21,6 +21,7 @@ function BatsignalPost({
   post,
   tagListProp,
   setItemEditedFunction,
+  signedInUsersId,
 }) {
   const image = post.image;
   const title = post.title;
@@ -38,6 +39,7 @@ function BatsignalPost({
   const showtime = true;
 
   const [postsCommentsFromFetch, setPostsCommentsFromFetch] = useState([]);
+  let userIsTheCreator = post.createdby._id === signedInUsersId;
 
   //for comments
   const [commentsShowing, SetCommentsShowing] = useState(false);
@@ -177,11 +179,6 @@ function BatsignalPost({
           <h4 className="text-base">Tags: {tagList}</h4>
 
           <div className="flex border-y-2 border-slate-200 py-2 bg-violet-900 text-white justify-between">
-            <SeeCommentsButton
-              comments={amountOfComments}
-              onupdateCommentShowState={updateCommentShowState}
-            />
-
             <LikesButtonAndLikesLogic
               data={post}
               currentTargetedId={currentTargetedId}
@@ -190,11 +187,26 @@ function BatsignalPost({
               apiLink="/api/individualposts/updatepostlikes"
             />
 
+            <SeeCommentsButton
+              comments={amountOfComments}
+              onupdateCommentShowState={updateCommentShowState}
+            />
+
             <ShareButton
               shares={shares}
               onClickShowShares={onClickShowShares}
             />
           </div>
+
+          <FlaggingContentSection
+            userIsTheCreator={userIsTheCreator}
+            signedInUsersId={signedInUsersId}
+            currentTargetedId={currentTargetedId}
+            contentType="post"
+            content={post}
+            apiflagReportSubmission="/api/flag/flagreportsubmission/"
+            apiaddUserToFlaggedByArray="/api/flag/addToPostsFlaggedByArray/"
+          />
 
           <AddComment
             replyingtothisid={postId}
@@ -220,6 +232,7 @@ function BatsignalPost({
           rootComments.map((comment) => (
             <CommentListing
               key={comment._id}
+              signedInUsersId={signedInUsersId}
               rootComment={comment}
               replies={replyComments}
               postid={postId}

@@ -35,6 +35,13 @@ const BatSignalCommentSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       default: null,
     },
+    flaggedby: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      },
+    ],
     likedby: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -42,7 +49,7 @@ const BatSignalCommentSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const BatSignalComment =

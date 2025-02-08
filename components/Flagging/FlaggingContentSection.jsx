@@ -54,6 +54,13 @@ export default function FlaggingContentSection({
         description: content.description,
       };
       return copyOfContent;
+    } else if (contentType === "comment") {
+      let copyOfContent = {
+        image: content.image,
+        description: content.description,
+        parentCommentId: content.parentcommentid,
+      };
+      return copyOfContent;
     }
   };
 

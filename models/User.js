@@ -21,6 +21,13 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    flaggedby: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      },
+    ],
     blockedusers: [
       {
         type: mongoose.Schema.Types.ObjectId,

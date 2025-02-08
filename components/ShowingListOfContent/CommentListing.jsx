@@ -16,12 +16,14 @@ import DeleteCommentNotification from "../DeletingData/DeleteCommentNotification
 import { useRouter } from "next/router";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
+import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 
 function CommentListing({
   replyingtothisid,
   rootComment,
   replies,
   sessionFromServer,
+  signedInUsersId,
   apiLink,
   likesApiLink,
   typeOfContentReplyingTo,
@@ -31,14 +33,19 @@ function CommentListing({
   const [commentParentId, setCommentParentId] = useState(null);
   const [postersName, setPostersName] = useState(rootComment.createdby.name);
   const [postersProfileImage, setPostersProfileImage] = useState(
-    rootComment.createdby.profileimage
+    rootComment.createdby.profileimage,
   );
   const [postersProfileName, setProfileName] = useState(
-    rootComment.createdby.profilename
+    rootComment.createdby.profilename,
   );
   const [adjustedParentId, setAdjustedParentId] = useState("");
 
   const showtime = true;
+  let userIsTheCreator = rootComment.createdby._id === signedInUsersId;
+
+  let [currentTargetedId, setCurrentTargetedDescriptionId] = useState(
+    rootComment._id,
+  );
 
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
@@ -108,22 +115,22 @@ function CommentListing({
 
           <div className="text-left ml-2 mt-2 grid grid-cols-2 gap-x-8">
             <div className="place-self-start">
-              <FontAwesomeIcon
-                icon={faCommentDots}
-                className="ml-2 mr-4 text-darkPurple text-2xl"
-                onClick={() => {
-                  setReplying(!replying);
-                }}
-              ></FontAwesomeIcon>
-
               {console.log(rootComment)}
               <LikesButtonAndLikesLogic
                 data={rootComment}
-                HeartIconStyling="text-2xl"
+                HeartIconStyling="text-3xl"
                 HeartIconTextStyling="text-darkPurple ml-2"
                 session={sessionFromServer}
                 apiLink={likesApiLink}
               />
+
+              <FontAwesomeIcon
+                icon={faCommentDots}
+                className="ml-2 mr-4 text-darkPurple text-3xl"
+                onClick={() => {
+                  setReplying(!replying);
+                }}
+              ></FontAwesomeIcon>
 
               <ShareButton
                 onClickShowShares={onClickShowShares}
@@ -165,6 +172,17 @@ function CommentListing({
               />
             )}
           </div>
+
+          <FlaggingContentSection
+            userIsTheCreator={userIsTheCreator}
+            signedInUsersId={signedInUsersId}
+            currentTargetedId={currentTargetedId}
+            contentType="comment"
+            content={rootComment}
+            apiflagReportSubmission="/api/flag/flagreportsubmission/"
+            apiaddUserToFlaggedByArray="/api/flag/addToForumCommentsFlaggedByArray/"
+          />
+
           {shareSectionShowing && (
             <section className="bg-violet-900 py-2">
               <SharingOptionsBar

@@ -36,10 +36,12 @@ export default function Community({ sessionFromServer }) {
   // #### Info for nav menu
   let userName = "";
   let profileImage = "";
+  let signedInUsersId = "";
 
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
+    signedInUsersId = sessionFromServer.user._id;
   }
   // ##### end of section for nav menu
 
@@ -282,6 +284,7 @@ export default function Community({ sessionFromServer }) {
             .map((post) => {
               return (
                 <BatsignalPost
+                  signedInUsersId={signedInUsersId}
                   post={post}
                   key={post._id}
                   className="mx-auto"
