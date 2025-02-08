@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
-import FlagButtonAndLogic from "../ReusableSmallComponents/buttons/FlagButtonAndLogic";
-import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
+import FlagButtonAndLogic from "../Flagging/FlagButtonAndLogic";
+import DeleteButton from "../DeletingData/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import DeleteItemNotification from "../DeletingData/DeleteItemNotification";
 import EditName from "../EditingData/EditName";
@@ -11,7 +11,7 @@ import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsBut
 import CommentListing from "../ShowingListOfContent/CommentListing";
 import AddComment from "../AddingNewData/AddComment";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
-import FormFlagReport from "../AddingNewData/FormFlagReport";
+import FormFlagReport from "../Flagging/FormFlagReport";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 

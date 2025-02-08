@@ -7,7 +7,7 @@ import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesBu
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import EditComment from "../EditingData/EditComment";
-import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
+import DeleteButton from "../DeletingData/DeleteButton";
 import DeleteCommentNotification from "../DeletingData/DeleteCommentNotification";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";

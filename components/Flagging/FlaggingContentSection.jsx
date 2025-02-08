@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import FlagButtonAndLogic from "../ReusableSmallComponents/buttons/FlagButtonAndLogic";
-import FormFlagReport from "../AddingNewData/FormFlagReport";
+import FlagButtonAndLogic from "./FlagButtonAndLogic";
+import FormFlagReport from "./FormFlagReport";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import {
   Description,

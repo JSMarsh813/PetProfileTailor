@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
-import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
+import DeleteButton from "../DeletingData/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import { useRouter } from "next/router";
 import DeleteItemNotification from "../DeletingData/DeleteItemNotification";
 import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
-import FormFlagReport from "../AddingNewData/FormFlagReport";
+import FormFlagReport from "../Flagging/FormFlagReport";
 import Image from "next/image";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";

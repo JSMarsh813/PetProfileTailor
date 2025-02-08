@@ -5,7 +5,7 @@ import CommentListing from "./CommentListing";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import EditPost from "../EditingData/EditPost";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
-import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
+import DeleteButton from "../DeletingData/DeleteButton";
 import DeletePostNotification from "../DeletingData/DeletePostNotification";
 import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";

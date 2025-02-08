@@ -7,7 +7,7 @@ import axios from "axios";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import PostersImageUsernameProfileName from "../ReusableSmallComponents/PostersImageUsernameProfileName";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
-import DeleteButton from "../ReusableSmallComponents/buttons/DeleteButton";
+import DeleteButton from "../DeletingData/DeleteButton";
 
 import EditComment from "../EditingData/EditComment";
 
@@ -67,17 +67,11 @@ function CommentListing({
   //for editing
   const [showEditPage, SetShowEditPage] = useState(false);
 
-  //for deleting
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const router = useRouter();
   const [commentChanged, setCommentChanged] = useState(false);
 
   function updateEditState() {
     SetShowEditPage(true);
-  }
-
-  function updateDeleteState() {
-    setShowDeleteConfirmation(true);
   }
 
   if (commentChanged) {
@@ -146,7 +140,7 @@ function CommentListing({
                     onupdateEditState={updateEditState}
                   />
 
-                  <DeleteButton onupdateDeleteState={updateDeleteState} />
+                  <DeleteButton />
                 </div>
               )}
 
@@ -161,7 +155,7 @@ function CommentListing({
               />
             )}
 
-            {showDeleteConfirmation && (
+            {/* {showDeleteConfirmation && (
               <DeleteCommentNotification
                 setShowDeleteConfirmation={setShowDeleteConfirmation}
                 sessionFromServer={sessionFromServer}
@@ -170,7 +164,7 @@ function CommentListing({
                 commentCreatedBy={rootComment.createdby._id}
                 apiLink={apiLink}
               />
-            )}
+            )} */}
           </div>
 
           <FlaggingContentSection
