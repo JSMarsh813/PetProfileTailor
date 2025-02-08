@@ -6,7 +6,7 @@ import { unstable_getServerSession } from "next-auth/next";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
-import Posts from "../../models/Posts";
+import Posts from "../../models/Post";
 
 import dbConnect from "../../utils/db";
 const ObjectId = require("mongodb").ObjectId;

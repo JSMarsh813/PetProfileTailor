@@ -27,7 +27,7 @@ import BatSignalComments from "../../models/BatSignalComment";
 import NameTag from "../../models/NameTag";
 import Descriptions from "../../models/description";
 import DescriptionTag from "../../models/descriptiontag";
-import IndividualPosts from "../../models/Posts";
+import IndividualPosts from "../../models/Post";
 import User from "../../models/User";
 
 // const ObjectId = require("mongodb").ObjectId;

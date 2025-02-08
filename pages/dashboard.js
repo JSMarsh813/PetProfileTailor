@@ -18,7 +18,7 @@ import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames"
 
 import dbConnect from "../utils/db";
 import Names from "../models/Names";
-import IndividualPosts from "../models/Posts";
+import IndividualPosts from "../models/Post";
 import BatSignalComments from "../models/BatSignalComment";
 import Descriptions from "../models/description";
 import DescriptionTag from "../models/descriptiontag";

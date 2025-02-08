@@ -1,4 +1,4 @@
-import IndividualPosts from "../../../models/Posts";
+import IndividualPosts from "../../../models/Post";
 import db from "../../../utils/db";
 const mongoose = require("mongoose");
 

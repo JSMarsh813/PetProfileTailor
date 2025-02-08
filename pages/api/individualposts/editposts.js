@@ -1,4 +1,4 @@
-import Post from "../../../models/Posts";
+import Post from "../../../models/Post";
 import db from "../../../utils/db";
 
 export default async function editposts(req, res) {

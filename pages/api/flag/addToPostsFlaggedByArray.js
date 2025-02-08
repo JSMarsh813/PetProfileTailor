@@ -1,4 +1,4 @@
-import Posts from "../../../models/Posts";
+import Posts from "../../../models/Post";
 import db from "../../../utils/db";
 
 async function handler(req, res) {
