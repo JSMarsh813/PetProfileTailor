@@ -1,4 +1,4 @@
-import IndividualPosts from "../../../models/posts";
+import IndividualPosts from "../../../models/Posts";
 import db from "../../../utils/db";
 const mongoose = require("mongoose");
 
@@ -35,7 +35,7 @@ async function handler(req, res) {
 
   toUpdatePost.likedby.includes(user._id)
     ? (toUpdatePost.likedby = toUpdatePost.likedby.filter(
-        (userinlikedby) => userinlikedby != user._id
+        (userinlikedby) => userinlikedby != user._id,
       ))
     : (toUpdatePost.likedby = toUpdatePost.likedby.concat(user._id));
 

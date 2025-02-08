@@ -3,7 +3,7 @@ import dbConnect from "../../../utils/db";
 import db from "../../../utils/db";
 const mongoose = require("mongoose");
 
-import IndividualPosts from "../../../models/posts";
+import IndividualPosts from "../../../models/Posts";
 //wasn't working when everything was lowercase, had to be IndividualPosts not individualNames for it to work
 
 export default async function handler(req, res) {

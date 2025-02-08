@@ -9,13 +9,13 @@ import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSett
 
 import dbConnect from "../../utils/db";
 const ObjectId = require("mongodb").ObjectId;
-import Posts from "../../models/posts";
+import Posts from "../../models/Posts";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   let UserId = "";

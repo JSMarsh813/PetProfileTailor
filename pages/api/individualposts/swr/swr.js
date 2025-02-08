@@ -1,5 +1,5 @@
 import dbConnect from "../../../../utils/db";
-import Posts from "../../../../models/posts";
+import Posts from "../../../../models/Posts";
 import Users from "../../../../models/User";
 
 export default async function handler(req, res) {

@@ -1,6 +1,6 @@
 import dbConnect from "../../../../utils/db";
 const ObjectId = require("mongodb").ObjectId;
-import Posts from "../../../../models/posts";
+import Posts from "../../../../models/Posts";
 
 export default async function handler(req, res) {
   const postId = ObjectId(req.query.id);

@@ -1,4 +1,4 @@
-import Post from "../../models/posts";
+import Post from "../../models/Posts";
 import db from "../../utils/db";
 
 async function APINewPost(req, res) {
