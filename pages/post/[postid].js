@@ -6,10 +6,10 @@ import { unstable_getServerSession } from "next-auth/next";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
 import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
+import Posts from "../../models/Posts";
 
 import dbConnect from "../../utils/db";
 const ObjectId = require("mongodb").ObjectId;
-import Posts from "../../models/Posts";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
