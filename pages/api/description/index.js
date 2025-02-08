@@ -77,8 +77,10 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
-      let idToObjectId = mongoose.Types.ObjectId(req.body.itemId);
+      let idToObjectId = mongoose.Types.ObjectId(req.body.contentId);
 
+      console.log(idToObjectId);
+      console.log(req.body);
       const test = await Description.deleteOne({ _id: idToObjectId });
 
       res.status(200).json({

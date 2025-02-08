@@ -20,6 +20,7 @@ export default function NameListingAsSections({
   signedInUsersId,
   tagList,
   setNameEditedFunction,
+  setDeleteThisContentId,
 }) {
   let userIsTheCreator = name.createdby._id === signedInUsersId;
 
@@ -177,19 +178,14 @@ export default function NameListingAsSections({
                 className="ml-2 mr-6"
                 onupdateEditState={onupdateEditState}
               />
-              <DeleteButton onupdateDeleteState={updateDeleteState} />
+              <DeleteButton
+                signedInUsersId={signedInUsersId}
+                contentId={name._id}
+                setDeleteThisContentId={setDeleteThisContentId}
+                contentCreatedBy={name.createdby._id}
+                apiLink="/api/names/"
+              />
             </div>
-          )}
-
-          {showDeleteConfirmation && (
-            <DeleteItemNotification
-              setShowDeleteConfirmation={setShowDeleteConfirmation}
-              signedInUsersId={signedInUsersId}
-              setEditedFunction={setNameEditedFunction}
-              itemId={name._id}
-              itemCreatedBy={name.createdby._id}
-              deletionApiPath="/api/names/"
-            />
           )}
 
           {showEditPage && (

@@ -8,9 +8,16 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import deleteCommentNotification from "./DeleteCommentNotification";
+import DeleteContentNotification from "./DeleteContentNotification";
 
-export default function DeleteButton({ onupdateDeleteState }) {
+export default function DeleteButton({
+  signedInUsersId,
+  contentId,
+  changeContentState,
+  contentCreatedBy,
+  apiLink,
+  setDeleteThisContentId,
+}) {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   function updateDeleteState() {
@@ -44,12 +51,13 @@ export default function DeleteButton({ onupdateDeleteState }) {
             tabIndex={1}
           >
             <DialogPanel className=" bg-darkPurple p-12 bg-opacity-80 h-fit">
-              <DeleteCommentNotification
+              <DeleteContentNotification
                 setShowDeleteConfirmation={setShowDeleteConfirmation}
-                sessionFromServer={sessionFromServer}
-                changeCommentState={setCommentChanged}
-                commentId={rootComment._id}
-                commentCreatedBy={rootComment.createdby._id}
+                contentId={contentId}
+                signedInUsersId={signedInUsersId}
+                contentCreatedBy={contentCreatedBy}
+                setDeleteThisContentId={setDeleteThisContentId}
+                // changeContentState={changeContentState}
                 apiLink={apiLink}
               />
             </DialogPanel>

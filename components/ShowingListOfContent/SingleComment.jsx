@@ -8,7 +8,7 @@ import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import EditComment from "../EditingData/EditComment";
 import DeleteButton from "../DeletingData/DeleteButton";
-import DeleteCommentNotification from "../DeletingData/DeleteCommentNotification";
+import DeleteContentNotification from "../DeletingData/DeleteContentNotification";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
@@ -183,7 +183,7 @@ function CommentListing({
             )}
 
             {showDeleteConfirmation && (
-              <DeleteCommentNotification
+              <DeleteContentNotification
                 setShowDeleteConfirmation={setShowDeleteConfirmation}
                 sessionFromServer={sessionFromServer}
                 changeCommentState={setCommentChanged}

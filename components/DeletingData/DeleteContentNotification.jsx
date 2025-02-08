@@ -3,34 +3,39 @@ import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
-export default function deleteCommentNotification({
+export default function deleteContentNotification({
   setShowDeleteConfirmation,
-  commentId,
-  sessionFromServer,
-  commentCreatedBy,
-  changeCommentState,
+  contentId,
+  signedInUsersId,
+  contentCreatedBy,
+  changeContentState,
+  setUpdateListOfContent,
+  listOfContent,
   apiLink,
+  setDeleteThisContentId,
 }) {
   //  toast.success(`You successfully deleted your post!`)
 
-  const handleCommentDelete = async () => {
-    if (sessionFromServer.user._id != commentCreatedBy) {
+  const handleContentDelete = async () => {
+    if (signedInUsersId != contentCreatedBy) {
       toast.error(
-        "validation error, session id does not match the post creator's id"
+        "validation error, session id does not match the post creator's id",
       );
       return;
     } else {
       await axios
         .delete(apiLink, {
-          data: { commentId },
+          data: { contentId },
         })
         .then((response) => {
-          changeCommentState(true);
+          // changeContentState(true);
           setShowDeleteConfirmation(false);
+          console.log(`this is content id to delete ${contentId}`);
+          setDeleteThisContentId(contentId);
         })
         .catch((error) => {
-          console.log("there was an error when deleting your post", error);
-          toast.error(`Ruh Roh! Post not deleted`);
+          console.log("there was an error when deleting your content", error);
+          toast.error(`Ruh Roh! Content not deleted`);
         });
     }
   };
@@ -107,7 +112,7 @@ export default function deleteCommentNotification({
                       <button
                         type="submit"
                         class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
-                        onClick={() => handleCommentDelete()}
+                        onClick={() => handleContentDelete()}
                       >
                         Yes, I&apos;m sure
                       </button>

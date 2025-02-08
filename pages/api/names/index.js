@@ -62,7 +62,7 @@ export default async function handler(req, res) {
         existingName: existingNameCheck,
       });
       return;
-    } else if (checkForInvalidInput.length) {
+    } else if (checkForInvalidInput != null) {
       res.status(400).json({
         message: `Ruh Roh! The name ${name} has invalid character(s) ${checkForInvalidInput}`,
       });
@@ -79,7 +79,7 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
-      let idToObjectId = mongoose.Types.ObjectId(req.body.itemId);
+      let idToObjectId = mongoose.Types.ObjectId(req.body.contentId);
       const test = await Names.deleteOne({ _id: idToObjectId });
       res.status(200).json({ success: true, msg: `Name Deleted ${test}` });
     } catch (err) {

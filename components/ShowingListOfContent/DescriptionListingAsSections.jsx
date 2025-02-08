@@ -18,8 +18,10 @@ export default function DescriptionListingAsSections({
   tagList,
   className,
   setItemEditedFunction,
+  setDeleteThisContentId,
 }) {
-  let userIsTheCreator = description.createdby._id === signedInUsersId;
+  let contentCreatedBy = description.createdby._id;
+  let userIsTheCreator = contentCreatedBy === signedInUsersId;
 
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
@@ -107,7 +109,13 @@ export default function DescriptionListingAsSections({
                 className="ml-2 mr-6"
                 onupdateEditState={updateEditState}
               />
-              <DeleteButton onupdateDeleteState={updateDeleteState} />
+              <DeleteButton
+                signedInUsersId={signedInUsersId}
+                contentId={description._id}
+                setDeleteThisContentId={setDeleteThisContentId}
+                contentCreatedBy={contentCreatedBy}
+                apiLink="/api/description/"
+              />
             </div>
           )}
         </div>
@@ -138,7 +146,7 @@ export default function DescriptionListingAsSections({
             </div>
           </a>
 
-          {showDeleteConfirmation && (
+          {/* {showDeleteConfirmation && (
             <DeleteItemNotification
               setShowDeleteConfirmation={setShowDeleteConfirmation}
               signedInUsersId={signedInUsersId}
@@ -147,7 +155,7 @@ export default function DescriptionListingAsSections({
               deletionApiPath="/api/description/"
               setEditedFunction={setItemEditedFunction}
             />
-          )}
+          )} */}
 
           {showEditPage && (
             <EditDescription

@@ -8,7 +8,7 @@ import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
-
+import removeDeletedContent from "../components/DeletingData/RemoveDeletedContent";
 import dbConnect from "../utils/db";
 import Category from "../models/nameCategory";
 import NameTag from "../models/NameTag";
@@ -67,16 +67,17 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [IsOpen, setIsOpen] = useState(false);
   const [tagFilters, setTagFiltersState] = useState([]);
-  const [filterednames, setFilteredNames] = useState([]);
+  const [filteredNames, setFilteredNames] = useState([]);
   const [page, setPage] = useState(1);
   // const [sortinglogicstring, setSortingLogicString] = useState("_id,-1");
   const [sortingvalue, setSortingValue] = useState(-1);
   const [sortingproperty, setSortingProperty] = useState("_id");
   const [nameEdited, setNameEdited] = useState(false);
+  const [deleteThisContentId, setDeleteThisContentId] = useState(null);
 
   const PAGE_SIZE = itemsPerPage;
 
-  let filteredListLastPage = filterednames.length / itemsPerPage;
+  let filteredListLastPage = filteredNames.length / itemsPerPage;
 
   // ############ Section for passing state into components as functions #######
 
@@ -173,15 +174,30 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
 
   useEffect(() => {
-    if (filterednames.length / page < itemsPerPage) {
+    if (filteredNames.length / page < itemsPerPage) {
       setSize(size + 1) && mutate();
     }
-  }, [filterednames]);
+  }, [filteredNames]);
   //makes sure there is at least 10 items(aka itemsPerPage value) per page or try to grab more names
 
   useEffect(() => {
     mutate();
   }, [nameEdited]);
+
+  //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
+
+  useEffect(() => {
+    if (deleteThisContentId !== null) {
+      removeDeletedContent(
+        setFilteredNames,
+        filteredNames,
+        deleteThisContentId,
+        setDeleteThisContentId,
+      );
+    }
+  }, [deleteThisContentId]);
+
+  // ########### End of Section that allows the deleted content to be removed without having to refresh the page ####
 
   return (
     <div className="bg-violet-900">
@@ -225,7 +241,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
             setPageFunction={setPageFunction}
             setSizeFunction={setSizeFunction}
             size={size}
-            filterednameslength={filterednames.length}
+            filterednameslength={filteredNames.length}
             setSortingLogicFunction={setSortingLogicFunction}
           />
 
@@ -240,7 +256,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
             )}
 
             <section className="whitespace-pre-line">
-              {filterednames
+              {filteredNames
                 .slice(
                   page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
                   page * itemsPerPage,
@@ -253,6 +269,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                       signedInUsersId={signedInUsersId}
                       tagList={tagList}
                       setNameEditedFunction={setNameEditedFunction}
+                      setDeleteThisContentId={setDeleteThisContentId}
                     />
                   );
                 })}
@@ -266,7 +283,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                 setPageFunction={setPageFunction}
                 setSizeFunction={setSizeFunction}
                 size={size}
-                filterednameslength={filterednames.length}
+                filterednameslength={filteredNames.length}
                 setSortingLogicFunction={setSortingLogicFunction}
               />
 

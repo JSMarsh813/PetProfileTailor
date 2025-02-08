@@ -11,7 +11,7 @@ import DeleteButton from "../DeletingData/DeleteButton";
 
 import EditComment from "../EditingData/EditComment";
 
-import DeleteCommentNotification from "../DeletingData/DeleteCommentNotification";
+import DeleteCommentNotification from "../DeletingData/DeleteContentNotification";
 
 import { useRouter } from "next/router";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
@@ -23,13 +23,16 @@ function CommentListing({
   rootComment,
   replies,
   sessionFromServer,
+  updateListOfReplies,
   signedInUsersId,
   apiLink,
   likesApiLink,
+  listOfContent,
   typeOfContentReplyingTo,
   replyingtothiscontent,
 }) {
   const [replying, setReplying] = useState(false);
+  const [listOfReplies, setListOfReplies] = useState(replies);
   const [commentParentId, setCommentParentId] = useState(null);
   const [postersName, setPostersName] = useState(rootComment.createdby.name);
   const [postersProfileImage, setPostersProfileImage] = useState(
@@ -74,14 +77,14 @@ function CommentListing({
     SetShowEditPage(true);
   }
 
-  if (commentChanged) {
-    const forceReload = () => {
-      router.reload();
-    };
+  // if (commentChanged) {
+  //   const forceReload = () => {
+  //     router.reload();
+  //   };
 
-    forceReload();
-    setCommentChanged(false);
-  }
+  //   forceReload();
+  //   setCommentChanged(false);
+  // }
 
   //for shares
   function onClickShowShares() {
@@ -140,7 +143,15 @@ function CommentListing({
                     onupdateEditState={updateEditState}
                   />
 
-                  <DeleteButton />
+                  <DeleteButton
+                    signedInUsersId={signedInUsersId}
+                    contentId={rootComment._id}
+                    setUpdateListOfContent={setListOfReplies}
+                    listOfContent={listOfReplies}
+                    // changeContentState={setCommentChanged}
+                    contentCreatedBy={rootComment.createdby._id}
+                    apiLink={apiLink}
+                  />
                 </div>
               )}
 
@@ -201,7 +212,7 @@ function CommentListing({
       {/* if replies exist for this post, loop through them. If their parentcommentid matches this current comment, then add it to the bottom of this comment.
           Otherwise do not add it to the bottom of this comment. */}
       {replies &&
-        replies.map((reply) => {
+        listOfReplies.map((reply) => {
           if (reply.parentcommentid == rootComment._id) {
             return (
               <div key={reply._id}>
@@ -209,6 +220,9 @@ function CommentListing({
                   key={`comment${reply._id}`}
                   rootComment={reply}
                   replies={null}
+                  signedInUsersId={signedInUsersId}
+                  updateListOfReplies={listOfReplies}
+                  listOfContent={listOfReplies}
                   sessionFromServer={sessionFromServer}
                   apiLink={apiLink}
                   likesApiLink={likesApiLink}

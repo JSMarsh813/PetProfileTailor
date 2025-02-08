@@ -6,7 +6,7 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections";
-
+import removeDeletedContent from "../components/DeletingData/RemoveDeletedContent";
 import dbConnect from "../utils/db";
 import Category from "../models/descriptioncategory";
 import DescriptionTag from "../models/descriptiontag";
@@ -63,6 +63,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   const [sortingvalue, setSortingValue] = useState(-1);
   const [sortingproperty, setSortingProperty] = useState("likedbylength");
   const [itemEdited, setItemEdited] = useState(false);
+  const [deleteThisContentId, setDeleteThisContentId] = useState(null);
 
   const PAGE_SIZE = itemsPerPage;
   let filteredListLastPage = filteredDescriptions.length / itemsPerPage;
@@ -143,6 +144,21 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
       ),
     );
   }, [tagFilters, data]);
+
+  //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
+
+  useEffect(() => {
+    if (deleteThisContentId !== null) {
+      removeDeletedContent(
+        setFilteredDescriptions,
+        filteredDescriptions,
+        deleteThisContentId,
+        setDeleteThisContentId,
+      );
+    }
+  }, [deleteThisContentId]);
+
+  // ########### End of Section that allows the deleted content to be removed without having to refresh the page ####
 
   useEffect(() => {
     setPage(1);
@@ -225,6 +241,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
                       signedInUsersId={signedInUsersId}
                       tagList={tagList}
                       setItemEditedFunction={setItemEditedFunction}
+                      setDeleteThisContentId={setDeleteThisContentId}
                     />
                   );
                 })}

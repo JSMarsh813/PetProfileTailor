@@ -76,7 +76,7 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
-      let idToObjectId = mongoose.Types.ObjectId(req.body.postId);
+      let idToObjectId = mongoose.Types.ObjectId(req.body.contentId);
       const test = await IndividualPosts.deleteOne({ _id: idToObjectId });
       res.status(200).json({ success: true, msg: `Post Deleted ${test}` });
     } catch (err) {
