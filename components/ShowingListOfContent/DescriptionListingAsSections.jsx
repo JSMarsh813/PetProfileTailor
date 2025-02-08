@@ -166,6 +166,18 @@ export default function DescriptionListingAsSections({
             .map((relatedname) => relatedname)
             .join(", ")}
         </div>
+
+        <div className="w-full bg-violet-900 flex justify-center">
+          <FlaggingContentSection
+            userIsTheCreator={userIsTheCreator}
+            signedInUsersId={signedInUsersId}
+            currentTargetedId={currentTargetedId}
+            contentType="description"
+            content={description}
+            apiflagReportSubmission="/api/flag/flagreportsubmission/"
+            apiaddUserToFlaggedByArray="/api/flag/addToDescriptionsFlaggedByArray/"
+          />
+        </div>
       </div>
 
       {shareSectionShowing && (
@@ -176,18 +188,6 @@ export default function DescriptionListingAsSections({
           />
         </section>
       )}
-
-      <div className="w-full bg-violet-900 flex justify-center">
-        <FlaggingContentSection
-          userIsTheCreator={userIsTheCreator}
-          signedInUsersId={signedInUsersId}
-          currentTargetedId={currentTargetedId}
-          contentType="description"
-          content={description}
-          apiflagReportSubmission="/api/flag/flagreportsubmission/"
-          apiaddUserToFlaggedByArray="/api/flag/addToDescriptionsFlaggedByArray/"
-        />
-      </div>
     </div>
   );
 }
