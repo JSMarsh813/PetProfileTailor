@@ -19,6 +19,7 @@ import EditBioAndProfile from "../../components/EditingData/EditBioAndProfile";
 import EditBioProfileButton from "../../components/ReusableSmallComponents/buttons/EditBioProfileButton";
 import UsersFollowersList from "../../components/ShowingListOfContent/UsersFollowersList";
 import UsersFollowingList from "../../components/ShowingListOfContent/UsersFollowingList";
+import FlaggingContentSection from "../../components/Flagging/FlaggingContentSection";
 
 import dbConnect from "../../utils/db";
 import Names from "../../models/Names";
@@ -26,7 +27,7 @@ import BatSignalComments from "../../models/BatSignalComment";
 import NameTag from "../../models/NameTag";
 import Descriptions from "../../models/description";
 import DescriptionTag from "../../models/descriptiontag";
-import IndividualPosts from "../../models/posts";
+import IndividualPosts from "../../models/Posts";
 import User from "../../models/User";
 
 // const ObjectId = require("mongodb").ObjectId;
@@ -193,11 +194,15 @@ function ProfilePage({
   //for Nav menu profile name and image
   let userName = "";
   let profileImage = "";
+  let signedInUsersId = "";
 
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
+    signedInUsersId = sessionFromServer.user._id;
   }
+
+  let userIsTheCreator = userData._id === signedInUsersId;
 
   const [showProfileEditPage, setShowProfileEditPage] = useState(false);
   const [profileChanged, setProfileChange] = useState(false);
@@ -330,6 +335,16 @@ function ProfilePage({
 
                     <span className="mr-2 text-lg">{userData.location}</span>
                   </div>
+
+                  <FlaggingContentSection
+                    userIsTheCreator={userIsTheCreator}
+                    signedInUsersId={signedInUsersId}
+                    currentTargetedId={userData._id}
+                    contentType="user"
+                    content={userData}
+                    apiflagReportSubmission="/api/flag/flagreportsubmission/"
+                    apiaddUserToFlaggedByArray="/api/flag/addToUsersFlaggedByArray/"
+                  />
                 </div>
 
                 <div className="py-2 border-t border-darkPurple text-center">

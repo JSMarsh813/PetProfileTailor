@@ -128,7 +128,7 @@ export default function NameListingAsSections({
           <ShareButton onClickShowShares={onClickShowShares} />
 
           <SeeCommentsButton
-            comments={commentsFromFetch.length}
+            comments={name.comments.length}
             onupdateCommentShowState={onupdateCommentShowState}
           />
         </div>

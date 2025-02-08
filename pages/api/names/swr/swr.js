@@ -40,6 +40,14 @@ export default async function handler(req, res) {
         { $unwind: "$createdby" },
         {
           $lookup: {
+            from: "namecomments",
+            localField: "comments",
+            foreignField: "_id",
+            as: "namecomments",
+          },
+        },
+        {
+          $lookup: {
             from: "nametags",
             localField: "tags",
             foreignField: "_id",

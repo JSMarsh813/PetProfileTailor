@@ -47,8 +47,21 @@ function AddFlagReport({
       return;
     }
 
-    if (contentInfo.createdby._id === flaggedByUser) {
-      toast.warn(`Ruh Roh! Nice try but you can't flag your own submission :)`);
+    //dealing with the edge case because of profile pages, profile pages won't have a createdby property
+    let profileIsLoggedInUserCheck = contentInfo._id;
+
+    let contentCreatedByUserId =
+      contentInfo.createdby != undefined
+        ? contentInfo.createdby._id
+        : profileIsLoggedInUserCheck;
+
+    if (
+      contentCreatedByUserId === flaggedByUser ||
+      profileIsLoggedInUserCheck === flaggedByUser
+    ) {
+      toast.warn(
+        `Ruh Roh! Nice try but you can't flag your own content silly goose :)`,
+      );
       return;
     }
 
@@ -56,7 +69,7 @@ function AddFlagReport({
       contenttype: contentType,
       contentid: contentInfo._id,
       contentcopy: copyOfContentForReport,
-      createdbyuser: contentInfo.createdby._id,
+      createdbyuser: contentCreatedByUserId,
       flaggedbyuser: flaggedByUser,
       flagcategories: flagCategoriesState,
       comments: additionalCommentsState,

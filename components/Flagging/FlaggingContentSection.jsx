@@ -61,6 +61,22 @@ export default function FlaggingContentSection({
         parentCommentId: content.parentcommentid,
       };
       return copyOfContent;
+    } else if (contentType === "post") {
+      let copyOfContent = {
+        image: content.image,
+        alttext: content.alttext,
+        title: content.description,
+      };
+      return copyOfContent;
+    } else if (contentType === "user") {
+      let copyOfContent = {
+        name: content.name,
+        profilename: content.profilename,
+        profileimage: content.prfileimage,
+        bioblurb: content.bioblurb,
+        location: content.location,
+      };
+      return copyOfContent;
     }
   };
 
