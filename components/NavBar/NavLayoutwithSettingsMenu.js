@@ -57,7 +57,7 @@ export default function NavLayoutwithSettingsMenu({
 
             <Menu
               as="div"
-              className="relative inline-block text-white  z-10 xl:hidden pt-4"
+              className="relative inline-block text-white  z-30 xl:hidden pt-4 "
             >
               {/* md:hidden makes it so the dropdown will be hidden if the screen is enlarged from a small screen. Important because the hamburger button disappears on medium screens */}
 

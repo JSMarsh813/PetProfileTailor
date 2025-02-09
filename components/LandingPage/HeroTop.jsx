@@ -25,11 +25,6 @@ const HeroTop = ({
     <div
       className="hero min-h-fit font-serif 
 border-y-4 border-darkPurple bg-black"
-      // style={{
-      //   backgroundImage: `url(${hover ? "/pugStillImage.png" : "/pugs.webp"})`,
-      //   fontFamily: "Comfortaa",
-      // }  }
-
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >
