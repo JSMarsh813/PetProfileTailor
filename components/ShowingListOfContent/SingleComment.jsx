@@ -21,11 +21,16 @@ function CommentListing({
   replyingtothisid,
   rootComment,
   sessionFromServer,
+  signedInUsersId,
   typeOfContentReplyingTo,
   replyingtothiscontent,
   apilink,
   apilinklikes,
+  setDeleteThisContentId,
 }) {
+  let contentCreatedBy = rootComment.createdby._id;
+  let userIsTheCreator = contentCreatedBy === signedInUsersId;
+
   const [replying, setReplying] = useState(false);
 
   const [commentParentId, setCommentParentId] = useState(null);

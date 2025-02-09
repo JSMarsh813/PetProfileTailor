@@ -8,6 +8,7 @@ async function handler(req, res) {
   }
 
   //session info
+
   const user = req.body.session.user;
 
   // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.
@@ -49,7 +50,7 @@ async function handler(req, res) {
 
   toUpdateComment.likedby.includes(user._id)
     ? (toUpdateComment.likedby = toUpdateComment.likedby.filter(
-        (userinlikedby) => userinlikedby != user._id
+        (userinlikedby) => userinlikedby != user._id,
       ))
     : (toUpdateComment.likedby = toUpdateComment.likedby.concat(user._id));
 

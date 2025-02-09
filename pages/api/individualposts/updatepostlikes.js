@@ -13,12 +13,13 @@ async function handler(req, res) {
   // }
 
   //session info
-  const user = req.body.session.user;
+  console.log(`this is request body ${JSON.stringify(req.body)}`);
+  const userId = req.body.signedInUsersId;
+  const postId = req.body.currentTargetedId;
 
   // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.
-  const nameId = req.body.currentTargetedId; //
 
-  let idToObjectId = mongoose.Types.ObjectId(nameId);
+  let idToObjectId = mongoose.Types.ObjectId(postId);
 
   //result: new ObjectId("63b7fe4362bf243a197c505d")
 
@@ -33,11 +34,11 @@ async function handler(req, res) {
   // use the model we're updating,IndividualNames. Look through it to find the one document we're looking for with the name's id.
   const toUpdatePost = await IndividualPosts.findById(idToObjectId);
 
-  toUpdatePost.likedby.includes(user._id)
+  toUpdatePost.likedby.includes(userId)
     ? (toUpdatePost.likedby = toUpdatePost.likedby.filter(
-        (userinlikedby) => userinlikedby != user._id,
+        (userinlikedby) => userinlikedby != userId,
       ))
-    : (toUpdatePost.likedby = toUpdatePost.likedby.concat(user._id));
+    : (toUpdatePost.likedby = toUpdatePost.likedby.concat(userId));
 
   await toUpdatePost.save();
 

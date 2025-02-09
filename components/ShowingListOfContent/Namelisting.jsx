@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 
-function Namelisting({ name, session }) {
+function Namelisting({ name, session, signedInUsersId }) {
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
   let [openComment, SetOpenComments] = useState(false);
 
@@ -11,6 +11,7 @@ function Namelisting({ name, session }) {
       <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">
         <LikesButtonAndLikesLogic
           data={name}
+          signedInUsersid={signedInUsersId}
           currentTargetedId={currentTargetedId}
           session={session}
           apiLink="/api/auth/updateLikes"

@@ -30,7 +30,7 @@ const namecommentSchema = new mongoose.Schema(
     flaggedby: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        default: [],
         ref: "User",
       },
     ],
