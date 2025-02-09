@@ -328,7 +328,7 @@ export default function Dashboard({
                     <NameListingAsSections
                       name={name}
                       key={name._id}
-                      sessionFromServer={sessionFromServer}
+                      signedInUsersId={sessionFromServer.user._id}
                       tagList={NameTagListProp}
                     />
                   );
@@ -397,6 +397,7 @@ export default function Dashboard({
                     post={post}
                     key={post._id}
                     className="mx-auto"
+                    signedInUsersId={sessionFromServer.user._id}
                     sessionFromServer={sessionFromServer}
                     tagListProp={tagListProp}
                   />

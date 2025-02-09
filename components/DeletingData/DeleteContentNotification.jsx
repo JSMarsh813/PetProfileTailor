@@ -8,9 +8,7 @@ export default function deleteContentNotification({
   contentId,
   signedInUsersId,
   contentCreatedBy,
-  changeContentState,
-  setUpdateListOfContent,
-  listOfContent,
+
   apiLink,
   setDeleteThisContentId,
 }) {
