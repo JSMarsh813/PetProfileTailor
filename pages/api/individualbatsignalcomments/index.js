@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
     try {
       const toUpdateBatSignalComment = await BatSignalComment.findById(
-        commentId
+        commentId,
       );
 
       toUpdateBatSignalComment.description = description;
@@ -81,8 +81,9 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
-      let idToObjectId = mongoose.Types.ObjectId(req.body.commentId);
-      const test = await BatSignalComment.deleteOne({ _id: idToObjectId });
+      // let idToObjectId = mongoose.Types.ObjectId(req.body.commentId);
+      let contentId = req.body.contentId;
+      const test = await BatSignalComment.deleteOne({ _id: contentId });
       res.status(200).json({ success: true, msg: `Comment Deleted ${test}` });
     } catch (err) {
       res.status(500).json(err);

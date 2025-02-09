@@ -57,7 +57,6 @@ export default function DeleteButton({
                 signedInUsersId={signedInUsersId}
                 contentCreatedBy={contentCreatedBy}
                 setDeleteThisContentId={setDeleteThisContentId}
-                // changeContentState={changeContentState}
                 apiLink={apiLink}
               />
             </DialogPanel>

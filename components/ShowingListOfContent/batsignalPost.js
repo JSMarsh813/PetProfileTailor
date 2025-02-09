@@ -14,6 +14,7 @@ import Image from "next/image";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 import { useRouter } from "next/router";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
+import removeDeletedContent from "../DeletingData/RemoveDeletedContent";
 
 function BatsignalPost({
   className,
@@ -46,6 +47,7 @@ function BatsignalPost({
 
   //for comments
   const [commentsShowing, SetCommentsShowing] = useState(false);
+  const [deleteThisCommentId, setDeleteThisCommentId] = useState(null);
 
   let rootComments = [];
 
@@ -98,10 +100,6 @@ function BatsignalPost({
     // https://www.reddit.com/r/learnreactjs/comments/m99nbz/is_it_a_good_practice_to_pass_setstate_of_one/
   }
 
-  function updateDeleteState() {
-    setShowDeleteConfirmation(true);
-  }
-
   function updateCommentShowState() {
     SetCommentsShowing(!commentsShowing);
   }
@@ -109,6 +107,19 @@ function BatsignalPost({
   function onClickShowShares() {
     setShareSectionShowing(!shareSectionShowing);
   }
+
+  useEffect(() => {
+    console.log(`this is the commentid to delete ${deleteThisCommentId}`);
+
+    if (deleteThisCommentId !== null) {
+      removeDeletedContent(
+        setPostsCommentsFromFetch,
+        postsCommentsFromFetch,
+        deleteThisCommentId,
+        setDeleteThisCommentId,
+      );
+    }
+  }, [deleteThisCommentId]);
 
   return (
     <div
@@ -240,6 +251,7 @@ function BatsignalPost({
               sessionFromServer={sessionFromServer}
               apiLink="/api/individualbatsignalcomments/"
               likesApiLink="/api/individualbatsignalcomments/updatecommentlikes"
+              setDeleteThisContentId={setDeleteThisCommentId}
             />
           ))}
       </div>

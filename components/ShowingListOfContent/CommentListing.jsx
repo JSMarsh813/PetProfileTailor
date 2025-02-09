@@ -10,7 +10,7 @@ import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import DeleteButton from "../DeletingData/DeleteButton";
 
 import EditComment from "../EditingData/EditComment";
-
+import removeDeletedContent from "../DeletingData/RemoveDeletedContent";
 import DeleteCommentNotification from "../DeletingData/DeleteContentNotification";
 
 import { useRouter } from "next/router";
@@ -30,7 +30,9 @@ function CommentListing({
   listOfContent,
   typeOfContentReplyingTo,
   replyingtothiscontent,
+  setDeleteThisContentId,
 }) {
+  const [deleteThisReplyId, setDeleteThisReplyId] = useState(null);
   const [replying, setReplying] = useState(false);
   const [listOfReplies, setListOfReplies] = useState(replies);
   const [commentParentId, setCommentParentId] = useState(null);
@@ -49,6 +51,17 @@ function CommentListing({
   let [currentTargetedId, setCurrentTargetedDescriptionId] = useState(
     rootComment._id,
   );
+
+  useEffect(() => {
+    if (deleteThisReplyId !== null) {
+      removeDeletedContent(
+        setListOfReplies,
+        listOfReplies,
+        deleteThisReplyId,
+        setDeleteThisReplyId,
+      );
+    }
+  }, [deleteThisReplyId]);
 
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
@@ -70,21 +83,11 @@ function CommentListing({
   //for editing
   const [showEditPage, SetShowEditPage] = useState(false);
 
-  const router = useRouter();
   const [commentChanged, setCommentChanged] = useState(false);
 
   function updateEditState() {
     SetShowEditPage(true);
   }
-
-  // if (commentChanged) {
-  //   const forceReload = () => {
-  //     router.reload();
-  //   };
-
-  //   forceReload();
-  //   setCommentChanged(false);
-  // }
 
   //for shares
   function onClickShowShares() {
@@ -149,9 +152,9 @@ function CommentListing({
                     contentId={rootComment._id}
                     setUpdateListOfContent={setListOfReplies}
                     listOfContent={listOfReplies}
-                    // changeContentState={setCommentChanged}
                     contentCreatedBy={rootComment.createdby._id}
                     apiLink={apiLink}
+                    setDeleteThisContentId={setDeleteThisContentId}
                   />
                 </div>
               )}
@@ -222,12 +225,11 @@ function CommentListing({
                   rootComment={reply}
                   replies={null}
                   signedInUsersId={signedInUsersId}
-                  updateListOfReplies={listOfReplies}
-                  listOfContent={listOfReplies}
                   sessionFromServer={sessionFromServer}
                   apiLink={apiLink}
                   likesApiLink={likesApiLink}
                   typeOfContentReplyingTo="name"
+                  setDeleteThisContentId={setDeleteThisReplyId}
                 />
               </div>
             );
