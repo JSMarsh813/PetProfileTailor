@@ -13,7 +13,7 @@ import Image from "next/image";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
-import removeDeletedContent from "../DeletingData/RemoveDeletedContent";
+import removeDeletedContent from "../DeletingData/removeDeletedContent";
 
 function BatsignalPost({
   className,

@@ -8,8 +8,7 @@ import GeneralButton from "../components/ReusableSmallComponents/buttons/General
 import AddPost from "../components/AddingNewData/AddPost";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import Image from "next/image";
-import removeDeletedContent from "../components/DeletingData/RemoveDeletedContent";
-
+import removeDeletedContent from "../components/DeletingData/removeDeletedContent";
 import dbConnect from "../utils/db";
 import Pagination from "../components/ShowingListOfContent/pagination";
 

@@ -10,7 +10,7 @@ import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import DeleteButton from "../DeletingData/DeleteButton";
 
 import EditComment from "../EditingData/EditComment";
-import removeDeletedContent from "../DeletingData/RemoveDeletedContent";
+import removeDeletedContent from "../DeletingData/removeDeletedContent";
 
 import { useRouter } from "next/router";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";

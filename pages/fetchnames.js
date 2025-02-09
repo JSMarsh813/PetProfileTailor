@@ -8,7 +8,7 @@ import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
-import removeDeletedContent from "../components/DeletingData/RemoveDeletedContent";
+import removeDeletedContent from "../components/DeletingData/removeDeletedContent";
 import dbConnect from "../utils/db";
 import Category from "../models/nameCategory";
 import NameTag from "../models/NameTag";

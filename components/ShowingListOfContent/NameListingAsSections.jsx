@@ -14,7 +14,7 @@ import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import FormFlagReport from "../Flagging/FormFlagReport";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
-import removeDeletedContent from "../DeletingData/RemoveDeletedContent";
+import removeDeletedContent from "../DeletingData/removeDeletedContent";
 
 export default function NameListingAsSections({
   name,

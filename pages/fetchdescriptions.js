@@ -6,7 +6,7 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections";
-import removeDeletedContent from "../components/DeletingData/RemoveDeletedContent";
+import removeDeletedContent from "../components/DeletingData/removeDeletedContent";
 import dbConnect from "../utils/db";
 import Category from "../models/descriptioncategory";
 import DescriptionTag from "../models/descriptiontag";
