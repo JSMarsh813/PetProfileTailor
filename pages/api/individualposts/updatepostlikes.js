@@ -7,32 +7,20 @@ async function handler(req, res) {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  // const session = await getSession({ req });
-  // if (!session) {
-  //   return res.status(401).send({ message: "signin required" });
-  // }
-
-  //session info
-  console.log(`this is request body ${JSON.stringify(req.body)}`);
-  const userId = req.body.signedInUsersId;
   const postId = req.body.currentTargetedId;
+  const userId = req.body.signedInUsersId;
 
-  // the things we're sending to update. In this case, we're sending the names id in the request and then writing the logic later to determine what to change the current array to.
-
-  let idToObjectId = mongoose.Types.ObjectId(postId);
+  await db.connect();
 
   //result: new ObjectId("63b7fe4362bf243a197c505d")
-
+  // let idToObjectId = mongoose.Types.ObjectId(postId);
   // change the string id into an objectId, so it can be compared to the name's object id in the MongoDB database.
   //  CHANGE TO MONGODB ID  https://stackoverflow.com/questions/56592063/how-to-convert-a-string-to-a-mongodb-objectid
 
   // "63ae16a9f202c8bf57525455", is stored in nameId
   //Object { currentTargetedNameId: "63ae16a9f202c8bf57525455" }
 
-  await db.connect();
-
-  // use the model we're updating,IndividualNames. Look through it to find the one document we're looking for with the name's id.
-  const toUpdatePost = await IndividualPosts.findById(idToObjectId);
+  const toUpdatePost = await IndividualPosts.findById(postId);
 
   toUpdatePost.likedby.includes(userId)
     ? (toUpdatePost.likedby = toUpdatePost.likedby.filter(

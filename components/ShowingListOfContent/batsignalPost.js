@@ -180,6 +180,7 @@ function BatsignalPost({
           <div className="flex border-y-2 border-slate-200 py-2 bg-violet-900 text-white justify-between">
             <LikesButtonAndLikesLogic
               data={post}
+              signedInUsersId={signedInUsersId}
               currentTargetedId={currentTargetedId}
               HeartIconStyling="text-3xl"
               session={sessionFromServer}

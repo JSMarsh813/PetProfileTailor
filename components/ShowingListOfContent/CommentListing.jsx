@@ -117,6 +117,7 @@ function CommentListing({
                 data={rootComment}
                 HeartIconStyling="text-3xl"
                 HeartIconTextStyling="text-darkPurple ml-2"
+                signedInUsersId={signedInUsersId}
                 session={sessionFromServer}
                 apiLink={likesApiLink}
               />
