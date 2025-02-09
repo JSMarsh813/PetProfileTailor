@@ -14,12 +14,12 @@ const MediaObjectRight = ({
   imgheight,
 }) => {
   return (
-    (<div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
+    <div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
       <div
         className="max-w-md ml-4 mr-8 self-center 
     "
       >
-        <ul className="text-lg text-white pb-8 ">
+        <ul className="text-base md:text-lg text-white pb-8 ">
           {listOfText.map((sentence) => (
             <ListWithPawPrintIcon
               text={sentence}
@@ -58,10 +58,11 @@ const MediaObjectRight = ({
           sizes="100vw"
           style={{
             width: "100%",
-            height: "auto"
-          }} />
+            height: "auto",
+          }}
+        />
       </div>
-    </div>)
+    </div>
   );
 };
 export default MediaObjectRight;

@@ -14,7 +14,7 @@ const MediaObject = ({
   imgheight,
 }) => {
   return (
-    (<div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
+    <div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
       <div
         className="self-center 
             shadow-lg shadow-slate-900/70
@@ -28,14 +28,15 @@ const MediaObject = ({
           alt={alttext}
           style={{
             maxWidth: "100%",
-            height: "auto"
-          }} />
+            height: "auto",
+          }}
+        />
       </div>
       <div
         className="max-w-1/2  mr-8 self-center 
   "
       >
-        <ul className="text-lg text-white pb-8 pl-4">
+        <ul className="text-base md:text-lg text-white pb-8 pl-4">
           {listOfText.map((sentence) => (
             <ListWithPawPrintIcon
               text={sentence}
@@ -63,7 +64,7 @@ const MediaObject = ({
           )}
         </div>
       </div>
-    </div>)
+    </div>
   );
 };
 export default MediaObject;

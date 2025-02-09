@@ -57,14 +57,14 @@ border-y-4 border-darkPurple bg-black"
       </div>
       <div className="hero-content text-center text-neutral-content mb-10 z-20">
         <div className="max-w-xl text-white">
-          <h1 className="mb-5 text-3xl md:text-5xl text-yellow-300 font-black">
+          <h1 className="mb-5 text-3xl md:text-4xl text-yellow-300 font-black">
             Welcome to <br /> Tailored Pet Names!
           </h1>
-          <p className="mb-5 text-xl">
+          <p className="mb-5 text-base md:text-xl">
             Naming your new pet or creating engaging profiles for adoptable pets
             can feel ruff! We&apos;ve been there! And we&apos;re here to help.
           </p>
-          <p className="mb-5 text-xl">
+          <p className="mb-5 text-base md:text-xl">
             Tailored Pet Names is a community powered assistant which helps you
             find that perfect name or create pet profiles which are:
           </p>
@@ -78,7 +78,7 @@ border-y-4 border-darkPurple bg-black"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 font-black text-base h-16
+                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 font-black text-md md:text-base h-16
                            
                            hover:text-yellow-300"
                 onClick={updateImpactfulState}
@@ -95,7 +95,7 @@ border-y-4 border-darkPurple bg-black"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 text-base h-16
+                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 text-md md:text-base h-16
                             
                             hover:text-yellow-300"
                 onClick={updateFunState}
@@ -111,7 +111,7 @@ border-y-4 border-darkPurple bg-black"
                 color="yellow"
               />
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300  text-violet-900 text-base h-16
+                className="btn btn-primary w-full mt-2 bg-yellow-300  text-violet-900 text-md md:text-base h-16
                                
                                hover:text-yellow-300"
                 onClick={updateTailorState}
