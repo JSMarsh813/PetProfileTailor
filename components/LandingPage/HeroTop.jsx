@@ -33,7 +33,7 @@ border-y-4 border-darkPurple bg-black"
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >
-      <div className="hero-overlay relative w-screen z-20 opacity-20">
+      <div className="hero-overlay relative w-screen z-10 opacity-20">
         {hover ? (
           <Image
             priority
@@ -55,9 +55,9 @@ border-y-4 border-darkPurple bg-black"
           />
         )}
       </div>
-      <div className="hero-content text-center text-neutral-content mb-10">
+      <div className="hero-content text-center text-neutral-content mb-10 z-20">
         <div className="max-w-xl text-white">
-          <h1 className="mb-5 text-5xl text-yellow-300 font-black">
+          <h1 className="mb-5 text-3xl md:text-5xl text-yellow-300 font-black">
             Welcome to <br /> Tailored Pet Names!
           </h1>
           <p className="mb-5 text-xl">
