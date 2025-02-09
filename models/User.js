@@ -31,6 +31,7 @@ const UserSchema = new mongoose.Schema(
     blockedusers: [
       {
         type: mongoose.Schema.Types.ObjectId,
+        default: [],
         ref: "User",
       },
     ],

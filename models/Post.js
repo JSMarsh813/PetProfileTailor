@@ -31,7 +31,7 @@ const PostSchema = new mongoose.Schema(
     ],
     createdby: {
       type: mongoose.Schema.Types.ObjectId,
-      required: false,
+      required: true,
       ref: "User",
     },
     shares: {
@@ -42,11 +42,12 @@ const PostSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
+        default: [],
       },
     ],
     taglist: {
       type: Array,
-      required: true,
+      default: [],
     },
   },
   { timestamps: true },

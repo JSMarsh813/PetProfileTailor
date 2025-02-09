@@ -45,6 +45,7 @@ const BatSignalCommentSchema = new mongoose.Schema(
     likedby: [
       {
         type: mongoose.Schema.Types.ObjectId,
+        default: [],
         ref: "User",
       },
     ],

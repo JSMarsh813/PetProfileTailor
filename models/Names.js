@@ -14,7 +14,7 @@ const NameSchema = new mongoose.Schema({
   tags: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      default: [],
       ref: "NameTag",
     },
   ],
@@ -31,12 +31,13 @@ const NameSchema = new mongoose.Schema({
   likedby: [
     {
       type: mongoose.Schema.Types.ObjectId,
+      default: [],
       ref: "User",
     },
   ],
   createdby: {
     type: mongoose.Schema.Types.ObjectId,
-    required: false,
+    required: true,
     ref: "User",
   },
 });
