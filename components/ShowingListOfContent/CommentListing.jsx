@@ -11,7 +11,6 @@ import DeleteButton from "../DeletingData/DeleteButton";
 
 import EditComment from "../EditingData/EditComment";
 import removeDeletedContent from "../DeletingData/RemoveDeletedContent";
-import DeleteCommentNotification from "../DeletingData/DeleteContentNotification";
 
 import { useRouter } from "next/router";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";

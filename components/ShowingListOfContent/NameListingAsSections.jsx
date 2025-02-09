@@ -3,7 +3,7 @@ import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesBu
 import FlagButtonAndLogic from "../Flagging/FlagButtonAndLogic";
 import DeleteButton from "../DeletingData/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
-import DeleteItemNotification from "../DeletingData/DeleteItemNotification";
+
 import EditName from "../EditingData/EditName";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";

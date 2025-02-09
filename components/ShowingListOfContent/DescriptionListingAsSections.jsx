@@ -3,11 +3,11 @@ import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesBu
 import DeleteButton from "../DeletingData/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import { useRouter } from "next/router";
-import DeleteItemNotification from "../DeletingData/DeleteItemNotification";
+
 import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
-import FormFlagReport from "../Flagging/FormFlagReport";
+
 import Image from "next/image";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
@@ -145,17 +145,6 @@ export default function DescriptionListingAsSections({
               <span className="">@{description.createdby.profilename}</span>
             </div>
           </a>
-
-          {/* {showDeleteConfirmation && (
-            <DeleteItemNotification
-              setShowDeleteConfirmation={setShowDeleteConfirmation}
-              signedInUsersId={signedInUsersId}
-              itemId={description._id}
-              itemCreatedBy={description.createdby._id}
-              deletionApiPath="/api/description/"
-              setEditedFunction={setItemEditedFunction}
-            />
-          )} */}
 
           {showEditPage && (
             <EditDescription

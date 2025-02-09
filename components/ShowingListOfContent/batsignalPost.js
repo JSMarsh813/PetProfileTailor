@@ -6,13 +6,12 @@ import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesBu
 import EditPost from "../EditingData/EditPost";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import DeleteButton from "../DeletingData/DeleteButton";
-import DeletePostNotification from "../DeletingData/DeletePostNotification";
 import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import PostersImageUsernameProfileName from "../ReusableSmallComponents/PostersImageUsernameProfileName";
 import Image from "next/image";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
-import { useRouter } from "next/router";
+
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import removeDeletedContent from "../DeletingData/RemoveDeletedContent";
 
