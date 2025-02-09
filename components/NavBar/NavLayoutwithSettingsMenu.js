@@ -91,7 +91,7 @@ export default function NavLayoutwithSettingsMenu({
               {userName != "" ? (
                 <Menu
                   as="div"
-                  className="relative inline-block text-left z-10"
+                  className="relative inline-block text-left z-30"
                 >
                   <Menu.Button
                     className="inline-flex justify-center 
@@ -126,7 +126,7 @@ export default function NavLayoutwithSettingsMenu({
                     />
                   </Menu.Button>
 
-                  <Menu.Items className="absolute font-bold right-0 w-56 origin-top-right bg-violet-800 text-white shadow-lg ">
+                  <Menu.Items className="absolute font-bold right-0 w-56 z-30 origin-top-right bg-violet-800 text-white shadow-lg ">
                     <Menu.Item>
                       {({ active }) => (
                         <MyLink
@@ -180,7 +180,7 @@ export default function NavLayoutwithSettingsMenu({
               ) : (
                 <Menu
                   as="div"
-                  className="relative inline-block text-left z-10"
+                  className="relative inline-block text-left z-30"
                 >
                   <Menu.Button
                     className="inline-flex justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium         text-yellow-400

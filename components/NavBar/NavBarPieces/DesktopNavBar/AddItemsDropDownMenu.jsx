@@ -14,7 +14,7 @@ import { forwardRef } from "react";
 const MyLink = forwardRef((props, ref) => {
   let { href, active, children, ...rest } = props;
   return (
-    (<Link
+    <Link
       href={href}
       ref={ref}
       className={`block rounded-md px-2 py-2 text-md
@@ -23,11 +23,10 @@ const MyLink = forwardRef((props, ref) => {
       text-center                   
   ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
 `}
-      {...rest}>
-
+      {...rest}
+    >
       {children}
-
-    </Link>)
+    </Link>
   );
 });
 MyLink.displayName = "MyLink";
@@ -36,7 +35,7 @@ export default function DropDownMenu() {
   return (
     <Menu
       as="div"
-      className="relative inline-block text-left z-10"
+      className="relative inline-block text-left z-30"
     >
       <Menu.Button
         className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white align-middle
