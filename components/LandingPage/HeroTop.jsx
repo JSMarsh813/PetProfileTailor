@@ -6,7 +6,7 @@ import {
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-
+import Image from "next/image";
 const HeroTop = ({
   updateImpactfulState,
   updateFunState,
@@ -24,15 +24,37 @@ const HeroTop = ({
   return (
     <div
       className="hero min-h-fit font-serif 
-border-y-4 border-darkPurple"
-      style={{
-        backgroundImage: `url(${hover ? "/pugStillImage.png" : "/pugs.webp"})`,
-        fontFamily: "Comfortaa",
-      }}
+border-y-4 border-darkPurple bg-black"
+      // style={{
+      //   backgroundImage: `url(${hover ? "/pugStillImage.png" : "/pugs.webp"})`,
+      //   fontFamily: "Comfortaa",
+      // }  }
+
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >
-      <div className="hero-overlay bg-opacity-80"></div>
+      <div className="hero-overlay relative w-screen z-20 opacity-20">
+        {hover ? (
+          <Image
+            priority
+            src="/pugStillImage.png"
+            fill
+            className="opacity-80"
+            objectFit="cover"
+            objectPosition="center"
+            alt=""
+          />
+        ) : (
+          <Image
+            priority
+            src="/pugs.webp"
+            fill
+            objectFit="cover"
+            objectPosition="center"
+            alt=""
+          />
+        )}
+      </div>
       <div className="hero-content text-center text-neutral-content mb-10">
         <div className="max-w-xl text-white">
           <h1 className="mb-5 text-5xl text-yellow-300 font-black">
