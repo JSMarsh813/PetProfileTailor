@@ -115,7 +115,6 @@ function CommentListing({
 
           <div className="text-left ml-2 mt-2 grid grid-cols-2 gap-x-8">
             <div className="place-self-start">
-              {console.log(rootComment)}
               <LikesButtonAndLikesLogic
                 data={rootComment}
                 HeartIconStyling="text-3xl"
@@ -139,25 +138,24 @@ function CommentListing({
               />
             </div>
 
-            {sessionFromServer &&
-              rootComment.createdby._id == sessionFromServer.user._id && (
-                <div className="place-self-end mr-2">
-                  <EditButton
-                    className="mr-4"
-                    onupdateEditState={updateEditState}
-                  />
+            {userIsTheCreator && (
+              <div className="place-self-end mr-2">
+                <EditButton
+                  className="mr-4"
+                  onupdateEditState={updateEditState}
+                />
 
-                  <DeleteButton
-                    signedInUsersId={signedInUsersId}
-                    contentId={rootComment._id}
-                    setUpdateListOfContent={setListOfReplies}
-                    listOfContent={listOfReplies}
-                    contentCreatedBy={rootComment.createdby._id}
-                    apiLink={apiLink}
-                    setDeleteThisContentId={setDeleteThisContentId}
-                  />
-                </div>
-              )}
+                <DeleteButton
+                  signedInUsersId={signedInUsersId}
+                  contentId={rootComment._id}
+                  setUpdateListOfContent={setListOfReplies}
+                  listOfContent={listOfReplies}
+                  contentCreatedBy={rootComment.createdby._id}
+                  apiLink={apiLink}
+                  setDeleteThisContentId={setDeleteThisContentId}
+                />
+              </div>
+            )}
 
             {showEditPage && (
               <EditComment
@@ -169,17 +167,6 @@ function CommentListing({
                 apiLink={apiLink}
               />
             )}
-
-            {/* {showDeleteConfirmation && (
-              <DeleteCommentNotification
-                setShowDeleteConfirmation={setShowDeleteConfirmation}
-                sessionFromServer={sessionFromServer}
-                changeCommentState={setCommentChanged}
-                commentId={rootComment._id}
-                commentCreatedBy={rootComment.createdby._id}
-                apiLink={apiLink}
-              />
-            )} */}
           </div>
 
           <FlaggingContentSection
@@ -206,7 +193,7 @@ function CommentListing({
               apiLink={apiLink}
               replyingtothisid={rootComment.replyingtothisid}
               parentcommentid={adjustedParentId}
-              sessionFromServer={sessionFromServer}
+              signedInUsersId={signedInUsersId}
               replyingtothiscontent={replyingtothiscontent}
             />
           )}

@@ -14,6 +14,7 @@ import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import FormFlagReport from "../Flagging/FormFlagReport";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
+import removeDeletedContent from "../DeletingData/RemoveDeletedContent";
 
 export default function NameListingAsSections({
   name,
@@ -46,11 +47,20 @@ export default function NameListingAsSections({
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
   const localLink = `/name/${name.name}`;
 
-  // ##for the delete notification button #####
+  const [deleteThisCommentId, setDeleteThisCommentId] = useState(null);
 
-  function updateDeleteState() {
-    setShowDeleteConfirmation(true);
-  }
+  useEffect(() => {
+    console.log(`this is the commentid to delete ${deleteThisCommentId}`);
+
+    if (deleteThisCommentId !== null) {
+      removeDeletedContent(
+        setCommentsFromFetch,
+        commentsFromFetch,
+        deleteThisCommentId,
+        setDeleteThisCommentId,
+      );
+    }
+  }, [deleteThisCommentId]);
 
   // ### for the edit notification button
   function onupdateEditState() {
@@ -236,15 +246,16 @@ export default function NameListingAsSections({
           {rootComments.map((comment) => {
             return (
               <CommentListing
-                typeOfContentReplyingTo="name"
-                key={comment._id}
+                replyingtothisid={comment.replyingtothisid}
                 rootComment={comment}
                 replies={replyComments}
-                replyingtothisid={comment.replyingtothisid}
                 signedInUsersId={signedInUsersId}
                 apiLink="/api/namecomments/"
                 likesApiLink="/api/namecomments/updatenamecommentlikes"
+                typeOfContentReplyingTo="name"
+                key={comment._id}
                 replyingtothiscontent={name.name}
+                setDeleteThisContentId={setDeleteThisCommentId}
               />
             );
           })}

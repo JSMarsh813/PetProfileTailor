@@ -87,6 +87,7 @@ export default async function handler(req, res) {
 
   if (method === "DELETE") {
     try {
+      console.log(`this is deletes request body in namecomment ${req.body}`);
       let idToObjectId = mongoose.Types.ObjectId(req.body.commentId);
       const test = await NameComment.deleteOne({ _id: idToObjectId });
       res.status(200).json({ success: true, msg: `Comment Deleted ${test}` });

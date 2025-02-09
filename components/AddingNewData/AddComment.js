@@ -9,6 +9,7 @@ function AddComment({
   parentcommentid,
   sessionFromServer,
   apiLink,
+  signedInUsersId,
 }) {
   const [showCommentForm, setShowCommentForm] = useState(false);
   const [description, setDescription] = useState("");
@@ -16,7 +17,7 @@ function AddComment({
   const [image, setImage] = useState([]);
 
   useEffect(() => {
-    setCreatedBy(sessionFromServer ? sessionFromServer.user._id : "");
+    setCreatedBy(signedInUsersId);
   }, [sessionFromServer]);
 
   const commentSubmission = async (e) => {
