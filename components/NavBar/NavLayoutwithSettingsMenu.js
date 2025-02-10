@@ -159,7 +159,7 @@ export default function NavLayoutwithSettingsMenu({
                           href={`/editsettings`}
                           active={active}
                         >
-                          Edit Settings
+                          Settings
                         </MyLink>
                       )}
                     </Menu.Item>
