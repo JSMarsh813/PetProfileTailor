@@ -133,7 +133,7 @@ export default function NameListingAsSections({
             HeartIconTextStyling="ml-2"
             currentTargetedId={currentTargetedId}
             signedInUsersId={signedInUsersId}
-            apiLink="/api/auth/updateLikes"
+            apiLink="/api/names/updateLikes"
           />
 
           <ShareButton onClickShowShares={onClickShowShares} />

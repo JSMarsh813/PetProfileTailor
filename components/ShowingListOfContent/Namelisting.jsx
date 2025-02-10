@@ -14,7 +14,7 @@ function Namelisting({ name, session, signedInUsersId }) {
           signedInUsersid={signedInUsersId}
           currentTargetedId={currentTargetedId}
           session={session}
-          apiLink="/api/auth/updateLikes"
+          apiLink="/api/names/updateLikes"
         />
       </td>
       {/* end of likes checkbox section*/}
