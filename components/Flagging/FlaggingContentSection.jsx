@@ -90,7 +90,7 @@ export default function FlaggingContentSection({
       <div classcontent=" bg-violet-900">
         <FlagButtonAndLogic
           data={content}
-          FlagIconStyling="text-3xl my-auto mx-auto pt-4"
+          FlagIconStyling="text-xl my-auto mx-auto pt-4"
           FlagIconTextStyling="ml-2 inline-block pb-4"
           currentTargetedId={currentTargetedId}
           signedInUsersId={signedInUsersId}

@@ -31,7 +31,7 @@ export default function DeleteButton({
 
         <FontAwesomeIcon
           icon={faTrashCan}
-          className="text-3xl justify-self-end text-rose-500"
+          className="text-xl justify-self-end text-rose-500"
         />
       </label>
 

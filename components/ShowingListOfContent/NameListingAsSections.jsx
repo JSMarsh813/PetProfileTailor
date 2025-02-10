@@ -129,7 +129,7 @@ export default function NameListingAsSections({
         <div className="w-full flex justify-evenly mt-2">
           <LikesButtonAndLikesLogic
             data={name}
-            HeartIconStyling="text-3xl ml-2"
+            HeartIconStyling="text-xl ml-2"
             HeartIconTextStyling="ml-2"
             currentTargetedId={currentTargetedId}
             signedInUsersId={signedInUsersId}
@@ -149,12 +149,12 @@ export default function NameListingAsSections({
         </div>
         {/* ###### DESCRIPTION SECTION #### */}
         <span className="pb-2">
-          {name.description[0] == "" ? "no description" : name.description}
+          Description: {name.description[0] == "" ? "no description" : name.description}
         </span>
 
         {/* ###### TAGS SECTION #### */}
         <span className="pb-2">
-          {name.tags.map((names) => names.tag).join(", ")}
+          Tags: {name.tags[0] == null ? "no tags" : name.tags.map((names) => names.tag).join(", ")}
         </span>
 
         {/* ###### CREATEDBY SECTION #### */}

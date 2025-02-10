@@ -97,8 +97,11 @@ export default function DescriptionListingAsSections({
         />
 
         {/* ###### TAGS SECTION #### */}
-        <span className="text-amber-100 font-bold">Tags: </span>
-        <p className="">{description.tags.map((tag) => tag.tag).join(",  ")}</p>
+     
+        <p className="">  
+            <span className="text-amber-100 font-bold">Tags: </span> 
+            {description.tags.map((tag) => tag.tag).join(",  ")}
+        </p>
 
         <div className="text-center">
           <ShareButton onClickShowShares={onClickShowShares} />

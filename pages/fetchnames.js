@@ -6,7 +6,6 @@ import { unstable_getServerSession } from "next-auth/next";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
-import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
 import removeDeletedContent from "../components/DeletingData/removeDeletedContent";
 import dbConnect from "../utils/db";
@@ -246,7 +245,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
           />
 
           <section className="w-full">
-            <HeadersForNames />
+         
             {isLoading && (
               <div className="flex">
                 <span className="text-white text-3xl my-20 mx-auto">

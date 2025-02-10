@@ -19,7 +19,7 @@ export default function ShareButton({
         />
         <FontAwesomeIcon
           icon={faShareFromSquare}
-          className={`text-3xl inline flex-1 ${shareIconStyling}`}
+          className={`text-xl inline flex-1 ${shareIconStyling}`}
         />
       </label>
     </span>
