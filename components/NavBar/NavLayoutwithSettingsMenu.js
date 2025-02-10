@@ -57,7 +57,7 @@ export default function NavLayoutwithSettingsMenu({
 
             <Menu
               as="div"
-              className="relative inline-block text-white  z-30 xl:hidden pt-4 "
+              className="relative inline-block text-white  z-30 lg:hidden pt-4 "
             >
               {/* md:hidden makes it so the dropdown will be hidden if the screen is enlarged from a small screen. Important because the hamburger button disappears on medium screens */}
 
@@ -78,7 +78,7 @@ export default function NavLayoutwithSettingsMenu({
 
             <MyLink
               className="text-lg font-extrabold text-yellow-300 
-              hidden  sm:block 
+              block 
               mx-auto ml-2 hover:text-violet-100"
               href={`/`}
             >

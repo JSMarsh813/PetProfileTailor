@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TagListing({content, text}) {
+export default function ParagraphRenderBasedOnArrayProperty({content, text}) {
   return (
     <p className="pb-2">  
     <span className="text-amber-100 font-bold">

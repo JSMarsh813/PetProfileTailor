@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags, faIgloo, faIdCard } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import NavBarLink from "../NavBarLink";
+import Image from "next/image";
 
 //onclick wrapped in spans due to this error https://github.com/vercel/next.js/discussions/39212
 
@@ -13,7 +14,7 @@ const NavBarNames = () => {
     <div className="divWhichHasBothMenus">
       {/* DESKTOP MENU */}
 
-      <section className="hidden xl:flex desktop-menu ">
+      <section className="hidden lg:flex desktop-menu ">
         <ul className="">
           <NavBarLink
             href="/"
@@ -21,7 +22,7 @@ const NavBarNames = () => {
           >
             <FontAwesomeIcon
               icon={faIgloo}
-              className="text-xl mr-1 text-white"
+              className="text-base mr-1 text-white"
             />
             Home
           </NavBarLink>
@@ -29,28 +30,31 @@ const NavBarNames = () => {
           <NavBarLink href="/fetchnames">
             <FontAwesomeIcon
               icon={faTags}
-              className="text-xl mr-1 text-white"
+              className="text-base mr-1 text-white"
             />
-            Fetch Names
+            Names
           </NavBarLink>
 
           <NavBarLink href="/fetchdescriptions">
             <FontAwesomeIcon
               icon={faIdCard}
-              className="text-xl mr-1 text-white"
+              className="text-base mr-1 text-white"
             />
-            Fetch Descriptions
+            Descriptions
           </NavBarLink>
 
           <AddItemsDropDownMenu />
 
           <NavBarLink href="/community">
-            <img
-              className="h-5 inline-block invert"
-              src="/batsignal.png"
-              alt=""
-              layout="responsive"
-            />
+
+          <Image
+      src="/batsignal.png"
+      width={30}
+      height={20}
+       className="inline-block invert mr-1"
+    />
+
+     
             Community
           </NavBarLink>
         </ul>

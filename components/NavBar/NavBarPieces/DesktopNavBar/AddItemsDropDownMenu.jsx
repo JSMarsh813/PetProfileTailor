@@ -35,7 +35,7 @@ export default function DropDownMenu() {
   return (
     <Menu
       as="div"
-      className="relative inline-block text-left z-30"
+      className="relative inline-block text-left text-base z-30"
     >
       <Menu.Button
         className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white align-middle
@@ -53,7 +53,7 @@ export default function DropDownMenu() {
       >
         <FontAwesomeIcon
           icon={faCirclePlus}
-          className="text-xl mr-2 font-bold text-white "
+          className="text-base mr-2 font-bold text-white "
         />
 
         <span className="font-bold  text-white "> Add </span>
@@ -76,7 +76,7 @@ export default function DropDownMenu() {
             >
               <FontAwesomeIcon
                 icon={faTags}
-                className={`text-xl mr-1 
+                className={`text-base mr-1 
                       
                         
                         ${active ? "text-violet-800" : "text-violet-100"}`}
@@ -94,7 +94,7 @@ export default function DropDownMenu() {
             >
               <FontAwesomeIcon
                 icon={faIdCard}
-                className={`text-xl mr-1 
+                className={`text-base mr-1 
                       
                         
                         ${active ? "text-violet-800" : "text-violet-100"}`}
