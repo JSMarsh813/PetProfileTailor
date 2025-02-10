@@ -15,6 +15,8 @@ import FormFlagReport from "../Flagging/FormFlagReport";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 import removeDeletedContent from "../DeletingData/removeDeletedContent";
+import ParagraphRenderBasedOnArrayProperty from "./ParagraphRenderBasedOnArrayProperty";
+import ParagraphRenderBasedOnStringProperty from "./ParagraphRenderBasedOnStringProperty";
 
 export default function NameListingAsSections({
   name,
@@ -148,14 +150,15 @@ export default function NameListingAsSections({
           <span className="font-bold mx-auto"> {name.name} </span>
         </div>
         {/* ###### DESCRIPTION SECTION #### */}
-        <span className="pb-2">
-          Description: {name.description[0] == "" ? "no description" : name.description}
-        </span>
+      
+
+        <ParagraphRenderBasedOnStringProperty content={name} text="description"/>
+
+        
 
         {/* ###### TAGS SECTION #### */}
-        <span className="pb-2">
-          Tags: {name.tags[0] == null ? "no tags" : name.tags.map((names) => names.tag).join(", ")}
-        </span>
+        <ParagraphRenderBasedOnArrayProperty content={name} text="tag"/>
+       
 
         {/* ###### CREATEDBY SECTION #### */}
         <section
