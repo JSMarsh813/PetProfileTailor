@@ -63,7 +63,7 @@ export default function deleteContentNotification({
                      border-2 border-violet-400 border-dotted 
                      p-4 shadow-lg max-w-3xl"
                 >
-                  <div class="relative p-4 text-center rounded-lg shadow dark:bg-darkPurple sm:p-5">
+                  <div className="relative p-4 text-center rounded-lg shadow dark:bg-darkPurple sm:p-5">
                     {/* X Button and SVG Icon */}
 
                     <XSvgIcon
@@ -73,7 +73,7 @@ export default function deleteContentNotification({
 
                     {/* Trash can icon */}
                     <svg
-                      class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
+                      className="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
                       aria-hidden="true"
                       fill="white"
                       viewBox="0 0 20 20"
@@ -86,15 +86,15 @@ export default function deleteContentNotification({
                       ></path>
                     </svg>
 
-                    <p class="mb-4 text-gray-500 dark:text-gray-300">
+                    <p className="mb-4 text-gray-500 dark:text-gray-300">
                       Are you sure you want to delete this?
                     </p>
 
-                    <div class="flex justify-center items-center space-x-4">
+                    <div className="flex justify-center items-center space-x-4">
                       <button
                         data-modal-toggle="deleteModal"
                         type="button"
-                        class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 
+                        className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 
                 
                 hover:bg-gray-100 hover:text-gray-900 
                 
@@ -109,7 +109,7 @@ export default function deleteContentNotification({
 
                       <button
                         type="submit"
-                        class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
+                        className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
                         onClick={() => handleContentDelete()}
                       >
                         Yes, I&apos;m sure

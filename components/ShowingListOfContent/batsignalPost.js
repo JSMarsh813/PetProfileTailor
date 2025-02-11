@@ -36,62 +36,78 @@ function BatsignalPost({
   const postDate = post.createdAt;
 
   const shares = post.shares;
-  const likes = post.likes;
   const tagList = post.taglist.map((tag) => "#" + tag).join(", ");
   const postId = post._id;
-
   const showtime = true;
 
-  const [postsCommentsFromFetch, setPostsCommentsFromFetch] = useState([]);
-
-  //for comments
+  const [
+    postsCommentsAndRepliesFromFetch,
+    setPostsCommentsAndRepliesFromFetch,
+  ] = useState([]);
+  const [postsComments, setPostsComments] = useState([]);
+  const [repliesToComments, setRepliesToComments] = useState([]);
   const [commentsShowing, SetCommentsShowing] = useState(false);
+
+  // if a comment or reply is rendered, we'll retrigger the fetch so the list will get the new content added to it. React will see the new content then render the new comment or reply
+  const [thereIsANewComment, setThereIsANewComment] = useState(false);
+  const [thereIsANewReply, setThereIsANewReply] = useState(false);
+  //deletion
   const [deleteThisCommentId, setDeleteThisCommentId] = useState(null);
 
-  let rootComments = [];
-
-  if (postsCommentsFromFetch) {
-    rootComments = postsCommentsFromFetch.filter(
-      (comment) =>
-        comment.replyingtothisid === post._id &&
-        comment.parentcommentid === null,
-    );
-  }
-
-  let amountOfComments = rootComments.length;
+  let amountOfComments = postsCommentsAndRepliesFromFetch.length;
 
   //for editing
   const [showEditPage, SetShowEditPage] = useState(false);
-
-  //for deleting
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   //for showing share buttons
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/post/${post._id}`;
   const localLink = `/post/${post._id}`;
 
-  let replyComments = "";
-  if (postsCommentsFromFetch) {
-    replyComments = postsCommentsFromFetch.filter(
-      (comment) => comment.parentcommentid != null,
-    );
-  }
-  //for likes
-  const [currentTargetedId, setCurrentTargetedId] = useState(postId);
-  //if the post is edited, we will refresh this component
-
-  const handleFetchPosts = async () => {
+  // ### grab all the 1. post comments and 2. replies to comments for this post
+  const handleFetchPostsCommentsAndReplies = async () => {
     const response = await fetch(
       "/api/individualbatsignalcomments/commentscontainingpostid/" + postId,
     );
     const data = await response.json();
-    setPostsCommentsFromFetch(data);
+    setPostsCommentsAndRepliesFromFetch(data);
   };
 
   useEffect(() => {
-    handleFetchPosts();
+    handleFetchPostsCommentsAndReplies();
   }, []);
+
+  // ###### POST COMMENTS ONLY (responding to the post not replying to a comment)
+  useEffect(() => {
+    let topLevelComment = postsCommentsAndRepliesFromFetch.filter(
+      (comment) =>
+        comment.replyingtothisid === post._id &&
+        comment.parentcommentid === null,
+    );
+    setPostsComments(topLevelComment);
+  }, [postsCommentsAndRepliesFromFetch]);
+
+  // ######## REPLIES DATA (responding to a comment, not the post itself) ################
+
+  useEffect(() => {
+    // this will grab JUST the replies
+    // normal comments are not responding to another comment so their parent comment id is null
+    // replies WILL have a parentcomment
+    setRepliesToComments(
+      postsCommentsAndRepliesFromFetch.filter(
+        (comment) => comment.parentcommentid != null,
+      ),
+    );
+  }, [postsCommentsAndRepliesFromFetch, thereIsANewReply]);
+
+  // if a comment is added, grab the post's comments again. React will only render the new item
+  useEffect(() => {
+    if (thereIsANewComment !== false) {
+      handleFetchPostsCommentsAndReplies();
+      SetCommentsShowing(true);
+      setThereIsANewComment(false);
+    }
+  }, [thereIsANewComment]);
 
   function updateEditState() {
     SetShowEditPage(true);
@@ -107,13 +123,12 @@ function BatsignalPost({
     setShareSectionShowing(!shareSectionShowing);
   }
 
+  // if a comment is deleted, this will make it disappear from the screen without rerouting/refreshing the page
   useEffect(() => {
-    console.log(`this is the commentid to delete ${deleteThisCommentId}`);
-
     if (deleteThisCommentId !== null) {
       removeDeletedContent(
-        setPostsCommentsFromFetch,
-        postsCommentsFromFetch,
+        setPostsCommentsAndRepliesFromFetch,
+        postsCommentsAndRepliesFromFetch,
         deleteThisCommentId,
         setDeleteThisCommentId,
       );
@@ -125,6 +140,12 @@ function BatsignalPost({
       className="mx-auto sm:px-6 py-8 bg-darkPurple
              "
     >
+      <div>
+        <h3> comments</h3>
+        {JSON.stringify(postsComments)}
+        <h3> replies </h3>
+        {JSON.stringify(repliesToComments)}
+      </div>
       <span className="bg-white"></span>
       {/* above is the background of posts
                 below is the start of the post squares */}
@@ -191,7 +212,7 @@ function BatsignalPost({
             <LikesButtonAndLikesLogic
               data={post}
               signedInUsersId={signedInUsersId}
-              currentTargetedId={currentTargetedId}
+              currentTargetedId={postId}
               HeartIconStyling="text-3xl"
               session={sessionFromServer}
               apiLink="/api/individualposts/updatepostlikes"
@@ -211,7 +232,7 @@ function BatsignalPost({
           <FlaggingContentSection
             userIsTheCreator={userIsTheCreator}
             signedInUsersId={signedInUsersId}
-            currentTargetedId={currentTargetedId}
+            currentTargetedId={postId}
             contentType="post"
             content={post}
             apiflagReportSubmission="/api/flag/flagreportsubmission/"
@@ -221,9 +242,12 @@ function BatsignalPost({
           <AddComment
             replyingtothisid={postId}
             parentcommentid={null}
+            signedInUsersId={signedInUsersId}
             sessionFromServer={sessionFromServer}
             apiLink="/api/individualbatsignalcomments/"
             replyingtothiscontent="post"
+            setThereIsANewComment={setThereIsANewComment}
+            setThereIsANewReply={setThereIsANewReply}
           />
         </section>
 
@@ -238,19 +262,20 @@ function BatsignalPost({
         {/* ######## POST'S COMMENTS SECTION ###########*/}
 
         {commentsShowing &&
-          rootComments != [] &&
-          rootComments.map((comment) => (
+          postsComments.map((comment) => (
             <CommentListing
               key={comment._id}
               signedInUsersId={signedInUsersId}
               rootComment={comment}
-              replies={replyComments}
+              replies={repliesToComments}
               postid={postId}
               typeOfContentReplyingTo="post"
               sessionFromServer={sessionFromServer}
               apiLink="/api/individualbatsignalcomments/"
               likesApiLink="/api/individualbatsignalcomments/updatecommentlikes"
               setDeleteThisContentId={setDeleteThisCommentId}
+              setThereIsANewComment={setThereIsANewComment}
+              setThereIsANewReply={setThereIsANewReply}
             />
           ))}
       </div>

@@ -14,10 +14,13 @@ export default async function handler(req, res) {
 
   await dbConnect.connect();
 
+  {
+    console.log(`this is in comments containing post id ${postid}`);
+  }
   if (method === "GET") {
     try {
       const batSignalComments = await BatSignalComments.find({
-        postid: postid,
+        replyingtothisid: postid,
       }).populate({
         path: "createdby",
         select: ["name", "profilename", "profileimage"],

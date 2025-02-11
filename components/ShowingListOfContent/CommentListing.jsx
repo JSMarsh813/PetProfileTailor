@@ -12,7 +12,6 @@ import DeleteButton from "../DeletingData/DeleteButton";
 import EditComment from "../EditingData/EditComment";
 import removeDeletedContent from "../DeletingData/removeDeletedContent";
 
-import { useRouter } from "next/router";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
@@ -22,17 +21,17 @@ function CommentListing({
   rootComment,
   replies,
   sessionFromServer,
-  updateListOfReplies,
   signedInUsersId,
   apiLink,
   likesApiLink,
-  listOfContent,
   typeOfContentReplyingTo,
   replyingtothiscontent,
   setDeleteThisContentId,
+  setThereIsANewComment,
+  setThereIsANewReply,
 }) {
   const [deleteThisReplyId, setDeleteThisReplyId] = useState(null);
-  const [replying, setReplying] = useState(false);
+  const [showAddCommentForm, setShowAddCommentForm] = useState(false);
   const [listOfReplies, setListOfReplies] = useState(replies);
   const [commentParentId, setCommentParentId] = useState(null);
   const [postersName, setPostersName] = useState(rootComment.createdby.name);
@@ -127,7 +126,7 @@ function CommentListing({
                 icon={faCommentDots}
                 className="ml-2 mr-4 text-darkPurple text-3xl"
                 onClick={() => {
-                  setReplying(!replying);
+                  setShowAddCommentForm(!showAddCommentForm);
                 }}
               ></FontAwesomeIcon>
 
@@ -187,13 +186,16 @@ function CommentListing({
             </section>
           )}
 
-          {replying && (
+          {showAddCommentForm && (
             <AddComment
               apiLink={apiLink}
               replyingtothisid={rootComment.replyingtothisid}
               parentcommentid={adjustedParentId}
               signedInUsersId={signedInUsersId}
               replyingtothiscontent={replyingtothiscontent}
+              setThereIsANewComment={setThereIsANewComment}
+              setThereIsANewReply={setThereIsANewReply}
+              setShowAddCommentForm={setShowAddCommentForm}
             />
           )}
         </div>
@@ -216,6 +218,8 @@ function CommentListing({
                   likesApiLink={likesApiLink}
                   typeOfContentReplyingTo="name"
                   setDeleteThisContentId={setDeleteThisReplyId}
+                  setThereIsANewComment={setThereIsANewComment}
+                  setThereIsANewReply={setThereIsANewReply}
                 />
               </div>
             );

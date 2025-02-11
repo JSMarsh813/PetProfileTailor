@@ -10,6 +10,9 @@ function AddComment({
   sessionFromServer,
   apiLink,
   signedInUsersId,
+  setThereIsANewComment,
+  setThereIsANewReply,
+  setReplying,
 }) {
   const [showCommentForm, setShowCommentForm] = useState(false);
   const [description, setDescription] = useState("");
@@ -37,16 +40,19 @@ function AddComment({
       parentcommentid: parentcommentid,
       replyingtothisid: replyingtothisid,
       description: description,
-      createdby: createdby.toString(),
+      createdby: createdby,
       replyingtothiscontent: replyingtothiscontent,
     };
 
     await axios
       .post(apiLink, commentSubmission)
       .then((response) => {
-        const commentid = response.data._id;
-        const replyingtothisidresponse = response.data.replyingtothisid;
         toast.success(`Successfully added new comment!`);
+        // close reply form
+        // a comment has been added, so pass the true prop to the parent component, the parent component will refetch the data and render the new comment
+        setThereIsANewReply(false);
+        setThereIsANewComment(true);
+        setReplying(false);
       })
       .catch((error) => {
         console.log("this is error", error);
