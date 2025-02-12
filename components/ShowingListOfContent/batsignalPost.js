@@ -189,7 +189,7 @@ function BatsignalPost({
             <div className="md:flex-shrink-0 pt-4">
               <img
                 src={post.image}
-                alt={post.alttext}
+                alt={post.alttext || ""}
                 className="max-w-full mx-auto max-h-96 rounded-lg rounded-b-none"
               />
             </div>
@@ -262,11 +262,11 @@ function BatsignalPost({
         {/* ######## POST'S COMMENTS SECTION ###########*/}
 
         {commentsShowing &&
-          postsComments.map((comment) => (
+          postsComments.map((topLevelComment) => (
             <CommentListing
-              key={comment._id}
+              key={topLevelComment._id}
               signedInUsersId={signedInUsersId}
-              rootComment={comment}
+              rootComment={topLevelComment}
               replies={repliesToComments}
               postid={postId}
               typeOfContentReplyingTo="post"
