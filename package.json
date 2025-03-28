@@ -10,6 +10,7 @@
     "email": "email dev --dir components/EmailTemplates"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^1.0.12",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@etchteam/next-pagination": "^3.5.4",
@@ -22,13 +23,16 @@
     "@mui/material": "^5.11.14",
     "@next-auth/mongodb-adapter": "^1.1.1",
     "@nextui-org/react": "^1.0.0-beta.12",
+    "@radix-ui/react-slot": "^1.1.1",
     "@react-email/components": "^0.0.30",
     "@react-email/img": "0.0.11",
     "@sendgrid/mail": "^8.1.1",
     "@types/node": "^22.10.1",
     "@types/react": "^18.3.14",
+    "ai": "^4.0.23",
     "axios": "^1.2.1",
     "bcryptjs": "^2.4.3",
+    "class-variance-authority": "^0.7.1",
     "cloudinary": "^1.33.0",
     "daisyui": "^2.42.1",
     "datauri": "^4.1.0",
@@ -43,6 +47,7 @@
     "next-connect": "^0.13.0",
     "next-share": "^0.19.0",
     "nodemailer": "^6.9.16",
+    "openai": "^4.90.0",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
@@ -51,7 +56,9 @@
     "react-select": "^5.7.0",
     "react-toastify": "^9.1.1",
     "resend": "^4.0.1",
+    "shadcn": "^2.4.0-canary.17",
     "swr": "^2.1.0",
+    "tailwind-merge": "^2.6.0",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
