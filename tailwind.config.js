@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -15,24 +16,78 @@ module.exports = {
       },
       colors: {
         darkPurple: "#140223",
-        accent: "",
-        mainColor: "",
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
         secondaryColor: "rgb(243 232 255 / var(--tw-bg-opacity, 1))",
-        darkBackground: "",
-
         errorBackgroundColor: "rgb(30 41 59 / var(--tw-bg-opacity, 1))",
         errorTextColor: "rgb(255 255 255 / var(--tw-bg-opacity, 1))",
         errorBorderColor: "rgb(241 245 249 / var(--tw-bg-opacity, 1))",
-
-        buttonBackgroundColor: "",
-        buttonTextColor: "",
-        buttonBorderColor: "",
-
-        //22043b
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        primary: {
+          DEFAULT: "#140223", //dark purple
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        chart: {
+          1: "hsl(var(--chart-1))",
+          2: "hsl(var(--chart-2))",
+          3: "hsl(var(--chart-3))",
+          4: "hsl(var(--chart-4))",
+          5: "hsl(var(--chart-5))",
+        },
+        shiki: {
+          light: "var(--shiki-light)",
+          "light-bg": "var(--shiki-light-bg)",
+          dark: "var(--shiki-dark)",
+          "dark-bg": "var(--shiki-dark-bg)",
+        },
       },
       fontFamily: {},
       width: {
         "30rem": "40rem",
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "typing-dot-bounce": {
+          "0%,40%": {
+            transform: "translateY(0)",
+          },
+          "20%": {
+            transform: "translateY(-0.25rem)",
+          },
+        },
+      },
+      animation: {
+        "typing-dot-bounce": "typing-dot-bounce 1.25s ease-out infinite",
       },
     },
   },
@@ -40,5 +95,6 @@ module.exports = {
     require("@tailwindcss/forms"),
     require("daisyui"),
     require("@tailwindcss/forms"),
+    require("tailwindcss-animate"),
   ],
 };
