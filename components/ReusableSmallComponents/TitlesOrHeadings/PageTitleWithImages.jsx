@@ -17,7 +17,7 @@ export default function PageTitleWithImages({ imgSrc, title, title2 }) {
     font-semibold
     border-y-4 border-amber-300 absolute inset-0 my-auto"
         style={{
-          background: "hsla(260, 80%, 60%, 0.5)",
+          background: "hsla(240, 80%, 60%, 0.5)",
           backdropFilter: "blur(20px)",
         }}
       >

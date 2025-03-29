@@ -211,7 +211,7 @@ export function Chat({
       ) : null}
 
       <ChatForm
-        className="mt-auto border-4 border-black rounded-2xl"
+        className="mt-auto border-4 border-darkPurple rounded-2xl"
         isPending={isGenerating || isTyping}
         handleSubmit={handleSubmit}
       >

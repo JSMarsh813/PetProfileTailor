@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar/NavLayoutwithSettingsMenu";
 import { useSession } from "next-auth/react";
 
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
-import { ChatDemo } from "../components/AiChatSection";
+import { AiChatSection } from "../components/AiChatSection";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -73,9 +73,9 @@ export default function Custom404() {
         </section>
       </section>
 
-      <Card className="bg-indigo-200">
+      <Card className="bg-gradient-to-r from-blue-900 via-indigo-800 to-violet-950">
         <CardContent>
-          <ChatDemo />
+          <AiChatSection />
         </CardContent>
       </Card>
     </section>

@@ -163,7 +163,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
               <time
                 dateTime={createdAt.toISOString()}
                 className={cn(
-                  "mt-1 block px-1 text-xs opacity-90",
+                  "mt-1 block px-1 text-xs opacity-90 text-white",
                   animation !== "none" && "duration-500 animate-in fade-in-0",
                 )}
               >
@@ -210,7 +210,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         <time
           dateTime={createdAt.toISOString()}
           className={cn(
-            "mt-1 block px-1 text-xs opacity-50 mr-10",
+            "mt-1 block px-1 text-xs opacity-90 mr-10 text-white",
             animation !== "none" && "duration-500 animate-in fade-in-0",
           )}
         >

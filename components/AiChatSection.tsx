@@ -8,7 +8,7 @@ type ChatDemoProps = {
   initialMessages?: UseChatOptions["initialMessages"];
 };
 
-export function ChatDemo(props: ChatDemoProps) {
+export function AiChatSection(props: ChatDemoProps) {
   const {
     messages,
     input,
@@ -20,7 +20,7 @@ export function ChatDemo(props: ChatDemoProps) {
   } = useChat(props);
 
   return (
-    <div className="flex min-h-[500px] w-95vw  py-4 ">
+    <div className="flex min-h-[500px] w-[95vw]  py-4 ">
       <Chat
         className="grow"
         messages={messages}
