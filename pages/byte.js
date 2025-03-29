@@ -49,9 +49,10 @@ export default function Custom404() {
             </a>
           </div>
           <div>
+            <p> Say hi to Byte, the AI dog! </p>
             <p>Don't let his name fool you, Byte doesn't actually bite 😉</p>
             <p className="pb-2">
-              Wow, look at that tail go, Byte's so doggone happy to help you!
+              Wow, look at that tail go, Byte's so doggone happy to see you!
             </p>
             <h3 className="pt-4 font-bold text-lg  bg-violet-800 border-white border-x-2">
               {" "}
