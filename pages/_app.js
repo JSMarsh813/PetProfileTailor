@@ -32,7 +32,20 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       <footer className="text-white py-4 px-4 bg-darkPurple border-t-2 border-violet-400 mt-4 flex">
         <div className="flex-1">
           <h6> Credits: </h6>
-          <span>“Bat” icon by Megan Mitchell, from thenounproject.com.</span>
+          <a
+            className="text-xs block"
+            href="https://thenounproject.com/icon/bat-72023/"
+          >
+            <span> Bat icon by Megan Mitchell, from thenounproject.com.</span>
+          </a>
+          <a
+            className="text-xs block"
+            href="https://thenounproject.com/icon/robot-dog-5217285/"
+          >
+            <span className="text-xs inline-block">
+              Robot dog icon by Amethyst Studio, from thenounproject.com.
+            </span>
+          </a>
         </div>
 
         <div className="flex-end">
