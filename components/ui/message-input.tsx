@@ -12,7 +12,7 @@ import {
 import { omit } from "remeda";
 
 import { cn } from "@/lib/utils";
-import { useAutosizeTextArea } from "@/hooks/use-autosize-textarea";
+// import { useAutosizeTextArea } from "@/hooks/use-autosize-textarea";
 import { Button } from "@/components/ui/button";
 
 interface MessageInputBaseProps
@@ -60,20 +60,6 @@ export function MessageInput({
   };
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [textAreaHeight, setTextAreaHeight] = useState<number>(0);
-
-  useEffect(() => {
-    if (textAreaRef.current) {
-      setTextAreaHeight(textAreaRef.current.offsetHeight);
-    }
-  }, [props.value]);
-
-  useAutosizeTextArea({
-    ref: textAreaRef,
-    maxHeight: 240,
-    borderWidth: 1,
-    dependencies: [props.value],
-  });
 
   return (
     <div className="relative flex w-full items-center space-x-2">

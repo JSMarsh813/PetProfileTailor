@@ -10,7 +10,7 @@ import Image from "next/image";
 const MyLink = forwardRef((props, ref) => {
   let { href, active, children, ...rest } = props;
   return (
-    (<Link
+    <Link
       href={href}
       ref={ref}
       className={`block rounded-md px-2 py-2 text-md
@@ -19,18 +19,17 @@ const MyLink = forwardRef((props, ref) => {
       text-center                   
   ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
 `}
-      {...rest}>
-
+      {...rest}
+    >
       {children}
-
-    </Link>)
+    </Link>
   );
 });
 MyLink.displayName = "MyLink";
 
 function MobileNavBar() {
   return (
-    (<div>
+    <div>
       <Menu.Items
         className="block text-sm text-white 
         absolute  
@@ -173,8 +172,29 @@ focus-visible:ring-opacity-75"
 
         <Menu.Item>
           {({ active }) => (
+            <MyLink href={`/byte`}>
+              <div className="mx-auto inline-block w-9 align-middle">
+                <Image
+                  className={`${active ? "" : "invert"}`}
+                  src="/noun-robot-dog.png"
+                  width={40}
+                  height={10}
+                  alt=""
+                  style={{
+                    maxWidth: "40px",
+                    height: "30px",
+                  }}
+                />
+              </div>
+              Byte
+            </MyLink>
+          )}
+        </Menu.Item>
+
+        <Menu.Item>
+          {({ active }) => (
             <MyLink href={`/community`}>
-              <div className="mx-auto inline-block w-9">
+              <div className="mx-auto inline-block w-9 align-middle">
                 <Image
                   className={`${active ? "" : "invert"}`}
                   src="/batsignal.png"
@@ -183,15 +203,16 @@ focus-visible:ring-opacity-75"
                   alt=""
                   style={{
                     maxWidth: "100%",
-                    height: "auto"
-                  }} />
+                    height: "auto",
+                  }}
+                />
               </div>
               Community
             </MyLink>
           )}
         </Menu.Item>
       </Menu.Items>
-    </div>)
+    </div>
   );
 }
 

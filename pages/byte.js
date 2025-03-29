@@ -2,17 +2,11 @@ import React from "react";
 import NavBar from "../components/NavBar/NavLayoutwithSettingsMenu";
 // import dbConnect from "../utils/db";
 import { useSession } from "next-auth/react";
-import AiChat from "../components/AiChatbot/AIChat";
-import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
-import { ChatDemo } from "@/components/chat-demo";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
+import { ChatDemo } from "../components/AiChatSection";
+
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function Custom404() {
   //grab data from Session and rename data to session
@@ -55,10 +49,7 @@ export default function Custom404() {
             </a>
           </div>
           <div>
-            <p>
-              Don't let his name fool you, Byte the AI dog doesn't actually bite
-              😉
-            </p>
+            <p>Don't let his name fool you, Byte doesn't actually bite 😉</p>
             <p className="pb-2">
               Wow, look at that tail go, Byte's so doggone happy to help you!
             </p>
@@ -82,7 +73,7 @@ export default function Custom404() {
         </section>
       </section>
 
-      <Card>
+      <Card className="bg-indigo-200">
         <CardContent>
           <ChatDemo />
         </CardContent>
