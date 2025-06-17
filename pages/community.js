@@ -202,7 +202,7 @@ export default function Community({ sessionFromServer }) {
   // ########### End of Section that allows the deleted content to be removed without having to refresh the page ####
 
   return (
-    <div>
+    <div className="bg-violet-900">
       <Layout
         profileImage={profileImage}
         userName={userName}
@@ -217,7 +217,7 @@ export default function Community({ sessionFromServer }) {
         className="mx-auto bg-violet-900 max-w-4xl text-center py-4 border-2 border-violet-400 border-dotted 
                                     shadow-lg shadow-slate-900/100 pl-4"
       >
-        <div className="flex">
+        <div className="flex bg-violet-900">
           <div className="my-auto">
             <Image
               className=" mx-auto rounded-full lg:h-20"

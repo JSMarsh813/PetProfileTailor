@@ -140,12 +140,6 @@ function BatsignalPost({
       className="mx-auto sm:px-6 py-8 bg-darkPurple
              "
     >
-      <div>
-        <h3> comments</h3>
-        {JSON.stringify(postsComments)}
-        <h3> replies </h3>
-        {JSON.stringify(repliesToComments)}
-      </div>
       <span className="bg-white"></span>
       {/* above is the background of posts
                 below is the start of the post squares */}
