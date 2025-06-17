@@ -31,7 +31,7 @@ interface MessageInputWithoutAttachmentProps extends MessageInputBaseProps {
 type MessageInputProps = MessageInputWithoutAttachmentProps;
 
 export function MessageInput({
-  placeholder = "Ask Byte the AI dog...",
+  placeholder = "Ask Byte the AI dog by typing here...",
   className,
   onKeyDown: onKeyDownProp,
   submitOnEnter = true,
@@ -70,7 +70,7 @@ export function MessageInput({
           ref={textAreaRef}
           onKeyDown={onKeyDown}
           className={cn(
-            "z-10 w-full grow  rounded-xl border border-input bg-background p-3 pr-24 text-sm ring-offset-background transition-[border] placeholder:text-muted-foreground focus-visible:border-primary focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+            "z-10 w-full grow  rounded-xl border border-input bg-background p-3 pr-24 text-sm ring-offset-background transition-[border] placeholder:text-black focus-visible:border-primary focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
             "pb-16",
             className,
           )}

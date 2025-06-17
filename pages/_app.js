@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       </Head>
       <Component {...pageProps} />
       <ToastContainer />
-      <footer className="text-white py-4 px-4 bg-darkPurple border-t-2 border-violet-400 mt-4 flex">
+      <footer className="text-white py-4 px-4 bg-darkPurple border-t-2 border-violet-400 flex">
         <div className="flex-1">
           <h6> Credits: </h6>
           <a

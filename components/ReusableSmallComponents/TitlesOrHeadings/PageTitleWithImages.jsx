@@ -13,9 +13,9 @@ export default function PageTitleWithImages({ imgSrc, title, title2 }) {
       <h3
         className="text-center pt-2 
      mx-auto  h-32
-    text-4xl text-yellow-300 bg-darkPurple
+    text-4xl text-white bg-darkPurple
     font-semibold
-    border-y-4 border-amber-300 absolute inset-0 my-auto"
+     absolute inset-0 my-auto"
         style={{
           background: "hsla(240, 80%, 60%, 0.5)",
           backdropFilter: "blur(20px)",

@@ -22,7 +22,7 @@ export default function Custom404() {
   //end of section for nav menu
 
   return (
-    <section className="min-h-screen bg-darkPurple">
+    <section className="min-h-screen bg-violet-950">
       <NavBar
         title="Login"
         profileImage={profileImage}
@@ -31,11 +31,11 @@ export default function Custom404() {
       />
       <PageTitleWithImages
         title="Byte's"
-        title2="Dogpark"
+        title2="Dog House"
       />
       <section className="text-center text-white py-4">
         <section className="flex flex-wrap md:flex-nowrap justify-center mx-2 gap-6 ">
-          <div>
+          <div className="my-auto">
             <img
               src="/robot-dog-catalyststuff-freepik.png"
               alt="a friendly looking cartoon blue robot dog with its tongue sticking out"
@@ -48,25 +48,38 @@ export default function Custom404() {
               Created by Catalyststuff on FreePik{" "}
             </a>
           </div>
-          <div>
-            <p> Say hi to Byte, the AI dog! </p>
-            <p>Don't let his name fool you, Byte doesn't actually bite 😉</p>
-            <p className="pb-2">
-              Wow, look at that tail go, Byte's so doggone happy to see you!
-            </p>
-            <h3 className="pt-4 font-bold text-lg  bg-violet-800 border-white border-x-2">
+          <div className=" bg-darkPurple  shadow-blue-500 shadow-lg px-4">
+            <h2 className="font-bold text-2xl pb-6 pt-4 ">
               {" "}
-              The (Dog) House Rules:{" "}
-            </h3>
-            <ul className=" bg-violet-800 p-2  border-white border-x-2 ">
+              Say hi to{" "}
+              <span className="underline-offset-4 underline decoration-blue-500">
+                Byte
+              </span>{" "}
+              the AI dog! 🐕‍🦺{" "}
+            </h2>
+            <p className="pb-2">
+              Don't let his name fool you, Byte doesn't actually bite 😉
+            </p>
+            <p className="pb-6">
+              If you couldn't find the perfect pet name or description in our
+              community database, Byte's here to help!
+            </p>
+
+            <div className="flex justify-center  bg-violet-950 py-2 mx-8  border-white border-t-2 border-x-2 rounded-lg">
+              <h3 className="py-auto font-bold text-lg mx-10 ">
+                {" "}
+                The (Dog) House Rules:{" "}
+              </h3>
+            </div>
+            <ul className=" p-2 space-y-2 my-4">
               <li>
                 {" "}
-                🐶 Questions must be related to pet names or descriptions
+                🦴 Questions must be related to pet names or descriptions
               </li>
-              <li> 🐶 1 to 15 names at a time </li>
-              <li> 🐶 1 or 2 descriptions at a time</li>
+              <li> 🦴 1 to 15 names at a time </li>
+              <li> 🦴 1 or 2 descriptions at a time</li>
               <li>
-                🐶 If Byte does not respond, the free limit of OpenAi may of
+                🦴 If Byte does not respond, the free limit of OpenAi may of
                 been reached for the day
               </li>
             </ul>
@@ -74,7 +87,7 @@ export default function Custom404() {
         </section>
       </section>
 
-      <Card className="bg-gradient-to-r from-blue-900 via-indigo-800 to-violet-950">
+      <Card className="bg-gradient-to-b from-violet-950  via-indigo-800 to-blue-900">
         <CardContent>
           <AiChatSection />
         </CardContent>
