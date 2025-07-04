@@ -46,6 +46,15 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
               Robot dog icon by Amethyst Studio, from thenounproject.com.
             </span>
           </a>
+
+          <a
+            className="text-xs block"
+            href="https://www.freepik.com/author/freepik/icons/kawaii-flat_45#from_element=resource_detail"
+          >
+            <span className="text-xs inline-block">
+              Default user icons created by freepik, Kawaii Flat family
+            </span>
+          </a>
         </div>
 
         <div className="flex-end">
