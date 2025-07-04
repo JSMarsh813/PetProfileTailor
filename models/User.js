@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+import chooseRandomDefaultAvatar from "@/utils/chooseRandomDefaultAvatar";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -52,7 +53,9 @@ const UserSchema = new mongoose.Schema(
     },
     profileimage: {
       type: String,
-      default: "https://placekitten.com/300/300",
+      default: chooseRandomDefaultAvatar,
+      //why no () after chooseRandomDefaultAvatar?
+      // Because Mongoose will call it for you every time it needs a default value, so you pass the function, not its result.
     },
     passwordresettoken: {
       type: String,

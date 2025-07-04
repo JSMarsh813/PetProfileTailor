@@ -55,6 +55,7 @@ function HomePage({ sessionFromServer }) {
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
+
       <HeroTop
         updateImpactfulState={() => handleVideoClick("impactful")}
         updateFunState={() => handleVideoClick("fun")}
