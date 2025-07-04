@@ -175,7 +175,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   }, [itemEdited]);
 
   return (
-    <div>
+    <div className="bg-violet-900">
       <Layout
         profileImage={profileImage}
         userName={userName}
@@ -199,7 +199,8 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
 
         {/*################# CONTENT DIV ################### */}
 
-        <div className="bg-darkPurple rounded-box ">
+        <div className="bg-darkPurple rounded-box w-full">
+          {/* w-full ensures the list of content takes up the remaining space, it does not lead to overflow because it is flexed with filteringSidebar*/}
           <GeneralButton
             text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
             onClick={() => SetIsOpen(!IsOpen)}
@@ -221,7 +222,8 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
           <section>
             <section className="">
               {isLoading && (
-                <div className="flex">
+                <div className="flex w-full items-center justify-center">
+                  {/* w-full makes it as wide as its parent, but you still need items-center justify-center to center the text horizonally and vetically */}
                   <span className="text-white text-3xl my-20 mx-auto">
                     Fetching data ...
                   </span>
