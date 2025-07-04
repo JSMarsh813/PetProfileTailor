@@ -43,22 +43,11 @@ function HomePage({ sessionFromServer }) {
   }
   //end of section for nav menu
 
-  const [impactfulClicked, setImpactfulClicked] = useState(false);
-  const [funClicked, setfunClicked] = useState(false);
-  const [tailorClicked, setTailorClicked] = useState(false);
+  const [openVideo, setOpenVideo] = useState(null);
 
-  function updateImpactfulState() {
-    setImpactfulClicked(!impactfulClicked);
+  function handleVideoClick(videoKey) {
+    setOpenVideo(openVideo === videoKey ? null : videoKey);
   }
-
-  function updateFunState() {
-    setfunClicked(!funClicked);
-  }
-
-  function updateTailorState() {
-    setTailorClicked(!tailorClicked);
-  }
-
   return (
     <div className=" bg-violet-900">
       <Layout
@@ -67,34 +56,34 @@ function HomePage({ sessionFromServer }) {
         sessionFromServer={sessionFromServer}
       />
       <HeroTop
-        updateImpactfulState={updateImpactfulState}
-        updateFunState={updateFunState}
-        updateTailorState={updateTailorState}
+        updateImpactfulState={() => handleVideoClick("impactful")}
+        updateFunState={() => handleVideoClick("fun")}
+        updateTailorState={() => handleVideoClick("tailor")}
       />
-      {impactfulClicked && (
+      {openVideo === "impactful" && (
         <YoutubeEmbed
           embedId="y5cx0MeHuE8"
           styling="aspect-video"
           title="Fishtopher the cat gets adopted after going viral"
-          showVideoFunction={() => updateImpactfulState()}
+          showVideoFunction={() => setOpenVideo(null)}
           key="y5cx0MeHuE8"
         />
       )}
-      {funClicked && (
+      {openVideo === "fun" && (
         <YoutubeEmbed
           embedId="_7SMbp-W6sM"
           styling="aspect-video"
           title="Woman Writes Hilariously Honest Adoption Post For Her Wild Foster Dog | The Dodo Adopt Me!"
-          showVideoFunction={() => updateFunState()}
+          showVideoFunction={() => setOpenVideo(null)}
           key="_7SMbp-W6sM"
         />
       )}
-      {tailorClicked && (
+      {openVideo === "tailor" && (
         <YoutubeEmbed
           embedId="T_lAGw4lpiM"
           styling="aspect-video"
           title="Woman's Brutally Honest Pet Adoption Ad Goes Viral"
-          showVideoFunction={() => updateTailorState()}
+          showVideoFunction={() => setOpenVideo(null)}
           key="T_lAGw4lpiM"
         />
       )}
