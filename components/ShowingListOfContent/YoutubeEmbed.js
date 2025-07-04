@@ -15,7 +15,7 @@ export default function YoutubeEmbed({
 
       <GeneralButton
         text="close X"
-        className={`grid text-white text-xl justify-end mb-2 ${
+        className={`grid text-darkPurple text-xl justify-end mb-2 mx-auto ${
           loaded ? "block" : "hidden"
         }`}
         onClick={() => showVideoFunction(false)}
