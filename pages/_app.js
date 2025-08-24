@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
+import { Analytics } from "@vercel/analytics/next";
 
 import "@etchteam/next-pagination/dist/index.css";
 
@@ -28,6 +29,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         />
       </Head>
       <Component {...pageProps} />
+      <Analytics />
       <ToastContainer />
       <footer className="text-white py-4 px-4 bg-darkPurple border-t-2 border-violet-400 flex">
         <div className="flex-1">
