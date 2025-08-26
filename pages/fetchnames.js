@@ -63,7 +63,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   }
   // ##### end of section for nav menu
 
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
   const [IsOpen, setIsOpen] = useState(false);
   const [tagFilters, setTagFiltersState] = useState([]);
   const [filteredNames, setFilteredNames] = useState([]);
@@ -129,7 +129,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
       pageIndex + 1
     }
     &limit=${pagesize}
-    &sortingvalue=${sortingvalue}&sortingproperty=${sortingproperty}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
+    &sortingvalue=${sortingvalue}&sortingproperty=${sortingproperty}&tags=${tagFilters}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
   };
 
   const { data, error, isLoading, isValidating, mutate, size, setSize } =
@@ -138,16 +138,13 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
       fetcher,
     );
 
-  const names = data ? [].concat(...data) : [];
+  const names = data ? data.flatMap((page) => page.data) : [];
 
-  let isAtEnd = data && data[data.length - 1]?.length < 1;
+  console.log("names", names);
 
-  useEffect(() => {
-    if (names) {
-      setFilteredNames([...names]);
-    }
-  }, [data]);
-  //data was necessary to make it work with swr, using the names variable instead wouldn't trigger a state update
+  const totalPages = data ? data[0].totalPages : 0;
+  const currentPage = data ? data[data.length - 1].currentPage : 1;
+  const totalDocs = data ? data[0].totalDocs : 0;
 
   //#################### END of SWR section ##############
 
@@ -155,28 +152,11 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     setPage(1);
   }, [itemsPerPage, sortingvalue, sortingproperty]);
 
-  useEffect(() => {
-    let currenttags = tagFilters;
-
-    //every time we click, lets start off with names aka its initial state. This way if we go backwards/unclick options, we'll regain the names we lost so future filtering is correct.
-    // aka round: 1, we click christmas and male. So we lost all female names since they had no male tag
-    //      round: 2, we unclick male
-
-    setFilteredNames(
-      names.filter((names) =>
-        currenttags.every((selectedtag) =>
-          names.tags.map(({ tag }) => tag).includes(selectedtag),
-        ),
-      ),
-    );
-  }, [tagFilters, data]);
-  // every time a new tag is added to the tagsFilter array, we want to filter the names and update the filteredNames state, so we have useEffect run every time tagFilters is changed
-
-  useEffect(() => {
-    if (filteredNames.length / page < itemsPerPage) {
-      setSize(size + 1) && mutate();
-    }
-  }, [filteredNames]);
+  // useEffect(() => {
+  //   if (filteredNames.length / page < itemsPerPage) {
+  //     setSize(size + 1) && mutate();
+  //   }
+  // }, [filteredNames]);
   //makes sure there is at least 10 items(aka itemsPerPage value) per page or try to grab more names
 
   useEffect(() => {
@@ -235,7 +215,6 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
             page={page}
             itemsPerPage={itemsPerPage}
             filteredListLastPage={filteredListLastPage}
-            isAtEnd={isAtEnd}
             setItemsPerPageFunction={setItemsPerPageFunction}
             setPageFunction={setPageFunction}
             setSizeFunction={setSizeFunction}
@@ -245,7 +224,6 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
           />
 
           <section className="w-full">
-         
             {isLoading && (
               <div className="flex">
                 <span className="text-white text-3xl my-20 mx-auto">
@@ -255,7 +233,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
             )}
 
             <section className="whitespace-pre-line">
-              {filteredNames
+              {names
                 .slice(
                   page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
                   page * itemsPerPage,
@@ -277,7 +255,6 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                 page={page}
                 itemsPerPage={itemsPerPage}
                 filteredListLastPage={filteredListLastPage}
-                isAtEnd={isAtEnd}
                 setItemsPerPageFunction={setItemsPerPageFunction}
                 setPageFunction={setPageFunction}
                 setSizeFunction={setSizeFunction}
@@ -290,7 +267,6 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                 page={page}
                 filteredListLastPage={filteredListLastPage}
                 setSizeFunction={setSizeFunction}
-                isAtEnd={isAtEnd}
               />
             </section>
           </section>

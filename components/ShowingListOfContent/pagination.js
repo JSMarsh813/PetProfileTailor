@@ -8,7 +8,6 @@ export default function Pagination({
   page,
   itemsPerPage,
   filteredListLastPage,
-  isAtEnd,
   setItemsPerPageFunction,
   setPageFunction,
   setSizeFunction,
@@ -56,10 +55,10 @@ export default function Pagination({
             value={itemsPerPage}
             onChange={(e) => setItemsPerPageFunction(e.target.value)}
           >
-            <option value="5">5</option>
-            <option value="15">15</option>
-            <option value="30">30</option>
-            <option value="60">60</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="75">75</option>
+            <option value="100">100</option>
           </select>
           <label
             className="text-white ml-2"

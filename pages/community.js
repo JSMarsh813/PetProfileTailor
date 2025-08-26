@@ -48,7 +48,7 @@ export default function Community({ sessionFromServer }) {
   const [IsOpen, SetIsOpen] = useState(false);
   const [tagFilters, setFiltersState] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState();
   const [page, setPage] = useState(1);
   const [addingPost, setAddingPost] = useState(false);
   const [itemEdited, setItemEdited] = useState(false);

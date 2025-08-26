@@ -42,7 +42,7 @@ function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
                         <input
                           id={`filter-mobile-${index}`}
                           name={`${option.tag}[]`}
-                          value={option.tag}
+                          value={option._id}
                           type="checkbox"
                           onChange={handleFilterChange}
                           className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600 "

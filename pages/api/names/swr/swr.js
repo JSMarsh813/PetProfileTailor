@@ -1,11 +1,12 @@
 import dbConnect from "../../../../utils/db.js";
 import Names from "../../../../models/Names.js";
+import mongoose from "mongoose";
 
 export default async function handler(req, res) {
   const method = req.method;
   const {
     page = 1,
-    limit = 10,
+    limit = 25,
     sortingvalue = -1,
     sortingproperty = "createdAt",
     tags,
@@ -14,19 +15,26 @@ export default async function handler(req, res) {
   let sortLogic = {};
   sortLogic[sortingproperty] = parseInt(sortingvalue);
 
+  console.log("tags", tags);
+
   await dbConnect.connect();
 
   if (method === "GET") {
     try {
-      // Build filter for tags (optional)
+      // filtering by tags logic
       let filter = {};
       if (tags) {
         // Expect tags as a comma-separated string of ObjectId strings
-        const tagIds = tags.split(",");
-        filter.tags = { $in: tagIds };
+        const tagIds = tags
+          .split(",")
+          .map((id) => new mongoose.Types.ObjectId(id));
+        filter.tags = { $all: tagIds };
       }
 
-      const individualNames = await Names.aggregate([
+      const totalDocs = await Names.countDocuments(filter);
+      const totalPages = Math.ceil(totalDocs / parseInt(limit));
+
+      const names = await Names.aggregate([
         { $match: filter },
 
         // Pagination
@@ -82,7 +90,12 @@ export default async function handler(req, res) {
         },
       ]);
 
-      res.status(200).json(individualNames);
+      res.status(200).json({
+        data: names,
+        totalPages,
+        currentPage: parseInt(page),
+        totalDocs,
+      });
     } catch (err) {
       console.error("API error:", err);
       res.status(500).json({ error: "Server error" });
