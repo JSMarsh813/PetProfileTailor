@@ -1,34 +1,40 @@
-import dbConnect from "../../../../utils/db";
-import Names from "../../../../models/Names";
+import dbConnect from "../../../../utils/db.js";
+import Names from "../../../../models/Names.js";
 
 export default async function handler(req, res) {
   const method = req.method;
-  const { page, limit, sortingvalue, sortingproperty } = req.query;
+  const {
+    page = 1,
+    limit = 10,
+    sortingvalue = -1,
+    sortingproperty = "createdAt",
+    tags,
+  } = req.query;
   //https://stackoverflow.com/questions/70751313/how-can-i-pass-a-variable-in-sort-funtcion-of-mongobd
-  let sortlogic = {};
-  sortlogic[sortingproperty] = parseInt(sortingvalue);
+  let sortLogic = {};
+  sortLogic[sortingproperty] = parseInt(sortingvalue);
 
   await dbConnect.connect();
 
   if (method === "GET") {
     try {
+      // Build filter for tags (optional)
+      let filter = {};
+      if (tags) {
+        // Expect tags as a comma-separated string of ObjectId strings
+        const tagIds = tags.split(",");
+        filter.tags = { $in: tagIds };
+      }
+
       const individualNames = await Names.aggregate([
-        {
-          $project: {
-            _id: 1,
-            name: 1,
-            description: 1,
-            tags: 1,
-            comments: 1,
-            createdby: 1,
-            likedby: 1,
-            likedbylength: { $size: "$likedby" },
-            flaggedby: 1,
-          },
-        },
-        { $sort: sortlogic },
-        { $skip: parseInt((page - 1) * limit) },
+        { $match: filter },
+
+        // Pagination
+        { $sort: sortLogic },
+        { $skip: (parseInt(page) - 1) * parseInt(limit) },
         { $limit: parseInt(limit) },
+
+        // Lookups
         {
           $lookup: {
             from: "users",
@@ -54,6 +60,8 @@ export default async function handler(req, res) {
             as: "tags",
           },
         },
+
+        // Final projection
         {
           $project: {
             _id: 1,
@@ -68,7 +76,7 @@ export default async function handler(req, res) {
               _id: 1,
             },
             likedby: 1,
-            length: { $size: "$likedby" },
+            likedbylength: 1, // use precomputed field
             flaggedby: 1,
           },
         },
@@ -76,8 +84,10 @@ export default async function handler(req, res) {
 
       res.status(200).json(individualNames);
     } catch (err) {
-      res.status(500).json(err);
-      console.log(`this is an error ${JSON.stringify(err)}`);
+      console.error("API error:", err);
+      res.status(500).json({ error: "Server error" });
     }
+  } else {
+    res.status(405).json({ error: "Method not allowed" });
   }
 }
