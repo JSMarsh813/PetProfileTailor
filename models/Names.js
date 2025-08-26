@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
+import mongoose from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 
 const NameSchema = new mongoose.Schema({
   name: {
@@ -18,9 +18,9 @@ const NameSchema = new mongoose.Schema({
       ref: "NameTag",
     },
   ],
-  comments: {
-    type: Array,
-  },
+  comments: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "NameComment", default: [] },
+  ],
   flaggedby: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +35,10 @@ const NameSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  likedbylength: {
+    type: Number,
+    default: 0,
+  },
   createdby: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -42,7 +46,11 @@ const NameSchema = new mongoose.Schema({
   },
 });
 
-// Apply the uniqueValidator plugin to userSchema.
 NameSchema.plugin(uniqueValidator);
 
-module.exports = mongoose.models?.names || mongoose.model("names", NameSchema);
+const Names =
+  mongoose.models.Names || mongoose.model("Names", NameSchema, "names");
+// the last one "names" is for when we're doing migration, the migration script we need to explicitly pass the existing colleciton name in mongoDB to the migration script
+// why? since the migration script runs outside the usual app context.
+
+export default Names;
