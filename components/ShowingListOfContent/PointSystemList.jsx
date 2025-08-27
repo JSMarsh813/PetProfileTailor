@@ -14,10 +14,6 @@ import GeneralOpenCloseButton from "../ReusableSmallComponents/buttons/generalOp
 export default function PointSystemList({
   favNames,
   namesCreated,
-  postsCreated,
-  postsLiked,
-  commentsCreated,
-  likedComments,
   likedDescriptions,
   createdDescriptions,
 }) {
@@ -28,14 +24,6 @@ export default function PointSystemList({
   const [namesLikedPoints, setNamesLikedPoints] = useState(0);
 
   const [namesAddedPoints, setNamesAddedPoints] = useState(0);
-
-  const [commentsLikedPoints, setCommentsLikedPoints] = useState(0);
-
-  const [postsAddedPoints, setPostsAddedPoints] = useState(0);
-
-  const [postsLikedPoints, setpostsLikedPoints] = useState(0);
-
-  const [commentsAddedPoints, setCommentsAddedPoints] = useState(0);
 
   const [descriptionsLikedPoints, setDescriptionsLikedPoints] = useState(0);
 
@@ -72,7 +60,7 @@ export default function PointSystemList({
         +postsLikedPoints +
         +postsAddedPoints +
         +descriptionsLikedPoints +
-        +descriptionsAddedPoints
+        +descriptionsAddedPoints,
     );
   }, [
     namesLikedPoints,
