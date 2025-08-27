@@ -161,7 +161,7 @@ function HomePage({ sessionFromServer }) {
           image="/freepikhalloween.avif"
           listOfText={[
             "Do you want to help pets get adopted but you can't volunteer or foster? Excellent, you're barking up the right tree!",
-            "Sign up to add names or descriptions. Animal welfare professionals can use your contributions to create creative and tailored pet profiles to help pets get adopted! ",
+            "Sign up to add names or descriptions. Animal welfare professionals can use your contributions to create creative profiles to help pets get adopted! ",
           ]}
           buttonTextRight="Sign Up"
           buttonTextRightLink="/register"
