@@ -111,8 +111,8 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     const { value, checked } = e.target;
 
     checked
-      ? setFilterTagsIds([...tagFilters, value])
-      : setFilterTagsIds(tagFilters.filter((tag) => tag != value));
+      ? setFilterTagsIds([...filterTagsIds, value])
+      : setFilterTagsIds(filterTagsIds.filter((tag) => tag != value));
 
     setSwrPage(1);
   };
