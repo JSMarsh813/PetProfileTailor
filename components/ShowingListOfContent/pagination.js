@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import GeneralButton from "../../components/ReusableSmallComponents/buttons/GeneralButton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +8,7 @@ export default function Pagination({
   itemsPerPage,
   setItemsPerPageFunction,
   setPageFunction,
-  setSizeFunction,
+  setSize,
   size,
   currentUiPage,
   setCurrentUiPage,
@@ -16,70 +16,99 @@ export default function Pagination({
   totalPagesInDatabase,
   currentSwrPage,
   totalItems,
-  loadNextChunk, // function to trigger SWR fetch
+  amountOfDataLoaded, // Add this prop to get the actual loaded items
 }) {
   const [windowStart, setWindowStart] = useState(1); // first page of the visible window
 
   const [totalLoadedPages, setTotalLoadedPages] = useState(0);
   const windowSize = 5; // max number of visible pages
 
+  const ITEMS_PER_SWR_PAGE = 50;
+
   useEffect(() => {
-    if (totalItems) {
-      setTotalLoadedPages(Math.ceil(totalItems / itemsPerPage));
-    }
-  }, [totalItems, itemsPerPage]);
+    const calculatedTotalLoadedPages = Math.ceil(
+      amountOfDataLoaded / itemsPerPage,
+    );
+
+    setTotalLoadedPages(calculatedTotalLoadedPages);
+  }, [amountOfDataLoaded, size, itemsPerPage]);
+
+  console.log("totalItems", totalItems);
+  console.log("itemsPerPage)", itemsPerPage);
+  console.log(
+    "Math.ceil(totalItems / itemsPerPage))",
+    Math.ceil(totalItems / itemsPerPage),
+  );
 
   function howManyPagesHaveBeenLoaded(totalItems, itemsPerPage) {
     return Math.ceil(totalItems / itemsPerPage);
   }
 
-  useEffect(() => {
-    // Slide window if currentPage moves outside visible range
-    if (currentUiPage >= windowStart + windowSize) {
-      setWindowStart(currentUiPage - windowSize + 1);
-    } else if (currentUiPage < windowStart) {
-      setWindowStart(currentUiPage);
-    }
+  // useEffect(() => {
+  //   // Slide window if currentPage moves outside visible range
+  //   if (currentUiPage >= windowStart + windowSize) {
+  //     setWindowStart(currentUiPage - windowSize + 1);
+  //   } else if (currentUiPage < windowStart) {
+  //     setWindowStart(currentUiPage);
+  //   }
 
-    // If user navigates to last page in current chunk, load next SWR chunk
-    if (
-      currentUiPage === totalLoadedPages &&
-      totalLoadedPages < totalPagesInDatabase
-    ) {
-      loadNextChunk?.();
-    }
-  }, [currentUiPage, totalLoadedPages, windowStart, loadNextChunk]);
+  //   // If user navigates to last page in current chunk, load next SWR chunk
+  //   if (
+  //     currentUiPage === totalLoadedPages &&
+  //     totalLoadedPages < totalPagesInDatabase
+  //   ) {
+  //     loadNextChunk?.();
+  //   }
+  // }, [currentUiPage, windowStart, totalPagesInDatabase]);
 
   const windowEnd = Math.min(windowStart + windowSize - 1, totalLoadedPages);
 
-  let pageNumbers = [];
+  // Make pageNumbers reactive using useMemo
+  const pageNumbers = useMemo(() => {
+    const numbers = [];
+    console.log(
+      "Calculating pageNumbers - windowStart:",
+      windowStart,
+      "windowEnd:",
+      windowEnd,
+      "totalLoadedPages:",
+      totalLoadedPages,
+    );
 
-  for (let i = windowStart; i <= windowEnd; i++) {
-    pageNumbers.push(i);
-  }
+    for (let i = windowStart; i <= windowEnd; i++) {
+      numbers.push(i);
+    }
+    console.log("Generated pageNumbers:", numbers);
+    return numbers;
+  }, [windowStart, windowEnd, totalLoadedPages]);
+  // useMemo only recalculates when the dependencies actually change, not on every render
 
   let lastPageNumber = pageNumbers.slice(-1).toString();
 
   const lastPageHandler = () => {
     // If we're at the last loaded page and there's more data to fetch
+    console.log("LastPageHandlerRan");
+    console.log("currentUiPage", currentUiPage);
+    console.log("totalLoadedPages", totalLoadedPages);
+    console.log("totalPagesInDatabase", totalPagesInDatabase);
+
     if (
       currentUiPage >= totalLoadedPages &&
       totalLoadedPages < totalPagesInDatabase
     ) {
       // Trigger SWR to fetch next chunk
-      setSizeFunction(size + 1);
+      setSize(size + 1);
       return;
     }
     // If we have more pages loaded, just move to the next UI page
     if (currentUiPage < totalLoadedPages) {
+      updateWindow(currentUiPage + 1);
       setCurrentUiPage(currentUiPage + 1);
     }
     setPageFunction(currentSwrPage + 1);
   };
 
-  const handleClickPage = (page) => {
-    setCurrentUiPage(page);
-
+  const updateWindow = (page) => {
     // Slide the window if page goes beyond visible range
     if (page >= windowStart + windowSize) {
       setWindowStart(page - windowSize + 1);
@@ -88,21 +117,31 @@ export default function Pagination({
     }
   };
 
-  const clickOnLastNumber = (number) => {
-    setPageFunction(number);
-    setSizeFunction(size + 1);
-    //  && mutate();
+  const handleClickPage = (page) => {
+    setCurrentUiPage(page);
+    updateWindow(page);
+    // Slide the window if page goes beyond visible range
+    if (page >= windowStart + windowSize) {
+      setWindowStart(page - windowSize + 1);
+    } else if (page < windowStart) {
+      setWindowStart(page);
+    }
+    // Check if we need to load more data before navigating
+    if (page >= totalLoadedPages && totalLoadedPages < totalPagesInDatabase) {
+      console.log("Need to load more data for page:", page);
+      setSize(size + 1);
+      // Don't set currentUiPage yet - let the SWR data load first
+      return;
+    }
+
+    setCurrentUiPage(page);
   };
   return (
     <section className="pagination-navigation grid grid-rows-1 min-w-0  bg-violet-800 text-violet-900 font-bold pt-2 sm:border-x-4 border-darkPurple">
       {/* sorting logic*/}
       <div className="inline  my-auto pb-3 ">
         {/* wrapping the selects in sections & inline-block keeps the per page and sort by labels from wrapping weirdly at smaller sizes */}
-        <span>
-          {" "}
-          window start {windowStart} window end {windowEnd} currentUiPage{" "}
-          {currentUiPage}
-        </span>
+
         {/* Per page */}
         <section className="inline-block">
           <select
@@ -135,13 +174,14 @@ export default function Pagination({
             <option value="likedbylength,1">Least Liked</option>
           </select>
 
-          <label
+          {/* <label
             className="text-white ml-2"
             htmlFor="per-page"
           >
             Sort by
-          </label>
-          <span> Total Items: {totalItems}</span>
+          </label> */}
+
+          <span className="text-white"> Total Matches: {totalItems} </span>
         </section>
       </div>
 

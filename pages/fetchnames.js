@@ -77,8 +77,6 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   const [nameEdited, setNameEdited] = useState(false);
   const [deleteThisContentId, setDeleteThisContentId] = useState(null);
 
-  const PAGE_SIZE = itemsPerPage;
-
   let filteredListLastPage = filteredNames.length / itemsPerPage;
 
   // ############ Section for passing state into components as functions #######
@@ -205,7 +203,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
             itemsPerPage={itemsPerPage}
             setItemsPerPageFunction={setItemsPerPageFunction}
             setPageFunction={setPageFunction}
-            setSizeFunction={setSizeFunction}
+            setSize={setSize}
             size={size}
             currentUiPage={currentUiPage}
             setCurrentUiPage={setCurrentUiPage}
@@ -213,6 +211,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
             totalPagesInDatabase={totalPagesInDatabase}
             currentSwrPage={currentSwrPage}
             totalItems={totalItems}
+            amountOfDataLoaded={data?.length}
           />
 
           <section className="w-full">
@@ -249,7 +248,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                 itemsPerPage={itemsPerPage}
                 setItemsPerPageFunction={setItemsPerPageFunction}
                 setPageFunction={setPageFunction}
-                setSizeFunction={setSizeFunction}
+                setSize={setSize}
                 size={size}
                 setSortingLogicFunction={setSortingLogicFunction}
                 totalItems={totalItems}
@@ -257,7 +256,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
 
               <CheckForMoreData
                 filteredListLastPage={filteredListLastPage}
-                setSizeFunction={setSizeFunction}
+                setSize={setSize}
               />
             </section>
           </section>

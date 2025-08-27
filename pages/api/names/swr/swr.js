@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   sortLogic[sortingproperty] = parseInt(sortingvalue);
 
   console.log("tags", tags);
-  const limit = 100;
+  const limit = 50;
 
   await dbConnect.connect();
 
