@@ -17,6 +17,7 @@ import fetcher from "../utils/fetch";
 import Pagination from "../components/ShowingListOfContent/pagination";
 import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 import Image from "next/image";
+import { useSwrPagination } from "../hooks/useSwrPagination";
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
 
@@ -63,11 +64,13 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   }
   // ##### end of section for nav menu
 
-  const [itemsPerPage, setItemsPerPage] = useState(25);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [IsOpen, setIsOpen] = useState(false);
-  const [tagFilters, setTagFiltersState] = useState([]);
+  const [filterTagsIds, setFilterTagsIds] = useState([]);
   const [filteredNames, setFilteredNames] = useState([]);
-  const [page, setPage] = useState(1);
+  const [swrPage, setSwrPage] = useState(1);
+  const [currentUiPage, setCurrentUiPage] = useState(1);
+  const [itemsPerUiPage, setItemsPerUiPage] = useState(10);
   // const [sortinglogicstring, setSortingLogicString] = useState("_id,-1");
   const [sortingvalue, setSortingValue] = useState(-1);
   const [sortingproperty, setSortingProperty] = useState("_id");
@@ -85,11 +88,13 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   }
 
   function setPageFunction(event) {
-    setPage(event);
+    setSwrPage(event);
   }
 
   function setSizeFunction(event) {
-    setSize(event) && mutate();
+    setSize(event);
+    //  && mutate();
+    // You usually don’t need to manually call mutate() after setSize, because setSize already triggers a revalidation internally.
   }
 
   function setSortingLogicFunction(event) {
@@ -108,59 +113,46 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     const { value, checked } = e.target;
 
     checked
-      ? setTagFiltersState([...tagFilters, value])
-      : setTagFiltersState(tagFilters.filter((tag) => tag != value));
+      ? setFilterTagsIds([...tagFilters, value])
+      : setFilterTagsIds(tagFilters.filter((tag) => tag != value));
 
-    setPage(1);
+    setSwrPage(1);
   };
 
   // ########### SWR Section #################
 
-  const getKey = (
-    pageIndex,
-    previousPageData,
-    pagesize,
-    sortingvalue,
-    sortingproperty,
-  ) => {
-    if (previousPageData && !previousPageData.length) return null; // reached the end
+  const {
+    data,
+    totalPagesInDatabase,
+    totalItems,
+    size,
+    setSize,
+    isLoading,
+    currentSwrPage,
+    isValidating,
+    mutate,
+  } = useSwrPagination({
+    currentUiPage,
+    itemsPerUiPage,
+    tags: filterTagsIds,
+    sortingproperty: "createdAt",
+    sortingvalue: -1,
+  });
 
-    return `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}api/names/swr/swr?page=${
-      pageIndex + 1
-    }
-    &limit=${pagesize}
-    &sortingvalue=${sortingvalue}&sortingproperty=${sortingproperty}&tags=${tagFilters}`; // SWR key, grab data from the next page (pageIndex+1) in each loop
-  };
-
-  const { data, error, isLoading, isValidating, mutate, size, setSize } =
-    useSWRInfinite(
-      (...args) => getKey(...args, PAGE_SIZE, sortingvalue, sortingproperty),
-      fetcher,
-    );
-
-  const names = data ? data.flatMap((page) => page.data) : [];
-
+  const names = data ?? [];
   console.log("names", names);
-
-  const totalPages = data ? data[0].totalPages : 0;
-  const currentPage = data ? data[data.length - 1].currentPage : 1;
-  const totalDocs = data ? data[0].totalDocs : 0;
 
   //#################### END of SWR section ##############
 
+  // if users have changed how the items get sorted, then start over swr from page 1
   useEffect(() => {
-    setPage(1);
-  }, [itemsPerPage, sortingvalue, sortingproperty]);
-
-  // useEffect(() => {
-  //   if (filteredNames.length / page < itemsPerPage) {
-  //     setSize(size + 1) && mutate();
-  //   }
-  // }, [filteredNames]);
-  //makes sure there is at least 10 items(aka itemsPerPage value) per page or try to grab more names
+    setSwrPage(1);
+  }, [sortingvalue, sortingproperty]);
 
   useEffect(() => {
-    mutate();
+    if (nameEdited) {
+      mutate();
+    }
   }, [nameEdited]);
 
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
@@ -185,9 +177,7 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-      {/* {`this is data ${JSON.stringify(data)}`}
-      {`this is filtered names ${JSON.stringify(filterednames)}`}
-      {`this is names ${JSON.stringify(names)}`} */}
+
       <section className="sm:px-4 bg-violet-900">
         <PageTitleWithImages
           title="Fetch"
@@ -212,15 +202,17 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
           />
 
           <Pagination
-            page={page}
             itemsPerPage={itemsPerPage}
-            filteredListLastPage={filteredListLastPage}
             setItemsPerPageFunction={setItemsPerPageFunction}
             setPageFunction={setPageFunction}
             setSizeFunction={setSizeFunction}
             size={size}
-            filterednameslength={filteredNames.length}
+            currentUiPage={currentUiPage}
+            setCurrentUiPage={setCurrentUiPage}
             setSortingLogicFunction={setSortingLogicFunction}
+            totalPagesInDatabase={totalPagesInDatabase}
+            currentSwrPage={currentSwrPage}
+            totalItems={totalItems}
           />
 
           <section className="w-full">
@@ -235,8 +227,10 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
             <section className="whitespace-pre-line">
               {names
                 .slice(
-                  page - 1 == 0 ? 0 : (page - 1) * itemsPerPage,
-                  page * itemsPerPage,
+                  currentUiPage - 1 == 0
+                    ? 0
+                    : (currentUiPage - 1) * itemsPerPage,
+                  currentUiPage * itemsPerPage,
                 )
                 .map((name) => {
                   return (
@@ -252,19 +246,16 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                 })}
 
               <Pagination
-                page={page}
                 itemsPerPage={itemsPerPage}
-                filteredListLastPage={filteredListLastPage}
                 setItemsPerPageFunction={setItemsPerPageFunction}
                 setPageFunction={setPageFunction}
                 setSizeFunction={setSizeFunction}
                 size={size}
-                filterednameslength={filteredNames.length}
                 setSortingLogicFunction={setSortingLogicFunction}
+                totalItems={totalItems}
               />
 
               <CheckForMoreData
-                page={page}
                 filteredListLastPage={filteredListLastPage}
                 setSizeFunction={setSizeFunction}
               />

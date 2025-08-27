@@ -6,7 +6,6 @@ export default async function handler(req, res) {
   const method = req.method;
   const {
     page = 1,
-    limit = 25,
     sortingvalue = -1,
     sortingproperty = "createdAt",
     tags,
@@ -16,6 +15,7 @@ export default async function handler(req, res) {
   sortLogic[sortingproperty] = parseInt(sortingvalue);
 
   console.log("tags", tags);
+  const limit = 100;
 
   await dbConnect.connect();
 
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       }
 
       const totalDocs = await Names.countDocuments(filter);
-      const totalPages = Math.ceil(totalDocs / parseInt(limit));
+      const totalPagesInDatabase = Math.ceil(totalDocs / parseInt(limit));
 
       const names = await Names.aggregate([
         { $match: filter },
@@ -92,7 +92,7 @@ export default async function handler(req, res) {
 
       res.status(200).json({
         data: names,
-        totalPages,
+        totalPagesInDatabase,
         currentPage: parseInt(page),
         totalDocs,
       });
