@@ -7,9 +7,9 @@ import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 import EditName from "../EditingData/EditName";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
-import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
-import CommentListing from "../ShowingListOfContent/CommentListing";
-import AddComment from "../AddingNewData/AddComment";
+// import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
+// import CommentListing from "../ShowingListOfContent/CommentListing";
+// import AddComment from "../AddingNewData/AddComment";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import FormFlagReport from "../Flagging/FormFlagReport";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
@@ -37,9 +37,9 @@ export default function NameListingAsSections({
   const [showEditPage, setShowEditPage] = useState(false);
 
   //### STATE FOR COMMENTS ######
-  const [commentsShowing, SetCommentsShowing] = useState(false);
+  // const [commentsShowing, SetCommentsShowing] = useState(false);
 
-  const [commentsFromFetch, setCommentsFromFetch] = useState([]);
+  // const [commentsFromFetch, setCommentsFromFetch] = useState([]);
 
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
@@ -49,20 +49,20 @@ export default function NameListingAsSections({
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
   const localLink = `/name/${name.name}`;
 
-  const [deleteThisCommentId, setDeleteThisCommentId] = useState(null);
+  // const [deleteThisCommentId, setDeleteThisCommentId] = useState(null);
 
-  useEffect(() => {
-    console.log(`this is the commentid to delete ${deleteThisCommentId}`);
+  // useEffect(() => {
+  //   console.log(`this is the commentid to delete ${deleteThisCommentId}`);
 
-    if (deleteThisCommentId !== null) {
-      removeDeletedContent(
-        setCommentsFromFetch,
-        commentsFromFetch,
-        deleteThisCommentId,
-        setDeleteThisCommentId,
-      );
-    }
-  }, [deleteThisCommentId]);
+  //   if (deleteThisCommentId !== null) {
+  //     removeDeletedContent(
+  //       setCommentsFromFetch,
+  //       commentsFromFetch,
+  //       deleteThisCommentId,
+  //       setDeleteThisCommentId,
+  //     );
+  //   }
+  // }, [deleteThisCommentId]);
 
   // ### for the edit notification button
   function onupdateEditState() {
@@ -75,42 +75,42 @@ export default function NameListingAsSections({
   }
 
   //########## for comments
-  function onupdateCommentShowState() {
-    SetCommentsShowing(!commentsShowing);
-  }
+  // function onupdateCommentShowState() {
+  //   SetCommentsShowing(!commentsShowing);
+  // }
 
-  const handleFetchComments = async () => {
-    const response = await fetch(
-      "/api/names/commentscontainingnameid/" + name._id,
-    );
-    const data = await response.json();
+  // const handleFetchComments = async () => {
+  //   const response = await fetch(
+  //     "/api/names/commentscontainingnameid/" + name._id,
+  //   );
+  //   const data = await response.json();
 
-    setCommentsFromFetch(data);
-  };
+  //   setCommentsFromFetch(data);
+  // };
 
-  useEffect(() => {
-    handleFetchComments();
-  }, []);
+  // useEffect(() => {
+  //   handleFetchComments();
+  // }, []);
 
   //root comments
-  let rootComments = [];
+  // let rootComments = [];
 
-  if (commentsFromFetch) {
-    rootComments = commentsFromFetch.filter(
-      (comment) =>
-        comment.replyingtothisid === name._id &&
-        comment.parentcommentid === null,
-    );
-  }
+  // if (commentsFromFetch) {
+  //   rootComments = commentsFromFetch.filter(
+  //     (comment) =>
+  //       comment.replyingtothisid === name._id &&
+  //       comment.parentcommentid === null,
+  //   );
+  // }
 
   //reply comments
-  let replyComments = "";
+  // let replyComments = "";
 
-  if (commentsFromFetch) {
-    replyComments = commentsFromFetch.filter(
-      (comment) => comment.parentcommentid != null,
-    );
-  }
+  // if (commentsFromFetch) {
+  //   replyComments = commentsFromFetch.filter(
+  //     (comment) => comment.parentcommentid != null,
+  //   );
+  // }
 
   return (
     <div className="text-base">
@@ -140,25 +140,27 @@ export default function NameListingAsSections({
 
           <ShareButton onClickShowShares={onClickShowShares} />
 
-          <SeeCommentsButton
+          {/* <SeeCommentsButton
             comments={name.comments.length}
             onupdateCommentShowState={onupdateCommentShowState}
-          />
+          /> */}
         </div>
         {/* ###### NAME SECTION #### */}
         <div className="py-4">
           <span className="font-bold mx-auto"> {name.name} </span>
         </div>
         {/* ###### DESCRIPTION SECTION #### */}
-      
 
-        <ParagraphRenderBasedOnStringProperty content={name} text="description"/>
-
-        
+        <ParagraphRenderBasedOnStringProperty
+          content={name}
+          text="description"
+        />
 
         {/* ###### TAGS SECTION #### */}
-        <ParagraphRenderBasedOnArrayProperty content={name} text="tag"/>
-       
+        <ParagraphRenderBasedOnArrayProperty
+          content={name}
+          text="tag"
+        />
 
         {/* ###### CREATEDBY SECTION #### */}
         <section
@@ -235,18 +237,18 @@ export default function NameListingAsSections({
         </section>
       )}
 
-      {commentsShowing && (
-        <section className="bg-violet-900 py-2">
-          <AddComment
+      {/* {commentsShowing && (
+        <section className="bg-violet-900 py-2"> */}
+      {/* <AddComment
             apiLink="/api/namecomments/"
             replyingtothisid={name._id}
             hasParent={null}
             signedInUsersId={signedInUsersId}
             replyingtothiscontent={name.name}
-          />
-          {/* ######### showing comments #########*/}
+          /> */}
+      {/* ######### showing comments #########*/}
 
-          {rootComments.map((comment) => {
+      {/* {rootComments.map((comment) => {
             return (
               <CommentListing
                 replyingtothisid={comment.replyingtothisid}
@@ -261,9 +263,9 @@ export default function NameListingAsSections({
                 setDeleteThisContentId={setDeleteThisCommentId}
               />
             );
-          })}
-        </section>
-      )}
+          })} */}
+      {/* </section>
+      )} */}
     </div>
   );
 }

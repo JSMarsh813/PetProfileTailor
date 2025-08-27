@@ -4,7 +4,7 @@ import GeneralButton from "./GeneralButton";
 export default function CheckForMoreDataButton({
   page,
   filteredListLastPage,
-  setSizeFunction,
+  setSize,
 }) {
   return (
     <div>
@@ -14,7 +14,7 @@ export default function CheckForMoreDataButton({
             text="Check for more"
             className=""
             type="submit"
-            onClick={() => setSizeFunction(page + 1)}
+            onClick={() => setSize(page + 1)}
           />
 
           <p className="text-white">
