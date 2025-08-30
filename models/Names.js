@@ -32,7 +32,7 @@ const NameSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
-  likedbylength: {
+  likedbycount: {
     type: Number,
     default: 0,
   },

@@ -24,8 +24,12 @@ export default function NameListingAsSections({
   tagList,
   setNameEditedFunction,
   setDeleteThisContentId,
+  likedSetRef,
+  toggleLike,
+  likesToggledNameId,
 }) {
   let userIsTheCreator = name.createdby._id === signedInUsersId;
+  const [liked, setLiked] = useState(likedSetRef.current.has(name._id));
 
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
 
@@ -48,6 +52,14 @@ export default function NameListingAsSections({
 
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
   const localLink = `/name/${name.name}`;
+
+  // decide if the component has to rerender when the likes heart changes
+  // it does this by comparing its ID to the last toggled ID
+  useEffect(() => {
+    if (likesToggledNameId === name._id) {
+      setLiked(likedSetRef.current.has(name._id));
+    }
+  }, [likesToggledNameId, name._id]);
 
   // const [deleteThisCommentId, setDeleteThisCommentId] = useState(null);
 
@@ -136,6 +148,8 @@ export default function NameListingAsSections({
             currentTargetedId={currentTargetedId}
             signedInUsersId={signedInUsersId}
             apiLink="/api/names/updateLikes"
+            likedSetRef={likedSetRef}
+            toggleLike={toggleLike}
           />
 
           <ShareButton onClickShowShares={onClickShowShares} />

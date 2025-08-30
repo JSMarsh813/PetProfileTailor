@@ -12,66 +12,41 @@ export default function LikesButtonAndLikesLogic({
   apiLink,
   HeartIconStyling,
   HeartIconTextStyling,
+  likedSetRef,
+  toggleLike,
 }) {
-  let [likesCount, setLikesCount] = useState(
-    data.likedby == [] ? 0 : data.likedby.length,
-  );
+  const [liked, setLiked] = useState(likedSetRef.current.has(data._id));
+  const [likedCount, setLikedCount] = useState(data.likedbycount);
 
-  const [dataLiked, setdataLiked] = useState(false);
-  let likesColor = dataLiked ? "red" : "#87ceeb";
-  let currentTargetedId = data._id;
-  let userId = "";
-
-  useEffect(() => {
-    if (signedInUsersId) {
-      userId = signedInUsersId;
+  const handleClick = () => {
+    if (liked) {
+      likedSetRef.current.delete(data._id);
+      // updating the ref since if they went back a page, we'd have to remember which names they freshly liked/unliked when that page of 50 names is rendered again
+      setLikedCount((prev) => prev - 1);
+    } else {
+      likedSetRef.current.add(data._id);
+      setLikedCount((prev) => prev + 1);
     }
-    data.likedby.includes(userId) ? setdataLiked(true) : setdataLiked(false);
-  }, [userId]);
-
-  const handlelikes = (e) => {
-    {
-      !signedInUsersId &&
-        toast.error("Please sign in to like", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-    }
-
-    const putLikes = async () => {
-      try {
-        const response = await axios.put(apiLink, {
-          currentTargetedId,
-          signedInUsersId,
-        });
-
-        dataLiked == true
-          ? setLikesCount((likesCount -= 1))
-          : setLikesCount((likesCount += 1));
-        setdataLiked(!dataLiked);
-      } catch (err) {
-        console.log("something went wrong :(", err);
-      }
-    };
-    putLikes();
+    setLiked(!liked);
+    // call API
+    toggleLike(data._id);
   };
 
   return (
     <span>
-      <label id="likesbutton">
-        <input
-          type="button"
-          onClick={handlelikes}
-          htmlFor="likesbutton"
-        />
-
+      <span> Liked: {liked ? "true" : "false"}</span>
+      <button
+        onClick={handleClick}
+        style={{ background: "transparent", border: "none", cursor: "pointer" }}
+      >
         <FontAwesomeIcon
           icon={faHeart}
           className={`${HeartIconStyling}`}
-          color={likesColor}
+          color={liked ? "red" : "#87ceeb"}
         />
 
-        <span className={`${HeartIconTextStyling}`}>{likesCount}</span>
-      </label>
+        <span className={`${HeartIconTextStyling}`}>{likedCount}</span>
+      </button>
     </span>
   );
 }

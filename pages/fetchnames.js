@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
@@ -11,12 +11,10 @@ import removeDeletedContent from "../components/DeletingData/removeDeletedConten
 import dbConnect from "../utils/db";
 import Category from "../models/nameCategory";
 import NameTag from "../models/NameTag";
+import NameLikes from "../models/NameLikes";
 
-import useSWRInfinite from "swr/infinite";
-import fetcher from "../utils/fetch";
 import Pagination from "../components/ShowingListOfContent/pagination";
 import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
-import Image from "next/image";
 import { useSwrPagination } from "../hooks/useSwrPagination";
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
@@ -41,16 +39,34 @@ export const getServerSideProps = async (context) => {
     .map((tag) => tag)
     .reduce((sum, value) => sum.concat(value), []);
 
+  // grabbing names by logged in user
+  let usersLikedNamesFromDb = [];
+
+  if (session) {
+    await dbConnect.connect();
+    const userId = session.user.id;
+    const likes = await NameLikes.find({ userId }).select("nameId -_id");
+    usersLikedNamesFromDb = likes.map((l) => l.nameId.toString());
+  }
+
+  // MongoDB documents (from Mongoose) are not plain JavaScript objects they have extra methods like .save, ect, but Next.JS needs JSON-serializable objects
+  // thus the JSON.parse(JSON.stringify)
   return {
     props: {
       category: JSON.parse(JSON.stringify(data)),
       tagList: JSON.parse(JSON.stringify(tagListProp)),
       sessionFromServer: session,
+      usersLikedNamesFromDb,
     },
   };
 };
 
-export default function FetchNames({ category, sessionFromServer, tagList }) {
+export default function FetchNames({
+  category,
+  sessionFromServer,
+  tagList,
+  usersLikedNamesFromDb,
+}) {
   // #### Info for nav menu
 
   let userName = "";
@@ -60,9 +76,14 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
-    signedInUsersId = sessionFromServer.user._id;
+    signedInUsersId = sessionFromServer.user.id;
   }
   // ##### end of section for nav menu
+  // store liked IDs in a ref so updates don't trigger full re-render
+  const likedSetRef = useRef(new Set(usersLikedNamesFromDb));
+
+  // local state to trigger re-render of a single card when the likes toggled
+  const [likesToggledNameId, setLikesToggledNameId] = useState(null);
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [IsOpen, setIsOpen] = useState(false);
@@ -89,12 +110,6 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
     setSwrPage(event);
   }
 
-  function setSizeFunction(event) {
-    setSize(event);
-    //  && mutate();
-    // You usually don’t need to manually call mutate() after setSize, because setSize already triggers a revalidation internally.
-  }
-
   function setSortingLogicFunction(event) {
     // setSortingLogicString(event);
     setSortingValue(event.split(",")[1]);
@@ -115,6 +130,35 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
       : setFilterTagsIds(filterTagsIds.filter((tag) => tag != value));
 
     setSwrPage(1);
+  };
+
+  // ############# toggle likes logic ####################
+
+  const toggleLike = async (nameId) => {
+    console.log("toggleLike clicked!", nameId);
+    const isLiked = likedSetRef.current.has(nameId);
+
+    // Optimistically update ref
+    if (isLiked) likedSetRef.current.delete(nameId);
+    else likedSetRef.current.add(nameId);
+
+    // Trigger render only for this card
+    setLikesToggledNameId(nameId);
+    console.log("nameId:", nameId, "userId:", signedInUsersId);
+
+    try {
+      await fetch(`/api/names/${nameId}/togglelike`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: signedInUsersId }),
+      });
+    } catch (err) {
+      console.log("an error occured");
+      // Rollback on error
+      if (isLiked) likedSetRef.current.add(nameId);
+      else likedSetRef.current.delete(nameId);
+      setLikesToggledNameId(nameId);
+    }
   };
 
   // ########### SWR Section #################
@@ -240,6 +284,9 @@ export default function FetchNames({ category, sessionFromServer, tagList }) {
                       tagList={tagList}
                       setNameEditedFunction={setNameEditedFunction}
                       setDeleteThisContentId={setDeleteThisContentId}
+                      likedSetRef={likedSetRef}
+                      toggleLike={toggleLike}
+                      likesToggledNameId={likesToggledNameId}
                     />
                   );
                 })}
