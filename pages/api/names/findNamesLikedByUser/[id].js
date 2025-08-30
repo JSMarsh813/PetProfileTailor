@@ -1,6 +1,5 @@
 import dbConnect from "@/utils/db";
-import Likes from "@/models/Likes";
-
+import NameLikes from "../../../../models/NameLikes";
 export default async function handler(req, res) {
   await dbConnect();
 
@@ -16,7 +15,7 @@ export default async function handler(req, res) {
 
   try {
     // Fetch all Likes for this user
-    const likes = await Likes.find({ userId }).select("nameId -_id"); // only return nameId
+    const likes = await NameLikes.find({ userId }).select("nameId -_id"); // only return nameId
     const nameIds = likes.map((l) => l.nameId.toString());
 
     res.status(200).json({ nameIds });
