@@ -14,6 +14,14 @@ export default async function handler(req, res) {
   let sortLogic = {};
   sortLogic[sortingproperty] = parseInt(sortingvalue);
 
+  console.log(
+    "sortLogic",
+    sortLogic,
+    "sortingproperty",
+    sortingproperty,
+    "sortingvalue",
+    sortingvalue,
+  );
   console.log("tags", tags);
   const limit = 50;
 

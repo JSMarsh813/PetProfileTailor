@@ -11,7 +11,7 @@ export default function LikesButtonAndLikesLogic({
   HeartIconStyling,
   HeartIconTextStyling,
   likedSetRef,
-  recentLikesRef, // 0 same as server, 1 liked, -1 unliked
+  recentLikesRef,
 }) {
   const { liked, likeCount, isProcessing, toggleLike } = useLikeState({
     data,
@@ -23,8 +23,8 @@ export default function LikesButtonAndLikesLogic({
 
   return (
     <span>
-      <span> Liked: {liked ? "true" : "false"}</span>
       <button
+        disabled={isProcessing}
         onClick={toggleLike}
         style={{ background: "transparent", border: "none", cursor: "pointer" }}
       >

@@ -150,8 +150,8 @@ export default function FetchNames({
     currentUiPage,
     itemsPerUiPage,
     tags: filterTagsIds,
-    sortingproperty: "createdAt",
-    sortingvalue: -1,
+    sortingproperty: sortingproperty,
+    sortingvalue: sortingvalue,
   });
 
   const names = data ?? [];
