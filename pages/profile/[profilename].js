@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
-import BatsignalPost from "../../components/ShowingListOfContent/batsignalPost";
-import SingleComment from "../../components/ShowingListOfContent/SingleComment";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import NameListingAsSections from "../../components/ShowingListOfContent/NameListingAsSections";
@@ -23,11 +21,9 @@ import FlaggingContentSection from "../../components/Flagging/FlaggingContentSec
 
 import dbConnect from "../../utils/db";
 import Names from "../../models/Names";
-import BatSignalComments from "../../models/BatSignalComment";
 import NameTag from "../../models/NameTag";
 import Descriptions from "../../models/description";
 import DescriptionTag from "../../models/descriptiontag";
-import IndividualPosts from "../../models/Post";
 import User from "../../models/User";
 
 // const ObjectId = require("mongodb").ObjectId;
@@ -69,25 +65,6 @@ export const getServerSideProps = async (context) => {
         select: ["name", "profilename", "profileimage"],
       })
       .populate({ path: "tags", select: ["tag"] });
-    //grabbing posts
-
-    let postData = await IndividualPosts.find({
-      createdby: userId,
-    }).populate({
-      path: "createdby",
-      select: ["name", "profilename", "profileimage"],
-    });
-
-    //###### grabbing comments user created
-
-    const UsersCommentData = await BatSignalComments.find({
-      createdby: userId,
-    });
-    // commented out since i'm taking comments off the profile page
-    // .populate({
-    //   path: "createdby",
-    //   select: ["name", "profilename", "profileimage"],
-    // });
 
     //##### grabbing Tags for name edit function
 
@@ -124,14 +101,6 @@ export const getServerSideProps = async (context) => {
       likedby: userId,
     });
 
-    const postsLiked = await IndividualPosts.find({
-      likedby: userId,
-    });
-
-    const likedComments = await BatSignalComments.find({
-      likedby: userId,
-    });
-
     const likedDescriptions = await Descriptions.find({
       likedby: userId,
     });
@@ -156,12 +125,6 @@ export const getServerSideProps = async (context) => {
         nameTagList: JSON.parse(JSON.stringify(nameTagListProp)),
         favNames: JSON.parse(JSON.stringify(likedNames)),
 
-        UsersCommentData: JSON.parse(JSON.stringify(UsersCommentData)),
-        likedComments: JSON.parse(JSON.stringify(likedComments)),
-
-        postData: JSON.parse(JSON.stringify(postData)),
-        postsLiked: JSON.parse(JSON.stringify(postsLiked)),
-
         likedDescriptions: JSON.parse(JSON.stringify(likedDescriptions)),
         createdDescriptions: JSON.parse(JSON.stringify(createdDescriptions)),
         descriptionTagListProp: descriptionTagListProp,
@@ -175,12 +138,6 @@ export const getServerSideProps = async (context) => {
 function ProfilePage({
   sessionFromServer,
   userData,
-
-  UsersCommentData,
-  likedComments,
-
-  postData,
-  postsLiked,
 
   nameList,
   nameTagList,
@@ -364,10 +321,6 @@ function ProfilePage({
                     <PointSystemList
                       favNames={favNames}
                       namesCreated={nameList}
-                      postsCreated={postData}
-                      postsLiked={postsLiked}
-                      commentsCreated={UsersCommentData}
-                      likedComments={likedComments}
                       createdDescriptions={createdDescriptions}
                       likedDescriptions={likedDescriptions}
                     />
@@ -422,81 +375,6 @@ function ProfilePage({
               )}
             </div>
           </section>
-          {/* ################  POSTS SECTION  #################   */}
-          <section className="my-4">
-            <h2
-              className="w-full text-center font-semibold text-amber-300 
-            text-xl
-             p-2 
-            
-            "
-            >
-              Posts Added
-            </h2>
-
-            <div
-              className=" flex-1 grid grid-cols-1 gap-4 mr-2  
- w-full
- border-2 border-amber-300"
-            >
-              {!postData.length ? (
-                <section>
-                  <span className="bg-none">no posts added yet!</span>
-                </section>
-              ) : (
-                <section className="">
-                  {postData.map((post) => {
-                    return (
-                      <BatsignalPost
-                        post={post}
-                        key={post._id}
-                        className="mx-auto"
-                        sessionFromServer={sessionFromServer}
-                        // commentList={commentList}
-                      />
-                    );
-                  })}
-                </section>
-              )}
-            </div>
-          </section>
-          {/* ###############  COMMENTS SECTION ############ */}
-
-          {/* <section className="my-2">
-            <h2
-              className="w-full text-center font-semibold text-amber-300 
-            text-xl
-            bg-darkPurple p-2 
-            "
-            >
-              Comments Added
-            </h2>
-            <div
-              className=" flex-1 grid grid-cols-1 gap-4 mr-2  
- w-full
- border-2 border-amber-300"
-            >
-              {!UsersCommentData.length ? (
-                <section className="border-2 border-amber-300">
-                  <span> No comments added yet! </span>
-                </section>
-              ) : (
-                <section className="border-2 border-amber-300">
-                  {UsersCommentData.map((singleComment) => (
-                    <SingleComment
-                      key={singleComment._id}
-                      replyingtothisid={singleComment.replyingtothisid}
-                      rootComment={singleComment}
-                      sessionFromServer={sessionFromServer}
-                      typeOfContentReplyingTo="post"
-                      apilink="/api/individualbatsignalcomments"
-                      apilinklikes="/api/individualbatsignalcomments/updatecommentlikes"
-                    />
-                  ))}
-                </section>
-              )}
-            </div>
-          </section> */}
 
           {/* ############## DESCRIPTIONS ADDED ##############*/}
           <section className="my-2">

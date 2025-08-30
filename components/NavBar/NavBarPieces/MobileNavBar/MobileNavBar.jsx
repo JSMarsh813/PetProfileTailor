@@ -169,48 +169,6 @@ focus-visible:ring-opacity-75"
             Community
           </button>
         </Menu.Item>
-
-        <Menu.Item>
-          {({ active }) => (
-            <MyLink href={`/byte`}>
-              <div className="mx-auto inline-block w-9 align-middle">
-                <Image
-                  className={`${active ? "" : "invert"}`}
-                  src="/noun-robot-dog.png"
-                  width={40}
-                  height={10}
-                  alt=""
-                  style={{
-                    maxWidth: "40px",
-                    height: "30px",
-                  }}
-                />
-              </div>
-              Byte
-            </MyLink>
-          )}
-        </Menu.Item>
-
-        <Menu.Item>
-          {({ active }) => (
-            <MyLink href={`/community`}>
-              <div className="mx-auto inline-block w-9 align-middle">
-                <Image
-                  className={`${active ? "" : "invert"}`}
-                  src="/batsignal.png"
-                  width={40}
-                  height={20}
-                  alt=""
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto",
-                  }}
-                />
-              </div>
-              Community
-            </MyLink>
-          )}
-        </Menu.Item>
       </Menu.Items>
     </div>
   );

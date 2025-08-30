@@ -44,26 +44,6 @@ const NavBarNames = () => {
           </NavBarLink>
 
           <AddItemsDropDownMenu />
-
-          <NavBarLink href="/byte">
-            <Image
-              src="/noun-robot-dog.png"
-              width={30}
-              height={20}
-              className="inline-block invert mr-1"
-            />
-            Byte
-          </NavBarLink>
-
-          <NavBarLink href="/community">
-            <Image
-              src="/batsignal.png"
-              width={30}
-              height={20}
-              className="inline-block invert mr-1"
-            />
-            Community
-          </NavBarLink>
         </ul>
       </section>
     </div>

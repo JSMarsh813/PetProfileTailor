@@ -9,7 +9,7 @@ try {
   // Step 1: Drop any old index
   const indexes = await Names.collection.indexes();
   for (const i of indexes) {
-    if (i.key.likedByLength || i.key.likedbylength) {
+    if (i.key.likedby) {
       await Names.collection.dropIndex(i.name);
       console.log(`✅ Dropped index: ${i.name}`);
     }
@@ -18,17 +18,14 @@ try {
   // Step 2: Remove old fields using raw MongoDB driver
   const result = await Names.collection.updateMany(
     {},
-    { $unset: { likedByLength: "", likedbylength: "" } },
+    { $unset: { likedby: [] } },
   );
 
   console.log(`✅ Removed old fields from ${result.modifiedCount} documents.`);
 
   // Step 3: Verify
   const check = await Names.collection.findOne({
-    $or: [
-      { likedByLength: { $exists: true } },
-      { likedbylength: { $exists: true } },
-    ],
+    $or: [{ likedbyLength: { $exists: true } }],
   });
 
   if (!check) {

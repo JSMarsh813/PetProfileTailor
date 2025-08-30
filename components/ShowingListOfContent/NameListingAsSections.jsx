@@ -24,6 +24,9 @@ export default function NameListingAsSections({
   tagList,
   setNameEditedFunction,
   setDeleteThisContentId,
+  likedSetRef,
+  recentLikesRef,
+  likesToggledNameId,
 }) {
   let userIsTheCreator = name.createdby._id === signedInUsersId;
 
@@ -36,11 +39,6 @@ export default function NameListingAsSections({
   // ##### STATE FOR EDITS ####
   const [showEditPage, setShowEditPage] = useState(false);
 
-  //### STATE FOR COMMENTS ######
-  // const [commentsShowing, SetCommentsShowing] = useState(false);
-
-  // const [commentsFromFetch, setCommentsFromFetch] = useState([]);
-
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
@@ -48,21 +46,6 @@ export default function NameListingAsSections({
 
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
   const localLink = `/name/${name.name}`;
-
-  // const [deleteThisCommentId, setDeleteThisCommentId] = useState(null);
-
-  // useEffect(() => {
-  //   console.log(`this is the commentid to delete ${deleteThisCommentId}`);
-
-  //   if (deleteThisCommentId !== null) {
-  //     removeDeletedContent(
-  //       setCommentsFromFetch,
-  //       commentsFromFetch,
-  //       deleteThisCommentId,
-  //       setDeleteThisCommentId,
-  //     );
-  //   }
-  // }, [deleteThisCommentId]);
 
   // ### for the edit notification button
   function onupdateEditState() {
@@ -73,44 +56,6 @@ export default function NameListingAsSections({
   function onClickShowShares() {
     setShareSectionShowing(!shareSectionShowing);
   }
-
-  //########## for comments
-  // function onupdateCommentShowState() {
-  //   SetCommentsShowing(!commentsShowing);
-  // }
-
-  // const handleFetchComments = async () => {
-  //   const response = await fetch(
-  //     "/api/names/commentscontainingnameid/" + name._id,
-  //   );
-  //   const data = await response.json();
-
-  //   setCommentsFromFetch(data);
-  // };
-
-  // useEffect(() => {
-  //   handleFetchComments();
-  // }, []);
-
-  //root comments
-  // let rootComments = [];
-
-  // if (commentsFromFetch) {
-  //   rootComments = commentsFromFetch.filter(
-  //     (comment) =>
-  //       comment.replyingtothisid === name._id &&
-  //       comment.parentcommentid === null,
-  //   );
-  // }
-
-  //reply comments
-  // let replyComments = "";
-
-  // if (commentsFromFetch) {
-  //   replyComments = commentsFromFetch.filter(
-  //     (comment) => comment.parentcommentid != null,
-  //   );
-  // }
 
   return (
     <div className="text-base">
@@ -135,7 +80,9 @@ export default function NameListingAsSections({
             HeartIconTextStyling="ml-2"
             currentTargetedId={currentTargetedId}
             signedInUsersId={signedInUsersId}
-            apiLink="/api/names/updateLikes"
+            apiBaseLink={`/api/names`}
+            likedSetRef={likedSetRef}
+            recentLikesRef={recentLikesRef}
           />
 
           <ShareButton onClickShowShares={onClickShowShares} />

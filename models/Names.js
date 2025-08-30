@@ -18,9 +18,6 @@ const NameSchema = new mongoose.Schema({
       ref: "NameTag",
     },
   ],
-  comments: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "NameComment", default: [] },
-  ],
   flaggedby: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -35,7 +32,7 @@ const NameSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
-  likedbylength: {
+  likedbycount: {
     type: Number,
     default: 0,
   },

@@ -36,3 +36,61 @@ Result: Tried a few things after googling, but what ended up fixing it was delet
 2. Problem: Needed to install multiple packages for a tailwind component
 
 I kept getting "module not found errors" but after installing the modules with npm they worked.
+
+## Trade Offs
+
+### Likes
+
+Schema Version 1:
+
+Attach likes to the name document
+
+```const NameSchema =  new mongoose.Schema({
+    ....
+ likedby: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      default: [],
+      ref: "User",
+    },
+  ],
+  likedbylength: {
+    type: Number,
+    default: 0,
+  },
+ });
+```
+
+Schema Version 2:
+
+Make small documents in a Likes Collection, which tracks nameIds that the userIds have liked
+
+```
+const LikesSchema = new mongoose.Schema(
+  {
+    userId: { type: ObjectId, ref: "Users", required: true },
+    nameId: { type: ObjectId, ref: "Names", required: true },
+  },
+  { timestamps: true },
+);
+```
+
+This project was updated to schema 2
+
+Why?
+
+1. Dashboard: With this small app schema 1 would work, schema 2 was chosen to simplfy logic for the dashboard. Schema 2 makes it easy to grab the list of names favorited by user, while schema 1 would have to scan the entire collection's arrays.
+
+2. Heart Logic: Schema 1 would be simplier, since the userIds that the heart should appear red for are already in the likedBy array.
+
+However schema 2 has an easy workaround, to decide whether a heart should appear red (already liked), we'd ask for a list of names that the user has liked and store it. Then depending on that, decide whether to render a red heart or not.
+
+A page can have up to 50 names, so would these checks slow down the page?
+
+- no because it will be stored in a set
+  ` const likedSet = new Set(userLikes.map(l => l.nameId.toString()));`
+- so checking if the user liked this name is an O(1) lookup
+  `const liked = likedSet.has(name._id.toString());`
+- in large apps where a user likes 10k items, this might be an issue but for this small app where a user will have a max of perhaps 200 names liked, this won't be an issue
+
+But this state could get out of sync if updates and error handling aren't handled carefully.

@@ -33,13 +33,6 @@ export default function Pagination({
     setTotalLoadedPages(calculatedTotalLoadedPages);
   }, [amountOfDataLoaded, size, itemsPerPage]);
 
-  console.log("totalItems", totalItems);
-  console.log("itemsPerPage)", itemsPerPage);
-  console.log(
-    "Math.ceil(totalItems / itemsPerPage))",
-    Math.ceil(totalItems / itemsPerPage),
-  );
-
   function howManyPagesHaveBeenLoaded(totalItems, itemsPerPage) {
     return Math.ceil(totalItems / itemsPerPage);
   }
@@ -66,19 +59,11 @@ export default function Pagination({
   // Make pageNumbers reactive using useMemo
   const pageNumbers = useMemo(() => {
     const numbers = [];
-    console.log(
-      "Calculating pageNumbers - windowStart:",
-      windowStart,
-      "windowEnd:",
-      windowEnd,
-      "totalLoadedPages:",
-      totalLoadedPages,
-    );
 
     for (let i = windowStart; i <= windowEnd; i++) {
       numbers.push(i);
     }
-    console.log("Generated pageNumbers:", numbers);
+
     return numbers;
   }, [windowStart, windowEnd, totalLoadedPages]);
   // useMemo only recalculates when the dependencies actually change, not on every render
@@ -87,10 +72,6 @@ export default function Pagination({
 
   const lastPageHandler = () => {
     // If we're at the last loaded page and there's more data to fetch
-    console.log("LastPageHandlerRan");
-    console.log("currentUiPage", currentUiPage);
-    console.log("totalLoadedPages", totalLoadedPages);
-    console.log("totalPagesInDatabase", totalPagesInDatabase);
 
     if (
       currentUiPage >= totalLoadedPages &&
@@ -170,8 +151,8 @@ export default function Pagination({
           >
             <option value="_id,-1">Newest</option>
             <option value="_id,1">Oldest </option>
-            <option value="likedbylength,-1">Most Liked</option>
-            <option value="likedbylength,1">Least Liked</option>
+            <option value=" likedbycount,-1">Most Liked</option>
+            <option value=" likedbycount,1">Least Liked</option>
           </select>
 
           {/* <label

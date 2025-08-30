@@ -1,77 +1,41 @@
-import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLikeState } from "../../../hooks/useLlikeState";
 
 export default function LikesButtonAndLikesLogic({
   data,
   signedInUsersId,
-  apiLink,
+  apiBaseLink,
   HeartIconStyling,
   HeartIconTextStyling,
+  likedSetRef,
+  recentLikesRef, // 0 same as server, 1 liked, -1 unliked
 }) {
-  let [likesCount, setLikesCount] = useState(
-    data.likedby == [] ? 0 : data.likedby.length,
-  );
-
-  const [dataLiked, setdataLiked] = useState(false);
-  let likesColor = dataLiked ? "red" : "#87ceeb";
-  let currentTargetedId = data._id;
-  let userId = "";
-
-  useEffect(() => {
-    if (signedInUsersId) {
-      userId = signedInUsersId;
-    }
-    data.likedby.includes(userId) ? setdataLiked(true) : setdataLiked(false);
-  }, [userId]);
-
-  const handlelikes = (e) => {
-    {
-      !signedInUsersId &&
-        toast.error("Please sign in to like", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-    }
-
-    const putLikes = async () => {
-      try {
-        const response = await axios.put(apiLink, {
-          currentTargetedId,
-          signedInUsersId,
-        });
-
-        dataLiked == true
-          ? setLikesCount((likesCount -= 1))
-          : setLikesCount((likesCount += 1));
-        setdataLiked(!dataLiked);
-      } catch (err) {
-        console.log("something went wrong :(", err);
-      }
-    };
-    putLikes();
-  };
+  const { liked, likeCount, isProcessing, toggleLike } = useLikeState({
+    data,
+    userId: signedInUsersId,
+    likedSetRef,
+    apiBaseLink,
+    recentLikesRef,
+  });
 
   return (
     <span>
-      <label id="likesbutton">
-        <input
-          type="button"
-          onClick={handlelikes}
-          htmlFor="likesbutton"
-        />
-
+      <span> Liked: {liked ? "true" : "false"}</span>
+      <button
+        onClick={toggleLike}
+        style={{ background: "transparent", border: "none", cursor: "pointer" }}
+      >
         <FontAwesomeIcon
           icon={faHeart}
           className={`${HeartIconStyling}`}
-          color={likesColor}
+          color={liked ? "red" : "#87ceeb"}
         />
 
-        <span className={`${HeartIconTextStyling}`}>{likesCount}</span>
-      </label>
+        <span className={`${HeartIconTextStyling}`}>{likeCount}</span>
+      </button>
     </span>
   );
 }
