@@ -1,42 +1,31 @@
-import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLikeState } from "../../../hooks/useLlikeState";
 
 export default function LikesButtonAndLikesLogic({
   data,
   signedInUsersId,
-  apiLink,
+  apiBaseLink,
   HeartIconStyling,
   HeartIconTextStyling,
   likedSetRef,
-  toggleLike,
+  recentLikesRef, // 0 same as server, 1 liked, -1 unliked
 }) {
-  const [liked, setLiked] = useState(likedSetRef.current.has(data._id));
-  const [likedCount, setLikedCount] = useState(data.likedbycount);
-
-  const handleClick = () => {
-    if (liked) {
-      likedSetRef.current.delete(data._id);
-      // updating the ref since if they went back a page, we'd have to remember which names they freshly liked/unliked when that page of 50 names is rendered again
-      setLikedCount((prev) => prev - 1);
-    } else {
-      likedSetRef.current.add(data._id);
-      setLikedCount((prev) => prev + 1);
-    }
-    setLiked(!liked);
-    // call API
-    toggleLike(data._id);
-  };
+  const { liked, likeCount, isProcessing, toggleLike } = useLikeState({
+    data,
+    userId: signedInUsersId,
+    likedSetRef,
+    apiBaseLink,
+    recentLikesRef,
+  });
 
   return (
     <span>
       <span> Liked: {liked ? "true" : "false"}</span>
       <button
-        onClick={handleClick}
+        onClick={toggleLike}
         style={{ background: "transparent", border: "none", cursor: "pointer" }}
       >
         <FontAwesomeIcon
@@ -45,7 +34,7 @@ export default function LikesButtonAndLikesLogic({
           color={liked ? "red" : "#87ceeb"}
         />
 
-        <span className={`${HeartIconTextStyling}`}>{likedCount}</span>
+        <span className={`${HeartIconTextStyling}`}>{likeCount}</span>
       </button>
     </span>
   );

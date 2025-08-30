@@ -83,7 +83,6 @@ export default async function handler(req, res) {
               profileimage: 1,
               _id: 1,
             },
-            likedby: 1,
             likedbycount: 1, // use precomputed field
             flaggedby: 1,
           },

@@ -81,6 +81,8 @@ export default function FetchNames({
   // ##### end of section for nav menu
   // store liked IDs in a ref so updates don't trigger full re-render
   const likedSetRef = useRef(new Set(usersLikedNamesFromDb));
+  const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
+  // tracks if the likes count has to be updated, important for if the user navigates backwards
 
   // local state to trigger re-render of a single card when the likes toggled
   const [likesToggledNameId, setLikesToggledNameId] = useState(null);
@@ -130,35 +132,6 @@ export default function FetchNames({
       : setFilterTagsIds(filterTagsIds.filter((tag) => tag != value));
 
     setSwrPage(1);
-  };
-
-  // ############# toggle likes logic ####################
-
-  const toggleLike = async (nameId) => {
-    console.log("toggleLike clicked!", nameId);
-    const isLiked = likedSetRef.current.has(nameId);
-
-    // Optimistically update ref
-    if (isLiked) likedSetRef.current.delete(nameId);
-    else likedSetRef.current.add(nameId);
-
-    // Trigger render only for this card
-    setLikesToggledNameId(nameId);
-    console.log("nameId:", nameId, "userId:", signedInUsersId);
-
-    try {
-      await fetch(`/api/names/${nameId}/togglelike`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: signedInUsersId }),
-      });
-    } catch (err) {
-      console.log("an error occured");
-      // Rollback on error
-      if (isLiked) likedSetRef.current.add(nameId);
-      else likedSetRef.current.delete(nameId);
-      setLikesToggledNameId(nameId);
-    }
   };
 
   // ########### SWR Section #################
@@ -285,7 +258,7 @@ export default function FetchNames({
                       setNameEditedFunction={setNameEditedFunction}
                       setDeleteThisContentId={setDeleteThisContentId}
                       likedSetRef={likedSetRef}
-                      toggleLike={toggleLike}
+                      recentLikesRef={recentLikesRef}
                       likesToggledNameId={likesToggledNameId}
                     />
                   );

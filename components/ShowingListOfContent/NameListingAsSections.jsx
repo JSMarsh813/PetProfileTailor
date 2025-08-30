@@ -25,11 +25,10 @@ export default function NameListingAsSections({
   setNameEditedFunction,
   setDeleteThisContentId,
   likedSetRef,
-  toggleLike,
+  recentLikesRef,
   likesToggledNameId,
 }) {
   let userIsTheCreator = name.createdby._id === signedInUsersId;
-  const [liked, setLiked] = useState(likedSetRef.current.has(name._id));
 
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
 
@@ -40,11 +39,6 @@ export default function NameListingAsSections({
   // ##### STATE FOR EDITS ####
   const [showEditPage, setShowEditPage] = useState(false);
 
-  //### STATE FOR COMMENTS ######
-  // const [commentsShowing, SetCommentsShowing] = useState(false);
-
-  // const [commentsFromFetch, setCommentsFromFetch] = useState([]);
-
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
@@ -52,29 +46,6 @@ export default function NameListingAsSections({
 
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
   const localLink = `/name/${name.name}`;
-
-  // decide if the component has to rerender when the likes heart changes
-  // it does this by comparing its ID to the last toggled ID
-  useEffect(() => {
-    if (likesToggledNameId === name._id) {
-      setLiked(likedSetRef.current.has(name._id));
-    }
-  }, [likesToggledNameId, name._id]);
-
-  // const [deleteThisCommentId, setDeleteThisCommentId] = useState(null);
-
-  // useEffect(() => {
-  //   console.log(`this is the commentid to delete ${deleteThisCommentId}`);
-
-  //   if (deleteThisCommentId !== null) {
-  //     removeDeletedContent(
-  //       setCommentsFromFetch,
-  //       commentsFromFetch,
-  //       deleteThisCommentId,
-  //       setDeleteThisCommentId,
-  //     );
-  //   }
-  // }, [deleteThisCommentId]);
 
   // ### for the edit notification button
   function onupdateEditState() {
@@ -85,44 +56,6 @@ export default function NameListingAsSections({
   function onClickShowShares() {
     setShareSectionShowing(!shareSectionShowing);
   }
-
-  //########## for comments
-  // function onupdateCommentShowState() {
-  //   SetCommentsShowing(!commentsShowing);
-  // }
-
-  // const handleFetchComments = async () => {
-  //   const response = await fetch(
-  //     "/api/names/commentscontainingnameid/" + name._id,
-  //   );
-  //   const data = await response.json();
-
-  //   setCommentsFromFetch(data);
-  // };
-
-  // useEffect(() => {
-  //   handleFetchComments();
-  // }, []);
-
-  //root comments
-  // let rootComments = [];
-
-  // if (commentsFromFetch) {
-  //   rootComments = commentsFromFetch.filter(
-  //     (comment) =>
-  //       comment.replyingtothisid === name._id &&
-  //       comment.parentcommentid === null,
-  //   );
-  // }
-
-  //reply comments
-  // let replyComments = "";
-
-  // if (commentsFromFetch) {
-  //   replyComments = commentsFromFetch.filter(
-  //     (comment) => comment.parentcommentid != null,
-  //   );
-  // }
 
   return (
     <div className="text-base">
@@ -147,9 +80,9 @@ export default function NameListingAsSections({
             HeartIconTextStyling="ml-2"
             currentTargetedId={currentTargetedId}
             signedInUsersId={signedInUsersId}
-            apiLink="/api/names/updateLikes"
+            apiBaseLink={`/api/names`}
             likedSetRef={likedSetRef}
-            toggleLike={toggleLike}
+            recentLikesRef={recentLikesRef}
           />
 
           <ShareButton onClickShowShares={onClickShowShares} />
