@@ -19,23 +19,9 @@ export function useSwrPagination({
   sortingproperty,
   sortingvalue,
 }) {
-  //   // Compute indices in the full list
-  //   const uiStartIndex = (currentUiPage - 1) * itemsPerUiPage;
-  //   const uiEndIndex = uiStartIndex + itemsPerUiPage - 1;
-
-  //   // Compute which DB chunks we need
-  //   const startDbPage = Math.floor(uiStartIndex / ITEMS_PER_FETCH) + 1;
-  //   const endDbPage = Math.floor(uiEndIndex / ITEMS_PER_FETCH) + 1;
-
-  //   const neededPages = [];
-  //   for (let p = startDbPage; p <= endDbPage; p++) {
-  //     neededPages.push(p);
-  //   }
-
   // SWR key function
-  const getKey = (index) => {
-    // const page = neededPages[index];
-    // if (!page) return null; // stop fetching
+  const getKey = (index, previousPageData) => {
+    if (previousPageData && !previousPageData.data?.length) return null; // no more data
     if (index === undefined) return null; // stop fetching
     const page = index + 1; // SWR index starts at 0, but our API pages start at 1
     let url = `/api/names/swr/swr?page=${page}&sortingproperty=${sortingproperty}&sortingvalue=${sortingvalue}`;
@@ -46,19 +32,13 @@ export function useSwrPagination({
   const { data, error, size, isLoading, isValidating, setSize, mutate } =
     useSWRInfinite(getKey, fetcher);
 
-  if (!data & !error)
-    return { items: [], isLoading: true, error, totalItems: 0, totalPages: 0 };
-
   // Flatten all fetched DB chunks
-  const allItems = data
-    ? data.flatMap((chunk) => (chunk?.data ? chunk.data : []))
-    : [];
-  // The optional chaining (chunk?.data) prevents the crash if a chunk is undefined.
+  const allItems = data ? data.flatMap((chunk) => chunk?.data ?? []) : [];
+  // (chunk?.data) prevents the crash if a chunk is undefined.
 
   // Total docs from API metadata
-  const totalItems = data[0]?.totalDocs || 0;
+  const totalItems = data?.[0]?.totalDocs || 0;
   const totalPagesInDatabase = Math.ceil(totalItems / itemsPerUiPage);
-  const currentSwrPage = data?.[0]?.currentPage || 1;
 
   console.log("SWR data:", data);
   console.log("SWR size:", size);
@@ -66,13 +46,12 @@ export function useSwrPagination({
 
   return {
     data: allItems,
-    isLoading,
+    isLoading: isLoading ?? !data,
     error,
     totalItems,
     totalPagesInDatabase,
     size,
     setSize,
-    currentSwrPage,
     isValidating,
     mutate,
   };

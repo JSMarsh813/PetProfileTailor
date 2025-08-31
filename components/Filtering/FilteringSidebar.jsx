@@ -1,8 +1,13 @@
-import { Disclosure } from "@headlessui/react";
+import { Button, Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
-import React from "react";
-
-function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+function FilteringSidebar({
+  category,
+  handleFilterChange,
+  IsOpen,
+  handleApplyFilters,
+  filterTagsIds,
+}) {
   return (
     <div
       className={` h-fit bg-violet-900 border-b-2 border-solid border-violet-400 rounded-box place-items-center ${
@@ -46,6 +51,7 @@ function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
                           type="checkbox"
                           onChange={handleFilterChange}
                           className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600 "
+                          checked={filterTagsIds.includes(option._id)}
                         />
 
                         {/* shows the actual description (male, female, unisex ect for gender) */}
@@ -64,6 +70,18 @@ function FilteringSidebar({ category, handleFilterChange, IsOpen }) {
           </Disclosure>
         );
       })}
+      <div className="flex justify-evenly">
+        <GeneralButton
+          text="apply"
+          className="text-center"
+          onClick={() => handleApplyFilters()}
+        />
+        <GeneralButton
+          text="reset"
+          className="text-center"
+          onClick={() => handleApplyFilters("reset")}
+        />
+      </div>
     </div>
   );
 }

@@ -84,14 +84,10 @@ export default function FetchNames({
   const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
   // tracks if the likes count has to be updated, important for if the user navigates backwards
 
-  // local state to trigger re-render of a single card when the likes toggled
-  const [likesToggledNameId, setLikesToggledNameId] = useState(null);
-
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [IsOpen, setIsOpen] = useState(false);
   const [filterTagsIds, setFilterTagsIds] = useState([]);
-  const [filteredNames, setFilteredNames] = useState([]);
-  const [swrPage, setSwrPage] = useState(1);
+
   const [currentUiPage, setCurrentUiPage] = useState(1);
   const [itemsPerUiPage, setItemsPerUiPage] = useState(10);
   // const [sortinglogicstring, setSortingLogicString] = useState("_id,-1");
@@ -99,8 +95,26 @@ export default function FetchNames({
   const [sortingproperty, setSortingProperty] = useState("_id");
   const [nameEdited, setNameEdited] = useState(false);
   const [deleteThisContentId, setDeleteThisContentId] = useState(null);
+  const [triggerApplyFilters, setTriggerApplyFilters] = useState([]);
 
-  let filteredListLastPage = filteredNames.length / itemsPerPage;
+  // ########### SWR Section #################
+
+  const {
+    data,
+    totalPagesInDatabase,
+    totalItems,
+    size,
+    setSize,
+    isLoading,
+    isValidating,
+    mutate,
+  } = useSwrPagination({
+    currentUiPage,
+    itemsPerUiPage,
+    tags: triggerApplyFilters,
+    sortingproperty: sortingproperty,
+    sortingvalue: sortingvalue,
+  });
 
   // ############ Section for passing state into components as functions #######
 
@@ -109,7 +123,7 @@ export default function FetchNames({
   }
 
   function setPageFunction(event) {
-    setSwrPage(event);
+    setSize(event);
   }
 
   function setSortingLogicFunction(event) {
@@ -130,29 +144,19 @@ export default function FetchNames({
     checked
       ? setFilterTagsIds([...filterTagsIds, value])
       : setFilterTagsIds(filterTagsIds.filter((tag) => tag != value));
-
-    setSwrPage(1);
   };
 
-  // ########### SWR Section #################
+  const handleApplyFilters = (reset) => {
+    if (reset) {
+      setFilterTagsIds([]);
+      setTriggerApplyFilters([]);
+    } else {
+      setTriggerApplyFilters(filterTagsIds);
+    }
 
-  const {
-    data,
-    totalPagesInDatabase,
-    totalItems,
-    size,
-    setSize,
-    isLoading,
-    currentSwrPage,
-    isValidating,
-    mutate,
-  } = useSwrPagination({
-    currentUiPage,
-    itemsPerUiPage,
-    tags: filterTagsIds,
-    sortingproperty: sortingproperty,
-    sortingvalue: sortingvalue,
-  });
+    setCurrentUiPage(1);
+    setSize(1);
+  };
 
   const names = data ?? [];
   console.log("names", names);
@@ -161,7 +165,7 @@ export default function FetchNames({
 
   // if users have changed how the items get sorted, then start over swr from page 1
   useEffect(() => {
-    setSwrPage(1);
+    setSize(1);
   }, [sortingvalue, sortingproperty]);
 
   useEffect(() => {
@@ -175,8 +179,8 @@ export default function FetchNames({
   useEffect(() => {
     if (deleteThisContentId !== null) {
       removeDeletedContent(
-        setFilteredNames,
-        filteredNames,
+        // setFilteredNames,
+        // filteredNames,
         deleteThisContentId,
         setDeleteThisContentId,
       );
@@ -205,6 +209,8 @@ export default function FetchNames({
           category={category}
           handleFilterChange={handleFilterChange}
           IsOpen={IsOpen}
+          handleApplyFilters={handleApplyFilters}
+          filterTagsIds={filterTagsIds}
         />
 
         {/*################# CONTENT DIV ################### */}
@@ -226,7 +232,6 @@ export default function FetchNames({
             setCurrentUiPage={setCurrentUiPage}
             setSortingLogicFunction={setSortingLogicFunction}
             totalPagesInDatabase={totalPagesInDatabase}
-            currentSwrPage={currentSwrPage}
             totalItems={totalItems}
             amountOfDataLoaded={data?.length}
           />
@@ -259,7 +264,6 @@ export default function FetchNames({
                       setDeleteThisContentId={setDeleteThisContentId}
                       likedSetRef={likedSetRef}
                       recentLikesRef={recentLikesRef}
-                      likesToggledNameId={likesToggledNameId}
                     />
                   );
                 })}
@@ -274,10 +278,10 @@ export default function FetchNames({
                 totalItems={totalItems}
               />
 
-              <CheckForMoreData
-                filteredListLastPage={filteredListLastPage}
+              {/* <CheckForMoreData
+                filteredListLastPage={filteredListLastPage} //deleted
                 setSize={setSize}
-              />
+              /> */}
             </section>
           </section>
         </div>

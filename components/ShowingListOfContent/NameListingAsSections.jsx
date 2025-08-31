@@ -26,7 +26,6 @@ export default function NameListingAsSections({
   setDeleteThisContentId,
   likedSetRef,
   recentLikesRef,
-  likesToggledNameId,
 }) {
   let userIsTheCreator = name.createdby._id === signedInUsersId;
 

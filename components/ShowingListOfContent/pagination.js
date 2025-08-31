@@ -14,7 +14,6 @@ export default function Pagination({
   setCurrentUiPage,
   setSortingLogicFunction,
   totalPagesInDatabase,
-  currentSwrPage,
   totalItems,
   amountOfDataLoaded, // Add this prop to get the actual loaded items
 }) {
@@ -33,27 +32,6 @@ export default function Pagination({
     setTotalLoadedPages(calculatedTotalLoadedPages);
   }, [amountOfDataLoaded, size, itemsPerPage]);
 
-  function howManyPagesHaveBeenLoaded(totalItems, itemsPerPage) {
-    return Math.ceil(totalItems / itemsPerPage);
-  }
-
-  // useEffect(() => {
-  //   // Slide window if currentPage moves outside visible range
-  //   if (currentUiPage >= windowStart + windowSize) {
-  //     setWindowStart(currentUiPage - windowSize + 1);
-  //   } else if (currentUiPage < windowStart) {
-  //     setWindowStart(currentUiPage);
-  //   }
-
-  //   // If user navigates to last page in current chunk, load next SWR chunk
-  //   if (
-  //     currentUiPage === totalLoadedPages &&
-  //     totalLoadedPages < totalPagesInDatabase
-  //   ) {
-  //     loadNextChunk?.();
-  //   }
-  // }, [currentUiPage, windowStart, totalPagesInDatabase]);
-
   const windowEnd = Math.min(windowStart + windowSize - 1, totalLoadedPages);
 
   // Make pageNumbers reactive using useMemo
@@ -67,8 +45,6 @@ export default function Pagination({
     return numbers;
   }, [windowStart, windowEnd, totalLoadedPages]);
   // useMemo only recalculates when the dependencies actually change, not on every render
-
-  let lastPageNumber = pageNumbers.slice(-1).toString();
 
   const lastPageHandler = () => {
     // If we're at the last loaded page and there's more data to fetch
@@ -86,7 +62,6 @@ export default function Pagination({
       updateWindow(currentUiPage + 1);
       setCurrentUiPage(currentUiPage + 1);
     }
-    setPageFunction(currentSwrPage + 1);
   };
 
   const updateWindow = (page) => {
@@ -99,23 +74,29 @@ export default function Pagination({
   };
 
   const handleClickPage = (page) => {
-    setCurrentUiPage(page);
-    updateWindow(page);
-    // Slide the window if page goes beyond visible range
-    if (page >= windowStart + windowSize) {
-      setWindowStart(page - windowSize + 1);
-    } else if (page < windowStart) {
-      setWindowStart(page);
-    }
-    // Check if we need to load more data before navigating
     if (page >= totalLoadedPages && totalLoadedPages < totalPagesInDatabase) {
-      console.log("Need to load more data for page:", page);
-      setSize(size + 1);
-      // Don't set currentUiPage yet - let the SWR data load first
+      setSize(size + 1); // trigger SWR fetch for more pages
       return;
     }
-
     setCurrentUiPage(page);
+    updateWindow(page);
+    // setCurrentUiPage(page);
+    // updateWindow(page);
+    // // Slide the window if page goes beyond visible range
+    // if (page >= windowStart + windowSize) {
+    //   setWindowStart(page - windowSize + 1);
+    // } else if (page < windowStart) {
+    //   setWindowStart(page);
+    // }
+    // // Check if we need to load more data before navigating
+    // if (page >= totalLoadedPages && totalLoadedPages < totalPagesInDatabase) {
+    //   console.log("Need to load more data for page:", page);
+    //   setSize(size + 1);
+    //   // Don't set currentUiPage yet - let the SWR data load first
+    //   return;
+    // }
+
+    // setCurrentUiPage(page);
   };
   return (
     <section className="pagination-navigation grid grid-rows-1 min-w-0  bg-violet-800 text-violet-900 font-bold pt-2 sm:border-x-4 border-darkPurple">
@@ -171,22 +152,23 @@ export default function Pagination({
         <button
           className="prevpage "
           aria-label="prevpage"
-          disabled={currentSwrPage == 1}
+          disabled={currentUiPage == 1}
           type="submit"
-          onClick={() => setPageFunction(currentSwrPage - 1)}
+          onClick={() => {
+            if (currentUiPage > 1) {
+              setCurrentUiPage(currentUiPage - 1);
+              updateWindow(currentUiPage - 1);
+            }
+          }}
         >
           <FontAwesomeIcon
             icon={faChevronCircleRight}
             className="text-3xl fa-rotate-180"
-            color={`${currentSwrPage == 1 ? "grey" : "yellow"}`}
+            color={`${currentUiPage === 1 ? "grey" : "yellow"}`}
           />
         </button>
 
         {pageNumbers.map((number) => {
-          // if (number >  + 2 || number < currentSwrPage - 3) {
-          //   return;
-          // }
-
           return (
             <GeneralButton
               text={number}
@@ -208,7 +190,7 @@ export default function Pagination({
           aria-label="nextpage"
           className="nextpage aligncenter"
           type="submit"
-          onClick={() => lastPageHandler(currentSwrPage)}
+          onClick={() => lastPageHandler()}
         >
           <FontAwesomeIcon
             icon={faChevronCircleRight}
