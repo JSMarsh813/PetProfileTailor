@@ -204,14 +204,14 @@ export default function FetchNames({
         sessionFromServer={sessionFromServer}
       />
 
-      <section className="sm:px-4 bg-violet-900">
+      <section className="sm:px-4 bg-violet-900 max-w-7xl mx-auto">
         <PageTitleWithImages
           title="Fetch"
           title2="Names"
         />
       </section>
 
-      <div className="flex  sm:px-2">
+      <div className="flex  sm:px-2 max-w-7xl mx-auto">
         <Drawer
           open={IsOpen}
           onClose={(event, reason) => {
