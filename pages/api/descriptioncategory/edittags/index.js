@@ -8,6 +8,7 @@ export default async function handler(req, res) {
   const { newtagid, categoriesToUpdate } = req.body.addTagsToCategorySubmission;
 
   await dbConnect.connect();
+  console.log("request body", req.body);
 
   if (method === "PUT") {
     try {
@@ -15,7 +16,7 @@ export default async function handler(req, res) {
         {
           _id: { $in: categoriesToUpdate.map((category) => category) },
         },
-        { $push: { tags: newtagid } }
+        { $push: { tags: newtagid } },
       );
       res.status(200).json(category);
     } catch (err) {

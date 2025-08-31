@@ -12,6 +12,8 @@ const NameCategorySchema = new mongoose.Schema({
       ref: "NameTag",
     },
   ],
+  order: Number,
+  default: 0,
 });
 
 module.exports =

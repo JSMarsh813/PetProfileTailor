@@ -35,7 +35,7 @@ module.exports = {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "#140223", //dark purple
+          DEFAULT: "#090110", //dark purple
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -67,7 +67,10 @@ module.exports = {
           "dark-bg": "var(--shiki-dark-bg)",
         },
       },
-      fontFamily: {},
+      fontFamily: {
+        sans: ['"Comfortaa"', "sans-serif"],
+        eduTAS: ['"Edu TAS Beginner"', "sans-serif"],
+      },
       width: {
         "30rem": "40rem",
       },

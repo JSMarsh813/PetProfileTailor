@@ -20,7 +20,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.0.12",
-    "@mui/material": "^5.11.14",
+    "@mui/material": "^6.5.0",
     "@next-auth/mongodb-adapter": "^1.1.1",
     "@nextui-org/react": "^1.0.0-beta.12",
     "@radix-ui/react-collapsible": "^1.1.3",

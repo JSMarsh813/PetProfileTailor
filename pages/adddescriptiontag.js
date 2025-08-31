@@ -12,11 +12,11 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   let categoryList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptioncategory`
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/descriptioncategory`,
   );
   let categoryData = await categoryList.json();
 
@@ -24,14 +24,24 @@ export const getServerSideProps = async (context) => {
     props: {
       sessionFromServer: session,
       categoryData: categoryData,
+      isAdmin: session.user.id === process.env.admin_id,
     },
   };
 };
 
-export default function AddDescriptionTag({ sessionFromServer, categoryData }) {
+export default function AddDescriptionTag({
+  sessionFromServer,
+  categoryData,
+  isAdmin,
+}) {
   const [newDescriptionTag, setNewDescriptionTag] = useState("");
   const [categoryList, setCategoryList] = useState(
-    categoryData.map((listing) => listing.category)
+    categoryData.map((listing) => listing.category),
+  );
+
+  console.log(
+    "categoryData",
+    categoryData.map((listing) => listing),
   );
 
   //for Nav menu profile name and image
@@ -115,8 +125,7 @@ export default function AddDescriptionTag({ sessionFromServer, categoryData }) {
           }
         />
 
-        {sessionFromServer &&
-        sessionFromServer.user._id == "640178e6d9f774e804cb323d" ? (
+        {sessionFromServer && isAdmin ? (
           <GeneralButton
             text="Submit tag"
             type="submit"

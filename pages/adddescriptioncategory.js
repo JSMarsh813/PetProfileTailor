@@ -16,11 +16,12 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       sessionFromServer: session,
+      isAdmin: session.user.id === process.env.admin_id,
     },
   };
 };
 
-export default function AddCategory({ sessionFromServer }) {
+export default function AddCategory({ sessionFromServer, isAdmin }) {
   // #### Info for nav menu
   let userName = "";
   let profileImage = "";
@@ -64,8 +65,7 @@ export default function AddCategory({ sessionFromServer }) {
           onChange={(e) => setNewCategory(e.target.value.toLowerCase())}
         />
 
-        {sessionFromServer &&
-        sessionFromServer.user._id == "640178e6d9f774e804cb323d" ? (
+        {sessionFromServer && isAdmin ? (
           <GeneralButton
             text="Submit description category"
             type="submit"

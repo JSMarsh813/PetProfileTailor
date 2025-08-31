@@ -73,7 +73,7 @@ border-y-4 border-darkPurple bg-black"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 font-black text-md md:text-base h-16
+                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 font-black text-md md:text-base h-16 rounded-full
                            
                            hover:text-yellow-300"
                 onClick={updateImpactfulState}
@@ -90,7 +90,7 @@ border-y-4 border-darkPurple bg-black"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 text-md md:text-base h-16
+                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 text-md md:text-base h-16 rounded-full
                             
                             hover:text-yellow-300"
                 onClick={updateFunState}
@@ -106,7 +106,7 @@ border-y-4 border-darkPurple bg-black"
                 color="yellow"
               />
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300  text-violet-900 text-md md:text-base h-16
+                className="btn btn-primary w-full mt-2 bg-yellow-300  text-violet-900 text-md md:text-base h-16 rounded-full
                                
                                hover:text-yellow-300"
                 onClick={updateTailorState}

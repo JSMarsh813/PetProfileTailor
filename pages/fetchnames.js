@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-
+import { Drawer } from "@mui/material";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import FilteringSidebar from "../components/Filtering/FilteringSidebar";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
@@ -30,7 +30,10 @@ export const getServerSideProps = async (context) => {
 
   //grabbing category's
 
-  const data = await Category.find().populate("tags");
+  const data = await Category.find()
+    .populate("tags")
+    .sort({ order: 1, _id: 1 });
+  // _id:1 is there just in case a category doesn't have an order property, it will appear at the end
 
   //grabbing Tags for name edit function
 
@@ -97,6 +100,10 @@ export default function FetchNames({
   const [deleteThisContentId, setDeleteThisContentId] = useState(null);
   const [triggerApplyFilters, setTriggerApplyFilters] = useState([]);
 
+  const toggleDrawer = (newOpen) => {
+    setIsOpen(newOpen);
+  };
+
   // ########### SWR Section #################
 
   const {
@@ -153,7 +160,7 @@ export default function FetchNames({
     } else {
       setTriggerApplyFilters(filterTagsIds);
     }
-
+    toggleDrawer(false);
     setCurrentUiPage(1);
     setSize(1);
   };
@@ -204,15 +211,26 @@ export default function FetchNames({
         />
       </section>
 
-      <div className="flex w-full sm:px-2">
-        <FilteringSidebar
-          category={category}
-          handleFilterChange={handleFilterChange}
-          IsOpen={IsOpen}
-          handleApplyFilters={handleApplyFilters}
-          filterTagsIds={filterTagsIds}
-        />
-
+      <div className="flex  sm:px-2">
+        <Drawer
+          open={IsOpen}
+          onClose={(event, reason) => {
+            if (reason === "backdropClick") {
+              // prevent closing when clicking on backdrop
+              return;
+            }
+            toggleDrawer(false);
+          }}
+          anchor="left"
+        >
+          <FilteringSidebar
+            category={category}
+            handleFilterChange={handleFilterChange}
+            handleApplyFilters={handleApplyFilters}
+            filterTagsIds={filterTagsIds}
+            toggleDrawer={toggleDrawer}
+          />
+        </Drawer>
         {/*################# CONTENT DIV ################### */}
 
         <div className="grow bg-darkPurple rounded-box place-items-center">
