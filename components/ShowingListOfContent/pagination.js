@@ -3,6 +3,7 @@ import GeneralButton from "../../components/ReusableSmallComponents/buttons/Gene
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
+import startCooldown from "../../utils/startCooldown";
 
 export default function Pagination({
   itemsPerPage,
@@ -16,6 +17,9 @@ export default function Pagination({
   totalPagesInDatabase,
   totalItems,
   amountOfDataLoaded, // Add this prop to get the actual loaded items
+  remainingSortCooldown,
+  sortingValue,
+  sortingProperty,
 }) {
   const [windowStart, setWindowStart] = useState(1); // first page of the visible window
 
@@ -125,16 +129,30 @@ export default function Pagination({
         </section>
         {/* sort by */}
         <section className="inline-block">
-          <select
-            id="per-page"
-            className="bg-violet-200  ml-2 p-2"
-            onChange={(e) => setSortingLogicFunction(e.target.value)}
-          >
-            <option value="_id,-1">Newest</option>
-            <option value="_id,1">Oldest </option>
-            <option value="likedbycount,-1">Most Liked</option>
-            <option value="likedbycount,1">Least Liked</option>
-          </select>
+          {remainingSortCooldown > 0 ? (
+            <select
+              className="bg-violet-200 ml-2 p-2 opacity-50 cursor-not-allowed border rounded w-56"
+              disabled
+            >
+              <option>
+                Please wait {remainingSortCooldown} second
+                {remainingSortCooldown > 1 ? "s" : ""}
+              </option>
+            </select>
+          ) : (
+            <select
+              id="per-page"
+              className="bg-violet-200 ml-2 p-2 border rounded w-40"
+              onChange={(e) => setSortingLogicFunction(e.target.value)}
+              value={`${sortingProperty},${sortingValue}`}
+              // so we remember what the user selected after the timeout
+            >
+              <option value="_id,-1">Newest</option>
+              <option value="_id,1">Oldest</option>
+              <option value="likedbycount,-1">Most Liked</option>
+              <option value="likedbycount,1">Least Liked</option>
+            </select>
+          )}
 
           {/* <label
             className="text-white ml-2"

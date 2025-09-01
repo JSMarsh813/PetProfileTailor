@@ -16,6 +16,7 @@ import NameLikes from "../models/NameLikes";
 import Pagination from "../components/ShowingListOfContent/pagination";
 import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 import { useSwrPagination } from "../hooks/useSwrPagination";
+import startCooldown from "../utils/startCooldown";
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
 
@@ -70,8 +71,12 @@ export default function FetchNames({
   tagList,
   usersLikedNamesFromDb,
 }) {
-  const [remainingCooldown, setRemainingCooldown] = useState(0);
-  const intervalRef = useRef(null);
+  const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
+  const [remainingSortCooldown, setRemainingSortCooldown] = useState(0);
+  const filterCooldownRef = useRef(null);
+  const sortIntervalRef = useRef(null);
+  // prevents overlapping cooldown intervals by attaching the interval to useRef, it will clear after 5 seconds
+  // so we check if filterCooldownRef.current has no intervals currently going before running another interval
 
   // #### Info for nav menu
 
@@ -97,8 +102,8 @@ export default function FetchNames({
   const [currentUiPage, setCurrentUiPage] = useState(1);
   const [itemsPerUiPage, setItemsPerUiPage] = useState(10);
   // const [sortinglogicstring, setSortingLogicString] = useState("_id,-1");
-  const [sortingvalue, setSortingValue] = useState(-1);
-  const [sortingproperty, setSortingProperty] = useState("_id");
+  const [sortingValue, setSortingValue] = useState(-1);
+  const [sortingProperty, setSortingProperty] = useState("_id");
   const [nameEdited, setNameEdited] = useState(false);
   const [deleteThisContentId, setDeleteThisContentId] = useState(null);
   const [triggerApplyFilters, setTriggerApplyFilters] = useState([]);
@@ -122,8 +127,8 @@ export default function FetchNames({
     currentUiPage,
     itemsPerUiPage,
     tags: triggerApplyFilters,
-    sortingproperty: sortingproperty,
-    sortingvalue: sortingvalue,
+    sortingProperty: sortingProperty,
+    sortingValue: sortingValue,
   });
 
   // ############ Section for passing state into components as functions #######
@@ -140,6 +145,7 @@ export default function FetchNames({
     // setSortingLogicString(event);
     setSortingValue(event.split(",")[1]);
     setSortingProperty(event.split(",")[0]);
+    startCooldown(sortIntervalRef, setRemainingSortCooldown, 3);
   }
 
   function setNameEditedFunction() {
@@ -160,6 +166,7 @@ export default function FetchNames({
     if (reset) {
       setFilterTagsIds([]);
     } else {
+      startCooldown(filterCooldownRef, setRemainingFilterCooldown);
       setTriggerApplyFilters(filterTagsIds);
       toggleDrawer(false);
     }
@@ -175,7 +182,7 @@ export default function FetchNames({
   // if users have changed how the items get sorted, then start over swr from page 1
   useEffect(() => {
     setSize(1);
-  }, [sortingvalue, sortingproperty]);
+  }, [sortingValue, sortingProperty]);
 
   useEffect(() => {
     if (nameEdited) {
@@ -197,22 +204,6 @@ export default function FetchNames({
   }, [deleteThisContentId]);
 
   // ########### End of Section that allows the deleted content to be removed without having to refresh the page ####
-
-  const startCooldown = (seconds = 5) => {
-    if (intervalRef.current) return; // already running
-    setRemainingCooldown(seconds);
-
-    intervalRef.current = setInterval(() => {
-      setRemainingCooldown((prev) => {
-        if (prev <= 1) {
-          clearInterval(intervalRef.current);
-          intervalRef.current = null;
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-  };
 
   return (
     <div className="bg-violet-900">
@@ -248,8 +239,8 @@ export default function FetchNames({
             filterTagsIds={filterTagsIds}
             toggleDrawer={toggleDrawer}
             isLoading={isLoading}
-            remainingCooldown={remainingCooldown}
-            intervalRef={intervalRef}
+            remainingFilterCooldown={remainingFilterCooldown}
+            filterCooldownRef={filterCooldownRef}
             startCooldown={startCooldown}
           />
         </Drawer>
@@ -274,6 +265,9 @@ export default function FetchNames({
             totalPagesInDatabase={totalPagesInDatabase}
             totalItems={totalItems}
             amountOfDataLoaded={data?.length}
+            remainingSortCooldown={remainingSortCooldown}
+            sortingValue={sortingValue}
+            sortingProperty={sortingProperty}
           />
 
           <section className="w-full">

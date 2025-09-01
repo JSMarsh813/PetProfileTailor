@@ -16,15 +16,15 @@ export function useSwrPagination({
   currentUiPage,
   itemsPerUiPage,
   tags,
-  sortingproperty,
-  sortingvalue,
+  sortingProperty,
+  sortingValue,
 }) {
   // SWR key function
   const getKey = (index, previousPageData) => {
     if (previousPageData && !previousPageData.data?.length) return null; // no more data
     if (index === undefined) return null; // stop fetching
     const page = index + 1; // SWR index starts at 0, but our API pages start at 1
-    let url = `/api/names/swr/swr?page=${page}&sortingproperty=${sortingproperty}&sortingvalue=${sortingvalue}`;
+    let url = `/api/names/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
     if (tags?.length) url += `&tags=${tags.join(",")}`;
     return url;
   };

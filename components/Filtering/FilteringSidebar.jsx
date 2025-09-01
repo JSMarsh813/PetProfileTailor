@@ -11,14 +11,13 @@ function FilteringSidebar({
   filterTagsIds,
   toggleDrawer,
   isLoading,
-  remainingCooldown,
+  remainingFilterCooldown,
   startCooldown,
 }) {
   const onApplyClick = () => {
-    if (remainingCooldown > 0 || isLoading) return;
+    if (remainingFilterCooldown > 0 || isLoading) return;
 
     handleApplyFilters();
-    startCooldown();
   };
 
   return (
@@ -104,10 +103,14 @@ function FilteringSidebar({
       </div>
       <div className="flex justify-evenly p-4 border-t border-white bg-primary">
         <GeneralButton
-          text={remainingCooldown ? `wait ${remainingCooldown} secs` : "apply"}
+          text={
+            remainingFilterCooldown
+              ? `wait ${remainingFilterCooldown} secs`
+              : "apply"
+          }
           className="text-center"
           onClick={() => onApplyClick()}
-          disabled={isLoading || remainingCooldown}
+          disabled={isLoading || remainingFilterCooldown}
         />
         <GeneralButton
           text="reset"
