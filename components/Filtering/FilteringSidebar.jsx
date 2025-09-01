@@ -1,15 +1,26 @@
+import { useState, useRef } from "react";
 import { Button, Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import { ButtonGroup } from "@mui/material";
+
 function FilteringSidebar({
   category,
   handleFilterChange,
   handleApplyFilters,
   filterTagsIds,
   toggleDrawer,
+  isLoading,
+  remainingCooldown,
+  startCooldown,
 }) {
-  console.log("category", category);
+  const onApplyClick = () => {
+    if (remainingCooldown > 0 || isLoading) return;
+
+    handleApplyFilters();
+    startCooldown();
+  };
+
   return (
     <div className="flex flex-col h-full bg-primary w-96">
       <div className="flex justify-between text-xl my-3 border-b border-white pb-3">
@@ -93,15 +104,17 @@ function FilteringSidebar({
       </div>
       <div className="flex justify-evenly p-4 border-t border-white bg-primary">
         <GeneralButton
-          text="apply"
+          text={remainingCooldown ? `wait ${remainingCooldown} secs` : "apply"}
           className="text-center"
-          onClick={() => handleApplyFilters()}
+          onClick={() => onApplyClick()}
+          disabled={isLoading || remainingCooldown}
         />
         <GeneralButton
           text="reset"
           active
           className="text-center bg-white"
           onClick={() => handleApplyFilters("reset")}
+          disabled={isLoading}
         />
       </div>
     </div>

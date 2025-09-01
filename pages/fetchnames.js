@@ -70,6 +70,9 @@ export default function FetchNames({
   tagList,
   usersLikedNamesFromDb,
 }) {
+  const [remainingCooldown, setRemainingCooldown] = useState(0);
+  const intervalRef = useRef(null);
+
   // #### Info for nav menu
 
   let userName = "";
@@ -156,11 +159,10 @@ export default function FetchNames({
   const handleApplyFilters = (reset) => {
     if (reset) {
       setFilterTagsIds([]);
-      setTriggerApplyFilters([]);
     } else {
       setTriggerApplyFilters(filterTagsIds);
+      toggleDrawer(false);
     }
-    toggleDrawer(false);
     setCurrentUiPage(1);
     setSize(1);
   };
@@ -196,6 +198,22 @@ export default function FetchNames({
 
   // ########### End of Section that allows the deleted content to be removed without having to refresh the page ####
 
+  const startCooldown = (seconds = 5) => {
+    if (intervalRef.current) return; // already running
+    setRemainingCooldown(seconds);
+
+    intervalRef.current = setInterval(() => {
+      setRemainingCooldown((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
   return (
     <div className="bg-violet-900">
       <Layout
@@ -229,6 +247,10 @@ export default function FetchNames({
             handleApplyFilters={handleApplyFilters}
             filterTagsIds={filterTagsIds}
             toggleDrawer={toggleDrawer}
+            isLoading={isLoading}
+            remainingCooldown={remainingCooldown}
+            intervalRef={intervalRef}
+            startCooldown={startCooldown}
           />
         </Drawer>
         {/*################# CONTENT DIV ################### */}
