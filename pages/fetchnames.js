@@ -87,8 +87,10 @@ export default function FetchNames({
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
-    signedInUsersId = sessionFromServer.user.id;
+    signedInUsersId = sessionFromServer.user._id;
   }
+
+  console.log("signedInUsersId in fetchNames", sessionFromServer);
   // ##### end of section for nav menu
   // store liked IDs in a ref so updates don't trigger full re-render
   const likedSetRef = useRef(new Set(usersLikedNamesFromDb));

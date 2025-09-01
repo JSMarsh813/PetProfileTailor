@@ -4,7 +4,7 @@ import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesBu
 function Namelisting({ name, session, signedInUsersId }) {
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
   let [openComment, SetOpenComments] = useState(false);
-
+  console.log("signedInUsersId in nameListing", signedInUsersId);
   return (
     <tr>
       {/* start of likes checkbox section*/}

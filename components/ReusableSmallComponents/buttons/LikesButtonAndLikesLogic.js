@@ -14,6 +14,7 @@ export default function LikesButtonAndLikesLogic({
   likedSetRef,
   recentLikesRef,
 }) {
+  console.log("signedInUsersId in likes button", signedInUsersId);
   const { liked, likeCount, isProcessing, toggleLike } = useLikeState({
     data,
     userId: signedInUsersId,
