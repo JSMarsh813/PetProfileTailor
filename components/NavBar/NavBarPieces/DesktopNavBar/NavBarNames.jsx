@@ -22,7 +22,7 @@ const NavBarNames = () => {
           >
             <FontAwesomeIcon
               icon={faIgloo}
-              className="text-base mr-1 text-white"
+              className="text-base mr-1 text-subtleWhite"
             />
             Home
           </NavBarLink>
@@ -30,7 +30,7 @@ const NavBarNames = () => {
           <NavBarLink href="/fetchnames">
             <FontAwesomeIcon
               icon={faTags}
-              className="text-base mr-1 text-white"
+              className="text-base mr-1 text-subtleWhite"
             />
             Names
           </NavBarLink>
@@ -38,7 +38,7 @@ const NavBarNames = () => {
           <NavBarLink href="/fetchdescriptions">
             <FontAwesomeIcon
               icon={faIdCard}
-              className="text-base mr-1 text-white"
+              className="text-base mr-1 text-subtleWhite"
             />
             Descriptions
           </NavBarLink>

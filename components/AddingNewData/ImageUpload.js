@@ -74,7 +74,7 @@ function ImageUpload({ sessionFromServer }) {
   };
 
   return (
-    <div className=" text-white text-center ">
+    <div className=" text-subtleWhite text-center ">
       <h1 className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-700 font-semibold">
         Change Your Avatar{" "}
       </h1>

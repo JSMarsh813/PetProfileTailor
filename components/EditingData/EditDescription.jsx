@@ -18,11 +18,11 @@ export default function EditName({
   const [descriptionState, setDescription] = useState(description.description);
   const [notes, setNotes] = useState(description.notes);
   const [tags, setTags] = useState(
-    description.tags.map((tag) => ({ label: tag.tag, value: tag._id }))
+    description.tags.map((tag) => ({ label: tag.tag, value: tag._id })),
   );
 
   const [relatedNames, setRelatedNames] = useState(
-    description.relatednames.join(",")
+    description.relatednames.join(","),
   );
 
   const descriptionSubmission = async () => {
@@ -87,7 +87,7 @@ export default function EditName({
                  p-4 shadow-lg max-w-3xl"
                 >
                   {/* ##### Description AREA ######*/}
-                  <h4 className="text-white mt-4"> Description </h4>
+                  <h4 className="text-subtleWhite mt-4"> Description </h4>
                   <textarea
                     type="text"
                     id="nameDescription"
@@ -98,7 +98,7 @@ export default function EditName({
 
                   {/* #####Notes AREA ######*/}
 
-                  <h4 className="text-white"> notes </h4>
+                  <h4 className="text-subtleWhite"> notes </h4>
 
                   <textarea
                     className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
@@ -109,12 +109,12 @@ export default function EditName({
 
                   {/* ##### ATTACHING TAGS  ######*/}
                   <label
-                    className="font-bold block mt-4 text-white"
+                    className="font-bold block mt-4 text-subtleWhite"
                     htmlFor="nameTags"
                   >
                     Tags:
                   </label>
-                  <div className="text-white"></div>
+                  <div className="text-subtleWhite"></div>
                   <Select
                     value={tags.map((tag) => ({
                       label: tag.label,
@@ -135,13 +135,13 @@ export default function EditName({
                         opt.map((tag) => ({
                           label: tag.label,
                           value: tag.value,
-                        }))
+                        })),
                       )
                     }
                   />
                   {/* RELATED NAMES SECTION */}
                   <label
-                    className="font-bold block mt-4 text-white"
+                    className="font-bold block mt-4 text-subtleWhite"
                     htmlFor="relatedNames"
                   >
                     Related Names
@@ -155,7 +155,7 @@ export default function EditName({
                       setRelatedNames(e.target.value.toLowerCase().trim())
                     }
                   ></input>
-                  <p className="text-white">
+                  <p className="text-subtleWhite">
                     Please seperate multiple names with a comma. Example:
                     Jedi,Luke,obiwan,Darth
                   </p>
@@ -172,7 +172,7 @@ export default function EditName({
                 type="button"
                 className="justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-base 
                  
-                 font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                 font-medium text-subtleWhite shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={() => descriptionSubmission()}
               >
                 Save
@@ -182,7 +182,7 @@ export default function EditName({
                 type="button"
                 className="justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base 
                  
-                font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                font-medium text-subtleWhite shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={() => SetShowEditPage(false)}
               >
                 Cancel

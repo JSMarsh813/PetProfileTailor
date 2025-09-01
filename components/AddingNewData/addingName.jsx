@@ -125,7 +125,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
 
           <input
             type="text"
-            className="text-darkPurple"
+            className="bg-darkPurple border-subtleWhite text-subtleWhite"
             value={nameCheck}
             id="checkNameExists"
             maxLength="40"
@@ -133,7 +133,8 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           />
 
           <button
-            className="inline-block bg-yellow-300 text-purple-600 p-2 border-2 border-yellow-200  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
+            className="inline-block bg-subtleBackground  text-subtleWhite p-2 border-2  hover:text-subtleWhite hover:border-blue-500 hover:bg-blue-400 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
+            //    "bg-subtleBackground text-white hover:text-white hover:border-blue-500 hover:bg-blue-400";
             onClick={() => checkIfNameExists()}
             disabled={
               nameCheckInvalidInput !== null || nameCheck.length < 2
@@ -144,11 +145,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             <FontAwesomeIcon
               icon={faSearch}
               className="text-2xl"
-              color={
-                nameCheckInvalidInput !== null || nameCheck.length < 2
-                  ? "white"
-                  : "purple"
-              }
+              color={"rgb(221 214 254)"} //subtle white
             />
 
             <span
@@ -209,42 +206,40 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           <input
             type="text"
             id="nameInput"
-            className="text-darkPurple"
-            placeholder="enter a name to add"
+            className="bg-darkPurple border-subtleWhite text-subtleWhite"
             value={newName}
             onChange={(e) => setNewName(e.target.value.toLowerCase())}
             maxLength="40"
             disabled={sessionFromServer ? "" : "disabled"}
           ></input>
-
           {newNameInvalidInput !== null && (
             <WarningMessage
               message={`${newNameInvalidInput} is not a valid character`}
             />
           )}
-
           <span className="block">
             {`${40 - newName.length}/40 characters left`}
           </span>
-
           {/* setDescription */}
           <label
-            className="font-bold block mt-4"
+            className="font-bold block mt-4 mb-2"
             htmlFor="nameDescription"
           >
             Description (optional)
           </label>
+          <p>optional. Add anything that would be useful to know.</p>{" "}
+          <p>
+            Examples: the name's meaning, popular fictional or historical
+            figures with this name.
+          </p>
           <textarea
             type="text"
             id="nameDescription"
             maxLength="500"
-            className="text-darkPurple block w-full"
-            placeholder="optional. please add anything that would be useful to know. Examples: the name's meaning, popular fictional or historical figures with this name, ect"
+            className="bg-darkPurple border-subtleWhite text-subtleWhite block w-full"
             onChange={(e) => setDescription(e.target.value.trim())}
           ></textarea>
-
           <span> {`${500 - description.length}/500 characters left`} </span>
-
           <label
             className="font-bold block mt-4"
             htmlFor="nameTags"
@@ -252,7 +247,26 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             Tags
           </label>
           <Select
-            className="text-darkPurple mb-4"
+            unstyled
+            className="text-subtleWhite border border-subtleWhite bg-darkPurple "
+            // className styles the input
+            // styles is needed to style the dropdown
+            styles={{
+              menu: (provided, state) => ({
+                ...provided,
+                backgroundColor: "rgb(20 2 35)", // dark purple
+                color: "rgb(221 214 254)",
+                borderRadius: "0.5rem", // optional rounding
+              }),
+              option: (provided, state) => ({
+                ...provided,
+                backgroundColor: state.isFocused
+                  ? "#2563EB" // Tailwind bg-blue-600 on hover
+                  : "rgb(20 2 35)", // dark purple
+                color: "rgb(221 214 254)", //subtle white
+                cursor: state.isDisabled ? "not-allowed" : "pointer",
+              }),
+            }}
             id="nameTags"
             options={tagList.map((opt, index) => ({
               label: opt.tag,
@@ -263,13 +277,11 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             placeholder="If you type in the tags field, it will filter the tags"
             onChange={(opt) => setTags(opt.map((tag) => tag.value))}
           />
-
           {/* BUTTON */}
-
           {!isPending && (
             <button
-              className={`font-bold py-2 px-4 border-b-4 rounded mt-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-white                     hover:border-blue-500
-                    disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"             `}
+              className={`font-bold py-2 px-4 border-b-4 rounded my-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-subtleWhite                   hover:border-blue-500
+                    disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor "             `}
               disabled={
                 !sessionFromServer ||
                 newNameInvalidInput !== null ||
@@ -282,17 +294,15 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
               Add name
             </button>
           )}
-
           {isPending && (
             <button
-              className="btn  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
+              className="btn my-4 disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
               disabled
             >
               {" "}
               Adding name ...{" "}
             </button>
           )}
-
           {!sessionFromServer && (
             <WarningMessage message="please sign in to submit a name" />
           )}

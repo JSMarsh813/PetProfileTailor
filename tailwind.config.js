@@ -17,6 +17,7 @@ module.exports = {
       colors: {
         darkPurple: "#140223",
         subtleBackground: "rgb(99,64,153)",
+        subtleWhite: "rgb(221 214 254 / var(--tw-bg-opacity, 1))",
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
@@ -70,7 +71,6 @@ module.exports = {
       },
       fontFamily: {
         sans: ['"Comfortaa"', "sans-serif"],
-        eduTAS: ['"Edu TAS Beginner"', "sans-serif"],
       },
       width: {
         "30rem": "40rem",

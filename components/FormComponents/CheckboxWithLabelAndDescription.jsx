@@ -11,13 +11,13 @@ export default function CheckboxWithLabelAndDescription({
       {/* className ==> "group" is needed for the Checkbox component, otherwise the checkbox svg will not appear */}
       <input
         value={title}
-        className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500 mt-2"
+        className="group block size-4 rounded border bg-subtleWhite  data-[checked]:bg-blue-500 mt-2"
         onChange={handleFlagCategoriesState}
         type="checkbox"
         aria-label="checkboxes-for-suggestion-categoreis"
       />
 
-      <div className="ml-2 text-white">
+      <div className="ml-2 text-subtleWhite">
         <Label className="font-bold text-lg ">{title}</Label>
         <Description>{description}</Description>
       </div>

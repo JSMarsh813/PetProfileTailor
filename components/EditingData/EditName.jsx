@@ -76,7 +76,7 @@ export default function EditName({
                  p-4 shadow-lg max-w-3xl"
                 >
                   {/* ##### NAME AREA ######*/}
-                  <h4 className="text-white mt-4"> Name </h4>
+                  <h4 className="text-subtleWhite mt-4"> Name </h4>
                   <input
                     className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"
                     onChange={(e) => setName(e.target.value)}
@@ -85,12 +85,12 @@ export default function EditName({
                     type="title"
                   />
 
-                  <span className="block text-white mb-2">
+                  <span className="block text-subtleWhite mb-2">
                     {`${40 - newName.length}/40 characters left`}{" "}
                   </span>
 
                   {/* ##### DESCRIPTION AREA ######*/}
-                  <h4 className="text-white"> Description </h4>
+                  <h4 className="text-subtleWhite"> Description </h4>
 
                   <textarea
                     className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
@@ -100,17 +100,17 @@ export default function EditName({
                     value={description}
                   ></textarea>
 
-                  <span className="block text-white mb-2">
+                  <span className="block text-subtleWhite mb-2">
                     {`${500 - description.length}/500 characters left`}{" "}
                   </span>
                   {/* ##### ATTACHING TAGS  ######*/}
                   <label
-                    className="font-bold block mt-4 text-white"
+                    className="font-bold block mt-4 text-subtleWhite"
                     htmlFor="nameTags"
                   >
                     Tags:
                   </label>
-                  <div className="text-white"></div>
+                  <div className="text-subtleWhite"></div>
 
                   <Select
                     value={tags.map((tag) => ({
@@ -150,7 +150,7 @@ export default function EditName({
                 type="button"
                 className="justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-base 
                  
-                 font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                 font-medium text-subtleWhite shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={() => nameSubmission()}
               >
                 Save
@@ -158,7 +158,7 @@ export default function EditName({
 
               <button
                 type="button"
-                className="mt-3 inline-flex justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
+                className="mt-3 inline-flex justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-subtleWhite shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
           sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={() => SetShowEditPage(false)}
               >

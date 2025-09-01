@@ -35,10 +35,10 @@ export default function NavLayoutwithSettingsMenu({
         href={href}
         ref={ref}
         className={`block rounded-md px-2 py-2 text-md
-        hover:bg-yellow-400
-        hover:text-violet-900  
+        hover:bg-subtleWhite
+        hover:text-darkPurple
         text-center                   
-    ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
+ 
 `}
         {...rest}
       >
@@ -57,7 +57,7 @@ export default function NavLayoutwithSettingsMenu({
 
             <Menu
               as="div"
-              className="relative inline-block text-white  z-30 lg:hidden pt-4 "
+              className="relative inline-block text-subtleWhite  z-30 lg:hidden pt-4 "
             >
               {/* md:hidden makes it so the dropdown will be hidden if the screen is enlarged from a small screen. Important because the hamburger button disappears on medium screens */}
 
@@ -79,7 +79,7 @@ export default function NavLayoutwithSettingsMenu({
             <MyLink
               className="text-lg font-extrabold text-yellow-300 
               block 
-              mx-auto ml-2 hover:text-violet-100"
+              mx-auto ml-2 hover:text-subtleWhite"
               href={`/`}
             >
               TailoredPetNames
@@ -97,18 +97,18 @@ export default function NavLayoutwithSettingsMenu({
                     className="inline-flex justify-center 
                   text-yellow-400 
                   
-                  border-4 border-transparent 
+             
                   
                
-                  hover:border-b-6
-                  hover:border-b-yellow-400 
+                  hover:border-b-4
+                  hover:border-blue-100
         
                   focus:outline-none 
                   focus-visible:ring-2 
                   focus-visible:ring-white 
                   focus-visible:ring-opacity-75
                   
-                  hover:text-violet-100"
+                  hover:text-subtleWhite"
                   >
                     <span className="text-base font-bold sm:ml-2">
                       {userName}
@@ -126,7 +126,7 @@ export default function NavLayoutwithSettingsMenu({
                     />
                   </Menu.Button>
 
-                  <Menu.Items className="absolute font-bold right-0 w-56 z-30 origin-top-right bg-violet-800 text-white shadow-lg ">
+                  <Menu.Items className="absolute font-bold right-0 w-56 z-30 origin-top-right bg-primary text-subtleWhite shadow-lg ">
                     <Menu.Item>
                       {({ active }) => (
                         <MyLink
@@ -183,7 +183,7 @@ export default function NavLayoutwithSettingsMenu({
                   className="relative inline-block text-left z-30"
                 >
                   <Menu.Button
-                    className="inline-flex justify-center rounded-2xl  py-2 px-4 text-sm font-semibold  text-white bg-violet-700 
+                    className="inline-flex justify-center rounded-2xl  py-2 px-4 text-sm font-semibold  text-subtleWhite bg-primary 
                 
                 
                 

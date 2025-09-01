@@ -11,7 +11,7 @@ import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import Image from "next/image";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
-import ParagraphRenderBasedOnArrayProperty from "./ParagraphRenderBasedOnArrayProperty";
+// import ParagraphRenderBasedOnArrayProperty from "./ParagraphRenderBasedOnArrayProperty";
 import ParagraphRenderBasedOnStringProperty from "./ParagraphRenderBasedOnStringProperty";
 
 export default function DescriptionListingAsSections({
@@ -68,7 +68,10 @@ export default function DescriptionListingAsSections({
     >
       {/* ###### DESCRIPTION SECTION #### */}
 
-           <ParagraphRenderBasedOnStringProperty content={description} text="description"/>
+      <ParagraphRenderBasedOnStringProperty
+        content={description}
+        text="description"
+      />
 
       {/* ###### NOTES SECTION #### */}
       <p className="whitespace-pre-wrap break-all">
@@ -95,13 +98,10 @@ export default function DescriptionListingAsSections({
           apiLink="/api/description/updateLikes"
         />
 
-   
-
         <div className="text-center">
           <ShareButton onClickShowShares={onClickShowShares} />
 
-        
-         {signedInUsersId && description.createdby._id == signedInUsersId && (
+          {signedInUsersId && description.createdby._id == signedInUsersId && (
             <div className="grid grid-cols-2">
               <EditButton
                 className="ml-2 mr-6"
@@ -116,13 +116,10 @@ export default function DescriptionListingAsSections({
               />
             </div>
           )}
-
-
-     
         </div>
 
-              {/* ###### TAGS SECTION #### */}
-        <ParagraphRenderBasedOnArrayProperty content={description} text="tag"/>
+        {/* ###### TAGS SECTION #### */}
+        {/* <ParagraphRenderBasedOnArrayProperty content={description} text="tag"/> */}
         {/* ###### CREATEDBY SECTION #### */}
 
         <section className="flex gap-1.5 place-items-center  bg-violet-700 p-4 border-2 border-amber-200 border-dotted ">

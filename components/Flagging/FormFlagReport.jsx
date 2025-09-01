@@ -118,7 +118,7 @@ function AddFlagReport({
   return (
     <form className=" mx-auto bg-violet-900 rounded-lg w-[94vw]">
       <div className="flex items-center justify-center py-6   bg-darkPurple">
-        <p className="text-white text-center ml-2">
+        <p className="text-subtleWhite text-center ml-2">
           <span> Woof?! </span>
           <br />
           Did you mean to give us an alert about this content? <br /> If not, no
@@ -135,7 +135,7 @@ function AddFlagReport({
       <div className={`-mx-3 mb-6`}>
         {/* Area to Type a comment  */}
 
-        <div className=" mb-2 text-white px-4 pt-2">
+        <div className=" mb-2 text-subtleWhite px-4 pt-2">
           <h2 className="text-center text-xl ">
             Report for Suggestions or Flagging Content
           </h2>
@@ -226,21 +226,21 @@ function AddFlagReport({
             <textarea
               aria-label="type-comments"
               onChange={(e) => setAdditionalCommentsState(e.target.value)}
-              className="bg-violet-100 rounded border  border-gray-400 leading-normal text-black w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white mt-2"
+              className="bg-violet-100 rounded border  border-gray-400 leading-normal text-black w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-subtleWhite  mt-2"
               name="body"
               required
               maxLength="500"
               placeholder="Optional"
             ></textarea>
           </Field>
-          <span className="text-white">
+          <span className="text-subtleWhite">
             {`${500 - description.length}/500 characters left`}
           </span>
 
           <Field>
             <input
               type="submit"
-              className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
+              className="bg-subtleWhite  text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
               value="Submit Report"
               onClick={handleSubmitReport}
             ></input>

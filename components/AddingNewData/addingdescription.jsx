@@ -59,7 +59,7 @@ function NewDescriptionWithTagsData({
 
   return (
     <div className="mx-auto max-w-7xl">
-      <section className="my-6 text-white text-center">
+      <section className="my-6 text-subtleWhite text-center">
         <p> Add a description with one or more tags. </p>
 
         <h6 className="mt-4 ml-4 text-center"> Example: </h6>
@@ -82,27 +82,34 @@ function NewDescriptionWithTagsData({
           well-behaved.
         </p>
 
-        <h4 className="mt-4 underline font-bold"> Submission Guidelines </h4>
+        <h4 className="mt-4  font-black text-lg"> Submission Guidelines </h4>
         <ul className="">
-          <li> Descriptions must be between 10-4000 characters long</li>
+          <li>
+            {" "}
+            Descriptions must be{" "}
+            <strong className="underline">
+              {" "}
+              between 10-4000 characters
+            </strong>{" "}
+            long
+          </li>
         </ul>
 
         <form onSubmit={handleDescriptionSubmission}>
           {/* needs label and value for Select to work  */}
 
           <label
-            className="font-bold block mt-4"
+            className="font-bold block mt-4 text-lg"
             htmlFor="descriptionInput"
           >
-            New Description
+            Description *required
           </label>
 
           <textarea
             type="text"
             id="nameDescription"
-            className="text-darkPurple block w-full disabled:bg-errorBackgroundColor
+            className="text-subtleWhite block w-full disabled:bg-errorBackgroundColor bg-darkPurple border-subtleWhite 
 disabled:text-errorTextColor "
-            placeholder="enter a description to add"
             onChange={(e) => setNewDescription(e.target.value.toLowerCase())}
             maxLength="4000"
             disabled={sessionFromServer ? "" : "disabled"}
@@ -118,35 +125,60 @@ disabled:text-errorTextColor "
           {/* NOTES SECTION           */}
 
           <label
-            className="font-bold block mt-4"
+            className="font-bold block mt-4 text-lg"
             htmlFor="notesinput"
           >
             Notes
           </label>
-
+          <span className="block mb-2">
+            {" "}
+            Enter any notes to add. For example, explaining if it has any
+            references to shows/popular culture, ect
+          </span>
           <textarea
             type="text"
             id="noteinput"
-            className="text-darkPurple block w-full disabled:bg-errorBackgroundColor
-disabled:text-errorTextColor"
+            className="text-subtleWhite block w-full disabled:bg-errorBackgroundColor  bg-darkPurple border-subtleWhite
+disabled:text-errorTextColor "
             maxLength="800"
-            placeholder="(Optional) enter any notes to add. For example, explaining if it has any references to shows/popular culture, ect."
             onChange={(e) => setNotes(e.target.value.toLowerCase())}
             disabled={sessionFromServer ? "" : "disabled"}
           ></textarea>
+
           <span> {`${800 - notes.length}/800 characters left`}</span>
 
           {/* TAGS SECTION */}
           <label
-            className="font-bold block mt-4"
+            className="font-bold block mt-4 text-lg"
             htmlFor="descriptionTags"
           >
-            Tags
+            Tags *required
           </label>
-
+          <span className="block mb-2">
+            If you type in the tags field, it will filter the tags. Enter at
+            least 1 tag.
+          </span>
           <Select
-            className="text-darkPurple mb-4 disabled:bg-errorBackgroundColor
-disabled:text-errorTextColor"
+            unstyled
+            className="text-subtleWhite border border-subtleWhite bg-darkPurple "
+            // className styles the input
+            // styles is needed to style the dropdown
+            styles={{
+              menu: (provided, state) => ({
+                ...provided,
+                backgroundColor: "rgb(20 2 35)", // dark purple
+                color: "rgb(221 214 254)",
+                borderRadius: "0.5rem", // optional rounding
+              }),
+              option: (provided, state) => ({
+                ...provided,
+                backgroundColor: state.isFocused
+                  ? "#2563EB" // Tailwind bg-blue-600 on hover
+                  : "rgb(20 2 35)", // dark purple
+                color: "rgb(221 214 254)", //subtle white
+                cursor: state.isDisabled ? "not-allowed" : "pointer",
+              }),
+            }}
             id="descriptionTags"
             options={tagList.map((opt, index) => ({
               label: opt.tag,
@@ -155,21 +187,20 @@ disabled:text-errorTextColor"
             isMulti
             isSearchable
             disabled
-            placeholder="If you type in the tags field, it will filter the tags"
             onChange={(opt) => setTags(opt.map((tag) => tag.value))}
           />
 
           {/* RELATED NAMES SECTION */}
           <label
-            className="font-bold block mt-4"
+            className="font-bold block mt-4 text-lg"
             htmlFor="relatedNames"
           >
             Related Names
           </label>
           <input
-            className="text-darkPurple mb-4 
+            className="text-subtleWhite mb-4 
 disabled:bg-errorBackgroundColor
-disabled:text-errorTextColor"
+disabled:text-errorTextColor  bg-darkPurple border-subtleWhite"
             id="relatedNames"
             type="text"
             value={relatedNames}
@@ -205,9 +236,9 @@ disabled:text-errorTextColor"
 
           {!isPending && (
             <button
-              className={`font-bold py-2 px-4 border-b-4 mt-2 rounded     
+              className={`font-bold py-2 px-4 border-b-4 rounded     
                 disabled:bg-errorBackgroundColor disabled:text-errorTextColor           
-                   mt-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-white                     hover:border-blue-500
+                   mt-4 bg-yellow-300 text-violet-800 border-yellow-100   hover:bg-blue-400                       hover:text-subtleWhite                     hover:border-blue-500
                `}
               disabled={
                 !sessionFromServer || newDescription.length < 10
@@ -231,7 +262,7 @@ disabled:text-errorTextColor"
           )}
 
           {!sessionFromServer && (
-            <span className="mt-4 bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 block text-center">
+            <span className="mt-4 bg-red-800 p-2 text-subtleWhite font-bold border-2 border-yellow-300 block text-center">
               Please sign in to submit a description{" "}
             </span>
           )}

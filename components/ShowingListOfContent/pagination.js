@@ -26,7 +26,13 @@ export default function Pagination({
   const [totalLoadedPages, setTotalLoadedPages] = useState(0);
   const windowSize = 5; // max number of visible pages
 
-  const ITEMS_PER_SWR_PAGE = 50;
+  const startingItemCountForPage = Math.max(
+    (currentUiPage - 1) * itemsPerPage + 1,
+  );
+  const endingItemCountForPage = Math.min(
+    currentUiPage * itemsPerPage,
+    totalItems,
+  );
 
   useEffect(() => {
     const calculatedTotalLoadedPages = Math.ceil(
@@ -112,7 +118,7 @@ export default function Pagination({
         <section className="inline-block">
           <select
             id="per-page"
-            className="bg-violet-200  ml-2"
+            className="bg-darkPurple text-subtleWhite ml-2"
             value={itemsPerPage}
             onChange={(e) => setItemsPerPageFunction(e.target.value)}
           >
@@ -131,7 +137,7 @@ export default function Pagination({
         <section className="inline-block">
           {remainingSortCooldown > 0 ? (
             <select
-              className="bg-violet-200 ml-2 p-2 opacity-50 cursor-not-allowed border rounded w-56"
+              className="bg-darkPurple text-subtleWhite ml-2 p-2 opacity-50 cursor-not-allowed border rounded w-56"
               disabled
             >
               <option>
@@ -142,7 +148,7 @@ export default function Pagination({
           ) : (
             <select
               id="per-page"
-              className="bg-violet-200 ml-2 p-2 border rounded w-40"
+              className="bg-darkPurple text-subtleWhite ml-2 p-2 border rounded w-40"
               onChange={(e) => setSortingLogicFunction(e.target.value)}
               value={`${sortingProperty},${sortingValue}`}
               // so we remember what the user selected after the timeout
@@ -164,9 +170,9 @@ export default function Pagination({
       </div>
 
       {/* PAGINATION ARROWS */}
-      <div className="flex justify-center   pt-1">
+      <div className="flex justify-center my-auto items-center ">
         <button
-          className="prevpage "
+          className="prevpage"
           aria-label="prevpage"
           disabled={currentUiPage == 1}
           type="submit"
@@ -179,8 +185,8 @@ export default function Pagination({
         >
           <FontAwesomeIcon
             icon={faChevronCircleRight}
-            className="text-3xl fa-rotate-180"
-            color={`${currentUiPage === 1 ? "grey" : "yellow"}`}
+            className="text-[38px] fa-rotate-180 leading-none "
+            color={`${currentUiPage === 1 ? "grey" : "rgb(221 214 254)"}`}
           />
         </button>
 
@@ -189,8 +195,9 @@ export default function Pagination({
             <GeneralButton
               text={number}
               key={number}
+              subtle={true}
               active={number === currentUiPage}
-              className={`py-1 px-4 mx-2 mt-1`}
+              className={` px-4 mx-2`}
               onClick={
                 () => handleClickPage(number)
 
@@ -210,15 +217,16 @@ export default function Pagination({
         >
           <FontAwesomeIcon
             icon={faChevronCircleRight}
-            className="text-3xl mt-2 md:mt-0 "
-            color={`${currentUiPage < totalLoadedPages ? "yellow" : "grey"}`}
+            className="text-[38px]   "
+            color={`${
+              currentUiPage < totalLoadedPages ? "rgb(221 214 254)" : "grey" //subtle white or grey
+            }`}
           />
         </button>
       </div>
       <span className="text-white mx-auto mb-2">
-        {" "}
-        {Math.max((currentUiPage - 1) * itemsPerPage + 1)}-
-        {currentUiPage * itemsPerPage} of {totalItems} Items
+        {`${startingItemCountForPage}-${endingItemCountForPage} of ${totalItems}`}
+        Items
       </span>
     </section>
   );

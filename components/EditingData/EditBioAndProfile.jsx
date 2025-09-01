@@ -38,7 +38,7 @@ export default function EditBioAndProfile({
       });
   };
   return (
-    (<div>
+    <div>
       <div
         className="relative z-10"
         aria-labelledby="modal-title"
@@ -70,7 +70,7 @@ export default function EditBioAndProfile({
                  p-4 shadow-lg max-w-3xl"
                 >
                   {/* ##### NAME AREA ######*/}
-                  <h4 className="text-white mt-4"> location </h4>
+                  <h4 className="text-subtleWhite mt-4"> location </h4>
                   <input
                     className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"
                     onChange={(e) => setLocation(e.target.value)}
@@ -79,14 +79,14 @@ export default function EditBioAndProfile({
                     type="title"
                   />
 
-                  <span className="text-white">
+                  <span className="text-subtleWhite">
                     {" "}
                     {`${70 - location.length}/70 characters left`}
                   </span>
 
                   {/* ##### DESCRIPTION AREA ######*/}
 
-                  <h4 className="text-white"> Bio </h4>
+                  <h4 className="text-subtleWhite"> Bio </h4>
 
                   <textarea
                     className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
@@ -96,12 +96,12 @@ export default function EditBioAndProfile({
                     value={bio}
                   ></textarea>
 
-                  <span className="text-white">
+                  <span className="text-subtleWhite">
                     {" "}
                     {`${400 - bio.length}/400 characters left`}
                   </span>
 
-                  <h4 className="text-white mt-2">Current Avatar </h4>
+                  <h4 className="text-subtleWhite mt-2">Current Avatar </h4>
 
                   <Image
                     src={avatar}
@@ -112,8 +112,9 @@ export default function EditBioAndProfile({
                     sizes="100vw"
                     style={{
                       width: "100%",
-                      height: "auto"
-                    }} />
+                      height: "auto",
+                    }}
+                  />
 
                   <ImageUpload sessionFromServer={sessionFromServer} />
                 </div>
@@ -129,7 +130,7 @@ export default function EditBioAndProfile({
                 type="button"
                 className="justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-base 
                  
-                 font-medium text-white shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                 font-medium text-subtleWhite shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={() => bioSubmission()}
               >
                 Save
@@ -137,7 +138,7 @@ export default function EditBioAndProfile({
 
               <button
                 type="button"
-                className="mt-3 inline-flex justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
+                className="mt-3 inline-flex justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-subtleWhite shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
           sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={() => setShowProfileEditPage(false)}
               >
@@ -147,6 +148,6 @@ export default function EditBioAndProfile({
           </div>
         </div>
       </div>
-    </div>)
+    </div>
   );
 }

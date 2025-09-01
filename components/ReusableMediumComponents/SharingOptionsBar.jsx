@@ -33,10 +33,10 @@ const MyLink = forwardRef((props, ref) => {
       href={href}
       ref={ref}
       className={`block rounded-md px-2 py-2 text-md
-      hover:bg-yellow-400
-      hover:text-violet-900  
+      hover:bg-subtleWhite
+      hover:text-darkPurple 
       text-center                   
-  ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
+
 `}
       {...rest}
     >
@@ -52,9 +52,9 @@ function SharingOptionsBar({ linkToShare, localLink }) {
   return (
     <section className="flex justify-evenly ">
       <button
-        className="bg-white px-4 py-2
+        className="bg-subtleWhite px-4 py-2
                   rounded-full
-                  text-violet-800
+                  text-darkPurple
                   font-semibold
                   shadow-md
                   shadow-darkPurple
@@ -73,9 +73,9 @@ function SharingOptionsBar({ linkToShare, localLink }) {
       </button>
 
       <MyLink
-        className="bg-white px-4 py-2
+        className="bg-subtleWhite px-4 py-2
         rounded-full
-        text-violet-800
+        text-darkPurple
         font-semibold
         shadow-md
         shadow-darkPurple
@@ -91,7 +91,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
       </MyLink>
 
       <div
-        className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  
+        className="drop-shadow-lg hover:bg-subtleWhite hover:rounded-full hover:items-center flex active:bg-violet-700  
       
       ring-offset-2 ring-offset-indigo-600 
       
@@ -108,7 +108,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
         </EmailShareButton>
       </div>
 
-      <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
+      <div className="drop-shadow-lg hover:bg-subtleWhite hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
         <FacebookShareButton
           url={linkToShare}
           hashtag={"#tailoredPetNames"}
@@ -122,7 +122,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
         </FacebookShareButton>
       </div>
 
-      <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
+      <div className="drop-shadow-lg hover:bg-subtleWhite hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
         <TwitterShareButton url={linkToShare}>
           <TwitterIcon
             size={40}
@@ -131,7 +131,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
         </TwitterShareButton>
       </div>
 
-      <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
+      <div className="drop-shadow-lg hover:bg-subtleWhite hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
         <RedditShareButton
           url={linkToShare}
           title={linkToShare}
@@ -143,7 +143,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
         </RedditShareButton>
       </div>
 
-      <div className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
+      <div className="drop-shadow-lg hover:bg-subtleWhite hover:rounded-full hover:items-center flex active:bg-violet-700  focus-within:ring-2 focus-within:ring-indigo-200 ring-offset-2 ring-offset-indigo-600 focus-within:bg-indigo-800">
         <TumblrShareButton
           url={linkToShare}
           title={linkToShare}
@@ -156,7 +156,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
       </div>
 
       <div
-        className="drop-shadow-lg hover:bg-yellow-300 hover:rounded-full hover:items-center flex active:bg-violet-700     
+        className="drop-shadow-lg hover:bg-subtleWhite hover:rounded-full hover:items-center flex active:bg-violet-700     
         ring-offset-2 ring-offset-indigo-600   
       focus-within:ring-2 focus-within:ring-indigo-200  focus-within:bg-indigo-800"
       >

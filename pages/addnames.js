@@ -46,7 +46,7 @@ function AddNewNameWithTags({ tagList, sessionFromServer }) {
   }
 
   return (
-    <div className="bg-violet-900 h-full text-white">
+    <div className=" h-full text-white">
       <Layout
         profileImage={profileImage}
         userName={userName}

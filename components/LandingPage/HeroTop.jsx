@@ -23,12 +23,12 @@ const HeroTop = ({
 
   return (
     <div
-      className="hero min-h-fit font-serif 
-border-y-4 border-darkPurple bg-black max-w-7xl mx-auto overflow-hidden"
+      className="hero min-h-fit font-serif  
+border-y-4 border-darkPurple  max-w-7xl mx-auto overflow-hidden"
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >
-      <div className="hero-overlay relative w-screen z-10 opacity-20">
+      <div className="hero-overlay relative max-w-7xl z-10 opacity-20 ">
         {hover ? (
           <Image
             priority
@@ -50,8 +50,8 @@ border-y-4 border-darkPurple bg-black max-w-7xl mx-auto overflow-hidden"
           />
         )}
       </div>
-      <div className="hero-content text-center text-neutral-content mb-10 z-20">
-        <div className="max-w-xl text-white">
+      <div className="hero-content text-center text-neutral-content mb-10 z-20  ">
+        <div className="max-w-xl text-subtleWhite">
           <h1 className="mb-5 text-3xl md:text-4xl text-yellow-300 font-black">
             Welcome to <br /> Tailored Pet Names!
           </h1>
@@ -69,13 +69,11 @@ border-y-4 border-darkPurple bg-black max-w-7xl mx-auto overflow-hidden"
               <FontAwesomeIcon
                 icon={faBullseye}
                 className="text-2xl"
-                color="yellow"
+                color="white"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 font-black text-md md:text-base h-16 rounded-full
-                           
-                           hover:text-yellow-300"
+                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full"
                 onClick={updateImpactfulState}
               >
                 Impactful
@@ -86,13 +84,11 @@ border-y-4 border-darkPurple bg-black max-w-7xl mx-auto overflow-hidden"
               <FontAwesomeIcon
                 icon={faFaceGrinWink}
                 className="text-2xl fa-bounce"
-                color="yellow"
+                color="white"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300 text-violet-900 text-md md:text-base h-16 rounded-full
-                            
-                            hover:text-yellow-300"
+                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full"
                 onClick={updateFunState}
               >
                 Fun
@@ -103,12 +99,10 @@ border-y-4 border-darkPurple bg-black max-w-7xl mx-auto overflow-hidden"
               <FontAwesomeIcon
                 icon={faUserTie}
                 className="text-2xl"
-                color="yellow"
+                color="white"
               />
               <button
-                className="btn btn-primary w-full mt-2 bg-yellow-300  text-violet-900 text-md md:text-base h-16 rounded-full
-                               
-                               hover:text-yellow-300"
+                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full"
                 onClick={updateTailorState}
               >
                 Tailor Fitted

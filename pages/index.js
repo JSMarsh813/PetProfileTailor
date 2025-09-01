@@ -113,7 +113,7 @@ function HomePage({ sessionFromServer }) {
               "Easily sort by personality, species, physical traits, and more",
               "Find names for themes such as Christmas, just in time for your adoption event!",
             ]}
-            buttonTextLeft="Search for Names"
+            buttonTextLeft="Search Names"
             buttonTextLeftLink="/fetchnames"
             alttext="a picture of a chameleon with a cartoony bling necklace drawn on his neck. The text underneath says: chamillionare, young, lizard, 210 miles away"
             imgwidth="220"

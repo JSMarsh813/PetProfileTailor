@@ -13,12 +13,12 @@ export default function NavBarLink(props) {
 
   return (
     <li
-      className="inline-flex px-2 py-2 text-sm font-bold text-white 
+      className="inline-flex px-2 py-2 text-sm font-bold text-subtleWhite 
  
             
-    hover:bg-opacity-30 
+   
     hover:border-b-4
-    hover:border-b-yellow-400 
+    hover:border-subtleWhite
     
     focus:outline-none 
     focus-visible:ring-2 

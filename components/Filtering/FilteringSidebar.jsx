@@ -23,9 +23,9 @@ function FilteringSidebar({
   return (
     <div className="flex flex-col h-full bg-primary w-96">
       <div className="flex justify-between text-xl my-3 border-b border-white pb-3">
-        <h4 className="text-white text-center  pl-4 ">All Filters </h4>
+        <h4 className="text-subtleWhite text-center  pl-4 ">All Filters </h4>
         <button
-          className="text-center text-white pr-5 hover:text-slate-400 rounded-full"
+          className="text-center text-subtleWhite pr-5 hover:text-slate-400 rounded-full"
           onClick={() => toggleDrawer(false)}
         >
           {" "}
@@ -44,7 +44,7 @@ function FilteringSidebar({
                 <>
                   {/* Category Name shows here ("species", "food") */}
                   <Disclosure.Button
-                    className="flex w-full justify-between bg-primary px-2 py-2 text-left text-base font-medium text-white
+                    className="flex w-full justify-between bg-primary px-2 py-2 text-left text-base font-medium text-subtleWhite
                  hover:text-slate-400   focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 "
                   >
                     <div>
@@ -60,7 +60,7 @@ function FilteringSidebar({
                     <ChevronUpIcon
                       className={`${
                         open ? "rotate-180 transform" : ""
-                      } h-5 w-5 text-white`}
+                      } h-5 w-5 text-subtleWhite`}
                     />
                   </Disclosure.Button>
 
@@ -80,7 +80,7 @@ function FilteringSidebar({
                             value={option._id}
                             type="checkbox"
                             onChange={handleFilterChange}
-                            className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600  group-hover:bg-slate-400"
+                            className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600  group-hover:bg-subtleWhite bg-darkPurple"
                             checked={filterTagsIds.includes(option._id)}
                           />
 
@@ -115,7 +115,7 @@ function FilteringSidebar({
         <GeneralButton
           text="reset"
           active
-          className="text-center bg-white"
+          className="text-center bg-subtleWhite"
           onClick={() => handleApplyFilters("reset")}
           disabled={isLoading}
         />

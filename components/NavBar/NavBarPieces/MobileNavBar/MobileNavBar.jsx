@@ -14,10 +14,11 @@ const MyLink = forwardRef((props, ref) => {
       href={href}
       ref={ref}
       className={`block rounded-md px-2 py-2 text-md
-      hover:bg-yellow-400
-      hover:text-violet-900  
+      hover:bg-subtleWhite
+      hover:text-darkPurple
+      border-none
       text-center                   
-  ${active ? "bg-yellow-400 text-violet-900" : "bg-violet-800"}
+ 
 `}
       {...rest}
     >
@@ -31,15 +32,16 @@ function MobileNavBar() {
   return (
     <div>
       <Menu.Items
-        className="block text-sm text-white 
+        className="block text-sm text-subtleWhite 
         absolute  
  divide-y divide-gray-100 
- rounded-md bg-violet-800 shadow-lg ring-1 ring-black ring-opacity-5 
+ rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 
+ border-subtleWhite border-b
 
  
  w-screen
  items-center
-border-4 border-transparent border-r-violet-400 
+
 -left-2
 z-10
 
@@ -66,10 +68,13 @@ focus-visible:ring-opacity-75"
           )}
         </Menu.Item>
 
-        <Menu.Item disabled>
+        <Menu.Item
+          disabled
+          className="border-none"
+        >
           <button
-            className="text-yellow-300         
-                      w-full items-center rounded-md px-2 py-2 text-sm font-bold bg-violet-600"
+            className="text-subtleWhite     
+                      w-full items-center rounded-md px-2 py-2 text-sm font-bold bg-darkPurple  "
             disabled={true}
           >
             Fetch/Find
@@ -112,10 +117,13 @@ focus-visible:ring-opacity-75"
           )}
         </Menu.Item>
 
-        <Menu.Item disabled>
+        <Menu.Item
+          disabled
+          className="border-none"
+        >
           <button
-            className="text-yellow-300  
-                      bg-violet-600       
+            className="text-subtleWhite 
+                      bg-darkPurple  
                       w-full items-center rounded-md px-2 py-2 text-sm font-bold"
             disabled={true}
           >
@@ -157,17 +165,6 @@ focus-visible:ring-opacity-75"
               Descriptions
             </MyLink>
           )}
-        </Menu.Item>
-
-        <Menu.Item disabled>
-          <button
-            className="text-yellow-300  
-                      bg-violet-600       
-                      w-full items-center rounded-md px-2 py-2 text-sm font-bold"
-            disabled={true}
-          >
-            Community
-          </button>
         </Menu.Item>
       </Menu.Items>
     </div>
