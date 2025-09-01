@@ -134,9 +134,9 @@ export default function Dashboard({
   }
   //end of section for nav menu
 
-  let tagListProp = category
-    .map((category) => category.tags)
-    .reduce((sum, value) => sum.concat(value), []);
+  // let tagListProp = category
+  //   .map((category) => category.tags)
+  //   .reduce((sum, value) => sum.concat(value), []);
 
   return (
     <div className="bg-violet-900 h-fit">
@@ -148,7 +148,7 @@ export default function Dashboard({
 
       <section>
         <div
-          className="relative overflow-hidden bg-no-repeat bg-cover"
+          className="relative overflow-hidden bg-no-repeat bg-cover max-w-7xl mx-auto"
           style={{
             backgroundPosition: "80%",
             backgroundImage: `url("/dogheaderfreewebheaders.jpg")`,
@@ -212,21 +212,21 @@ export default function Dashboard({
 
       {/* ############# FAVORITE LISTS SECTION ############ */}
 
-      <section className="favoritesSection px-4 pt-4 text-center">
+      <section className="favoritesSection px-4 pt-4  max-w-7xl mx-auto  text-center">
         <WideCenteredHeader heading="Your Favorites" />
 
         <div
           className="favoriteSubsections mt-5 text-yellow-400  font-bold mb-2 text-lg 
        pb-2
        border-b-2
-       border-yellow-300"
+       border-yellow-300 w-full"
         >
           {/* ############# FAVORITE NAMES LIST ############ */}
 
           <section className="favoriteNames">
             <div className="">
               <GeneralOpenCloseButton
-                text="Favorites Names"
+                text="Names"
                 setStatus={setFavoritesListOpen}
                 styling="mb-2 w-96"
                 status={favoritesListOpen}
@@ -254,7 +254,7 @@ export default function Dashboard({
 
           <section className="favoriteDescriptions">
             <GeneralOpenCloseButton
-              text="Favorites Descriptions"
+              text="Descriptions"
               setStatus={setFavDescriptionsOpen}
               styling="mb-2 w-96"
               status={favDescriptionsOpen}

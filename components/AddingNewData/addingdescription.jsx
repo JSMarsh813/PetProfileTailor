@@ -58,7 +58,7 @@ function NewDescriptionWithTagsData({
   }
 
   return (
-    <div className="mx-auto mx-2 md:px-4">
+    <div className="mx-auto max-w-7xl">
       <section className="my-6 text-white text-center">
         <p> Add a description with one or more tags. </p>
 

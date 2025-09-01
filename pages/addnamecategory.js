@@ -56,32 +56,35 @@ export default function AddCategory({ sessionFromServer, isAdmin }) {
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-      <form onSubmit={handleCategorySubmission}>
-        <input
-          type="text"
-          id="categoryInput"
-          className="text-darkPurple"
-          placeholder="enter a category to add"
-          onChange={(e) => setNewCategory(e.target.value.toLowerCase())}
-        />
 
-        {sessionFromServer && isAdmin ? (
-          <GeneralButton
-            text="Submit name category"
-            type="submit"
-            className="ml-2"
-            onClick={handleCategorySubmission}
+      <div className="max-w-7xl mx-auto flex justify-center text-center">
+        <form onSubmit={handleCategorySubmission}>
+          <input
+            type="text"
+            id="categoryInput"
+            className="text-darkPurple"
+            placeholder="enter a category to add"
+            onChange={(e) => setNewCategory(e.target.value.toLowerCase())}
           />
-        ) : (
-          <div>
-            <DisabledButton text="Submit tag" />
-            <p className="text-yellow-300 bg-red-800 pl-2 py-2 mx-auto border-2 border-yellow-300 mt-2">
-              To protect data quality, only users with special permissions can
-              submit tags
-            </p>
-          </div>
-        )}
-      </form>
+
+          {sessionFromServer && isAdmin ? (
+            <GeneralButton
+              text="Submit name category"
+              type="submit"
+              className="ml-2"
+              onClick={handleCategorySubmission}
+            />
+          ) : (
+            <div>
+              <DisabledButton text="Submit tag" />
+              <p className="text-yellow-300 bg-red-800 pl-2 py-2 mx-auto border-2 border-yellow-300 mt-2">
+                To protect data quality, only users with special permissions can
+                submit tags
+              </p>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 }

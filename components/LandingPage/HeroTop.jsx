@@ -24,7 +24,7 @@ const HeroTop = ({
   return (
     <div
       className="hero min-h-fit font-serif 
-border-y-4 border-darkPurple bg-black"
+border-y-4 border-darkPurple bg-black max-w-7xl mx-auto overflow-hidden"
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >

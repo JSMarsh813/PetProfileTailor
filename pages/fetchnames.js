@@ -204,7 +204,7 @@ export default function FetchNames({
         sessionFromServer={sessionFromServer}
       />
 
-      <section className="sm:px-4 bg-violet-900 max-w-7xl mx-auto">
+      <section className="sm:px-4 bg-violet-900 mx-auto">
         <PageTitleWithImages
           title="Fetch"
           title2="Names"

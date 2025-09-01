@@ -118,14 +118,14 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
   };
 
   return (
-    (<div>
+    <div>
       <Layout
         title="Forgot Password"
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-      <div>
+      <div className="max-w-7xl mx-auto">
         <section className="h-fit">
           <div className="px-6 h-full text-gray-100">
             <div className="flex justify-center items-center flex-wrap ">
@@ -140,8 +140,9 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
                   sizes="100vw"
                   style={{
                     width: "100%",
-                    height: "auto"
-                  }} />
+                    height: "auto",
+                  }}
+                />
               </div>
 
               <div className="xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 mt-2">
@@ -205,10 +206,9 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
                   Don&apos;t have an account? Welcome! &nbsp;
                   <Link
                     href={`/register`}
-                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
-                    
-                      Register by clicking here
-                    
+                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out"
+                  >
+                    Register by clicking here
                   </Link>
                 </p>
               </div>
@@ -216,6 +216,6 @@ export default function ForgotPassword({ sessionFromServer, csrfToken }) {
           </div>
         </section>
       </div>
-    </div>)
+    </div>
   );
 }

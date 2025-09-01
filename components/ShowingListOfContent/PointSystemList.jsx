@@ -14,8 +14,8 @@ import GeneralOpenCloseButton from "../ReusableSmallComponents/buttons/generalOp
 export default function PointSystemList({
   favNames,
   namesCreated,
-  likedDescriptions,
   createdDescriptions,
+  likedDescriptions,
 }) {
   const [treatBreakdownMenuOpen, settreatBreakdownMenuOpen] = useState(false);
 
@@ -35,40 +35,23 @@ export default function PointSystemList({
   useEffect(() => {
     setNamesLikedPoints(favNames.length);
     setNamesAddedPoints(namesCreated.length * 3);
-    setCommentsLikedPoints(likedComments.length);
-    setCommentsAddedPoints(commentsCreated.length * 3);
-    setPostsAddedPoints(likedComments.length);
-    setPostsAddedPoints(postsCreated.length * 3);
-    setpostsLikedPoints(postsLiked.length);
+
     setDescriptionsLikedPoints(likedDescriptions.length);
     setDescriptionsAddedPoints(createdDescriptions.length);
-  }, [
-    favNames,
-    namesCreated,
-    likedComments,
-    commentsCreated,
-    postsLiked,
-    postsCreated,
-  ]);
+  }, [favNames, namesCreated, createdDescriptions, likedDescriptions]);
   //for total points
   useEffect(() => {
     setTotalPoints(
       +namesLikedPoints +
         +namesAddedPoints +
-        +commentsLikedPoints +
-        +commentsAddedPoints +
-        +postsLikedPoints +
-        +postsAddedPoints +
         +descriptionsLikedPoints +
         +descriptionsAddedPoints,
     );
   }, [
     namesLikedPoints,
     namesAddedPoints,
-    commentsLikedPoints,
-    commentsAddedPoints,
-    postsLikedPoints,
-    postsAddedPoints,
+    descriptionsLikedPoints,
+    descriptionsAddedPoints,
   ]);
 
   return (
@@ -132,24 +115,6 @@ export default function PointSystemList({
 
               <div>
                 <FontAwesomeIcon
-                  icon={faHeart}
-                  className="text-xl mr-1 text-red-500"
-                />
-                Posts=
-                <span className="text-yellow-300"> {postsLikedPoints}</span>
-              </div>
-
-              <div>
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  className="text-xl mr-1 text-red-500"
-                />
-                Comments=
-                <span className="text-yellow-300"> {commentsLikedPoints}</span>
-              </div>
-
-              <div>
-                <FontAwesomeIcon
                   icon={faCirclePlus}
                   className="text-xl mr-1 text-green-500"
                 />
@@ -166,24 +131,6 @@ export default function PointSystemList({
                 <span className="text-yellow-300">
                   {descriptionsAddedPoints}
                 </span>
-              </div>
-
-              <div>
-                <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  className="text-xl mr-1 text-green-500"
-                />
-                Posts =
-                <span className="text-yellow-300"> {postsAddedPoints}</span>
-              </div>
-
-              <div>
-                <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  className="text-xl mr-1 text-green-500"
-                />
-                Comments =
-                <span className="text-yellow-300"> {commentsAddedPoints}</span>
               </div>
             </section>
 

@@ -8,7 +8,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   return {
@@ -30,16 +30,17 @@ export default function FetchUsers({ sessionFromServer }) {
   }
 
   return (
-    <div className="bg-violet-900 h-screen">
+    <div className=" h-screen">
       <Layout
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
+      <section className="max-w-7xl mx-auto text-white">
+        <div>lookup user by: user name</div>
 
-      <div>lookup user by: user name</div>
-
-      <div>lookup user by: profilename</div>
+        <div>lookup user by: profilename</div>
+      </section>
     </div>
   );
 }

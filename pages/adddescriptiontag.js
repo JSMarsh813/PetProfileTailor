@@ -94,54 +94,56 @@ export default function AddDescriptionTag({
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-      <form onSubmit={handleDescriptionTagSubmission}>
-        <input
-          type="text"
-          id="categoryInput"
-          className="text-darkPurple"
-          placeholder="enter a description tag to add"
-          onChange={(e) => setNewDescriptionTag(e.target.value.toLowerCase())}
-        />
-
-        {/* TAG AREA */}
-        <label
-          className="font-bold block mt-4 text-white"
-          htmlFor="nameTags"
-        >
-          Categories
-        </label>
-        <Select
-          className="text-darkPurple mb-4"
-          id="nameTags"
-          options={categoryData.map((opt) => ({
-            label: opt.category,
-            value: opt._id,
-          }))}
-          isMulti
-          isSearchable
-          placeholder="If you type in the tags field, it will filter the tags"
-          onChange={(opt) =>
-            setCategoryList(opt.map((category) => category.value))
-          }
-        />
-
-        {sessionFromServer && isAdmin ? (
-          <GeneralButton
-            text="Submit tag"
-            type="submit"
-            className="ml-2"
-            onClick={handleDescriptionTagSubmission}
+      <div className="max-w-7xl mx-auto flex justify-center text-center">
+        <form onSubmit={handleDescriptionTagSubmission}>
+          <input
+            type="text"
+            id="categoryInput"
+            className="text-darkPurple"
+            placeholder="enter a description tag"
+            onChange={(e) => setNewDescriptionTag(e.target.value.toLowerCase())}
           />
-        ) : (
-          <div>
-            <DisabledButton text="Submit tag" />
-            <p className="text-yellow-300 bg-red-800 pl-2 py-2 mx-auto border-2 border-yellow-300 mt-2">
-              To protect data quality, only users with special permissions can
-              submit tags
-            </p>
-          </div>
-        )}
-      </form>
+
+          {/* TAG AREA */}
+          <label
+            className="font-bold block mt-4 text-white"
+            htmlFor="nameTags"
+          >
+            Categories
+          </label>
+          <Select
+            className="text-darkPurple mb-4"
+            id="nameTags"
+            options={categoryData.map((opt) => ({
+              label: opt.category,
+              value: opt._id,
+            }))}
+            isMulti
+            isSearchable
+            placeholder="If you type in the tags field, it will filter the categories"
+            onChange={(opt) =>
+              setCategoryList(opt.map((category) => category.value))
+            }
+          />
+
+          {sessionFromServer && isAdmin ? (
+            <GeneralButton
+              text="Submit tag"
+              type="submit"
+              className="ml-2"
+              onClick={handleDescriptionTagSubmission}
+            />
+          ) : (
+            <div>
+              <DisabledButton text="Submit tag" />
+              <p className="text-yellow-300 bg-red-800 pl-2 py-2 mx-auto border-2 border-yellow-300 mt-2">
+                To protect data quality, only users with special permissions can
+                submit tags
+              </p>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 }

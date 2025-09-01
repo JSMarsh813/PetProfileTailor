@@ -99,13 +99,13 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
         sessionFromServer={sessionFromServer}
       />
       <div>
-        <section className="h-fit">
+        <section className="h-fit max-w-7xl mx-auto">
           <div className="px-6 h-full text-gray-100">
             <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h- g-6">
               <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
                 <Image
                   src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg"
-                  className="w-full rounded-full shadow-lg border-2 border-yellow-300 border-dashed"
+                  className="max-w-[300px] lg:max-w-lg rounded-full shadow-lg border-2 border-yellow-300 border-dashed mx-auto"
                   width={200}
                   height={200}
                   alt="A guinea pig looks at the screen calmly as it sits on a keyboard"

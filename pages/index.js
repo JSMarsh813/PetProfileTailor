@@ -49,7 +49,7 @@ function HomePage({ sessionFromServer }) {
     setOpenVideo(openVideo === videoKey ? null : videoKey);
   }
   return (
-    <div className=" bg-violet-900">
+    <div>
       <Layout
         profileImage={profileImage}
         userName={userName}
@@ -88,7 +88,7 @@ function HomePage({ sessionFromServer }) {
           key="T_lAGw4lpiM"
         />
       )}
-      <section className="bg-violet-900 h-24 flex place-items-center justify-center">
+      <section className=" h-24 flex place-items-center justify-center">
         <h5 className="text-white text-xl md:text-2xl pr-2">Adoptions Ahoy!</h5>
 
         <Image
@@ -102,74 +102,77 @@ function HomePage({ sessionFromServer }) {
           }}
         />
       </section>
-      <section className="landingNamesSection bg-violet-900">
-        <WideCenteredHeading heading="Find the Purrfect Name" />
+      <div className="max-w-7xl mx-auto">
+        <section className="landingNamesSection">
+          <WideCenteredHeading heading="Find the Purrfect Name" />
 
-        <MediaObjectLeft
-          image="/chamil.jpg"
-          listOfText={[
-            "Find eye-catching pet names you wouldn't find on regular name sites",
-            "Easily sort by personality, species, physical traits, and more",
-            "Find names for themes such as Christmas, just in time for your adoption event!",
-          ]}
-          buttonTextLeft="Search for Names"
-          buttonTextLeftLink="/fetchnames"
-          alttext="a picture of a chameleon with a cartoony bling necklace drawn on his neck. The text underneath says: chamillionare, young, lizard, 210 miles away"
-          imgwidth="220"
-          imgheight="330"
-        />
-      </section>
-      <section className="landingDescriptionsSection bg-violet-900">
-        <WideCenteredHeading heading="Find Tailor-fit Descriptions" />
+          <MediaObjectLeft
+            image="/chamil.jpg"
+            listOfText={[
+              "Find eye-catching pet names you wouldn't find on regular name sites",
+              "Easily sort by personality, species, physical traits, and more",
+              "Find names for themes such as Christmas, just in time for your adoption event!",
+            ]}
+            buttonTextLeft="Search for Names"
+            buttonTextLeftLink="/fetchnames"
+            alttext="a picture of a chameleon with a cartoony bling necklace drawn on his neck. The text underneath says: chamillionare, young, lizard, 210 miles away"
+            imgwidth="220"
+            imgheight="330"
+          />
+        </section>
 
-        <MediaObjectRight
-          image="/obviousplant.webp"
-          listOfText={[
-            "Engaging and creative descriptions",
-            "Honest and engaging wording for problem behaviors",
-            "Easily sort by personality, species, physical traits, and more",
-          ]}
-          buttonTextLeft="Search Descriptions"
-          buttonTextLeftLink="/fetchdescriptions"
-          alttext="Picture of an adoption sign. There is a black and white cat with the text Honey next to it. Underneath it reads: Likes: catnip. Dislikes: Birds. And in quotation marks is They are lousy sky wizards that need to obey the laws of gravity! - honey. Sante D'or adoption center obvious plant"
-          imgwidth="128"
-          imgheight="113"
-        />
-      </section>
-      <section className="landingSignUpSection">
-        <WideCenteredHeading heading="Create a free profile to access extra features" />
+        <section className="landingDescriptionsSection">
+          <WideCenteredHeading heading="Find Tailor-fit Descriptions" />
 
-        <MediaObjectLeft
-          image="/profile.png"
-          listOfText={[
-            "Save your favorite names, descriptions, posts and comments for easy access",
-            "Add new names, descriptions and posts",
-            "Add comments and like posts",
-            "Follow other users",
-          ]}
-          buttonTextLeft="Sign Up"
-          buttonTextLeftLink="/register"
-          alttext="screenshot of the dashboard for the site. It says welcome back, treats earned, shows the profile image and shows a your favorite section. A list of names is seen underneath it, all which have red hearts"
-          imgwidth="517"
-          imgheight="508"
-        />
-      </section>
-      <section className="LandingWantToHelpSection">
-        <WideCenteredHeading heading="Psst...Want To Help Some Pets 😸🐹?" />
+          <MediaObjectRight
+            image="/obviousplant.webp"
+            listOfText={[
+              "Engaging and creative descriptions",
+              "Honest and engaging wording for problem behaviors",
+              "Easily sort by personality, species, physical traits, and more",
+            ]}
+            buttonTextLeft="Search Descriptions"
+            buttonTextLeftLink="/fetchdescriptions"
+            alttext="Picture of an adoption sign. There is a black and white cat with the text Honey next to it. Underneath it reads: Likes: catnip. Dislikes: Birds. And in quotation marks is They are lousy sky wizards that need to obey the laws of gravity! - honey. Sante D'or adoption center obvious plant"
+            imgwidth="128"
+            imgheight="113"
+          />
+        </section>
+        <section className="landingSignUpSection">
+          <WideCenteredHeading heading="Create a free profile to access extra features" />
 
-        <MediaObjectRight
-          image="/freepikhalloween.avif"
-          listOfText={[
-            "Do you want to help pets get adopted but you can't volunteer or foster? Excellent, you're barking up the right tree!",
-            "Sign up to add names or descriptions. Animal welfare professionals can use your contributions to create creative profiles to help pets get adopted! ",
-          ]}
-          buttonTextRight="Sign Up"
-          buttonTextRightLink="/register"
-          imgwidth="70"
-          imgheight="100"
-          alttext="picture of a cute white pomeranian sitting and lifting a paw up. Its wearing a black mask and a black cape, its tongue is sticking out in a relaxed manner."
-        />
-      </section>
+          <MediaObjectLeft
+            image="/profile.png"
+            listOfText={[
+              "Save your favorite names, descriptions, posts and comments for easy access",
+              "Add new names, descriptions and posts",
+              "Add comments and like posts",
+              "Follow other users",
+            ]}
+            buttonTextLeft="Sign Up"
+            buttonTextLeftLink="/register"
+            alttext="screenshot of the dashboard for the site. It says welcome back, treats earned, shows the profile image and shows a your favorite section. A list of names is seen underneath it, all which have red hearts"
+            imgwidth="517"
+            imgheight="508"
+          />
+        </section>
+        <section className="LandingWantToHelpSection">
+          <WideCenteredHeading heading="Psst...Want To Help Some Pets 😸🐹?" />
+
+          <MediaObjectRight
+            image="/freepikhalloween.avif"
+            listOfText={[
+              "Do you want to help pets get adopted but you can't volunteer or foster? Excellent, you're barking up the right tree!",
+              "Sign up to add names or descriptions. Animal welfare professionals can use your contributions to create creative profiles to help pets get adopted! ",
+            ]}
+            buttonTextRight="Sign Up"
+            buttonTextRightLink="/register"
+            imgwidth="70"
+            imgheight="100"
+            alttext="picture of a cute white pomeranian sitting and lifting a paw up. Its wearing a black mask and a black cape, its tongue is sticking out in a relaxed manner."
+          />
+        </section>
+      </div>
     </div>
   );
 }

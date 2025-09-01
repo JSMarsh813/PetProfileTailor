@@ -84,7 +84,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
   }
 
   return (
-    <div className="mx-2">
+    <div className="mx-2 w-full">
       <section className="mx-auto text-center">
         <p> Add a name with one or more tags. </p>
 

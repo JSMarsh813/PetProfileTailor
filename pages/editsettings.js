@@ -16,7 +16,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   return {
@@ -65,14 +65,14 @@ export default function ProfileScreen({ sessionFromServer }) {
   };
 
   return (
-    (<div className="w-full">
+    <div>
       <Layout
         title="Profile"
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-      <div className="h-40 w-40 mx-auto mb-4">
+      <div className="h-fit w-40 mx-auto mb-4 ">
         <Image
           className="rounded-full"
           src="/sunglasseseditsettingsdog.jpg"
@@ -83,123 +83,126 @@ export default function ProfileScreen({ sessionFromServer }) {
           style={{
             width: "100%",
             height: "auto",
-            objectFit: "cover"
-          }} />
+            objectFit: "cover",
+          }}
+        />
       </div>
-      <form
-        className="mx-auto max-w-screen-md"
-        onSubmit={handleSubmit(submitHandler)}
-      >
-        <h1 className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-700 font-semibold text-white">
-          Update Profile
-        </h1>
+      <div className="max-w-7xl mx-auto  text-center">
+        <form onSubmit={handleSubmit(submitHandler)}>
+          <h1 className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-700 font-semibold text-white ">
+            Update Profile
+          </h1>
 
-        <p className="text-white text-center pb-2">
-          You can change your name, email and/or password
-        </p>
+          <p className="text-white text-center pb-2">
+            You can change your name, email and/or password
+          </p>
 
-        <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="text-white"
-          >
-            Name
-          </label>
-          <input
-            type="text"
-            maxLength="30"
-            className="w-full text-darkPurple"
-            id="name"
-            autoFocus
-            {...register("name", {
-              required: "Please enter name",
-            })}
-          />
-          {errors.name && (
-            <div className="text-red-500">{errors.name.message}</div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="text-white"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            className="w-full text-darkPurple"
-            id="email"
-            {...register("email", {
-              required: "Please enter email",
-              pattern: {
-                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                message: "Please enter valid email",
-              },
-            })}
-          />
-          {errors.email && (
-            <div className="text-red-500">{errors.email.message}</div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="password"
-            className="text-white"
-          >
-            New Password
-          </label>
-
-          <input
-            className="w-full text-darkPurple"
-            type="password"
-            id="password"
-            {...register("password", {
-              minLength: { value: 6, message: "password is more than 5 chars" },
-            })}
-          />
-          {errors.password && (
-            <div className="text-red-500 ">{errors.password.message}</div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label
-            htmlFor="confirmPassword"
-            className="text-white"
-          >
-            Confirm New Password
-          </label>
-          <input
-            className="w-full text-darkPurple"
-            type="password"
-            id="confirmPassword"
-            {...register("confirmPassword", {
-              validate: (value) => value === getValues("password"),
-              minLength: {
-                value: 6,
-                message: "confirm password is more than 5 chars",
-              },
-            })}
-          />
-          {errors.confirmPassword && (
-            <div className="text-red-500 ">
-              {errors.confirmPassword.message}
-            </div>
-          )}
-          {errors.confirmPassword &&
-            errors.confirmPassword.type === "validate" && (
-              <div className="text-red-500 ">Password do not match</div>
+          <div className="mb-4 max-w-md mx-auto">
+            <label
+              htmlFor="name"
+              className="text-white"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              maxLength="30"
+              className="w-full text-darkPurple"
+              id="name"
+              autoFocus
+              {...register("name", {
+                required: "Please enter name",
+              })}
+            />
+            {errors.name && (
+              <div className="text-red-500">{errors.name.message}</div>
             )}
-        </div>
-        <div className="mb-4">
-          <GeneralButton text="Update Profile" />
-        </div>
-      </form>
-      <ImageUpload sessionFromServer={sessionFromServer} />
-    </div>)
+          </div>
+
+          <div className="mb-4 max-w-md mx-auto">
+            <label
+              htmlFor="email"
+              className="text-white"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              className="w-full text-darkPurple"
+              id="email"
+              {...register("email", {
+                required: "Please enter email",
+                pattern: {
+                  value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
+                  message: "Please enter valid email",
+                },
+              })}
+            />
+            {errors.email && (
+              <div className="text-red-500">{errors.email.message}</div>
+            )}
+          </div>
+
+          <div className="mb-4 max-w-md mx-auto">
+            <label
+              htmlFor="password"
+              className="text-white"
+            >
+              New Password
+            </label>
+
+            <input
+              className="w-full text-darkPurple"
+              type="password"
+              id="password"
+              {...register("password", {
+                minLength: {
+                  value: 6,
+                  message: "password is more than 5 chars",
+                },
+              })}
+            />
+            {errors.password && (
+              <div className="text-red-500 ">{errors.password.message}</div>
+            )}
+          </div>
+
+          <div className="mb-4 max-w-md mx-auto">
+            <label
+              htmlFor="confirmPassword"
+              className="text-white"
+            >
+              Confirm New Password
+            </label>
+            <input
+              className="w-full text-darkPurple"
+              type="password"
+              id="confirmPassword"
+              {...register("confirmPassword", {
+                validate: (value) => value === getValues("password"),
+                minLength: {
+                  value: 6,
+                  message: "confirm password is more than 5 chars",
+                },
+              })}
+            />
+            {errors.confirmPassword && (
+              <div className="text-red-500 ">
+                {errors.confirmPassword.message}
+              </div>
+            )}
+            {errors.confirmPassword &&
+              errors.confirmPassword.type === "validate" && (
+                <div className="text-red-500 ">Password do not match</div>
+              )}
+          </div>
+          <div className="mb-4 w-full text-center">
+            <GeneralButton text="Update Profile" />
+          </div>
+        </form>
+        <ImageUpload sessionFromServer={sessionFromServer} />
+      </div>
+    </div>
   );
 }
 

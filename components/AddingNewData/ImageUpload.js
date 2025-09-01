@@ -38,7 +38,7 @@ function ImageUpload({ sessionFromServer }) {
       {
         method: "POST",
         body: formData,
-      }
+      },
     ).then((r) => r.json());
 
     let profileImage = data.secure_url;
@@ -58,7 +58,7 @@ function ImageUpload({ sessionFromServer }) {
 
       if (res.status == 200) {
         toast.success(
-          "Avatar updated! Please sign back in to finish updating your avatar"
+          "Avatar updated! Please sign back in to finish updating your avatar",
         );
         setSelectedImage("");
         setImagePreview("");
@@ -74,39 +74,40 @@ function ImageUpload({ sessionFromServer }) {
   };
 
   return (
-    (<div className="mx-auto max-w-screen-md text-white ">
+    <div className=" text-white text-center ">
       <h1 className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-700 font-semibold">
         Change Your Avatar{" "}
       </h1>
       <p className="mb-4  text-center">
-        Choose an image. Accepted formats are .jpg, jpeg, and .png and .gif.
-        Gifs will appear as a still image until they are hovered over.
+        Accepted image formats are .jpg, jpeg, and .png and .gif. Gifs will
+        appear as a still image until they are hovered over.
       </p>
       <input
         onChange={handleImageAttachment}
         accept=".jpg, .png, .jpeg, .gif"
-        className="fileInput mb-4"
+        className="fileInput mb-4 w-full text-center"
         type="file"
       ></input>
       <div>
         <p className="mb-4">
           Please choose an image to make the upload button clickable
         </p>
-
-        {selectedImage ? (
-          <GeneralButton
-            onClick={handleImageUpload}
-            className=""
-            text="Upload"
-          />
-        ) : (
-          <DisabledButton
-            onClick={handleImageUpload}
-            disabled={!selectedImage}
-            className="bg-blue"
-            text="Upload"
-          />
-        )}
+        <div className="w-full text-center">
+          {selectedImage ? (
+            <GeneralButton
+              onClick={handleImageUpload}
+              className=" w-full text-center"
+              text="Upload"
+            />
+          ) : (
+            <DisabledButton
+              onClick={handleImageUpload}
+              disabled={!selectedImage}
+              className="bg-blue"
+              text="Upload"
+            />
+          )}
+        </div>
 
         {/* ##### IMAGE PREVIEW AREA  ######*/}
         {imagePreview && (
@@ -120,8 +121,9 @@ function ImageUpload({ sessionFromServer }) {
                 alt=""
                 style={{
                   maxWidth: "100%",
-                  height: "auto"
-                }} />
+                  height: "auto",
+                }}
+              />
               <FontAwesomeIcon
                 icon={faCircleXmark}
                 onClick={() => {
@@ -139,7 +141,7 @@ function ImageUpload({ sessionFromServer }) {
           log out and log back in{" "}
         </p>
       </div>
-    </div>)
+    </div>
   );
 }
 

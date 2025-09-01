@@ -74,7 +74,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
   //we need to use router (line 8) to redirect user
 
   return (
-    (<div>
+    <div>
       <Layout
         title="Magic Link Message"
         profileImage={profileImage}
@@ -89,7 +89,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
           />
           <div className="px-6 h-full text-gray-100">
             <div className="flex xl:justify-center  justify-center items-center flex-wrap ">
-              <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+              <div className="max-w-7xl mx-auto mb-12 md:mb-0">
                 <div className="text-center  mb-4 flex justify-center mt-2">
                   <MagicRabbitSVG />
                   <h2 className="text-4xl"> Magic link request sent! </h2>
@@ -98,17 +98,21 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
 
                 <p className="text-center rounded-lg mb-2">
                   Congrats! If the email you entered is in our system, you will
-                  recieve a magic link in your inbox. Click the link in the
-                  email to be signed in.
+                  recieve a magic link in your inbox.
+                </p>
+                <p className="text-center rounded-lg mb-2">
+                  Click the link in the email to be signed in.
                 </p>
 
                 <section className="bg-darkPurple p-2 ">
                   <div className="flex mt-2"></div>
 
-                  <p className="text-center rounded-lg">
+                  <p className="text-center rounded-lg ">
                     <strong> No email? </strong> Please check for typos and
-                    check your spam folder. It may take several minutes for the
-                    email to arrive.
+                    check your spam folder.
+                  </p>
+                  <p className="text-center rounded-lg ">
+                    It may take several minutes for the email to arrive.
                   </p>
                 </section>
 
@@ -124,14 +128,13 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   Don&apos;t have an account? Welcome! &nbsp;
                   <Link
                     href={`/register`}
-                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out">
-                    
-                      Register by clicking here
-                    
+                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out"
+                  >
+                    Register by clicking here
                   </Link>
                 </p>
 
-                <p className="text-xs text-center mt-4">
+                <p className="text-xs text-center my-4">
                   Icons from Noun Project:
                   <span>
                     <a
@@ -155,6 +158,6 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
           </div>
         </section>
       </div>
-    </div>)
+    </div>
   );
 }

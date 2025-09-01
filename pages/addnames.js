@@ -15,7 +15,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   await dbConnect.connect();
@@ -59,7 +59,7 @@ function AddNewNameWithTags({ tagList, sessionFromServer }) {
         title2="Name"
       />
 
-      <div className="mx-auto mt-4 md:px-4">
+      <div className="max-w-7xl mx-auto mt-4 flex justify-center text-center">
         {!sessionFromServer && (
           <div className="bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 text-center">
             To avoid spam, users must sign in to add names

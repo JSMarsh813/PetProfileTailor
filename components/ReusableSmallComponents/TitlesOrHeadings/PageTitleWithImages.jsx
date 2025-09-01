@@ -3,7 +3,7 @@ import React from "react";
 export default function PageTitleWithImages({ imgSrc, title, title2 }) {
   return (
     <div
-      className={`h-32 mb-4 bg-no-repeat relative bg-cover ${imgSrc} relative`}
+      className={`h-32 mb-4 bg-no-repeat relative bg-cover ${imgSrc} relative max-w-7xl mx-auto`}
       style={{
         backgroundPosition: "80%",
         backgroundImage: `url("/dogheaderfreewebheaders.jpg")`,

@@ -349,8 +349,9 @@ export default function Register({ sessionFromServer }) {
             <strong> you can add a password in settings </strong>
           </p>
         </section>
-
-        <GeneralButton text="register" />
+        <div className="w-full flex justify-center">
+          <GeneralButton text="register" />
+        </div>
       </form>
     </div>
   );
