@@ -227,7 +227,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
           >
             Description (optional)
           </label>
-          <p>optional. Add anything that would be useful to know.</p>{" "}
+          <p>Add anything that would be useful to know.</p>{" "}
           <p>
             Examples: the name's meaning, popular fictional or historical
             figures with this name.
