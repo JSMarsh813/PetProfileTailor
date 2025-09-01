@@ -50,9 +50,9 @@ export default function NavLayoutwithSettingsMenu({
 
   return (
     <>
-      <div className="flex flex-col justify-between bg-violet-900">
+      <div className="flex flex-col justify-between bg-primary">
         <header>
-          <nav className="flex h-12 items-center pl-2 justify-between shadow-md bg-violet-600">
+          <nav className="flex h-12 items-center pl-2 justify-between  bg-primary">
             {/* HAMBURGER MENU BUTTON */}
 
             <Menu
@@ -183,9 +183,9 @@ export default function NavLayoutwithSettingsMenu({
                   className="relative inline-block text-left z-30"
                 >
                   <Menu.Button
-                    className="inline-flex justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium         text-yellow-400
+                    className="inline-flex justify-center rounded-2xl  py-2 px-4 text-sm font-semibold  text-white bg-violet-700 
                 
-                border-4 border-transparent 
+                
                 
                 hover:bg-opacity-30 hover:border-b-yellow-400
 

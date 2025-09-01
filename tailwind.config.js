@@ -35,7 +35,7 @@ module.exports = {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "#090110", //dark purple
+          DEFAULT: "#1b073b", //dark purple
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {

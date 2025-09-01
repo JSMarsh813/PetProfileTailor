@@ -62,12 +62,12 @@ export default function NameListingAsSections({
         className="grid  grid-cols-1
          space-between
         
-            xl:grid-cols-6          
+                
            
-            border-b-4 border-amber-300
-            bg-darkPurple
+            border-b-4 border-violet-300
+            bg-primary
                     text-purple-200 sm:p-2 
-                  justify-items-center"
+                  justify-items-center "
         //  items-center
       >
         {/* ###### LIKES SECTION #### */}

@@ -40,8 +40,6 @@ export default function DropDownMenu() {
       <Menu.Button
         className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white align-middle
           
-          border-4 border-transparent border-r-violet-400 
-
           hover:bg-opacity-30 
           hover:border-b-4
           hover:border-b-yellow-400 

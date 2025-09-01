@@ -206,14 +206,14 @@ export default function FetchNames({
   // ########### End of Section that allows the deleted content to be removed without having to refresh the page ####
 
   return (
-    <div className="bg-violet-900">
+    <div>
       <Layout
         profileImage={profileImage}
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
 
-      <section className="sm:px-4 bg-violet-900 mx-auto">
+      <section className="sm:px-4  mx-auto">
         <PageTitleWithImages
           title="Fetch"
           title2="Names"
@@ -246,7 +246,7 @@ export default function FetchNames({
         </Drawer>
         {/*################# CONTENT DIV ################### */}
 
-        <div className="grow bg-darkPurple rounded-box place-items-center">
+        <div className="grow bg-primary rounded-box place-items-center  ">
           {/* Button that toggles the filter div */}
           <GeneralButton
             text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
@@ -279,7 +279,7 @@ export default function FetchNames({
               </div>
             )}
 
-            <section className="whitespace-pre-line">
+            <section className="whitespace-pre-line ">
               {names
                 .slice(
                   currentUiPage - 1 == 0
@@ -302,21 +302,20 @@ export default function FetchNames({
                   );
                 })}
 
-              <Pagination
-                itemsPerPage={itemsPerPage}
-                setItemsPerPageFunction={setItemsPerPageFunction}
-                setPageFunction={setPageFunction}
-                setSize={setSize}
-                size={size}
-                setSortingLogicFunction={setSortingLogicFunction}
-                totalItems={totalItems}
-              />
-
               {/* <CheckForMoreData
                 filteredListLastPage={filteredListLastPage} //deleted
                 setSize={setSize}
               /> */}
             </section>
+            <Pagination
+              itemsPerPage={itemsPerPage}
+              setItemsPerPageFunction={setItemsPerPageFunction}
+              setPageFunction={setPageFunction}
+              setSize={setSize}
+              size={size}
+              setSortingLogicFunction={setSortingLogicFunction}
+              totalItems={totalItems}
+            />
           </section>
         </div>
       </div>
