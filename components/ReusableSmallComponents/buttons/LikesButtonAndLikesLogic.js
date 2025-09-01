@@ -3,6 +3,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import { useLikeState } from "../../../hooks/useLlikeState";
+import ContainerForLikeShareFlag from "./ContainerForLikeShareFlag";
 
 export default function LikesButtonAndLikesLogic({
   data,
@@ -22,7 +23,7 @@ export default function LikesButtonAndLikesLogic({
   });
 
   return (
-    <span>
+    <ContainerForLikeShareFlag>
       <button
         disabled={isProcessing}
         onClick={toggleLike}
@@ -31,11 +32,11 @@ export default function LikesButtonAndLikesLogic({
         <FontAwesomeIcon
           icon={faHeart}
           className={`${HeartIconStyling}`}
-          color={liked ? "red" : "#87ceeb"}
+          color={liked ? "red" : "white"}
         />
 
         <span className={`${HeartIconTextStyling}`}>{likeCount}</span>
       </button>
-    </span>
+    </ContainerForLikeShareFlag>
   );
 }

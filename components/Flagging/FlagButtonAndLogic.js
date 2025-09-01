@@ -7,13 +7,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
+import ContainerForLikeShareFlag from "../ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
 
 export default function FlagButtonAndLogic({
   signedInUsersId,
   userHasAlreadyReportedThis,
   userIsTheCreator,
   FlagIconStyling,
-  FlagIconTextStyling,
   setFlagFormIsToggled,
   flagFormIsToggled,
   flaggedCount,
@@ -22,7 +22,7 @@ export default function FlagButtonAndLogic({
   setFlagIconClickedByNewUser,
 }) {
   let flaggedColor =
-    userHasAlreadyReportedThis || flagIconClickedByNewUser ? "red" : "#87ceeb";
+    userHasAlreadyReportedThis || flagIconClickedByNewUser ? "red" : "white";
 
   const toggleFlagColorAndNumber = () => {
     flagIconClickedByNewUser == true
@@ -49,7 +49,8 @@ export default function FlagButtonAndLogic({
 
   return (
     <>
-      <div className="block text-center">
+      <ContainerForLikeShareFlag>
+        {/* <div className="text-center bg-subtleBackground rounded-2xl w-20 h-9 flex justify-center align-middle"> */}
         <label id="flaggedbutton">
           <input
             type="button"
@@ -62,10 +63,8 @@ export default function FlagButtonAndLogic({
             className={`${FlagIconStyling}`}
             color={flaggedColor}
           />
-
-          <span className={`${FlagIconTextStyling}`}>{flaggedCount}</span>
         </label>
-      </div>
+      </ContainerForLikeShareFlag>
 
       {flagFormIsToggled && userIsTheCreator && (
         <ToggeableAlert

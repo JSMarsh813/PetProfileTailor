@@ -52,7 +52,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
   return (
     <section className="flex justify-evenly ">
       <button
-        className="bg-amber-300 px-4 py-2
+        className="bg-white px-4 py-2
                   rounded-full
                   text-violet-800
                   font-semibold
@@ -73,7 +73,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
       </button>
 
       <MyLink
-        className="bg-amber-300 px-4 py-2
+        className="bg-white px-4 py-2
         rounded-full
         text-violet-800
         font-semibold

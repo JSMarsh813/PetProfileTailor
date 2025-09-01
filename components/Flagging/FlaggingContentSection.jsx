@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FlagButtonAndLogic from "./FlagButtonAndLogic";
 import FormFlagReport from "./FormFlagReport";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+
 import {
   Description,
   Dialog,
@@ -90,8 +90,7 @@ export default function FlaggingContentSection({
       <div classcontent=" bg-violet-900">
         <FlagButtonAndLogic
           data={content}
-          FlagIconStyling="text-xl my-auto mx-auto pt-4"
-          FlagIconTextStyling="ml-2 inline-block pb-4"
+          FlagIconStyling="text-xl"
           currentTargetedId={currentTargetedId}
           signedInUsersId={signedInUsersId}
           flagFormIsToggled={flagFormIsToggled}

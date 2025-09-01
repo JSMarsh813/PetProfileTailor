@@ -16,6 +16,7 @@ module.exports = {
       },
       colors: {
         darkPurple: "#140223",
+        subtleBackground: "rgb(99,64,153)",
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",

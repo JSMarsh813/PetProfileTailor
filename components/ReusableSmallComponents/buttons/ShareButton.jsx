@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShareFromSquare } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import ContainerForLikeShareFlag from "./ContainerForLikeShareFlag";
 
 export default function ShareButton({
   shares,
@@ -9,19 +10,18 @@ export default function ShareButton({
   shareIconStyling,
 }) {
   return (
-    <span>
-      <label className="flex-1 inline ">
-        <input
-          className=""
-          type="button"
-          onClick={onClickShowShares}
-          tabIndex="0"
-        />
+    <ContainerForLikeShareFlag>
+      <button
+        className=""
+        type="button"
+        onClick={onClickShowShares}
+        tabIndex="0"
+      >
         <FontAwesomeIcon
           icon={faShareFromSquare}
-          className={`text-xl inline flex-1 ${shareIconStyling}`}
+          className={`text-xl inline ${shareIconStyling}`}
         />
-      </label>
-    </span>
+      </button>
+    </ContainerForLikeShareFlag>
   );
 }
