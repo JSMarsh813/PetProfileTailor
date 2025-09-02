@@ -55,6 +55,9 @@ export default function NameListingAsSections({
     setShareSectionShowing(!shareSectionShowing);
   }
 
+  console.log("AddHashToArrayString(name)", AddHashToArrayString(name));
+  console.log("name.tags", name.tags);
+
   return (
     <div className="text-base flex border-t border-subtleWhite">
       <a

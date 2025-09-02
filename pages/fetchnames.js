@@ -38,10 +38,20 @@ export const getServerSideProps = async (context) => {
 
   //grabbing Tags for name edit function
 
-  const tagData = await NameTag.find();
-  let tagListProp = tagData
-    .map((tag) => tag)
-    .reduce((sum, value) => sum.concat(value), []);
+  // convert tags to a plain array of objects, in the same order mongoDB returned them
+  //toObject() strips most of the Mongoose document into a plain object that Next.js can serialize safely
+  // except for _id which is still a ObjectID, which we need to convert to a string
+
+  const tagData = await NameTag.find().map((tag) => {
+    const obj = tag.toObject();
+
+    return {
+      _id: obj._id.toString(),
+      tag: obj.tag,
+      //  createdby: obj.createdby ? obj.createdby.toString() : null,
+      // safe for JSON, for if I decide to let others submit tags one day
+    };
+  });
 
   // grabbing names by logged in user
   let usersLikedNamesFromDb = [];
@@ -58,7 +68,7 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       category: JSON.parse(JSON.stringify(data)),
-      tagList: JSON.parse(JSON.stringify(tagListProp)),
+      tagList: tagData,
       sessionFromServer: session,
       usersLikedNamesFromDb,
     },
@@ -151,7 +161,7 @@ export default function FetchNames({
   }
 
   function setNameEditedFunction() {
-    setNameEdited(!nameEdited);
+    setNameEdited(true);
   }
 
   // ########## End of section for passing state into components as functions ####
@@ -177,7 +187,7 @@ export default function FetchNames({
   };
 
   const names = data ?? [];
-  console.log("names", names);
+  // console.log("names", names);
 
   //#################### END of SWR section ##############
 
@@ -190,6 +200,7 @@ export default function FetchNames({
     if (nameEdited) {
       mutate();
     }
+    setNameEdited(false);
   }, [nameEdited]);
 
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
@@ -214,7 +225,6 @@ export default function FetchNames({
         userName={userName}
         sessionFromServer={sessionFromServer}
       />
-
       <section className="sm:px-4  mx-auto">
         <PageTitleWithImages
           title="Fetch"

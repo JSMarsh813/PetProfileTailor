@@ -69,11 +69,40 @@ export default async function handler(req, res) {
           },
         },
         {
+          // will fill out the tags data from the objectIds stored in the name, but lookup will reorder the tags
           $lookup: {
             from: "nametags",
             localField: "tags",
             foreignField: "_id",
-            as: "tags",
+            as: "tagsLookup",
+          },
+        }, // Preserve original order of tags, so users see the tags in the order they added them // so when we mutate() following a name being edited, the newest tags show up at the end
+        {
+          $addFields: {
+            // replacing the tags field with a reordered array based on tagsLookup
+            tags: {
+              $map: {
+                input: "$tags",
+                // we're looking at the original tags array of tag ObjectIds, before it was fleshed out with tags information in the lookup
+                as: "tagId",
+                in: {
+                  // in expression determines what value goes into the new array
+                  $arrayElemAt: [
+                    // arrayElemAt picks the first (and only) element from the filtered array that passes
+                    {
+                      $filter: {
+                        // Filters the $tagsLookup array (the joined full tag documents) for the tag._id that matches the current tagId Object Id
+                        input: "$tagsLookup",
+                        // the fleshed out but reordered tags array from lookup
+                        as: "t",
+                        cond: { $eq: ["$$t._id", "$$tagId"] }, //$$tagId current ObjectId from the original tags array
+                      },
+                    },
+                    0,
+                  ],
+                },
+              },
+            },
           },
         },
 

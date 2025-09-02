@@ -25,18 +25,43 @@ const getHandler = async (req, res) => {
 // https://stackoverflow.com/questions/52147649/mongoose-findbyid-return-null
 const putHandler = async (req, res) => {
   await db.connect();
+
+  const { name, description, tags } = req.body; // tags = array of ObjectIds or strings
+
+  // convert incoming tags to ObjectIds
+  const tagsAsObjectIds = (tags || []).map((t) =>
+    t instanceof mongoose.Types.ObjectId ? t : mongoose.Types.ObjectId(t),
+  );
+
   const individualname = await Names.findById(req.query.id);
-  if (individualname) {
-    individualname.name = req.body.name;
-    individualname.description = req.body.description;
-    individualname.tags = req.body.tags;
-    individualname.likedby = req.body.likedby;
 
-    await Names.save();
+  if (!individualname)
+    return res.status(404).send({ message: "Name not found" });
 
-    res.send({ message: "Name updated successfully" });
-  } else {
-    res.status(404).send({ message: "name not found" });
+  try {
+    // update other fields
+    individualname.name = name;
+    individualname.description = description;
+
+    // create a Set of existing tag strings for quick lookup
+    const existingTagStrings = new Set(
+      individualname.tags.map((t) => t.toString()),
+    );
+
+    // filter out any new tags that already exist
+    const newTagsToAdd = tagsAsObjectIds.filter(
+      (t) => !existingTagStrings.has(t.toString()),
+    );
+
+    // append new tags in order
+    individualname.tags.push(...newTagsToAdd);
+
+    await individualname.save();
+
+    res.send({ message: "Name updated successfully", data: individualname });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Internal server error" });
   }
 };
 
