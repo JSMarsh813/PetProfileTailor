@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFlag } from "@fortawesome/free-solid-svg-icons";
+import { faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,39 +11,36 @@ import ContainerForLikeShareFlag from "../ReusableSmallComponents/buttons/Contai
 
 export default function FlagButtonAndLogic({
   signedInUsersId,
-  userHasAlreadyReportedThis,
+  userAlreadySentIdea,
   userIsTheCreator,
   FlagIconStyling,
-  setFlagFormIsToggled,
-  flagFormIsToggled,
-  flaggedCount,
-  setFlaggedCount,
-  flagIconClickedByNewUser,
-  setFlagIconClickedByNewUser,
+  setIdeaFormToggled,
+  ideaFormIsToggled,
+
+  ideaIconClickedByNewUser,
+  setIdeaIconClickedByNewUser,
 }) {
   let flaggedColor =
-    userHasAlreadyReportedThis || flagIconClickedByNewUser ? "red" : "white";
+    userAlreadySentIdea || ideaIconClickedByNewUser ? "yellow" : "white";
 
-  const toggleFlagColorAndNumber = () => {
-    flagIconClickedByNewUser == true
-      ? setFlaggedCount((flaggedCount -= 1))
-      : setFlaggedCount((flaggedCount += 1));
-    setFlagIconClickedByNewUser(!flagIconClickedByNewUser);
+  const toggleFlagColor = () => {
+    setIdeaIconClickedByNewUser(!ideaIconClickedByNewUser);
   };
 
   const handleFlagged = (e) => {
+    console.log("signedInUsersId in idea button", signedInUsersId);
     if (!signedInUsersId) {
       toast.error("Please sign in to flag", {
         position: toast.POSITION.BOTTOM_CENTER,
       });
       return;
     }
-    setFlagFormIsToggled(!flagFormIsToggled);
+    setIdeaFormToggled(!ideaFormIsToggled);
 
-    if (userHasAlreadyReportedThis || userIsTheCreator) {
+    if (userAlreadySentIdea || userIsTheCreator) {
       return;
     } else {
-      toggleFlagColorAndNumber();
+      toggleFlagColor();
     }
   };
 
@@ -59,29 +56,12 @@ export default function FlagButtonAndLogic({
           htmlFor="flaggedbutton"
         >
           <FontAwesomeIcon
-            icon={faFlag}
+            icon={faLightbulb}
             className={`${FlagIconStyling}`}
             color={flaggedColor}
           />
         </button>
       </ContainerForLikeShareFlag>
-
-      {flagFormIsToggled && userIsTheCreator && (
-        <ToggeableAlert
-          text="You cannot flag your own content 😜"
-          setToggleState={setFlagFormIsToggled}
-          toggleState={flagFormIsToggled}
-        />
-      )}
-
-      {flagFormIsToggled && userHasAlreadyReportedThis && (
-        <ToggeableAlert
-          text="We are in the process of reviewing your report. This content cannot be
-                flagged again until the prior report is reviewed"
-          setToggleState={setFlagFormIsToggled}
-          toggleState={flagFormIsToggled}
-        />
-      )}
     </>
   );
 }

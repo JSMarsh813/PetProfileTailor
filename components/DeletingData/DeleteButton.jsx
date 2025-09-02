@@ -6,6 +6,7 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import DeleteContentNotification from "./DeleteContentNotification";
 
 export default function DeleteButton({
+  className,
   signedInUsersId,
   contentId,
   changeContentState,
@@ -16,24 +17,28 @@ export default function DeleteButton({
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   function updateDeleteState() {
+    console.log("delete clicked");
     setShowDeleteConfirmation(true);
   }
 
   return (
     <>
-      <label className="justify-self-end">
-        <input
-          className=""
+      <div className={`justify-self-end ${className}`}>
+        <button
+          className="gap-x-2"
           type="button"
           onClick={updateDeleteState}
           tabIndex="0"
-        />
+          name="delete-button"
+        >
+          <FontAwesomeIcon
+            icon={faTrashCan}
+            className="text-xl w-4 h-4"
+          />
 
-        <FontAwesomeIcon
-          icon={faTrashCan}
-          className="text-xl justify-self-end text-rose-500"
-        />
-      </label>
+          <span className="ml-1"> Delete </span>
+        </button>
+      </div>
 
       {showDeleteConfirmation && (
         <Dialog

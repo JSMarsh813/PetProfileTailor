@@ -9,7 +9,7 @@ export function useLikeState({
 }) {
   const nameId = data._id;
 
-  const initialLiked = likedSetRef.current.has(nameId); // true, false
+  const initialLiked = likedSetRef?.current.has(nameId); // true, false
   const initialCount = data.likedbycount; // 10
 
   // Local state only for rendering

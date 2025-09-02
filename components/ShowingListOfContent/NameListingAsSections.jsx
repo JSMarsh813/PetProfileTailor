@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Menu } from "@headlessui/react";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import FlagButtonAndLogic from "../Flagging/FlagButtonAndLogic";
 import DeleteButton from "../DeletingData/DeleteButton";
@@ -12,10 +13,15 @@ import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 // import AddComment from "../AddingNewData/AddComment";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import FormFlagReport from "../Flagging/FormFlagReport";
+import IdeaContentSection from "../AddingIdeas/IdeaContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 import removeDeletedContent from "../DeletingData/removeDeletedContent";
 import AddHashToArrayString from "../../utils/stringManipulation/addHashToArrayString";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Ellipsis } from "lucide-react";
+import ContainerForLikeShareFlag from "../ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
 
 export default function NameListingAsSections({
   name,
@@ -44,6 +50,16 @@ export default function NameListingAsSections({
 
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${name.name}`;
   const localLink = `/name/${name.name}`;
+
+  // ############# FLAG ###################
+  //STATE FOR FLAG COUNT AND COLOR AND FORM
+
+  const [userAlreadySentIdea, setUserAlreadySentIdea] = useState(
+    name.flaggedby != null ? name.flaggedby.includes(signedInUsersId) : false,
+  );
+  // TODO: changed userAlreadySentIdea logic to reflect actual logic
+
+  const [ideaFormToggled, setIdeaFormToggled] = useState(false);
 
   // ### for the edit notification button
   function onupdateEditState() {
@@ -91,40 +107,71 @@ export default function NameListingAsSections({
             {/* height needed otherwise the nonpositioned elements will move up */}
 
             <div className="">
-              <a
-                href={`${
-                  process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                }profile/${name.createdby.profilename.toLowerCase()}`}
-                className="flex"
-              >
-                <div>
-                  <span className="font-bold text-lg">
-                    {" "}
-                    {name.createdby.name}
-                  </span>
-                  <span className="font-thin text-base">
-                    {" "}
-                    @{name.createdby.profilename}
-                  </span>
-                </div>
-              </a>
-            </div>
+              <div className="w-full flex items-center justify-between p-2">
+                <a
+                  href={`${
+                    process.env.NEXT_PUBLIC_BASE_FETCH_URL
+                  }profile/${name.createdby.profilename.toLowerCase()}`}
+                  className="flex"
+                >
+                  <div>
+                    <span className="font-bold text-lg">
+                      {name.createdby.name}
+                    </span>
+                    <span className="font-thin text-base">
+                      @{name.createdby.profilename}
+                    </span>
+                  </div>
+                </a>
 
-            {signedInUsersId && name.createdby._id == signedInUsersId && (
-              <div className="my-2 flex w-full justify-around ">
-                <EditButton
-                  className="ml-2 mr-6"
-                  onupdateEditState={onupdateEditState}
-                />
-                <DeleteButton
-                  signedInUsersId={signedInUsersId}
-                  contentId={name._id}
-                  setDeleteThisContentId={setDeleteThisContentId}
-                  contentCreatedBy={name.createdby._id}
-                  apiLink="/api/names/"
-                />
+                {signedInUsersId && name.createdby._id == signedInUsersId && (
+                  <Menu
+                    as="div"
+                    className="relative inline-block text-left"
+                  >
+                    <div>
+                      <Menu.Button className="px-2 py-1 rounded hover:bg-subtleWhite/20">
+                        <Ellipsis />
+                      </Menu.Button>
+                    </div>
+
+                    <Menu.Items className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-primary border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <span> temporary</span>
+                          // <button
+                          //   className={`${
+                          //     active ? "bg-gray-100" : ""
+                          //   } group flex w-full items-center px-4 py-2 text-sm`}
+                          // >
+                          //   Edit Post
+                          // </button>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <DeleteButton
+                            className="ml-2 mr-6 w-full group flex items-center"
+                            signedInUsersId={signedInUsersId}
+                            contentId={name._id}
+                            setDeleteThisContentId={setDeleteThisContentId}
+                            contentCreatedBy={name.createdby._id}
+                            apiLink="/api/names/"
+                          />
+                          // <button
+                          //   className={`${
+                          //     active ? "bg-gray-100" : ""
+                          //   } group flex w-full items-center px-4 py-2 text-sm`}
+                          // >
+                          //   Delete Post
+                          // </button>
+                        )}
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Menu>
+                )}
               </div>
-            )}
+            </div>
 
             {showEditPage && (
               <EditName
@@ -170,15 +217,38 @@ export default function NameListingAsSections({
             comments={name.comments.length}
             onupdateCommentShowState={onupdateCommentShowState}
           /> */}
-            <FlaggingContentSection
-              userIsTheCreator={userIsTheCreator}
-              signedInUsersId={signedInUsersId}
-              currentTargetedId={currentTargetedId}
-              contentType="name"
-              content={name}
-              apiflagReportSubmission="/api/flag/flagreportsubmission/"
-              apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
-            />
+            {signedInUsersId && name.createdby._id == signedInUsersId ? (
+              <ContainerForLikeShareFlag>
+                <EditButton
+                  className=""
+                  onupdateEditState={onupdateEditState}
+                />
+              </ContainerForLikeShareFlag>
+            ) : (
+              <IdeaContentSection
+                userIsTheCreator={userIsTheCreator}
+                signedInUsersId={signedInUsersId}
+                currentTargetedId={currentTargetedId}
+                contentType="name"
+                content={name}
+                apiIdeaSubmission="/api/_______/"
+                apiaddUserToIdea="/api/_____"
+                userAlreadySentIdea={userAlreadySentIdea}
+                setUserAlreadySentIdea={setUserAlreadySentIdea}
+                ideaFormToggled={ideaFormToggled}
+                setIdeaFormToggled={setIdeaFormToggled}
+              />
+
+              // <FlaggingContentSection
+              //   userIsTheCreator={userIsTheCreator}
+              //   signedInUsersId={signedInUsersId}
+              //   currentTargetedId={currentTargetedId}
+              //   contentType="name"
+              //   content={name}
+              //   apiflagReportSubmission="/api/flag/flagreportsubmission/"
+              //   apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
+              // />
+            )}
           </div>
         </div>
         {/* ###### END OF LISTING #### */}
@@ -192,6 +262,22 @@ export default function NameListingAsSections({
               localLink={localLink}
             />
           </section>
+        )}
+
+        {ideaFormToggled && userIsTheCreator && (
+          <ToggeableAlert
+            text="You cannot flag your own content 😜"
+            setToggleState={setIdeaFormToggled}
+            toggleState={ideaFormToggled}
+          />
+        )}
+
+        {ideaFormToggled && userAlreadySentIdea && (
+          <ToggeableAlert
+            text="We are in the process of reviewing your idea. Please wait for the prior report to be reviewed before submitting"
+            setToggleState={setIdeaFormToggled}
+            toggleState={ideaFormToggled}
+          />
         )}
       </div>
     </div>

@@ -12,7 +12,7 @@ export default function ShareButton({
   return (
     <ContainerForLikeShareFlag>
       <button
-        className=""
+        className="w-full"
         type="button"
         onClick={onClickShowShares}
         tabIndex="0"
