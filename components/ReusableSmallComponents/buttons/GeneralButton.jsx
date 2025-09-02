@@ -3,6 +3,7 @@ const GeneralButton = ({
   className,
   onClick,
   subtle,
+  warning,
   type,
   active = false,
   disabled,
@@ -16,6 +17,9 @@ const GeneralButton = ({
   if (subtle)
     bgClass =
       "bg-subtleBackground text-white hover:text-white hover:border-blue-500 hover:bg-blue-400";
+  if (warning)
+    bgClass =
+      "bg-red-500 text-white hover:text-white hover:border-blue-500 hover:bg-blue-400";
   if (active && !disabled)
     bgClass =
       "bg-subtleWhite border-indigo-600 text-darkPurple hover:bg-blue-400 hover:text-white hover:border-blue-500";
@@ -25,7 +29,7 @@ const GeneralButton = ({
 
   return (
     <button
-      className={`${baseClasses} ${bgClass} ${className} 0`}
+      className={`${baseClasses} ${bgClass} ${className} `}
       onClick={onClick}
       type={type}
       disabled={disabled}

@@ -170,6 +170,8 @@ function HomePage({ sessionFromServer }) {
             imgwidth="70"
             imgheight="100"
             alttext="picture of a cute white pomeranian sitting and lifting a paw up. Its wearing a black mask and a black cape, its tongue is sticking out in a relaxed manner."
+            credit="By gpointstudio"
+            creditLink="https://www.freepik.com/free-photo/portrait-playful-dog-halloween-costume_13452943.htm"
           />
         </section>
       </div>

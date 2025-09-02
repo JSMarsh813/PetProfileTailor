@@ -23,12 +23,12 @@ const HeroTop = ({
 
   return (
     <div
-      className="hero min-h-fit font-serif  
+      className="hero min-h-fit font-serif  bg-black
 border-y-4 border-darkPurple  max-w-7xl mx-auto overflow-hidden"
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >
-      <div className="hero-overlay relative max-w-7xl z-10 opacity-20 ">
+      <div className="hero-overlay  relative max-w-7xl z-10 opacity-20 ">
         {hover ? (
           <Image
             priority
@@ -51,6 +51,7 @@ border-y-4 border-darkPurple  max-w-7xl mx-auto overflow-hidden"
         )}
       </div>
       <div className="hero-content text-center text-neutral-content mb-10 z-20  ">
+        {/* hero-content is from daisy ui */}
         <div className="max-w-xl text-subtleWhite">
           <h1 className="mb-5 text-3xl md:text-4xl text-yellow-300 font-black">
             Welcome to <br /> Tailored Pet Names!

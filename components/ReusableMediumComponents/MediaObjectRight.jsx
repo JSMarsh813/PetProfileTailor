@@ -12,6 +12,8 @@ const MediaObjectRight = ({
   alttext,
   imgwidth,
   imgheight,
+  credit,
+  creditLink,
 }) => {
   return (
     <div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
@@ -61,6 +63,13 @@ const MediaObjectRight = ({
             height: "auto",
           }}
         />
+
+        {credit && (
+          <small className="text-subtleWhite">
+            {credit}
+            <a href={creditLink}> - clickable link </a>
+          </small>
+        )}
       </div>
     </div>
   );

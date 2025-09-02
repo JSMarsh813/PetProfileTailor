@@ -3,6 +3,10 @@ import Select from "react-select";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import StyledInput from "../FormComponents/StyledInput";
+import StyledTextarea from "../FormComponents/StyledTextarea";
+import StyledSelect from "../FormComponents/StyledSelect";
 
 export default function EditName({
   SetShowEditPage,
@@ -51,7 +55,7 @@ export default function EditName({
         role="dialog"
         aria-modal="true"
       >
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div className="fixed inset-0 bg-darkPurple bg-opacity-75 transition-opacity"></div>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
           {/* centers content */}
@@ -77,8 +81,8 @@ export default function EditName({
                 >
                   {/* ##### NAME AREA ######*/}
                   <h4 className="text-subtleWhite mt-4"> Name </h4>
-                  <input
-                    className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"
+
+                  <StyledInput
                     onChange={(e) => setName(e.target.value)}
                     value={newName}
                     maxLength="40"
@@ -92,13 +96,13 @@ export default function EditName({
                   {/* ##### DESCRIPTION AREA ######*/}
                   <h4 className="text-subtleWhite"> Description </h4>
 
-                  <textarea
-                    className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
+                  <StyledTextarea
                     onChange={(e) => setDescription(e.target.value)}
                     required
+                    // works fine because react treats required as true
                     maxLength="500"
                     value={description}
-                  ></textarea>
+                  />
 
                   <span className="block text-subtleWhite mb-2">
                     {`${500 - description.length}/500 characters left`}{" "}
@@ -112,7 +116,18 @@ export default function EditName({
                   </label>
                   <div className="text-subtleWhite"></div>
 
-                  <Select
+                  <StyledSelect
+                    id="nameTags"
+                    options={tagList}
+                    value={tags.map((tag) => ({
+                      label: tag.label,
+                      value: tag.value,
+                    }))}
+                    onChange={setTags}
+                    labelProperty="tag"
+                    valueProperty="_id"
+                  />
+                  {/* <Select
                     value={tags.map((tag) => ({
                       label: tag.label,
                       value: tag.value,
@@ -136,7 +151,7 @@ export default function EditName({
                         })),
                       )
                     }
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
@@ -144,26 +159,28 @@ export default function EditName({
             {/* ###########                       buttons                     ############## */}
             <div
               className="bg-darkPurple px-4 py-3
-                 sm:px-6 grid grid-cols-2"
+                 sm:px-6 grid grid-cols-2 gap-4"
             >
-              <button
-                type="button"
-                className="justify-center rounded-md border border-transparent bg-emerald-600 px-4 py-2 text-base 
-                 
-                 font-medium text-subtleWhite shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+              <GeneralButton
+                text="save"
+                subtle
                 onClick={() => nameSubmission()}
-              >
-                Save
-              </button>
+              />
 
-              <button
+              <GeneralButton
+                text="cancel"
+                warning
+                onClick={() => SetShowEditPage(false)}
+              />
+
+              {/* <button
                 type="button"
                 className="mt-3 inline-flex justify-center rounded-md bg-red-600 px-4 py-2 text-base font-medium text-subtleWhite shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 
           sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={() => SetShowEditPage(false)}
               >
                 Cancel
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
