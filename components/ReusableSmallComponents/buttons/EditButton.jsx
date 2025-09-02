@@ -15,7 +15,7 @@ export default function EditButton({ onupdateEditState, className }) {
 
       <FontAwesomeIcon
         icon={faPenToSquare}
-        className="text-xl  text-emerald-500"
+        className="text-xl  text-subtleWhite"
       />
     </label>
   );

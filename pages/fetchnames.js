@@ -41,8 +41,10 @@ export const getServerSideProps = async (context) => {
   // convert tags to a plain array of objects, in the same order mongoDB returned them
   //toObject() strips most of the Mongoose document into a plain object that Next.js can serialize safely
   // except for _id which is still a ObjectID, which we need to convert to a string
+  const tagFromDatabase = await NameTag.find();
+  // find returns a promise not an array, so we have to wait for the result before mapping
 
-  const tagData = await NameTag.find().map((tag) => {
+  const tagData = tagFromDatabase.map((tag) => {
     const obj = tag.toObject();
 
     return {
