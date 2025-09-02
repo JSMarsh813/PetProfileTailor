@@ -75,12 +75,12 @@ export default function EditName({
                 />
 
                 <div
-                  className="mx-auto flex flex-col font-semibold text-darkPurple bg-violet-900
+                  className="mx-auto flex flex-col font-semibold text-darkPurple bg-primary
                  border-2 border-violet-400 border-dotted 
                  p-4 shadow-lg max-w-3xl"
                 >
                   {/* ##### NAME AREA ######*/}
-                  <h4 className="text-subtleWhite mt-4"> Name </h4>
+                  <h4 className="text-subtleWhite mt-4 mb-2 text-lg"> Name </h4>
 
                   <StyledInput
                     onChange={(e) => setName(e.target.value)}
@@ -94,7 +94,10 @@ export default function EditName({
                   </span>
 
                   {/* ##### DESCRIPTION AREA ######*/}
-                  <h4 className="text-subtleWhite"> Description </h4>
+                  <h4 className="text-subtleWhite mb-2 text-lg">
+                    {" "}
+                    Description{" "}
+                  </h4>
 
                   <StyledTextarea
                     onChange={(e) => setDescription(e.target.value)}
@@ -104,7 +107,7 @@ export default function EditName({
                     value={description}
                   />
 
-                  <span className="block text-subtleWhite mb-2">
+                  <span className="block text-subtleWhite my-2">
                     {`${500 - description.length}/500 characters left`}{" "}
                   </span>
                   {/* ##### ATTACHING TAGS  ######*/}

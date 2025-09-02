@@ -87,7 +87,7 @@ export default function FlaggingContentSection({
 
   return (
     <>
-      <div classcontent=" bg-violet-900">
+      <div classcontent="">
         <FlagButtonAndLogic
           data={content}
           FlagIconStyling="text-xl"
@@ -116,7 +116,7 @@ export default function FlaggingContentSection({
               className="fixed inset-0 flex w-screen overflow-scroll justify-center"
               tabIndex={1}
             >
-              <DialogPanel className=" bg-darkPurple p-12 bg-opacity-80 h-fit">
+              <DialogPanel className=" bg-darkPurple p-12 bg-opacity-60 h-fit w-full">
                 <FormFlagReport
                   contentType={contentType}
                   contentInfo={content}

@@ -117,6 +117,7 @@ function AddFlagReport({
       <div className="flex items-center justify-center py-6   bg-darkPurple">
         <GeneralButton
           text="Cancel"
+          warning
           className="mx-2"
           onClick={() => cancelFlagFormAndRevertFlagState()}
         />
@@ -151,24 +152,25 @@ function AddFlagReport({
           <div className=" bg-darkPurple border-white border-2 flex">
             <h3 className=" mb-2 text-xl mx-auto py-3"> Suggest Changes </h3>
           </div>
+          <div className="ml-2">
+            <CheckboxWithLabelAndDescription
+              handleFlagCategoriesState={handleFlagCategoriesState}
+              title="Add other tags"
+              description="Please write the suggested tags in the textbox below. Thank you!"
+            />
 
-          <CheckboxWithLabelAndDescription
-            handleFlagCategoriesState={handleFlagCategoriesState}
-            title="Add other tags"
-            description="Please write the suggested tags in the textbox below. Thank you!"
-          />
+            <CheckboxWithLabelAndDescription
+              handleFlagCategoriesState={handleFlagCategoriesState}
+              title="Typos or wrong tags"
+              description="Please describe the typos or incorrect tags in the textbox below. Thank you!"
+            />
 
-          <CheckboxWithLabelAndDescription
-            handleFlagCategoriesState={handleFlagCategoriesState}
-            title="Typos or wrong tags"
-            description="Please describe the typos or incorrect tags in the textbox below. Thank you!"
-          />
-
-          <CheckboxWithLabelAndDescription
-            handleFlagCategoriesState={handleFlagCategoriesState}
-            title="None of these"
-            description="Please give us more information in the comments textbox below"
-          />
+            <CheckboxWithLabelAndDescription
+              handleFlagCategoriesState={handleFlagCategoriesState}
+              title="None of these"
+              description="Please give us more information in the comments textbox below"
+            />
+          </div>
 
           <div className=" bg-darkPurple border-white border-2 flex">
             <h3 className=" mb-2 text-xl mx-auto py-3">Additional Comments</h3>

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import CheckboxWithLabelAndDescription from "../FormComponents/CheckboxWithLabelAndDescription";
 import { Field } from "@headlessui/react";
+import StyledTextarea from "../FormComponents/StyledTextarea";
 
 function AddFlagReport({
   contentType,
@@ -19,7 +20,6 @@ function AddFlagReport({
   setFlagIconClickedByNewUser,
   setUserHasAlreadyReportedThis,
 }) {
-  const [description, setDescription] = useState("");
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
 
@@ -116,8 +116,8 @@ function AddFlagReport({
   }
 
   return (
-    <form className=" mx-auto bg-violet-900 rounded-lg w-[94vw]">
-      <div className="flex items-center justify-center py-6   bg-darkPurple">
+    <form className=" mx-auto bg-primary rounded-lg max-w-7xl border border-subtleWhite">
+      <div className="flex items-center justify-center py-6   bg-darkPurple ">
         <p className="text-subtleWhite text-center ml-2">
           <span> Woof?! </span>
           <br />
@@ -136,9 +136,7 @@ function AddFlagReport({
         {/* Area to Type a comment  */}
 
         <div className=" mb-2 text-subtleWhite px-4 pt-2">
-          <h2 className="text-center text-xl ">
-            Report for Suggestions or Flagging Content
-          </h2>
+          <h2 className="text-center text-xl ">Report Content</h2>
           <p className="text-center mt-3">
             Thank you for taking the time to help improve our community powered
             database! 🙏🙇
@@ -156,28 +154,7 @@ function AddFlagReport({
             to submit this form
           </p>
 
-          <div className=" bg-darkPurple border-white border-2 flex">
-            <h3 className=" mb-2 text-xl mx-auto py-3"> Suggest Changes </h3>
-          </div>
-          <CheckboxWithLabelAndDescription
-            handleFlagCategoriesState={handleFlagCategoriesState}
-            title="Add flags for controversial or vulgar content"
-            description="For content that isn't hate speech or gratious violence but could still be considered edgy. This allows users to opt in or out of seeing this content."
-          />
-
-          <CheckboxWithLabelAndDescription
-            handleFlagCategoriesState={handleFlagCategoriesState}
-            title="Add other tags"
-            description="Please write the suggested tags in the textbox below. Thank you!"
-          />
-
-          <CheckboxWithLabelAndDescription
-            handleFlagCategoriesState={handleFlagCategoriesState}
-            title="Typos or wrong tags"
-            description="Please describe the typos or incorrect tags in the textbox below. Thank you!"
-          />
-
-          <div className=" bg-darkPurple border-white border-2 flex">
+          <div className=" bg-darkPurple border-white border-y-2 flex">
             <h3 className=" mb-2 text-xl mx-auto py-3">
               Flag Inappropriate Content
             </h3>
@@ -219,22 +196,21 @@ function AddFlagReport({
             description="Please give us more information in the comments textbox below"
           />
 
-          <div className=" bg-darkPurple border-white border-2 flex">
+          <div className=" bg-darkPurple border-white border-y-2 flex">
             <h3 className=" mb-2 text-xl mx-auto py-3">Additional Comments</h3>
           </div>
-          <Field className="border-t-2 border-white py-2">
-            <textarea
-              aria-label="type-comments"
+          <Field className="mt-2 py-2">
+            <StyledTextarea
+              ariaLabel="type-comments"
               onChange={(e) => setAdditionalCommentsState(e.target.value)}
-              className="bg-violet-100 rounded border  border-gray-400 leading-normal text-black w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-subtleWhite  mt-2"
               name="body"
               required
               maxLength="500"
               placeholder="Optional"
-            ></textarea>
+            />
           </Field>
           <span className="text-subtleWhite">
-            {`${500 - description.length}/500 characters left`}
+            {`${500 - additionalCommentsState.length}/500 characters left`}
           </span>
 
           <Field>

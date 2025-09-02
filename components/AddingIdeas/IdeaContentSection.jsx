@@ -105,9 +105,10 @@ export default function FlaggingContentSection({
           onClose={() => setIdeaFormToggled(false)}
           className="relative z-50 "
         >
+          {/* Backdrop */}
           <div
-            className="fixed inset-0 flex w-screen overflow-scroll justify-center"
-            tabIndex={1}
+            className="fixed inset-0 bg-black/50"
+            aria-hidden="true"
           >
             <DialogPanel className=" bg-darkPurple p-12 bg-opacity-80 h-fit">
               <IdeaForm

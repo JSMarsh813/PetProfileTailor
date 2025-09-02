@@ -49,22 +49,21 @@ export default function FlagButtonAndLogic({
 
   return (
     <>
-      <ContainerForLikeShareFlag>
-        {/* <div className="text-center bg-subtleBackground rounded-2xl w-20 h-9 flex justify-center align-middle"> */}
+      {/* <div className="text-center bg-subtleBackground rounded-2xl w-20 h-9 flex justify-center align-middle"> */}
 
-        <button
-          className="w-full"
-          type="button"
-          onClick={handleFlagged}
-          htmlFor="flaggedbutton"
-        >
-          <FontAwesomeIcon
-            icon={faFlag}
-            className={`${FlagIconStyling}`}
-            color={flaggedColor}
-          />
-        </button>
-      </ContainerForLikeShareFlag>
+      <button
+        className=""
+        type="button"
+        onClick={handleFlagged}
+        htmlFor="flaggedbutton"
+      >
+        <FontAwesomeIcon
+          icon={faFlag}
+          className={`${FlagIconStyling} ml-3 mr-2`}
+          color={flaggedColor}
+        />
+        <span> Flag </span>
+      </button>
 
       {flagFormIsToggled && userIsTheCreator && (
         <ToggeableAlert

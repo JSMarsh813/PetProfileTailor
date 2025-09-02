@@ -326,8 +326,15 @@ export default function FetchNames({
               setPageFunction={setPageFunction}
               setSize={setSize}
               size={size}
+              currentUiPage={currentUiPage}
+              setCurrentUiPage={setCurrentUiPage}
               setSortingLogicFunction={setSortingLogicFunction}
+              totalPagesInDatabase={totalPagesInDatabase}
               totalItems={totalItems}
+              amountOfDataLoaded={data?.length}
+              remainingSortCooldown={remainingSortCooldown}
+              sortingValue={sortingValue}
+              sortingProperty={sortingProperty}
             />
           </section>
         </div>

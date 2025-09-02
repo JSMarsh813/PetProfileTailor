@@ -115,7 +115,7 @@ export default function NameListingAsSections({
                   className="flex"
                 >
                   <div>
-                    <span className="font-bold text-lg">
+                    <span className="font-bold text-lg mr-2">
                       {name.createdby.name}
                     </span>
                     <span className="font-thin text-base">
@@ -124,52 +124,65 @@ export default function NameListingAsSections({
                   </div>
                 </a>
 
-                {signedInUsersId && name.createdby._id == signedInUsersId && (
-                  <Menu
-                    as="div"
-                    className="relative inline-block text-left"
-                  >
-                    <div>
-                      <Menu.Button className="px-2 py-1 rounded hover:bg-subtleWhite/20">
-                        <Ellipsis />
-                      </Menu.Button>
-                    </div>
+                <Menu
+                  as="div"
+                  className="relative inline-block text-left"
+                >
+                  {({ open }) => (
+                    <>
+                      <div>
+                        <Menu.Button
+                          className={`px-2 py-1 rounded ${
+                            open
+                              ? " bg-subtleWhite text-darkPurple rounded-2xl"
+                              : "hover:bg-blue-400 rounded-2xl"
+                          }`}
+                        >
+                          <Ellipsis />
+                        </Menu.Button>
+                      </div>
 
-                    <Menu.Items className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-primary border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <span> temporary</span>
-                          // <button
-                          //   className={`${
-                          //     active ? "bg-gray-100" : ""
-                          //   } group flex w-full items-center px-4 py-2 text-sm`}
-                          // >
-                          //   Edit Post
-                          // </button>
+                      <Menu.Items className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-darkPurple border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50">
+                        {signedInUsersId &&
+                        name.createdby._id == signedInUsersId ? (
+                          <Menu.Item>
+                            {({ active }) => (
+                              <DeleteButton
+                                className="ml-2 mr-6 w-full group flex items-center"
+                                signedInUsersId={signedInUsersId}
+                                contentId={name._id}
+                                setDeleteThisContentId={setDeleteThisContentId}
+                                contentCreatedBy={name.createdby._id}
+                                apiLink="/api/names/"
+                              />
+                              // <button
+                              //   className={`${
+                              //     active ? "bg-gray-100" : ""
+                              //   } group flex w-full items-center px-4 py-2 text-sm`}
+                              // >
+                              //   Delete Post
+                              // </button>
+                            )}
+                          </Menu.Item>
+                        ) : (
+                          <Menu.Item>
+                            {({ active }) => (
+                              <FlaggingContentSection
+                                userIsTheCreator={userIsTheCreator}
+                                signedInUsersId={signedInUsersId}
+                                currentTargetedId={currentTargetedId}
+                                contentType="name"
+                                content={name}
+                                apiflagReportSubmission="/api/flag/flagreportsubmission/"
+                                apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
+                              />
+                            )}
+                          </Menu.Item>
                         )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <DeleteButton
-                            className="ml-2 mr-6 w-full group flex items-center"
-                            signedInUsersId={signedInUsersId}
-                            contentId={name._id}
-                            setDeleteThisContentId={setDeleteThisContentId}
-                            contentCreatedBy={name.createdby._id}
-                            apiLink="/api/names/"
-                          />
-                          // <button
-                          //   className={`${
-                          //     active ? "bg-gray-100" : ""
-                          //   } group flex w-full items-center px-4 py-2 text-sm`}
-                          // >
-                          //   Delete Post
-                          // </button>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Menu>
-                )}
+                      </Menu.Items>
+                    </>
+                  )}
+                </Menu>
               </div>
             </div>
 
@@ -213,10 +226,6 @@ export default function NameListingAsSections({
 
             <ShareButton onClickShowShares={onClickShowShares} />
 
-            {/* <SeeCommentsButton
-            comments={name.comments.length}
-            onupdateCommentShowState={onupdateCommentShowState}
-          /> */}
             {signedInUsersId && name.createdby._id == signedInUsersId ? (
               <ContainerForLikeShareFlag>
                 <EditButton

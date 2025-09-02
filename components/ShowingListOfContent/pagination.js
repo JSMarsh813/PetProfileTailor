@@ -109,7 +109,7 @@ export default function Pagination({
     // setCurrentUiPage(page);
   };
   return (
-    <section className="pagination-navigation grid grid-rows-1 min-w-0 my-2  border-y border-violet-300 text-violet-900 font-bold pt-2 ">
+    <section className="pagination-navigation grid grid-rows-1 min-w-0 my-2  border-t border-violet-300 text-violet-900 font-bold pt-2 ">
       {/* sorting logic*/}
       <div className="inline  my-auto pb-3 ">
         {/* wrapping the selects in sections & inline-block keeps the per page and sort by labels from wrapping weirdly at smaller sizes */}
@@ -225,8 +225,7 @@ export default function Pagination({
         </button>
       </div>
       <span className="text-white mx-auto mb-2">
-        {`${startingItemCountForPage}-${endingItemCountForPage} of ${totalItems}`}
-        Items
+        {`${startingItemCountForPage}-${endingItemCountForPage} of ${totalItems} Items`}
       </span>
     </section>
   );

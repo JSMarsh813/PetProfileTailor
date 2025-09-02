@@ -20,7 +20,7 @@ const GeneralButton = ({
       "bg-subtleBackground text-white hover:text-white hover:border-blue-500 hover:bg-blue-400";
   if (warning)
     bgClass =
-      "bg-red-500 text-white hover:text-white hover:border-blue-500 hover:bg-blue-400";
+      "bg-red-900 text-subtleWhite hover:text-white hover:border-blue-500 hover:bg-blue-400";
   if (active && !disabled)
     bgClass =
       "bg-subtleWhite border-indigo-600 text-darkPurple hover:bg-blue-400 hover:text-white hover:border-blue-500";
