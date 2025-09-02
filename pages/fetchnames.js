@@ -43,7 +43,6 @@ export const getServerSideProps = async (context) => {
   // except for _id which is still a ObjectID, which we need to convert to a string
   const tagFromDatabase = await NameTag.find();
   // find returns a promise not an array, so we have to wait for the result before mapping
-
   const tagData = tagFromDatabase.map((tag) => {
     const obj = tag.toObject();
 
