@@ -1,7 +1,7 @@
 import React from "react";
 import { Menu, MenuItem, MenuItems, MenuButton } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTags, faIgloo, faIdCard } from "@fortawesome/free-solid-svg-icons";
+
 import Link from "next/link";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
@@ -24,11 +24,11 @@ export default function MobileNavBar() {
         {/* -ml-2 has it go flush to the left, w-[calc(100vw-17px)] leaves room for the scrollbar on the right */}
         <div className="flex flex-col py-1">
           <MenuItem>
-            {({ active }) => (
+            {({ focus }) => (
               <a
                 href="/"
                 className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  active ? "bg-white/10 text-white" : ""
+                  focus ? "bg-white/10 text-white" : ""
                 }`}
               >
                 <Link
@@ -36,15 +36,7 @@ export default function MobileNavBar() {
                   legacyBehavior
                   passHref
                 >
-                  <span className="flex items-center">
-                    <FontAwesomeIcon
-                      icon={faIgloo}
-                      className={`text-xl mr-1 ${
-                        active ? "text-violet-800" : "text-violet-100"
-                      }`}
-                    />
-                    Home
-                  </span>
+                  <span className="flex items-center">Home</span>
                 </Link>
               </a>
             )}
@@ -52,7 +44,7 @@ export default function MobileNavBar() {
 
           <MenuItem disabled>
             <button
-              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-darkPurple cursor-not-allowed"
+              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-darkPurple cursor-not-allowed ml-2"
               disabled
             >
               Fetch/Find
@@ -60,11 +52,11 @@ export default function MobileNavBar() {
           </MenuItem>
 
           <MenuItem>
-            {({ active }) => (
+            {({ focus }) => (
               <a
                 href="/fetchnames"
                 className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  active ? "bg-white/10 text-white" : ""
+                  focus ? "bg-white/10 text-white" : ""
                 }`}
               >
                 <Link
@@ -72,26 +64,18 @@ export default function MobileNavBar() {
                   legacyBehavior
                   passHref
                 >
-                  <span className="flex items-center">
-                    <FontAwesomeIcon
-                      icon={faTags}
-                      className={`text-xl mr-1 ${
-                        active ? "text-violet-800" : "text-violet-100"
-                      }`}
-                    />
-                    Names
-                  </span>
+                  <span className="flex items-center">Names</span>
                 </Link>
               </a>
             )}
           </MenuItem>
 
           <MenuItem>
-            {({ active }) => (
+            {({ focus }) => (
               <a
                 href="/fetchdescriptions"
                 className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  active ? "bg-white/10 text-white" : ""
+                  focus ? "bg-white/10 text-white" : ""
                 }`}
               >
                 <Link
@@ -99,15 +83,7 @@ export default function MobileNavBar() {
                   legacyBehavior
                   passHref
                 >
-                  <span className="flex items-center">
-                    <FontAwesomeIcon
-                      icon={faIdCard}
-                      className={`text-xl mr-1 ${
-                        active ? "text-violet-800" : "text-violet-100"
-                      }`}
-                    />
-                    Descriptions
-                  </span>
+                  <span className="flex items-center">Descriptions</span>
                 </Link>
               </a>
             )}
@@ -115,7 +91,7 @@ export default function MobileNavBar() {
 
           <MenuItem disabled>
             <button
-              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-darkPurple cursor-not-allowed"
+              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-darkPurple cursor-not-allowed ml-2"
               disabled
             >
               Add
@@ -123,11 +99,11 @@ export default function MobileNavBar() {
           </MenuItem>
 
           <MenuItem>
-            {({ active }) => (
+            {({ focus }) => (
               <a
                 href="/addnames"
                 className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  active ? "bg-white/10 text-white" : ""
+                  focus ? "bg-white/10 text-white" : ""
                 }`}
               >
                 <Link
@@ -135,26 +111,18 @@ export default function MobileNavBar() {
                   legacyBehavior
                   passHref
                 >
-                  <span className="flex items-center">
-                    <FontAwesomeIcon
-                      icon={faTags}
-                      className={`text-xl mr-1 ${
-                        active ? "text-violet-800" : "text-violet-100"
-                      }`}
-                    />
-                    Names
-                  </span>
+                  <span className="flex items-center">Names</span>
                 </Link>
               </a>
             )}
           </MenuItem>
 
           <MenuItem>
-            {({ active }) => (
+            {({ focus }) => (
               <a
                 href="/adddescriptions"
                 className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  active ? "bg-white/10 text-white" : ""
+                  focus ? "bg-white/10 text-white" : ""
                 }`}
               >
                 <Link
@@ -162,15 +130,7 @@ export default function MobileNavBar() {
                   legacyBehavior
                   passHref
                 >
-                  <span className="flex items-center">
-                    <FontAwesomeIcon
-                      icon={faIdCard}
-                      className={`text-xl mr-1 ${
-                        active ? "text-violet-800" : "text-violet-100"
-                      }`}
-                    />
-                    Descriptions
-                  </span>
+                  <span className="flex items-center">Descriptions</span>
                 </Link>
               </a>
             )}

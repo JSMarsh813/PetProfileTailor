@@ -15,15 +15,14 @@ export default function YoutubeEmbed({
 
       <GeneralButton
         text="close X"
-        className={`grid text-darkPurple text-xl justify-end mb-2 mx-auto ${
-          loaded ? "block" : "hidden"
-        }`}
+        subtle
+        className={`mb-3 mx-auto ${loaded ? "block" : "hidden"}`}
         onClick={() => showVideoFunction(false)}
         type="button"
       />
 
       <iframe
-        className={`mx-auto aspect-video w-11/12 lg:w-7/12 ${styling} ${
+        className={`mx-auto aspect-video w-[90vw] max-w-[800px] lg:w-5/12 ${styling} ${
           loaded ? "block" : "hidden"
         }`}
         width="mx-auto"

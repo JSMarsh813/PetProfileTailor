@@ -1,4 +1,5 @@
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import LinkButton from "../ReusableSmallComponents/buttons/LinkButton";
 import ListWithPawPrintIcon from "../ReusableSmallComponents/ListWithPawPrintIcon";
 import Image from "next/image";
 
@@ -38,12 +39,10 @@ const MediaObjectRight = ({
           )}
 
           {buttonTextRight && (
-            <a
-              className="ml-2"
+            <LinkButton
               href={buttonTextRightLink}
-            >
-              <GeneralButton text={buttonTextRight} />
-            </a>
+              text={buttonTextRight}
+            />
           )}
         </div>
       </div>

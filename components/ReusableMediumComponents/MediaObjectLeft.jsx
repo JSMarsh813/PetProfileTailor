@@ -1,6 +1,7 @@
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import ListWithPawPrintIcon from "../ReusableSmallComponents/ListWithPawPrintIcon";
 import Image from "next/image";
+import LinkButton from "../ReusableSmallComponents/buttons/LinkButton";
 
 const MediaObject = ({
   image,
@@ -47,20 +48,16 @@ const MediaObject = ({
 
         <div className="flex items-center max-w-2xl ml-4">
           {buttonTextLeft && (
-            <a href={buttonTextLeftLink}>
-              <GeneralButton
-                text={buttonTextLeft}
-                className="shadow-lg"
-              />
-            </a>
+            <LinkButton
+              href={buttonTextLeftLink}
+              text={buttonTextLeft}
+            />
           )}
           {buttonTextRight && (
-            <a href={buttonTextRightLink}>
-              <GeneralButton
-                text={buttonTextRight}
-                className="shadow-lg"
-              />
-            </a>
+            <LinkButton
+              href={buttonTextRightLink}
+              text={buttonTextRight}
+            />
           )}
         </div>
       </div>

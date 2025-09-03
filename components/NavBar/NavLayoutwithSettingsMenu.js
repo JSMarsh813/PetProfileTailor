@@ -8,13 +8,11 @@ import "react-toastify/dist/ReactToastify.css";
 import MobileNavBar from "./NavBarPieces/MobileNavBar/MobileNavBar";
 import NavBarNames from "./NavBarPieces/DesktopNavBar/NavBarNames";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { forwardRef } from "react";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
+import LinkButton from "../ReusableSmallComponents/buttons/LinkButton";
 
 export default function NavLayoutwithSettingsMenu({
   children,
@@ -22,8 +20,6 @@ export default function NavLayoutwithSettingsMenu({
   profileImage,
   sessionFromServer,
 }) {
-  const [isHamBurgNavOpen, setisHamBurgNavOpen] = useState(false);
-
   const logoutClickHandler = () => {
     signOut({ callbackUrl: "/login" });
   };
@@ -51,20 +47,19 @@ export default function NavLayoutwithSettingsMenu({
   return (
     <>
       <div className="flex flex-col justify-between bg-primary">
-        <header>
+        <header className="my-1">
           <nav className="flex h-12 items-center pl-2 justify-between  bg-primary">
             {/* HAMBURGER MENU BUTTON */}
 
             <MobileNavBar />
 
-            <MyLink
+            <LinkButton
               className="text-lg font-extrabold text-yellow-300 
               hidden lg:block
               mx-auto ml-2 hover:text-subtleWhite"
-              href={`/`}
-            >
-              TailoredPetNames
-            </MyLink>
+              href="/"
+              text=" TailoredPetNames"
+            />
 
             <NavBarNames />
 
@@ -76,7 +71,7 @@ export default function NavLayoutwithSettingsMenu({
                 >
                   <Menu.Button
                     className="inline-flex items-center justify-center 
-             text-yellow-400
+            text-subtleWhite
              hover:border-b-4 hover:border-blue-100
              focus:outline-none focus-visible:ring-2 
              focus-visible:ring-white focus-visible:ring-opacity-75
@@ -93,7 +88,7 @@ export default function NavLayoutwithSettingsMenu({
                     />
 
                     <ChevronDownIcon
-                      className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-amber-300"
+                      className="ml-3 -mr-1 h-5 w-5 text-violet-200 hover:text-amber-300"
                       aria-hidden="true"
                     />
                   </Menu.Button>
@@ -170,7 +165,7 @@ export default function NavLayoutwithSettingsMenu({
             </div>
           </nav>
         </header>
-        <main className="container m-auto mt-4 px-4 ">{children}</main>
+        <main className="container m-auto px-4 ">{children}</main>
       </div>
     </>
   );

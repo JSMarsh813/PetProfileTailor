@@ -3,10 +3,11 @@ import PawPrintIcon from "./iconsOrSvgImages/PawPrintIcon";
 
 function ListWithPawPrintIcon({ text, className }) {
   return (
-    <li className={`my-2 ${className}`}>
+    <li className={`my-3 ${className} flex`}>
       <p>
-        <PawPrintIcon /> {text}
+        <PawPrintIcon />
       </p>
+      <p>{text}</p>
     </li>
   );
 }
