@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Link from "next/link";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import LinkMenu from "../../LinkMenu";
 
 export default function MobileNavBar() {
   return (
@@ -25,20 +26,12 @@ export default function MobileNavBar() {
         <div className="flex flex-col py-1">
           <MenuItem>
             {({ focus }) => (
-              <a
+              <LinkMenu
                 href="/"
-                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  focus ? "bg-white/10 text-white" : ""
-                }`}
+                focus={focus}
               >
-                <Link
-                  href="/"
-                  legacyBehavior
-                  passHref
-                >
-                  <span className="flex items-center">Home</span>
-                </Link>
-              </a>
+                Home
+              </LinkMenu>
             )}
           </MenuItem>
 
@@ -53,39 +46,23 @@ export default function MobileNavBar() {
 
           <MenuItem>
             {({ focus }) => (
-              <a
+              <LinkMenu
                 href="/fetchnames"
-                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  focus ? "bg-white/10 text-white" : ""
-                }`}
+                focus={focus}
               >
-                <Link
-                  href="/fetchnames"
-                  legacyBehavior
-                  passHref
-                >
-                  <span className="flex items-center">Names</span>
-                </Link>
-              </a>
+                Names
+              </LinkMenu>
             )}
           </MenuItem>
 
           <MenuItem>
             {({ focus }) => (
-              <a
+              <LinkMenu
                 href="/fetchdescriptions"
-                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  focus ? "bg-white/10 text-white" : ""
-                }`}
+                focus={focus}
               >
-                <Link
-                  href="/fetchdescriptions"
-                  legacyBehavior
-                  passHref
-                >
-                  <span className="flex items-center">Descriptions</span>
-                </Link>
-              </a>
+                Descriptions
+              </LinkMenu>
             )}
           </MenuItem>
 
@@ -99,40 +76,32 @@ export default function MobileNavBar() {
           </MenuItem>
 
           <MenuItem>
+            {/* // MenuItem demands the content to be an <a> tag, but Next.js 13's Link does not render a real <a> so focus styling and click handling breaks */}
+
+            {/* legacyBehavior → lets you explicitly hand headless UI the a tag it demands to see. Allows us to type out an a child tag. This uses an older pattern of Link, 
+            next.js 13+ will yell at you if you do this without legacy behavior */}
+
+            {/* needed in order to pass the href to Link's child a tag */}
+
             {({ focus }) => (
-              <a
+              <LinkMenu
                 href="/addnames"
-                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  focus ? "bg-white/10 text-white" : ""
-                }`}
+                focus={focus}
               >
-                <Link
-                  href="/addnames"
-                  legacyBehavior
-                  passHref
-                >
-                  <span className="flex items-center">Names</span>
-                </Link>
-              </a>
+                {" "}
+                Names{" "}
+              </LinkMenu>
             )}
           </MenuItem>
 
           <MenuItem>
             {({ focus }) => (
-              <a
+              <LinkMenu
                 href="/adddescriptions"
-                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
-                  focus ? "bg-white/10 text-white" : ""
-                }`}
+                focus={focus}
               >
-                <Link
-                  href="/adddescriptions"
-                  legacyBehavior
-                  passHref
-                >
-                  <span className="flex items-center">Descriptions</span>
-                </Link>
-              </a>
+                Descriptions
+              </LinkMenu>
             )}
           </MenuItem>
         </div>

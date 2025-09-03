@@ -51,12 +51,14 @@ const MediaObject = ({
             <LinkButton
               href={buttonTextLeftLink}
               text={buttonTextLeft}
+              defaultStyle
             />
           )}
           {buttonTextRight && (
             <LinkButton
               href={buttonTextRightLink}
               text={buttonTextRight}
+              defaultStyle
             />
           )}
         </div>

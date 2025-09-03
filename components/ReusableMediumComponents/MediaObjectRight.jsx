@@ -33,15 +33,18 @@ const MediaObjectRight = ({
 
         <div className="flex items-center mb-4">
           {buttonTextLeft && (
-            <a href={buttonTextLeftLink}>
-              <GeneralButton text={buttonTextLeft} />
-            </a>
+            <LinkButton
+              href={buttonTextLeftLink}
+              text={buttonTextLeft}
+              defaultStyle
+            />
           )}
 
           {buttonTextRight && (
             <LinkButton
               href={buttonTextRightLink}
               text={buttonTextRight}
+              defaultStyle
             />
           )}
         </div>
