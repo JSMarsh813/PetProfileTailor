@@ -1,9 +1,9 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 // //Special jsx code that allows us to build links. Allows us to keep everything on a single page (makes it a SPA), rather than using a href="page link", which would make us lose any state and require that we get a new file sent from the server
-import Image from "next/image";
+
 import React, { useState } from "react";
-import { Menu } from "@headlessui/react";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import "react-toastify/dist/ReactToastify.css";
 import MobileNavBar from "./NavBarPieces/MobileNavBar/MobileNavBar";
 import NavBarNames from "./NavBarPieces/DesktopNavBar/NavBarNames";
@@ -44,6 +44,15 @@ export default function NavLayoutwithSettingsMenu({
   });
   MyLink.displayName = "MyLink";
 
+  const MenuItemsStyling =
+    "absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none";
+
+  const menuItemStyling = function (focus) {
+    return `block px-4 py-2 text-sm text-gray-300 ${
+      focus ? "bg-white/10 text-white" : ""
+    }`;
+  };
+
   return (
     <>
       <div className="flex flex-col justify-between bg-primary">
@@ -69,7 +78,7 @@ export default function NavLayoutwithSettingsMenu({
                   as="div"
                   className="relative inline-block text-left z-30"
                 >
-                  <Menu.Button
+                  <MenuButton
                     className="inline-flex items-center justify-center 
             text-subtleWhite
              hover:border-b-4 hover:border-blue-100
@@ -84,72 +93,91 @@ export default function NavLayoutwithSettingsMenu({
                     <ProfileImage
                       divStyling={"ml-3 h-8 w-8 relative"}
                       profileImage={profileImage}
-                      className="ml-3 rounded-full inline relative"
+                      className="rounded-full inline relative"
                     />
 
                     <ChevronDownIcon
-                      className="ml-3 -mr-1 h-5 w-5 text-violet-200 hover:text-amber-300"
+                      className="ml-1 h-5 w-5 text-violet-200 hover:text-amber-300"
                       aria-hidden="true"
                     />
-                  </Menu.Button>
+                  </MenuButton>
 
-                  <Menu.Items className="absolute font-bold right-0 w-56 z-30 origin-top-right bg-primary text-subtleWhite shadow-lg ">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <MyLink
+                  <MenuItems className={MenuItemsStyling}>
+                    <MenuItem>
+                      {({ focus }) => (
+                        <a
                           href={`/dashboard`}
-                          active={active}
+                          className={menuItemStyling(focus)}
                         >
-                          dashboard
-                        </MyLink>
+                          <Link
+                            href="/dashboard"
+                            legacyBehavior
+                            passHref
+                          >
+                            <span>Dashboard</span>
+                          </Link>
+                        </a>
                       )}
-                    </Menu.Item>
+                    </MenuItem>
 
                     {sessionFromServer.user.profilename && (
-                      <Menu.Item>
-                        {({ active }) => (
-                          <MyLink
+                      <MenuItem>
+                        {({ focus }) => (
+                          <a
                             href={`${
                               process.env.NEXT_PUBLIC_BASE_FETCH_URL
                             }profile/${sessionFromServer.user.profilename.toLowerCase()}`}
-                            active={active}
+                            legacyBehavior
+                            passHref
+                            className={menuItemStyling(focus)}
                           >
-                            Profile
-                          </MyLink>
+                            <Link
+                              href={`${
+                                process.env.NEXT_PUBLIC_BASE_FETCH_URL
+                              }profile/${sessionFromServer.user.profilename.toLowerCase()}`}
+                              legacyBehavior
+                              passHref
+                            >
+                              <span>Profile</span>
+                            </Link>
+                          </a>
                         )}
-                      </Menu.Item>
+                      </MenuItem>
                     )}
 
-                    <Menu.Item>
-                      {({ active }) => (
-                        <MyLink
+                    <MenuItem>
+                      {({ focus }) => (
+                        <a
                           href={`/editsettings`}
-                          active={active}
+                          className={menuItemStyling(focus)}
                         >
-                          Settings
-                        </MyLink>
+                          <Link href={`/editsettings`}>
+                            <span>Settings</span>
+                          </Link>
+                        </a>
                       )}
-                    </Menu.Item>
+                    </MenuItem>
 
-                    <Menu.Item>
-                      {({ active }) => (
-                        <MyLink
-                          href={`/`}
-                          active={active}
+                    <MenuItem>
+                      {({ focus }) => (
+                        <button
                           onClick={logoutClickHandler}
+                          className={`${menuItemStyling(
+                            focus,
+                          )} w-full text-left`}
                         >
                           Logout
-                        </MyLink>
+                        </button>
                       )}
-                    </Menu.Item>
-                  </Menu.Items>
+                    </MenuItem>
+                  </MenuItems>
                 </Menu>
               ) : (
                 <Menu
                   as="div"
                   className="relative inline-block text-left z-30"
                 >
-                  <Menu.Button
+                  <MenuButton
                     className="inline-flex justify-center rounded-2xl  py-2 px-4 text-sm font-semibold  text-subtleWhite bg-primary 
                 
                 
@@ -159,7 +187,7 @@ export default function NavLayoutwithSettingsMenu({
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                   >
                     <Link href="/login">login</Link>
-                  </Menu.Button>
+                  </MenuButton>
                 </Menu>
               )}
             </div>

@@ -3,6 +3,9 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 
 export default function DropDownMenu() {
+  const MenuItemsStyling =
+    "absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none";
+
   return (
     <Menu
       as="div"
@@ -20,11 +23,11 @@ export default function DropDownMenu() {
       <MenuItems className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
         <div className="py-1 flex flex-col">
           <MenuItem>
-            {({ active }) => (
+            {({ focus }) => (
               <a
                 href="/addnames" // use href on <a> not Link. It is a real DOM element, so Headless UI can attach refs for keyboard focus.
                 className={`block px-4 py-2 text-sm text-gray-300 ${
-                  active ? "bg-white/10 text-white" : ""
+                  focus ? "bg-white/10 text-white" : ""
                 }`}
               >
                 <Link
@@ -39,12 +42,12 @@ export default function DropDownMenu() {
           </MenuItem>
 
           <MenuItem>
-            {({ active }) => (
+            {({ focus }) => (
               //<a> is a real DOM element, so Headless UI can attach refs for keyboard focus.
               <a
                 href="/adddescriptions"
                 className={`block px-4 py-2 text-sm text-gray-300 ${
-                  active ? "bg-white/10 text-white" : ""
+                  focus ? "bg-white/10 text-white" : ""
                 }`}
               >
                 <Link

@@ -68,31 +68,30 @@ border-y-4 border-darkPurple  max-w-7xl mx-auto overflow-hidden"
           <section className="flex justify-center gap-3 flex-wrap">
             <div className="flex-1">
               <FontAwesomeIcon
-                icon={faBullseye}
-                className="text-2xl"
-                color="white"
-              />
-
-              <button
-                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full"
-                onClick={updateImpactfulState}
-              >
-                Impactful
-              </button>
-            </div>
-
-            <div className="flex-1">
-              <FontAwesomeIcon
                 icon={faFaceGrinWink}
                 className="text-2xl fa-bounce"
                 color="white"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full"
+                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest"
                 onClick={updateFunState}
               >
                 Fun
+              </button>
+            </div>
+            <div className="flex-1">
+              <FontAwesomeIcon
+                icon={faBullseye}
+                className="text-2xl"
+                color="white"
+              />
+
+              <button
+                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest"
+                onClick={updateImpactfulState}
+              >
+                Impactful
               </button>
             </div>
 
@@ -103,10 +102,10 @@ border-y-4 border-darkPurple  max-w-7xl mx-auto overflow-hidden"
                 color="white"
               />
               <button
-                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full"
+                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest px-0"
                 onClick={updateTailorState}
               >
-                Tailor Fitted
+                Fitting
               </button>
             </div>
           </section>
