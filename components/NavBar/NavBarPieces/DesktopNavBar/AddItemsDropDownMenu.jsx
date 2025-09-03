@@ -1,108 +1,64 @@
-import { Menu } from "@headlessui/react";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTags,
-  faIdCard,
-  faCirclePlus,
-} from "@fortawesome/free-solid-svg-icons";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-
 import Link from "next/link";
-import { forwardRef } from "react";
-
-const MyLink = forwardRef((props, ref) => {
-  let { href, active, children, ...rest } = props;
-  return (
-    <Link
-      href={href}
-      ref={ref}
-      className={`block rounded-md px-2 py-2 text-md
-      hover:bg-blue-500
-      hover:text-subtleWhite
-      text-center                   
- bg-primary text-subtleWhite
-`}
-      {...rest}
-    >
-      {children}
-    </Link>
-  );
-});
-MyLink.displayName = "MyLink";
 
 export default function DropDownMenu() {
   return (
     <Menu
       as="div"
-      className="relative inline-block text-left text-base z-30"
+      className="relative inline-block text-left z-30"
     >
-      <Menu.Button
-        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-subtleWhite align-middle
-          
-         
-          hover:border-b-4
-         hover:border-subtleWhite
-    
-
-          focus:outline-none 
-          focus-visible:ring-2 
-          focus-visible:ring-white 
-          focus-visible:ring-opacity-75"
-      >
-        <FontAwesomeIcon
-          icon={faCirclePlus}
-          className="text-base mr-2 font-bold text-subtleWhite "
-        />
-
-        <span className="font-bold  text-subtleWhite "> Add </span>
+      <MenuButton className="inline-flex justify-center px-4 py-2 text-sm font-medium text-subtleWhite hover:border-b-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+        Add
         <ChevronDownIcon
-          className="ml-2 -mr-1 h-5 w-5 text-subtleWhite  hover:text-violet-100"
           aria-hidden="true"
+          className="-mr-1 size-5 text-subtleWhite"
         />
-      </Menu.Button>
+      </MenuButton>
 
-      <Menu.Items
-        className="absolute font-bold  text-subtleWhite  right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 
-          
-          focus:outline-none"
-      >
-        <Menu.Item>
-          {({ active }) => (
-            <MyLink
-              href={`/addnames`}
-              active={active}
-            >
-              <FontAwesomeIcon
-                icon={faTags}
-                className={`text-base mr-1 
-                      
-                        
-                       "text-violet-100`}
-              />
-              Names
-            </MyLink>
-          )}
-        </Menu.Item>
+      {/* You cannot just use MenuItem as={Link}, because <Link> is a React component, not a DOM element. Headless UI needs a real DOM element for ref. */}
+      <MenuItems className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="py-1 flex flex-col">
+          <MenuItem>
+            {({ active }) => (
+              <a
+                href="/addnames" // use href on <a> not Link. It is a real DOM element, so Headless UI can attach refs for keyboard focus.
+                className={`block px-4 py-2 text-sm text-gray-300 ${
+                  active ? "bg-white/10 text-white" : ""
+                }`}
+              >
+                <Link
+                  href="/addnames"
+                  legacyBehavior
+                  passHref
+                >
+                  <span>Names</span>
+                </Link>
+              </a>
+            )}
+          </MenuItem>
 
-        <Menu.Item>
-          {({ active }) => (
-            <MyLink
-              href={`/adddescriptions`}
-              active={active}
-            >
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className={`text-base mr-1 
-                      
-                        
-                       "text-violet-100`}
-              />
-              Descriptions
-            </MyLink>
-          )}
-        </Menu.Item>
-      </Menu.Items>
+          <MenuItem>
+            {({ active }) => (
+              //<a> is a real DOM element, so Headless UI can attach refs for keyboard focus.
+              <a
+                href="/adddescriptions"
+                className={`block px-4 py-2 text-sm text-gray-300 ${
+                  active ? "bg-white/10 text-white" : ""
+                }`}
+              >
+                <Link
+                  href="/adddescriptions"
+                  legacyBehavior
+                  passHref
+                >
+                  <span>Descriptions</span>
+                </Link>
+              </a>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
     </Menu>
   );
 }

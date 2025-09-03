@@ -1,47 +1,30 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import AddItemsDropDownMenu from "./AddItemsDropDownMenu";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTags, faIgloo, faIdCard } from "@fortawesome/free-solid-svg-icons";
+
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import NavBarLink from "../NavBarLink";
-import Image from "next/image";
 
 //onclick wrapped in spans due to this error https://github.com/vercel/next.js/discussions/39212
 
 const NavBarNames = () => {
   return (
-    <div className="divWhichHasBothMenus">
+    <div className="divWhichHasBothMenus w-full">
       {/* DESKTOP MENU */}
 
       <section className="hidden lg:flex desktop-menu ">
-        <ul className="">
+        <ul className="flex justify-around w-full max-w-3xl mx-auto ">
+          {/* w-full is needed for it to stretch, and then max-w-5xl limits it */}
           <NavBarLink
             href="/"
             className=""
           >
-            <FontAwesomeIcon
-              icon={faIgloo}
-              className="text-base mr-1 text-subtleWhite"
-            />
             Home
           </NavBarLink>
 
-          <NavBarLink href="/fetchnames">
-            <FontAwesomeIcon
-              icon={faTags}
-              className="text-base mr-1 text-subtleWhite"
-            />
-            Names
-          </NavBarLink>
+          <NavBarLink href="/fetchnames">Names</NavBarLink>
 
-          <NavBarLink href="/fetchdescriptions">
-            <FontAwesomeIcon
-              icon={faIdCard}
-              className="text-base mr-1 text-subtleWhite"
-            />
-            Descriptions
-          </NavBarLink>
+          <NavBarLink href="/fetchdescriptions">Descriptions</NavBarLink>
 
           <AddItemsDropDownMenu />
         </ul>

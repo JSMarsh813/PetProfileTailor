@@ -1,174 +1,182 @@
 import React from "react";
-import { Menu } from "@headlessui/react";
+import { Menu, MenuItem, MenuItems, MenuButton } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags, faIgloo, faIdCard } from "@fortawesome/free-solid-svg-icons";
-import "@fortawesome/fontawesome-svg-core/styles.css";
-import { forwardRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-const MyLink = forwardRef((props, ref) => {
-  let { href, active, children, ...rest } = props;
+export default function MobileNavBar() {
   return (
-    <Link
-      href={href}
-      ref={ref}
-      className={`block rounded-md px-2 py-2 text-md
-      hover:bg-subtleWhite
-      hover:text-darkPurple
-      border-none
-      text-center                   
- 
-`}
-      {...rest}
+    <Menu
+      as="div"
+      className="inline-block w-full lg:hidden z-50 "
     >
-      {children}
-    </Link>
-  );
-});
-MyLink.displayName = "MyLink";
+      {/* Hamburger Button */}
+      <MenuButton className="inline-flex justify-center p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-subtleWhite">
+        <FontAwesomeIcon
+          icon={faBars}
+          className="text-xl text-violet-100 hover:text-yellow-300"
+        />
+      </MenuButton>
 
-function MobileNavBar() {
-  return (
-    <div>
-      <Menu.Items
-        className="block text-sm text-subtleWhite 
-        absolute  
- divide-y divide-gray-100 
- rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 
- border-subtleWhite border-b
+      {/* Menu Items */}
+      <MenuItems className="absolute  mt-2 w-full  rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y -ml-2  divide-gray-100">
+        {/* -ml-2 has it go flush to the left, w-[calc(100vw-17px)] leaves room for the scrollbar on the right */}
+        <div className="flex flex-col py-1">
+          <MenuItem>
+            {({ active }) => (
+              <a
+                href="/"
+                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
+                  active ? "bg-white/10 text-white" : ""
+                }`}
+              >
+                <Link
+                  href="/"
+                  legacyBehavior
+                  passHref
+                >
+                  <span className="flex items-center">
+                    <FontAwesomeIcon
+                      icon={faIgloo}
+                      className={`text-xl mr-1 ${
+                        active ? "text-violet-800" : "text-violet-100"
+                      }`}
+                    />
+                    Home
+                  </span>
+                </Link>
+              </a>
+            )}
+          </MenuItem>
 
- 
- w-screen
- items-center
-
--left-2
-z-10
-
-focus:outline-none 
-focus-visible:ring-2 
-focus-visible:ring-white 
-focus-visible:ring-opacity-75"
-      >
-        <Menu.Item>
-          {({ active }) => (
-            <MyLink
-              href={`/`}
-              active={active}
+          <MenuItem disabled>
+            <button
+              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-darkPurple cursor-not-allowed"
+              disabled
             >
-              <FontAwesomeIcon
-                icon={faIgloo}
-                className={`text-xl mr-1 
-                      
-                        
-                        ${active ? "text-violet-800" : "text-violet-100"}`}
-              />
-              Home
-            </MyLink>
-          )}
-        </Menu.Item>
+              Fetch/Find
+            </button>
+          </MenuItem>
 
-        <Menu.Item
-          disabled
-          className="border-none"
-        >
-          <button
-            className="text-subtleWhite     
-                      w-full items-center rounded-md px-2 py-2 text-sm font-bold bg-darkPurple  "
-            disabled={true}
-          >
-            Fetch/Find
-          </button>
-        </Menu.Item>
+          <MenuItem>
+            {({ active }) => (
+              <a
+                href="/fetchnames"
+                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
+                  active ? "bg-white/10 text-white" : ""
+                }`}
+              >
+                <Link
+                  href="/fetchnames"
+                  legacyBehavior
+                  passHref
+                >
+                  <span className="flex items-center">
+                    <FontAwesomeIcon
+                      icon={faTags}
+                      className={`text-xl mr-1 ${
+                        active ? "text-violet-800" : "text-violet-100"
+                      }`}
+                    />
+                    Names
+                  </span>
+                </Link>
+              </a>
+            )}
+          </MenuItem>
 
-        <Menu.Item>
-          {({ active }) => (
-            <MyLink
-              href={`/fetchnames`}
-              active={active}
+          <MenuItem>
+            {({ active }) => (
+              <a
+                href="/fetchdescriptions"
+                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
+                  active ? "bg-white/10 text-white" : ""
+                }`}
+              >
+                <Link
+                  href="/fetchdescriptions"
+                  legacyBehavior
+                  passHref
+                >
+                  <span className="flex items-center">
+                    <FontAwesomeIcon
+                      icon={faIdCard}
+                      className={`text-xl mr-1 ${
+                        active ? "text-violet-800" : "text-violet-100"
+                      }`}
+                    />
+                    Descriptions
+                  </span>
+                </Link>
+              </a>
+            )}
+          </MenuItem>
+
+          <MenuItem disabled>
+            <button
+              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-darkPurple cursor-not-allowed"
+              disabled
             >
-              <FontAwesomeIcon
-                icon={faTags}
-                className={`text-xl mr-1 
-                      
-                        
-                        ${active ? "text-violet-800" : "text-violet-100"}`}
-              />
-              Names
-            </MyLink>
-          )}
-        </Menu.Item>
+              Add
+            </button>
+          </MenuItem>
 
-        <Menu.Item>
-          {({ active }) => (
-            <MyLink
-              href={`/fetchdescriptions`}
-              active={active}
-            >
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className={`text-xl mr-1 
-                      
-                        
-                        ${active ? "text-violet-800" : "text-violet-100"}`}
-              />
-              Descriptions
-            </MyLink>
-          )}
-        </Menu.Item>
+          <MenuItem>
+            {({ active }) => (
+              <a
+                href="/addnames"
+                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
+                  active ? "bg-white/10 text-white" : ""
+                }`}
+              >
+                <Link
+                  href="/addnames"
+                  legacyBehavior
+                  passHref
+                >
+                  <span className="flex items-center">
+                    <FontAwesomeIcon
+                      icon={faTags}
+                      className={`text-xl mr-1 ${
+                        active ? "text-violet-800" : "text-violet-100"
+                      }`}
+                    />
+                    Names
+                  </span>
+                </Link>
+              </a>
+            )}
+          </MenuItem>
 
-        <Menu.Item
-          disabled
-          className="border-none"
-        >
-          <button
-            className="text-subtleWhite 
-                      bg-darkPurple  
-                      w-full items-center rounded-md px-2 py-2 text-sm font-bold"
-            disabled={true}
-          >
-            Add
-          </button>
-        </Menu.Item>
-
-        <Menu.Item>
-          {({ active }) => (
-            <MyLink
-              href={`/addnames`}
-              active={active}
-            >
-              <FontAwesomeIcon
-                icon={faTags}
-                className={`text-xl mr-1 
-                      
-                        
-                        ${active ? "text-violet-800" : "text-violet-100"}`}
-              />
-              Names
-            </MyLink>
-          )}
-        </Menu.Item>
-
-        <Menu.Item>
-          {({ active }) => (
-            <MyLink
-              href={`/adddescriptions`}
-              active={active}
-            >
-              <FontAwesomeIcon
-                icon={faIdCard}
-                className={`text-xl mr-1 
-                      
-                        
-                        ${active ? "text-violet-800" : "text-violet-100"}`}
-              />
-              Descriptions
-            </MyLink>
-          )}
-        </Menu.Item>
-      </Menu.Items>
-    </div>
+          <MenuItem>
+            {({ active }) => (
+              <a
+                href="/adddescriptions"
+                className={`flex items-center px-4 py-2 text-sm text-gray-300 ${
+                  active ? "bg-white/10 text-white" : ""
+                }`}
+              >
+                <Link
+                  href="/adddescriptions"
+                  legacyBehavior
+                  passHref
+                >
+                  <span className="flex items-center">
+                    <FontAwesomeIcon
+                      icon={faIdCard}
+                      className={`text-xl mr-1 ${
+                        active ? "text-violet-800" : "text-violet-100"
+                      }`}
+                    />
+                    Descriptions
+                  </span>
+                </Link>
+              </a>
+            )}
+          </MenuItem>
+        </div>
+      </MenuItems>
+    </Menu>
   );
 }
-
-export default MobileNavBar;

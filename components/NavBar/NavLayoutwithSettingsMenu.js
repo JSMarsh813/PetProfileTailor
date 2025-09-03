@@ -55,30 +55,11 @@ export default function NavLayoutwithSettingsMenu({
           <nav className="flex h-12 items-center pl-2 justify-between  bg-primary">
             {/* HAMBURGER MENU BUTTON */}
 
-            <Menu
-              as="div"
-              className="relative inline-block text-subtleWhite  z-30 lg:hidden pt-4 "
-            >
-              {/* md:hidden makes it so the dropdown will be hidden if the screen is enlarged from a small screen. Important because the hamburger button disappears on medium screens */}
-
-              <Menu.Button
-                className="inline-flex justify-center xl:hidden
-                focus-visible:ring-white 
-                focus-visible:ring-opacity-75"
-              >
-                <FontAwesomeIcon
-                  icon={faBars}
-                  className="text-xl text-violet-100 hover:text-yellow-300"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-
-              <MobileNavBar />
-            </Menu>
+            <MobileNavBar />
 
             <MyLink
               className="text-lg font-extrabold text-yellow-300 
-              block 
+              hidden lg:block
               mx-auto ml-2 hover:text-subtleWhite"
               href={`/`}
             >
@@ -94,21 +75,12 @@ export default function NavLayoutwithSettingsMenu({
                   className="relative inline-block text-left z-30"
                 >
                   <Menu.Button
-                    className="inline-flex justify-center 
-                  text-yellow-400 
-                  
-             
-                  
-               
-                  hover:border-b-4
-                  hover:border-blue-100
-        
-                  focus:outline-none 
-                  focus-visible:ring-2 
-                  focus-visible:ring-white 
-                  focus-visible:ring-opacity-75
-                  
-                  hover:text-subtleWhite"
+                    className="inline-flex items-center justify-center 
+             text-yellow-400
+             hover:border-b-4 hover:border-blue-100
+             focus:outline-none focus-visible:ring-2 
+             focus-visible:ring-white focus-visible:ring-opacity-75
+             hover:text-subtleWhite"
                   >
                     <span className="text-base font-bold sm:ml-2">
                       {userName}
