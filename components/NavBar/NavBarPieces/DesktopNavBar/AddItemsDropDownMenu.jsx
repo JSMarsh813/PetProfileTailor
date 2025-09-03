@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import LinkMenu from "../../LinkMenu";
 
 export default function DropDownMenu() {
   const MenuItemsStyling =
@@ -24,40 +25,25 @@ export default function DropDownMenu() {
         <div className="py-1 flex flex-col">
           <MenuItem>
             {({ focus }) => (
-              <a
-                href="/addnames" // use href on <a> not Link. It is a real DOM element, so Headless UI can attach refs for keyboard focus.
-                className={`block px-4 py-2 text-sm text-gray-300 ${
-                  focus ? "bg-white/10 text-white" : ""
-                }`}
+              <LinkMenu
+                href="/addnames"
+                focus={focus}
               >
-                <Link
-                  href="/addnames"
-                  legacyBehavior
-                  passHref
-                >
-                  <span>Names</span>
-                </Link>
-              </a>
+                Names
+              </LinkMenu>
             )}
           </MenuItem>
 
           <MenuItem>
             {({ focus }) => (
               //<a> is a real DOM element, so Headless UI can attach refs for keyboard focus.
-              <a
+
+              <LinkMenu
                 href="/adddescriptions"
-                className={`block px-4 py-2 text-sm text-gray-300 ${
-                  focus ? "bg-white/10 text-white" : ""
-                }`}
+                focus={focus}
               >
-                <Link
-                  href="/adddescriptions"
-                  legacyBehavior
-                  passHref
-                >
-                  <span>Descriptions</span>
-                </Link>
-              </a>
+                Description
+              </LinkMenu>
             )}
           </MenuItem>
         </div>

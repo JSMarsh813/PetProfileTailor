@@ -13,6 +13,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { forwardRef } from "react";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import LinkButton from "../ReusableSmallComponents/buttons/LinkButton";
+import LinkMenu from "./LinkMenu";
 
 export default function NavLayoutwithSettingsMenu({
   children,
@@ -105,56 +106,41 @@ export default function NavLayoutwithSettingsMenu({
                   <MenuItems className={MenuItemsStyling}>
                     <MenuItem>
                       {({ focus }) => (
-                        <a
-                          href={`/dashboard`}
+                        <LinkMenu
+                          href="/dashboard"
+                          focus={focus}
                           className={menuItemStyling(focus)}
                         >
-                          <Link
-                            href="/dashboard"
-                            legacyBehavior
-                            passHref
-                          >
-                            <span>Dashboard</span>
-                          </Link>
-                        </a>
+                          Dashboard
+                        </LinkMenu>
                       )}
                     </MenuItem>
 
                     {sessionFromServer.user.profilename && (
                       <MenuItem>
                         {({ focus }) => (
-                          <a
+                          <LinkMenu
                             href={`${
                               process.env.NEXT_PUBLIC_BASE_FETCH_URL
                             }profile/${sessionFromServer.user.profilename.toLowerCase()}`}
-                            legacyBehavior
-                            passHref
+                            focus={focus}
                             className={menuItemStyling(focus)}
                           >
-                            <Link
-                              href={`${
-                                process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                              }profile/${sessionFromServer.user.profilename.toLowerCase()}`}
-                              legacyBehavior
-                              passHref
-                            >
-                              <span>Profile</span>
-                            </Link>
-                          </a>
+                            Profle
+                          </LinkMenu>
                         )}
                       </MenuItem>
                     )}
 
                     <MenuItem>
                       {({ focus }) => (
-                        <a
+                        <LinkMenu
                           href={`/editsettings`}
+                          focus={focus}
                           className={menuItemStyling(focus)}
                         >
-                          <Link href={`/editsettings`}>
-                            <span>Settings</span>
-                          </Link>
-                        </a>
+                          Settings
+                        </LinkMenu>
                       )}
                     </MenuItem>
 
