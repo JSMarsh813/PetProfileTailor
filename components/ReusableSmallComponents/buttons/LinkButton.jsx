@@ -31,7 +31,7 @@ export default function LinkButton({
   return (
     <Link
       href={href}
-      className={` ${className} `}
+      className={` ${bgClass}  ${className} `}
     >
       {text}
     </Link>

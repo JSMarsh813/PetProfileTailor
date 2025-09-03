@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu";
 
 import { authOptions } from "../api/auth/[...nextauth]";
@@ -10,7 +10,7 @@ import { faLocationDot, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import HeadersForNames from "../../components/ShowingListOfContent/HeadersForNames";
-import PointSystemList from "../../components/ShowingListOfContent/PointSystemList";
+import PointSystemList from "../../components/Ranking/PointSystemList";
 import DashboardChartForFavDescriptions from "../../components/ShowingListOfContent/DashboardChartForFavDescriptions";
 import FollowButton from "../../components/ReusableSmallComponents/buttons/FollowButton";
 import EditBioAndProfile from "../../components/EditingData/EditBioAndProfile";
@@ -20,6 +20,7 @@ import UsersFollowingList from "../../components/ShowingListOfContent/UsersFollo
 import FlaggingContentSection from "../../components/Flagging/FlaggingContentSection";
 
 import dbConnect from "../../utils/db";
+import NameLikes from "../../models/NameLikes";
 import Names from "../../models/Names";
 import NameTag from "../../models/NameTag";
 import Descriptions from "../../models/description";
@@ -68,11 +69,18 @@ export const getServerSideProps = async (context) => {
 
     //##### grabbing Tags for name edit function
 
-    let nametagData = await NameTag.find();
+    const tagFromDatabase = await NameTag.find();
+    // find returns a promise not an array, so we have to wait for the result before mapping
+    const tagData = tagFromDatabase.map((tag) => {
+      const obj = tag.toObject();
 
-    let nameTagListProp = nametagData
-      .map((tag) => tag.tag)
-      .reduce((sum, value) => sum.concat(value), []);
+      return {
+        _id: obj._id.toString(),
+        tag: obj.tag,
+        //  createdby: obj.createdby ? obj.createdby.toString() : null,
+        // safe for JSON, for if I decide to let others submit tags one day
+      };
+    });
 
     //##### grabbing DESCRIPTIONS added by user
 
@@ -116,19 +124,28 @@ export const getServerSideProps = async (context) => {
         "name followers name profileimage profilename bioblurb location",
       );
 
+    let usersLikedNamesFromDb = [];
+
+    if (session) {
+      await dbConnect.connect();
+      const userId = session.user.id;
+      const likes = await NameLikes.find({ userId }).select("nameId -_id");
+      usersLikedNamesFromDb = likes.map((l) => l.nameId.toString());
+    }
+
     return {
       props: {
         sessionFromServer: session,
         userData: JSON.parse(JSON.stringify(userData[0])),
 
         nameList: JSON.parse(JSON.stringify(nameData)),
-        nameTagList: JSON.parse(JSON.stringify(nameTagListProp)),
-        favNames: JSON.parse(JSON.stringify(likedNames)),
+        tagList: tagData,
+        likedNames: JSON.parse(JSON.stringify(likedNames)),
 
         likedDescriptions: JSON.parse(JSON.stringify(likedDescriptions)),
         createdDescriptions: JSON.parse(JSON.stringify(createdDescriptions)),
         descriptionTagListProp: descriptionTagListProp,
-
+        usersLikedNamesFromDb,
         usersFollowing: JSON.parse(JSON.stringify(usersFollowing)),
       },
     };
@@ -140,8 +157,9 @@ function ProfilePage({
   userData,
 
   nameList,
-  nameTagList,
-  favNames,
+  tagList,
+  likedNames,
+  usersLikedNamesFromDb,
 
   createdDescriptions,
   likedDescriptions,
@@ -152,6 +170,11 @@ function ProfilePage({
   let userName = "";
   let profileImage = "";
   let signedInUsersId = "";
+
+  // store liked IDs in a ref so updates don't trigger full re-render
+  const likedSetRef = useRef(new Set(usersLikedNamesFromDb));
+  const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
+  // tracks if the likes count has to be updated, important for if the user navigates backwards
 
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
@@ -169,6 +192,9 @@ function ProfilePage({
   const [showFollowingList, setShowFollowingList] = useState(false);
 
   const [nameEdited, setNameEdited] = useState(false);
+
+  // for names
+  const [deleteThisContentId, setDeleteThisContentId] = useState(null);
 
   function updateSetShowProfileEditPage() {
     setShowProfileEditPage(!showProfileEditPage);
@@ -190,6 +216,19 @@ function ProfilePage({
     setNameEdited(!nameEdited);
   }
 
+  // for names
+  //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
+
+  useEffect(() => {
+    if (deleteThisContentId !== null) {
+      removeDeletedContent(
+        // setFilteredNames,
+        // filteredNames,
+        deleteThisContentId,
+        setDeleteThisContentId,
+      );
+    }
+  }, [deleteThisContentId]);
   return (
     <div>
       <Layout
@@ -319,11 +358,18 @@ function ProfilePage({
                 <section className="relative pb-6 bg-darkPurple mb-4">
                   <div className="container mx-auto px-2">
                     <PointSystemList
-                      favNames={favNames}
+                      namesLikes={likedNames.length}
+                      namesAdds={nameList.length}
+                      descriptionsLikes={likedDescriptions.length}
+                      descriptionsAdds={createdDescriptions.length}
+                    />
+
+                    {/* <PointSystemList
+                      favNames={likedNames}
                       namesCreated={nameList}
                       createdDescriptions={createdDescriptions}
                       likedDescriptions={likedDescriptions}
-                    />
+                    /> */}
                   </div>
                 </section>
               </div>
@@ -364,9 +410,12 @@ function ProfilePage({
                         <NameListingAsSections
                           name={name}
                           key={name._id}
-                          sessionFromServer={sessionFromServer}
-                          tagList={nameTagList}
+                          signedInUsersId={signedInUsersId}
+                          tagList={tagList}
                           setNameEditedFunction={setNameEditedFunction}
+                          setDeleteThisContentId={setDeleteThisContentId}
+                          likedSetRef={likedSetRef}
+                          recentLikesRef={recentLikesRef}
                         />
                       );
                     })}

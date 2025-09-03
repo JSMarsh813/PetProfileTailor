@@ -1,15 +1,15 @@
 import React from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-function generalOpenCloseButton({ text, styling, setStatus, status }) {
+function generalOpenCloseButton({ text, className, setStatus, status }) {
   return (
     <button
-      className={`text-xl bg-yellow-200  border-b-4 border-yellow-600
-    text-violet-700  font-bold py-2 px-4 
-    hover:bg-violet-700 
-    hover:text-yellow-300
-    hover:border-yellow-400 rounded
-    ${styling} `}
+      className={`bg-subtleBackground  border-b-4 border-subtleWhite rounded-2xl
+    text-subtleWhite  font-bold py-2 px-4 
+    hover:bg-blue-500
+    hover:border-blue-600
+   
+    ${className} `}
       onClick={() => setStatus(!status)}
     >
       {text}

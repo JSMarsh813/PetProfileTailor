@@ -15,7 +15,7 @@ export function useLikeState({
   // Local state only for rendering
   const [liked, setLiked] = useState(initialLiked);
   const [likeCount, setLikeCount] = useState(
-    initialCount + (recentLikesRef.current[nameId] || 0),
+    initialCount + (recentLikesRef?.current[nameId] || 0),
   );
 
   const [isProcessing, setIsProcessing] = useState(false);

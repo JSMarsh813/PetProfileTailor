@@ -1,5 +1,3 @@
-import React from "react";
-
 function RankNames(points) {
   let rankName = "";
   let rankTitlesByPoints = {
@@ -13,7 +11,9 @@ function RankNames(points) {
 
   rankName = rankTitlesByPoints[pointsDividedBy10] || "A good pupper";
 
-  return <span className="text-yellow-400">{` ${rankName}`}</span>;
+  return (
+    <span className="text-subtleWhite inline-block m-0">{` ${rankName}`}</span>
+  );
 }
 
 export default RankNames;
