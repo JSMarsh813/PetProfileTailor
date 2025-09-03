@@ -75,7 +75,7 @@ function ImageUpload({ sessionFromServer }) {
 
   return (
     <div className=" text-subtleWhite text-center ">
-      <h1 className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-700 font-semibold">
+      <h1 className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-800 font-semibold">
         Change Your Avatar{" "}
       </h1>
       <p className="mb-4  text-center">
@@ -85,9 +85,11 @@ function ImageUpload({ sessionFromServer }) {
       <input
         onChange={handleImageAttachment}
         accept=".jpg, .png, .jpeg, .gif"
-        className="fileInput mb-4 w-full text-center"
+        className="mb-4 w-full text-center b"
         type="file"
       ></input>
+      {/* styled in globals.css input::file-selector-button
+       */}
       <div>
         <p className="mb-4">
           Please choose an image to make the upload button clickable

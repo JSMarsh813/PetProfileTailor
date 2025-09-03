@@ -11,6 +11,8 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
 import ImageUpload from "../components/AddingNewData/ImageUpload";
+import StyledInput from "../components/FormComponents/StyledInput";
+import RegisterInput from "../components/FormComponents/RegisterInput";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -87,115 +89,69 @@ export default function ProfileScreen({ sessionFromServer }) {
           }}
         />
       </div>
-      <div className="max-w-7xl mx-auto  text-center">
+      <div className=" mx-auto  text-center max-w-3xl">
         <form onSubmit={handleSubmit(submitHandler)}>
-          <h1 className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-700 font-semibold text-white ">
+          <h1 className="mb-4 text-xl text-center border-y-2 py-2 bg-violet-700 font-semibold text-white   mx-auto">
             Update Profile
           </h1>
 
           <p className="text-white text-center pb-2">
             You can change your name, email and/or password
           </p>
+          <RegisterInput
+            id="name"
+            label="Name"
+            maxLength={30}
+            autoFocus
+            register={register}
+            validation={{ required: "Please enter a name" }}
+            error={errors.name}
+          />
 
-          <div className="mb-4 max-w-md mx-auto">
-            <label
-              htmlFor="name"
-              className="text-white"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              maxLength="30"
-              className="w-full text-darkPurple"
-              id="name"
-              autoFocus
-              {...register("name", {
-                required: "Please enter name",
-              })}
-            />
-            {errors.name && (
-              <div className="text-red-500">{errors.name.message}</div>
-            )}
-          </div>
+          <RegisterInput
+            id="email"
+            label="Email"
+            type="email"
+            register={register}
+            validation={{
+              required: "Please enter email",
+              pattern: {
+                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+                message: "Please enter valid email",
+              },
+            }}
+            error={errors.email}
+          />
+          <RegisterInput
+            id="password"
+            label="New Password"
+            type="password"
+            register={register}
+            validation={{
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
+            }}
+            error={errors.password}
+          />
 
-          <div className="mb-4 max-w-md mx-auto">
-            <label
-              htmlFor="email"
-              className="text-white"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              className="w-full text-darkPurple"
-              id="email"
-              {...register("email", {
-                required: "Please enter email",
-                pattern: {
-                  value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                  message: "Please enter valid email",
-                },
-              })}
-            />
-            {errors.email && (
-              <div className="text-red-500">{errors.email.message}</div>
-            )}
-          </div>
+          <RegisterInput
+            id="confirmPassword"
+            label="Confirm New Password"
+            type="password"
+            register={register}
+            validation={{
+              validate: (value) =>
+                value === getValues("password") || "Passwords do not match",
+              minLength: {
+                value: 6,
+                message: "Confirm password must be at least 6 characters",
+              },
+            }}
+            error={errors.confirmPassword}
+          />
 
-          <div className="mb-4 max-w-md mx-auto">
-            <label
-              htmlFor="password"
-              className="text-white"
-            >
-              New Password
-            </label>
-
-            <input
-              className="w-full text-darkPurple"
-              type="password"
-              id="password"
-              {...register("password", {
-                minLength: {
-                  value: 6,
-                  message: "password is more than 5 chars",
-                },
-              })}
-            />
-            {errors.password && (
-              <div className="text-red-500 ">{errors.password.message}</div>
-            )}
-          </div>
-
-          <div className="mb-4 max-w-md mx-auto">
-            <label
-              htmlFor="confirmPassword"
-              className="text-white"
-            >
-              Confirm New Password
-            </label>
-            <input
-              className="w-full text-darkPurple"
-              type="password"
-              id="confirmPassword"
-              {...register("confirmPassword", {
-                validate: (value) => value === getValues("password"),
-                minLength: {
-                  value: 6,
-                  message: "confirm password is more than 5 chars",
-                },
-              })}
-            />
-            {errors.confirmPassword && (
-              <div className="text-red-500 ">
-                {errors.confirmPassword.message}
-              </div>
-            )}
-            {errors.confirmPassword &&
-              errors.confirmPassword.type === "validate" && (
-                <div className="text-red-500 ">Password do not match</div>
-              )}
-          </div>
           <div className="mb-4 w-full text-center">
             <GeneralButton text="Update Profile" />
           </div>

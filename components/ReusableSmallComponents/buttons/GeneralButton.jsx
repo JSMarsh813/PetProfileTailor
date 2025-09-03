@@ -14,7 +14,7 @@ const GeneralButton = ({
 
   // Compute background & border
   let bgClass =
-    "bg-yellow-200 border-yellow-600 text-darkPurple hover:bg-blue-400 hover:text-white hover:border-blue-500";
+    "bg-yellow-300 border-yellow-700 text-darkPurple hover:bg-blue-400 hover:text-white hover:border-blue-500";
   if (subtle)
     bgClass =
       "bg-subtleBackground text-white hover:text-white hover:border-blue-500 hover:bg-blue-400";
