@@ -38,12 +38,12 @@ function AddFlagReport({
 
     if (flagCategoriesState.length === 0) {
       toast.error(
-        `Ruh Roh! You must click 1 or more of the checkboxes for flag type`,
+        `Ruh Roh! You must click 1 or more of the checkboxes for report type`,
       );
       return;
     }
     if (flaggedByUser == "") {
-      toast.error(`Ruh Roh! You must be signed in to flag content`);
+      toast.error(`Ruh Roh! You must be signed in to report content`);
       return;
     }
 
@@ -60,7 +60,7 @@ function AddFlagReport({
       profileIsLoggedInUserCheck === flaggedByUser
     ) {
       toast.warn(
-        `Ruh Roh! Nice try but you can't flag your own content silly goose :)`,
+        `Ruh Roh! Nice try but you can't report your own content silly goose :)`,
       );
       return;
     }
@@ -106,7 +106,7 @@ function AddFlagReport({
   function callApiToaddUserToNamesArray(userAndNameId) {
     axios
       .put(apiaddUserToFlaggedByArray, userAndNameId)
-      .then(toast.success(`your name has been added to the flaggedby array`));
+      .then(toast.success(`your name has been added to the reported array`));
   }
 
   function cancelFlagFormAndRevertFlagState() {
@@ -156,7 +156,7 @@ function AddFlagReport({
 
           <div className=" bg-darkPurple border-white border-y-2 flex">
             <h3 className=" mb-2 text-xl mx-auto py-3">
-              Flag Inappropriate Content
+              Report Inappropriate Content
             </h3>
           </div>
 

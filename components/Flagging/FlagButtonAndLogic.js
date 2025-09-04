@@ -62,12 +62,12 @@ export default function FlagButtonAndLogic({
           className={`${FlagIconStyling} ml-3 mr-2`}
           color={flaggedColor}
         />
-        <span> Flag </span>
+        <span> Report </span>
       </button>
 
       {flagFormIsToggled && userIsTheCreator && (
         <ToggeableAlert
-          text="You cannot flag your own content 😜"
+          text="You cannot report your own content 😜"
           setToggleState={setFlagFormIsToggled}
           toggleState={flagFormIsToggled}
         />
@@ -76,7 +76,7 @@ export default function FlagButtonAndLogic({
       {flagFormIsToggled && userHasAlreadyReportedThis && (
         <ToggeableAlert
           text="We are in the process of reviewing your report. This content cannot be
-                flagged again until the prior report is reviewed"
+                reported again until the prior report is reviewed"
           setToggleState={setFlagFormIsToggled}
           toggleState={flagFormIsToggled}
         />
