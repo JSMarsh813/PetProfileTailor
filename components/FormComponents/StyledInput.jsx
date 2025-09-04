@@ -6,6 +6,8 @@ export default function StyledInput({
   value,
   maxLength,
   type,
+  id,
+  name,
 }) {
   return (
     <input
@@ -14,6 +16,8 @@ export default function StyledInput({
       value={value}
       maxLength={maxLength}
       type={type}
+      id={id}
+      name={name}
     />
   );
 }

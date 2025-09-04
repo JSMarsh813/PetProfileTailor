@@ -20,6 +20,10 @@ import Image from "next/image";
 import { getCsrfToken } from "next-auth/react";
 import NounBlackCatIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/svgImages/NounBlackCatIcon";
 import MagicRabbitSVG from "../components/ReusableSmallComponents/iconsOrSvgImages/svgImages/MagicRabbitSVG";
+import RegisterInput from "../components/FormComponents/RegisterInput";
+import StyledInput from "../components/FormComponents/StyledInput";
+import { StyledLink } from "@nextui-org/react";
+import LinkButton from "../components/ReusableSmallComponents/buttons/LinkButton";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -99,10 +103,10 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
         sessionFromServer={sessionFromServer}
       />
       <div>
-        <section className="h-fit max-w-7xl mx-auto">
+        <section className="h-fit max-w-7xl mx-auto ">
           <div className="px-6 h-full text-gray-100">
-            <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h- g-6">
-              <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
+            <div className="flex lg:justify-between xl:justify-center  justify-center items-center flex-wrap h- g-6">
+              <div className="grow-0 shrink-1 md:shrink-0 basis-auto lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
                 <Image
                   src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg"
                   className="max-w-[300px] lg:max-w-lg rounded-full shadow-lg border-2 border-yellow-300 border-dashed mx-auto"
@@ -118,104 +122,85 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                 />
               </div>
 
-              <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+              {/* ################ Right Side Section with login #################### */}
+              <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 md:mt-3 lg:mt-0">
                 <form
-                  className="mx-auto max-w-screen-md"
+                  className="mx-auto max-w-screen-md border-x  border-subtleWhite"
                   onSubmit={handleSubmit(submitHandler)}
                 >
-                  <div className="text-center text-2xl mb-4"> Login </div>
+                  <div className="flex justify-center text-2xl my-4 ">
+                    {" "}
+                    Login{" "}
+                  </div>
 
                   {/* <!-- Email input --> */}
-                  <div className="mb-6">
-                    <label htmlFor="signinemail">Email</label>
-                    <input
-                      type="email"
-                      {...register("email", {
-                        required: "Please enter email",
-                        pattern: {
-                          value:
-                            /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                          message: "Please enter valid email",
-                        },
-                      })}
-                      className="w-full text-darkPurple"
-                      id="signinemail"
-                      autoFocus
-                    ></input>
 
-                    {errors.email && (
-                      <div className="text-red-500">{errors.email.message}</div>
-                    )}
+                  <RegisterInput
+                    id="signinemail"
+                    label="Email"
+                    type="email"
+                    autoFocus
+                    labelStyling="text-center"
+                    inputStyling="flex mx-auto "
+                    register={register}
+                    validation={{
+                      required: "Please enter email",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+                        message: "Please enter valid email",
+                      },
+                    }}
+                    error={errors.email}
+                  />
+
+                  <RegisterInput
+                    id="password"
+                    label="Password"
+                    type="password"
+                    labelStyling="text-center"
+                    inputStyling="flex mx-auto "
+                    autoFocus
+                    register={register}
+                    validation={{
+                      required: "Please enter password",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      },
+                    }}
+                    error={errors.password}
+                  />
+
+                  {/* ############# Forgot Password ################### */}
+
+                  <div className="flex justify-center mb-2">
+                    <span> Forgot? </span>
+
+                    <LinkButton
+                      text="Click here"
+                      href="/forgotpassword"
+                      className="underline-offset-4 underline hover:border-b-2 hover:text-slate-300 hover:border-text-slate-300 ml-2"
+                    />
                   </div>
 
-                  {/* <!-- Password input --> */}
-                  <div className="mb-4">
-                    <label htmlFor="password">Password</label>
-
-                    <input
-                      type="password"
-                      {...register("password", {
-                        required: "Please enter password",
-                        minLength: {
-                          value: 6,
-                          message: "password is more than 5 chars",
-                        },
-                      })}
-                      className="w-full text-darkPurple"
-                      id="password"
-                      autoFocus
-                    ></input>
-
-                    {errors.password && (
-                      <div className="text-red-500 ">
-                        {errors.password.message}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* <!-- Remember Me Toggle Checkbox --> */}
-                  <div className="flex justify-between items-center mb-6">
-                    {/*       
-      <div className="form-group form-check">
-              <input
-                type="checkbox"
-                className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                id="exampleCheck2"
-              />
-
-              <label className="form-check-label inline-block text-gray-100" htmlFor="exampleCheck2">
-                Remember me on this computer
-              </label>
-      </div> */}
-
-                    {/* <!-- Forgot Password Link --> */}
-                    <div>
-                      <span> Forgot Password? </span>
-                      <Link
-                        href="/forgotpassword"
-                        legacyBehavior
-                      >
-                        <span className="font-semibold text-violet-800 bg-yellow-300 p-2 rounded hover:bg-blue-400 hover:text-white">
-                          Click Here
-                        </span>
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* <!-- Login Button --> */}
-                  <div className="text-center lg:text-left">
-                    <button
+                  <div className="text-center">
+                    <GeneralButton
+                      text="sign in"
+                      className=""
                       type="submit"
-                      className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                    >
-                      Login
-                    </button>
+                      subtle
+                    />
                   </div>
                 </form>
+
+                {/* ################ Or Divider ##################### */}
 
                 <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
                   <p className="text-center font-semibold mx-4 mb-0">Or</p>
                 </div>
+
+                {/* ################ Magic Link ##################### */}
 
                 <section className="bg-darkPurple p-2 ">
                   <h4 className="text-center mb-2 pb-2 font-semibold border-b-2 border-white">
@@ -232,18 +217,18 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                       type="hidden"
                       defaultValue={csrfToken}
                     />
-
-                    <input
+                    <StyledInput
                       type="email"
                       id="magiclinkemail"
                       name="email"
-                      className="w-2/3 text-darkPurple "
+                      className="lg:min-w-64"
                     />
 
                     <GeneralButton
                       text="sign in"
                       className="ml-2 mb-2 text-center"
                       type="submit"
+                      subtle
                     />
                   </form>
 
@@ -263,43 +248,43 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   </p>
                 </section>
 
-                <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"></div>
+                {/* ################ Divider ##################### */}
 
                 {/* <!-- Registration Link--> */}
 
-                <p className="text-sm font-semibold mt-2 pt-1 mb-0 text-center">
-                  <FontAwesomeIcon
-                    className="fa-bounce text-yellow-300 mr-2 text-xl"
-                    icon={faPaw}
-                  />
-                  Don&apos;t have an account? Welcome! &nbsp;
-                  <Link
-                    href={`/register`}
-                    className="text-yellow-300 hover:text-indigo-200 focus:text-red-700 transition duration-200 ease-in-out"
-                  >
-                    Register by clicking here
-                  </Link>
-                </p>
-
-                <p className="text-xs text-center mt-4">
-                  Icons from Noun Project:
-                  <span>
-                    <a
-                      href="https://thenounproject.com/browse/icons/term/magic/"
-                      title="magic Icons"
-                    >
-                      * Magic by Monkik{" "}
-                    </a>
-                  </span>
-                  <span>
-                    <a
-                      href="https://thenounproject.com/browse/icons/term/black-cat/"
-                      title="black cat Icons"
-                    >
-                      * Black Cat by Narakorn Chanchittakarm{" "}
-                    </a>
-                  </span>
-                </p>
+                <section className=" border-x border-subtleWhite my-4">
+                  <p className="font-semibold mt-2 pt-1 mb-0 text-center">
+                    <FontAwesomeIcon
+                      className="fa-bounce text-yellow-300 mr-2 text-xl "
+                      icon={faPaw}
+                    />
+                    Don&apos;t have an account? Welcome! &nbsp;
+                    <LinkButton
+                      href={`/register`}
+                      defaultStyle
+                      text="Register"
+                    />
+                  </p>
+                  <section className="flex flex-col text-center">
+                    <small className="mt-4">Icons from Noun Project:</small>
+                    <small>
+                      <a
+                        href="https://thenounproject.com/browse/icons/term/magic/"
+                        title="magic Icons"
+                      >
+                        Magic by Monkik{" "}
+                      </a>
+                    </small>
+                    <small>
+                      <a
+                        href="https://thenounproject.com/browse/icons/term/black-cat/"
+                        title="black cat Icons"
+                      >
+                        Black Cat by Narakorn Chanchittakarm{" "}
+                      </a>
+                    </small>
+                  </section>
+                </section>
               </div>
             </div>
           </div>

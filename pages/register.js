@@ -15,6 +15,8 @@ import { unstable_getServerSession } from "next-auth/next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import StyledInput from "../components/FormComponents/StyledInput";
+import RegisterInput from "../components/FormComponents/RegisterInput";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -77,6 +79,7 @@ export default function Register({ sessionFromServer }) {
     handleSubmit,
     register,
     getValues,
+    setError,
     formState: { errors },
     watch,
   } = useForm();
@@ -89,6 +92,8 @@ export default function Register({ sessionFromServer }) {
         password,
         profilename: profilename.toLowerCase(),
       });
+
+      // ###### magic-link signups ######
 
       if (password === "") {
         const magicLinkSignUp = await signIn("email", {
@@ -109,6 +114,8 @@ export default function Register({ sessionFromServer }) {
         return;
       }
 
+      // ###### password signups ######
+
       const result = await signIn("credentials", {
         redirect: false,
         email,
@@ -124,14 +131,23 @@ export default function Register({ sessionFromServer }) {
         router.push("/dashboard");
       }
     } catch (err) {
-      toast.error(getError(err));
+      // take the error object from the api, and map it to react-hook-forms error fields
+      const apiErrors = err.response?.data?.errors;
+
+      if (apiErrors) {
+        Object.entries(apiErrors).forEach(([field, message]) => {
+          setError(field, { type: "server", message });
+        });
+      } else {
+        toast.error(err.response?.data?.message || "Something went wrong");
+      }
     }
   };
 
   const passwordEntered = watch("password");
 
   return (
-    <div className="bg-violet-900 h-fit text-white">
+    <div className="h-fit text-subtleWhite">
       <Layout
         title="Create Account"
         profileImage={profileImage}
@@ -142,214 +158,141 @@ export default function Register({ sessionFromServer }) {
       <div className="flex justify-center">
         <Image
           src="/welcometothepack.webp"
-          alt=""
+          alt="A dog is highfiving a human hand and the text on the bottom says welcome to the pack!"
           width={220}
           height={220}
           style={{
             maxWidth: "100%",
             height: "auto",
+            borderRadius: 30,
           }}
         />
       </div>
-      <section className="text-center mt-2">
-        <h4 className="font-semibold text-lg">
-          Check if a profile name is available
-        </h4>
 
-        <input
-          type="text"
-          className="text-darkPurple"
-          value={nameCheck}
-          maxLength="30"
-          onChange={(e) => resetData(e)}
-        />
+      <h2 className="my-4 text-2xl text-center">Create Account</h2>
+      <section className="bg-darkPurple px-4 mb-2 text-center mx-auto py-6 max-w-screen-md ">
+        <p className=" pb-2 font-bold text-lg border-b-2 border-white mb-2">
+          Do you prefer passwordless sign in?
+        </p>
 
-        <button
-          className="inline-block bg-darkPurple p-2 border-2 border-yellow-200"
-          onClick={() => checkIfNameExists()}
-        >
-          <FontAwesomeIcon
-            icon={faSearch}
-            className="text-2xl"
-            color="yellow"
-          />
+        <p className="mb-2"> You can sign in using a magic link!</p>
+        <p className="mb-2">
+          We’ll send a “magic” link to your email, and clicking it is all it
+          takes to log in.
+        </p>
 
-          <span
-            className="mx-2
-                                   text-yellow-200"
-          >
-            Search
-          </span>
-        </button>
-        <span className="block">
-          {`${30 - nameCheck.length}/30 characters left`}{" "}
-        </span>
+        <p className="mb-4">
+          However, we <strong> recommend </strong> magic link users also add a
+          password when signing up. Think of it as a little extra leash for your
+          account. That way, you won’t get locked out if your email wanders off!
+        </p>
 
-        {nameCheckFunctionRun && namesThatExist.length != 0 && (
-          <p
-            className="mt-2 
-                                        text-yellow-200 font-bold
-                                         bg-red-700
-                                         border-2 border-yellow-200"
-          >
-            {namesThatExist[0].name} already exists!
-          </p>
-        )}
-
-        {nameCheckFunctionRun && !namesThatExist.length && (
-          <span className="block">
-            Success! {nameCheck} does NOT exist yet.
-          </span>
-        )}
+        <p className="mb-4">
+          If you decide you want to add a password later,
+          <strong> you can add a password in settings. </strong>
+        </p>
       </section>
+
       {/* #################### FORM #########################*/}
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <h1 className="my-4 text-2xl text-center">Create Account</h1>
+        <RegisterInput
+          id="name"
+          label="User Name"
+          type="text"
+          register={register}
+          validation={{ required: "Please enter a name" }}
+          error={errors.name}
+          helperText={[
+            "Valid characters: any",
+            <p key="changeable">
+              <strong>Can</strong> be changed later
+            </p>,
+            "30 characters max",
+          ]}
+          inputStyling="w-full"
+        />
 
-        <div className="mb-4">
-          <label htmlFor="name">
-            User Name (this <strong> can </strong> be changed later, 30
-            characters max)
-          </label>
+        <RegisterInput
+          id="profilename"
+          label="Profile Name"
+          type="text"
+          className="lowercase" // keep lowercase styling
+          maxLength={30}
+          autoFocus
+          register={register}
+          validation={{
+            required: "Please enter a profilename",
+            validate: (value) =>
+              value.match(/[^a-z\d&'-]+/) == null ||
+              `Invalid characters entered: ${value.match(/[^a-z\d&'-]+/g)}`,
+          }}
+          error={errors.profilename}
+          inputStyling="w-full"
+          helperText={[
+            "CAN'T be changed later, it will be unique to you.",
+            "Valid characters: a-z, numbers, &, ' and -",
+            "30 characters max.",
+          ]}
+        />
 
-          <input
-            type="text"
-            className="w-full text-darkPurple"
-            maxLength="30"
-            id="name"
-            autoFocus
-            {...register("name", {
-              required: "Please enter a name",
-            })}
-          />
-          {errors.name && (
-            <div className="text-red-500">{errors.name.message}</div>
-          )}
-          <span> Valid Characters: any </span>
-        </div>
+        <RegisterInput
+          id="email"
+          label="Email"
+          type="email"
+          register={register}
+          validation={{
+            required: "Please enter an email",
+            pattern: {
+              value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
+              message: "Please enter a valid email",
+            },
+          }}
+          inputStyling="w-full"
+          error={errors.email}
+        />
 
-        <div className="mb-4">
-          <label htmlFor="profilename">
-            Profile Name (this <strong>CAN&apos;T</strong> be changed later, it
-            will be unique to you, 30 characters max)
-          </label>
+        <RegisterInput
+          id="password"
+          autoFocus
+          label="Password"
+          type="password"
+          register={register}
+          validation={{
+            minLength: {
+              value: 6,
+              message: "password must be more than 5 chars",
+            },
+          }}
+          error={errors.password}
+          inputStyling="w-full"
+          helperText="Recommended but not required for magic link users"
+        />
 
-          <input
-            type="text"
-            className="w-full text-darkPurple lowercase"
-            maxLength="30"
-            id="profilename"
-            autoFocus
-            {...register("profilename", {
-              required: "Please enter a profilename",
-              validate: (value) =>
-                value.match(/[^a-z\d&'-]+/) == null ||
-                `invalid characters entered ${value.match(/[^a-z\d&'-]+/g)}`,
-            })}
-          />
+        <span> {console.log(passwordEntered != "")}</span>
 
-          <span> Valid Characters: a-z, numbers, &, &apos; and - </span>
+        <RegisterInput
+          id="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          register={register}
+          validation={{
+            required: passwordEntered && "This field is required",
+            // if the password field has input in it (its truthy), the confirm password field is required. Because it defaults to true. And the second statement shows
+            validate: (value) =>
+              value === getValues("password") || "Passwords do not match",
+            minLength: {
+              value: 6,
+              message: "Confirm password must be more than 5 chars",
+            },
+          }}
+          inputStyling="w-full"
+          error={errors.confirmPassword}
+        />
 
-          {errors.profilename && (
-            <div className="text-red-500">{errors.profilename.message}</div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            {...register("email", {
-              required: "Please enter an email",
-              pattern: {
-                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                message: "Please enter a valid email",
-              },
-            })}
-            className="w-full text-darkPurple"
-            id="email"
-          ></input>
-          {errors.email && (
-            <div className="text-red-500">{errors.email.message}</div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="password">
-            Password (recommended but not required for magic link users)
-          </label>
-          <input
-            type="password"
-            {...register("password", {
-              minLength: {
-                value: 6,
-                message: "password must be more than 5 chars",
-              },
-            })}
-            className="w-full text-darkPurple"
-            id="password"
-            autoFocus
-          ></input>
-
-          {errors.password && (
-            <div className="text-red-500 ">{errors.password.message}</div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <span> {console.log(passwordEntered != "")}</span>
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            className="w-full text-darkPurple"
-            type="password"
-            id="confirmPassword"
-            {...register("confirmPassword", {
-              required: passwordEntered && "this field is required",
-              // if the password field has input in it (its truthy), the confirm password field is required. Because it defaults to true. And the second statement shows
-
-              validate: (value) =>
-                value === getValues("password") || "Passwords do not match",
-              minLength: {
-                value: 6,
-                message: "Confirm password must be more than 5 chars",
-              },
-            })}
-          />
-          {errors.confirmPassword && (
-            <div className="text-red-500 ">
-              {errors.confirmPassword.message}
-            </div>
-          )}
-        </div>
-
-        <section className="bg-darkPurple p-2 mb-2 ">
-          <h3 className="mb-4 border-b-2 border-white pb-2 font-bold">
-            Notes for magic link users (logging in with an email link, not a
-            password)
-          </h3>
-          <p className="mb-4">
-            We <strong> recommend </strong>magic link users also add a password.
-            This way you will not be locked out of your account if you lose
-            access to your email. However, we do not require this.
-          </p>
-
-          <p className="mb-4">
-            To access their new account,{" "}
-            <strong>
-              magic link users will have to click the link sent to their email.
-            </strong>{" "}
-            This is done to ensure there were no typos in the email.
-          </p>
-
-          <p className="mb-4">
-            If you decide you want to add a password later,
-            <strong> you can add a password in settings </strong>
-          </p>
-        </section>
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center mb-4">
           <GeneralButton text="register" />
         </div>
       </form>

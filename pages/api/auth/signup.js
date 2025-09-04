@@ -2,6 +2,7 @@ import bcryptjs from "bcryptjs";
 import User from "../../../models/User";
 import db from "../../../utils/db";
 import regexInvalidInput from "../../../utils/stringManipulation/check-for-valid-names";
+import { getUserByProfileName } from "../../../utils/getUserByProfileName";
 
 async function handler(req, res) {
   if (req.method !== "POST") {
@@ -9,52 +10,50 @@ async function handler(req, res) {
   }
   const { name, email, password, profilename } = req.body;
 
-  let passwordChecked = password;
+  const errors = {};
 
-  if (passwordChecked === "") {
-    passwordChecked = null;
+  // ############  Basic required field validation ###############
+  if (!name) errors.name = "Please enter a name";
+  if (!email) errors.email = "Please enter an email";
+  if (email && !email.includes("@"))
+    errors.email = "Please enter a valid email";
+  if (!profilename) errors.profilename = "Please enter a profile name";
+
+  // ############ Profile name checks ###############
+  if (profilename) {
+    const invalidProfileNameInput = regexInvalidInput(profilename);
+    if (invalidProfileNameInput != null) {
+      errors.profilename = `Invalid characters entered: ${invalidProfileNameInput}`;
+    }
+
+    const existingUserProfile = await getUserByProfileName(profilename);
+    if (existingUserProfile) {
+      errors.profilename = "That profile name is already used!";
+    }
   }
 
-  if (!name || !email || !profilename || !email.includes("@")) {
-    res.status(422).json({
-      message: `Validation error, please check the name ${name},  profilename ${profilename} and email ${email} fields`,
-    });
-    return;
-  }
+  // ############ Password checks ###############
+  const passwordChecked = password === "" ? null : password;
 
-  let checkForInvalidInput = regexInvalidInput(profilename);
-
-  if (checkForInvalidInput != null) {
-    res.status(422).json({
-      message: `Invalid characters entered ${checkForInvalidInput}`,
-    });
-  }
   if (passwordChecked != null && passwordChecked.length < 5) {
-    res.status(422).json({
-      message: "Invalid Password length",
-    });
-    return;
+    errors.password = "Password must be at least 6 characters";
   }
 
-  console.log(`this is passwordchecked $passwordChecked}`);
-  await db.connect();
+  // ############ Email uniqueness ###############
+  if (email) {
+    await db.connect();
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      errors.email = "Email is already used!";
+    }
 
-  const existingEmail = await User.findOne({ email: email });
-
-  if (existingEmail) {
-    res.status(422).json({ message: "Email is already used!" });
-
-    return;
+    // ############ Return all errors at once if any ###############
+    if (Object.keys(errors).length > 0) {
+      return res.status(422).json({ errors });
+    }
   }
 
-  const existingUserProfile = await User.findOne({ profilename: profilename });
-  if (existingUserProfile) {
-    res.status(422).json({ message: "That profile name is already used!" });
-
-    return;
-  }
-
-  // !password?
+  // ############ Proceed to create user ###############
 
   const newUser = new User({
     name,

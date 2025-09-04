@@ -1,7 +1,7 @@
-// components/FormInput.jsx
 import React from "react";
+// necessary because of React.cloneElement
 
-const FormInput = ({
+const RegisterInput = ({
   id,
   label,
   type = "text",
@@ -11,14 +11,17 @@ const FormInput = ({
   register,
   validation,
   error,
-  className = "",
+  inputStyling = "",
+  labelStyling = "",
+  labelToSide = false,
+  helperText, // NEW prop
 }) => {
   return (
-    <div className="mb-4 ">
+    <div className={`mb-4 ${labelToSide && "flex"}`}>
       {label && (
         <label
           htmlFor={id}
-          className="block mb-1 font-medium text-subtleWhite"
+          className={`block mb-1 font-medium text-subtleWhite ${labelStyling}`}
         >
           {label}
         </label>
@@ -30,13 +33,51 @@ const FormInput = ({
         placeholder={placeholder}
         maxLength={maxLength}
         autoFocus={autoFocus}
-        className={`border bg-darkPurple text-subtleWhite border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple min-w-[400px] lg:w-[30rem] ${className} `}
+        className={`border bg-darkPurple text-subtleWhite border-violet-200 p-2 mb-2 outline-none placeholder-darkPurple min-w-[400px]  ${inputStyling} `}
         {...register(id, validation)}
       />
+
+      {/* helper text if provided */}
+      {helperText &&
+        (Array.isArray(helperText) ? (
+          //case 1 if its an array
+          helperText.map((item, idx) =>
+            // case 1.a If the element is a string => wrap it in <p>
+            typeof item === "string" ? (
+              <p
+                key={idx}
+                className="text-sm text-gray-300 mt-1"
+              >
+                {item}
+              </p>
+            ) : (
+              // case 1.b
+              // If element is JSX (like <p><strong>…</strong></p>)
+              //  keep it as-is but add the standard helper classes via React.cloneElement
+              React.cloneElement(item, {
+                key: idx,
+                className: `text-sm text-gray-300 mt-1 ${
+                  item.props.className || ""
+                }`,
+              })
+            ),
+          )
+        ) : // case 2 if its not an array
+        typeof helperText === "string" ? (
+          // case 2.1 if its a string render it as a p
+          <p className="text-sm text-gray-300 mt-1">{helperText}</p>
+        ) : (
+          // case 2.2 otherwise its JSX so render it as JSX with helper classes
+          React.cloneElement(helperText, {
+            className: `text-sm text-gray-300 mt-1 ${
+              helperText.props.className || ""
+            }`,
+          })
+        ))}
 
       {error && <p className="mt-1 text-sm text-red-500">{error.message}</p>}
     </div>
   );
 };
 
-export default FormInput;
+export default RegisterInput;
