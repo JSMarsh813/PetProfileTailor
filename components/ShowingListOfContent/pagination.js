@@ -8,7 +8,6 @@ import startCooldown from "../../utils/startCooldown";
 export default function Pagination({
   itemsPerPage,
   setItemsPerPageFunction,
-  setPageFunction,
   setSize,
   size,
   currentUiPage,
@@ -21,6 +20,10 @@ export default function Pagination({
   sortingValue,
   sortingProperty,
 }) {
+  const paginationCooldownRef = useRef(null);
+  const [remainingPaginationCooldown, setRemainingPaginationCooldown] =
+    useState(0);
+
   const [windowStart, setWindowStart] = useState(1); // first page of the visible window
 
   const [totalLoadedPages, setTotalLoadedPages] = useState(0);
@@ -57,20 +60,27 @@ export default function Pagination({
   // useMemo only recalculates when the dependencies actually change, not on every render
 
   const lastPageHandler = () => {
-    // If we're at the last loaded page and there's more data to fetch
+    // If we have more pages loaded, just move to the next UI page
 
+    if (currentUiPage < totalLoadedPages) {
+      updateWindow(currentUiPage + 1);
+      setCurrentUiPage(currentUiPage + 1);
+    }
+
+    if ((remainingPaginationCooldown > 0) & (currentUiPage > totalLoadedPages))
+      return;
+
+    // If we're at the last loaded page and there's more data to fetch
     if (
-      currentUiPage >= totalLoadedPages &&
+      // we're going to pretend we're 2 pages ahead, so we can have the next pages loaded ahead of time
+      // so theres no flicker of the pagination > button being greyed out
+      currentUiPage + 2 >= totalLoadedPages &&
       totalLoadedPages < totalPagesInDatabase
     ) {
       // Trigger SWR to fetch next chunk
       setSize(size + 1);
+      startCooldown(paginationCooldownRef, setRemainingPaginationCooldown, 15);
       return;
-    }
-    // If we have more pages loaded, just move to the next UI page
-    if (currentUiPage < totalLoadedPages) {
-      updateWindow(currentUiPage + 1);
-      setCurrentUiPage(currentUiPage + 1);
     }
   };
 
@@ -90,23 +100,6 @@ export default function Pagination({
     }
     setCurrentUiPage(page);
     updateWindow(page);
-    // setCurrentUiPage(page);
-    // updateWindow(page);
-    // // Slide the window if page goes beyond visible range
-    // if (page >= windowStart + windowSize) {
-    //   setWindowStart(page - windowSize + 1);
-    // } else if (page < windowStart) {
-    //   setWindowStart(page);
-    // }
-    // // Check if we need to load more data before navigating
-    // if (page >= totalLoadedPages && totalLoadedPages < totalPagesInDatabase) {
-    //   console.log("Need to load more data for page:", page);
-    //   setSize(size + 1);
-    //   // Don't set currentUiPage yet - let the SWR data load first
-    //   return;
-    // }
-
-    // setCurrentUiPage(page);
   };
   return (
     <section className="pagination-navigation grid grid-rows-1 min-w-0 my-2  border-t border-violet-300 text-violet-900 font-bold pt-2 ">
@@ -170,6 +163,14 @@ export default function Pagination({
       </div>
 
       {/* PAGINATION ARROWS */}
+      {remainingPaginationCooldown !== 0 &&
+        currentUiPage === totalLoadedPages && (
+          <p className="text-subtleWhite mx-auto">
+            {" "}
+            {`Please wait ${remainingPaginationCooldown} secs`}
+          </p>
+        )}
+
       <div className="flex justify-center my-auto items-center ">
         <button
           className="prevpage"

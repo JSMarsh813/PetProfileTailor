@@ -33,7 +33,8 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
 
   //client side validation for "check if name already exists" section
   useEffect(() => {
-    setNameCheckInvalidInput(regexInvalidInput(nameCheck));
+    const invalidCharacters = regexInvalidInput(nameCheck);
+    setNameCheckInvalidInput(invalidCharacters);
   }, [nameCheck]);
 
   //client side validation for name submission section
@@ -83,6 +84,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
       });
   }
 
+  console.log(`${nameCheckInvalidInput} is not a valid character`);
   return (
     <div className="mx-2 w-full">
       <section className="mx-auto text-center">
@@ -208,7 +210,7 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             id="nameInput"
             className="bg-darkPurple border-subtleWhite text-subtleWhite"
             value={newName}
-            onChange={(e) => setNewName(e.target.value.toLowerCase())}
+            onChange={(e) => setNewName(e.target.value)}
             maxLength="40"
             disabled={sessionFromServer ? "" : "disabled"}
           ></input>
