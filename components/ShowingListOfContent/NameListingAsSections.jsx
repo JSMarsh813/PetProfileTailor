@@ -31,6 +31,7 @@ export default function NameListingAsSections({
   setDeleteThisContentId,
   likedSetRef,
   recentLikesRef,
+  categoriesWithTags,
 }) {
   let userIsTheCreator = name.createdby._id === signedInUsersId;
 
@@ -73,6 +74,7 @@ export default function NameListingAsSections({
 
   console.log("AddHashToArrayString(name)", AddHashToArrayString(name));
   console.log("name.tags", name.tags);
+  console.log("categoriesWithTags in name listings", categoriesWithTags);
 
   return (
     <div className="text-base flex border-t border-subtleWhite">
@@ -193,6 +195,7 @@ export default function NameListingAsSections({
                 signedInUsersId={signedInUsersId}
                 tagList={tagList}
                 setEditedFunction={setNameEditedFunction}
+                categoriesWithTags={categoriesWithTags}
               />
             )}
           </section>

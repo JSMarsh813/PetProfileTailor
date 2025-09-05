@@ -1,46 +1,22 @@
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import Select from "react-select";
+import { useMemo } from "react";
 import { useTags } from "../../hooks/useTags";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
 
-export default function TagsSelectAndCheatSheet({ category, tagList }) {
+export default function TagsSelectAndCheatSheet({ categoriesWithTags }) {
   // ######## Logic for when tags Change ###############
 
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
 
-  // const handleTagsChange = (e) => {
-  //   //since e.target is looking at a checkbox input element
-  //   //checked is a boolean property only available on HTMLInputElement. That narrows things down for type safety and IntelliSense.
-
-  //   console.log(e.target);
-  //   const { id, value, checked } = e.target;
-
-  //   setToSubmitTags((prev) =>
-  //     checked
-  //       ? prev.some((tag) => tag.value === id)
-  //         ? prev
-  //         : [...prev, { label: value, value: id, key: id }]
-  //       : prev.filter((tag) => tag.value !== id),
-  //   );
-
-  //   // // Is checkbox clicked?
-  //   // if (checked) {
-  //   //   //if  so check if the tag does not exist in the tagsToSubmit state
-  //   //   if (!tagsToSubmit.some((tag) => tag.value === id)) {
-  //   //     setToSubmitTags([
-  //   //       ...tagsToSubmit,
-  //   //       { label: value, value: id, key: id },
-  //   //     ]);
-  //   //   }
-  //   // } else {
-  //   //   // if the tag already exists in the tagsToSubmit state, then remove it from the tagsToSubmit state
-  //   //   // since the tags checkbox's state relies on the tagsToSubmit state, this will also uncheck the checkbox
-  //   //   setToSubmitTags(tagsToSubmit.filter((tag) => tag.value !== id));
-  //   // }
-  // };
-  console.log("tagsToSubmit", tagsToSubmit);
+  const tagList = useMemo(() => {
+    return categoriesWithTags.flatMap((cat) =>
+      cat.tags.map((tag) => ({ label: tag.tag, value: tag._id, key: tag._id })),
+    );
+    // added key here for consistency with checkbox input
+  }, [categoriesWithTags]);
 
   return (
     <div
@@ -76,20 +52,16 @@ export default function TagsSelectAndCheatSheet({ category, tagList }) {
           }),
         }}
         id="nameTags"
-        options={tagList.map((opt, index) => ({
-          label: opt.tag,
-          value: opt._id,
-          key: opt._id, // added key here for consistency with checkbox input
-        }))}
+        options={tagList}
         value={tagsToSubmit}
         isMulti
         isSearchable
         placeholder="If you type in the tags field, it will filter the tags"
         onChange={handleSelectChange}
       />
-      <p className="my-4"> Or use the tags cheet sheet </p>
+      <p className="my-4 text-subtleWhite"> Or use the tags cheet sheet </p>
 
-      {category.map((category, index) => {
+      {categoriesWithTags.map((category, index) => {
         return (
           <Disclosure
             key={category._id}

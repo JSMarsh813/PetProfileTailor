@@ -92,8 +92,6 @@ function NewNameWithTagsData({
 
   const [tagsToSubmit, setToSubmitTags] = useState([]);
 
-  console.log("categoriesWithTags", categoriesWithTags);
-
   return (
     <div className="mx-2 w-full">
       <section className="mx-auto text-center">
@@ -252,7 +250,7 @@ function NewNameWithTagsData({
           ></textarea>
           <span> {`${500 - description.length}/500 characters left`} </span>
           <TagsSelectAndCheatSheet
-            category={categoriesWithTags}
+            categoriesWithTags={categoriesWithTags}
             tagsToSubmit={tagsToSubmit}
             setToSubmitTags={setToSubmitTags}
             tagList={tagList}

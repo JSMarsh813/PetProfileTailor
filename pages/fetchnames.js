@@ -68,7 +68,7 @@ export const getServerSideProps = async (context) => {
   // thus the JSON.parse(JSON.stringify)
   return {
     props: {
-      category: JSON.parse(JSON.stringify(data)),
+      categoriesWithTags: JSON.parse(JSON.stringify(data)),
       tagList: tagData,
       sessionFromServer: session,
       usersLikedNamesFromDb,
@@ -77,7 +77,7 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function FetchNames({
-  category,
+  categoriesWithTags,
   sessionFromServer,
   tagList,
   usersLikedNamesFromDb,
@@ -246,7 +246,7 @@ export default function FetchNames({
           anchor="left"
         >
           <FilteringSidebar
-            category={category}
+            category={categoriesWithTags}
             handleFilterChange={handleFilterChange}
             handleApplyFilters={handleApplyFilters}
             filterTagsIds={filterTagsIds}
@@ -311,6 +311,7 @@ export default function FetchNames({
                       setDeleteThisContentId={setDeleteThisContentId}
                       likedSetRef={likedSetRef}
                       recentLikesRef={recentLikesRef}
+                      categoriesWithTags={categoriesWithTags}
                     />
                   );
                 })}

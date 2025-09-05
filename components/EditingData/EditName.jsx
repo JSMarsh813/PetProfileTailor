@@ -7,6 +7,7 @@ import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import StyledInput from "../FormComponents/StyledInput";
 import StyledTextarea from "../FormComponents/StyledTextarea";
 import StyledSelect from "../FormComponents/StyledSelect";
+import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 
 export default function EditName({
   SetShowEditPage,
@@ -15,18 +16,20 @@ export default function EditName({
   setToastMessage,
   tagList,
   setEditedFunction,
+  categoriesWithTags,
 }) {
   const [description, setDescription] = useState(name.description);
   const [newName, setName] = useState(name.name);
-  const [tags, setTags] = useState(
-    name.tags.map((tag) => ({ label: tag.tag, value: tag._id })),
-  );
+  const [tagsToSubmit, setToSubmitTags] = useState([]);
+  // const [tags, setTags] = useState(
+  //   name.tags.map((tag) => ({ label: tag.tag, value: tag._id })),
+  // );
 
   const nameSubmission = async () => {
     const nameSubmission = {
       description: description,
       name: newName,
-      tags: tags.map((tag) => tag.value),
+      tags: tagsToSubmit.map((tag) => tag.value),
       //changing each {label: tag.tag, value:tag._id} into just an object id
       nameId: name._id,
     };
@@ -110,8 +113,15 @@ export default function EditName({
                   <span className="block text-subtleWhite my-2">
                     {`${500 - description.length}/500 characters left`}{" "}
                   </span>
+
+                  <TagsSelectAndCheatSheet
+                    categoriesWithTags={categoriesWithTags}
+                    tagsToSubmit={tagsToSubmit}
+                    setToSubmitTags={setToSubmitTags}
+                    tagList={tagList}
+                  />
                   {/* ##### ATTACHING TAGS  ######*/}
-                  <label
+                  {/* <label
                     className="font-bold block mt-4 text-subtleWhite"
                     htmlFor="nameTags"
                   >
@@ -129,7 +139,7 @@ export default function EditName({
                     onChange={setTags}
                     labelProperty="tag"
                     valueProperty="_id"
-                  />
+                  /> */}
                   {/* <Select
                     value={tags.map((tag) => ({
                       label: tag.label,
