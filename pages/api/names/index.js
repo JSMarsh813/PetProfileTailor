@@ -31,12 +31,28 @@ export default async function handler(req, res) {
     const toUpdateName = await Names.findById(nameId);
 
     try {
+      // Only check if user is actually changing the name
+      if (name && name.toLowerCase() !== toUpdateName.name.toLowerCase()) {
+        const existingNameCheck = await Names.findOne({
+          name: { $regex: new RegExp(`^${name}$`, "i") },
+        });
+
+        if (existingNameCheck) {
+          return res.status(409).json({
+            message: `Ruh Roh! The name ${name} already exists`,
+          });
+        }
+      }
       if (description) {
         toUpdateName.description = description;
       }
-      toUpdateName.name = name;
+      if (name) {
+        toUpdateName.name = name;
+      }
 
-      toUpdateName.tags = tags;
+      if (tags) {
+        toUpdateName.tags = tags;
+      }
 
       await toUpdateName.save();
 
@@ -51,7 +67,12 @@ export default async function handler(req, res) {
   if (method === "POST") {
     const { name, description, tags, createdby } = req.body;
 
-    let existingNameCheck = await Names.find({ name: name });
+    let existingNameCheck = await Names.find({
+      name: { $regex: new RegExp(`^${name}$`, "i") },
+    });
+    // case-insensitive query
+    // "mike" will get the name already exists error if it matches a "Mike", "MIKE", "mikE", etc.
+    // he ^ and $ anchors make sure it only matches the full string (not substrings).
 
     let checkForInvalidInput = regexInvalidInput(name);
     console.log(checkForInvalidInput);

@@ -62,7 +62,7 @@ function NewNameWithTagsData({
     const nameSubmission = {
       name: newName,
       description: description,
-      tags: tagsToSubmit,
+      tags: tagsToSubmit.map((tag) => tag.value),
       createdby: userId.toString(),
     };
 

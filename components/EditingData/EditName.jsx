@@ -82,7 +82,7 @@ export default function EditName({
           <div
             className="            
             p-4 text-center sm:items-center sm:p-0 
-            max-w-3xl
+            max-w-6xl
             mx-auto my-2"
           >
             <div>
@@ -97,7 +97,7 @@ export default function EditName({
                 <div
                   className="mx-auto flex flex-col font-semibold text-darkPurple bg-primary
                  border-2 border-violet-400 border-dotted 
-                 p-4 shadow-lg max-w-3xl"
+                 p-4 shadow-lg "
                 >
                   {/* ##### NAME AREA ######*/}
                   <h4 className="text-subtleWhite mt-4 mb-2 text-lg"> Name </h4>
