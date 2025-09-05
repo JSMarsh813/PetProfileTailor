@@ -9,7 +9,7 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
 import removeDeletedContent from "../components/DeletingData/removeDeletedContent";
 import dbConnect from "../utils/db";
-import Category from "../models/nameCategory";
+import Category from "../models/NameCategory";
 import NameLikes from "../models/NameLikes";
 
 import Pagination from "../components/ShowingListOfContent/pagination";

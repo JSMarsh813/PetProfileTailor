@@ -9,7 +9,7 @@ import { unstable_getServerSession } from "next-auth/next";
 import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
 import dbConnect from "../utils/db";
-import Category from "../models/nameCategory";
+import Category from "../models/NameCategory";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(

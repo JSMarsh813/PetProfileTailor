@@ -25,7 +25,7 @@ export default function TagsSelectAndCheatSheet({ categoriesWithTags }) {
       {/* mapping through categories ex: gender, holidays */}
 
       <label
-        className="font-bold block mt-4"
+        className="font-bold block mt-4 text-subtleWhite"
         htmlFor="nameTags"
       >
         Tags
