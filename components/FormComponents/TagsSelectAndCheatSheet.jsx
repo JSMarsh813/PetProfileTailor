@@ -22,10 +22,12 @@ export default function TagsSelectAndCheatSheet({
   }, [categoriesWithTags]);
 
   // Map tagsToSubmit to the actual objects in tagList so React Select displays them
-  const selectedOptions = tagList.filter((option) =>
-    tagsToSubmit.some((tag) => tag.value === option.value),
-  );
 
+  // do NOT use filter, it will reorganized the array, so the selected tags won't appear in the order the user added them
+  // we have to use map isntead to preserve the order
+  const selectedOptions = tagsToSubmit.map(
+    (tag) => tagList.find((option) => option.value === tag.value) || tag,
+  );
   return (
     <div className="h-fit w-fit bg-darkPurple border-b-2 border-subtleWhite rounded-box py-2">
       <label

@@ -19,10 +19,13 @@ export const getServerSideProps = async (context) => {
   );
 
   await dbConnect.connect();
+  const rawCategories = await Category.find().populate("tags");
+  const categoryData = rawCategories.map((cat) => ({
+    ...cat.toObject(),
+    tags: cat.tags.map((tag) => tag.toObject()), // keeps insertion order intact
+  }));
 
-  const categoryData = await Category.find()
-    .populate("tags")
-    .sort({ order: 1, _id: 1 });
+  console.log("categoryData", categoryData);
 
   return {
     props: {
