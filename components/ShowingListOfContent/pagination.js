@@ -96,7 +96,6 @@ export default function Pagination({
   const handleClickPage = (page) => {
     if (page >= totalLoadedPages && totalLoadedPages < totalPagesInDatabase) {
       setSize(size + 1); // trigger SWR fetch for more pages
-      return;
     }
     setCurrentUiPage(page);
     updateWindow(page);
