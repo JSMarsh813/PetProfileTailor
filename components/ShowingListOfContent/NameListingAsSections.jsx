@@ -77,7 +77,7 @@ export default function NameListingAsSections({
   console.log("categoriesWithTags in name listings", categoriesWithTags);
 
   return (
-    <div className="text-base flex border-t border-subtleWhite">
+    <div className="text-base flex border-t border-subtleWhite mb-4">
       <a
         href={`${
           process.env.NEXT_PUBLIC_BASE_FETCH_URL
@@ -215,7 +215,7 @@ export default function NameListingAsSections({
 
           {/* ###### LIKES, SHARE, FLAG #### */}
 
-          <div className="w-full flex justify-evenly mt-2 ">
+          <div className="w-full flex justify-evenly m-2 ">
             <LikesButtonAndLikesLogic
               data={name}
               HeartIconStyling="text-xl ml-2 my-auto mx-auto"

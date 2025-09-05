@@ -94,7 +94,7 @@ export default function FetchNames({
 
   const [currentUiPage, setCurrentUiPage] = useState(1);
   const [itemsPerUiPage, setItemsPerUiPage] = useState(10);
-  // const [sortinglogicstring, setSortingLogicString] = useState("_id,-1");
+
   const [sortingValue, setSortingValue] = useState(-1);
   const [sortingProperty, setSortingProperty] = useState("_id");
   const [nameEdited, setNameEdited] = useState(false);
