@@ -117,10 +117,6 @@ function NewNameWithTagsData({
 
         <h4 className="mt-4 underline font-bold"> Submission Guidelines </h4>
         <ul className="">
-          <li className="block">
-            Names will automatically be converted to lowercase
-          </li>
-
           <li>
             <strong> Valid characters: </strong> a-z 0-9 &&apos;-
           </li>
