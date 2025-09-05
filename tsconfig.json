@@ -29,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/register.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "components/FormComponents/TagsCheatsheet.jsx"
   ],
   "exclude": ["node_modules"]
 }

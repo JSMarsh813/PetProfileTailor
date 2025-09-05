@@ -10,8 +10,14 @@ import Link from "next/link";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import WarningMessage from "../ReusableSmallComponents/buttons/WarningMessage";
 import regexInvalidInput from "../../utils/stringManipulation/check-for-valid-names";
+import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 
-function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
+function NewNameWithTagsData({
+  tagList,
+  userId,
+  categoriesWithTags,
+  sessionFromServer,
+}) {
   const [newName, setNewName] = useState("");
   const [tags, setTags] = useState([]);
   const [isPending, setIsPending] = useState(false);
@@ -84,7 +90,10 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
       });
   }
 
-  console.log(`${nameCheckInvalidInput} is not a valid character`);
+  const [tagsToSubmit, setToSubmitTags] = useState([]);
+
+  console.log("categoriesWithTags", categoriesWithTags);
+
   return (
     <div className="mx-2 w-full">
       <section className="mx-auto text-center">
@@ -242,42 +251,11 @@ function NewNameWithTagsData({ tagList, userId, sessionFromServer }) {
             onChange={(e) => setDescription(e.target.value.trim())}
           ></textarea>
           <span> {`${500 - description.length}/500 characters left`} </span>
-          <label
-            className="font-bold block mt-4"
-            htmlFor="nameTags"
-          >
-            Tags
-          </label>
-          <Select
-            unstyled
-            className="text-subtleWhite border border-subtleWhite bg-darkPurple "
-            // className styles the input
-            // styles is needed to style the dropdown
-            styles={{
-              menu: (provided, state) => ({
-                ...provided,
-                backgroundColor: "rgb(20 2 35)", // dark purple
-                color: "rgb(221 214 254)",
-                borderRadius: "0.5rem", // optional rounding
-              }),
-              option: (provided, state) => ({
-                ...provided,
-                backgroundColor: state.isFocused
-                  ? "#2563EB" // Tailwind bg-blue-600 on hover
-                  : "rgb(20 2 35)", // dark purple
-                color: "rgb(221 214 254)", //subtle white
-                cursor: state.isDisabled ? "not-allowed" : "pointer",
-              }),
-            }}
-            id="nameTags"
-            options={tagList.map((opt, index) => ({
-              label: opt.tag,
-              value: opt._id,
-            }))}
-            isMulti
-            isSearchable
-            placeholder="If you type in the tags field, it will filter the tags"
-            onChange={(opt) => setTags(opt.map((tag) => tag.value))}
+          <TagsSelectAndCheatSheet
+            category={categoriesWithTags}
+            tagsToSubmit={tagsToSubmit}
+            setToSubmitTags={setToSubmitTags}
+            tagList={tagList}
           />
           {/* BUTTON */}
           {!isPending && (

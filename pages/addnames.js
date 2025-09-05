@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import NewNameWithTagsData from "../components/AddingNewData/addingName";
 
 import { useSession } from "next-auth/react";
@@ -10,6 +10,7 @@ import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrH
 
 import dbConnect from "../utils/db";
 import NameTag from "../models/NameTag";
+import Category from "../models/nameCategory";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -22,15 +23,24 @@ export const getServerSideProps = async (context) => {
 
   const tagData = await NameTag.find();
 
+  const categoryData = await Category.find()
+    .populate("tags")
+    .sort({ order: 1, _id: 1 });
+
   return {
     props: {
       tagList: JSON.parse(JSON.stringify(tagData)),
+      categoriesWithTags: JSON.parse(JSON.stringify(categoryData)),
       sessionFromServer: session,
     },
   };
 };
 
-function AddNewNameWithTags({ tagList, sessionFromServer }) {
+function AddNewNameWithTags({
+  tagList,
+  sessionFromServer,
+  categoriesWithTags,
+}) {
   const { data: session, status } = useSession();
 
   //need to do let to avoid error if sessionFromServer is null aka not signed in
@@ -68,6 +78,7 @@ function AddNewNameWithTags({ tagList, sessionFromServer }) {
 
         <NewNameWithTagsData
           tagList={tagList}
+          categoriesWithTags={categoriesWithTags}
           userId={userId}
           sessionFromServer={sessionFromServer}
         />
