@@ -8,16 +8,28 @@ export default function StyledInput({
   type,
   id,
   name,
+  label,
 }) {
   return (
-    <input
-      className={`border bg-darkPurple text-subtleWhite border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple ${className}`}
-      onChange={onChange}
-      value={value}
-      maxLength={maxLength}
-      type={type}
-      id={id}
-      name={name}
-    />
+    <>
+      {label && (
+        <label
+          className="font-bold block mt-4 text-subtleWhite"
+          htmlFor={id}
+        >
+          {label}
+        </label>
+      )}
+
+      <input
+        className={`border bg-darkPurple text-subtleWhite border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple ${className}`}
+        onChange={onChange}
+        value={value}
+        maxLength={maxLength}
+        type={type}
+        id={id}
+        name={name}
+      />
+    </>
   );
 }

@@ -8,6 +8,7 @@ import StyledInput from "../FormComponents/StyledInput";
 import StyledTextarea from "../FormComponents/StyledTextarea";
 import StyledSelect from "../FormComponents/StyledSelect";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
+import { useTags } from "../../hooks/useTags";
 
 export default function EditName({
   SetShowEditPage,
@@ -18,9 +19,20 @@ export default function EditName({
   setEditedFunction,
   categoriesWithTags,
 }) {
+  const initialTags = name.tags.map((tag) => ({
+    label: tag.tag,
+    value: tag._id,
+  }));
   const [description, setDescription] = useState(name.description);
   const [newName, setName] = useState(name.name);
-  const [tagsToSubmit, setToSubmitTags] = useState([]);
+  const { tagsToSubmit, handleSelectChange, handleCheckboxChange } =
+    useTags(initialTags);
+  console.log("hookTest", {
+    tagsToSubmit,
+    handleSelectChange,
+    handleCheckboxChange,
+  });
+  console.log("tagsToSubmit", tagsToSubmit);
   // const [tags, setTags] = useState(
   //   name.tags.map((tag) => ({ label: tag.tag, value: tag._id })),
   // );
@@ -49,6 +61,11 @@ export default function EditName({
         toast.error(`Ruh Roh! Name not edited`);
       });
   };
+
+  console.log("Parent debug:");
+  console.log("tagsToSubmit:", tagsToSubmit);
+  console.log("handleSelectChange:", handleSelectChange);
+  console.log("handleCheckboxChange:", handleCheckboxChange);
 
   return (
     <div>
@@ -84,24 +101,20 @@ export default function EditName({
                 >
                   {/* ##### NAME AREA ######*/}
                   <h4 className="text-subtleWhite mt-4 mb-2 text-lg"> Name </h4>
-
                   <StyledInput
                     onChange={(e) => setName(e.target.value)}
                     value={newName}
                     maxLength="40"
                     type="title"
                   />
-
                   <span className="block text-subtleWhite mb-2">
                     {`${40 - newName.length}/40 characters left`}{" "}
                   </span>
-
                   {/* ##### DESCRIPTION AREA ######*/}
                   <h4 className="text-subtleWhite mb-2 text-lg">
                     {" "}
                     Description{" "}
                   </h4>
-
                   <StyledTextarea
                     onChange={(e) => setDescription(e.target.value)}
                     required
@@ -109,7 +122,6 @@ export default function EditName({
                     maxLength="500"
                     value={description}
                   />
-
                   <span className="block text-subtleWhite my-2">
                     {`${500 - description.length}/500 characters left`}{" "}
                   </span>
@@ -117,8 +129,8 @@ export default function EditName({
                   <TagsSelectAndCheatSheet
                     categoriesWithTags={categoriesWithTags}
                     tagsToSubmit={tagsToSubmit}
-                    setToSubmitTags={setToSubmitTags}
-                    tagList={tagList}
+                    handleSelectChange={handleSelectChange}
+                    handleCheckboxChange={handleCheckboxChange}
                   />
                   {/* ##### ATTACHING TAGS  ######*/}
                   {/* <label

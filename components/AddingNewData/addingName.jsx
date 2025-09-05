@@ -11,6 +11,7 @@ import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import WarningMessage from "../ReusableSmallComponents/buttons/WarningMessage";
 import regexInvalidInput from "../../utils/stringManipulation/check-for-valid-names";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
+import { useTags } from "../../hooks/useTags";
 
 function NewNameWithTagsData({
   userId,
@@ -28,6 +29,8 @@ function NewNameWithTagsData({
   const [nameCheckInvalidInput, setNameCheckInvalidInput] = useState(null);
   const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
   //regex will return null if none of the characters are invalid, so start with null to begin with
+
+  const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
 
   async function checkIfNameExists() {
     let nameResponse = await fetch("/api/names/findonenamebyname/" + nameCheck);
@@ -88,8 +91,6 @@ function NewNameWithTagsData({
         }
       });
   }
-
-  const [tagsToSubmit, setToSubmitTags] = useState([]);
 
   return (
     <div className="mx-2 w-full">
@@ -251,7 +252,8 @@ function NewNameWithTagsData({
           <TagsSelectAndCheatSheet
             categoriesWithTags={categoriesWithTags}
             tagsToSubmit={tagsToSubmit}
-            setToSubmitTags={setToSubmitTags}
+            handleSelectChange={handleSelectChange}
+            handleCheckboxChange={handleCheckboxChange}
           />
           {/* BUTTON */}
           {!isPending && (

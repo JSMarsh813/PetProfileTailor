@@ -6,6 +6,10 @@ import axios from "axios";
 import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
 import DisabledButton from "../components/ReusableSmallComponents/buttons/DisabledButton";
 import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import StyledInput from "../components/FormComponents/StyledInput";
+import StyledSelect from "../components/FormComponents/StyledSelect";
+import dbConnect from "../utils/db";
+import Category from "../models/NameCategory";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -14,16 +18,16 @@ export const getServerSideProps = async (context) => {
     authOptions,
   );
 
-  let categoryList = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/namecategories`,
-  );
-  let categoryData = await categoryList.json();
+  await dbConnect.connect();
 
+  const categoryData = await Category.find().sort({ order: 1, _id: 1 });
+
+  console.log("categoryData", categoryData);
   return {
     props: {
       sessionFromServer: session,
-      categoryData: categoryData,
-      isAdmin: session.user.id === process.env.admin_id,
+      categoryData: JSON.parse(JSON.stringify(categoryData)),
+      isAdmin: session.user._id === process.env.admin_id,
     },
   };
 };
@@ -34,8 +38,20 @@ export default function AddNameTag({
   isAdmin,
 }) {
   const [newNameTag, setNewNameTag] = useState("");
-  const [categoryList, setCategoryList] = useState(
-    categoryData.map((listing) => listing.category),
+  const [categoriesChosen, setCategoriesChosen] = useState();
+
+  const categoryList = categoryData.map((listing) => ({
+    category: listing.category,
+    _id: listing._id,
+  }));
+
+  console.log("categoryList", categoryList);
+
+  console.log(
+    categoryList.map((opt) => ({
+      label: opt.category,
+      value: opt._id,
+    })),
   );
 
   //for Nav menu profile name and image
@@ -70,7 +86,7 @@ export default function AddNameTag({
   function addTagToCategories(newNameTagId) {
     const addTagsToCategorySubmission = {
       newtagid: newNameTagId,
-      categoriesToUpdate: categoryList,
+      categoriesToUpdate: categoriesChosen,
     };
 
     try {
@@ -94,12 +110,12 @@ export default function AddNameTag({
           className="mx-2"
           onSubmit={handleNameTagSubmission}
         >
-          <input
+          <StyledInput
             type="text"
             id="categoryInput"
             className="text-darkPurple"
-            placeholder="enter a name tag to add"
-            onChange={(e) => setNewNameTag(e.target.value.toLowerCase())}
+            onChange={(e) => setNewNameTag(e.target.value)}
+            label="Enter a name tag to add"
           />
 
           {/* TAG AREA */}
@@ -109,19 +125,14 @@ export default function AddNameTag({
           >
             Categories
           </label>
-          <Select
-            className="text-darkPurple mb-4"
+
+          <StyledSelect
             id="nameTags"
-            options={categoryData.map((opt) => ({
-              label: opt.category,
-              value: opt._id,
-            }))}
-            isMulti
-            isSearchable
-            placeholder="If you type in the tags field, it will filter the tags"
-            onChange={(opt) =>
-              setCategoryList(opt.map((category) => category.value))
-            }
+            options={categoryData}
+            value={categoriesChosen}
+            onChange={(selected) => setCategoriesChosen(selected)}
+            labelProperty="category"
+            valueProperty="_id"
           />
 
           {sessionFromServer && isAdmin ? (

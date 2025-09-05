@@ -7,17 +7,19 @@ export default function StyledSelect({
   value = [],
   options = [],
   onChange,
-  labelProperty = "tag",
-  valueProperty = "_id",
+  labelProperty = "label",
+  valueProperty = "value",
+  isMulti = true,
+  isSearchable = true,
 }) {
   const formattedOptions = options.map((opt) => ({
     label: opt[labelProperty],
     value: opt[valueProperty],
   }));
-  // Transform value (same shape as options)
-  const formattedValue = value.map((v) => ({
-    label: v[labelProperty] ?? v.label,
-    value: v[valueProperty] ?? v.value,
+  // Match the selected values with formattedOptions so react-select displays them
+  const formattedValue = value.map((val) => ({
+    label: val[labelProperty],
+    value: val[valueProperty],
   }));
 
   return (
@@ -45,17 +47,20 @@ export default function StyledSelect({
       }}
       id="nameTags"
       options={formattedOptions}
-      isMulti
-      isSearchable
+      isMulti={isMulti}
+      isSearchable={isSearchable}
       value={formattedValue}
       placeholder="If you type in the tags field, it will filter the tags"
       onChange={(selected) => {
-        // normalize output for parent
+        // map react-select’s values back into raw objects
         const normalized = selected
-          ? selected.map((item) => ({
-              label: item.label,
-              value: item.value,
-            }))
+          ? selected.map(
+              (s) =>
+                s.original ?? {
+                  [labelProperty]: s.label,
+                  [valueProperty]: s.value,
+                },
+            )
           : [];
         onChange(normalized);
       }}
