@@ -19,7 +19,6 @@ function NewNameWithTagsData({
   sessionFromServer,
 }) {
   const [newName, setNewName] = useState("");
-  const [tags, setTags] = useState([]);
   const [isPending, setIsPending] = useState(false);
   const [nameAlreadyExists, setNameExists] = useState(false);
   const [description, setDescription] = useState("");
@@ -63,7 +62,7 @@ function NewNameWithTagsData({
     const nameSubmission = {
       name: newName,
       description: description,
-      tags: tags,
+      tags: tagsToSubmit,
       createdby: userId.toString(),
     };
 

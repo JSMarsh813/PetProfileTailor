@@ -1,6 +1,6 @@
 export default function regexInvalidInput(stringToCheck: string) {
   const invalidChars: string[] = [];
-  const allowedCharsRegex = /[a-zA-Z\d&'-]/;
+  const allowedCharsRegex = /[a-zA-Z\d&'.-]/;
 
   for (let i = 0; i < stringToCheck.length; i++) {
     const char = stringToCheck[i];

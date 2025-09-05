@@ -187,15 +187,15 @@ export default function EditName({
                  sm:px-6 grid grid-cols-2 gap-4"
             >
               <GeneralButton
-                text="save"
-                subtle
-                onClick={() => nameSubmission()}
-              />
-
-              <GeneralButton
                 text="cancel"
                 warning
                 onClick={() => SetShowEditPage(false)}
+              />
+
+              <GeneralButton
+                text="save"
+                subtle
+                onClick={() => nameSubmission()}
               />
 
               {/* <button

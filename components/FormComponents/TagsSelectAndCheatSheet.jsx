@@ -90,11 +90,13 @@ export default function TagsSelectAndCheatSheet({
                     return (
                       <label
                         key={tag._id}
+                        htmlFor={tag._id}
                         className="flex items-center space-x-2 cursor-pointer hover:bg-blue-700 px-1 py-1 rounded"
                       >
                         <input
+                          id={tag._id}
                           type="checkbox"
-                          className="peer hidden"
+                          className="sr-only peer"
                           checked={checked}
                           onChange={(e) =>
                             handleCheckboxChange({
@@ -105,7 +107,15 @@ export default function TagsSelectAndCheatSheet({
                           }
                         />
 
-                        <span className="border-2 border-violet-300 rounded flex items-center justify-center bg-darkPurple peer-checked:bg-yellow-300 p-[7px] peer-checked:text-darkPurple text-subtleWhite transition-colors duration-200">
+                        <span
+                          className={`
+      border-2 border-violet-300 rounded flex items-center justify-center p-[7px]
+      transition-colors duration-200
+      bg-darkPurple text-subtleWhite
+      peer-checked:bg-yellow-300 peer-checked:text-darkPurple
+      peer-focus:ring-2 peer-focus:ring-yellow-400 peer-focus:outline-none
+    `}
+                        >
                           <FontAwesomeIcon icon={faPaw} />
                         </span>
 
