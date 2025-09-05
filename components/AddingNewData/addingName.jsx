@@ -13,7 +13,6 @@ import regexInvalidInput from "../../utils/stringManipulation/check-for-valid-na
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 
 function NewNameWithTagsData({
-  tagList,
   userId,
   categoriesWithTags,
   sessionFromServer,
@@ -253,7 +252,6 @@ function NewNameWithTagsData({
             categoriesWithTags={categoriesWithTags}
             tagsToSubmit={tagsToSubmit}
             setToSubmitTags={setToSubmitTags}
-            tagList={tagList}
           />
           {/* BUTTON */}
           {!isPending && (

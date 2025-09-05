@@ -10,7 +10,6 @@ import NameListingAsSections from "../components/ShowingListOfContent/NameListin
 import removeDeletedContent from "../components/DeletingData/removeDeletedContent";
 import dbConnect from "../utils/db";
 import Category from "../models/nameCategory";
-import NameTag from "../models/NameTag";
 import NameLikes from "../models/NameLikes";
 
 import Pagination from "../components/ShowingListOfContent/pagination";
@@ -36,24 +35,6 @@ export const getServerSideProps = async (context) => {
     .sort({ order: 1, _id: 1 });
   // _id:1 is there just in case a category doesn't have an order property, it will appear at the end
 
-  //grabbing Tags for name edit function
-
-  // convert tags to a plain array of objects, in the same order mongoDB returned them
-  //toObject() strips most of the Mongoose document into a plain object that Next.js can serialize safely
-  // except for _id which is still a ObjectID, which we need to convert to a string
-  const tagFromDatabase = await NameTag.find();
-  // find returns a promise not an array, so we have to wait for the result before mapping
-  const tagData = tagFromDatabase.map((tag) => {
-    const obj = tag.toObject();
-
-    return {
-      _id: obj._id.toString(),
-      tag: obj.tag,
-      //  createdby: obj.createdby ? obj.createdby.toString() : null,
-      // safe for JSON, for if I decide to let others submit tags one day
-    };
-  });
-
   // grabbing names by logged in user
   let usersLikedNamesFromDb = [];
 
@@ -69,7 +50,6 @@ export const getServerSideProps = async (context) => {
   return {
     props: {
       categoriesWithTags: JSON.parse(JSON.stringify(data)),
-      tagList: tagData,
       sessionFromServer: session,
       usersLikedNamesFromDb,
     },

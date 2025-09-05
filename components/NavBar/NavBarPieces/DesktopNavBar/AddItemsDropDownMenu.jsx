@@ -10,7 +10,7 @@ export default function DropDownMenu() {
   return (
     <Menu
       as="div"
-      className="relative inline-block text-left z-30"
+      className="relative inline-block text-left z-10"
     >
       <MenuButton className="inline-flex justify-center px-4 py-2 text-sm font-medium text-subtleWhite hover:border-b-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
         Add
