@@ -256,7 +256,7 @@ function ProfilePage({
                       <img
                         src={userData.profileimage}
                         alt=""
-                        className="rounded-full border-4 border-amber-300 align-middle -mt-16 h-36"
+                        className="rounded-2xl align-middle -mt-16 h-36"
                       />
                     </div>
                   </div>

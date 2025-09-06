@@ -111,6 +111,7 @@ export default function FlaggingContentSection({
           <div
             className="fixed inset-0 bg-black/50 overflow-y-auto"
             aria-hidden="true"
+            tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
           >
             <DialogPanel className=" bg-secondary p-12 bg-opacity-80 h-fit">
               <IdeaForm

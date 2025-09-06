@@ -76,10 +76,10 @@ function AddFlagReport({
     };
     console.log(reportSubmission);
 
-    const userAndNameId = {
-      contentid: contentInfo._id,
-      flaggedbyuser: flaggedByUser,
-    };
+    // const userAndNameId = {
+    //   contentid: contentInfo._id,
+    //   flaggedbyuser: flaggedByUser,
+    // };
 
     await axios
       .post(apiflagReportSubmission, reportSubmission)
@@ -88,7 +88,7 @@ function AddFlagReport({
           `Thank you for your report! Report for ${response.data.message} successfully sent`,
         );
       })
-      .then(() => callApiToaddUserToNamesArray(userAndNameId))
+      // .then(() => callApiToaddUserToNamesArray(userAndNameId))
       .then(() => setFlagFormIsToggled(false))
       .then(() => setUserHasAlreadyReportedThis(true))
 
@@ -103,11 +103,11 @@ function AddFlagReport({
       });
   };
 
-  function callApiToaddUserToNamesArray(userAndNameId) {
-    axios
-      .put(apiaddUserToFlaggedByArray, userAndNameId)
-      .then(toast.success(`your name has been added to the reported array`));
-  }
+  // function callApiToaddUserToNamesArray(userAndNameId) {
+  //   axios
+  //     .put(apiaddUserToFlaggedByArray, userAndNameId)
+  //     .then(toast.success(`your name has been added to the reported array`));
+  // }
 
   function cancelFlagFormAndRevertFlagState() {
     setFlagIconClickedByNewUser(false);
