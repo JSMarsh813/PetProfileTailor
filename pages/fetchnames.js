@@ -37,13 +37,20 @@ export const getServerSideProps = async (context) => {
   // _id:1 is there just in case a category doesn't have an order property, it will appear at the end
 
   // grabbing names by logged in user
-  let usersLikedNamesFromDb = [];
+  let usersLikedContent = [];
+
+  let contentUserReported = [];
+
+  let contentUserSuggestedEdits = [];
 
   if (session) {
     await dbConnect.connect();
     const userId = session.user.id;
     const likes = await NameLikes.find({ userId }).select("nameId -_id");
-    usersLikedNamesFromDb = likes.map((l) => l.nameId.toString());
+    usersLikedContent = likes.map((l) => l.nameId.toString());
+
+    // const contentReported
+    // const contentWithSuggestions
   }
 
   // MongoDB documents (from Mongoose) are not plain JavaScript objects they have extra methods like .save, ect, but Next.JS needs JSON-serializable objects
@@ -52,7 +59,7 @@ export const getServerSideProps = async (context) => {
     props: {
       categoriesWithTags: JSON.parse(JSON.stringify(data)),
       sessionFromServer: session,
-      usersLikedNamesFromDb,
+      usersLikedNamesFromDb: usersLikedContent,
     },
   };
 };

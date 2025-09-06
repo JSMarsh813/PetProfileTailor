@@ -237,7 +237,7 @@ function ProfilePage({
         sessionFromServer={sessionFromServer}
       />
 
-      <p className="text-yellow-300 bg-red-600 text-center my-2">
+      <p className="text-subtleWhite bg-red-700 text-center my-2">
         Profile pages do not currently have SWR, so you will need to refresh to
         see the changes you make
       </p>
@@ -306,20 +306,6 @@ function ProfilePage({
                         data={userData}
                         session={sessionFromServer}
                       />
-
-                      <a
-                        href="#"
-                        className="ml-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 hover:border-yellow-500 text-center py-2 px-4 rounded"
-                      >
-                        <FontAwesomeIcon
-                          icon={faEnvelope}
-                          className="mr-2"
-                        />
-                        Message
-                      </a>
-                      <p className="mt-4">
-                        The message feature is still in development
-                      </p>
                     </div>
                   )}
 

@@ -52,7 +52,7 @@ const FlagReportSchema = new mongoose.Schema(
     outcome: {
       type: String,
       enum: ["pending", "dismissed", "warning_issued", "content_removed"],
-      default: "none",
+      default: "pending",
     },
     priority: {
       type: String,
