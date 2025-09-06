@@ -16,8 +16,6 @@ import {
   TwitterIcon,
   WhatsappShareButton,
   WhatsappIcon,
-  FacebookMessengerShareButton,
-  FacebookMessengerIcon,
   EmailShareButton,
   EmailIcon,
 } from "next-share";
@@ -30,7 +28,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
 
   return (
     <section className="flex sm:flex-row flex-wrap justify-evenly items-center">
-      <div className="w-full justify-evenly flex flex-col items-center gap-4 sm:gap-0 sm:flex-row mb-6 sm:mb-0">
+      <div className="w-full justify-evenly flex flex-col items-center gap-4 sm:gap-0 sm:flex-row mb-6 sm:mb-4">
         <button
           className="bg-subtleWhite px-4 py-2 
                   rounded-full
@@ -49,7 +47,7 @@ function SharingOptionsBar({ linkToShare, localLink }) {
         </button>
 
         <LinkButton
-          text="Go To Link"
+          text="Go to link"
           href={`${localLink}`}
           className="bg-subtleWhite px-4 py-2
                   rounded-full
