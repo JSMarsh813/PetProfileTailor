@@ -16,6 +16,7 @@ import Pagination from "../components/ShowingListOfContent/pagination";
 import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 import { useSwrPagination } from "../hooks/useSwrPagination";
 import startCooldown from "../utils/startCooldown";
+import GoToTopButton from "../components/ReusableSmallComponents/buttons/GoToTopButton";
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
 
@@ -301,23 +302,8 @@ export default function FetchNames({
                 setSize={setSize}
               /> */}
             </section>
-            <Pagination
-              itemsPerPage={itemsPerPage}
-              setItemsPerPageFunction={setItemsPerPageFunction}
-              setPageFunction={setPageFunction}
-              setSize={setSize}
-              size={size}
-              currentUiPage={currentUiPage}
-              setCurrentUiPage={setCurrentUiPage}
-              setSortingLogicFunction={setSortingLogicFunction}
-              totalPagesInDatabase={totalPagesInDatabase}
-              totalItems={totalItems}
-              amountOfDataLoaded={data?.length}
-              remainingSortCooldown={remainingSortCooldown}
-              sortingValue={sortingValue}
-              sortingProperty={sortingProperty}
-            />
           </section>
+          <GoToTopButton top="280" />
         </div>
       </div>
     </div>
