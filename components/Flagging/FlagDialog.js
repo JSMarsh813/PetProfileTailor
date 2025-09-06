@@ -11,7 +11,7 @@ export default function FlagDialog({ open, target, onClose }) {
       className="relative z-50 "
     >
       <div
-        className="fixed inset-0 bg-black/50"
+        className="fixed inset-0 bg-black/50 overflow-y-auto"
         aria-hidden="true"
       >
         <DialogPanel className=" bg-darkPurple p-12 bg-opacity-40 h-fit">

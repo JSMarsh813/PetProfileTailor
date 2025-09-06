@@ -5,6 +5,7 @@ import axios from "axios";
 import CheckboxWithLabelAndDescription from "../FormComponents/CheckboxWithLabelAndDescription";
 import { Field } from "@headlessui/react";
 import StyledTextarea from "../FormComponents/StyledTextarea";
+import StyledInput from "../FormComponents/StyledInput";
 
 function AddFlagReport({
   contentType,
@@ -115,16 +116,9 @@ function AddFlagReport({
   return (
     <form className=" mx-auto bg-primary rounded-lg max-w-7xl border border-subtleWhite">
       <div className="flex items-center justify-center py-6   bg-darkPurple ">
-        <p className="text-subtleWhite text-center ml-2">
-          <span> Woof?! </span>
-          <br />
-          Did you mean to give us an alert about this content? <br /> If not, no
-          worries just click cancel
-        </p>
-
         <GeneralButton
+          subtle
           text="Cancel"
-          className="mx-2"
           onClick={() => cancelFlagFormAndRevertFlagState()}
         />
       </div>
@@ -210,13 +204,12 @@ function AddFlagReport({
             {`${500 - additionalCommentsState.length}/500 characters left`}
           </span>
 
-          <Field>
-            <input
+          <Field className="text-center">
+            <StyledInput
               type="submit"
-              className="bg-subtleWhite  text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
               value="Submit Report"
               onClick={handleSubmitReport}
-            ></input>
+            />
           </Field>
         </div>
       </div>

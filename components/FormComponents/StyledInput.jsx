@@ -22,7 +22,7 @@ export default function StyledInput({
       )}
 
       <input
-        className={`border bg-darkPurple text-subtleWhite border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple ${className}`}
+        className={`border bg-darkPurple text-subtleWhite border-violet-200 p-2 mb-4 outline-none rounded-2xl placeholder-darkPurple ${className}`}
         onChange={onChange}
         value={value}
         maxLength={maxLength}

@@ -107,7 +107,7 @@ export default function FlaggingContentSection({
         >
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/50"
+            className="fixed inset-0 bg-black/50 overflow-y-auto"
             aria-hidden="true"
           >
             <DialogPanel className=" bg-darkPurple p-12 bg-opacity-80 h-fit">
