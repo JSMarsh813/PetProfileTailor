@@ -18,6 +18,7 @@ function AddFlagReport({
   setFlagFormIsToggled,
   setFlagIconClickedByNewUser,
   setUserHasAlreadyReportedThis,
+  onClose,
 }) {
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
@@ -110,7 +111,7 @@ function AddFlagReport({
 
   function cancelFlagFormAndRevertFlagState() {
     setFlagIconClickedByNewUser(false);
-    setFlagFormIsToggled(!flagFormIsToggled);
+    onClose?.(); // <-- close the dialog
   }
 
   return (
@@ -119,7 +120,7 @@ function AddFlagReport({
         <GeneralButton
           subtle
           text="Cancel"
-          onClick={() => cancelFlagFormAndRevertFlagState()}
+          onClick={cancelFlagFormAndRevertFlagState}
         />
       </div>
 
@@ -195,7 +196,6 @@ function AddFlagReport({
               ariaLabel="type-comments"
               onChange={(e) => setAdditionalCommentsState(e.target.value)}
               name="body"
-              required
               maxLength="500"
               placeholder="Optional"
             />

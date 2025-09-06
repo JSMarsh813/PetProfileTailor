@@ -7,14 +7,19 @@ export default function FlagDialog({ open, target, onClose }) {
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={() => {}}
+      // this way the form won't close when the user clicks on the backdrop
       className="relative z-50 "
     >
       <div
         className="fixed inset-0 bg-black/50 overflow-y-auto"
         aria-hidden="true"
+        tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
       >
-        <DialogPanel className=" bg-darkPurple p-12 bg-opacity-40 h-fit">
+        <DialogPanel
+          className=" bg-darkPurple p-12 bg-opacity-40 h-fit"
+          onClick={(e) => e.stopPropagation()}
+        >
           <FormFlagReport
             contentInfo={target}
             copyOfContentForReport={target} // adjust if needed
@@ -26,6 +31,7 @@ export default function FlagDialog({ open, target, onClose }) {
             setFlagIconClickedByNewUser={() => {}} // optional
             setUserHasAlreadyReportedThis={() => {}} // optional
             contentType="name"
+            onClose={onClose}
           />
         </DialogPanel>
       </div>
