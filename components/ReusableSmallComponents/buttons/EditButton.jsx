@@ -8,7 +8,7 @@ export default function EditButton({ onupdateEditState, className }) {
   return (
     <ContainerForLikeShareFlag>
       <button
-        className="w-full"
+        className=""
         type="button"
         onClick={onupdateEditState}
         tabIndex="0"
