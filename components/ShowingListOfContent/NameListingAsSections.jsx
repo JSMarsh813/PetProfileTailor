@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Menu } from "@headlessui/react";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
-import FlagButtonAndLogic from "../Flagging/FlagButtonAndLogic";
+import FlagButtonAndLogic from "../Flagging/FlagButton";
 import DeleteButton from "../DeletingData/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 
 import EditName from "../EditingData/EditName";
 import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
+import { Dialog, DialogPanel } from "@headlessui/react";
 // import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
 // import CommentListing from "../ShowingListOfContent/CommentListing";
 // import AddComment from "../AddingNewData/AddComment";
@@ -22,6 +23,11 @@ import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Ellipsis } from "lucide-react";
 import ContainerForLikeShareFlag from "../ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
+import { useDeleteConfirmation } from "../../hooks/useDeleteConfirmation";
+import DeleteDialog from "../DeletingData/DeleteDialog";
+import FlagDialog from "../Flagging/FlagDialog";
+import FlagButton from "../Flagging/FlagButton";
+import { useFlagging } from "../../hooks/useFlagging";
 
 export default function NameListingAsSections({
   name,
@@ -33,13 +39,16 @@ export default function NameListingAsSections({
   recentLikesRef,
   categoriesWithTags,
 }) {
-  let userIsTheCreator = name.createdby._id === signedInUsersId;
+  const { showDeleteConfirmation, deleteTarget, openDelete, closeDelete } =
+    useDeleteConfirmation();
+
+  const { showFlagDialog, flagTarget, openFlag, closeFlag } = useFlagging();
+
+  const userIsTheCreator = name.createdby._id === signedInUsersId;
+  const userHasAlreadyReported =
+    flagTarget?.flaggedby?.includes(signedInUsersId) ?? false;
 
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
-
-  //##### STATE FOR DELETIONS ######
-
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   // ##### STATE FOR EDITS ####
   const [showEditPage, setShowEditPage] = useState(false);
@@ -133,7 +142,7 @@ export default function NameListingAsSections({
                   {({ open }) => (
                     <>
                       <div>
-                        <Menu.Button
+                        <MenuButton
                           className={`px-2 py-1 rounded ${
                             open
                               ? " bg-subtleWhite text-darkPurple rounded-2xl"
@@ -141,52 +150,63 @@ export default function NameListingAsSections({
                           }`}
                         >
                           <Ellipsis />
-                        </Menu.Button>
+                        </MenuButton>
                       </div>
 
-                      <Menu.Items className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-darkPurple border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50">
+                      <MenuItems className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-darkPurple border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50">
                         {signedInUsersId &&
                         name.createdby._id == signedInUsersId ? (
-                          <Menu.Item>
-                            {({ active }) => (
+                          <MenuItem>
+                            {() => (
                               <DeleteButton
-                                className="ml-2 mr-6 w-full group flex items-center"
-                                signedInUsersId={signedInUsersId}
-                                contentId={name._id}
-                                setDeleteThisContentId={setDeleteThisContentId}
-                                contentCreatedBy={name.createdby._id}
-                                apiLink="/api/names/"
-                              />
-                              // <button
-                              //   className={`${
-                              //     active ? "bg-gray-100" : ""
-                              //   } group flex w-full items-center px-4 py-2 text-sm`}
-                              // >
-                              //   Delete Post
-                              // </button>
-                            )}
-                          </Menu.Item>
-                        ) : (
-                          <Menu.Item>
-                            {({ active }) => (
-                              <FlaggingContentSection
-                                userIsTheCreator={userIsTheCreator}
-                                signedInUsersId={signedInUsersId}
-                                currentTargetedId={currentTargetedId}
-                                contentType="name"
                                 content={name}
-                                apiflagReportSubmission="/api/flag/flagreportsubmission/"
-                                apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
+                                onDeleteClick={openDelete}
                               />
                             )}
-                          </Menu.Item>
+                          </MenuItem>
+                        ) : (
+                          <MenuItem>
+                            {({ active }) => (
+                              <FlagButton
+                                content={name}
+                                onClick={openFlag}
+                                userHasAlreadyReported={name.flaggedby?.includes(
+                                  signedInUsersId,
+                                )}
+                                userIsTheCreator={
+                                  name.createdby._id === signedInUsersId
+                                }
+                              />
+                            )}
+                          </MenuItem>
                         )}
-                      </Menu.Items>
+                      </MenuItems>
                     </>
                   )}
                 </Menu>
               </div>
             </div>
+
+            {/* Dialog rendered outside, it can't be placed in  <DeleteButton> in the MenuItem because headlessUi's menu will closed anything inside it when one of its button is clicked
+            so the deletion confirmation dialog has to be outside of it, so it isn't immeditely sent to the abyss */}
+            {showDeleteConfirmation && deleteTarget && (
+              <DeleteDialog
+                open={showDeleteConfirmation}
+                target={deleteTarget}
+                onClose={closeDelete}
+                signedInUsersId={signedInUsersId}
+                setDeleteThisContentId={setDeleteThisContentId}
+              />
+            )}
+
+            {!userIsTheCreator && !userHasAlreadyReported && showFlagDialog && (
+              <FlagDialog
+                open={showFlagDialog}
+                target={flagTarget}
+                onClose={closeFlag}
+                signedInUsersId={signedInUsersId}
+              />
+            )}
 
             {showEditPage && (
               <EditName

@@ -2,6 +2,7 @@ import React from "react";
 import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 
 export default function deleteContentNotification({
   setShowDeleteConfirmation,
@@ -46,7 +47,7 @@ export default function deleteContentNotification({
         role="dialog"
         aria-modal="true"
       >
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+        <div className="fixed inset-0 bg-darkPurple bg-opacity-75 transition-opacity"></div>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
           {/* centers content */}
@@ -59,7 +60,7 @@ export default function deleteContentNotification({
             <div>
               <div className="">
                 <div
-                  className="mx-auto flex flex-col font-semibold text-darkPurple bg-violet-900
+                  className="mx-auto flex flex-col font-semibold text-darkPurple bg-primary
                      border-2 border-violet-400 border-dotted 
                      p-4 shadow-lg max-w-3xl"
                 >
@@ -86,34 +87,24 @@ export default function deleteContentNotification({
                       ></path>
                     </svg>
 
-                    <p className="mb-4 text-gray-500 dark:text-gray-300">
+                    <p className="mb-4 text-subtleWhite bg-darkPurple p-5 rounded-3xl border-y border-subtleWhite">
                       Are you sure you want to delete this?
                     </p>
 
-                    <div className="flex justify-center items-center space-x-4">
-                      <button
-                        data-modal-toggle="deleteModal"
-                        type="button"
-                        className="py-2 px-3 text-sm font-medium text-gray-500 bg-subtleWhite  rounded-lg border border-gray-200 
-                
-                hover:bg-gray-100 hover:text-gray-900 
-                
-                focus:ring-4 focus:outline-none focus:ring-primary-300 focus:z-10 
-                
-                dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-subtleWhite dark:hover:bg-gray-600 dark:focus:ring-gray-600
-                "
-                        onClick={() => setShowDeleteConfirmation(false)}
-                      >
-                        No, cancel
-                      </button>
-
-                      <button
+                    <div className="flex justify-center items-center space-x-6">
+                      <GeneralButton
+                        warning
                         type="submit"
-                        className="py-2 px-3 text-sm font-medium text-center text-subtleWhite bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
                         onClick={() => handleContentDelete()}
-                      >
-                        Yes, I&apos;m sure
-                      </button>
+                        text="Yes, I'm sure"
+                      />
+
+                      <GeneralButton
+                        subtle
+                        dataModalToggle="deleteModal"
+                        onClick={() => setShowDeleteConfirmation(false)}
+                        text="No, cancel"
+                      />
                     </div>
                   </div>
                 </div>

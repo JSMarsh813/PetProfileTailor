@@ -15,8 +15,6 @@ function AddFlagReport({
   apiaddUserToFlaggedByArray,
   flagFormIsToggled,
   setFlagFormIsToggled,
-  setFlaggedCount,
-  flaggedCount,
   setFlagIconClickedByNewUser,
   setUserHasAlreadyReportedThis,
 }) {
@@ -112,7 +110,6 @@ function AddFlagReport({
   function cancelFlagFormAndRevertFlagState() {
     setFlagIconClickedByNewUser(false);
     setFlagFormIsToggled(!flagFormIsToggled);
-    setFlaggedCount((flaggedCount -= 1));
   }
 
   return (

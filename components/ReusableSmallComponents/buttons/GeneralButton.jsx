@@ -8,6 +8,7 @@ const GeneralButton = ({
   active = false,
   disabled,
   children,
+  dataModalToggle,
 }) => {
   const baseClasses =
     "font-bold my-3 py-1 px-4 border-b-4 shadow-lg shadow-stone-900/70 rounded-2xl text-base";
@@ -34,6 +35,7 @@ const GeneralButton = ({
       onClick={onClick}
       type={type}
       disabled={disabled}
+      data-modal-toggle={dataModalToggle}
     >
       {text}
       {children}
