@@ -5,6 +5,7 @@ import axios from "axios";
 import CheckboxWithLabelAndDescription from "../FormComponents/CheckboxWithLabelAndDescription";
 import { Field } from "@headlessui/react";
 import StyledTextarea from "../FormComponents/StyledTextarea";
+import StyledCheckbox from "../FormComponents/styledCheckbox";
 
 function AddFlagReport({
   contentType,
@@ -31,7 +32,7 @@ function AddFlagReport({
         );
   };
 
-  const handleSubmitReport = async (e) => {
+  const handleSubmitIdea = async (e) => {
     e.preventDefault();
 
     if (flagCategoriesState.length === 0) {
@@ -113,7 +114,10 @@ function AddFlagReport({
   }
 
   return (
-    <form className=" mx-auto bg-primary rounded-lg w-[94vw] border border-subtleWhite">
+    <form
+      className=" mx-auto bg-primary rounded-lg w-[94vw] border border-subtleWhite"
+      onSubmit={handleSubmitIdea}
+    >
       <div className="flex items-center justify-center py-6   bg-darkPurple">
         <GeneralButton
           text="Cancel"
@@ -123,12 +127,8 @@ function AddFlagReport({
         />
       </div>
 
-      <div className={`-mx-3 mb-6`}>
+      <div className={`-mx-3 mb-4`}>
         {/* Area to Type a comment  */}
-        <span className="bg-yellow-300 mx-auto w-64 block">
-          {" "}
-          This feature is in development
-        </span>
 
         <div className=" mb-2 text-subtleWhite px-4 pt-2">
           <h2 className="text-center text-xl ">Suggestions</h2>
@@ -149,34 +149,37 @@ function AddFlagReport({
             to submit this form
           </p>
 
-          <div className=" bg-darkPurple border-white border-2 flex">
-            <h3 className=" mb-2 text-xl mx-auto py-3"> Suggest Changes </h3>
+          <div className=" bg-darkPurple border-white border-y rounded-sm mx-5 flex">
+            <h3 className=" mb-2 text-xl mx-auto py-3 "> Suggest Changes </h3>
           </div>
-          <div className="ml-2">
-            <CheckboxWithLabelAndDescription
-              handleFlagCategoriesState={handleFlagCategoriesState}
-              title="Add other tags"
+          <div className="ml-6 my-4">
+            <StyledCheckbox
+              label="Add other tags"
               description="Please write the suggested tags in the textbox below. Thank you!"
+              checked={flagCategoriesState.includes("Add other tags")}
+              onChange={handleFlagCategoriesState}
             />
 
-            <CheckboxWithLabelAndDescription
-              handleFlagCategoriesState={handleFlagCategoriesState}
-              title="Typos or wrong tags"
+            <StyledCheckbox
+              label="Typos or wrong tags"
               description="Please describe the typos or incorrect tags in the textbox below. Thank you!"
+              checked={flagCategoriesState.includes("Typos or wrong tags")}
+              onChange={handleFlagCategoriesState}
             />
 
-            <CheckboxWithLabelAndDescription
-              handleFlagCategoriesState={handleFlagCategoriesState}
-              title="None of these"
+            <StyledCheckbox
+              label="None of these"
               description="Please give us more information in the comments textbox below"
+              checked={flagCategoriesState.includes("None of these")}
+              onChange={handleFlagCategoriesState}
             />
           </div>
 
-          <div className=" bg-darkPurple border-white border-2 flex">
+          <div className=" bg-darkPurple border-white border-y rounded-sm mx-5 flex">
             <h3 className=" mb-2 text-xl mx-auto py-3">Additional Comments</h3>
           </div>
 
-          <Field className="border-t-2 border-white py-2">
+          <Field className="mt-6 mx-4">
             <StyledTextarea
               onChange={(e) => setAdditionalCommentsState(e.target.value)}
               required
@@ -184,6 +187,14 @@ function AddFlagReport({
               placeholder="Optional"
               ariaLabel="type-comments"
               name="body"
+            />
+          </Field>
+
+          <Field className="text-center mt-2">
+            <GeneralButton
+              type="submit"
+              text="Submit"
+              default
             />
           </Field>
         </div>

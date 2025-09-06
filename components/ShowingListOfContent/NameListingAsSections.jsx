@@ -101,7 +101,7 @@ export default function NameListingAsSections({
           height={80}
         />
       </a>
-      <div className="flex-grow">
+      <div className="flex-grow ">
         <div
           className="grid  grid-cols-1
          space-between flex-none     
@@ -114,18 +114,18 @@ export default function NameListingAsSections({
           //  items-center
         >
           {/* ###### CREATEDBY SECTION #### */}
-          <section className="w-full pt-2  ">
+          <section className="w-full pt-2 ">
             {/* height needed otherwise the nonpositioned elements will move up */}
 
             <div className="">
-              <div className="w-full flex items-center justify-between p-2">
+              <div className="w-full flex flex-wrap items-center justify-between p-2">
                 <a
                   href={`${
                     process.env.NEXT_PUBLIC_BASE_FETCH_URL
                   }profile/${name.createdby.profilename.toLowerCase()}`}
                   className="flex"
                 >
-                  <div>
+                  <div className="flex flex-wrap">
                     <span className="font-bold text-lg mr-2">
                       {name.createdby.name}
                     </span>

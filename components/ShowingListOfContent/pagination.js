@@ -173,7 +173,7 @@ export default function Pagination({
           </p>
         )}
 
-      <div className="flex justify-center my-auto items-center ">
+      <div className="flex flex-wrap gap-2 justify-center my-auto items-center ">
         <button
           className="prevpage"
           aria-label="prevpage"
@@ -200,7 +200,7 @@ export default function Pagination({
               key={number}
               subtle={true}
               active={number === currentUiPage}
-              className={` px-4 mx-2`}
+              className={` px-4`}
               onClick={
                 () => handleClickPage(number)
 

@@ -102,8 +102,10 @@ export default function FlaggingContentSection({
       {!userIsTheCreator && !userAlreadySentIdea && ideaFormToggled && (
         <Dialog
           open={ideaFormToggled}
-          onClose={() => setIdeaFormToggled(false)}
+          onClose={() => {}}
+          // this way the form won't close when the user clicks on the backdrop
           className="relative z-50 "
+          tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
         >
           {/* Backdrop */}
           <div

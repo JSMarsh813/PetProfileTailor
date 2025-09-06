@@ -214,7 +214,7 @@ export default function FetchNames({
         />
       </section>
 
-      <div className="flex  sm:px-2 max-w-7xl mx-auto">
+      <div className="flex  sm:px-2 max-w-7xl mx-auto ">
         <Drawer
           open={IsOpen}
           onClose={(event, reason) => {
