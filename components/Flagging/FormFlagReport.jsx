@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Field } from "@headlessui/react";
 import StyledTextarea from "../FormComponents/StyledTextarea";
-import StyledCheckbox from "../FormComponents/styledCheckbox";
+import StyledCheckbox from "../FormComponents/StyledCheckbox";
+import ClosingXButton from "../ReusableSmallComponents/buttons/ClosingXButton";
 
 function AddFlagReport({
   contentType,
@@ -118,11 +119,10 @@ function AddFlagReport({
       className=" mx-auto bg-primary rounded-lg max-w-7xl border border-subtleWhite "
       onSubmit={handleSubmitReport}
     >
-      <div className="flex items-center justify-center py-6   bg-darkPurple ">
-        <GeneralButton
-          subtle
-          text="Cancel"
+      <div className="flex items-center justify-end py-2   bg-secondary ">
+        <ClosingXButton
           onClick={cancelFlagFormAndRevertFlagState}
+          className="mr-5"
         />
       </div>
 
@@ -148,71 +148,80 @@ function AddFlagReport({
             to submit this form
           </p>
 
-          <div className=" bg-darkPurple border-white border-y-2 flex">
+          <div className=" bg-secondary border-white border-y-2 flex">
             <h3 className=" mb-2 text-xl mx-auto py-3">
               Report Inappropriate Content
             </h3>
           </div>
 
-          <StyledCheckbox
-            label="Hate"
-            description="Slurs, racist or sexist stereotypes, Incitement of fear or discrimination..."
-            checked={flagCategoriesState.includes("Hate")}
-            onChange={handleFlagCategoriesState}
-            className="ml-4"
-          />
+          <div className="flex flex-col gap-4 my-4">
+            <StyledCheckbox
+              label="Hate"
+              description="Slurs, racist or sexist stereotypes, Incitement of fear or discrimination..."
+              checked={flagCategoriesState.includes("Hate")}
+              onChange={handleFlagCategoriesState}
+              className="ml-4"
+              value="Hate"
+            />
 
-          <StyledCheckbox
-            label="Violent Speech"
-            description="Violent Threats, Wish of Harm, Coded Incitement of Violence"
-            checked={flagCategoriesState.includes("Violent Speech")}
-            onChange={handleFlagCategoriesState}
-            className="ml-4"
-          />
+            <StyledCheckbox
+              label="Violent Speech"
+              description="Violent Threats, Wish of Harm, Coded Incitement of Violence"
+              checked={flagCategoriesState.includes("Violent Speech")}
+              onChange={handleFlagCategoriesState}
+              className="ml-4"
+              value="Violent Speech"
+            />
 
-          <StyledCheckbox
-            label="Abuse and Harassment"
-            description="Insults, unwanted advances, targeted harassment and inciting harassment"
-            checked={flagCategoriesState.includes("Abuse and Harassment")}
-            onChange={handleFlagCategoriesState}
-            className="ml-4"
-          />
+            <StyledCheckbox
+              label="Abuse and Harassment"
+              description="Insults, unwanted advances, targeted harassment and inciting harassment"
+              checked={flagCategoriesState.includes("Abuse and Harassment")}
+              onChange={handleFlagCategoriesState}
+              className="ml-4"
+              value="Abuse and Harassment"
+            />
 
-          <StyledCheckbox
-            label="Privacy"
-            description="Sharing private information of others, threatening to share or expose private information"
-            checked={flagCategoriesState.includes("Privacy")}
-            onChange={handleFlagCategoriesState}
-            className="ml-4"
-          />
+            <StyledCheckbox
+              label="Privacy"
+              description="Sharing private information of others, threatening to share or expose private information"
+              checked={flagCategoriesState.includes("Privacy")}
+              onChange={handleFlagCategoriesState}
+              className="ml-4"
+              value="Privacy"
+            />
 
-          <StyledCheckbox
-            label="Spam"
-            description="Fake engagement, scams, malicious links"
-            checked={flagCategoriesState.includes("Spam")}
-            onChange={handleFlagCategoriesState}
-            className="ml-4"
-          />
+            <StyledCheckbox
+              label="Spam"
+              description="Fake engagement, scams, malicious links"
+              checked={flagCategoriesState.includes("Spam")}
+              onChange={handleFlagCategoriesState}
+              className="ml-4"
+              value="Spam"
+            />
 
-          <StyledCheckbox
-            label="Sensitive or disturbing content"
-            description="Gratuitous gore or violence, nudity & sexual behavior"
-            checked={flagCategoriesState.includes(
-              "Sensitive or disturbing content",
-            )}
-            onChange={handleFlagCategoriesState}
-            className="ml-4"
-          />
+            <StyledCheckbox
+              label="Sensitive or disturbing content"
+              description="Gratuitous gore or violence, nudity & sexual behavior"
+              checked={flagCategoriesState.includes(
+                "Sensitive or disturbing content",
+              )}
+              onChange={handleFlagCategoriesState}
+              className="ml-4"
+              value="Sensitive or disturbing content"
+            />
 
-          <StyledCheckbox
-            label="None of these"
-            description="Please give us more information in the comments textbox below"
-            checked={flagCategoriesState.includes("None of these")}
-            onChange={handleFlagCategoriesState}
-            className="ml-4"
-          />
+            <StyledCheckbox
+              label="None of these"
+              description="Please give us more information in the comments textbox below"
+              checked={flagCategoriesState.includes("None of these")}
+              onChange={handleFlagCategoriesState}
+              className="ml-4"
+              value="None of these"
+            />
+          </div>
 
-          <div className=" bg-darkPurple border-white border-y-2 flex">
+          <div className=" bg-secondary border-white border-y-2 flex">
             <h3 className=" mb-2 text-xl mx-auto py-3">Additional Comments</h3>
           </div>
           <Field className="mt-4 mx-4 py-2">
@@ -228,7 +237,13 @@ function AddFlagReport({
             </span>
           </Field>
 
-          <Field className="text-center">
+          <Field className="flex gap-24 justify-center">
+            <GeneralButton
+              subtle
+              text="Cancel"
+              onClick={cancelFlagFormAndRevertFlagState}
+            />
+
             <GeneralButton
               type="submit"
               text="Submit"

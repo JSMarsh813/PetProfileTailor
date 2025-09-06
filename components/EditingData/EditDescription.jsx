@@ -82,7 +82,7 @@ export default function EditName({
                 />
 
                 <div
-                  className="mx-auto flex flex-col font-semibold text-darkPurple bg-violet-900
+                  className="mx-auto flex flex-col font-semibold text-secondary bg-violet-900
                  border-2 border-violet-400 border-dotted 
                  p-4 shadow-lg max-w-3xl"
                 >
@@ -91,7 +91,7 @@ export default function EditName({
                   <textarea
                     type="text"
                     id="nameDescription"
-                    className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple block w-full"
+                    className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-secondary block w-full"
                     onChange={(e) => setDescription(e.target.value)}
                     value={descriptionState}
                   />
@@ -101,7 +101,7 @@ export default function EditName({
                   <h4 className="text-subtleWhite"> notes </h4>
 
                   <textarea
-                    className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
+                    className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-secondary`}
                     onChange={(e) => setNotes(e.target.value)}
                     required
                     value={notes}
@@ -120,7 +120,7 @@ export default function EditName({
                       label: tag.label,
                       value: tag.value,
                     }))}
-                    className={`text-darkPurple mb-4 border ${
+                    className={`text-secondary mb-4 border ${
                       tags ? "border-violet-200" : "border-rose-500 border-2"
                     }`}
                     id="nameTags"
@@ -147,7 +147,7 @@ export default function EditName({
                     Related Names
                   </label>
                   <input
-                    className="text-darkPurple mb-4 "
+                    className="text-secondary mb-4 "
                     id="relatedNames"
                     type="text"
                     value={relatedNames}
@@ -165,7 +165,7 @@ export default function EditName({
 
             {/* ###########                       buttons                     ############## */}
             <div
-              className="bg-darkPurple px-4 py-3
+              className="bg-secondary px-4 py-3
                  sm:px-6 grid grid-cols-2"
             >
               <button

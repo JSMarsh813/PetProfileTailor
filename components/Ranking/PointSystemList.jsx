@@ -27,7 +27,7 @@ export default function EngagementTable({
       {/* Desktop Table */}
       <div className="hidden sm:block bg-primary rounded-3xl shadow-lg overflow-hidden">
         <table className="min-w-full text-gray-100 border-t  border-subtleWhite ">
-          <thead className="bg-darkPurple">
+          <thead className="bg-secondary">
             <tr>
               <th className="px-4 py-2"></th>
               <th className="px-4 py-2 text-center">Names</th>
@@ -71,7 +71,7 @@ export default function EngagementTable({
           >
             <h3
               id={`cat-${cat.category}`}
-              className="text-lg font-semibold text-subtleWhite mb-2 bg-darkPurple py-2 rounded-2xl border-b border-subtleWhite"
+              className="text-lg font-semibold text-subtleWhite mb-2 bg-secondary py-2 rounded-2xl border-b border-subtleWhite"
             >
               {cat.category}
             </h3>

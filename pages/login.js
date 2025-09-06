@@ -202,7 +202,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
 
                 {/* ################ Magic Link ##################### */}
 
-                <section className="bg-darkPurple p-2 ">
+                <section className="bg-secondary p-2 ">
                   <h4 className="text-center mb-2 pb-2 font-semibold border-b-2 border-white">
                     Login with a magic link (for current users)
                   </h4>

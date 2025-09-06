@@ -24,7 +24,7 @@ const HeroTop = ({
   return (
     <div
       className="hero min-h-fit font-serif  bg-black
-border-y-4 border-darkPurple  max-w-7xl mx-auto overflow-hidden"
+border-y-4 border-secondary  max-w-7xl mx-auto overflow-hidden"
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >
@@ -74,7 +74,7 @@ border-y-4 border-darkPurple  max-w-7xl mx-auto overflow-hidden"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest"
+                className="btn btn-primary w-full mt-2 shadow-xl shadow-secondary bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest"
                 onClick={updateFunState}
               >
                 Fun
@@ -88,7 +88,7 @@ border-y-4 border-darkPurple  max-w-7xl mx-auto overflow-hidden"
               />
 
               <button
-                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest"
+                className="btn btn-primary w-full mt-2 shadow-xl shadow-secondary bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest"
                 onClick={updateImpactfulState}
               >
                 Impactful
@@ -102,7 +102,7 @@ border-y-4 border-darkPurple  max-w-7xl mx-auto overflow-hidden"
                 color="white"
               />
               <button
-                className="btn btn-primary w-full mt-2 shadow-xl shadow-darkPurple bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest px-0"
+                className="btn btn-primary w-full mt-2 shadow-xl shadow-secondary bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest px-0"
                 onClick={updateTailorState}
               >
                 Fitting

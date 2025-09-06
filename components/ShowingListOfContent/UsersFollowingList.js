@@ -39,7 +39,7 @@ export default function UsersFollowingList({
                   />
 
                   <div
-                    className="mx-auto flex flex-col font-semibold text-darkPurple bg-violet-900
+                    className="mx-auto flex flex-col font-semibold text-secondary bg-violet-900
                  border-2 border-violet-400 border-dotted 
                  p-4 shadow-lg max-w-3xl"
                   >
@@ -58,7 +58,7 @@ export default function UsersFollowingList({
                           className="grid 
     grid-cols-4 gap-4 
     border-b-2 border-amber-300
-    bg-darkPurple
+    bg-secondary
             text-purple-200 p-2  
             
             
@@ -96,7 +96,7 @@ export default function UsersFollowingList({
                       </a>
                     ))
                   ) : (
-                    <div className="bg-darkPurple items-center">
+                    <div className="bg-secondary items-center">
                       <p className="py-4">Currently not following anyone 😿</p>
 
                       <p> Lets find some friends! </p>

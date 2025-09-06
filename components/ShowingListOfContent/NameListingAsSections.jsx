@@ -14,7 +14,7 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 // import AddComment from "../AddingNewData/AddComment";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import FormFlagReport from "../Flagging/FormFlagReport";
-import IdeaContentSection from "../AddingIdeas/IdeaContentSection";
+import IdeaContentSection from "../ContentEditSuggestions/IdeaContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 import removeDeletedContent from "../DeletingData/removeDeletedContent";
@@ -145,7 +145,7 @@ export default function NameListingAsSections({
                         <MenuButton
                           className={`px-2 py-1 rounded ${
                             open
-                              ? " bg-subtleWhite text-darkPurple rounded-2xl"
+                              ? " bg-subtleWhite text-secondary rounded-2xl"
                               : "hover:bg-blue-400 rounded-2xl"
                           }`}
                         >
@@ -153,7 +153,7 @@ export default function NameListingAsSections({
                         </MenuButton>
                       </div>
 
-                      <MenuItems className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-darkPurple border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50">
+                      <MenuItems className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-secondary border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50">
                         {signedInUsersId &&
                         name.createdby._id == signedInUsersId ? (
                           <MenuItem>

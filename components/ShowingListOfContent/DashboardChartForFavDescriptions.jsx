@@ -8,7 +8,7 @@ export default function DashboardChartForFavDescriptions({
   className,
 }) {
   return (
-    <div className="bg-darkPurple">
+    <div className="bg-secondary">
       {likedDescriptions.map((description) => {
         return (
           <DescriptionListingAsSections

@@ -113,7 +113,7 @@ export default function AddNameTag({
           <StyledInput
             type="text"
             id="categoryInput"
-            className="text-darkPurple"
+            className="text-secondary"
             onChange={(e) => setNewNameTag(e.target.value)}
             label="Enter a name tag to add"
           />

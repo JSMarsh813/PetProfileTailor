@@ -33,7 +33,7 @@ export default function NavLayoutwithSettingsMenu({
         ref={ref}
         className={`block rounded-md px-2 py-2 text-md
         hover:bg-subtleWhite
-        hover:text-darkPurple
+        hover:text-secondary
         text-center                   
  
 `}

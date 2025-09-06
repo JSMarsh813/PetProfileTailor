@@ -99,7 +99,7 @@ export default function AddDescriptionTag({
           <input
             type="text"
             id="categoryInput"
-            className="text-darkPurple"
+            className="text-secondary"
             placeholder="enter a description tag"
             onChange={(e) => setNewDescriptionTag(e.target.value.toLowerCase())}
           />
@@ -112,7 +112,7 @@ export default function AddDescriptionTag({
             Categories
           </label>
           <Select
-            className="text-darkPurple mb-4"
+            className="text-secondary mb-4"
             id="nameTags"
             options={categoryData.map((opt) => ({
               label: opt.category,

@@ -149,6 +149,8 @@ export default function FetchNames({
   // ########## End of section for passing state into components as functions ####
 
   const handleFilterChange = (e) => {
+    console.log("handleFilterChange", e.target);
+    console.log("handleFilterChange filterTagsIds", filterTagsIds);
     const { value, checked } = e.target;
 
     checked

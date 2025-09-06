@@ -17,7 +17,7 @@ export default function DeleteDialog({
       className="relative z-50"
     >
       <div className="fixed inset-0 flex w-screen justify-center items-start overflow-auto">
-        <DialogPanel className="bg-darkPurple p-12 bg-opacity-80 rounded-md">
+        <DialogPanel className="bg-secondary p-12 bg-opacity-80 rounded-md">
           <DeleteContentNotification
             setShowDeleteConfirmation={onClose}
             contentId={target._id}

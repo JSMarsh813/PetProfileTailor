@@ -177,7 +177,7 @@ export default function Dashboard({
                         {`Welcome Back ${userName}!`}
                       </h3>
 
-                      <div className="bg-darkPurple rounded-2xl flex flex-col py-2 max-w-96 mx-auto">
+                      <div className="bg-secondary rounded-2xl flex flex-col py-2 max-w-96 mx-auto">
                         <h4 className="pt-4">
                           {" "}
                           Edit Contributions or Profile:

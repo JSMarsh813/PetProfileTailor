@@ -170,7 +170,7 @@ export default function Register({ sessionFromServer }) {
       </div>
 
       <h2 className="my-4 text-2xl text-center">Create Account</h2>
-      <section className="bg-darkPurple px-4 mb-2 text-center mx-auto py-6 max-w-screen-md ">
+      <section className="bg-secondary px-4 mb-2 text-center mx-auto py-6 max-w-screen-md ">
         <p className=" pb-2 font-bold text-lg border-b-2 border-white mb-2">
           Do you prefer passwordless sign in?
         </p>

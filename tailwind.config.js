@@ -15,7 +15,7 @@ module.exports = {
         "5xl": "3.052rem",
       },
       colors: {
-        darkPurple: "#140223",
+        secondary2: "#140223",
         subtleBackground: "rgb(99,64,153)",
         subtleWhite: "rgb(221 214 254 / var(--tw-bg-opacity, 1))",
         accent: {
@@ -37,11 +37,11 @@ module.exports = {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "#1b073b", //dark purple
+          DEFAULT: "#140223", //darkest purple
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
+          DEFAULT: "#1b073b", // slightly lighter
           foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {

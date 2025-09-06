@@ -17,7 +17,7 @@ export default function FlagDialog({ open, target, onClose, signedInUsersId }) {
         tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
       >
         <DialogPanel
-          className=" bg-darkPurple p-12 bg-opacity-40 h-fit"
+          className=" bg-secondary p-12 bg-opacity-40 h-fit"
           onClick={(e) => e.stopPropagation()}
         >
           <FormFlagReport

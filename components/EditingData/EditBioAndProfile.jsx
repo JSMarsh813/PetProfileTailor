@@ -65,14 +65,14 @@ export default function EditBioAndProfile({
                 />
 
                 <div
-                  className="mx-auto flex flex-col font-semibold text-darkPurple bg-violet-900
+                  className="mx-auto flex flex-col font-semibold text-secondary bg-violet-900
                  border-2 border-violet-400 border-dotted 
                  p-4 shadow-lg max-w-3xl"
                 >
                   {/* ##### NAME AREA ######*/}
                   <h4 className="text-subtleWhite mt-4"> location </h4>
                   <input
-                    className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-darkPurple"
+                    className="border bg-violet-50  border-violet-200 p-2 mb-4 outline-none placeholder-secondary"
                     onChange={(e) => setLocation(e.target.value)}
                     value={location}
                     maxLength="70"
@@ -89,7 +89,7 @@ export default function EditBioAndProfile({
                   <h4 className="text-subtleWhite"> Bio </h4>
 
                   <textarea
-                    className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-darkPurple`}
+                    className={`border  bg-violet-50 sec p-3 h-30  outline-none placeholder-secondary`}
                     onChange={(e) => setBio(e.target.value)}
                     required
                     maxLength="400"
@@ -123,7 +123,7 @@ export default function EditBioAndProfile({
 
             {/* ###########                       buttons                     ############## */}
             <div
-              className="bg-darkPurple px-4 py-3
+              className="bg-secondary px-4 py-3
                  sm:px-6 grid grid-cols-2"
             >
               <button

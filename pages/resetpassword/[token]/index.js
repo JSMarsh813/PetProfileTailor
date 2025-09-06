@@ -252,7 +252,7 @@ export default function ResetPassword({ token, sessionFromServer, csrfToken }) {
                         Confirm New Password
                       </label>
                       <input
-                        className="w-full text-darkPurple"
+                        className="w-full text-secondary"
                         type="password"
                         id="confirmPassword"
                         {...register("confirmPassword", {

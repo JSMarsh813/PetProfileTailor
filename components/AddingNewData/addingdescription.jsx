@@ -108,7 +108,7 @@ function NewDescriptionWithTagsData({
           <textarea
             type="text"
             id="nameDescription"
-            className="text-subtleWhite block w-full disabled:bg-errorBackgroundColor bg-darkPurple border-subtleWhite 
+            className="text-subtleWhite block w-full disabled:bg-errorBackgroundColor bg-secondary border-subtleWhite 
 disabled:text-errorTextColor "
             onChange={(e) => setNewDescription(e.target.value.toLowerCase())}
             maxLength="4000"
@@ -138,7 +138,7 @@ disabled:text-errorTextColor "
           <textarea
             type="text"
             id="noteinput"
-            className="text-subtleWhite block w-full disabled:bg-errorBackgroundColor  bg-darkPurple border-subtleWhite
+            className="text-subtleWhite block w-full disabled:bg-errorBackgroundColor  bg-secondary border-subtleWhite
 disabled:text-errorTextColor "
             maxLength="800"
             onChange={(e) => setNotes(e.target.value.toLowerCase())}
@@ -160,7 +160,7 @@ disabled:text-errorTextColor "
           </span>
           <Select
             unstyled
-            className="text-subtleWhite border border-subtleWhite bg-darkPurple "
+            className="text-subtleWhite border border-subtleWhite bg-secondary "
             // className styles the input
             // styles is needed to style the dropdown
             styles={{
@@ -200,7 +200,7 @@ disabled:text-errorTextColor "
           <input
             className="text-subtleWhite mb-4 
 disabled:bg-errorBackgroundColor
-disabled:text-errorTextColor  bg-darkPurple border-subtleWhite"
+disabled:text-errorTextColor  bg-secondary border-subtleWhite"
             id="relatedNames"
             type="text"
             value={relatedNames}
@@ -215,7 +215,7 @@ disabled:text-errorTextColor  bg-darkPurple border-subtleWhite"
             Jedi,Luke,obiwan,Darth
           </p>
           {/* <Select
-            className="text-darkPurple mb-4"
+            className="text-secondary mb-4"
             id="descriptionTags"
             options={nameList.map((opt, index) => ({
               label: opt,

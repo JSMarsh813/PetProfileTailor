@@ -9,7 +9,7 @@ export default function StyledTextarea({
 }) {
   return (
     <textarea
-      className={`bg-darkPurple border-subtleWhite text-subtleWhite block w-full rounded-2xl h-32 ${className}`}
+      className={`bg-secondary border-subtleWhite text-subtleWhite block w-full rounded-2xl h-32 ${className}`}
       aria-label={ariaLabel}
       onChange={onChange}
       required={required}

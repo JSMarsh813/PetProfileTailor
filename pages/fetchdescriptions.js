@@ -199,7 +199,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
 
         {/*################# CONTENT DIV ################### */}
 
-        <div className="bg-darkPurple rounded-box w-full">
+        <div className="bg-secondary rounded-box w-full">
           {/* w-full ensures the list of content takes up the remaining space, it does not lead to overflow because it is flexed with filteringSidebar*/}
           <GeneralButton
             text={`${IsOpen ? "Close Filters" : "Open Filters"}`}

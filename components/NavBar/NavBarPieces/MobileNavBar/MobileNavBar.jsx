@@ -37,7 +37,7 @@ export default function MobileNavBar() {
 
           <MenuItem disabled>
             <button
-              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-darkPurple cursor-not-allowed ml-2"
+              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-secondary cursor-not-allowed ml-2"
               disabled
             >
               Fetch/Find
@@ -68,7 +68,7 @@ export default function MobileNavBar() {
 
           <MenuItem disabled>
             <button
-              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-darkPurple cursor-not-allowed ml-2"
+              className="text-subtleWhite w-full text-left rounded-md px-2 py-2 text-sm font-bold bg-secondary cursor-not-allowed ml-2"
               disabled
             >
               Add

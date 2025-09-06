@@ -10,7 +10,7 @@ export default function XSvgIcon({ onClickAction, screenReaderText }) {
     rounded-lg text-sm p-1.5 ml-auto inline-flex items-center 
 
     hover:bg-yellow-300
-    hover:text-darkPurple"
+    hover:text-secondary"
       data-modal-toggle="deleteModal"
       onClick={onClickAction}
     >

@@ -104,7 +104,7 @@ export default function LoginScreen({ sessionFromServer, csrfToken }) {
                   Click the link in the email to be signed in.
                 </p>
 
-                <section className="bg-darkPurple p-2 ">
+                <section className="bg-secondary p-2 ">
                   <div className="flex mt-2"></div>
 
                   <p className="text-center rounded-lg ">

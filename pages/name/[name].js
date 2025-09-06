@@ -17,7 +17,7 @@ export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
-    authOptions
+    authOptions,
   );
 
   const UserId = session ? session.user._id : "";
@@ -67,7 +67,7 @@ export default function Postid({ sessionFromServer, nameData }) {
           className=" grid md:grid-cols-5
                           grid-cols-3 gap-4 
                           bg-purple-100
-                          text-darkPurple p-2"
+                          text-secondary p-2"
         >
           <span> Like </span>
           <span> Name </span>

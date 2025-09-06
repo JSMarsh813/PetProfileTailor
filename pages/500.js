@@ -16,11 +16,13 @@ import GifHover from "../components/ReusableSmallComponents/GifHover";
 const MyLink = forwardRef((props, ref) => {
   let { href, active, children, ...rest } = props;
   return (
-    (<Link href={href} ref={ref} {...rest}>
-
+    <Link
+      href={href}
+      ref={ref}
+      {...rest}
+    >
       {children}
-
-    </Link>)
+    </Link>
   );
 });
 MyLink.displayName = "MyLink";
@@ -66,7 +68,7 @@ export default function Custom404() {
         height={300}
       />
 
-      <ul className="text-center text-white bg-darkPurple max-w-4xl mx-auto h-fit pt-4 sm:px-2">
+      <ul className="text-center text-white bg-secondary max-w-4xl mx-auto h-fit pt-4 sm:px-2">
         <ListWithPawPrintIcon text=" You can try to reload the page to see if the error resolves" />
 
         <li>

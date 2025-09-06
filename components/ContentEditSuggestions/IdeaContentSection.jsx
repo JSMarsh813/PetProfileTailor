@@ -112,7 +112,7 @@ export default function FlaggingContentSection({
             className="fixed inset-0 bg-black/50 overflow-y-auto"
             aria-hidden="true"
           >
-            <DialogPanel className=" bg-darkPurple p-12 bg-opacity-80 h-fit">
+            <DialogPanel className=" bg-secondary p-12 bg-opacity-80 h-fit">
               <IdeaForm
                 contentType={contentType}
                 contentInfo={content}

@@ -11,7 +11,7 @@ export default function CheckboxWithLabelAndDescription({
       {/* className ==> "group" is needed for the Checkbox component, otherwise the checkbox svg will not appear */}
       <input
         value={title}
-        className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600  group-hover:bg-subtleWhite bg-darkPurple"
+        className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600  group-hover:bg-subtleWhite bg-secondary"
         onChange={handleFlagCategoriesState}
         type="checkbox"
         aria-label="checkboxes-for-suggestion-categoreis"

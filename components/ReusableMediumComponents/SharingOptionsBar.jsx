@@ -32,12 +32,12 @@ function SharingOptionsBar({ linkToShare, localLink }) {
         <button
           className="bg-subtleWhite px-4 py-2 
                   rounded-full
-                  text-darkPurple
+                  text-secondary
                   font-semibold
                   shadow-md
-                  shadow-darkPurple
+                  shadow-secondary
                   hover:text-violet-200
-                  hover:bg-darkPurple inline-block max-w-[160px]"
+                  hover:bg-secondary inline-block max-w-[160px]"
           onClick={() => {
             navigator.clipboard.writeText(linkToShare);
             toast.success("link saved to clipboard");
@@ -51,12 +51,12 @@ function SharingOptionsBar({ linkToShare, localLink }) {
           href={`${localLink}`}
           className="bg-subtleWhite px-4 py-2
                   rounded-full
-                  text-darkPurple
+                  text-secondary
                   font-semibold
                   shadow-md
-                  shadow-darkPurple
+                  shadow-secondary
                   hover:text-violet-200
-                  hover:bg-darkPurple max-w-[160px]"
+                  hover:bg-secondary max-w-[160px]"
         />
       </div>
 

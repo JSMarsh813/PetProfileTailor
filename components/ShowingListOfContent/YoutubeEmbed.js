@@ -10,7 +10,7 @@ export default function YoutubeEmbed({
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className="mt-2 py-4 text-center bg-darkPurple">
+    <div className="mt-2 py-4 text-center bg-secondary">
       {!loaded && <span className=" text-white text-xl"> Loading ... </span>}
 
       <GeneralButton

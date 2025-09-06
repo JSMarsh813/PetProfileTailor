@@ -78,7 +78,7 @@
 //           <input
 //             type="text"
 //             id="nameInput"
-//             className="text-darkPurple"
+//             className="text-secondary"
 //             placeholder="enter a name to add"
 //             onChange={(e) => setNewName(e.target.value.toLowerCase())}
 //             disabled={sessionFromServer ? "" : "disabled"}
@@ -98,7 +98,7 @@
 //           <textarea
 //             type="text"
 //             id="nameDescription"
-//             className="text-darkPurple block w-full"
+//             className="text-secondary block w-full"
 //             placeholder="optional description: please add anything that would be useful to know. Examples: the name's meaning, popular fictional or historical figures with this name, ect"
 //             onChange={(e) => setDescription(e.target.value.trim())}
 //           ></textarea>
@@ -110,7 +110,7 @@
 //             Tags
 //           </label>
 //           <Select
-//             className="text-darkPurple mb-4"
+//             className="text-secondary mb-4"
 //             id="nameTags"
 //             options={tagList.map((opt, index) => ({
 //               label: opt.nameTag,

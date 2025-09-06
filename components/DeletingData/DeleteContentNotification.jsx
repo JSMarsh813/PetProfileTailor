@@ -47,7 +47,7 @@ export default function deleteContentNotification({
         role="dialog"
         aria-modal="true"
       >
-        <div className="fixed inset-0 bg-darkPurple bg-opacity-75 transition-opacity"></div>
+        <div className="fixed inset-0 bg-secondary bg-opacity-75 transition-opacity"></div>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
           {/* centers content */}
@@ -60,11 +60,11 @@ export default function deleteContentNotification({
             <div>
               <div className="">
                 <div
-                  className="mx-auto flex flex-col font-semibold text-darkPurple bg-primary
+                  className="mx-auto flex flex-col font-semibold text-secondary bg-primary
                      border-2 border-violet-400 border-dotted 
                      p-4 shadow-lg max-w-3xl"
                 >
-                  <div className="relative p-4 text-center rounded-lg shadow dark:bg-darkPurple sm:p-5">
+                  <div className="relative p-4 text-center rounded-lg shadow dark:bg-secondary sm:p-5">
                     {/* X Button and SVG Icon */}
 
                     <XSvgIcon
@@ -87,7 +87,7 @@ export default function deleteContentNotification({
                       ></path>
                     </svg>
 
-                    <p className="mb-4 text-subtleWhite bg-darkPurple p-5 rounded-3xl border-y border-subtleWhite">
+                    <p className="mb-4 text-subtleWhite bg-secondary p-5 rounded-3xl border-y border-subtleWhite">
                       Are you sure you want to delete this?
                     </p>
 

@@ -13,7 +13,7 @@ export default function PageTitleWithImages({ imgSrc, title, title2 }) {
       <h3
         className="text-center pt-2 
      mx-auto  h-32
-    text-4xl text-white bg-darkPurple
+    text-4xl text-white bg-secondary
     font-semibold
      absolute inset-0 my-auto"
         style={{

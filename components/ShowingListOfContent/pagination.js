@@ -103,14 +103,14 @@ export default function Pagination({
   return (
     <section className="pagination-navigation grid grid-rows-1 min-w-0 my-2  border-t border-violet-300 text-violet-900 font-bold pt-2 ">
       {/* sorting logic*/}
-      <div className="inline  my-auto pb-3 ">
+      <div className="inline  my-auto pt-3 ">
         {/* wrapping the selects in sections & inline-block keeps the per page and sort by labels from wrapping weirdly at smaller sizes */}
 
         {/* Per page */}
         <section className="inline-block">
           <select
             id="per-page"
-            className="bg-darkPurple text-subtleWhite ml-2"
+            className="bg-secondary text-subtleWhite ml-2 rounded-2xl border-subtleWhite"
             value={itemsPerPage}
             onChange={(e) => setItemsPerPageFunction(e.target.value)}
           >
@@ -132,7 +132,7 @@ export default function Pagination({
         <section className="inline-block">
           {remainingSortCooldown > 0 ? (
             <select
-              className="bg-darkPurple text-subtleWhite ml-2 p-2 opacity-50 cursor-not-allowed border rounded w-56"
+              className="bg-secondary text-subtleWhite ml-2 p-2 opacity-50 cursor-not-allowed border rounded w-56"
               disabled
             >
               <option>
@@ -143,7 +143,7 @@ export default function Pagination({
           ) : (
             <select
               id="per-page"
-              className="bg-darkPurple text-subtleWhite ml-2 p-2 border rounded w-40"
+              className="bg-secondary border-subtleWhite text-subtleWhite ml-2 p-2 border  w-40 rounded-2xl"
               onChange={(e) => setSortingLogicFunction(e.target.value)}
               value={`${sortingProperty},${sortingValue}`}
               // so we remember what the user selected after the timeout

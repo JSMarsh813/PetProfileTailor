@@ -29,9 +29,9 @@ export default function TagsSelectAndCheatSheet({
     (tag) => tagList.find((option) => option.value === tag.value) || tag,
   );
   return (
-    <div className="h-fit w-fit bg-darkPurple border-b-2 border-subtleWhite rounded-box py-2">
+    <div className="h-fit w-fit bg-secondary border-b-2 border-subtleWhite rounded-box py-2">
       <label
-        className="font-bold block mt-4 text-subtleWhite"
+        className="font-bold block my-4 text-xl text-subtleWhite"
         htmlFor="nameTags"
       >
         Tags
@@ -39,7 +39,7 @@ export default function TagsSelectAndCheatSheet({
 
       <Select
         unstyled
-        className="text-subtleWhite border border-subtleWhite bg-darkPurple w-[96%] mx-auto"
+        className="text-subtleWhite border border-subtleWhite bg-secondary w-[96%] mx-auto"
         styles={{
           menu: (provided) => ({
             ...provided,
@@ -111,8 +111,8 @@ export default function TagsSelectAndCheatSheet({
                           className={`
       border-2 border-violet-300 rounded flex items-center justify-center p-[7px]
       transition-colors duration-200
-      bg-darkPurple text-subtleWhite
-      peer-checked:bg-yellow-300 peer-checked:text-darkPurple
+      bg-secondary text-subtleWhite
+      peer-checked:bg-yellow-300 peer-checked:text-secondary
       peer-focus:ring-2 peer-focus:ring-yellow-400 peer-focus:outline-none
     `}
                         >

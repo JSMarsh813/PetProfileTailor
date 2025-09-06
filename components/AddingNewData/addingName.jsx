@@ -12,6 +12,7 @@ import WarningMessage from "../ReusableSmallComponents/buttons/WarningMessage";
 import regexInvalidInput from "../../utils/stringManipulation/check-for-valid-names";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "../../hooks/useTags";
+import StyledTextarea from "../FormComponents/StyledTextarea";
 
 function NewNameWithTagsData({
   userId,
@@ -92,9 +93,12 @@ function NewNameWithTagsData({
   }
 
   return (
-    <div className="mx-2 w-full">
+    <div className="mx-2 w-full text-subtleWhite">
       <section className="mx-auto text-center">
-        <p> Add a name with one or more tags. </p>
+        <p className="font-bold block mt-4 mb-2 text-xl ">
+          {" "}
+          Add a name with one or more tags.{" "}
+        </p>
 
         <h6 className="mt-4 text-center"> Example: A dog named batman </h6>
         <div className="w-52 mx-auto">
@@ -118,18 +122,21 @@ function NewNameWithTagsData({
         <h4 className="mt-4 underline font-bold"> Submission Guidelines </h4>
         <ul className="">
           <li>
-            <strong> Valid characters: </strong> a-z 0-9 &&apos;-
+            <strong> Valid characters: </strong> a-z A-Z 0-9 & &apos; - ! ? .
           </li>
           <li> must be 2-40 characters</li>
           <li>buttons will turn on when this criteria is met</li>
         </ul>
 
         <section className="text-center mt-4">
-          <h4 className="font-semibold text-lg"> Check if a name exists: </h4>
+          <h4 className="font-bold block mt-4 mb-2 text-xl ">
+            {" "}
+            Check if a name exists:{" "}
+          </h4>
 
           <input
             type="text"
-            className="bg-darkPurple border-subtleWhite text-subtleWhite"
+            className="bg-secondary border-subtleWhite "
             value={nameCheck}
             id="checkNameExists"
             maxLength="40"
@@ -137,7 +144,7 @@ function NewNameWithTagsData({
           />
 
           <button
-            className="inline-block bg-subtleBackground  text-subtleWhite p-2 border-2  hover:text-subtleWhite hover:border-blue-500 hover:bg-blue-400 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
+            className="inline-block bg-subtleBackground   p-2 border-2  hover:text-subtleWhite hover:border-blue-500 hover:bg-blue-400 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
             //    "bg-subtleBackground text-white hover:text-white hover:border-blue-500 hover:bg-blue-400";
             onClick={() => checkIfNameExists()}
             disabled={
@@ -159,7 +166,7 @@ function NewNameWithTagsData({
               Search
             </span>
           </button>
-          <span className="block">
+          <span className="block my-3">
             {`${40 - nameCheck.length}/40 characters left`}{" "}
           </span>
 
@@ -202,7 +209,7 @@ function NewNameWithTagsData({
         <form onSubmit={handleNameSubmission}>
           {/* needs label and value for Select to work  */}
           <label
-            className="font-bold block mt-4"
+            className="font-bold block mt-4 mb-2 text-xl "
             htmlFor="nameInput"
           >
             New Name
@@ -210,7 +217,7 @@ function NewNameWithTagsData({
           <input
             type="text"
             id="nameInput"
-            className="bg-darkPurple border-subtleWhite text-subtleWhite"
+            className="bg-secondary border-subtleWhite "
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             maxLength="40"
@@ -221,29 +228,35 @@ function NewNameWithTagsData({
               message={`${newNameInvalidInput} is not a valid character`}
             />
           )}
-          <span className="block">
+          <span className="block my-3">
             {`${40 - newName.length}/40 characters left`}
           </span>
           {/* setDescription */}
           <label
-            className="font-bold block mt-4 mb-2"
+            className="font-bold block mt-4 mb-2 text-xl "
             htmlFor="nameDescription"
           >
             Description (optional)
           </label>
-          <p>Add anything that would be useful to know.</p>{" "}
-          <p>
-            Examples: the name's meaning, popular fictional or historical
-            figures with this name.
-          </p>
-          <textarea
+
+          <StyledTextarea
             type="text"
             id="nameDescription"
             maxLength="500"
-            className="bg-darkPurple border-subtleWhite text-subtleWhite block w-full"
+            className="bg-secondary border-subtleWhite  block w-full"
             onChange={(e) => setDescription(e.target.value.trim())}
-          ></textarea>
-          <span> {`${500 - description.length}/500 characters left`} </span>
+          />
+          <div className="mb-8 flex flex-col gap-2">
+            <span className="mt-3  block">
+              {" "}
+              {`${500 - description.length}/500 characters left`}{" "}
+            </span>
+            <p>Add anything that would be useful to know.</p>{" "}
+            <p>
+              Examples: the name's meaning, popular fictional or historical
+              figures with this name.
+            </p>
+          </div>
           <TagsSelectAndCheatSheet
             categoriesWithTags={categoriesWithTags}
             tagsToSubmit={tagsToSubmit}

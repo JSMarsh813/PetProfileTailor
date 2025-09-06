@@ -75,7 +75,7 @@ export default function EditName({
         role="dialog"
         aria-modal="true"
       >
-        <div className="fixed inset-0 bg-darkPurple bg-opacity-75 transition-opacity"></div>
+        <div className="fixed inset-0 bg-secondary bg-opacity-75 transition-opacity"></div>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
           {/* centers content */}
@@ -95,7 +95,7 @@ export default function EditName({
                 />
 
                 <div
-                  className="mx-auto flex flex-col font-semibold text-darkPurple bg-primary
+                  className="mx-auto flex flex-col font-semibold text-secondary bg-primary
                  border-2 border-violet-400 border-dotted 
                  p-4 shadow-lg "
                 >
@@ -157,7 +157,7 @@ export default function EditName({
                       label: tag.label,
                       value: tag.value,
                     }))}
-                    className={`text-darkPurple mb-4 border ${
+                    className={`text-secondary mb-4 border ${
                       tags ? "border-violet-200" : "border-rose-500 border-2"
                     }`}
                     id="nameTags"
@@ -183,7 +183,7 @@ export default function EditName({
 
             {/* ###########                       buttons                     ############## */}
             <div
-              className="bg-darkPurple px-4 py-3
+              className="bg-secondary px-4 py-3
                  sm:px-6 grid grid-cols-2 gap-4"
             >
               <GeneralButton

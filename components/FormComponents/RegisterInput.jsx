@@ -33,7 +33,7 @@ const RegisterInput = ({
         placeholder={placeholder}
         maxLength={maxLength}
         autoFocus={autoFocus}
-        className={`border bg-darkPurple text-subtleWhite border-violet-200 p-2 mb-2 outline-none placeholder-darkPurple min-w-[400px]  ${inputStyling} `}
+        className={`border bg-secondary text-subtleWhite border-violet-200 p-2 mb-2 outline-none placeholder-secondary min-w-[400px]  ${inputStyling} `}
         {...register(id, validation)}
       />
 

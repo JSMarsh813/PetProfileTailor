@@ -23,7 +23,7 @@ export default function FollowButton({
     }
 
     let searchingInFollowers = data.followers.find(
-      (follower) => follower._id == userId || follower == userId
+      (follower) => follower._id == userId || follower == userId,
     );
 
     searchingInFollowers != undefined
@@ -76,7 +76,7 @@ export default function FollowButton({
       ) : (
         <label
           className="justify-self-end
-             mr-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 text-darkPurple
+             mr-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 text-secondary
                       hover:border-yellow-500 text-center py-2 px-4 rounded"
         >
           <input

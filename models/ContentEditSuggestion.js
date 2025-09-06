@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const FlagReportSchema = new mongoose.Schema(
+const ContentEditSuggestionSchema = new mongoose.Schema(
   {
     contenttype: {
       type: String,
@@ -23,12 +23,12 @@ const FlagReportSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    flaggedbyuser: {
+    ideabyuser: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    flagcategories: {
+    ideaCategories: {
       type: Array,
       required: true,
       default: [],
@@ -51,7 +51,13 @@ const FlagReportSchema = new mongoose.Schema(
     },
     outcome: {
       type: String,
-      enum: ["pending", "dismissed", "warning_issued", "content_removed"],
+      enum: [
+        "pending",
+        "dismissed",
+        "added_content",
+        "edited_content",
+        "other",
+      ],
       default: "none",
     },
     priority: {
@@ -63,14 +69,16 @@ const FlagReportSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-FlagReportSchema.statics.fieldDescriptions = {
+ContentEditSuggestionSchema.statics.fieldDescriptions = {
   status: "Current stage of moderation workflow",
   outcome: "Result of the moderation review",
   priority: "How urgent or serious the report is",
-  flagcategories: "Categories applied by the user when reporting",
+  ideaCategories:
+    "Categories applied by the user when sending in their suggested changes",
   comments: "Optional notes provided by the user",
 };
 
-const FlagReport =
-  mongoose.models.FlagReport || mongoose.model("FlagReport", FlagReportSchema);
-export default FlagReport;
+const ContentEditSuggestion =
+  mongoose.models.ContentEditSuggestion ||
+  mongoose.model("ContentEditSuggestion", ContentEditSuggestionSchema);
+export default ContentEditSuggestion;

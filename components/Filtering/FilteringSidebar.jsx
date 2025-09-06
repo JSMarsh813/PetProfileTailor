@@ -3,6 +3,8 @@ import { Button, Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import { ButtonGroup } from "@mui/material";
+import StyledCheckbox from "../FormComponents/StyledCheckbox";
+import ClosingXButton from "../ReusableSmallComponents/buttons/ClosingXButton";
 
 function FilteringSidebar({
   category,
@@ -22,15 +24,12 @@ function FilteringSidebar({
 
   return (
     <div className="flex flex-col h-full bg-primary w-96">
-      <div className="flex justify-between text-xl my-3 border-b border-white pb-3">
-        <h4 className="text-subtleWhite text-center  pl-4 ">All Filters </h4>
-        <button
-          className="text-center text-subtleWhite pr-5 hover:text-slate-400 rounded-full"
+      <div className="flex justify-between text-xl items-center border-b border-white pb-3">
+        <h4 className="text-subtleWhite text-center pl-4 ">All Filters </h4>
+        <ClosingXButton
           onClick={() => toggleDrawer(false)}
-        >
-          {" "}
-          X{" "}
-        </button>
+          className="mr-5"
+        />
       </div>
 
       {/* scrollable content */}
@@ -69,29 +68,31 @@ function FilteringSidebar({
                       {/* mapping through category options and assigning them a button (ex: male, female, unisex)*/}
 
                       {category.tags.map((option, index) => (
-                        <div
+                        <StyledCheckbox
                           key={option._id}
-                          className="flex items-center group px-2"
-                        >
-                          {/* adds a checkbox*/}
-                          <input
-                            id={`filter-mobile-${index}`}
-                            name={`${option.tag}[]`}
-                            value={option._id}
-                            type="checkbox"
-                            onChange={handleFilterChange}
-                            className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600  group-hover:bg-subtleWhite bg-darkPurple"
-                            checked={filterTagsIds.includes(option._id)}
-                          />
+                          id={`filter-mobile-${index}`} // unique id for accessibility
+                          label={option.tag} // visible text
+                          value={option._id}
+                          checked={filterTagsIds.includes(option._id)}
+                          onChange={handleFilterChange}
+                          className="group px-2" // optional styling wrapper
+                        />
+                        // <div
+                        //   key={option._id}
+                        //   className="flex items-center group px-2"
+                        // >
+                        //   {/* adds a checkbox*/}
+                        //   <input
+                        //     id={`filter-mobile-${index}`}
+                        //     name={`${option.tag}[]`}
+                        //     value={option._id}
+                        //     type="checkbox"
+                        //     onChange={handleFilterChange}
+                        //     className="h-4 w-4 rounded border-violet-300 text-amber-300 focus:ring-amber-600  group-hover:bg-subtleWhite bg-secondary"
+                        //     checked={filterTagsIds.includes(option._id)}
+                        //   />
 
-                          {/* shows the actual description (male, female, unisex ect for gender) */}
-                          <label
-                            htmlFor={`filter-mobile-${option.tag}-${option.tag}`}
-                            className="ml-3 min-w-0 flex-1 text-base text-violet-100 group-hover:text-slate-400  "
-                          >
-                            {option.tag}
-                          </label>
-                        </div>
+                        // </div>
                       ))}
                     </div>
                   </Disclosure.Panel>

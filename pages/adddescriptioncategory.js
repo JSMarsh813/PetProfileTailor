@@ -61,7 +61,7 @@ export default function AddCategory({ sessionFromServer, isAdmin }) {
           <input
             type="text"
             id="categoryInput"
-            className="text-darkPurple "
+            className="text-secondary "
             placeholder="enter a category to add"
             onChange={(e) => setNewCategory(e.target.value.toLowerCase())}
           />
