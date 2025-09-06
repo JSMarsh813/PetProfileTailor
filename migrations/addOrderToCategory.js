@@ -1,6 +1,6 @@
 import "dotenv/config";
 import db from "../utils/db.js";
-import NameCategory from "../models/nameCategory.js";
+import NameCategory from "../models/NameCategory.js";
 
 (async () => {
   await db.connect();

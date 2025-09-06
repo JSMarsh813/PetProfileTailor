@@ -1,5 +1,5 @@
 import dbConnect from "../../../../utils/db";
-import Category from "../../../../models/nameCategory";
+import Category from "../../../../models/NameCategory";
 import NameTag from "../../../../models/NameTag";
 
 export default async function handler(req, res) {
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         {
           _id: { $in: categoriesToUpdate.map((category) => category) },
         },
-        { $push: { tags: newtagid } }
+        { $push: { tags: newtagid } },
       );
       res.status(200).json(category);
     } catch (err) {
