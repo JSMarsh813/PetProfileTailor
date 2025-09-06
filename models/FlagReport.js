@@ -33,7 +33,7 @@ const FlagReportSchema = new mongoose.Schema(
       required: true,
       default: [],
     },
-    reportcomments: {
+    comments: {
       type: String,
       required: false,
     },

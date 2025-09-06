@@ -25,7 +25,7 @@ export default function StyledSelect({
   return (
     <Select
       unstyled
-      className="text-subtleWhite border border-subtleWhite bg-darkPurple "
+      className="text-subtleWhite border border-subtleWhite bg-darkPurple rounded-2xl ml-3"
       // className styles the input
       // styles is needed to style the dropdown
 

@@ -31,18 +31,15 @@ export default function GoToTopButton({ top }) {
             children={
               <>
                 <FontAwesomeIcon icon={faArrowUp} />
-                <span className="block"> Top</span>
+                <span className="block tracking-wider"> Top</span>
               </>
             }
             aria-label="Go to top"
             onClick={scrollToTop}
-            className="fixed bottom-16 right-6 py-3 px-5 rounded-full transition"
+            className="fixed bottom-16 right-6 py-3 px-6 rounded-full transition"
           />
         </>
       )}
     </>
   );
 }
-
-//   className="fixed bottom-6 right-6 py-3 px-5 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 transition"
-//   aria-label="Go to top"

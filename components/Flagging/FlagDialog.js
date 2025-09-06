@@ -1,7 +1,7 @@
 import { Dialog, DialogPanel } from "@headlessui/react";
 import FormFlagReport from "./FormFlagReport";
 
-export default function FlagDialog({ open, target, onClose }) {
+export default function FlagDialog({ open, target, onClose, signedInUsersId }) {
   if (!open || !target) return null;
 
   return (
@@ -25,7 +25,7 @@ export default function FlagDialog({ open, target, onClose }) {
             copyOfContentForReport={target} // adjust if needed
             apiflagReportSubmission="/api/flag/flagreportsubmission/"
             apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
-            flaggedByUser={target.currentUserId} // pass signedInUsersId here
+            flaggedByUser={signedInUsersId}
             flagFormIsToggled={true} // form is visible when dialog opens
             setFlagFormIsToggled={() => {}} // optional callback if needed
             setFlagIconClickedByNewUser={() => {}} // optional
