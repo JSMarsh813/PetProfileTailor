@@ -1,7 +1,7 @@
 import db from "../../../../utils/db";
 import FlagReport from "@/models/FlagReport";
 
-import { getCurrentUserId } from "@/utils/auth"; // replace with your auth logic
+// import { getCurrentUserId } from "@/utils/auth"; // replace with your auth logic
 
 export async function GET(req) {
   try {

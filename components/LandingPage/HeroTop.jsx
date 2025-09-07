@@ -23,11 +23,18 @@ const HeroTop = ({
 
   return (
     <div
-      className="hero min-h-fit font-serif  bg-black
-border-y-4 border-secondary  max-w-7xl mx-auto overflow-hidden"
+      className="hero min-h-fit font-serif 
+ max-w-7xl mx-auto overflow-hidden"
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >
+      {/* Preload the hero image for faster LCP */}
+      <link
+        rel="preload"
+        as="image"
+        href="/pugs.webp"
+      />
+
       <div className="hero-overlay  relative max-w-7xl z-10 opacity-20 ">
         {hover ? (
           <Image
