@@ -1,9 +1,10 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const FlagReportSchema = new mongoose.Schema(
   {
     contenttype: {
       type: String,
+      enum: ["name", "description", "user"],
       required: true,
       unique: false,
     },
@@ -18,17 +19,17 @@ const FlagReportSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
-    createdbyuser: {
+    contentcreatedbyuser: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    flaggedbyuser: {
+    reportedbyuser: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    flagcategories: {
+    reportcategories: {
       type: Array,
       required: true,
       default: [],
@@ -67,7 +68,7 @@ FlagReportSchema.statics.fieldDescriptions = {
   status: "Current stage of moderation workflow",
   outcome: "Result of the moderation review",
   priority: "How urgent or serious the report is",
-  flagcategories: "Categories applied by the user when reporting",
+  reportcategories: "Categories applied by the user when reporting",
   comments: "Optional notes provided by the user",
 };
 

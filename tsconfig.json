@@ -30,7 +30,8 @@
     "**/*.tsx",
     "pages/register.js",
     ".next/types/**/*.ts",
-    "components/FormComponents/TagsCheatsheet.jsx"
+    "components/FormComponents/TagsCheatsheet.jsx",
+    "migrations/addIndexsToFlagReport.js"
   ],
   "exclude": ["node_modules"]
 }
