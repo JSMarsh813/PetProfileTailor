@@ -33,7 +33,6 @@ export default function NameListingAsSections({
   name,
   signedInUsersId,
   tagList,
-  setNameEditedFunction,
   likedSetRef,
   recentLikesRef,
   categoriesWithTags,
@@ -60,10 +59,6 @@ export default function NameListingAsSections({
     apiEndpoint: "/api/names/",
     mutate,
   });
-
-  console.log("EditName:", EditName);
-  console.log("showEditDialog:", showEditDialog);
-  console.log("editTarget:", editTarget);
 
   const userIsTheCreator = name.createdby._id === signedInUsersId;
   const userHasAlreadyReported =

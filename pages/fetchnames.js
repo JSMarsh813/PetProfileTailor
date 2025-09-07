@@ -105,8 +105,6 @@ export default function FetchNames({
 
   const [sortingValue, setSortingValue] = useState(-1);
   const [sortingProperty, setSortingProperty] = useState("_id");
-  const [nameEdited, setNameEdited] = useState(false);
-  const [contentDeleted, setContentDeleted] = useState(null);
   const [triggerApplyFilters, setTriggerApplyFilters] = useState([]);
 
   const toggleDrawer = (newOpen) => {
@@ -149,10 +147,6 @@ export default function FetchNames({
     startCooldown(sortIntervalRef, setRemainingSortCooldown, 3);
   }
 
-  function setNameEditedFunction() {
-    setNameEdited(true);
-  }
-
   // ########## End of section for passing state into components as functions ####
 
   const handleFilterChange = (e) => {
@@ -186,13 +180,6 @@ export default function FetchNames({
   useEffect(() => {
     setSize(1);
   }, [sortingValue, sortingProperty]);
-
-  useEffect(() => {
-    if (nameEdited) {
-      mutate();
-    }
-    setNameEdited(false);
-  }, [nameEdited]);
 
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
 
@@ -285,7 +272,6 @@ export default function FetchNames({
                         key={name._id}
                         signedInUsersId={signedInUsersId}
                         tagList={tagList}
-                        setNameEditedFunction={setNameEditedFunction}
                         likedSetRef={likedSetRef}
                         recentLikesRef={recentLikesRef}
                         categoriesWithTags={categoriesWithTags}
