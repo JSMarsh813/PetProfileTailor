@@ -156,8 +156,8 @@ export default function FetchNames({
   // ########## End of section for passing state into components as functions ####
 
   const handleFilterChange = (e) => {
-    console.log("handleFilterChange", e.target);
-    console.log("handleFilterChange filterTagsIds", filterTagsIds);
+    // console.log("handleFilterChange", e.target);
+    // console.log("handleFilterChange filterTagsIds", filterTagsIds);
     const { value, checked } = e.target;
 
     checked
@@ -195,18 +195,6 @@ export default function FetchNames({
   }, [nameEdited]);
 
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
-
-  // useEffect(() => {
-  //   if (deleteThisContentId !== null) {
-  //     removeDeletedContent(
-
-  //       deleteThisContentId,
-  //       setDeleteThisContentId,
-  //     );
-  //   }
-  // }, [deleteThisContentId]);
-
-  // ########### End of Section that allows the deleted content to be removed without having to refresh the page ####
 
   return (
     <div>

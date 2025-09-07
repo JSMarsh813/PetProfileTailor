@@ -31,7 +31,7 @@ export default function DeleteContentNotification({
 
               {/* Trash can icon */}
               <svg
-                className="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
+                className="subtleWhite w-11 h-11 mb-3.5 mx-auto"
                 aria-hidden="true"
                 fill="white"
                 viewBox="0 0 20 20"
@@ -44,7 +44,7 @@ export default function DeleteContentNotification({
                 />
               </svg>
 
-              <p className="mb-4 text-subtleWhite bg-secondary p-5 rounded-3xl border-y border-subtleWhite">
+              <p className="mb-4 text-subtleWhite bg-secondary p-5 rounded-3xl ">
                 Are you sure you want to delete this?
               </p>
 
