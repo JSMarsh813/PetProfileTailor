@@ -106,7 +106,7 @@ export default function FetchNames({
   const [sortingValue, setSortingValue] = useState(-1);
   const [sortingProperty, setSortingProperty] = useState("_id");
   const [nameEdited, setNameEdited] = useState(false);
-  const [deleteThisContentId, setDeleteThisContentId] = useState(null);
+  const [contentDeleted, setContentDeleted] = useState(null);
   const [triggerApplyFilters, setTriggerApplyFilters] = useState([]);
 
   const toggleDrawer = (newOpen) => {
@@ -196,16 +196,15 @@ export default function FetchNames({
 
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
 
-  useEffect(() => {
-    if (deleteThisContentId !== null) {
-      removeDeletedContent(
-        // setFilteredNames,
-        // filteredNames,
-        deleteThisContentId,
-        setDeleteThisContentId,
-      );
-    }
-  }, [deleteThisContentId]);
+  // useEffect(() => {
+  //   if (deleteThisContentId !== null) {
+  //     removeDeletedContent(
+
+  //       deleteThisContentId,
+  //       setDeleteThisContentId,
+  //     );
+  //   }
+  // }, [deleteThisContentId]);
 
   // ########### End of Section that allows the deleted content to be removed without having to refresh the page ####
 
@@ -298,10 +297,10 @@ export default function FetchNames({
                       signedInUsersId={signedInUsersId}
                       tagList={tagList}
                       setNameEditedFunction={setNameEditedFunction}
-                      setDeleteThisContentId={setDeleteThisContentId}
                       likedSetRef={likedSetRef}
                       recentLikesRef={recentLikesRef}
                       categoriesWithTags={categoriesWithTags}
+                      mutate={mutate}
                     />
                   );
                 })}

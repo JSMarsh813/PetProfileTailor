@@ -4,11 +4,7 @@ let removeDeletedContent = function (
   deleteThisContentId,
   setDeleteThisContentId,
 ) {
-  setListOfContent(
-    listOfContent.filter(
-      (ContentFromList) => ContentFromList._id != deleteThisContentId,
-    ),
-  ) && setDeleteThisContentId(null);
+  setDeleteThisContentId(null);
 };
 
 export default removeDeletedContent;

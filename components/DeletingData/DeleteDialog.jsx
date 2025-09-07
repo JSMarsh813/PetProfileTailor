@@ -5,8 +5,8 @@ export default function DeleteDialog({
   open,
   target,
   onClose,
+  onConfirm, // new prop
   signedInUsersId,
-  setDeleteThisContentId,
 }) {
   if (!open || !target) return null;
 
@@ -23,8 +23,8 @@ export default function DeleteDialog({
             contentId={target._id}
             signedInUsersId={signedInUsersId}
             contentCreatedBy={target.createdby._id}
-            setDeleteThisContentId={setDeleteThisContentId}
             apiLink="/api/names/"
+            onConfirm={onConfirm} // passes down confirmDelete
           />
         </DialogPanel>
       </div>

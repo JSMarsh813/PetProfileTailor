@@ -17,7 +17,6 @@ import FormFlagReport from "../Flagging/FormFlagReport";
 import IdeaContentSection from "../ContentEditSuggestions/IdeaContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
-import removeDeletedContent from "../DeletingData/removeDeletedContent";
 import AddHashToArrayString from "../../utils/stringManipulation/addHashToArrayString";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,13 +33,18 @@ export default function NameListingAsSections({
   signedInUsersId,
   tagList,
   setNameEditedFunction,
-  setDeleteThisContentId,
   likedSetRef,
   recentLikesRef,
   categoriesWithTags,
+  mutate,
 }) {
-  const { showDeleteConfirmation, deleteTarget, openDelete, closeDelete } =
-    useDeleteConfirmation();
+  const {
+    showDeleteConfirmation,
+    deleteTarget,
+    openDelete,
+    closeDelete,
+    confirmDelete,
+  } = useDeleteConfirmation();
 
   const { showFlagDialog, flagTarget, openFlag, closeFlag } = useFlagging();
 
@@ -195,7 +199,9 @@ export default function NameListingAsSections({
                 target={deleteTarget}
                 onClose={closeDelete}
                 signedInUsersId={signedInUsersId}
-                setDeleteThisContentId={setDeleteThisContentId}
+                onConfirm={
+                  () => confirmDelete("/api/names/", signedInUsersId, mutate) // passing mutate from useSwrPagination
+                }
               />
             )}
 
@@ -231,7 +237,7 @@ export default function NameListingAsSections({
           </p>
 
           {/* ###### TAGS SECTION #### */}
-          <span className="my-2"> {AddHashToArrayString(name)} </span>
+          <span className="my-4"> {AddHashToArrayString(name)} </span>
 
           {/* ###### LIKES, SHARE, FLAG #### */}
 
