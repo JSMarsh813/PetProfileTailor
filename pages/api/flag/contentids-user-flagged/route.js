@@ -1,23 +1,25 @@
-import dbConnect from "@/utils/db"; // your mongoose connection helper
+import db from "../../../../utils/db";
 import FlagReport from "@/models/FlagReport";
+
 import { getCurrentUserId } from "@/utils/auth"; // replace with your auth logic
 
 export async function GET(req) {
   try {
     // Connect to Mongo
-    await dbConnect.connect();
+    const userId = req.body.contentid;
+    await db.connect();
 
     // Get current user ID from session / JWT / etc.
-    const currentUserId = await getCurrentUserId(req);
-    if (!currentUserId) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-      });
-    }
+    // const currentUserId = await getCurrentUserId(req);
+    // if (!currentUserId) {
+    //   return new Response(JSON.stringify({ error: "Unauthorized" }), {
+    //     status: 401,
+    //   });
+    // }
 
     //  Query FlagReport for all reports by this user
     const reports = await FlagReport.find(
-      { reportedbyuser: currentUserId },
+      { reportedbyuser: userId },
       { contentid: 1, _id: 0 }, // only return contentid
     ).lean(); //.lean() makes the query faster by returning plain JS objects.
 
