@@ -270,28 +270,29 @@ export default function FetchNames({
             )}
 
             <section className="whitespace-pre-line ">
-              {names
-                .slice(
-                  currentUiPage - 1 == 0
-                    ? 0
-                    : (currentUiPage - 1) * itemsPerPage,
-                  currentUiPage * itemsPerPage,
-                )
-                .map((name) => {
-                  return (
-                    <NameListingAsSections
-                      name={name}
-                      key={name._id}
-                      signedInUsersId={signedInUsersId}
-                      tagList={tagList}
-                      setNameEditedFunction={setNameEditedFunction}
-                      likedSetRef={likedSetRef}
-                      recentLikesRef={recentLikesRef}
-                      categoriesWithTags={categoriesWithTags}
-                      mutate={mutate}
-                    />
-                  );
-                })}
+              {names?.length > 0 &&
+                names
+                  .slice(
+                    currentUiPage - 1 == 0
+                      ? 0
+                      : (currentUiPage - 1) * itemsPerPage,
+                    currentUiPage * itemsPerPage,
+                  )
+                  .map((name) => {
+                    return (
+                      <NameListingAsSections
+                        name={name}
+                        key={name._id}
+                        signedInUsersId={signedInUsersId}
+                        tagList={tagList}
+                        setNameEditedFunction={setNameEditedFunction}
+                        likedSetRef={likedSetRef}
+                        recentLikesRef={recentLikesRef}
+                        categoriesWithTags={categoriesWithTags}
+                        mutate={mutate}
+                      />
+                    );
+                  })}
 
               {/* <CheckForMoreData
                 filteredListLastPage={filteredListLastPage} //deleted

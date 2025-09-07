@@ -27,6 +27,7 @@ import DeleteDialog from "../DeletingData/DeleteDialog";
 import FlagDialog from "../Flagging/FlagDialog";
 import FlagButton from "../Flagging/FlagButton";
 import { useFlagging } from "../../hooks/useFlagging";
+import { useEditHandler } from "../../hooks/useEditHandler";
 
 export default function NameListingAsSections({
   name,
@@ -47,6 +48,22 @@ export default function NameListingAsSections({
   } = useDeleteConfirmation();
 
   const { showFlagDialog, flagTarget, openFlag, closeFlag } = useFlagging();
+
+  const {
+    showEditDialog,
+    editTarget,
+    openEdit,
+    closeEdit,
+    confirmEdit,
+    isSaving,
+  } = useEditHandler({
+    apiEndpoint: "/api/names/",
+    mutate,
+  });
+
+  console.log("EditName:", EditName);
+  console.log("showEditDialog:", showEditDialog);
+  console.log("editTarget:", editTarget);
 
   const userIsTheCreator = name.createdby._id === signedInUsersId;
   const userHasAlreadyReported =
@@ -214,14 +231,15 @@ export default function NameListingAsSections({
               />
             )}
 
-            {showEditPage && (
+            {showEditDialog && editTarget && (
               <EditName
-                SetShowEditPage={setShowEditPage}
-                name={name}
-                signedInUsersId={signedInUsersId}
+                open={showEditDialog}
+                onClose={closeEdit}
+                name={editTarget}
                 tagList={tagList}
-                setEditedFunction={setNameEditedFunction}
                 categoriesWithTags={categoriesWithTags}
+                onSave={confirmEdit}
+                signedInUsersId={signedInUsersId}
               />
             )}
           </section>
@@ -255,11 +273,12 @@ export default function NameListingAsSections({
 
             <ShareButton onClickShowShares={onClickShowShares} />
 
-            {signedInUsersId && name.createdby._id == signedInUsersId ? (
+            {name && name.createdby._id == signedInUsersId ? (
               <ContainerForLikeShareFlag>
                 <EditButton
-                  className=""
-                  onupdateEditState={onupdateEditState}
+                  onupdateEditState={() => {
+                    if (name) openEdit(name);
+                  }}
                 />
               </ContainerForLikeShareFlag>
             ) : (
