@@ -44,7 +44,7 @@ export default function DeleteContentNotification({
                 />
               </svg>
 
-              <p className="mb-4 text-subtleWhite bg-secondary p-5 rounded-3xl ">
+              <p className="mb-4 text-subtleWhite  p-5  ">
                 Are you sure you want to delete this?
               </p>
 
