@@ -8,6 +8,7 @@ export default function ProfileImage({
   width = "200",
   height = "200",
   divStyling,
+  href,
 }) {
   const [hover, setHover] = useState(false);
   const handleMouseEnterForImage = () => {
@@ -25,16 +26,18 @@ export default function ProfileImage({
 
   return (
     <div className={divStyling}>
-      <Image
-        src={hoverProfileImage}
-        alt=""
-        className={className}
-        width={width}
-        height={height}
-        unoptimized
-        onMouseEnter={handleMouseEnterForImage}
-        onMouseLeave={handleMouseLeaveForImage}
-      />
+      <a href={href}>
+        <Image
+          src={hoverProfileImage}
+          alt=""
+          className={className}
+          width={width}
+          height={height}
+          unoptimized
+          onMouseEnter={handleMouseEnterForImage}
+          onMouseLeave={handleMouseLeaveForImage}
+        />
+      </a>
     </div>
   );
 }

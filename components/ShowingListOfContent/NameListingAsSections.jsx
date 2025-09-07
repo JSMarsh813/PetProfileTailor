@@ -100,23 +100,22 @@ export default function NameListingAsSections({
   console.log("AddHashToArrayString(name)", AddHashToArrayString(name));
   console.log("name.tags", name.tags);
   console.log("categoriesWithTags in name listings", categoriesWithTags);
+  const href = `${
+    process.env.NEXT_PUBLIC_BASE_FETCH_URL
+  }profile/${name.createdby.profilename.toLowerCase()}`;
 
   return (
     <div className="text-base flex border-t border-subtleWhite mb-4">
-      <a
-        href={`${
-          process.env.NEXT_PUBLIC_BASE_FETCH_URL
-        }profile/${name.createdby.profilename.toLowerCase()}`}
-      >
-        <ProfileImage
-          divStyling="min-h-10 max-w-12 mr-4 mt-3 min-w-10 max-h-12"
-          profileImage={name.createdby.profileimage}
-          layout="responsive"
-          className="rounded-2xl"
-          width={80}
-          height={80}
-        />
-      </a>
+      <ProfileImage
+        divStyling="min-h-10 max-w-12 mr-4 mt-3 min-w-10 max-h-12"
+        profileImage={name.createdby.profileimage}
+        layout="responsive"
+        className="rounded-2xl"
+        width={80}
+        height={80}
+        href={href}
+      />
+
       <div className="flex-grow ">
         <div
           className="grid  grid-cols-1
