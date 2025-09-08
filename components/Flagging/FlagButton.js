@@ -7,7 +7,16 @@ import { faFlag } from "@fortawesome/free-solid-svg-icons";
 // Ah! That warning is coming from Headless UI’s MenuItem / Disclosure / Transition components, which try to attach a ref to whatever you pass inside. Regular function components (like your FlagButton) cannot receive refs unless you wrap them in React.forwardRef.
 
 const FlagButton = React.forwardRef(
-  ({ content, onClick, userHasAlreadyReported, userIsTheCreator }, ref) => {
+  (
+    {
+      content,
+      onClick,
+      userHasAlreadyReported,
+      userIsTheCreator,
+      reportsSetRef,
+    },
+    ref,
+  ) => {
     const flaggedColor = userHasAlreadyReported ? "red" : "white";
 
     return (

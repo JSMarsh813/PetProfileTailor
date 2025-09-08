@@ -35,6 +35,7 @@ export default function NameListingAsSections({
   tagList,
   likedSetRef,
   recentLikesRef,
+  reportsSetRef,
   categoriesWithTags,
   mutate,
 }) {
@@ -46,7 +47,8 @@ export default function NameListingAsSections({
     confirmDelete,
   } = useDeleteConfirmation();
 
-  const { showFlagDialog, flagTarget, openFlag, closeFlag } = useFlagging();
+  const { showFlagDialog, flagTarget, openFlag, closeFlag } =
+    useFlagging(reportsSetRef);
 
   const {
     showEditDialog,
@@ -61,8 +63,13 @@ export default function NameListingAsSections({
   });
 
   const userIsTheCreator = name.createdby._id === signedInUsersId;
-  const userHasAlreadyReported =
-    flagTarget?.flaggedby?.includes(signedInUsersId) ?? false;
+  const userHasAlreadyReported = reportsSetRef?.current.has(name._id);
+  console.log(
+    "reportsSetRef",
+    reportsSetRef,
+    "userHasAlreadyReported",
+    userHasAlreadyReported,
+  );
 
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
 
@@ -185,9 +192,8 @@ export default function NameListingAsSections({
                               <FlagButton
                                 content={name}
                                 onClick={openFlag}
-                                userHasAlreadyReported={name.flaggedby?.includes(
-                                  signedInUsersId,
-                                )}
+                                userHasAlreadyReported={userHasAlreadyReported}
+                                reportsSetRef={reportsSetRef}
                                 userIsTheCreator={
                                   name.createdby._id === signedInUsersId
                                 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function useFlagging() {
+export function useFlagging(reportsSetRef) {
   const [showFlagDialog, setShowFlagDialog] = useState(false);
   const [flagTarget, setFlagTarget] = useState(null);
 
@@ -14,6 +14,7 @@ export function useFlagging() {
     setShowFlagDialog(false);
   }
 
+  //   reportsSetRef
   return {
     showFlagDialog,
     flagTarget,

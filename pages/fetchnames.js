@@ -11,6 +11,7 @@ import removeDeletedContent from "../components/DeletingData/removeDeletedConten
 import dbConnect from "../utils/db";
 import Category from "../models/NameCategory";
 import NameLikes from "../models/NameLikes";
+import FlagReport from "../models/FlagReport";
 
 import Pagination from "../components/ShowingListOfContent/pagination";
 import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
@@ -37,6 +38,7 @@ export const getServerSideProps = async (context) => {
   // _id:1 is there just in case a category doesn't have an order property, it will appear at the end
 
   // grabbing names by logged in user
+
   let usersLikedContent = [];
 
   let contentUserReported = [];
@@ -46,10 +48,21 @@ export const getServerSideProps = async (context) => {
   if (session) {
     await dbConnect.connect();
     const userId = session.user.id;
+
+    // ######## Likes ###############
     const likes = await NameLikes.find({ userId }).select("nameId -_id");
     usersLikedContent = likes.map((l) => l.nameId.toString());
 
-    // const contentReported
+    // ############## Reports ################
+
+    const reports = await FlagReport.find(
+      { reportedbyuser: userId },
+      { contentid: 1, _id: 0 }, // only return contentid
+    ).lean(); //.lean() makes the query faster by returning plain JS objects.
+
+    // Extract contentIds into a simple array, convert objectIds to plain strings
+    const contentIds = reports.map((r) => r.contentid.toString());
+    contentUserReported = contentIds;
     // const contentWithSuggestions
   }
 
@@ -60,6 +73,7 @@ export const getServerSideProps = async (context) => {
       categoriesWithTags: JSON.parse(JSON.stringify(data)),
       sessionFromServer: session,
       usersLikedNamesFromDb: usersLikedContent,
+      contentUserReported,
     },
   };
 };
@@ -69,6 +83,7 @@ export default function FetchNames({
   sessionFromServer,
   tagList,
   usersLikedNamesFromDb,
+  contentUserReported,
 }) {
   const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
   const [remainingSortCooldown, setRemainingSortCooldown] = useState(0);
@@ -89,12 +104,13 @@ export default function FetchNames({
     signedInUsersId = sessionFromServer.user._id;
   }
 
-  console.log("signedInUsersId in fetchNames", sessionFromServer);
   // ##### end of section for nav menu
   // store liked IDs in a ref so updates don't trigger full re-render
   const likedSetRef = useRef(new Set(usersLikedNamesFromDb));
   const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
   // tracks if the likes count has to be updated, important for if the user navigates backwards
+
+  const reportsSetRef = useRef(new Set(contentUserReported));
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [IsOpen, setIsOpen] = useState(false);
@@ -274,6 +290,7 @@ export default function FetchNames({
                         tagList={tagList}
                         likedSetRef={likedSetRef}
                         recentLikesRef={recentLikesRef}
+                        reportsSetRef={reportsSetRef}
                         categoriesWithTags={categoriesWithTags}
                         mutate={mutate}
                       />
