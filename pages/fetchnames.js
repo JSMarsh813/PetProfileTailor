@@ -111,6 +111,7 @@ export default function FetchNames({
   // tracks if the likes count has to be updated, important for if the user navigates backwards
 
   const reportsSetRef = useRef(new Set(contentUserReported));
+  const recentReportsRef = useRef({});
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [IsOpen, setIsOpen] = useState(false);

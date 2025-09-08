@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useToggleState } from "./useToggleState";
 
 export function useLikeState({
   data,
   userId,
-  likedSetRef,
-  recentLikesRef,
+  likedSetRef, // likes we got from the server
+  recentLikesRef, // tracking changes to likedSetRef
   apiBaseLink,
 }) {
   const nameId = data._id;
@@ -13,80 +14,61 @@ export function useLikeState({
   const initialCount = data.likedbycount; // 10
 
   // Local state only for rendering
-  const [liked, setLiked] = useState(initialLiked);
   const [likeCount, setLikeCount] = useState(
     initialCount + (recentLikesRef?.current[nameId] || 0),
   );
 
-  const [isProcessing, setIsProcessing] = useState(false);
-  // if the user went backwards, we'd need to update the count to reflect the recent changes they made
-
   function calculateHowCountAdjusts() {
-    let currentChange;
-    if (initialLiked && !recentLikesRef.current[nameId]) {
-      // it was liked originally, but we hadn't clicked on it yet in this session
-      currentChange = -1;
-      // unlike it
-    } else if (
-      recentLikesRef.current[nameId] === 1 ||
-      recentLikesRef.current[nameId] === -1
-    ) {
-      currentChange = 0;
-      // change back to default whether it was initiallly liked or not, we're just undoing the clicks we did in this session
-    } else {
-      currentChange = 1;
-      // otherwise like it
-    }
-    return currentChange;
+    // ### Tracking how we're adjusting the likes count to match the server ######
+    if (initialLiked && !recentLikesRef.current[nameId]) return -1;
+    // it was liked originally, we're unliking it
+    if ([1, -1].includes(recentLikesRef.current[nameId])) return 0;
+    // change back to default whether it was initiallly liked or not, we're just undoing the clicks we did in this session
+    return 1;
+    // otherwise like it
   }
 
-  // ############ Handle Click ##############################
-  const toggleLike = async () => {
-    if (isProcessing) return;
-    console.log("toggleLike clicked!", nameId);
-    setIsProcessing(true);
+  const {
+    active: liked,
+    isProcessing,
+    toggle,
+  } = useToggleState({
+    id: userId,
+    initialActive: initialLiked,
+    apiUrl: `${apiBaseLink}/${nameId}/togglelike`,
+    onApplyOptimistic: (newLiked) => {
+      // newLiked = true or false, opposite of its initial liked/unliked state
+      const originalRecentLike = recentLikesRef.current[nameId] || 0;
+      // Save originalRecentLike somewhere we can reuse in rollback, keeping track if they originally:
+      // 1. liked during the session: 1,
+      // 2. unliked during this session: -1
+      // 3. number was === to database state: 0
+      const change = calculateHowCountAdjusts();
+      recentLikesRef.current[nameId] = change;
 
-    const currentNameCountChange = calculateHowCountAdjusts();
-    //  ### Tracking how we're adjusting the likes count to match the server ######
+      if (newLiked) {
+        likedSetRef.current.add(nameId);
+        setLikeCount((prev) => prev + 1);
+      } else {
+        likedSetRef.current.delete(nameId);
+        setLikeCount((prev) => prev - 1);
+      }
+      // Return originalRecentLike so rollback can use it
+      return originalRecentLike;
+    },
 
-    const newLikedStatus = !liked;
-    const prevChange = recentLikesRef.current[nameId] || 0;
+    onRollback: (originalRecentLike) => {
+      // use the saved originalRecentLike from onApplyOptimistic
+      if (originalRecentLike === 1) likedSetRef.current.add(nameId); // restore previous like
 
-    if (newLikedStatus) {
-      likedSetRef.current.add(nameId);
-      recentLikesRef.current[nameId] = currentNameCountChange;
-      setLikeCount((prev) => prev + 1);
-    } else {
-      likedSetRef.current.delete(nameId);
-      recentLikesRef.current[nameId] = currentNameCountChange;
-      setLikeCount((prev) => prev - 1);
-    }
+      if (originalRecentLike === -1) likedSetRef.current.delete(nameId); // restore previous unlike
+      recentLikesRef.current[nameId] = originalRecentLike;
 
-    setLiked(!liked);
+      const rollbackCount = initialCount + originalRecentLike;
 
-    try {
-      await fetch(`${apiBaseLink}/${nameId}/togglelike`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }),
-      });
-    } catch (err) {
-      console.log("an error occured");
-
-      if (prevChange === 1) likedSetRef.current.delete(nameId);
-      if (prevChange === -1) likedSetRef.current.add(nameId);
-      recentLikesRef.current[nameId] = prevChange;
-
-      const rollbackLiked =
-        likedSetRef.current.has(nameId) || recentLikesRef.current[nameId] === 1;
-      const rollbackCount = initialCount + prevChange;
-
-      setLiked(rollbackLiked);
       setLikeCount(rollbackCount);
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+    },
+  });
 
-  return { liked, likeCount, isProcessing, toggleLike };
+  return { liked, likeCount, isProcessing, toggleLike: toggle };
 }

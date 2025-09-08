@@ -14,7 +14,8 @@ export function useFlagging(reportsSetRef) {
     setShowFlagDialog(false);
   }
 
-  //   reportsSetRef
+  // update set with the new report reportsSetRef
+  // also add to state
   return {
     showFlagDialog,
     flagTarget,
