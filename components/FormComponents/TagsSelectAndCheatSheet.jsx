@@ -31,7 +31,7 @@ export default function TagsSelectAndCheatSheet({
   return (
     <div className="h-fit w-fit bg-secondary border-b-2 border-subtleWhite rounded-box py-2">
       <label
-        className="font-bold block my-4 text-xl text-subtleWhite"
+        className="font-bold block my-4 text-xl text-center text-subtleWhite"
         htmlFor="nameTags"
       >
         Tags
@@ -58,17 +58,19 @@ export default function TagsSelectAndCheatSheet({
         value={selectedOptions} // mapped to options
         isMulti
         isSearchable
-        placeholder="Filter tags here..."
+        placeholder="Type tags here..."
         onChange={handleSelectChange}
       />
 
-      <p className="my-4 text-subtleWhite">Or use the tags cheat sheet</p>
+      <p className="my-4 text-subtleWhite text-center">
+        Or use the tags cheat sheet
+      </p>
 
       {categoriesWithTags.map((category) => (
         <Disclosure
           key={category._id}
           as="div"
-          className="inline-block align-top mb-6"
+          className="inline-block align-top mb-6 "
         >
           {({ open }) => (
             <>

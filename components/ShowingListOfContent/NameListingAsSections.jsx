@@ -12,7 +12,7 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 // import CommentListing from "../ShowingListOfContent/CommentListing";
 // import AddComment from "../AddingNewData/AddComment";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
-import IdeaContentSection from "../ContentEditSuggestions/IdeaContentSection";
+import IdeaContentSection from "../EditSuggestions/IdeaContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import AddHashToArrayString from "../../utils/stringManipulation/addHashToArrayString";
 
@@ -291,6 +291,7 @@ export default function NameListingAsSections({
                 setUserAlreadySentIdea={setUserAlreadySentIdea}
                 ideaFormToggled={ideaFormToggled}
                 setIdeaFormToggled={setIdeaFormToggled}
+                categoriesWithTags={categoriesWithTags}
               />
 
               // <FlaggingContentSection

@@ -7,6 +7,8 @@ import { Field } from "@headlessui/react";
 import StyledTextarea from "../FormComponents/StyledTextarea";
 import StyledCheckbox from "../FormComponents/StyledCheckbox";
 import ClosingXButton from "../ReusableSmallComponents/buttons/ClosingXButton";
+import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
+import { useTags } from "../../hooks/useTags";
 
 function AddFlagReport({
   contentType,
@@ -19,9 +21,12 @@ function AddFlagReport({
   ideaFormToggled,
   setIdeaIconClickedByNewUser,
   setUserAlreadySentIdea,
+  categoriesWithTags,
 }) {
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
+
+  const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
 
   const handleFlagCategoriesState = (e) => {
     const { value, checked } = e.target;
@@ -69,10 +74,11 @@ function AddFlagReport({
       contenttype: contentType,
       contentid: contentInfo._id,
       contentcopy: copyOfContentForReport,
-      createdbyuser: contentCreatedByUserId,
+      contentcreatedby: contentCreatedByUserId,
       ideaByUser: ideaByUser,
-      flagcategories: flagCategoriesState,
+      // tagcategories: flagCategoriesState,
       comments: additionalCommentsState,
+      descriptionedits: descriptionCommentsState,
     };
     console.log(reportSubmission);
 
@@ -113,6 +119,7 @@ function AddFlagReport({
     setIdeaIconClickedByNewUser(false);
     setIdeaFormToggled(!ideaFormToggled);
   }
+  console.log("contentInfo", contentInfo);
 
   return (
     <form
@@ -150,47 +157,73 @@ function AddFlagReport({
 
           <section className="flex flex-col mx-5 my-8">
             <div className=" bg-secondary border-white border-y rounded-sm flex">
-              <h3 className=" mb-2 text-xl mx-auto py-3 "> Suggest Changes </h3>
+              <h3 className=" mb-2 text-xl mx-auto py-3 ">Incorrect Tags </h3>
             </div>
 
             <div className="flex flex-col gap-4 mt-4">
-              <StyledCheckbox
-                label="Add other tags"
-                description="Please write the suggested tags in the textbox below. Thank you!"
-                checked={flagCategoriesState.includes("Add other tags")}
-                onChange={handleFlagCategoriesState}
-                value="Add other tags"
-              />
-
-              <StyledCheckbox
-                label="Typos or wrong tags"
-                description="Please describe the typos or incorrect tags in the textbox below. Thank you!"
-                checked={flagCategoriesState.includes("Typos or wrong tags")}
-                onChange={handleFlagCategoriesState}
-                value="Typos or wrong tags"
-              />
-
-              <StyledCheckbox
-                label="None of these"
-                description="Please give us more information in the comments textbox below"
-                checked={flagCategoriesState.includes("None of these")}
-                onChange={handleFlagCategoriesState}
-                value="None of these"
-              />
+              <p className="mx-auto">
+                Select the incorrect tags and then please comment why the tags
+                are incorrect in the textbox at the bottom. Thank you!
+              </p>
+              {contentInfo.tags.map((tag) => (
+                <StyledCheckbox
+                  label={tag.tag}
+                  checked={flagCategoriesState.includes(tag._id)}
+                  onChange={handleFlagCategoriesState}
+                  value={tag._id}
+                />
+              ))}
             </div>
           </section>
 
+          <div className=" bg-secondary border-white border-y rounded-sm flex my-6">
+            <h3 className=" mb-2 text-xl mx-auto py-3 ">Add Tags </h3>
+          </div>
+
+          <TagsSelectAndCheatSheet
+            categoriesWithTags={categoriesWithTags}
+            tagsToSubmit={tagsToSubmit}
+            handleSelectChange={handleSelectChange}
+            handleCheckboxChange={handleCheckboxChange}
+          />
+
+          <div className=" bg-secondary border-white border-y rounded-sm flex mt-6">
+            <h3 className=" mb-2 text-xl mx-auto py-3 ">
+              Suggest Changes to Description{" "}
+            </h3>
+          </div>
+
+          <Field className="mt-6 mx-4">
+            <p className="text-center my-4">
+              {" "}
+              {`"${
+                contentInfo.description[0] === ""
+                  ? "no description given"
+                  : contentInfo.description[0]
+              }"`}
+            </p>
+            <StyledTextarea
+              onChange={(e) => setAdditionalCommentsState(e.target.value)}
+              maxLength="500"
+              placeholder=""
+              ariaLabel="type-comments"
+              name="body"
+            />
+          </Field>
+
           <section>
-            <div className=" bg-secondary border-white border-y rounded-sm mx-5 mb-10 flex">
+            <div className=" bg-secondary border-white border-y rounded-sm mx-5 mb-10 flex mt-6">
               <h3 className=" my-2 text-xl mx-auto py-3 ">
                 Additional Comments
               </h3>
             </div>
+            <p className="text-center">
+              Please give us more information in the comments textbox below
+            </p>
 
             <Field className="mt-6 mx-4">
               <StyledTextarea
                 onChange={(e) => setAdditionalCommentsState(e.target.value)}
-                required
                 maxLength="500"
                 placeholder="Optional"
                 ariaLabel="type-comments"
