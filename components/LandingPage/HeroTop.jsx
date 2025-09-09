@@ -81,7 +81,7 @@ const HeroTop = ({
               />
 
               <button
-                className="btn btn-primary w-full mt-2 shadow-xl shadow-secondary bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest"
+                className="btn btn-primary w-full mt-2 shadow-lg shadow-secondary bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest"
                 onClick={updateFunState}
               >
                 Fun
@@ -95,7 +95,7 @@ const HeroTop = ({
               />
 
               <button
-                className="btn btn-primary w-full mt-2 shadow-xl shadow-secondary bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest focus:ring-white"
+                className="btn btn-primary w-full mt-2 shadow-lg shadow-secondary bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest focus:ring-white"
                 onClick={updateImpactfulState}
               >
                 Impactful
@@ -109,7 +109,7 @@ const HeroTop = ({
                 color="white"
               />
               <button
-                className="btn btn-primary w-full mt-2 shadow-xl shadow-secondary bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest px-0"
+                className="btn btn-primary w-full mt-2 shadow-lg shadow-secondary bg-subtleBackground text-white hover:text-white border-b-4 border-subtleWhite hover:border-blue-500 hover:bg-blue-400 font-black text-md md:text-base h-16 rounded-full tracking-widest px-0"
                 onClick={updateTailorState}
               >
                 Fitting
