@@ -69,9 +69,9 @@ function AddFlagReport({
       contenttype: contentType,
       contentid: contentInfo._id,
       contentcopy: copyOfContentForReport,
-      createdbyuser: contentCreatedByUserId,
-      flaggedbyuser: flaggedByUser,
-      flagcategories: flagCategoriesState,
+      contentcreatedby: contentCreatedByUserId,
+      reportedby: flaggedByUser,
+      reportcategories: flagCategoriesState,
       comments: additionalCommentsState,
     };
     console.log(reportSubmission);

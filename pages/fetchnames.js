@@ -12,12 +12,14 @@ import dbConnect from "../utils/db";
 import Category from "../models/NameCategory";
 import NameLikes from "../models/NameLikes";
 import FlagReport from "../models/FlagReport";
+import mongoose from "mongoose";
 
 import Pagination from "../components/ShowingListOfContent/pagination";
 import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 import { useSwrPagination } from "../hooks/useSwrPagination";
 import startCooldown from "../utils/startCooldown";
 import GoToTopButton from "../components/ReusableSmallComponents/buttons/GoToTopButton";
+import { ReportsProvider } from "../context/ReportsContext";
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
 
@@ -46,9 +48,9 @@ export const getServerSideProps = async (context) => {
   let contentUserSuggestedEdits = [];
 
   if (session) {
-    await dbConnect.connect();
-    const userId = session.user.id;
+    const userId = mongoose.Types.ObjectId(session.user._id);
 
+    console.log("session.user.id:", session.user.id, typeof session.user.id);
     // ######## Likes ###############
     const likes = await NameLikes.find({ userId }).select("nameId -_id");
     usersLikedContent = likes.map((l) => l.nameId.toString());
@@ -56,13 +58,18 @@ export const getServerSideProps = async (context) => {
     // ############## Reports ################
 
     const reports = await FlagReport.find(
-      { reportedbyuser: userId },
-      { contentid: 1, _id: 0 }, // only return contentid
+      {
+        reportedby: userId,
+        status: { $nin: ["dismissed", "deleted", "resolved"] }, // exclude these
+      },
+      { contentid: 1, status: 1, _id: 0 },
     ).lean(); //.lean() makes the query faster by returning plain JS objects.
-
+    console.log("reports from DB:", reports);
     // Extract contentIds into a simple array, convert objectIds to plain strings
-    const contentIds = reports.map((r) => r.contentid.toString());
-    contentUserReported = contentIds;
+    contentUserReported = reports.map((r) => ({
+      contentid: r.contentid.toString(),
+      status: r.status ?? null,
+    }));
     // const contentWithSuggestions
   }
 
@@ -110,8 +117,7 @@ export default function FetchNames({
   const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
   // tracks if the likes count has to be updated, important for if the user navigates backwards
 
-  const reportsSetRef = useRef(new Set(contentUserReported));
-  const recentReportsRef = useRef({});
+  console.log("contentUserReported", contentUserReported);
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [IsOpen, setIsOpen] = useState(false);
@@ -201,112 +207,113 @@ export default function FetchNames({
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
 
   return (
-    <div>
-      <Layout
-        profileImage={profileImage}
-        userName={userName}
-        sessionFromServer={sessionFromServer}
-      />
-      <section className="sm:px-4  mx-auto">
-        <PageTitleWithImages
-          title="Fetch"
-          title2="Names"
+    <ReportsProvider initialReports={contentUserReported}>
+      <div>
+        <Layout
+          profileImage={profileImage}
+          userName={userName}
+          sessionFromServer={sessionFromServer}
         />
-      </section>
-
-      <div className="flex  sm:px-2 max-w-7xl mx-auto ">
-        <Drawer
-          open={IsOpen}
-          onClose={(event, reason) => {
-            if (reason === "backdropClick") {
-              // prevent closing when clicking on backdrop
-              return;
-            }
-            toggleDrawer(false);
-          }}
-          anchor="left"
-        >
-          <FilteringSidebar
-            category={categoriesWithTags}
-            handleFilterChange={handleFilterChange}
-            handleApplyFilters={handleApplyFilters}
-            filterTagsIds={filterTagsIds}
-            toggleDrawer={toggleDrawer}
-            isLoading={isLoading}
-            remainingFilterCooldown={remainingFilterCooldown}
-            filterCooldownRef={filterCooldownRef}
-            startCooldown={startCooldown}
+        <section className="sm:px-4  mx-auto">
+          <PageTitleWithImages
+            title="Fetch"
+            title2="Names"
           />
-        </Drawer>
-        {/*################# CONTENT DIV ################### */}
+        </section>
 
-        <div className="grow bg-primary rounded-box place-items-center  ">
-          {/* Button that toggles the filter div */}
-          <GeneralButton
-            text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
-            onClick={() => setIsOpen(!IsOpen)}
-          />
+        <div className="flex  sm:px-2 max-w-7xl mx-auto ">
+          <Drawer
+            open={IsOpen}
+            onClose={(event, reason) => {
+              if (reason === "backdropClick") {
+                // prevent closing when clicking on backdrop
+                return;
+              }
+              toggleDrawer(false);
+            }}
+            anchor="left"
+          >
+            <FilteringSidebar
+              category={categoriesWithTags}
+              handleFilterChange={handleFilterChange}
+              handleApplyFilters={handleApplyFilters}
+              filterTagsIds={filterTagsIds}
+              toggleDrawer={toggleDrawer}
+              isLoading={isLoading}
+              remainingFilterCooldown={remainingFilterCooldown}
+              filterCooldownRef={filterCooldownRef}
+              startCooldown={startCooldown}
+            />
+          </Drawer>
+          {/*################# CONTENT DIV ################### */}
 
-          <Pagination
-            itemsPerPage={itemsPerPage}
-            setItemsPerPageFunction={setItemsPerPageFunction}
-            setPageFunction={setPageFunction}
-            setSize={setSize}
-            size={size}
-            currentUiPage={currentUiPage}
-            setCurrentUiPage={setCurrentUiPage}
-            setSortingLogicFunction={setSortingLogicFunction}
-            totalPagesInDatabase={totalPagesInDatabase}
-            totalItems={totalItems}
-            amountOfDataLoaded={data?.length}
-            remainingSortCooldown={remainingSortCooldown}
-            sortingValue={sortingValue}
-            sortingProperty={sortingProperty}
-          />
+          <div className="grow bg-primary rounded-box place-items-center  ">
+            {/* Button that toggles the filter div */}
+            <GeneralButton
+              text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
+              onClick={() => setIsOpen(!IsOpen)}
+            />
 
-          <section className="w-full">
-            {isLoading && (
-              <div className="flex">
-                <span className="text-white text-3xl my-20 mx-auto">
-                  Fetching data ...
-                </span>
-              </div>
-            )}
+            <Pagination
+              itemsPerPage={itemsPerPage}
+              setItemsPerPageFunction={setItemsPerPageFunction}
+              setPageFunction={setPageFunction}
+              setSize={setSize}
+              size={size}
+              currentUiPage={currentUiPage}
+              setCurrentUiPage={setCurrentUiPage}
+              setSortingLogicFunction={setSortingLogicFunction}
+              totalPagesInDatabase={totalPagesInDatabase}
+              totalItems={totalItems}
+              amountOfDataLoaded={data?.length}
+              remainingSortCooldown={remainingSortCooldown}
+              sortingValue={sortingValue}
+              sortingProperty={sortingProperty}
+            />
 
-            <section className="whitespace-pre-line ">
-              {names?.length > 0 &&
-                names
-                  .slice(
-                    currentUiPage - 1 == 0
-                      ? 0
-                      : (currentUiPage - 1) * itemsPerPage,
-                    currentUiPage * itemsPerPage,
-                  )
-                  .map((name) => {
-                    return (
-                      <NameListingAsSections
-                        name={name}
-                        key={name._id}
-                        signedInUsersId={signedInUsersId}
-                        tagList={tagList}
-                        likedSetRef={likedSetRef}
-                        recentLikesRef={recentLikesRef}
-                        reportsSetRef={reportsSetRef}
-                        categoriesWithTags={categoriesWithTags}
-                        mutate={mutate}
-                      />
-                    );
-                  })}
+            <section className="w-full">
+              {isLoading && (
+                <div className="flex">
+                  <span className="text-white text-3xl my-20 mx-auto">
+                    Fetching data ...
+                  </span>
+                </div>
+              )}
 
-              {/* <CheckForMoreData
+              <section className="whitespace-pre-line ">
+                {names?.length > 0 &&
+                  names
+                    .slice(
+                      currentUiPage - 1 == 0
+                        ? 0
+                        : (currentUiPage - 1) * itemsPerPage,
+                      currentUiPage * itemsPerPage,
+                    )
+                    .map((name) => {
+                      return (
+                        <NameListingAsSections
+                          name={name}
+                          key={name._id}
+                          signedInUsersId={signedInUsersId}
+                          tagList={tagList}
+                          likedSetRef={likedSetRef}
+                          recentLikesRef={recentLikesRef}
+                          categoriesWithTags={categoriesWithTags}
+                          mutate={mutate}
+                        />
+                      );
+                    })}
+
+                {/* <CheckForMoreData
                 filteredListLastPage={filteredListLastPage} //deleted
                 setSize={setSize}
               /> */}
+              </section>
             </section>
-          </section>
-          <GoToTopButton top="280" />
+            <GoToTopButton top="280" />
+          </div>
         </div>
       </div>
-    </div>
+    </ReportsProvider>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
-import FlagButtonAndLogic from "../Flagging/FlagButton";
 import DeleteButton from "../DeletingData/DeleteButton";
 import EditButton from "../ReusableSmallComponents/buttons/EditButton";
 
@@ -13,13 +12,10 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 // import CommentListing from "../ShowingListOfContent/CommentListing";
 // import AddComment from "../AddingNewData/AddComment";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
-import FormFlagReport from "../Flagging/FormFlagReport";
 import IdeaContentSection from "../ContentEditSuggestions/IdeaContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
-import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 import AddHashToArrayString from "../../utils/stringManipulation/addHashToArrayString";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Ellipsis } from "lucide-react";
 import ContainerForLikeShareFlag from "../ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
 import { useDeleteConfirmation } from "../../hooks/useDeleteConfirmation";
@@ -28,6 +24,7 @@ import FlagDialog from "../Flagging/FlagDialog";
 import FlagButton from "../Flagging/FlagButton";
 import { useFlagging } from "../../hooks/useFlagging";
 import { useEditHandler } from "../../hooks/useEditHandler";
+import { useReports } from "../../context/ReportsContext";
 
 export default function NameListingAsSections({
   name,
@@ -35,7 +32,6 @@ export default function NameListingAsSections({
   tagList,
   likedSetRef,
   recentLikesRef,
-  reportsSetRef,
   categoriesWithTags,
   mutate,
 }) {
@@ -47,8 +43,17 @@ export default function NameListingAsSections({
     confirmDelete,
   } = useDeleteConfirmation();
 
+  const { reportsRef, hasReported, getStatus } = useReports();
+  const userHasAlreadyReported = hasReported(name._id.toString());
+
+  const reportStatus = getStatus(name._id.toString());
+  console.log("reportStatus", reportStatus);
+  const reportPendingOrUndef =
+    reportStatus === "pending" || reportStatus === null;
+  console.log("reportPendingOrUndef", reportPendingOrUndef);
+
   const { showFlagDialog, flagTarget, openFlag, closeFlag } =
-    useFlagging(reportsSetRef);
+    useFlagging(reportsRef);
 
   const {
     showEditDialog,
@@ -63,13 +68,6 @@ export default function NameListingAsSections({
   });
 
   const userIsTheCreator = name.createdby._id === signedInUsersId;
-  const userHasAlreadyReported = reportsSetRef?.current.has(name._id);
-  console.log(
-    "reportsSetRef",
-    reportsSetRef,
-    "userHasAlreadyReported",
-    userHasAlreadyReported,
-  );
 
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
 
@@ -192,8 +190,6 @@ export default function NameListingAsSections({
                               <FlagButton
                                 content={name}
                                 onClick={openFlag}
-                                userHasAlreadyReported={userHasAlreadyReported}
-                                reportsSetRef={reportsSetRef}
                                 userIsTheCreator={
                                   name.createdby._id === signedInUsersId
                                 }
@@ -222,12 +218,13 @@ export default function NameListingAsSections({
               />
             )}
 
-            {!userIsTheCreator && !userHasAlreadyReported && showFlagDialog && (
+            {!userIsTheCreator && reportPendingOrUndef && showFlagDialog && (
               <FlagDialog
                 open={showFlagDialog}
                 target={flagTarget}
                 onClose={closeFlag}
                 signedInUsersId={signedInUsersId}
+                contentId={name._id}
               />
             )}
 

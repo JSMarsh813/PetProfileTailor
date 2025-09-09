@@ -19,12 +19,12 @@ const FlagReportSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
-    contentcreatedbyuser: {
+    contentcreatedby: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    reportedbyuser: {
+    reportedby: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
@@ -46,6 +46,7 @@ const FlagReportSchema = new mongoose.Schema(
         "action_required",
         "resolved",
         "dismissed",
+        "deleted",
       ],
       default: "pending",
       required: true,

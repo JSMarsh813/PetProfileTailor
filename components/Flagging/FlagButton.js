@@ -1,22 +1,16 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
+import { useReports } from "../../context/ReportsContext";
 
 //Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
 
 // Ah! That warning is coming from Headless UI’s MenuItem / Disclosure / Transition components, which try to attach a ref to whatever you pass inside. Regular function components (like your FlagButton) cannot receive refs unless you wrap them in React.forwardRef.
 
 const FlagButton = React.forwardRef(
-  (
-    {
-      content,
-      onClick,
-      userHasAlreadyReported,
-      userIsTheCreator,
-      reportsSetRef,
-    },
-    ref,
-  ) => {
+  ({ content, onClick, userIsTheCreator }, ref) => {
+    const { reportsRef, hasReported, getStatus } = useReports();
+    const userHasAlreadyReported = hasReported(content._id.toString());
     const flaggedColor = userHasAlreadyReported ? "red" : "white";
 
     return (
