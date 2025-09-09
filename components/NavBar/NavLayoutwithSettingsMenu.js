@@ -163,7 +163,19 @@ export default function NavLayoutwithSettingsMenu({
                   as="div"
                   className="relative inline-block text-left z-30"
                 >
-                  <MenuButton
+                  <LinkButton
+                    basic
+                    href="/login"
+                    text="login"
+                    className="text-sm"
+                  />
+                  <LinkButton
+                    defaultStyle
+                    href="/register"
+                    text="register"
+                    className="text-sm"
+                  />
+                  {/* <MenuButton
                     className="inline-flex justify-center rounded-2xl  py-2 px-4 text-sm font-semibold  text-subtleWhite bg-primary 
                 
                 
@@ -173,7 +185,7 @@ export default function NavLayoutwithSettingsMenu({
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                   >
                     <Link href="/login">login</Link>
-                  </MenuButton>
+                  </MenuButton> */}
                 </Menu>
               )}
             </div>

@@ -5,6 +5,7 @@ export default function LinkButton({
   className,
   text,
   defaultStyle,
+  basic,
   subtle,
   warning,
   active,
@@ -14,6 +15,10 @@ export default function LinkButton({
     "font-bold my-3 py-1 px-4 border-b-4 shadow-lg shadow-stone-900/70 rounded-2xl text-base";
 
   let bgClass = "";
+
+  if (basic)
+    bgClass = `${baseClasses}  text-subtleWhite border-b-2 border-transparent
+   hover:border-subtleWhite rounded-none shadow-none`;
 
   if (defaultStyle)
     bgClass = `${baseClasses} bg-yellow-200 border-yellow-600 text-secondary 

@@ -65,7 +65,7 @@ export default async function handler(req, res) {
 
       const reportToUpdate = await FlagReport.findOneAndUpdate(
         { _id: reportid, reportedby: userid },
-        { status: "deleted" },
+        { status: "deleted", outcome: "report_deleted_by_reporter" },
         { new: true },
       );
 

@@ -241,7 +241,7 @@ function EditReport({
                       "Sensitive or disturbing content",
                     )}
                     onChange={handleReportCategories}
-                    className="ml-4"
+                    className="ml-4 text-"
                     value="Sensitive or disturbing content"
                   />
 
