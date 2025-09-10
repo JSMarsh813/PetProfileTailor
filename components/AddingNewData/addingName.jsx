@@ -242,14 +242,14 @@ function NewNameWithTagsData({
           <StyledTextarea
             type="text"
             id="nameDescription"
-            maxLength="500"
+            maxLength="1000"
             className="bg-secondary border-subtleWhite  block w-full"
             onChange={(e) => setDescription(e.target.value.trim())}
           />
           <div className="mb-8 flex flex-col gap-2">
             <span className="mt-3  block">
               {" "}
-              {`${500 - description.length}/500 characters left`}{" "}
+              {`${1000 - description.length}/1000 characters left`}{" "}
             </span>
             <p>Add anything that would be useful to know.</p>{" "}
             <p>

@@ -115,7 +115,8 @@ export const authOptions = {
 
         if (user && bcryptjs.compareSync(credentials.password, user.password)) {
           return {
-            _id: user._id,
+            id: user._id,
+            // use id that way it will be normalized with the magic login sign on, which creates user.session.id instead of user.session._id
             name: user.name,
             profilename: user.profilename,
             email: user.email,

@@ -47,8 +47,10 @@ function AddNewNameWithTags({ sessionFromServer, categoriesWithTags }) {
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
-    userId = sessionFromServer.user._id;
+    userId = sessionFromServer.user.id;
   }
+
+  console.log("userId in addNames", sessionFromServer);
 
   return (
     <div className=" h-full text-white">

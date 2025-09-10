@@ -49,7 +49,7 @@ export default function ProfileScreen({ sessionFromServer }) {
   useEffect(() => {
     setValue("name", sessionFromServer.user.name);
     setValue("email", sessionFromServer.user.email);
-    setValue("userid", sessionFromServer.user._id);
+    setValue("userid", sessionFromServer.user.id);
   }, [sessionFromServer.user, setValue]);
 
   const submitHandler = async ({ name, email, password, userid }) => {

@@ -20,7 +20,7 @@ export const getServerSideProps = async (context) => {
     authOptions,
   );
 
-  const UserId = session ? session.user._id : "";
+  const UserId = session ? session.user.id : "";
 
   await dbConnect.connect();
 

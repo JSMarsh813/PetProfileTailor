@@ -179,7 +179,7 @@ function ProfilePage({
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
-    signedInUsersId = sessionFromServer.user._id;
+    signedInUsersId = sessionFromServer.user.id;
   }
 
   let userIsTheCreator = userData._id === signedInUsersId;
@@ -296,7 +296,7 @@ function ProfilePage({
 
                 <div className="text-center">
                   {userName != "" &&
-                  sessionFromServer.user._id == userData._id ? (
+                  sessionFromServer.user.id == userData._id ? (
                     <EditBioProfileButton
                       setShowProfileEditPage={updateSetShowProfileEditPage}
                     />

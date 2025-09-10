@@ -38,7 +38,7 @@ export const getServerSideProps = async (context) => {
       },
     };
   } else {
-    const UserId = await session.user._id;
+    const UserId = await session.user.id;
 
     await dbConnect.connect();
 
@@ -247,7 +247,7 @@ export default function Dashboard({
                     <NameListingAsSections
                       name={name}
                       key={name._id}
-                      signedInUsersId={sessionFromServer.user._id}
+                      signedInUsersId={sessionFromServer.user.id}
                       tagList={NameTagListProp}
                     />
                   );

@@ -17,7 +17,7 @@
 //     return;
 //   }
 
-//   const userId = session.user._id;
+//   const userId = session.user.id;
 
 //   try {
 //     const client = await connectToDatabase();

@@ -22,7 +22,7 @@ export default function DeleteDialog({
             setShowDeleteConfirmation={onClose}
             contentId={target._id}
             signedInUsersId={signedInUsersId}
-            contentCreatedBy={target.createdby._id}
+            contentCreatedBy={target.createdby.id}
             apiLink="/api/names/"
             onConfirm={onConfirm} // passes down confirmDelete
           />

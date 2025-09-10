@@ -84,7 +84,7 @@ export default function UsersFollowingList({
 
                           <p>{person.bioblurb}</p>
                           {/* makes it so you can't follow yourself */}
-                          {!(person._id == sessionFromServer.user._id) && (
+                          {!(person._id == sessionFromServer.user.id) && (
                             <section>
                               <FollowButton
                                 data={person}

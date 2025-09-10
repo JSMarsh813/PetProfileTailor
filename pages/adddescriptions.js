@@ -62,7 +62,7 @@ function AddDescriptions({ sessionFromServer, tagList, nameList }) {
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
-    userId = sessionFromServer.user._id;
+    userId = sessionFromServer.user.id;
   }
   //end of section for nav menu
 

@@ -59,7 +59,7 @@ export default function AddDescriptionTag({
 
     const descriptionTagSubmission = {
       tag: newDescriptionTag,
-      createdby: sessionFromServer.user._id,
+      createdby: sessionFromServer.user.id,
     };
 
     axios

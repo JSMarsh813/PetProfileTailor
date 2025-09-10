@@ -51,7 +51,7 @@ function FetchDescriptions({ sessionFromServer, category, tagList }) {
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
-    signedInUsersId = sessionFromServer.user._id;
+    signedInUsersId = sessionFromServer.user.id;
   }
   // ##### end of section for nav menu
 

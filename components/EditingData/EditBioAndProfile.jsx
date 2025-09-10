@@ -19,7 +19,7 @@ export default function EditBioAndProfile({
     const bioSubmission = {
       bio: bio,
       location: location,
-      userid: sessionFromServer.user._id,
+      userid: sessionFromServer.user.id,
     };
 
     await axios

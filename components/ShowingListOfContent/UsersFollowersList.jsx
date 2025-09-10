@@ -88,7 +88,7 @@ export default function UsersFollowersList({
                           <p>{follower.bioblurb}</p>
 
                           <section>
-                            {!(follower._id == sessionFromServer.user._id) && (
+                            {!(follower._id == sessionFromServer.user.id) && (
                               <FollowButton
                                 data={follower}
                                 session={sessionFromServer}

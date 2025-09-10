@@ -48,7 +48,7 @@ export const getServerSideProps = async (context) => {
   let contentUserSuggestedEdits = [];
 
   if (session) {
-    const userId = mongoose.Types.ObjectId(session.user._id);
+    const userId = mongoose.Types.ObjectId(session.user.id);
 
     console.log("session.user.id:", session.user.id, typeof session.user.id);
     // ######## Likes ###############
@@ -108,7 +108,7 @@ export default function FetchNames({
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
-    signedInUsersId = sessionFromServer.user._id;
+    signedInUsersId = sessionFromServer.user.id;
   }
 
   // ##### end of section for nav menu

@@ -27,7 +27,7 @@ export const getServerSideProps = async (context) => {
     props: {
       sessionFromServer: session,
       categoryData: JSON.parse(JSON.stringify(categoryData)),
-      isAdmin: session.user._id === process.env.admin_id,
+      isAdmin: session.user.id === process.env.admin_id,
     },
   };
 };
@@ -69,7 +69,7 @@ export default function AddNameTag({
 
     const nameTagSubmission = {
       tag: newNameTag,
-      createdby: sessionFromServer.user._id,
+      createdby: sessionFromServer.user.id,
     };
 
     axios

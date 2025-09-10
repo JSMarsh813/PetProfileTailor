@@ -19,7 +19,7 @@ export default function FollowButton({
 
   useEffect(() => {
     if (session) {
-      userId = session.user._id;
+      userId = session.user.id;
     }
 
     let searchingInFollowers = data.followers.find(
@@ -33,7 +33,7 @@ export default function FollowButton({
 
   const handleFollows = (e) => {
     !session && toast.error("Please sign in to follow users");
-    let userId = session.user._id;
+    let userId = session.user.id;
 
     const putFollows = async () => {
       try {

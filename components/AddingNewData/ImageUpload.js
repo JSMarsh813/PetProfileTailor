@@ -30,7 +30,7 @@ function ImageUpload({ sessionFromServer }) {
     const formData = new FormData();
 
     formData.append("file", selectedImage);
-    formData.append("userId", sessionFromServer.user._id);
+    formData.append("userId", sessionFromServer.user.id);
     formData.append("upload_preset", "noyhrbxs");
 
     const data = await fetch(
@@ -53,7 +53,7 @@ function ImageUpload({ sessionFromServer }) {
     try {
       let res = await axios.put("/api/user/uploadprofileimage", {
         newProfileImage: newProfileImage.toString(),
-        user: sessionFromServer.user._id,
+        user: sessionFromServer.user.id,
       });
 
       if (res.status == 200) {
