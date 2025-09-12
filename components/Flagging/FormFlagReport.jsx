@@ -3,8 +3,8 @@ import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralBu
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Field } from "@headlessui/react";
-import StyledTextarea from "../FormComponents/StyledTextarea";
-import StyledCheckbox from "../FormComponents/StyledCheckbox";
+import StyledTextarea from "@components/FormComponents/StyledTextarea";
+import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
 
 function AddFlagReport({

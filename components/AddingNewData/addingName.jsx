@@ -10,9 +10,9 @@ import Link from "next/link";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import WarningMessage from "@components/ReusableSmallComponents/buttons/WarningMessage";
 import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
-import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
+import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "@hooks/useTags";
-import StyledTextarea from "../FormComponents/StyledTextarea";
+import StyledTextarea from "@components/FormComponents/StyledTextarea";
 
 function NewNameWithTagsData({
   userId,

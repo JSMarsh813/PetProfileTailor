@@ -2,9 +2,9 @@ import { Dialog, DialogPanel, DialogTitle, panelRef } from "@headlessui/react";
 import { useState } from "react";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import XSvgIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
-import StyledInput from "../FormComponents/StyledInput";
-import StyledTextarea from "../FormComponents/StyledTextarea";
-import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
+import StyledInput from "@components/FormComponents/StyledInput";
+import StyledTextarea from "@components/FormComponents/StyledTextarea";
+import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "@hooks/useTags";
 
 export default function EditName({
