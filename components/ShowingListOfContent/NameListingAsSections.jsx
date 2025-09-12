@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
-import DeleteButton from "../DeletingData/DeleteButton";
+import DeleteButton from "@components/DeletingData/DeleteButton";
 import EditButton from "@components/ReusableSmallComponents/buttons/EditButton";
 
 import EditName from "../EditingData/EditName";
@@ -19,7 +19,7 @@ import AddHashToArrayString from "@utils/stringManipulation/addHashToArrayString
 import { Ellipsis } from "lucide-react";
 import ContainerForLikeShareFlag from "@components/ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
 import { useDeleteConfirmation } from "@hooks/useDeleteConfirmation";
-import DeleteDialog from "../DeletingData/DeleteDialog";
+import DeleteDialog from "@components/DeletingData/DeleteDialog";
 import FlagDialog from "@components/Flagging/FlagDialog";
 import FlagButton from "@components/Flagging/FlagButton";
 import { useFlagging } from "@hooks/useFlagging";

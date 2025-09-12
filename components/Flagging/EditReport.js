@@ -6,7 +6,7 @@ import { Field } from "@headlessui/react";
 import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
-import DeleteContentNotification from "../DeletingData/DeleteContentNotification";
+import DeleteContentNotification from "@components/DeletingData/DeleteContentNotification";
 
 function EditReport({
   flaggedByUser,

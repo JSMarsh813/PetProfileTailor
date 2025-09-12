@@ -1,5 +1,5 @@
 import { Dialog, DialogPanel } from "@headlessui/react";
-import DeleteContentNotification from "./DeleteContentNotification";
+import DeleteContentNotification from "@components/DeletingData/DeleteContentNotification";
 
 export default function DeleteDialog({
   open,

@@ -10,14 +10,11 @@ export default function transformer(file, api) {
   root.find(j.ImportDeclaration).forEach((path) => {
     let importPath = path.node.source.value;
 
-    if (importPath.includes("Flagging")) {
-      // Replace relative path up to ReusableSmallComponents with @components
+    if (importPath.includes("DeletingData")) {
       importPath = importPath.replace(
-        /(\.\.\/)+Flagging/,
-        "@components/Flagging",
+        /(\.\.\/)+DeletingData/,
+        "@components/DeletingData",
       );
-
-      // Keep the rest of the path (e.g., /ProfileImage)
       path.node.source.value = importPath;
     }
   });

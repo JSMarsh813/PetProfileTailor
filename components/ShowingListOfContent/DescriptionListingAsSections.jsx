@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
-import DeleteButton from "../DeletingData/DeleteButton";
+import DeleteButton from "@components/DeletingData/DeleteButton";
 import EditButton from "@components/ReusableSmallComponents/buttons/EditButton";
 import { useRouter } from "next/router";
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import GeneralButton from "./GeneralButton";
+import GeneralButton from "components/ReusableSmallComponents/buttons/GeneralButton";
 
 export default function GoToTopButton({ top }) {
   const [isVisible, setIsVisible] = useState(false);
