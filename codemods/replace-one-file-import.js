@@ -10,11 +10,11 @@ export default function transformer(file, api) {
   root.find(j.ImportDeclaration).forEach((path) => {
     let importPath = path.node.source.value;
 
-    if (importPath.includes("ReusableSmallComponents")) {
+    if (importPath.includes("ReusableMediumComponents")) {
       // Replace relative path up to ReusableSmallComponents with @components
       importPath = importPath.replace(
-        /(\.\.\/)+ReusableSmallComponents/,
-        "@components/ReusableSmallComponents",
+        /(\.\.\/)+ReusableMediumComponents/,
+        "@components/ReusableMediumComponents",
       );
 
       // Keep the rest of the path (e.g., /ProfileImage)
