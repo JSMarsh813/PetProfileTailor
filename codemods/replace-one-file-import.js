@@ -10,11 +10,11 @@ export default function transformer(file, api) {
   root.find(j.ImportDeclaration).forEach((path) => {
     let importPath = path.node.source.value;
 
-    if (importPath.includes("FormComponents")) {
+    if (importPath.includes("Flagging")) {
       // Replace relative path up to ReusableSmallComponents with @components
       importPath = importPath.replace(
-        /(\.\.\/)+FormComponents/,
-        "@components/FormComponents",
+        /(\.\.\/)+Flagging/,
+        "@components/Flagging",
       );
 
       // Keep the rest of the path (e.g., /ProfileImage)

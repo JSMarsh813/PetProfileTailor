@@ -10,7 +10,7 @@ import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton
 
 import Image from "next/image";
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
-import FlaggingContentSection from "../Flagging/FlaggingContentSection";
+import FlaggingContentSection from "@components/Flagging/FlaggingContentSection";
 // import ParagraphRenderBasedOnArrayProperty from "./ParagraphRenderBasedOnArrayProperty";
 import ParagraphRenderBasedOnStringProperty from "./ParagraphRenderBasedOnStringProperty";
 
