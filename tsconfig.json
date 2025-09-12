@@ -1,9 +1,17 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    // not the actual url, it means “treat the project root folder as the base for imports”
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@components/*": ["components/*"],
+      "@utils/*": ["utils/*"],
+      "@hooks/*": ["hooks/*"],
+      "@models/*": ["models/*"],
+      "@context/*": ["context/*"]
     },
-    "target": "es5",
+    "target": "esnext",
+    // esnext just means “use whatever the latest stable ECMAScript features are.”
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -24,14 +32,6 @@
     ],
     "strictNullChecks": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "pages/register.js",
-    ".next/types/**/*.ts",
-    "components/FormComponents/TagsCheatsheet.jsx",
-    "migrations/addIndexsToFlagReport.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "exclude": ["node_modules"]
 }
