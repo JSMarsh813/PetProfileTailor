@@ -5,16 +5,16 @@ import { Resend } from "resend";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import EmailProvider from "next-auth/providers/email";
-import User from "../../../models/User";
+import User from "@models/User";
 import { createTransport } from "nodemailer";
 // import NameTag from "../../../models/NameTag";
-import db from "../../../utils/db";
+import db from "@utils/db";
 import path from "path";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../auth/lib/mongodb";
 import { ConnectionClosedEvent } from "mongodb";
 import nodemailer from "nodemailer";
-import { MagicLinkTemplate } from "../../../components/EmailTemplates/magic-link-template";
+import { MagicLinkTemplate } from "@components/EmailTemplates/magic-link-template";
 
 import { sendVerificationRequest } from "../auth/utils/send-verification-request";
 

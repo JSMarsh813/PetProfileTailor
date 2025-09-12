@@ -1,31 +1,31 @@
 import { useState, useRef, useEffect } from "react";
-import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import NameListingAsSections from "../../components/ShowingListOfContent/NameListingAsSections";
+import NameListingAsSections from "@components/ShowingListOfContent/NameListingAsSections";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import HeadersForNames from "../../components/ShowingListOfContent/HeadersForNames";
-import PointSystemList from "../../components/Ranking/PointSystemList";
-import DashboardChartForFavDescriptions from "../../components/ShowingListOfContent/DashboardChartForFavDescriptions";
-import FollowButton from "../../components/ReusableSmallComponents/buttons/FollowButton";
-import EditBioAndProfile from "../../components/EditingData/EditBioAndProfile";
-import EditBioProfileButton from "../../components/ReusableSmallComponents/buttons/EditBioProfileButton";
-import UsersFollowersList from "../../components/ShowingListOfContent/UsersFollowersList";
-import UsersFollowingList from "../../components/ShowingListOfContent/UsersFollowingList";
-import FlaggingContentSection from "../../components/Flagging/FlaggingContentSection";
+import HeadersForNames from "@components/ShowingListOfContent/HeadersForNames";
+import PointSystemList from "@components/Ranking/PointSystemList";
+import DashboardChartForFavDescriptions from "@components/ShowingListOfContent/DashboardChartForFavDescriptions";
+import FollowButton from "@components/ReusableSmallComponents/buttons/FollowButton";
+import EditBioAndProfile from "@components/EditingData/EditBioAndProfile";
+import EditBioProfileButton from "@components/ReusableSmallComponents/buttons/EditBioProfileButton";
+import UsersFollowersList from "@components/ShowingListOfContent/UsersFollowersList";
+import UsersFollowingList from "@components/ShowingListOfContent/UsersFollowingList";
+import FlaggingContentSection from "@components/Flagging/FlaggingContentSection";
 
-import dbConnect from "../../utils/db";
-import NameLikes from "../../models/NameLikes";
-import Names from "../../models/Names";
-import NameTag from "../../models/NameTag";
-import Descriptions from "../../models/description";
-import DescriptionTag from "../../models/descriptiontag";
-import User from "../../models/User";
+import dbConnect from "@utils/db";
+import NameLikes from "@models/NameLikes";
+import Names from "@models/Names";
+import NameTag from "@models/NameTag";
+import Descriptions from "@models/description";
+import DescriptionTag from "@models/descriptiontag";
+import User from "@models/User";
 
 // const ObjectId = require("mongodb").ObjectId;
 

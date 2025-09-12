@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
-import GeneralButton from "../../components/ReusableSmallComponents/buttons/GeneralButton";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
-import startCooldown from "../../utils/startCooldown";
+import startCooldown from "@utils/startCooldown";
 
 export default function Pagination({
   itemsPerPage,

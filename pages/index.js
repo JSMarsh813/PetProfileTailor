@@ -1,18 +1,18 @@
 // import React from 'react';
 // import ReactDOM from 'react-dom';
 // these react imports added behind the scenes writing it like this isn't needed for nextjs
-import HeroTop from "../components/LandingPage/HeroTop";
-import MediaObjectLeft from "../components/ReusableMediumComponents/MediaObjectLeft";
-import MediaObjectRight from "../components/ReusableMediumComponents/MediaObjectRight";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import HeroTop from "@components/LandingPage/HeroTop";
+import MediaObjectLeft from "@components/ReusableMediumComponents/MediaObjectLeft";
+import MediaObjectRight from "@components/ReusableMediumComponents/MediaObjectRight";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 import Image from "next/image";
 
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import WideCenteredHeading from "../components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
+import WideCenteredHeading from "@components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 
-import dbConnect from "../utils/db";
-import YoutubeEmbed from "../components/ShowingListOfContent/YoutubeEmbed";
+import dbConnect from "@utils/db";
+import YoutubeEmbed from "@components/ShowingListOfContent/YoutubeEmbed";
 import { useState } from "react";
 
 export const getServerSideProps = async (context) => {

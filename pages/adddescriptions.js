@@ -1,16 +1,16 @@
 import React from "react";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
+import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
-import AddingDescription from "../components/AddingNewData/addingdescription";
+import AddingDescription from "@components/AddingNewData/addingdescription";
 
-import dbConnect from "../utils/db";
+import dbConnect from "@utils/db";
 
-import Names from "../models/Names";
-import DescriptionTag from "../models/descriptiontag";
+import Names from "@models/Names";
+import DescriptionTag from "@models/descriptiontag";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(

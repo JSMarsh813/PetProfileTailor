@@ -1,5 +1,5 @@
-import Users from "../../../models/User";
-import db from "../../../utils/db";
+import Users from "@models/User";
+import db from "@utils/db";
 
 async function handler(req, res) {
   if (req.method !== "PUT") {

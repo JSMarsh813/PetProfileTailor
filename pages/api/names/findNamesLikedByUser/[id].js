@@ -1,5 +1,5 @@
 import dbConnect from "@/utils/db";
-import NameLikes from "../../../../models/NameLikes";
+import NameLikes from "@models/NameLikes";
 export default async function handler(req, res) {
   await dbConnect();
 

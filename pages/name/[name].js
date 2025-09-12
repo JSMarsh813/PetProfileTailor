@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/NavBar/NavLayoutwithSettingsMenu";
-import Namelisting from "../../components/ShowingListOfContent/Namelisting";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
+import Namelisting from "@components/ShowingListOfContent/Namelisting";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import NameListingAsSections from "../../components/ShowingListOfContent/NameListingAsSections";
+import NameListingAsSections from "@components/ShowingListOfContent/NameListingAsSections";
 
-import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
+import NavLayoutwithSettingsMenu from "@components/NavBar/NavLayoutwithSettingsMenu";
 
-import dbConnect from "../../utils/db";
-import Names from "../../models/Names";
+import dbConnect from "@utils/db";
+import Names from "@models/Names";
 
 export const getServerSideProps = async (context) => {
   //allows us to grab the dynamic value from the url

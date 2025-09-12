@@ -31,7 +31,6 @@ function FilteringSidebar({
           className="mr-5"
         />
       </div>
-
       {/* scrollable content */}
       <div className="flex-1 overflow-y-auto px-2">
         {/* mapping through categories ex: gender, holidays */}
@@ -68,7 +67,7 @@ function FilteringSidebar({
                       {/* mapping through category options and assigning them a button (ex: male, female, unisex)*/}
 
                       {category.tags.map((option, index) => (
-                        <StyledCheckbox
+                        (<StyledCheckbox
                           key={option._id}
                           id={`filter-mobile-${index}`} // unique id for accessibility
                           label={option.tag} // visible text
@@ -76,7 +75,7 @@ function FilteringSidebar({
                           checked={filterTagsIds.includes(option._id)}
                           onChange={handleFilterChange}
                           className="group px-2" // optional styling wrapper
-                        />
+                        />)
                         // <div
                         //   key={option._id}
                         //   className="flex items-center group px-2"

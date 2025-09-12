@@ -1,5 +1,5 @@
-import dbConnect from "../../../../utils/db";
-import Description from "../../../../models/description";
+import dbConnect from "@utils/db";
+import Description from "@models/description";
 
 export default async function handler(req, res) {
   const method = req.method;

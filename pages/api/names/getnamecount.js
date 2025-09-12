@@ -1,5 +1,5 @@
-import dbConnect from "../../../utils/db";
-import Names from "../../../models/Names";
+import dbConnect from "@utils/db";
+import Names from "@models/Names";
 
 export default async function getnamecount(req, res) {
   const method = req.method;

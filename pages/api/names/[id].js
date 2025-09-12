@@ -1,5 +1,5 @@
-import Names from "../../../models/Names";
-import db from "../../../utils/db";
+import Names from "@models/Names";
+import db from "@utils/db";
 import { useRouter } from "next/router";
 
 const handler = async (req, res) => {

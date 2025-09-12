@@ -1,15 +1,15 @@
 import { useState } from "react";
-import NewNameWithTagsData from "../components/AddingNewData/addingName";
+import NewNameWithTagsData from "@components/AddingNewData/addingName";
 
 import { useSession } from "next-auth/react";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
+import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
-import dbConnect from "../utils/db";
-import Category from "../models/NameCategory";
+import dbConnect from "@utils/db";
+import Category from "@models/NameCategory";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(

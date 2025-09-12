@@ -1,4 +1,4 @@
-import db from "../../../../utils/db";
+import db from "@utils/db";
 import FlagReport from "@/models/FlagReport";
 import mongoose from "mongoose";
 

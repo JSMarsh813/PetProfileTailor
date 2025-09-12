@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import dbConnect from "../../../utils/db";
-import DescriptionTag from "../../../models/descriptiontag";
+import dbConnect from "@utils/db";
+import DescriptionTag from "@models/descriptiontag";
 
 export default async function handler(req, res) {
   const { method } = req;

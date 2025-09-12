@@ -1,25 +1,25 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 
-import GeneralOpenCloseButton from "../components/ReusableSmallComponents/buttons/generalOpenCloseButton";
+import GeneralOpenCloseButton from "@components/ReusableSmallComponents/buttons/generalOpenCloseButton";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
-import WideCenteredHeader from "../components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
+import WideCenteredHeader from "@components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 
-import PointSystemList from "../components/Ranking/PointSystemList";
-import DashboardChartForFavDescriptions from "../components/ShowingListOfContent/DashboardChartForFavDescriptions";
-import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
-import HeadersForNames from "../components/ShowingListOfContent/HeadersForNames";
+import PointSystemList from "@components/Ranking/PointSystemList";
+import DashboardChartForFavDescriptions from "@components/ShowingListOfContent/DashboardChartForFavDescriptions";
+import NameListingAsSections from "@components/ShowingListOfContent/NameListingAsSections";
+import HeadersForNames from "@components/ShowingListOfContent/HeadersForNames";
 
-import dbConnect from "../utils/db";
-import Names from "../models/Names";
+import dbConnect from "@utils/db";
+import Names from "@models/Names";
 
-import Descriptions from "../models/description";
-import DescriptionTag from "../models/descriptiontag";
-import NameTag from "../models/NameTag";
-import ProfileImage from "../components/ReusableSmallComponents/ProfileImage";
-import LinkButton from "../components/ReusableSmallComponents/buttons/LinkButton";
+import Descriptions from "@models/description";
+import DescriptionTag from "@models/descriptiontag";
+import NameTag from "@models/NameTag";
+import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
+import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 
 // const ObjectId = require("mongodb").ObjectId;
 

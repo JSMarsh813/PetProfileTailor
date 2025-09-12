@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "@models/User";
 import db from "./db";
 
 export async function getUserByProfileName(profilename) {

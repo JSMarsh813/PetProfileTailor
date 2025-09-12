@@ -3,13 +3,13 @@ import Select from "react-select";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import axios from "axios";
-import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
-import DisabledButton from "../components/ReusableSmallComponents/buttons/DisabledButton";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import StyledInput from "../components/FormComponents/StyledInput";
-import StyledSelect from "../components/FormComponents/StyledSelect";
-import dbConnect from "../utils/db";
-import Category from "../models/NameCategory";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
+import DisabledButton from "@components/ReusableSmallComponents/buttons/DisabledButton";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
+import StyledInput from "@components/FormComponents/StyledInput";
+import StyledSelect from "@components/FormComponents/StyledSelect";
+import dbConnect from "@utils/db";
+import Category from "@models/NameCategory";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(

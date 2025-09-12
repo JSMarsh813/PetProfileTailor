@@ -1,5 +1,5 @@
-import Description from "../../../models/description";
-import db from "../../../utils/db";
+import Description from "@models/description";
+import db from "@utils/db";
 const mongoose = require("mongoose");
 
 async function handler(req, res) {

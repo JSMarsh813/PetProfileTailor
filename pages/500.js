@@ -1,17 +1,17 @@
 import React from "react";
 import { forwardRef } from "react";
-import NavBar from "../components/NavBar/NavLayoutwithSettingsMenu";
+import NavBar from "@components/NavBar/NavLayoutwithSettingsMenu";
 
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
-import ListWithPawPrintIcon from "../components/ReusableSmallComponents/ListWithPawPrintIcon";
+import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
+import ListWithPawPrintIcon from "@components/ReusableSmallComponents/ListWithPawPrintIcon";
 import Router from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
-import PawPrintIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
-import GifHover from "../components/ReusableSmallComponents/GifHover";
+import PawPrintIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
+import GifHover from "@components/ReusableSmallComponents/GifHover";
 
 const MyLink = forwardRef((props, ref) => {
   let { href, active, children, ...rest } = props;

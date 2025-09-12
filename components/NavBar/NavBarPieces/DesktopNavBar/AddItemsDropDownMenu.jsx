@@ -19,7 +19,6 @@ export default function DropDownMenu() {
           className="-mr-1 size-5 text-subtleWhite"
         />
       </MenuButton>
-
       {/* You cannot just use MenuItem as={Link}, because <Link> is a React component, not a DOM element. Headless UI needs a real DOM element for ref. */}
       <MenuItems className="absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
         <div className="py-1 flex flex-col">
@@ -38,12 +37,11 @@ export default function DropDownMenu() {
             {({ focus }) => (
               //<a> is a real DOM element, so Headless UI can attach refs for keyboard focus.
 
-              <LinkMenu
+              (<LinkMenu
                 href="/adddescriptions"
                 focus={focus}
-              >
-                Description
-              </LinkMenu>
+              >Description
+                              </LinkMenu>)
             )}
           </MenuItem>
         </div>

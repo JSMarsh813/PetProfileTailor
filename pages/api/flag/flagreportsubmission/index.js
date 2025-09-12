@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import db from "../../../../utils/db";
-import FlagReport from "../../../../models/FlagReport";
+import db from "@utils/db";
+import FlagReport from "@models/FlagReport";
 
 //wasn't working when everything was lowercase, had to be IndividualPosts not individualNames for it to work
 

@@ -1,6 +1,6 @@
 import { Dialog, DialogPanel } from "@headlessui/react";
 import FormFlagReport from "./FormFlagReport";
-import { useReports } from "../../context/ReportsContext";
+import { useReports } from "@context/ReportsContext";
 import EditReport from "./EditReport";
 
 export default function FlagDialog({

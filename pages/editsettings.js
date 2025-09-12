@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { getError } from "../utils/error";
+import { getError } from "@utils/error";
 import axios from "axios";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import Image from "next/image";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 
-import ImageUpload from "../components/AddingNewData/ImageUpload";
-import StyledInput from "../components/FormComponents/StyledInput";
-import RegisterInput from "../components/FormComponents/RegisterInput";
+import ImageUpload from "@components/AddingNewData/ImageUpload";
+import StyledInput from "@components/FormComponents/StyledInput";
+import RegisterInput from "@components/FormComponents/RegisterInput";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(

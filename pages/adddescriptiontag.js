@@ -3,10 +3,10 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import axios from "axios";
 import Select from "react-select";
-import NavLayoutwithSettingsMenu from "../components/NavBar/NavLayoutwithSettingsMenu";
-import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
-import DisabledButton from "../components/ReusableSmallComponents/buttons/DisabledButton";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import NavLayoutwithSettingsMenu from "@components/NavBar/NavLayoutwithSettingsMenu";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
+import DisabledButton from "@components/ReusableSmallComponents/buttons/DisabledButton";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(

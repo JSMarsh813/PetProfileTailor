@@ -14,17 +14,17 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import IdeaContentSection from "../EditSuggestions/IdeaContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
-import AddHashToArrayString from "../../utils/stringManipulation/addHashToArrayString";
+import AddHashToArrayString from "@utils/stringManipulation/addHashToArrayString";
 
 import { Ellipsis } from "lucide-react";
 import ContainerForLikeShareFlag from "../ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
-import { useDeleteConfirmation } from "../../hooks/useDeleteConfirmation";
+import { useDeleteConfirmation } from "@hooks/useDeleteConfirmation";
 import DeleteDialog from "../DeletingData/DeleteDialog";
 import FlagDialog from "../Flagging/FlagDialog";
 import FlagButton from "../Flagging/FlagButton";
-import { useFlagging } from "../../hooks/useFlagging";
-import { useEditHandler } from "../../hooks/useEditHandler";
-import { useReports } from "../../context/ReportsContext";
+import { useFlagging } from "@hooks/useFlagging";
+import { useEditHandler } from "@hooks/useEditHandler";
+import { useReports } from "@context/ReportsContext";
 
 export default function NameListingAsSections({
   name,
@@ -120,7 +120,6 @@ export default function NameListingAsSections({
         height={80}
         href={href}
       />
-
       <div className="flex-grow ">
         <div
           className="grid  grid-cols-1
@@ -279,7 +278,7 @@ export default function NameListingAsSections({
                 />
               </ContainerForLikeShareFlag>
             ) : (
-              <IdeaContentSection
+              (<IdeaContentSection
                 userIsTheCreator={userIsTheCreator}
                 signedInUsersId={signedInUsersId}
                 currentTargetedId={currentTargetedId}
@@ -292,7 +291,7 @@ export default function NameListingAsSections({
                 ideaFormToggled={ideaFormToggled}
                 setIdeaFormToggled={setIdeaFormToggled}
                 categoriesWithTags={categoriesWithTags}
-              />
+              />)
 
               // <FlaggingContentSection
               //   userIsTheCreator={userIsTheCreator}

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { getUserByProfileName } from "../../../../utils/getUserByProfileName";
+import { getUserByProfileName } from "@utils/getUserByProfileName";
 
 export default async function handler(req, res) {
   const { name: profilename } = req.query;

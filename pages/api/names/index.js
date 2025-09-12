@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import dbConnect from "../../../utils/db";
+import dbConnect from "@utils/db";
 const mongoose = require("mongoose");
-import Names from "../../../models/Names";
-import regexInvalidInput from "../../../utils/stringManipulation/check-for-valid-names";
+import Names from "@models/Names";
+import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
 // eslint-disable-next-line no-unused-vars
-import tags from "../../../models/NameTag";
+import tags from "@models/NameTag";
 //necessary or the tags won't populate
 
 export default async function handler(req, res) {

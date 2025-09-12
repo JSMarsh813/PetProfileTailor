@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import { getError } from "../utils/error";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
+import { getError } from "@utils/error";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import axios from "axios";
-import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import Image from "next/image";
 
 import { authOptions } from "./api/auth/[...nextauth]";
@@ -15,8 +15,8 @@ import { unstable_getServerSession } from "next-auth/next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import StyledInput from "../components/FormComponents/StyledInput";
-import RegisterInput from "../components/FormComponents/RegisterInput";
+import StyledInput from "@components/FormComponents/StyledInput";
+import RegisterInput from "@components/FormComponents/RegisterInput";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
@@ -168,7 +168,6 @@ export default function Register({ sessionFromServer }) {
           }}
         />
       </div>
-
       <h2 className="my-4 text-2xl text-center">Create Account</h2>
       <section className="bg-secondary px-4 mb-2 text-center mx-auto py-6 max-w-screen-md ">
         <p className=" pb-2 font-bold text-lg border-b-2 border-white mb-2">
@@ -192,7 +191,6 @@ export default function Register({ sessionFromServer }) {
           <strong> you can add a password in settings. </strong>
         </p>
       </section>
-
       {/* #################### FORM #########################*/}
       <form
         className="mx-auto max-w-screen-md"

@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
-import FilteringSidebar from "../components/Filtering/FilteringSidebar";
-import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
-import DescriptionListingAsSections from "../components/ShowingListOfContent/DescriptionListingAsSections";
-import removeDeletedContent from "../components/DeletingData/removeDeletedContent";
-import dbConnect from "../utils/db";
-import Category from "../models/descriptioncategory";
-import DescriptionTag from "../models/descriptiontag";
+import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
+import FilteringSidebar from "@components/Filtering/FilteringSidebar";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
+import DescriptionListingAsSections from "@components/ShowingListOfContent/DescriptionListingAsSections";
+import removeDeletedContent from "@components/DeletingData/removeDeletedContent";
+import dbConnect from "@utils/db";
+import Category from "@models/descriptioncategory";
+import DescriptionTag from "@models/descriptiontag";
 
-import Pagination from "../components/ShowingListOfContent/pagination";
+import Pagination from "@components/ShowingListOfContent/pagination";
 
 import useSWRInfinite from "swr/infinite";
-import fetcher from "../utils/fetch";
-import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
+import fetcher from "@utils/fetch";
+import CheckForMoreData from "@components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(

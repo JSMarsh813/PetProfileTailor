@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import Image from "next/image";
-import ImageUpload from "../../components/AddingNewData/ImageUpload";
+import ImageUpload from "@components/AddingNewData/ImageUpload";
 
 export default function EditBioAndProfile({
   setShowProfileEditPage,

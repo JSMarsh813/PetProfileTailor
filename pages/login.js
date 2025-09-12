@@ -2,8 +2,8 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
-import { getError } from "../utils/error";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
+import { getError } from "@utils/error";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
@@ -11,19 +11,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import dbConnect from "../utils/db";
+import dbConnect from "@utils/db";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
-import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 
 import Image from "next/image";
 import { getCsrfToken } from "next-auth/react";
-import NounBlackCatIcon from "../components/ReusableSmallComponents/iconsOrSvgImages/svgImages/NounBlackCatIcon";
-import MagicRabbitSVG from "../components/ReusableSmallComponents/iconsOrSvgImages/svgImages/MagicRabbitSVG";
-import RegisterInput from "../components/FormComponents/RegisterInput";
-import StyledInput from "../components/FormComponents/StyledInput";
+import NounBlackCatIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImages/NounBlackCatIcon";
+import MagicRabbitSVG from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImages/MagicRabbitSVG";
+import RegisterInput from "@components/FormComponents/RegisterInput";
+import StyledInput from "@components/FormComponents/StyledInput";
 import { StyledLink } from "@nextui-org/react";
-import LinkButton from "../components/ReusableSmallComponents/buttons/LinkButton";
+import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(

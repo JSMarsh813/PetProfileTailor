@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";

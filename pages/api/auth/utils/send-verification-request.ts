@@ -1,6 +1,6 @@
 import { SendVerificationRequestParams } from "next-auth/providers";
 import { Resend } from "resend";
-import { MagicLinkTemplate } from "../../../../components/EmailTemplates/magic-link-template";
+import { MagicLinkTemplate } from "@components/EmailTemplates/magic-link-template";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationRequest = async (

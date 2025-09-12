@@ -8,7 +8,7 @@ import StyledTextarea from "../FormComponents/StyledTextarea";
 import StyledCheckbox from "../FormComponents/StyledCheckbox";
 import ClosingXButton from "../ReusableSmallComponents/buttons/ClosingXButton";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
-import { useTags } from "../../hooks/useTags";
+import { useTags } from "@hooks/useTags";
 
 function AddFlagReport({
   contentType,

@@ -1,25 +1,25 @@
 import React, { useEffect, useState, useRef } from "react";
-import Layout from "../components/NavBar/NavLayoutwithSettingsMenu";
+import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { Drawer } from "@mui/material";
-import GeneralButton from "../components/ReusableSmallComponents/buttons/GeneralButton";
-import FilteringSidebar from "../components/Filtering/FilteringSidebar";
-import PageTitleWithImages from "../components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
-import NameListingAsSections from "../components/ShowingListOfContent/NameListingAsSections";
-import removeDeletedContent from "../components/DeletingData/removeDeletedContent";
-import dbConnect from "../utils/db";
-import Category from "../models/NameCategory";
-import NameLikes from "../models/NameLikes";
-import FlagReport from "../models/FlagReport";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
+import FilteringSidebar from "@components/Filtering/FilteringSidebar";
+import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
+import NameListingAsSections from "@components/ShowingListOfContent/NameListingAsSections";
+import removeDeletedContent from "@components/DeletingData/removeDeletedContent";
+import dbConnect from "@utils/db";
+import Category from "@models/NameCategory";
+import NameLikes from "@models/NameLikes";
+import FlagReport from "@models/FlagReport";
 import mongoose from "mongoose";
 
-import Pagination from "../components/ShowingListOfContent/pagination";
-import CheckForMoreData from "../components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
-import { useSwrPagination } from "../hooks/useSwrPagination";
-import startCooldown from "../utils/startCooldown";
-import GoToTopButton from "../components/ReusableSmallComponents/buttons/GoToTopButton";
-import { ReportsProvider } from "../context/ReportsContext";
+import Pagination from "@components/ShowingListOfContent/pagination";
+import CheckForMoreData from "@components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
+import { useSwrPagination } from "@hooks/useSwrPagination";
+import startCooldown from "@utils/startCooldown";
+import GoToTopButton from "@components/ReusableSmallComponents/buttons/GoToTopButton";
+import { ReportsProvider } from "@context/ReportsContext";
 
 //getkey: accepts the index of the current page, as well as the data from the previous page.
 

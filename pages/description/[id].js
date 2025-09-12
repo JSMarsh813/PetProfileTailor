@@ -1,12 +1,12 @@
 import React from "react";
-import NameListingAsSections from "../../components/ShowingListOfContent/NameListingAsSections";
+import NameListingAsSections from "@components/ShowingListOfContent/NameListingAsSections";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import NavLayoutwithSettingsMenu from "../../components/NavBar/NavLayoutwithSettingsMenu";
-import DescriptionListingAsSections from "../../components/ShowingListOfContent/DescriptionListingAsSections";
-import dbConnect from "../../utils/db";
-import Descriptions from "../../models/description";
-import DescriptionTag from "../../models/descriptiontag";
+import NavLayoutwithSettingsMenu from "@components/NavBar/NavLayoutwithSettingsMenu";
+import DescriptionListingAsSections from "@components/ShowingListOfContent/DescriptionListingAsSections";
+import dbConnect from "@utils/db";
+import Descriptions from "@models/description";
+import DescriptionTag from "@models/descriptiontag";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 

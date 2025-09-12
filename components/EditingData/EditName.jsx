@@ -5,7 +5,7 @@ import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import StyledInput from "../FormComponents/StyledInput";
 import StyledTextarea from "../FormComponents/StyledTextarea";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
-import { useTags } from "../../hooks/useTags";
+import { useTags } from "@hooks/useTags";
 
 export default function EditName({
   open,

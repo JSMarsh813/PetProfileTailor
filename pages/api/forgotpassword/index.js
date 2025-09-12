@@ -1,11 +1,11 @@
 import bcryptjs from "bcryptjs";
-import User from "../../../models/User";
-import db from "../../../utils/db";
+import User from "@models/User";
+import db from "@utils/db";
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
-import { ResetPasswordEmail } from "../../../components/EmailTemplates/reset-password-template";
+import { ResetPasswordEmail } from "@components/EmailTemplates/reset-password-template";
 
 //crypto is a native node.js package
 

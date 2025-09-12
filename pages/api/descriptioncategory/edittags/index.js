@@ -1,7 +1,7 @@
-import dbConnect from "../../../../utils/db";
+import dbConnect from "@utils/db";
 
-import Category from "../../../../models/descriptioncategory";
-import NameTag from "../../../../models/NameTag";
+import Category from "@models/descriptioncategory";
+import NameTag from "@models/NameTag";
 
 export default async function handler(req, res) {
   const { method } = req;

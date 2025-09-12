@@ -9,9 +9,9 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import WarningMessage from "../ReusableSmallComponents/buttons/WarningMessage";
-import regexInvalidInput from "../../utils/stringManipulation/check-for-valid-names";
+import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
-import { useTags } from "../../hooks/useTags";
+import { useTags } from "@hooks/useTags";
 import StyledTextarea from "../FormComponents/StyledTextarea";
 
 function NewNameWithTagsData({

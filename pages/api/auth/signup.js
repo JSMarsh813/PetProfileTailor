@@ -1,8 +1,8 @@
 import bcryptjs from "bcryptjs";
-import User from "../../../models/User";
-import db from "../../../utils/db";
-import regexInvalidInput from "../../../utils/stringManipulation/check-for-valid-names";
-import { getUserByProfileName } from "../../../utils/getUserByProfileName";
+import User from "@models/User";
+import db from "@utils/db";
+import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
+import { getUserByProfileName } from "@utils/getUserByProfileName";
 
 async function handler(req, res) {
   if (req.method !== "POST") {
