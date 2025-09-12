@@ -1,7 +1,7 @@
 import { Dialog, DialogPanel, DialogTitle, panelRef } from "@headlessui/react";
 import { useState } from "react";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
-import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
+import XSvgIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import StyledInput from "../FormComponents/StyledInput";
 import StyledTextarea from "../FormComponents/StyledTextarea";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";

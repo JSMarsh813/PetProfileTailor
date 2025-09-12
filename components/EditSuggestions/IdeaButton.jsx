@@ -5,9 +5,9 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
-import ContainerForLikeShareFlag from "../ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
+import ContainerForLikeShareFlag from "@components/ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
 
 export default function FlagButtonAndLogic({
   signedInUsersId,

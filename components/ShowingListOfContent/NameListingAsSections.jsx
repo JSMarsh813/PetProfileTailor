@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
+import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import DeleteButton from "../DeletingData/DeleteButton";
-import EditButton from "../ReusableSmallComponents/buttons/EditButton";
+import EditButton from "@components/ReusableSmallComponents/buttons/EditButton";
 
 import EditName from "../EditingData/EditName";
-import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
+import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import { Dialog, DialogPanel } from "@headlessui/react";
 // import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
 // import CommentListing from "../ShowingListOfContent/CommentListing";
 // import AddComment from "../AddingNewData/AddComment";
-import ProfileImage from "../ReusableSmallComponents/ProfileImage";
+import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import IdeaContentSection from "../EditSuggestions/IdeaContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import AddHashToArrayString from "@utils/stringManipulation/addHashToArrayString";
 
 import { Ellipsis } from "lucide-react";
-import ContainerForLikeShareFlag from "../ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
+import ContainerForLikeShareFlag from "@components/ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
 import { useDeleteConfirmation } from "@hooks/useDeleteConfirmation";
 import DeleteDialog from "../DeletingData/DeleteDialog";
 import FlagDialog from "../Flagging/FlagDialog";

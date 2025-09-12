@@ -1,5 +1,5 @@
 import React from "react";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 
 export default function ToggeableAlert({ text, setToggleState, toggleState }) {
   return (

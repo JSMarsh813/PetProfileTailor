@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import { toast } from "react-toastify";
 import axios from "axios";
 import CheckboxWithLabelAndDescription from "../FormComponents/CheckboxWithLabelAndDescription";
 import { Field } from "@headlessui/react";
 import StyledTextarea from "../FormComponents/StyledTextarea";
 import StyledCheckbox from "../FormComponents/StyledCheckbox";
-import ClosingXButton from "../ReusableSmallComponents/buttons/ClosingXButton";
+import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "@hooks/useTags";
 

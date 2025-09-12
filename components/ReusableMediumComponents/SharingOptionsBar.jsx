@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink, faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import LinkButton from "../ReusableSmallComponents/buttons/LinkButton";
+import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 import {
   FacebookShareButton,
   FacebookIcon,

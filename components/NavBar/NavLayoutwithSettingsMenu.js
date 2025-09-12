@@ -11,8 +11,8 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { forwardRef } from "react";
-import ProfileImage from "../ReusableSmallComponents/ProfileImage";
-import LinkButton from "../ReusableSmallComponents/buttons/LinkButton";
+import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
+import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 import LinkMenu from "./LinkMenu";
 
 export default function NavLayoutwithSettingsMenu({

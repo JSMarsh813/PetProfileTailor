@@ -1,9 +1,9 @@
 import React from "react";
-import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
-import FollowButton from "../ReusableSmallComponents/buttons/FollowButton";
+import XSvgIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
+import FollowButton from "@components/ReusableSmallComponents/buttons/FollowButton";
 import Image from "next/image";
-import ProfileImage from "../ReusableSmallComponents/ProfileImage";
-import GifHover from "../ReusableSmallComponents/GifHover";
+import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
+import GifHover from "@components/ReusableSmallComponents/GifHover";
 
 export default function UsersFollowersList({
   setShowUsersListPage,

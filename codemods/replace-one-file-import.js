@@ -10,17 +10,15 @@ export default function transformer(file, api) {
   root.find(j.ImportDeclaration).forEach((path) => {
     let importPath = path.node.source.value;
 
-    if (
-      typeof importPath === "string" &&
-      importPath.includes("ReusableSmallComponents")
-    ) {
-      // Replace the relative path with @components
-      const newPath = importPath.replace(
+    if (importPath.includes("ReusableSmallComponents")) {
+      // Replace relative path up to ReusableSmallComponents with @components
+      importPath = importPath.replace(
         /(\.\.\/)+ReusableSmallComponents/,
-        "@components",
+        "@components/ReusableSmallComponents",
       );
 
-      path.node.source.value = newPath;
+      // Keep the rest of the path (e.g., /ProfileImage)
+      path.node.source.value = importPath;
     }
   });
 

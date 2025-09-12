@@ -1,6 +1,6 @@
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
-import LinkButton from "../ReusableSmallComponents/buttons/LinkButton";
-import ListWithPawPrintIcon from "../ReusableSmallComponents/ListWithPawPrintIcon";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
+import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
+import ListWithPawPrintIcon from "@components/ReusableSmallComponents/ListWithPawPrintIcon";
 import Image from "next/image";
 
 const MediaObjectRight = ({

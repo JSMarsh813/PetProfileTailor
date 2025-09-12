@@ -1,6 +1,6 @@
 import React from "react";
-import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import XSvgIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 
 export default function DeleteContentNotification({
   setShowDeleteConfirmation,

@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
 import { Button, Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import { ButtonGroup } from "@mui/material";
 import StyledCheckbox from "../FormComponents/StyledCheckbox";
-import ClosingXButton from "../ReusableSmallComponents/buttons/ClosingXButton";
+import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
 
 function FilteringSidebar({
   category,

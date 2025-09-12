@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import XSvgIcon from "../ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
+import XSvgIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import Image from "next/image";
 import ImageUpload from "@components/AddingNewData/ImageUpload";
 

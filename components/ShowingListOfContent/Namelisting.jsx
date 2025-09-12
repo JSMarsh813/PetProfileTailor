@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
+import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 
 function Namelisting({ name, session, signedInUsersId }) {
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);

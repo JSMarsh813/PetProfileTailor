@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import LikesButtonAndLikesLogic from "../ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
+import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import DeleteButton from "../DeletingData/DeleteButton";
-import EditButton from "../ReusableSmallComponents/buttons/EditButton";
+import EditButton from "@components/ReusableSmallComponents/buttons/EditButton";
 import { useRouter } from "next/router";
 
 import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
-import ShareButton from "../ReusableSmallComponents/buttons/ShareButton";
+import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton";
 
 import Image from "next/image";
-import ProfileImage from "../ReusableSmallComponents/ProfileImage";
+import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import FlaggingContentSection from "../Flagging/FlaggingContentSection";
 // import ParagraphRenderBasedOnArrayProperty from "./ParagraphRenderBasedOnArrayProperty";
 import ParagraphRenderBasedOnStringProperty from "./ParagraphRenderBasedOnStringProperty";

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
-import DisabledButton from "../ReusableSmallComponents/buttons//DisabledButton";
+import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
+import DisabledButton from "@components/ReusableSmallComponents/buttons//DisabledButton";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
