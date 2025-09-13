@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Image from "next/image";
 
@@ -21,7 +23,7 @@ export default function GifHover({
   };
 
   return (
-    (<div className={divStyling}>
+    <div className={divStyling}>
       <Image
         src={hover ? gifSrc : stillImageSrc}
         layout={!layout ? "fill" : layout}
@@ -34,8 +36,9 @@ export default function GifHover({
         onMouseLeave={handleMouseLeaveForImage}
         style={{
           maxWidth: "100%",
-          height: "auto"
-        }} />
-    </div>)
+          height: "auto",
+        }}
+      />
+    </div>
   );
 }

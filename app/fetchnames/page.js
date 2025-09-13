@@ -1,39 +1,23 @@
-import { authOptions } from "./api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
 import dbConnect from "@utils/db";
-import Category from "@models/NameCategory";
 
 import NameLikes from "@models/NameLikes";
 import FlagReport from "@models/FlagReport";
 import mongoose from "mongoose";
 
 import CoreListingPageLogic from "@/components/CoreListingPagesLogic";
+import { getServerSession } from "next-auth";
+import { serverAuthOptions } from "@/lib/auth";
 
-//getkey: accepts the index of the current page, as well as the data from the previous page.
-
-export const getServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions,
-  );
-
+export default async function FetchNames() {
   await dbConnect.connect();
-
-  //grabbing category's
-
-  const data = await Category.find()
-    .populate("tags")
-    .sort({ order: 1, _id: 1 });
-  // _id:1 is there just in case a category doesn't have an order property, it will appear at the end
-
-  // grabbing names by logged in user
 
   let usersLikedContent = [];
 
   let contentUserReported = [];
 
   let contentUserSuggestedEdits = [];
+
+  const session = await getServerSession(serverAuthOptions);
 
   if (session) {
     const userId = mongoose.Types.ObjectId(session.user.id);
@@ -62,30 +46,11 @@ export const getServerSideProps = async (context) => {
     // const contentWithSuggestions
   }
 
-  // MongoDB documents (from Mongoose) are not plain JavaScript objects they have extra methods like .save, ect, but Next.JS needs JSON-serializable objects
-  // thus the JSON.parse(JSON.stringify)
-  return {
-    props: {
-      categoriesWithTags: JSON.parse(JSON.stringify(data)),
-      sessionFromServer: session,
-      usersLikedNamesFromDb: usersLikedContent,
-      contentUserReported,
-    },
-  };
-};
-
-export default function FetchNames({
-  categoriesWithTags,
-  sessionFromServer,
-  usersLikedNamesFromDb,
-  contentUserReported,
-}) {
   return (
     <CoreListingPageLogic
       dataType="name"
-      categoriesWithTags={categoriesWithTags}
-      sessionFromServer={sessionFromServer}
-      usersLikedNamesFromDb={usersLikedNamesFromDb}
+      sessionFromServer={session}
+      usersLikedNamesFromDb={usersLikedContent}
       contentUserReported={contentUserReported}
     />
   );

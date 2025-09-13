@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef } from "react";
 import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 import Namelisting from "@components/ShowingListOfContent/Namelisting";

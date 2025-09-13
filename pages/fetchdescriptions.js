@@ -74,6 +74,9 @@ export default function FetchDescriptions({
   usersLikedNamesFromDb,
   contentUserReported,
 }) {
+  const { nameCategRef } = useCategAndTags();
+  const nameCategMap = nameCategRef.current;
+  console.log("nameCategMap", nameCategMap);
   return (
     <CoreListingPageLogic
       dataType="description"

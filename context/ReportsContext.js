@@ -1,4 +1,5 @@
-// context/ReportsContext.js
+"use client";
+
 import { createContext, useContext, useRef } from "react";
 
 const ReportsContext = createContext(null);

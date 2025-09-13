@@ -16,12 +16,10 @@ import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 import LinkMenu from "./LinkMenu";
 
-export default function NavLayoutwithSettingsMenu() {
+export default function NavLayoutwithSettingsMenu({ session }) {
   const logoutClickHandler = () => {
     signOut({ callbackUrl: "/login" });
   };
-
-  const { data: sessionFromServer } = useSession(); // ✅ client hook
 
   const MenuItemsStyling =
     "absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none";
@@ -32,9 +30,9 @@ export default function NavLayoutwithSettingsMenu() {
     }`;
   };
 
-  let userName = sessionFromServer.user.name;
-  let profileImageLink = sessionFromServer.user.profileimage;
-  let signedInUsersId = sessionFromServer.user.id;
+  let userName = session.user.name;
+  let profileImageLink = session.user.profileimage;
+  let signedInUsersId = session.user.id;
 
   return (
     <>
@@ -98,13 +96,13 @@ export default function NavLayoutwithSettingsMenu() {
                       )}
                     </MenuItem>
 
-                    {sessionFromServer.user.profilename && (
+                    {session.user.profilename && (
                       <MenuItem>
                         {({ focus }) => (
                           <LinkMenu
                             href={`${
                               process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                            }profile/${sessionFromServer.user.profilename.toLowerCase()}`}
+                            }profile/${session.user.profilename.toLowerCase()}`}
                             focus={focus}
                             className={menuItemStyling(focus)}
                           >

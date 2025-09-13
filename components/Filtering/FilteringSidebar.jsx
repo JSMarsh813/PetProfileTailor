@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef } from "react";
 import { Button, Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
@@ -5,9 +7,11 @@ import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralBu
 import { ButtonGroup } from "@mui/material";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
+import { useCategAndTags } from "@/context/CategoriesAndTagsContext";
+import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 
 function FilteringSidebar({
-  category,
+  dataType,
   handleFilterChange,
   handleApplyFilters,
   filterTagsIds,
@@ -16,6 +20,7 @@ function FilteringSidebar({
   remainingFilterCooldown,
   startCooldown,
 }) {
+  const categoriesWithTags = useCategoriesForDataType(dataType);
   const onApplyClick = () => {
     if (remainingFilterCooldown > 0 || isLoading) return;
 
@@ -34,7 +39,7 @@ function FilteringSidebar({
       {/* scrollable content */}
       <div className="flex-1 overflow-y-auto px-2">
         {/* mapping through categories ex: gender, holidays */}
-        {category.map((category, index) => {
+        {categoriesWithTags.map((category, index) => {
           return (
             <Disclosure key={category._id}>
               {/* defaultOpen will have the disclosure stay open*/}
@@ -67,7 +72,7 @@ function FilteringSidebar({
                       {/* mapping through category options and assigning them a button (ex: male, female, unisex)*/}
 
                       {category.tags.map((option, index) => (
-                        (<StyledCheckbox
+                        <StyledCheckbox
                           key={option._id}
                           id={`filter-mobile-${index}`} // unique id for accessibility
                           label={option.tag} // visible text
@@ -75,7 +80,7 @@ function FilteringSidebar({
                           checked={filterTagsIds.includes(option._id)}
                           onChange={handleFilterChange}
                           className="group px-2" // optional styling wrapper
-                        />)
+                        />
                         // <div
                         //   key={option._id}
                         //   className="flex items-center group px-2"

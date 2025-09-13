@@ -1,5 +1,3 @@
-// context/ReportsContext.js
-
 "use client";
 
 import { createContext, useContext, useRef } from "react";
@@ -19,17 +17,9 @@ export function CategoriesAndTagsProvider({
   nameCateg = [],
 }) {
   console.log("descrCateg", descrCateg, "nameCateg", nameCateg);
-  const descriptionCategRef = useRef(
-    new Map(descrCateg.map((r) => [r._id.toString()])),
-  );
 
-  const nameCategRef = useRef(
-    new Map(nameCateg.map((r) => [r._id.toString()])),
-  );
   return (
-    <CategoriesAndTagsContext.Provider
-      value={{ descriptionCategRef, nameCategRef }}
-    >
+    <CategoriesAndTagsContext.Provider value={{ descrCateg, nameCateg }}>
       {children}
     </CategoriesAndTagsContext.Provider>
   );

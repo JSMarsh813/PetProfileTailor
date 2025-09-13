@@ -3,8 +3,6 @@ export default function startCooldown(
   setRemainingCooldown,
   seconds = 5,
 ) {
-  //  const intervalRef = useRef(null);
-  //   const [remainingCooldown, setRemainingCooldown] = useState(0);
   if (intervalRef.current) return; // interval already running
   setRemainingCooldown(seconds);
 

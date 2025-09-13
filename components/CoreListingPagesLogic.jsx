@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState, useRef } from "react";
 import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 import { Drawer } from "@mui/material";
@@ -15,7 +17,6 @@ import { ReportsProvider } from "@context/ReportsContext";
 
 export default function CoreListingPageLogic({
   dataType,
-  categoriesWithTags,
   sessionFromServer,
   usersLikedNamesFromDb,
   contentUserReported,
@@ -24,6 +25,7 @@ export default function CoreListingPageLogic({
   const [remainingSortCooldown, setRemainingSortCooldown] = useState(0);
   const filterCooldownRef = useRef(null);
   const sortIntervalRef = useRef(null);
+
   // prevents overlapping cooldown intervals by attaching the interval to useRef, it will clear after 5 seconds
   // so we check if filterCooldownRef.current has no intervals currently going before running another interval
 
@@ -143,11 +145,6 @@ export default function CoreListingPageLogic({
   return (
     <ReportsProvider initialReports={contentUserReported}>
       <div>
-        <Layout
-          profileImage={profileImage}
-          userName={userName}
-          sessionFromServer={sessionFromServer}
-        />
         <section className="sm:px-4  mx-auto">
           <PageTitleWithImages
             title="Fetch"
@@ -171,7 +168,7 @@ export default function CoreListingPageLogic({
             anchor="left"
           >
             <FilteringSidebar
-              category={categoriesWithTags}
+              dataType={dataType}
               handleFilterChange={handleFilterChange}
               handleApplyFilters={handleApplyFilters}
               filterTagsIds={filterTagsIds}
@@ -235,7 +232,6 @@ export default function CoreListingPageLogic({
                           signedInUsersId={signedInUsersId}
                           likedSetRef={likedSetRef}
                           recentLikesRef={recentLikesRef}
-                          categoriesWithTags={categoriesWithTags}
                           mutate={mutate}
                         />
                       );

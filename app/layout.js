@@ -20,6 +20,7 @@ import NameCategory from "@models/NameCategory";
 import DescriptionCategory from "@/models/DescriptionCategory";
 import { SessionProviderWrapper } from "@/wrappers/SessionProviderWrapper";
 import NavLayoutwithSettingsMenu from "@/components/NavBar/NavLayoutwithSettingsMenu";
+import CategTagsWrapper from "@/wrappers/CategTagsWrapper";
 
 export const metadata = {
   title:
@@ -50,11 +51,11 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body>
         <SessionProviderWrapper session={session}>
-          <CategoriesAndTagsProvider
+          <CategTagsWrapper
             descrCateg={descCategoryJSON}
             nameCateg={nameCategoryJSON}
           >
-            <NavLayoutwithSettingsMenu />
+            <NavLayoutwithSettingsMenu session={session} />
             <main>{children}</main>
             <Analytics />
             <ToastProvider />
@@ -112,7 +113,7 @@ export default async function RootLayout({ children }) {
                 </span>
               </div>
             </footer>
-          </CategoriesAndTagsProvider>
+          </CategTagsWrapper>
         </SessionProviderWrapper>
       </body>
     </html>

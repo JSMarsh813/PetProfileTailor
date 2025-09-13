@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import IdeaButton from "./IdeaButton";
 import IdeaForm from "./IdeaForm";

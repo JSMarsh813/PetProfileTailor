@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
@@ -25,6 +27,7 @@ import FlagButton from "@components/Flagging/FlagButton";
 import { useFlagging } from "@hooks/useFlagging";
 import { useEditHandler } from "@hooks/useEditHandler";
 import { useReports } from "@context/ReportsContext";
+import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 
 export default function NameListingAsSections({
   dataType,
@@ -33,7 +36,6 @@ export default function NameListingAsSections({
   tagList,
   likedSetRef,
   recentLikesRef,
-  categoriesWithTags,
   mutate,
 }) {
   const {
@@ -46,6 +48,8 @@ export default function NameListingAsSections({
 
   const { reportsRef, hasReported, getStatus } = useReports();
   const userHasAlreadyReported = hasReported(singleContent._id.toString());
+
+  const categoriesWithTags = useCategoriesForDataType(dataType);
 
   const reportStatus = getStatus(singleContent._id.toString());
   console.log("reportStatus", reportStatus);

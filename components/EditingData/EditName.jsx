@@ -1,3 +1,5 @@
+"use client";
+
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 import { useRef } from "react";

@@ -1,3 +1,5 @@
+"use client";
+
 import Select from "react-select";
 import React, { useState, useEffect } from "react";
 import axios from "axios";

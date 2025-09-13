@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import { toast } from "react-toastify";
