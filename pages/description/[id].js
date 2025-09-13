@@ -5,8 +5,8 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import NavLayoutwithSettingsMenu from "@components/NavBar/NavLayoutwithSettingsMenu";
 import DescriptionListingAsSections from "@components/ShowingListOfContent/DescriptionListingAsSections";
 import dbConnect from "@utils/db";
-import Descriptions from "@models/description";
-import DescriptionTag from "@models/descriptiontag";
+import Descriptions from "@/models/Description";
+import DescriptionTag from "@/models/DescriptionTag";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 

@@ -1,4 +1,4 @@
-import Descriptions from "@models/description";
+import Descriptions from "@/models/Description";
 import db from "@utils/db";
 
 async function handler(req, res) {

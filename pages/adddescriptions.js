@@ -10,7 +10,7 @@ import AddingDescription from "@components/AddingNewData/addingdescription";
 import dbConnect from "@utils/db";
 
 import Names from "@models/Names";
-import DescriptionTag from "@models/descriptiontag";
+import DescriptionTag from "@/models/DescriptionTag";
 
 export const getServerSideProps = async (context) => {
   const session = await unstable_getServerSession(

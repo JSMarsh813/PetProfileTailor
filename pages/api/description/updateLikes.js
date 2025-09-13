@@ -1,4 +1,4 @@
-import Description from "@models/description";
+import Description from "@/models/Description";
 import db from "@utils/db";
 const mongoose = require("mongoose");
 

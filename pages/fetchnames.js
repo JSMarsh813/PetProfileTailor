@@ -2,6 +2,7 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import dbConnect from "@utils/db";
 import Category from "@models/NameCategory";
+
 import NameLikes from "@models/NameLikes";
 import FlagReport from "@models/FlagReport";
 import mongoose from "mongoose";
@@ -48,6 +49,7 @@ export const getServerSideProps = async (context) => {
       {
         reportedby: userId,
         status: { $nin: ["dismissed", "deleted", "resolved"] }, // exclude these
+        contenttype: "name", // only get reports for descriptions
       },
       { contentid: 1, status: 1, _id: 0 },
     ).lean(); //.lean() makes the query faster by returning plain JS objects.

@@ -23,8 +23,8 @@ import dbConnect from "@utils/db";
 import NameLikes from "@models/NameLikes";
 import Names from "@models/Names";
 import NameTag from "@models/NameTag";
-import Descriptions from "@models/description";
-import DescriptionTag from "@models/descriptiontag";
+import Descriptions from "@/models/Description";
+import DescriptionTag from "@/models/DescriptionTag";
 import User from "@models/User";
 
 // const ObjectId = require("mongodb").ObjectId;

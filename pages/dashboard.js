@@ -15,8 +15,8 @@ import HeadersForNames from "@components/ShowingListOfContent/HeadersForNames";
 import dbConnect from "@utils/db";
 import Names from "@models/Names";
 
-import Descriptions from "@models/description";
-import DescriptionTag from "@models/descriptiontag";
+import Descriptions from "@/models/Description";
+import DescriptionTag from "@/models/DescriptionTag";
 import NameTag from "@models/NameTag";
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";

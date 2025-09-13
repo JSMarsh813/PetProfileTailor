@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const DescriptionTagSchema = new mongoose.Schema({
   tag: {
@@ -13,6 +13,7 @@ const DescriptionTagSchema = new mongoose.Schema({
 });
 
 const DescriptionTag =
-  mongoose.models.descriptiontag ||
-  mongoose.model("descriptiontag", DescriptionTagSchema);
+  mongoose.models.DescriptionTag ||
+  mongoose.model("DescriptionTag", DescriptionTagSchema);
+
 export default DescriptionTag;

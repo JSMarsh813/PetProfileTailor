@@ -1,6 +1,6 @@
 import dbConnect from "@utils/db";
-import Category from "@models/descriptioncategory";
-import descriptiontag from "@models/descriptiontag";
+import Category from "@/models/DescriptionCategory";
+import descriptiontag from "@/models/DescriptionTag";
 
 export default async function handler(req, res) {
   const { method } = req;
