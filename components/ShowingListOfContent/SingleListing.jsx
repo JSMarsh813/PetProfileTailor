@@ -43,6 +43,7 @@ export default function NameListingAsSections({
     closeDelete,
     confirmDelete,
   } = useDeleteConfirmation();
+  const [content, setContent] = useState(singleContent);
 
   const { reportsRef, hasReported, getStatus } = useReports();
   const userHasAlreadyReported = hasReported(singleContent._id.toString());
@@ -61,12 +62,12 @@ export default function NameListingAsSections({
 
   const linkToShare =
     dataType === "name"
-      ? `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${singleContent.name}`
+      ? `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${content.name}`
       : `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/description/${singleContent._id}`;
 
   const localLink =
     dataType === "name"
-      ? `/name/${singleContent.name}`
+      ? `/name/${content.name}`
       : `/description/${singleContent._id}`;
 
   // TODO
@@ -83,7 +84,7 @@ export default function NameListingAsSections({
     isSaving,
   } = useEditHandler({
     apiEndpoint: apiEndPoint,
-    mutate,
+    setLocalData: setContent,
   });
 
   const userIsTheCreator = singleContent.createdby._id === signedInUsersId;
@@ -122,9 +123,9 @@ export default function NameListingAsSections({
 
   console.log(
     "AddHashToArrayString(singleContent)",
-    AddHashToArrayString(singleContent),
+    AddHashToArrayString(content),
   );
-  console.log("singleContent.tags", singleContent.tags);
+  console.log("singleContent.tags", content.tags);
   console.log(
     "categoriesWithTags in singleContent listings",
     categoriesWithTags,
@@ -266,17 +267,17 @@ export default function NameListingAsSections({
           </section>
 
           <span className="font-bold text-xl text-center block w-full mb-2">
-            {singleContent.name}{" "}
+            {content.name}{" "}
           </span>
 
           {/* ###### DESCRIPTION SECTION #### */}
 
           <p className="whitespace-pre-line">
-            {singleContent.description && singleContent.description}
+            {content.description && content.description}
           </p>
 
           {/* ###### TAGS SECTION #### */}
-          <span className="my-4"> {AddHashToArrayString(singleContent)} </span>
+          <span className="my-4"> {AddHashToArrayString(content)} </span>
 
           {/* ###### LIKES, SHARE, FLAG #### */}
 
@@ -298,7 +299,7 @@ export default function NameListingAsSections({
               <ContainerForLikeShareFlag>
                 <EditButton
                   onupdateEditState={() => {
-                    if (singleContent) openEdit(singleContent);
+                    if (content) openEdit(content);
                   }}
                 />
               </ContainerForLikeShareFlag>
@@ -308,7 +309,7 @@ export default function NameListingAsSections({
                 signedInUsersId={signedInUsersId}
                 currentTargetedId={currentTargetedId}
                 contentType="name"
-                content={singleContent}
+                content={content}
                 apiIdeaSubmission="/api/_______/"
                 apiaddUserToIdea="/api/_____"
                 userAlreadySentIdea={userAlreadySentIdea}
@@ -317,16 +318,6 @@ export default function NameListingAsSections({
                 setIdeaFormToggled={setIdeaFormToggled}
                 categoriesWithTags={categoriesWithTags}
               />
-
-              // <FlaggingContentSection
-              //   userIsTheCreator={userIsTheCreator}
-              //   signedInUsersId={signedInUsersId}
-              //   currentTargetedId={currentTargetedId}
-              //   contentType="name"
-              //   content={name}
-              //   apiflagReportSubmission="/api/flag/flagreportsubmission/"
-              //   apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
-              // />
             )}
           </div>
         </div>

@@ -30,9 +30,16 @@ export default async function handler(req, res) {
 
     const toUpdateName = await Names.findById(nameId);
 
+    if (!toUpdateName) {
+      return res.status(404).json({ message: "Name not found" });
+    }
+
     try {
       // Only check if user is actually changing the name
-      if (name && name.toLowerCase() !== toUpdateName.name.toLowerCase()) {
+      if (
+        name &&
+        name.toLowerCase() !== (await toUpdateName.name.toLowerCase())
+      ) {
         const existingNameCheck = await Names.findOne({
           name: { $regex: new RegExp(`^${name}$`, "i") },
         });
@@ -56,7 +63,15 @@ export default async function handler(req, res) {
 
       await toUpdateName.save();
 
+      const populateName = await Names.findById(nameId)
+        .populate({
+          path: "createdby",
+          select: "name profilename profileimage",
+        })
+        .populate({ path: "tags", select: "tag" });
+
       res.send({
+        data: populateName,
         message: "Name Updated",
       });
     } catch (err) {

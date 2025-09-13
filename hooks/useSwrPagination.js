@@ -19,6 +19,7 @@ export function useSwrPagination({
   tags,
   sortingProperty,
   sortingValue,
+  contentIdentifier,
 }) {
   // SWR key function
   const getKey = (index, previousPageData) => {
@@ -30,6 +31,8 @@ export function useSwrPagination({
       url = `/api/names/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
     } else if (dataType === "description") {
       url = `/api/description/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
+    } else if (dataType === "individualName") {
+      url = `/api/names/findByName/${contentIdentifier}`;
     }
 
     if (tags?.length) url += `&tags=${tags.join(",")}`;

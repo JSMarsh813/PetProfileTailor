@@ -13,10 +13,10 @@ const handler = async (req, res) => {
 };
 const getHandler = async (req, res) => {
   await db.connect();
-
+  console.log("req.query", req.query);
   const individualname = await Names.findOne({ id: req.query._id });
 
-  res.status(200).json(individualname);
+  return res.status(200).json(individualname);
 };
 
 //

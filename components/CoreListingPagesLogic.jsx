@@ -82,6 +82,11 @@ export default function CoreListingPageLogic({
     sortingValue: sortingValue,
   });
 
+  console.log("SWR", Array.isArray(data)); // true
+  console.log("SWR", data.length);
+  console.log("SWR", typeof data[0]); // "object"
+  console.log("SWR first item", data[0] ? data[0]._id : "null"); // check first object's id
+
   // ############ Section for passing state into components as functions #######
 
   function setItemsPerPageFunction(event) {
@@ -221,11 +226,12 @@ export default function CoreListingPageLogic({
                         : (currentUiPage - 1) * itemsPerPage,
                       currentUiPage * itemsPerPage,
                     )
-                    .map((name) => {
+                    .map((singleContent) => {
                       return (
                         <NameListingAsSections
-                          name={name}
-                          key={name._id}
+                          dataType={dataType}
+                          singleContent={singleContent}
+                          key={singleContent._id}
                           signedInUsersId={signedInUsersId}
                           likedSetRef={likedSetRef}
                           recentLikesRef={recentLikesRef}
