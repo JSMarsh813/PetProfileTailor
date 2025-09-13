@@ -29,14 +29,18 @@ export const getServerSideProps = async (context) => {
 
   await dbConnect.connect();
 
-  const nameData = await Names.find({ name: name })
+  const nameData = await Names.findOne({
+    name: { $regex: new RegExp(`^${name}$`, "i") }, // case-insensitive exact match
+  })
     .populate({
       path: "createdby",
       select: ["name", "profilename", "profileimage"],
     })
     .populate({ path: "tags", select: ["tag"] });
 
-  console.log("nameData", nameData);
+  if (!nameData) {
+    return { notFound: true }; // Next.js 404
+  }
 
   let userLiked = [];
 
@@ -47,10 +51,13 @@ export const getServerSideProps = async (context) => {
     .sort({ order: 1, _id: 1 });
 
   if (session) {
-    // checking if its been reported by the logged in user
-
-    const likes = (await NameLikes.findOne({ userId, nameId: name._id })) || [];
-    userLiked = likes.map((l) => l.nameId.toString());
+    const likedDoc =
+      (await NameLikes.findOne({ userId: userId, nameId: nameData._id })) ||
+      null;
+    console.log("likeddoc", likedDoc);
+    if (likedDoc) {
+      userLiked = [likedDoc.nameId.toString()];
+    }
 
     report =
       (await FlagReport.findOne(
@@ -65,7 +72,7 @@ export const getServerSideProps = async (context) => {
     // return [] instead of null if nothing is found
   }
 
-  if (!nameData.length) {
+  if (!nameData) {
     return {
       notFound: true,
     };
@@ -92,8 +99,6 @@ export default function Postid({
   let userName = "";
   let profileImage = "";
 
-  console.log("categoriesWithTags", categoriesWithTags);
-
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
     profileImage = sessionFromServer.user.profileimage;
@@ -101,8 +106,6 @@ export default function Postid({
 
   const likedSetRef = useRef(new Set(userLiked));
   const recentLikesRef = useRef({});
-
-  console.log(" contentid: nameData[0]._id,", nameData[0]._id);
 
   return (
     <ReportsProvider initialReports={report}>
@@ -114,10 +117,10 @@ export default function Postid({
         />
 
         <div className="mx-2 mt-6 ">
-          {nameData.length > 0 && (
+          {nameData && (
             <SingleListing
-              singleContent={nameData[0]}
-              key={nameData[0]._id}
+              singleContent={nameData}
+              key={nameData._id}
               dataType="name"
               signedInUsersId={sessionFromServer.user.id}
               likedSetRef={likedSetRef}
@@ -125,6 +128,7 @@ export default function Postid({
               categoriesWithTags={categoriesWithTags}
             />
           )}
+          {/* {nameData.length === 0 && <p> the name </p>} */}
         </div>
       </div>
     </ReportsProvider>

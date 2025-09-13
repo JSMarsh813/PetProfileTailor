@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 export function useToggleState({
-  id,
   initialActive,
   apiUrl,
+  body,
   onApplyOptimistic, // custom function for optimistic updates
   onRollback, // custom function for rollback
 }) {
@@ -26,7 +26,7 @@ export function useToggleState({
       await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
+        body: JSON.stringify(body),
       });
     } catch (err) {
       console.error("toggle error", err);

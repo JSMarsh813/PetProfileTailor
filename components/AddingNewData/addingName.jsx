@@ -33,7 +33,7 @@ function NewNameWithTagsData({
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
 
   async function checkIfNameExists() {
-    let nameResponse = await fetch("/api/names/findonenamebyname/" + nameCheck);
+    let nameResponse = await fetch("/api/names/findByName/" + nameCheck);
     let nameData = await nameResponse.json();
     setNamesThatExist(nameData);
     setNameCheckFunctionRun(true);

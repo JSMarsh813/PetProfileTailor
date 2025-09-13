@@ -45,6 +45,8 @@ export default function NameListingAsSections({
   } = useDeleteConfirmation();
   const [content, setContent] = useState(singleContent);
 
+  console.log("singleContent", singleContent);
+
   const { reportsRef, hasReported, getStatus } = useReports();
   const userHasAlreadyReported = hasReported(singleContent._id.toString());
 

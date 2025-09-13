@@ -9,6 +9,8 @@ export default async function handler(req, res) {
   const { id: nameId } = req.query;
   const { userId } = req.body;
 
+  console.log("req.query",req.query)
+
   if (!userId) return res.status(400).json({ error: "userId required" });
   if (req.method !== "POST") return res.status(405).end();
 
