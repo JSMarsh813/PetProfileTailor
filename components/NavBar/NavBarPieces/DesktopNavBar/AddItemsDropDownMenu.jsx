@@ -1,3 +1,5 @@
+"use client";
+
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
@@ -10,7 +12,7 @@ export default function DropDownMenu() {
   return (
     <Menu
       as="div"
-      className="relative inline-block text-left z-10"
+      className="relative inline-block text-left z-30"
     >
       <MenuButton className="inline-flex justify-center px-4 py-2 text-sm font-medium text-subtleWhite hover:border-b-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
         Add
@@ -37,11 +39,12 @@ export default function DropDownMenu() {
             {({ focus }) => (
               //<a> is a real DOM element, so Headless UI can attach refs for keyboard focus.
 
-              (<LinkMenu
+              <LinkMenu
                 href="/adddescriptions"
                 focus={focus}
-              >Description
-                              </LinkMenu>)
+              >
+                Description
+              </LinkMenu>
             )}
           </MenuItem>
         </div>

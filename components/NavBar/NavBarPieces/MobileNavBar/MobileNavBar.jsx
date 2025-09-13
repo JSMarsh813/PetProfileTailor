@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Menu, MenuItem, MenuItems, MenuButton } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

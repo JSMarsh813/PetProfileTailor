@@ -1,4 +1,5 @@
-import { signOut } from "next-auth/react";
+"use client";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 // //Special jsx code that allows us to build links. Allows us to keep everything on a single page (makes it a SPA), rather than using a href="page link", which would make us lose any state and require that we get a new file sent from the server
 
@@ -15,35 +16,12 @@ import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 import LinkMenu from "./LinkMenu";
 
-export default function NavLayoutwithSettingsMenu({
-  children,
-  userName,
-  profileImage,
-  sessionFromServer,
-}) {
+export default function NavLayoutwithSettingsMenu() {
   const logoutClickHandler = () => {
     signOut({ callbackUrl: "/login" });
   };
 
-  const MyLink = forwardRef((props, ref) => {
-    let { href, active, children, ...rest } = props;
-    return (
-      <Link
-        href={href}
-        ref={ref}
-        className={`block rounded-md px-2 py-2 text-md
-        hover:bg-subtleWhite
-        hover:text-secondary
-        text-center                   
- 
-`}
-        {...rest}
-      >
-        {children}
-      </Link>
-    );
-  });
-  MyLink.displayName = "MyLink";
+  const { data: sessionFromServer } = useSession(); // ✅ client hook
 
   const MenuItemsStyling =
     "absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none";
@@ -53,6 +31,10 @@ export default function NavLayoutwithSettingsMenu({
       focus ? "bg-white/10 text-white" : ""
     }`;
   };
+
+  let userName = sessionFromServer.user.name;
+  let profileImageLink = sessionFromServer.user.profileimage;
+  let signedInUsersId = sessionFromServer.user.id;
 
   return (
     <>
@@ -93,7 +75,7 @@ export default function NavLayoutwithSettingsMenu({
 
                     <ProfileImage
                       divStyling={"ml-3 h-8 w-8 relative"}
-                      profileImage={profileImage}
+                      profileImage={profileImageLink}
                       className="rounded-full inline relative"
                     />
 
@@ -191,7 +173,6 @@ export default function NavLayoutwithSettingsMenu({
             </div>
           </nav>
         </header>
-        <main className="container m-auto px-4 ">{children}</main>
       </div>
     </>
   );

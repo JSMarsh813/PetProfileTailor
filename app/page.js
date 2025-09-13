@@ -1,46 +1,28 @@
 // import React from 'react';
 // import ReactDOM from 'react-dom';
 // these react imports added behind the scenes writing it like this isn't needed for nextjs
+
+"use client";
+
 import HeroTop from "@components/LandingPage/HeroTop";
 import MediaObjectLeft from "@components/ReusableMediumComponents/MediaObjectLeft";
 import MediaObjectRight from "@components/ReusableMediumComponents/MediaObjectRight";
-import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
-import Image from "next/image";
 
-import { authOptions } from "../pages/api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+
 import WideCenteredHeading from "@components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 
-import dbConnect from "@utils/db";
 import YoutubeEmbed from "@components/ShowingListOfContent/YoutubeEmbed";
 import { useState } from "react";
 
-export const getServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions,
-  );
-
-  await dbConnect.connect();
-
-  return {
-    props: {
-      sessionFromServer: session,
-    },
-  };
-};
-
-function HomePage({ sessionFromServer }) {
+function HomePage() {
+  const { data: session } = useSession(); // now client-side
   //for Nav menu profile name and image
   //let section exists in case the user is not signed in
-  let userName = "";
-  let profileImage = "";
 
-  if (sessionFromServer) {
-    userName = sessionFromServer.user.name;
-    profileImage = sessionFromServer.user.profileimage;
-  }
+  let userName = session?.user?.name || "";
+  let profileImage = session?.user?.profileimage || "";
   //end of section for nav menu
 
   const [openVideo, setOpenVideo] = useState(null);
@@ -50,12 +32,6 @@ function HomePage({ sessionFromServer }) {
   }
   return (
     <div>
-      <Layout
-        profileImage={profileImage}
-        userName={userName}
-        sessionFromServer={sessionFromServer}
-      />
-
       <HeroTop
         updateImpactfulState={() => handleVideoClick("impactful")}
         updateFunState={() => handleVideoClick("fun")}

@@ -1,4 +1,6 @@
-import { Dialog, DialogPanel, DialogTitle, panelRef } from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+
+import { useRef } from "react";
 import { useState } from "react";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import XSvgIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
@@ -33,6 +35,8 @@ export default function EditName({
       tags: tagsToSubmit.map((t) => t.value),
     });
   };
+
+  const panelRef = useRef(null);
 
   return (
     <Dialog
