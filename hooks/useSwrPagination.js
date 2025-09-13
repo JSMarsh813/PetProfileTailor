@@ -13,6 +13,7 @@ const ITEMS_PER_FETCH = 100; // number of items per DB chunk
  * @param {number} sortingvalue - 1 or -1
  */
 export function useSwrPagination({
+  dataType,
   currentUiPage,
   itemsPerUiPage,
   tags,
@@ -24,7 +25,13 @@ export function useSwrPagination({
     if (previousPageData && !previousPageData.data?.length) return null; // no more data
     if (index === undefined) return null; // stop fetching
     const page = index + 1; // SWR index starts at 0, but our API pages start at 1
-    let url = `/api/names/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
+    let url = "";
+    if (dataType === "name") {
+      url = `/api/names/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
+    } else if (dataType === "description") {
+      url = `/api/description/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
+    }
+
     if (tags?.length) url += `&tags=${tags.join(",")}`;
     return url;
   };

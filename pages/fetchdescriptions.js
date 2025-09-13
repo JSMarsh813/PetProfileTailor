@@ -76,6 +76,7 @@ export default function FetchDescriptions({
 }) {
   return (
     <CoreListingPageLogic
+      dataType="description"
       categoriesWithTags={categoriesWithTags}
       sessionFromServer={sessionFromServer}
       usersLikedNamesFromDb={usersLikedNamesFromDb}

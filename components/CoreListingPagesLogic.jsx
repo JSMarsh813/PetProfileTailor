@@ -14,6 +14,7 @@ import GoToTopButton from "@components/ReusableSmallComponents/buttons/GoToTopBu
 import { ReportsProvider } from "@context/ReportsContext";
 
 export default function CoreListingPageLogic({
+  dataType,
   categoriesWithTags,
   sessionFromServer,
   usersLikedNamesFromDb,
@@ -73,6 +74,7 @@ export default function CoreListingPageLogic({
     isValidating,
     mutate,
   } = useSwrPagination({
+    dataType,
     currentUiPage,
     itemsPerUiPage,
     tags: triggerApplyFilters,
@@ -121,8 +123,8 @@ export default function CoreListingPageLogic({
     setSize(1);
   };
 
-  const names = data ?? [];
-  // console.log("names", names);
+  const content = data ?? [];
+  // console.log("content", content);
 
   //#################### END of SWR section ##############
 
@@ -144,7 +146,10 @@ export default function CoreListingPageLogic({
         <section className="sm:px-4  mx-auto">
           <PageTitleWithImages
             title="Fetch"
-            title2="Names"
+            title2={
+              (dataType === "name" && "Names") ||
+              (dataType == "description" && "Descriptions")
+            }
           />
         </section>
 
@@ -208,8 +213,8 @@ export default function CoreListingPageLogic({
               )}
 
               <section className="whitespace-pre-line ">
-                {names?.length > 0 &&
-                  names
+                {content?.length > 0 &&
+                  content
                     .slice(
                       currentUiPage - 1 == 0
                         ? 0

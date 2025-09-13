@@ -82,6 +82,7 @@ export default function FetchNames({
 }) {
   return (
     <CoreListingPageLogic
+      dataType="name"
       categoriesWithTags={categoriesWithTags}
       sessionFromServer={sessionFromServer}
       usersLikedNamesFromDb={usersLikedNamesFromDb}
