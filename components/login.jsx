@@ -24,20 +24,30 @@ import { getCsrfToken } from "next-auth/react";
 export default function login() {
   const { data: session } = useSession();
   const [csrfToken, setCsrfToken] = useState("");
+  const [redirecting, setRedirecting] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
-    // because its async and client components are asyncronous we have to use a mix of useState and useEffect for the token
-    // fetch CSRF token only once
-    getCsrfToken().then((token) => setCsrfToken(token ?? ""));
+    let isMounted = true;
+    getCsrfToken().then((token) => {
+      if (isMounted) setCsrfToken(token ?? "");
+    });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
-    if (session?.user) {
-      router.push("/dashboard");
+    if (session?.user && !redirecting) {
+      setRedirecting(true);
+      //Prevents multiple router pushes if session updates quickly multiple times.
+
+      // Use a microtask Promise.resolve() to avoid interfering with render
+      Promise.resolve().then(() => router.push("/dashboard"));
     }
-  }, [session]);
+    //Wrapping in Promise.resolve() defers the push until after the current render, preventing multiple “history” calls.
+  }, [session, redirecting, router]);
 
   const {
     handleSubmit,

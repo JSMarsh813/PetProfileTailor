@@ -10,10 +10,8 @@ import axios from "axios";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import Image from "next/image";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import StyledInput from "@components/FormComponents/StyledInput";
+
 import RegisterInput from "@components/FormComponents/RegisterInput";
 
 export default function Register() {
