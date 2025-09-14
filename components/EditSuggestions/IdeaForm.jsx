@@ -23,7 +23,7 @@ function AddFlagReport({
   ideaFormToggled,
   setIdeaIconClickedByNewUser,
   setUserAlreadySentIdea,
-  categoriesWithTags,
+  dataType = { dataType },
 }) {
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
@@ -183,7 +183,7 @@ function AddFlagReport({
           </div>
 
           <TagsSelectAndCheatSheet
-            categoriesWithTags={categoriesWithTags}
+            dataType={dataType}
             tagsToSubmit={tagsToSubmit}
             handleSelectChange={handleSelectChange}
             handleCheckboxChange={handleCheckboxChange}

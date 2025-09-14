@@ -48,10 +48,6 @@ export const getServerSideProps = async (context) => {
 
   let report = [];
 
-  const categoriesWithTags = await NameCategory.find()
-    .populate("tags")
-    .sort({ order: 1, _id: 1 });
-
   if (session) {
     const likedDoc =
       (await NameLikes.findOne({ userId: userId, nameId: nameData._id })) ||
@@ -81,7 +77,6 @@ export const getServerSideProps = async (context) => {
   } else {
     return {
       props: {
-        categoriesWithTags: JSON.parse(JSON.stringify(categoriesWithTags)),
         nameData: JSON.parse(JSON.stringify(nameData)),
         sessionFromServer: session,
         userLiked,
@@ -96,7 +91,6 @@ export default function Postid({
   nameData,
   report,
   userLiked,
-  categoriesWithTags,
 }) {
   let userName = "";
   let profileImage = "";
@@ -127,7 +121,6 @@ export default function Postid({
               signedInUsersId={sessionFromServer.user.id}
               likedSetRef={likedSetRef}
               recentLikesRef={recentLikesRef}
-              categoriesWithTags={categoriesWithTags}
             />
           )}
           {/* {nameData.length === 0 && <p> the name </p>} */}

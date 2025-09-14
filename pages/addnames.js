@@ -4,38 +4,9 @@ import NewNameWithTagsData from "@components/AddingNewData/addingName";
 import { useSession } from "next-auth/react";
 import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 
-import { authOptions } from "../pages/api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
 import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 
-import dbConnect from "@utils/db";
-import Category from "@models/NameCategory";
-
-export const getServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions,
-  );
-
-  await dbConnect.connect();
-  const rawCategories = await Category.find().populate("tags");
-  const categoryData = rawCategories.map((cat) => ({
-    ...cat.toObject(),
-    tags: cat.tags.map((tag) => tag.toObject()), // keeps insertion order intact
-  }));
-
-  console.log("categoryData", categoryData);
-
-  return {
-    props: {
-      categoriesWithTags: JSON.parse(JSON.stringify(categoryData)),
-      sessionFromServer: session,
-    },
-  };
-};
-
-function AddNewNameWithTags({ sessionFromServer, categoriesWithTags }) {
+function AddNewNameWithTags({ sessionFromServer }) {
   const { data: session, status } = useSession();
 
   //need to do let to avoid error if sessionFromServer is null aka not signed in
@@ -74,7 +45,6 @@ function AddNewNameWithTags({ sessionFromServer, categoriesWithTags }) {
         )}
 
         <NewNameWithTagsData
-          categoriesWithTags={categoriesWithTags}
           userId={userId}
           sessionFromServer={sessionFromServer}
         />

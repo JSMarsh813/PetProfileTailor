@@ -27,7 +27,6 @@ import FlagButton from "@components/Flagging/FlagButton";
 import { useFlagging } from "@hooks/useFlagging";
 import { useEditHandler } from "@hooks/useEditHandler";
 import { useReports } from "@context/ReportsContext";
-import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 
 export default function NameListingAsSections({
   dataType,
@@ -48,8 +47,6 @@ export default function NameListingAsSections({
 
   const { reportsRef, hasReported, getStatus } = useReports();
   const userHasAlreadyReported = hasReported(singleContent._id.toString());
-
-  const categoriesWithTags = useCategoriesForDataType(dataType);
 
   const reportStatus = getStatus(singleContent._id.toString());
   console.log("reportStatus", reportStatus);
@@ -129,10 +126,7 @@ export default function NameListingAsSections({
     AddHashToArrayString(singleContent),
   );
   console.log("singleContent.tags", singleContent.tags);
-  console.log(
-    "categoriesWithTags in singleContent listings",
-    categoriesWithTags,
-  );
+
   const href = `${
     process.env.NEXT_PUBLIC_BASE_FETCH_URL
   }profile/${singleContent.createdby.profilename.toLowerCase()}`;
@@ -258,11 +252,11 @@ export default function NameListingAsSections({
 
             {showEditDialog && editTarget && (
               <EditName
+                dataType={dataType}
                 open={showEditDialog}
                 onClose={closeEdit}
                 name={editTarget}
                 tagList={tagList}
-                categoriesWithTags={categoriesWithTags}
                 onSave={confirmEdit}
                 signedInUsersId={signedInUsersId}
               />
@@ -319,7 +313,7 @@ export default function NameListingAsSections({
                 setUserAlreadySentIdea={setUserAlreadySentIdea}
                 ideaFormToggled={ideaFormToggled}
                 setIdeaFormToggled={setIdeaFormToggled}
-                categoriesWithTags={categoriesWithTags}
+                dataType={dataType}
               />
 
               // <FlaggingContentSection

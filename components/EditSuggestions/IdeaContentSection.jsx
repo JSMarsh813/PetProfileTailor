@@ -24,7 +24,7 @@ export default function FlaggingContentSection({
   setUserAlreadySentIdea,
   ideaFormToggled,
   setIdeaFormToggled,
-  categoriesWithTags,
+  dataType,
 }) {
   //flagIconClickedByNewUser:
   // the only user that can toggle the report flag because they are
@@ -33,7 +33,6 @@ export default function FlaggingContentSection({
   const [ideaIconClickedByNewUser, setIdeaIconClickedByNewUser] =
     useState(userAlreadySentIdea);
 
-  console.log("categories in idea content", categoriesWithTags);
   console.log(
     "userAlreadySentIdea",
     userAlreadySentIdea,
@@ -129,7 +128,6 @@ export default function FlaggingContentSection({
                 apiaddUserToIdea={apiaddUserToIdea}
                 ideaFormToggled={ideaFormToggled}
                 setUserAlreadySentIdea={setUserAlreadySentIdea}
-                categoriesWithTags={categoriesWithTags}
               />
             </DialogPanel>
           </div>

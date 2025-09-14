@@ -1,9 +1,16 @@
 import { useCategAndTags } from "@/context/CategoriesAndTagsContext";
 
 export function useCategoriesForDataType(dataType) {
-  const { nameCateg, descrCateg } = useCategAndTags();
+  const { nameCateg, descrCateg, nameTagList, descriptionTagList } =
+    useCategAndTags();
 
-  if (dataType === "name") return nameCateg;
-  if (dataType === "description") return descrCateg;
-  return [];
+  if (dataType === "name") {
+    return { categoriesWithTags: nameCateg, tagList: nameTagList };
+  }
+
+  if (dataType === "description") {
+    return { categoriesWithTags: descrCateg, tagList: descriptionTagList };
+  }
+
+  return { categoriesWithTags: [], tagList: [] };
 }

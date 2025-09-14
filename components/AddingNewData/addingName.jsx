@@ -16,11 +16,7 @@ import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndChe
 import { useTags } from "@hooks/useTags";
 import StyledTextarea from "@components/FormComponents/StyledTextarea";
 
-function NewNameWithTagsData({
-  userId,
-  categoriesWithTags,
-  sessionFromServer,
-}) {
+function NewNameWithTagsData({ userId, sessionFromServer }) {
   const [newName, setNewName] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [nameAlreadyExists, setNameExists] = useState(false);
@@ -30,6 +26,7 @@ function NewNameWithTagsData({
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
   const [nameCheckInvalidInput, setNameCheckInvalidInput] = useState(null);
   const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
+
   //regex will return null if none of the characters are invalid, so start with null to begin with
 
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
@@ -260,7 +257,7 @@ function NewNameWithTagsData({
             </p>
           </div>
           <TagsSelectAndCheatSheet
-            categoriesWithTags={categoriesWithTags}
+            dataType="name"
             tagsToSubmit={tagsToSubmit}
             handleSelectChange={handleSelectChange}
             handleCheckboxChange={handleCheckboxChange}

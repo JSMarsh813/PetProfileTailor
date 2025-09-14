@@ -20,7 +20,7 @@ function FilteringSidebar({
   remainingFilterCooldown,
   startCooldown,
 }) {
-  const categoriesWithTags = useCategoriesForDataType(dataType);
+  const { categoriesWithTags, tags } = useCategoriesForDataType(dataType);
   const onApplyClick = () => {
     if (remainingFilterCooldown > 0 || isLoading) return;
 

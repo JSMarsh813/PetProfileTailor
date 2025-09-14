@@ -4,22 +4,17 @@ import Select from "react-select";
 import { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
+import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 
 export default function TagsSelectAndCheatSheet({
-  categoriesWithTags,
+  dataType,
   tagsToSubmit,
   handleSelectChange,
   handleCheckboxChange,
 }) {
-  console.log("Child debug:");
   console.log({ tagsToSubmit, handleSelectChange, handleCheckboxChange });
 
-  // Flatten all tags into a single list for the select dropdown
-  const tagList = useMemo(() => {
-    return categoriesWithTags.flatMap((cat) =>
-      cat.tags.map((tag) => ({ label: tag.tag, value: tag._id })),
-    );
-  }, [categoriesWithTags]);
+  const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);
 
   // Map tagsToSubmit to the actual objects in tagList so React Select displays them
 

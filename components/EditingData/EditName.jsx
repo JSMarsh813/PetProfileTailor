@@ -10,20 +10,19 @@ import StyledInput from "@components/FormComponents/StyledInput";
 import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "@hooks/useTags";
+import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 
-export default function EditName({
-  open,
-  onClose,
-  name,
-  onSave,
-  categoriesWithTags,
-}) {
+export default function EditName({ dataType, open, onClose, name, onSave }) {
   if (!open) return null;
 
   const initialTags = name.tags.map((tag) => ({
     label: tag.tag,
     value: tag._id,
   }));
+
+  console.log("dataType in edit name", dataType);
+  const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);
+  console.log("dataType in tagList ", tagList);
 
   const [newName, setName] = useState(name.name);
   const [description, setDescription] = useState(name.description);
@@ -95,7 +94,7 @@ export default function EditName({
 
         {/* Tags */}
         <TagsSelectAndCheatSheet
-          categoriesWithTags={categoriesWithTags}
+          dataType={dataType}
           tagsToSubmit={tagsToSubmit}
           handleSelectChange={handleSelectChange}
           handleCheckboxChange={handleCheckboxChange}

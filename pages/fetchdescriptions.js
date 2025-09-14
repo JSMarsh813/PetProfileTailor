@@ -20,11 +20,6 @@ export const getServerSideProps = async (context) => {
 
   await dbConnect.connect();
 
-  const data = await Category.find()
-    .populate("tags")
-    .sort({ order: 1, _id: 1 });
-  // _id:1 is there just in case a category doesn't have an order property, it will appear at the end
-
   let usersLikedContent = [];
 
   let contentUserReported = [];
@@ -60,7 +55,6 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      categoriesWithTags: JSON.parse(JSON.stringify(data)),
       sessionFromServer: session,
       usersLikedNamesFromDb: usersLikedContent,
       contentUserReported,
@@ -69,7 +63,6 @@ export const getServerSideProps = async (context) => {
 };
 
 export default function FetchDescriptions({
-  categoriesWithTags,
   sessionFromServer,
   usersLikedNamesFromDb,
   contentUserReported,
@@ -80,7 +73,6 @@ export default function FetchDescriptions({
   return (
     <CoreListingPageLogic
       dataType="description"
-      categoriesWithTags={categoriesWithTags}
       sessionFromServer={sessionFromServer}
       usersLikedNamesFromDb={usersLikedNamesFromDb}
       contentUserReported={contentUserReported}

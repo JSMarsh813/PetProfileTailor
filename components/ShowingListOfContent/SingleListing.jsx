@@ -33,7 +33,6 @@ export default function NameListingAsSections({
   tagList,
   likedSetRef,
   recentLikesRef,
-  categoriesWithTags,
   mutate,
 }) {
   const {
@@ -128,10 +127,7 @@ export default function NameListingAsSections({
     AddHashToArrayString(content),
   );
   console.log("singleContent.tags", content.tags);
-  console.log(
-    "categoriesWithTags in singleContent listings",
-    categoriesWithTags,
-  );
+
   const href = `${
     process.env.NEXT_PUBLIC_BASE_FETCH_URL
   }profile/${singleContent.createdby.profilename.toLowerCase()}`;
@@ -261,7 +257,7 @@ export default function NameListingAsSections({
                 onClose={closeEdit}
                 name={editTarget}
                 tagList={tagList}
-                categoriesWithTags={categoriesWithTags}
+                dataType={dataType}
                 onSave={confirmEdit}
                 signedInUsersId={signedInUsersId}
               />
@@ -318,7 +314,7 @@ export default function NameListingAsSections({
                 setUserAlreadySentIdea={setUserAlreadySentIdea}
                 ideaFormToggled={ideaFormToggled}
                 setIdeaFormToggled={setIdeaFormToggled}
-                categoriesWithTags={categoriesWithTags}
+                dataType={dataType}
               />
             )}
           </div>
