@@ -27,6 +27,8 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(serverAuthOptions);
+  const safeSession = session ? { user: session.user || {} } : null;
+  //Guarantees session.user exists (or is an empty object).
 
   // connect to MongoDB + fetch categories
   await db.connect();
@@ -46,12 +48,12 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <SessionProviderWrapper session={session}>
+        <SessionProviderWrapper session={safeSession}>
           <CategTagsWrapper
             descrCateg={descCategoryJSON}
             nameCateg={nameCategoryJSON}
           >
-            <NavLayoutwithSettingsMenu session={session} />
+            <NavLayoutwithSettingsMenu session={safeSession} />
             <main>{children}</main>
             <Analytics />
             <ToastProvider />

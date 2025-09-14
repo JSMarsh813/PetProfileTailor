@@ -34,10 +34,10 @@ export default function NavLayoutwithSettingsMenu({ session }) {
   let profileImageLink = "";
   let signedInUsersId = "";
 
-  if (session) {
-    userName = session.user.name;
-    profileImageLink = session.user.profileimage;
-    signedInUsersId = session.user.id;
+  if (session?.user) {
+    userName = session.user.name || "";
+    profileImageLink = session.user.profileimage || "";
+    signedInUsersId = session.user.id || "";
   }
 
   return (
