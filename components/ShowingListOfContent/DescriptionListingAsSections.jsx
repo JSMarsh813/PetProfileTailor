@@ -9,11 +9,11 @@ import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton";
 
-import Image from "next/image";
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import FlaggingContentSection from "@components/Flagging/FlaggingContentSection";
 // import ParagraphRenderBasedOnArrayProperty from "./ParagraphRenderBasedOnArrayProperty";
 import ParagraphRenderBasedOnStringProperty from "./ParagraphRenderBasedOnStringProperty";
+import { signIn, useSession } from "next-auth/react";
 
 export default function DescriptionListingAsSections({
   description,
@@ -23,6 +23,7 @@ export default function DescriptionListingAsSections({
   setItemEditedFunction,
   setDeleteThisContentId,
 }) {
+  const { data: session } = useSession();
   let contentCreatedBy = description.createdby._id;
   let userIsTheCreator = contentCreatedBy === signedInUsersId;
 
