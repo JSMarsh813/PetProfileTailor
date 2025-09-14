@@ -24,6 +24,7 @@ import { getCsrfToken } from "next-auth/react";
 export default function Login() {
   const { data: session } = useSession();
   const [csrfToken, setCsrfToken] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const router = useRouter();
 
@@ -38,12 +39,13 @@ export default function Login() {
   }, []);
 
   useEffect(() => {
-    if (session && !redirecting) {
+    if (!redirect) return;
+    if (session) {
       // Use a microtask Promise.resolve() to avoid interfering with render
       Promise.resolve().then(() => router.replace("/dashboard"));
     }
     //Wrapping in Promise.resolve() defers the push until after the current render, preventing multiple “history” calls.
-  }, [session, router]);
+  }, [redirect]);
 
   const {
     handleSubmit,
@@ -64,6 +66,7 @@ export default function Login() {
       } else {
         toast.success("Successfully signed in! Sending to dashboard");
       }
+      setRedirect(true);
     } catch (err) {
       toast.error(getError(err));
     }
