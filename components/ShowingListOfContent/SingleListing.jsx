@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import DeleteButton from "@components/DeletingData/DeleteButton";
@@ -30,9 +32,7 @@ export default function NameListingAsSections({
   dataType,
   singleContent,
   signedInUsersId,
-  tagList,
-  likedSetRef,
-  recentLikesRef,
+  userLiked,
   mutate,
 }) {
   const {
@@ -45,6 +45,9 @@ export default function NameListingAsSections({
   const [content, setContent] = useState(singleContent);
 
   console.log("singleContent", singleContent);
+
+  const likedSetRef = useRef(new Set(userLiked));
+  const recentLikesRef = useRef({});
 
   const { reportsRef, hasReported, getStatus } = useReports();
   const userHasAlreadyReported = hasReported(singleContent._id.toString());
@@ -256,7 +259,6 @@ export default function NameListingAsSections({
                 open={showEditDialog}
                 onClose={closeEdit}
                 name={editTarget}
-                tagList={tagList}
                 dataType={dataType}
                 onSave={confirmEdit}
                 signedInUsersId={signedInUsersId}
