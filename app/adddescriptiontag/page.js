@@ -1,4 +1,4 @@
-import AddDescriptionTag from "@/components/AddingNewData/adddescriptiontag";
+import AddDescriptionTag from "@/components/AddingNewData/AddDescriptionTag";
 import { getServerSession } from "next-auth";
 import { serverAuthOptions } from "@/lib/auth";
 
