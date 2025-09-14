@@ -27,11 +27,8 @@ export default function login() {
 
   useEffect(() => {
     // because its async and client components are asyncronous we have to use a mix of useState and useEffect for the token
-    async function fetchToken() {
-      const token = await getCsrfToken();
-      setCsrfToken(token ?? "");
-    }
-    fetchToken();
+    // fetch CSRF token only once
+    getCsrfToken().then((token) => setCsrfToken(token ?? ""));
   }, []);
 
   useEffect(() => {
