@@ -14,13 +14,14 @@ import { useSwrPagination } from "@hooks/useSwrPagination";
 import startCooldown from "@utils/startCooldown";
 import GoToTopButton from "@components/ReusableSmallComponents/buttons/GoToTopButton";
 import { ReportsProvider } from "@context/ReportsContext";
+import { signIn, useSession } from "next-auth/react";
 
 export default function CoreListingPageLogic({
   dataType,
-  sessionFromServer,
   usersLikedContent,
   contentUserReported,
 }) {
+  const { data: session } = useSession();
   const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
   const [remainingSortCooldown, setRemainingSortCooldown] = useState(0);
   const filterCooldownRef = useRef(null);
@@ -33,10 +34,10 @@ export default function CoreListingPageLogic({
   let profileImage = "";
   let signedInUsersId = "";
 
-  if (sessionFromServer) {
-    userName = sessionFromServer.user.name;
-    profileImage = sessionFromServer.user.profileimage;
-    signedInUsersId = sessionFromServer.user.id;
+  if (session) {
+    userName = session.user.name;
+    profileImage = session.user.profileimage;
+    signedInUsersId = session.user.id;
   }
 
   // store liked IDs in a ref so updates don't trigger full re-render

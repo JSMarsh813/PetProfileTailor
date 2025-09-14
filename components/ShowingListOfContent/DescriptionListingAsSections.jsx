@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import DeleteButton from "@components/DeletingData/DeleteButton";
 import EditButton from "@components/ReusableSmallComponents/buttons/EditButton";
-import { useRouter } from "next/router";
 
 import EditDescription from "../EditingData/EditDescription";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
@@ -32,8 +31,6 @@ export default function DescriptionListingAsSections({
 
   const linkToShare = `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/description/${description._id}`;
   const localLink = `/description/${description._id}`;
-
-  const router = useRouter();
 
   //############## STATE FOR LIKES #######
 
