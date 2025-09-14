@@ -44,6 +44,7 @@ export default function Login() {
       // Use a microtask Promise.resolve() to avoid interfering with render
       Promise.resolve().then(() => router.replace("/dashboard"));
     }
+    setRedirect(false);
     //Wrapping in Promise.resolve() defers the push until after the current render, preventing multiple “history” calls.
   }, [redirect]);
 
@@ -54,6 +55,9 @@ export default function Login() {
   } = useForm();
 
   const submitHandler = async ({ email, password }) => {
+    console.log("email", email, "password", password);
+    if (!email || !password) return;
+
     try {
       const result = await signIn("credentials", {
         redirect: false,
@@ -103,7 +107,7 @@ export default function Login() {
               {/* <!-- Email input --> */}
 
               <RegisterInput
-                id="signinemail"
+                id="email"
                 label="Email"
                 type="email"
                 autoFocus
