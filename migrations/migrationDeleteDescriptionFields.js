@@ -1,31 +1,31 @@
 import "dotenv/config";
 import db from "../utils/db.js";
-import Names from "../models/Names.js";
+import Descriptions from "../models/Description.js";
 
 await db.connect();
 console.log("✅ Connected to MongoDB");
 
 try {
-  // Step 1: Drop any old index
-  const indexes = await Names.collection.indexes();
+  // Step 1: Drop any old indexes on these fields
+  const indexes = await Descriptions.collection.indexes();
   for (const i of indexes) {
-    if (i.key.likedby) {
-      await Names.collection.dropIndex(i.name);
+    if (i.key.shares || i.key.flaggedby) {
+      await Descriptions.collection.dropIndex(i.name);
       console.log(`✅ Dropped index: ${i.name}`);
     }
   }
 
-  // Step 2: Remove old fields using raw MongoDB driver
-  const result = await Names.collection.updateMany(
+  // Step 2: Remove old fields using $unset
+  const result = await Descriptions.collection.updateMany(
     {},
-    { $unset: { likedby: [] } },
+    { $unset: { shares: "", flaggedby: "" } },
   );
 
   console.log(`✅ Removed old fields from ${result.modifiedCount} documents.`);
 
   // Step 3: Verify
-  const check = await Names.collection.findOne({
-    $or: [{ likedby: { $exists: true } }],
+  const check = await Descriptions.collection.findOne({
+    $or: [{ shares: { $exists: true } }, { flaggedby: { $exists: true } }],
   });
 
   if (!check) {

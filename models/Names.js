@@ -18,20 +18,7 @@ const NameSchema = new mongoose.Schema({
       ref: "NameTag",
     },
   ],
-  flaggedby: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      default: [],
-      ref: "User",
-    },
-  ],
-  likedby: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      default: [],
-      ref: "User",
-    },
-  ],
+
   likedbycount: {
     type: Number,
     default: 0,

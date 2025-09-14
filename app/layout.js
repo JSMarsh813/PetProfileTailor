@@ -27,7 +27,6 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(serverAuthOptions);
-  console.log("session in root", session);
 
   // connect to MongoDB + fetch categories
   await db.connect();

@@ -15,8 +15,6 @@ export function CategoriesAndTagsProvider({
   descrCateg = [],
   nameCateg = [],
 }) {
-  console.log("descrCateg", descrCateg, "nameCateg", nameCateg);
-
   const nameTagList = useMemo(() => {
     return nameCateg.flatMap((cat) =>
       cat.tags.map((tag) => ({ label: tag.tag, value: tag._id })),

@@ -27,16 +27,23 @@ import FlagButton from "@components/Flagging/FlagButton";
 import { useFlagging } from "@hooks/useFlagging";
 import { useEditHandler } from "@hooks/useEditHandler";
 import { useReports } from "@context/ReportsContext";
+import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
+import { useSession } from "next-auth/react";
 
 export default function NameListingAsSections({
   dataType,
   singleContent,
-  signedInUsersId,
-  tagList,
   likedSetRef,
   recentLikesRef,
   mutate,
 }) {
+  const { data: session } = useSession();
+
+  let signedInUsersId = "";
+  if (session) {
+    signedInUsersId = session.user.id;
+  }
+
   const {
     showDeleteConfirmation,
     deleteTarget,
@@ -44,6 +51,8 @@ export default function NameListingAsSections({
     closeDelete,
     confirmDelete,
   } = useDeleteConfirmation();
+
+  const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);
 
   const { reportsRef, hasReported, getStatus } = useReports();
   const userHasAlreadyReported = hasReported(singleContent._id.toString());

@@ -6,32 +6,32 @@ await db.connect();
 console.log("✅ Connected to MongoDB");
 
 try {
-  // Step 1: Drop any old index
+  // Step 1: Drop any old indexes on flaggedby
   const indexes = await Names.collection.indexes();
   for (const i of indexes) {
-    if (i.key.likedby) {
+    if (i.key.flaggedby) {
       await Names.collection.dropIndex(i.name);
       console.log(`✅ Dropped index: ${i.name}`);
     }
   }
 
-  // Step 2: Remove old fields using raw MongoDB driver
+  // Step 2: Remove the flaggedby field using $unset
   const result = await Names.collection.updateMany(
     {},
-    { $unset: { likedby: [] } },
+    { $unset: { flaggedby: "" } },
   );
 
-  console.log(`✅ Removed old fields from ${result.modifiedCount} documents.`);
+  console.log(`✅ Removed flaggedby from ${result.modifiedCount} documents.`);
 
-  // Step 3: Verify
+  // Step 3: Verify removal
   const check = await Names.collection.findOne({
-    $or: [{ likedby: { $exists: true } }],
+    flaggedby: { $exists: true },
   });
 
   if (!check) {
-    console.log("✅ All old fields successfully removed.");
+    console.log("✅ All flaggedby fields successfully removed.");
   } else {
-    console.log("⚠️ Some documents still have old fields:", check);
+    console.log("⚠️ Some documents still have flaggedby:", check);
   }
 } catch (err) {
   console.error("❌ Migration failed:", err);

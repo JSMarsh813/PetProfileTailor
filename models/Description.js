@@ -17,31 +17,15 @@ const DescriptionSchema = new mongoose.Schema(
       required: false,
       ref: "User",
     },
-    shares: {
-      type: Array,
-      default: [],
-    },
-    likedby: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: [],
-      },
-    ],
+
     tags: [
       {
         type: mongoose.Schema.Types.ObjectId,
         default: [],
-        ref: "descriptiontag",
+        ref: "DescriptionTag",
       },
     ],
-    flaggedby: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        default: [],
-        ref: "User",
-      },
-    ],
+
     relatednames: {
       type: Array,
     },
