@@ -6,13 +6,14 @@ import axios from "axios";
 import Image from "next/image";
 
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 
-function NewDescriptionWithTagsData({
-  tagList,
-  userId,
-  sessionFromServer,
-  nameList,
-}) {
+function NewDescriptionWithTagsData() {
+  const { data: session } = useSession();
+  const { categoriesWithTags, tagList } =
+    useCategoriesForDataType("description");
+
   const [newDescription, setNewDescription] = useState("");
   const [tags, setTags] = useState([]);
   const [notes, setNotes] = useState("");
@@ -32,7 +33,7 @@ function NewDescriptionWithTagsData({
       description: newDescription,
       tags: tags,
       notes: notes,
-      createdby: userId.toString(),
+      createdby: session.user.id.toString(),
       relatednames: relatedNamesArray,
     };
 
@@ -42,7 +43,7 @@ function NewDescriptionWithTagsData({
       .then((response) => {
         setIsPending(false);
         toast.success(
-          `Successfully added description: ${newDescription}. Heres 3 treat points as thanks for your contribution ${sessionFromServer.user.name}!`,
+          `Successfully added description: ${newDescription}. Heres 3 treat points as thanks for your contribution ${session.user.name}!`,
         );
       })
       .catch((error) => {
@@ -114,7 +115,7 @@ function NewDescriptionWithTagsData({
 disabled:text-errorTextColor "
             onChange={(e) => setNewDescription(e.target.value.toLowerCase())}
             maxLength="4000"
-            disabled={sessionFromServer ? "" : "disabled"}
+            disabled={session ? "" : "disabled"}
             onClick={(e) => setDescriptionExists(false)}
           ></textarea>
 
@@ -144,7 +145,7 @@ disabled:text-errorTextColor "
 disabled:text-errorTextColor "
             maxLength="800"
             onChange={(e) => setNotes(e.target.value.toLowerCase())}
-            disabled={sessionFromServer ? "" : "disabled"}
+            disabled={session ? "" : "disabled"}
           ></textarea>
 
           <span> {`${800 - notes.length}/800 characters left`}</span>
@@ -206,7 +207,7 @@ disabled:text-errorTextColor  bg-secondary border-subtleWhite"
             id="relatedNames"
             type="text"
             value={relatedNames}
-            disabled={sessionFromServer ? "" : "disabled"}
+            disabled={session ? "" : "disabled"}
             onChange={(e) =>
               setRelatedNames(e.target.value.toLowerCase().trim())
             }
@@ -243,13 +244,11 @@ disabled:text-errorTextColor  bg-secondary border-subtleWhite"
                    mt-4 bg-yellow-300 text-violet-800 border-yellow-100   hover:bg-blue-400                       hover:text-subtleWhite                     hover:border-blue-500
                `}
               disabled={
-                !sessionFromServer || newDescription.length < 10
-                  ? "disabled"
-                  : ""
+                !session || newDescription.length < 10 ? "disabled" : ""
               }
               onClick={handleDescriptionSubmission}
             >
-              Add description {!sessionFromServer && "(disabled)"}
+              Add description {!session && "(disabled)"}
             </button>
           )}
 
@@ -263,7 +262,7 @@ disabled:text-errorTextColor  bg-secondary border-subtleWhite"
             </button>
           )}
 
-          {!sessionFromServer && (
+          {!session && (
             <span className="mt-4 bg-red-800 p-2 text-subtleWhite font-bold border-2 border-yellow-300 block text-center">
               Please sign in to submit a description{" "}
             </span>
