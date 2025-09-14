@@ -1,53 +1,18 @@
-import React from "react";
-import { forwardRef } from "react";
-import NavBar from "@components/NavBar/NavLayoutwithSettingsMenu";
+"use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useSession } from "next-auth/react";
+import React from "react";
 import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import ListWithPawPrintIcon from "@components/ReusableSmallComponents/ListWithPawPrintIcon";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
 import GifHover from "@components/ReusableSmallComponents/GifHover";
 
-const MyLink = forwardRef((props, ref) => {
-  let { href, active, children, ...rest } = props;
-  return (
-    <Link
-      href={href}
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </Link>
-  );
-});
-MyLink.displayName = "MyLink";
-
-export default function Custom404() {
-  //grab data from Session and rename data to session
-  const { data: sessionFromServer, status } = useSession();
-
-  let userName = "";
-  let profileImage = "";
-
-  if (sessionFromServer) {
-    userName = sessionFromServer.user.name;
-    profileImage = sessionFromServer.user.profileimage;
-  }
-  //end of section for nav menu
-
+export default function CustomError() {
+  const router = useRouter();
   return (
     <>
-      <NavBar
-        profileImage={profileImage}
-        userName={userName}
-        sessionFromServer={sessionFromServer}
-      />
-
       <PageTitleWithImages
         title="500"
         title2="Server Error"
@@ -69,7 +34,10 @@ export default function Custom404() {
       />
 
       <ul className="text-center text-white bg-secondary max-w-4xl mx-auto h-fit pt-4 sm:px-2">
-        <ListWithPawPrintIcon text=" You can try to reload the page to see if the error resolves" />
+        <ListWithPawPrintIcon
+          className="justify-center"
+          text=" You can try to reload the page to see if the error resolves"
+        />
 
         <li>
           <h4>
@@ -83,7 +51,7 @@ export default function Custom404() {
             />
             <button
               type="button"
-              onClick={() => Router.push("mailto:petprofiletailor@gmail.com")}
+              onClick={() => router.push("mailto:petprofiletailor@gmail.com")}
             >
               Email
             </button>
@@ -101,19 +69,19 @@ export default function Custom404() {
         </li>
 
         <ListWithPawPrintIcon
-          className="mb-6"
+          className="mb-6 justify-center"
           text="Or return to our login page"
         />
         <li className="h-16">
-          <MyLink
-            className="bg-yellow-300 text-violet-800  font-bold py-3 px-4 border-b-4 border-yellow-100    
-          shadow-lg shadow-stone-900/70
-          hover:bg-blue-400                            hover:text-white                            hover:border-blue-500 rounded text-base 
-          "
-            href={`/login`}
+          <LinkMenu
+            href="/login"
+            className=" bg-yellow-300 text-secondary font-bold py-3 px-4 border-b-4 border-yellow-100    
+                   shadow-lg shadow-stone-900/70 rounded-2xl
+                   hover:bg-blue-400                            hover:text-white                            hover:border-blue-500 text-base 
+                   "
           >
             Login
-          </MyLink>
+          </LinkMenu>
         </li>
       </ul>
     </>

@@ -5,6 +5,12 @@ import { forwardRef } from "react";
 
 const LinkMenu = forwardRef(
   ({ href, focus, children, className = "", ...rest }, ref) => {
+    let styling =
+      className === ""
+        ? `flex items-center px-4 py-2 text-sm text-subtleWhite ${
+            focus ? "bg-white/10 text-subtleWhite" : ""
+          }`
+        : `${className}`;
     return (
       <Link
         href={href}
@@ -14,9 +20,7 @@ const LinkMenu = forwardRef(
       >
         <a
           ref={ref}
-          className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
-            focus ? "bg-white/10 text-subtleWhite" : ""
-          }`}
+          className={styling}
         >
           {children}
         </a>

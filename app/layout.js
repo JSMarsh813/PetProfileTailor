@@ -11,10 +11,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 
-import Head from "next/head";
-import { CategoriesAndTagsProvider } from "@/context/CategoriesAndTagsContext";
-import { Metadata } from "next";
-
 import db from "@utils/db";
 import NameCategory from "@models/NameCategory";
 import DescriptionCategory from "@/models/DescriptionCategory";
