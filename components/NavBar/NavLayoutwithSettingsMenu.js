@@ -14,12 +14,14 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { forwardRef } from "react";
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
-import LinkMenu from "./LinkMenu";
 
-export default function NavLayoutwithSettingsMenu({ session }) {
+export default function NavLayoutwithSettingsMenu() {
+  // Use client-side session for reactive updates
+  const { data: session, status } = useSession();
   const logoutClickHandler = () => {
     signOut({ callbackUrl: "/login" });
   };
+  // Only use serverSession while clientSession is "loading"
 
   const MenuItemsStyling =
     "absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none";
@@ -92,41 +94,44 @@ export default function NavLayoutwithSettingsMenu({ session }) {
                   <MenuItems className={MenuItemsStyling}>
                     <MenuItem>
                       {({ focus }) => (
-                        <LinkMenu
+                        <Link
                           href="/dashboard"
-                          focus={focus}
-                          className={menuItemStyling(focus)}
+                          className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                            focus ? "bg-white/10 text-subtleWhite" : ""
+                          }`}
                         >
                           Dashboard
-                        </LinkMenu>
+                        </Link>
                       )}
                     </MenuItem>
 
                     {session.user.profilename && (
                       <MenuItem>
                         {({ focus }) => (
-                          <LinkMenu
+                          <Link
                             href={`${
                               process.env.NEXT_PUBLIC_BASE_FETCH_URL
                             }profile/${session.user.profilename.toLowerCase()}`}
-                            focus={focus}
-                            className={menuItemStyling(focus)}
+                            className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                              focus ? "bg-white/10 text-subtleWhite" : ""
+                            }`}
                           >
                             Profle
-                          </LinkMenu>
+                          </Link>
                         )}
                       </MenuItem>
                     )}
 
                     <MenuItem>
                       {({ focus }) => (
-                        <LinkMenu
+                        <Link
                           href={`/editsettings`}
-                          focus={focus}
-                          className={menuItemStyling(focus)}
+                          className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                            focus ? "bg-white/10 text-subtleWhite" : ""
+                          }`}
                         >
                           Settings
-                        </LinkMenu>
+                        </Link>
                       )}
                     </MenuItem>
 

@@ -53,7 +53,7 @@ export default async function RootLayout({ children }) {
             descrCateg={descCategoryJSON}
             nameCateg={nameCategoryJSON}
           >
-            <NavLayoutwithSettingsMenu session={safeSession} />
+            <NavLayoutwithSettingsMenu />
             <main>{children}</main>
             <Analytics />
             <ToastProvider />

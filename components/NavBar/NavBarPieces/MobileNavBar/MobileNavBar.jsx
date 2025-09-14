@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Link from "next/link";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import LinkMenu from "../../LinkMenu";
 
 export default function MobileNavBar() {
   return (
@@ -28,12 +27,14 @@ export default function MobileNavBar() {
         <div className="flex flex-col py-1">
           <MenuItem>
             {({ focus }) => (
-              <LinkMenu
+              <Link
                 href="/"
-                focus={focus}
+                className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                  focus ? "bg-white/10 text-subtleWhite" : ""
+                }`}
               >
                 Home
-              </LinkMenu>
+              </Link>
             )}
           </MenuItem>
 
@@ -48,23 +49,27 @@ export default function MobileNavBar() {
 
           <MenuItem>
             {({ focus }) => (
-              <LinkMenu
+              <Link
                 href="/fetchnames"
-                focus={focus}
+                className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                  focus ? "bg-white/10 text-subtleWhite" : ""
+                }`}
               >
                 Names
-              </LinkMenu>
+              </Link>
             )}
           </MenuItem>
 
           <MenuItem>
             {({ focus }) => (
-              <LinkMenu
+              <Link
                 href="/fetchdescriptions"
-                focus={focus}
+                className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                  focus ? "bg-white/10 text-subtleWhite" : ""
+                }`}
               >
                 Descriptions
-              </LinkMenu>
+              </Link>
             )}
           </MenuItem>
 
@@ -86,24 +91,28 @@ export default function MobileNavBar() {
             {/* needed in order to pass the href to Link's child a tag */}
 
             {({ focus }) => (
-              <LinkMenu
+              <Link
                 href="/addnames"
-                focus={focus}
+                className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                  focus ? "bg-white/10 text-subtleWhite" : ""
+                }`}
               >
                 {" "}
                 Names{" "}
-              </LinkMenu>
+              </Link>
             )}
           </MenuItem>
 
           <MenuItem>
             {({ focus }) => (
-              <LinkMenu
+              <Link
                 href="/adddescriptions"
-                focus={focus}
+                className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                  focus ? "bg-white/10 text-subtleWhite" : ""
+                }`}
               >
                 Descriptions
-              </LinkMenu>
+              </Link>
             )}
           </MenuItem>
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 // need to mark it as useClient, because of the way Next passes errors to this component Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with "use server". <... buildId=... assetPrefix="" initialCanonicalUrl=... initialTree=... initialHead=... globalErrorComponent={function} children=...>
-import LinkMenu from "@/components/NavBar/LinkMenu";
+import Link from "next/link";
 import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import ListWithPawPrintIcon from "@components/ReusableSmallComponents/ListWithPawPrintIcon";
 
@@ -73,7 +73,7 @@ export default function CustomError() {
           text="Or return to our login page"
         />
         <li className="h-16">
-          <LinkMenu
+          <Link
             href="/login"
             className=" bg-yellow-300 text-secondary font-bold py-3 px-4 border-b-4 border-yellow-100    
                    shadow-lg shadow-stone-900/70 rounded-2xl
@@ -81,7 +81,7 @@ export default function CustomError() {
                    "
           >
             Login
-          </LinkMenu>
+          </Link>
         </li>
       </ul>
     </>

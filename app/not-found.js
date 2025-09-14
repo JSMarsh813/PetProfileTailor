@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
 import GifHover from "@components/ReusableSmallComponents/GifHover";
-import LinkMenu from "@/components/NavBar/LinkMenu";
+import Link from "next/link";
 
 export default function Custom404() {
   //grab data from Session and rename data to session
@@ -73,7 +73,7 @@ export default function Custom404() {
           text="Or return to the login or dashboard page"
         />
         <li className="h-16">
-          <LinkMenu
+          <Link
             href="/login"
             className=" bg-yellow-300 text-secondary font-bold py-3 px-4 border-b-4 border-yellow-100    
           shadow-lg shadow-stone-900/70 rounded-2xl
@@ -81,7 +81,7 @@ export default function Custom404() {
           "
           >
             Login/dashboard
-          </LinkMenu>
+          </Link>
         </li>
       </ul>
     </>
