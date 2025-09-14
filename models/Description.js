@@ -25,6 +25,10 @@ const DescriptionSchema = new mongoose.Schema(
         ref: "DescriptionTag",
       },
     ],
+    likedbycount: {
+      type: Number,
+      default: 0,
+    },
 
     relatednames: {
       type: Array,

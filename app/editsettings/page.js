@@ -1,42 +1,23 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { getError } from "@utils/error";
 import axios from "axios";
-import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import Image from "next/image";
-import { authOptions } from "./api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
+import { useSession } from "next-auth/react";
 
 import ImageUpload from "@components/AddingNewData/ImageUpload";
-import StyledInput from "@components/FormComponents/StyledInput";
 import RegisterInput from "@components/FormComponents/RegisterInput";
 
-export const getServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions,
-  );
+export default function ProfileScreen() {
+  const { data: session } = useSession();
 
-  return {
-    props: {
-      sessionFromServer: session,
-    },
-  };
-};
-
-export default function ProfileScreen({ sessionFromServer }) {
-  let userName = "";
-  let profileImage = "";
-
-  if (sessionFromServer) {
-    userName = sessionFromServer.user.name;
-    profileImage = sessionFromServer.user.profileimage;
+  if (!session) {
+    return redirect("/login");
   }
-  //end of section for nav menu
 
   const {
     handleSubmit,
@@ -47,10 +28,9 @@ export default function ProfileScreen({ sessionFromServer }) {
   } = useForm();
 
   useEffect(() => {
-    setValue("name", sessionFromServer.user.name);
-    setValue("email", sessionFromServer.user.email);
-    setValue("userid", sessionFromServer.user.id);
-  }, [sessionFromServer.user, setValue]);
+    setValue("name", session.user.name);
+    setValue("userid", session.user.id);
+  }, [session.user, setValue]);
 
   const submitHandler = async ({ name, email, password, userid }) => {
     try {
@@ -68,12 +48,6 @@ export default function ProfileScreen({ sessionFromServer }) {
 
   return (
     <div>
-      <Layout
-        title="Profile"
-        profileImage={profileImage}
-        userName={userName}
-        sessionFromServer={sessionFromServer}
-      />
       <div className="h-fit w-40 mx-auto mb-4 ">
         <Image
           className="rounded-full"
@@ -156,7 +130,7 @@ export default function ProfileScreen({ sessionFromServer }) {
             <GeneralButton text="Update Profile" />
           </div>
         </form>
-        <ImageUpload sessionFromServer={sessionFromServer} />
+        <ImageUpload />
       </div>
     </div>
   );

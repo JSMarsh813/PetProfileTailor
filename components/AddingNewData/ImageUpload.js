@@ -11,13 +11,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
-function ImageUpload({ sessionFromServer }) {
+function ImageUpload() {
+  const { data: session } = useSession();
+
   const [selectedImage, setSelectedImage] = useState();
   const [newProfileImage, setNewProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState();
 
-  console.log(sessionFromServer);
+  console.log(session);
   const handleImageAttachment = (e) => {
     e.preventDefault();
     setSelectedImage(e.target.files[0]);
@@ -32,7 +35,7 @@ function ImageUpload({ sessionFromServer }) {
     const formData = new FormData();
 
     formData.append("file", selectedImage);
-    formData.append("userId", sessionFromServer.user.id);
+    formData.append("userId", session.user.id);
     formData.append("upload_preset", "noyhrbxs");
 
     const data = await fetch(
@@ -55,7 +58,7 @@ function ImageUpload({ sessionFromServer }) {
     try {
       let res = await axios.put("/api/user/uploadprofileimage", {
         newProfileImage: newProfileImage.toString(),
-        user: sessionFromServer.user.id,
+        user: session.user.id,
       });
 
       if (res.status == 200) {

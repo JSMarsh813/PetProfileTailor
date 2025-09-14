@@ -1,14 +1,14 @@
+import mongoose from "mongoose";
+import NameLikes from "@/models/NameLikes";
+import DescriptionLikes from "@/models/DescriptionLikes";
+import FlagReport from "@/models/FlagReport";
 import dbConnect from "@utils/db";
 
-import NameLikes from "@models/NameLikes";
-import FlagReport from "@models/FlagReport";
-import mongoose from "mongoose";
-
-import CoreListingPageLogic from "@/components/CoreListingPagesLogic";
 import { getServerSession } from "next-auth";
 import { serverAuthOptions } from "@/lib/auth";
+import CoreListingPageLogic from "@/components/CoreListingPagesLogic";
 
-export default async function FetchNames() {
+export default async function FetchDescriptions() {
   await dbConnect.connect();
 
   let usersLikedContent = [];
@@ -24,7 +24,7 @@ export default async function FetchNames() {
 
     console.log("session.user.id:", session.user.id, typeof session.user.id);
     // ######## Likes ###############
-    const likes = await NameLikes.find({ userId }).select("nameId -_id");
+    const likes = await DescriptionLikes.find({ userId }).select("nameId -_id");
     usersLikedContent = likes.map((l) => l.nameId.toString());
 
     // ############## Reports ################
@@ -33,7 +33,7 @@ export default async function FetchNames() {
       {
         reportedby: userId,
         status: { $nin: ["dismissed", "deleted", "resolved"] }, // exclude these
-        contenttype: "name", // only get reports for descriptions
+        contenttype: "description", // only get reports for descriptions
       },
       { contentid: 1, status: 1, _id: 0 },
     ).lean(); //.lean() makes the query faster by returning plain JS objects.
@@ -48,8 +48,7 @@ export default async function FetchNames() {
 
   return (
     <CoreListingPageLogic
-      dataType="name"
-      sessionFromServer={session}
+      dataType="description"
       usersLikedContent={usersLikedContent}
       contentUserReported={contentUserReported}
     />

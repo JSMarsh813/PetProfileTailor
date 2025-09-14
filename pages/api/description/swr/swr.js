@@ -105,9 +105,7 @@ export default async function handler(req, res) {
             tags: 1,
             createdby: 1,
             relatednames: 1,
-            likedby: 1,
-            likedbylength: { $size: "$likedby" },
-            flaggedby: 1,
+            likedbycount: 1,
           },
         },
         // Final projection
@@ -122,10 +120,8 @@ export default async function handler(req, res) {
               profilename: 1,
               profileimage: 1,
             },
-            likedby: 1,
             relatednames: 1,
-            length: { $size: "$likedby" },
-            flaggedby: 1,
+            likedbycount: 1,
           },
         },
       ]);

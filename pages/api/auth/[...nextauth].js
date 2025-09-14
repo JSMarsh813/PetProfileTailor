@@ -91,15 +91,26 @@ export const authOptions = {
       }
     },
     async jwt({ token, user }) {
+      // Only populate the token on first sign in
       if (user) {
-        token = user;
+        token.user = {
+          id: user.id || user._id,
+          name: user.name,
+          profilename: user.profilename,
+          bioblurb: user.bioblurb || "",
+          location: user.location || "",
+          profileimage: user.profileimage,
+          followers: user.followers || [],
+          blockedusers: user.blockedusers || [],
+        };
       }
       return token;
     },
     async session({ session, token }) {
       //used to be session, user, token
       if (token) {
-        session.user = token;
+        // Only expose safe fields in session, aka what we listed above in the token
+        session.user = token.user;
       }
       return session;
     },

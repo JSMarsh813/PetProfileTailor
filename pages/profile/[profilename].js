@@ -126,13 +126,13 @@ export const getServerSideProps = async (context) => {
         "name followers name profileimage profilename bioblurb location",
       );
 
-    let usersLikedNamesFromDb = [];
+    let usersLikedContent = [];
 
     if (session) {
       await dbConnect.connect();
       const userId = session.user.id;
       const likes = await NameLikes.find({ userId }).select("nameId -_id");
-      usersLikedNamesFromDb = likes.map((l) => l.nameId.toString());
+      usersLikedContent = likes.map((l) => l.nameId.toString());
     }
 
     return {
@@ -147,7 +147,7 @@ export const getServerSideProps = async (context) => {
         likedDescriptions: JSON.parse(JSON.stringify(likedDescriptions)),
         createdDescriptions: JSON.parse(JSON.stringify(createdDescriptions)),
         descriptionTagListProp: descriptionTagListProp,
-        usersLikedNamesFromDb,
+        usersLikedContent,
         usersFollowing: JSON.parse(JSON.stringify(usersFollowing)),
       },
     };
@@ -161,7 +161,7 @@ function ProfilePage({
   nameList,
   tagList,
   likedNames,
-  usersLikedNamesFromDb,
+  usersLikedContent,
 
   createdDescriptions,
   likedDescriptions,
@@ -174,7 +174,7 @@ function ProfilePage({
   let signedInUsersId = "";
 
   // store liked IDs in a ref so updates don't trigger full re-render
-  const likedSetRef = useRef(new Set(usersLikedNamesFromDb));
+  const likedSetRef = useRef(new Set(usersLikedContent));
   const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
   // tracks if the likes count has to be updated, important for if the user navigates backwards
 

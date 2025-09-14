@@ -18,7 +18,7 @@ import { ReportsProvider } from "@context/ReportsContext";
 export default function CoreListingPageLogic({
   dataType,
   sessionFromServer,
-  usersLikedNamesFromDb,
+  usersLikedContent,
   contentUserReported,
 }) {
   const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
@@ -28,8 +28,6 @@ export default function CoreListingPageLogic({
 
   // prevents overlapping cooldown intervals by attaching the interval to useRef, it will clear after 5 seconds
   // so we check if filterCooldownRef.current has no intervals currently going before running another interval
-
-  // #### Info for nav menu
 
   let userName = "";
   let profileImage = "";
@@ -41,9 +39,8 @@ export default function CoreListingPageLogic({
     signedInUsersId = sessionFromServer.user.id;
   }
 
-  // ##### end of section for nav menu
   // store liked IDs in a ref so updates don't trigger full re-render
-  const likedSetRef = useRef(new Set(usersLikedNamesFromDb));
+  const likedSetRef = useRef(new Set(usersLikedContent));
   const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
   // tracks if the likes count has to be updated, important for if the user navigates backwards
 
