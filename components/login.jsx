@@ -21,10 +21,9 @@ import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 import { useRouter } from "next/navigation";
 import { getCsrfToken } from "next-auth/react";
 
-export default function login() {
+export default function Login() {
   const { data: session } = useSession();
   const [csrfToken, setCsrfToken] = useState("");
-  const [redirecting, setRedirecting] = useState(false);
 
   const router = useRouter();
 
@@ -39,15 +38,12 @@ export default function login() {
   }, []);
 
   useEffect(() => {
-    if (session?.user && !redirecting) {
-      setRedirecting(true);
-      //Prevents multiple router pushes if session updates quickly multiple times.
-
+    if (session && !redirecting) {
       // Use a microtask Promise.resolve() to avoid interfering with render
-      Promise.resolve().then(() => router.push("/dashboard"));
+      Promise.resolve().then(() => router.replace("/dashboard"));
     }
     //Wrapping in Promise.resolve() defers the push until after the current render, preventing multiple “history” calls.
-  }, [session, redirecting, router]);
+  }, [session, router]);
 
   const {
     handleSubmit,
@@ -127,7 +123,6 @@ export default function login() {
                 type="password"
                 labelStyling="text-center"
                 inputStyling="flex mx-auto "
-                autoFocus
                 register={register}
                 validation={{
                   required: "Please enter password",
