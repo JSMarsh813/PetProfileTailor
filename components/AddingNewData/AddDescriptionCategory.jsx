@@ -1,37 +1,13 @@
+"use client";
+
 import React, { useState } from "react";
-import { authOptions } from "./api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
 import axios from "axios";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import DisabledButton from "@components/ReusableSmallComponents/buttons/DisabledButton";
-import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
+import { useSession } from "next-auth/react";
 
-export const getServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions,
-  );
-
-  return {
-    props: {
-      sessionFromServer: session,
-      isAdmin: session.user.id === process.env.admin_id,
-    },
-  };
-};
-
-export default function AddCategory({ sessionFromServer, isAdmin }) {
-  // #### Info for nav menu
-  let userName = "";
-  let profileImage = "";
-
-  if (sessionFromServer) {
-    userName = sessionFromServer.user.name;
-    profileImage = sessionFromServer.user.profileimage;
-  }
-  // ##### end of section for nav menu
-
+export default function AddDescriptionCategory({ isAdmin }) {
+  const { data: session } = useSession();
   const [newCategory, setNewCategory] = useState("");
   function handleCategorySubmission(e) {
     e.preventDefault();
@@ -50,29 +26,25 @@ export default function AddCategory({ sessionFromServer, isAdmin }) {
 
   return (
     <div>
-      <Layout
-        profileImage={profileImage}
-        userName={userName}
-        sessionFromServer={sessionFromServer}
-      />
-
-      <div className="max-w-7xl mx-auto flex justify-center">
+      <div className="max-w-7xl mx-auto flex justify-center ">
         <form onSubmit={handleCategorySubmission}>
           <input
             type="text"
             id="categoryInput"
-            className="text-secondary "
+            className="text-secondary w-full"
             placeholder="enter a category to add"
             onChange={(e) => setNewCategory(e.target.value.toLowerCase())}
           />
 
-          {sessionFromServer && isAdmin ? (
-            <GeneralButton
-              text="Submit description category"
-              type="submit"
-              className="ml-2"
-              onClick={handleCategorySubmission}
-            />
+          {session && isAdmin ? (
+            <div className="">
+              <GeneralButton
+                text="Submit description category"
+                type="submit"
+                className="ml-2 text-center"
+                onClick={handleCategorySubmission}
+              />
+            </div>
           ) : (
             <div>
               <DisabledButton text="Submit tag" />

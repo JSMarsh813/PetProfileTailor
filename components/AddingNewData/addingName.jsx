@@ -15,8 +15,9 @@ import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
 import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "@hooks/useTags";
 import StyledTextarea from "@components/FormComponents/StyledTextarea";
+import { useSession } from "next-auth/react";
 
-function NewNameWithTagsData({ userId, sessionFromServer }) {
+function NewNameWithTagsData() {
   const [newName, setNewName] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [nameAlreadyExists, setNameExists] = useState(false);
@@ -26,6 +27,7 @@ function NewNameWithTagsData({ userId, sessionFromServer }) {
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
   const [nameCheckInvalidInput, setNameCheckInvalidInput] = useState(null);
   const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
+  const { data: session } = useSession;
 
   //regex will return null if none of the characters are invalid, so start with null to begin with
 
@@ -63,7 +65,7 @@ function NewNameWithTagsData({ userId, sessionFromServer }) {
       name: newName,
       description: description,
       tags: tagsToSubmit.map((tag) => tag.value),
-      createdby: userId.toString(),
+      createdby: session.user._id.toString(),
     };
 
     axios
@@ -71,7 +73,7 @@ function NewNameWithTagsData({ userId, sessionFromServer }) {
       .then((response) => {
         setIsPending(false);
         toast.success(
-          `Successfully added name: ${newName}. Heres 3 treat points as thanks for your contribution ${sessionFromServer.user.name}!`,
+          `Successfully added name: ${newName}. Heres 3 treat points as thanks for your contribution ${session.user.name}!`,
         );
       })
       .catch((error) => {
@@ -220,7 +222,7 @@ function NewNameWithTagsData({ userId, sessionFromServer }) {
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             maxLength="40"
-            disabled={sessionFromServer ? "" : "disabled"}
+            disabled={session ? "" : "disabled"}
           ></input>
           {newNameInvalidInput !== null && (
             <WarningMessage
@@ -268,9 +270,7 @@ function NewNameWithTagsData({ userId, sessionFromServer }) {
               className={`font-bold py-2 px-4 border-b-4 rounded my-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-subtleWhite                   hover:border-blue-500
                     disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor "             `}
               disabled={
-                !sessionFromServer ||
-                newNameInvalidInput !== null ||
-                newName.length < 2
+                !session || newNameInvalidInput !== null || newName.length < 2
                   ? "disabled"
                   : ""
               }
@@ -288,7 +288,7 @@ function NewNameWithTagsData({ userId, sessionFromServer }) {
               Adding name ...{" "}
             </button>
           )}
-          {!sessionFromServer && (
+          {!session && (
             <WarningMessage message="please sign in to submit a name" />
           )}
         </form>
