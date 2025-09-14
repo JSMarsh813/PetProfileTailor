@@ -20,7 +20,7 @@ export default function forgotpassword() {
     if (session?.user) {
       redirect("/dashboard");
     }
-  }, [session, redirect]);
+  }, [session]);
   //if the session exists, then the user is already signed in. So if this is true, push back to the homepage
 
   const isValidEmail = (email) => {
