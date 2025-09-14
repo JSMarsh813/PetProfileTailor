@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -11,6 +11,7 @@ import StyledInput from "./FormComponents/StyledInput";
 
 export default function forgotpassword() {
   const { data: session } = useSession();
+  const router = useRouter();
   //useSession needed in order to grab session after the page is loaded, aka so we can grab session once we login
 
   const [message, setMessage] = useState("");
@@ -18,7 +19,7 @@ export default function forgotpassword() {
 
   useEffect(() => {
     if (session?.user) {
-      redirect("/dashboard");
+      router.push("/dashboard");
     }
   }, [session]);
   //if the session exists, then the user is already signed in. So if this is true, push back to the homepage

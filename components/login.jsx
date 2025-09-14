@@ -18,12 +18,14 @@ import MagicRabbitSVG from "@components/ReusableSmallComponents/iconsOrSvgImages
 import RegisterInput from "@components/FormComponents/RegisterInput";
 import StyledInput from "@components/FormComponents/StyledInput";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { getCsrfToken } from "next-auth/react";
 
 export default function login() {
   const { data: session } = useSession();
   const [csrfToken, setCsrfToken] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     // because its async and client components are asyncronous we have to use a mix of useState and useEffect for the token

@@ -1,4 +1,3 @@
-import dbConnect from "@utils/db";
 import { getServerSession } from "next-auth";
 import { serverAuthOptions } from "@/lib/auth";
 import ResetPassword from "@/components/ResetPassword";
