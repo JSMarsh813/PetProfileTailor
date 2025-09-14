@@ -1,16 +1,16 @@
 "use client";
 
-import React from "react";
+// need to mark it as useClient, because of the way Next passes errors to this component Error: Functions cannot be passed directly to Client Components unless you explicitly expose it by marking it with "use server". <... buildId=... assetPrefix="" initialCanonicalUrl=... initialTree=... initialHead=... globalErrorComponent={function} children=...>
+
 import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import ListWithPawPrintIcon from "@components/ReusableSmallComponents/ListWithPawPrintIcon";
-import { useRouter } from "next/navigation";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
 import GifHover from "@components/ReusableSmallComponents/GifHover";
 
 export default function CustomError() {
-  const router = useRouter();
   return (
     <>
       <PageTitleWithImages
@@ -49,12 +49,12 @@ export default function CustomError() {
               icon={faEnvelope}
               className="mr-2"
             />
-            <button
-              type="button"
-              onClick={() => router.push("mailto:petprofiletailor@gmail.com")}
+            <a
+              href="mailto:petprofiletailor@gmail.com"
+              className="underline"
             >
               Email
-            </button>
+            </a>
           </span>
 
           <span className="block">

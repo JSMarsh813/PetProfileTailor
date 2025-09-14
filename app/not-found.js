@@ -1,12 +1,7 @@
 "use client";
 
-import React from "react";
-
-// import dbConnect from "../utils/db";
-
 import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import ListWithPawPrintIcon from "@components/ReusableSmallComponents/ListWithPawPrintIcon";
-import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
@@ -15,8 +10,6 @@ import LinkMenu from "@/components/NavBar/LinkMenu";
 
 export default function Custom404() {
   //grab data from Session and rename data to session
-
-  const router = useRouter();
 
   return (
     <>
@@ -56,12 +49,12 @@ export default function Custom404() {
               icon={faEnvelope}
               className="mr-2"
             />
-            <button
-              type="button"
-              onClick={() => router.push("mailto:petprofiletailor@gmail.com")}
+            <a
+              href="mailto:petprofiletailor@gmail.com"
+              className="underline"
             >
               Email
-            </button>
+            </a>
           </span>
 
           <span className="block">
