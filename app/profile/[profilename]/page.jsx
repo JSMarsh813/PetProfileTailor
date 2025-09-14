@@ -85,7 +85,7 @@ export default async function ProfilePage({ params }) {
 
   let usersLikedContent = [];
 
-  if (session) {
+  if (session?.user) {
     const userId = session.user.id;
     const likes = await NameLikes.find({ userId }).select("nameId -_id").lean();
     usersLikedContent = likes.map((l) => l.nameId.toString());

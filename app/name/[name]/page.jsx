@@ -18,7 +18,7 @@ export default async function Postid({ params }) {
 
   const session = await getServerSession(serverAuthOptions);
 
-  const userId = session ? session.user.id : "";
+  const userId = session.user ? session.user.id : "";
 
   await dbConnect.connect();
 

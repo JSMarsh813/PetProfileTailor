@@ -7,7 +7,7 @@ export default async function ResetPasswordPage({ params }) {
   //allows us to grab the dynamic value from the url
   const session = await getServerSession(serverAuthOptions);
 
-  if (session) {
+  if (session?.user) {
     return redirect("/dashboard");
   }
 

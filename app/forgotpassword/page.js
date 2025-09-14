@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 export default async function ForgotPasswordPage() {
   const session = await getServerSession(serverAuthOptions);
 
-  if (session) {
+  if (session?.user) {
     redirect("/dashboard");
   }
 

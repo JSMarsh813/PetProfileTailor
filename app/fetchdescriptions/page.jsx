@@ -19,7 +19,7 @@ export default async function FetchDescriptions() {
 
   const session = await getServerSession(serverAuthOptions);
 
-  if (session) {
+  if (session?.user) {
     const userId = mongoose.Types.ObjectId(session.user.id);
 
     console.log("session.user.id:", session.user.id, typeof session.user.id);
