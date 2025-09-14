@@ -1,16 +1,14 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 import { getError } from "@utils/error";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import Image from "next/image";
-
-import { authOptions } from "./api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -18,44 +16,19 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import StyledInput from "@components/FormComponents/StyledInput";
 import RegisterInput from "@components/FormComponents/RegisterInput";
 
-export const getServerSideProps = async (context) => {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions,
-  );
-
-  return {
-    props: {
-      sessionFromServer: session,
-    },
-  };
-};
-
-export default function Register({ sessionFromServer }) {
+export default function Register() {
   const [namesThatExist, setNamesThatExist] = useState([]);
   const [nameCheck, setNameCheck] = useState("");
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
-
-  //for Nav menu profile name and image
-  //let section exists in case the user is not signed in
-  let userName = "";
-  let profileImage = "";
-
-  if (sessionFromServer) {
-    userName = sessionFromServer.user.name;
-    profileImage = sessionFromServer.user.profileimage;
-  }
-  //end of section for nav menu
-
-  const { data: session } = useSession();
+  const { data: session } = useSession(); // now client-side
 
   const router = useRouter();
-  const { redirect } = router.query;
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
 
   useEffect(() => {
     if (session?.user) {
-      router.push("/");
+      router.push(redirect || "/");
     }
   }, [router, session, redirect]);
 
@@ -148,12 +121,6 @@ export default function Register({ sessionFromServer }) {
 
   return (
     <div className="h-fit text-subtleWhite">
-      <Layout
-        title="Create Account"
-        profileImage={profileImage}
-        userName={userName}
-        sessionFromServer={sessionFromServer}
-      />
       <h1 className="flex justify-center text-3xl mb-1"> Register </h1>
       <div className="flex justify-center">
         <Image

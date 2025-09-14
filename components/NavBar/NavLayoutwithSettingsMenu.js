@@ -30,9 +30,15 @@ export default function NavLayoutwithSettingsMenu({ session }) {
     }`;
   };
 
-  let userName = session.user.name;
-  let profileImageLink = session.user.profileimage;
-  let signedInUsersId = session.user.id;
+  let userName = "";
+  let profileImageLink = "";
+  let signedInUsersId = "";
+
+  if (session) {
+    userName = session.user.name;
+    profileImageLink = session.user.profileimage;
+    signedInUsersId = session.user.id;
+  }
 
   return (
     <>
