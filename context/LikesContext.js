@@ -28,7 +28,7 @@ export function LikesProvider({ children, initialLikes = {} }) {
   console.log("likesRef in context", likesRef);
 
   const hasLiked = (type, contentId) => {
-    const map = likesRef.current[type]?.has(contentId.toString()) ?? false;
+    return likesRef.current[type]?.has(contentId.toString()) ?? false;
     // has returns a boolean, true or false
   };
 
