@@ -30,17 +30,9 @@ const HeroTop = ({
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >
-      {/* Preload the hero image for faster LCP */}
-      <link
-        rel="preload"
-        as="image"
-        href="/pugs.webp"
-      />
-
       <div className="hero-overlay  relative max-w-7xl z-10 opacity-20 ">
         {hover ? (
           <Image
-            priority
             src="/pugStillImage.png"
             fill
             className="opacity-80"
