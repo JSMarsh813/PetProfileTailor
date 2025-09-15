@@ -19,14 +19,14 @@ export function LikesProvider({ children, initialLikes = {} }) {
   const likesRef = useRef({
     names: new Map(
       names.map((r) => [
-        r.contentid.toString(),
-        { likeId: r._id?.toString?.(), status: r.status || "pending" },
+        r.contentId.toString(),
+        { likeId: r.id?.toString?.() },
       ]),
     ),
     descriptions: new Map(
       descriptions.map((r) => [
-        r.contentid.toString(),
-        { likeId: r._id?.toString?.(), status: r.status || "pending" },
+        r.contentId.toString(),
+        { likeId: r.id?.toString?.() },
       ]),
     ),
   });
@@ -40,11 +40,11 @@ export function LikesProvider({ children, initialLikes = {} }) {
     return map.has(contentId.toString());
   };
 
-  const getLikeStatus = (type, contentId) => {
-    const map = likesRef.current[type];
-    if (!map) return null;
-    return map.get(contentId.toString())?.status ?? null;
-  };
+  // const getLikeStatus = (type, contentId) => {
+  //   const map = likesRef.current[type];
+  //   if (!map) return null;
+  //   return map.get(contentId.toString())?.status ?? null;
+  // };
 
   const addLike = (type, contentId, likeId, status = "pending") => {
     const map = likesRef.current[type];
@@ -73,9 +73,7 @@ export function LikesProvider({ children, initialLikes = {} }) {
   };
 
   return (
-    <LikesContext.Provider
-      value={{ likesRef, hasLiked, getLikeStatus, addLike, deleteLike }}
-    >
+    <LikesContext.Provider value={{ likesRef, hasLiked, addLike, deleteLike }}>
       {children}
     </LikesContext.Provider>
   );

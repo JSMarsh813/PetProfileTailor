@@ -23,6 +23,9 @@ import ReportsWrapper from "@/wrappers/ReportsWrapper";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
 import FlagReport from "@models/FlagReport";
+import NameLikes from "@/models/NameLikes";
+import DescriptionLikes from "@/models/DescriptionLikes";
+
 import mongoose from "mongoose";
 import LikesWrapper from "@/wrappers/LikesWrapper";
 
@@ -53,10 +56,15 @@ export default async function RootLayout({ children }) {
 
   let nameReports = [];
   let descriptionReports = [];
-  const initialLikes = [];
-  // ############## Reports ################
+  let nameLikes = [];
+  let descriptionLikes = [];
+
+  // ########## Logged in user specific info ################
+
   if (session?.user) {
     const userId = mongoose.Types.ObjectId(session.user.id);
+
+    // ############# Reports ###################
 
     // Fetch both reports in parallel, so its faster
     // ensures both are fetched before rendering the report wrapper
@@ -83,17 +91,39 @@ export default async function RootLayout({ children }) {
         ),
       ),
     ]);
-    const testReports = await FlagReport.find({}).limit(5);
-    console.log("first 5 reports:", testReports);
+
+    // ############# Likes ###################
+
+    [nameLikes, descriptionLikes] = await Promise.all([
+      leanWithStrings(NameLikes.find({ userId }, { nameId: 1, _id: 1 })).then(
+        (docs) => docs.map((d) => ({ id: d._id, contentId: d.nameId })),
+      ),
+      leanWithStrings(
+        DescriptionLikes.find(
+          { userId },
+          { descriptionId: 1, userId: 1, _id: 1 },
+        ),
+      ).then((docs) =>
+        docs.map((d) => ({
+          id: d._id,
+          contentId: d.descriptionId,
+        })),
+      ),
+    ]);
 
     console.log("userId in layout", userId);
-  }
+  } // ############# End of user specific content ######
 
   console.log("name reports in layout", nameReports);
 
   const initialReports = {
     names: nameReports,
     descriptions: descriptionReports,
+  };
+
+  const initialLikes = {
+    names: nameLikes,
+    descriptions: descriptionLikes,
   };
 
   return (
