@@ -31,6 +31,7 @@ export default async function handler(req, res) {
     try {
       const report = await FlagReport.create(req.body);
       res.status(201).send({
+        report,
         message: `Report for ${contentcopy.name} successfully submitted, thank you!`,
       });
     } catch (err) {

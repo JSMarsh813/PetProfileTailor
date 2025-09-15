@@ -8,12 +8,16 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     try {
-      const { contentId, userId } = req.query;
+      const { contentId, userId, status } = req.query;
       await db.connect();
 
       const report = await leanWithStrings(
         FlagReport.findOne(
-          { contentid: contentId, flaggedbyuser: userId },
+          {
+            contentid: contentId,
+            flaggedbyuser: userId,
+            status,
+          },
           {
             reportcategories: 1,
             comments: 1,
@@ -22,7 +26,7 @@ export default async function handler(req, res) {
             _id: 1,
             status: 1,
           },
-        ),
+        ).sort({ createdAt: -1 }), //failsafe, in case somehow theres 2 active reports due to some glitch, grab the most recent one
       );
       if (!report) {
         return res.status(404).json({ error: "Report not found" });

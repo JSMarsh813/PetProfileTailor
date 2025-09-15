@@ -74,7 +74,7 @@ export default async function RootLayout({ children }) {
         FlagReport.find(
           {
             reportedby: userId,
-            status: { $nin: ["dismissed", "deleted", "resolved"] },
+            status: "pending", // only get pending reports
             contenttype: "descriptions",
           },
           { contentid: 1, status: 1, _id: 0 },

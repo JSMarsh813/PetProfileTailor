@@ -20,41 +20,64 @@ export function ReportsProvider({ children, initialReports = {} }) {
 
   const reportsRef = useRef({
     names: new Map(
-      names.map((r) => [r.contentid.toString(), r.status || "pending"]),
+      names.map((r) => [
+        r.contentid.toString(),
+        { reportId: r._id?.toString?.(), status: r.status || "pending" },
+      ]),
     ),
     descriptions: new Map(
-      descriptions.map((r) => [r.contentid.toString(), r.status || "pending"]),
+      descriptions.map((r) => [
+        r.contentid.toString(),
+        { reportId: r._id?.toString?.(), status: r.status || "pending" },
+      ]),
     ),
     users: new Map(
-      users.map((r) => [r.contentid.toString(), r.status || "pending"]),
+      users.map((r) => [
+        r.contentid.toString(),
+        { reportId: r._id?.toString?.(), status: r.status || "pending" },
+      ]),
     ),
   });
-  //map for fast lookups based on userID
+  //map for fast lookups based on contentID
 
   console.log("reportsRef in context", reportsRef);
 
-  const hasReported = (type, id) => {
+  const hasReported = (type, contentId) => {
     const map = reportsRef.current[type];
-    if (!map) return false; // type doesn’t exist
-    return map.has(id.toString());
+    if (!map) return false;
+    return map.has(contentId.toString());
   };
 
-  const getStatus = (type, id) => {
+  const getStatus = (type, contentId) => {
     const map = reportsRef.current[type];
     if (!map) return null;
-    return map.get(id.toString()) ?? null;
+    return map.get(contentId.toString())?.status ?? null;
   };
 
-  const addReport = (type, id, status = "pending") => {
+  const addReport = (type, contentId, reportId, status = "pending") => {
     const map = reportsRef.current[type];
     if (!map) return;
-    map.set(id.toString(), status);
+    map.set(contentId.toString(), { reportId, status });
   };
 
-  const deleteReport = (type, id) => {
+  const deleteReport = (type, contentId, reportId) => {
+    console.log(
+      "delete report type",
+      type,
+      "delete report reportId",
+      reportId,
+      "delete contentID",
+      contentId,
+    );
+
     const map = reportsRef.current[type];
+    console.log("in delete report, this is map", map);
     if (!map) return;
-    map.delete(id.toString());
+
+    const value = map.get(contentId.toString());
+    if (value && value.reportId === reportId) {
+      map.delete(contentId.toString());
+    }
   };
 
   return (
@@ -72,7 +95,7 @@ export function ReportsProvider({ children, initialReports = {} }) {
 
 // hasReported and Add Report
 // if (!hasReported("names", contentId)) {
-//   addReport("names", contentId, "pending");
+//   addReport("names", contentId, reportId, "pending");
 // }
 
 //  status usage

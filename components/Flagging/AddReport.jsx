@@ -73,25 +73,28 @@ export default function AddReport({
     };
     console.log(reportSubmission);
 
-    await axios
-      .post(apiflagReportSubmission, reportSubmission)
-      .then((response) => {
-        toast.success(
-          `Thank you for your report! Report for ${response.data.message} successfully sent`,
-        );
-      })
-      // .then(() => callApiToaddUserToNamesArray(userAndNameId))
-      .then(() => addReport(dataType, contentInfo._id))
-      .then(() => onClose?.())
-      .catch((error) => {
-        console.log("this is an error", error);
+    try {
+      const response = await axios.post(
+        apiflagReportSubmission,
+        reportSubmission,
+      );
 
-        toast.error(
-          `Ruh Roh! ${error.message} ${JSON.stringify(
-            error?.response?.data?.message,
-          )}`,
-        );
-      });
+      toast.success(
+        `Thank you for your report! Report for ${response.data.message} successfully sent`,
+      );
+
+      addReport(dataType, contentInfo._id, response.data.report._id);
+
+      onClose?.();
+    } catch (error) {
+      console.log("this is an error", error);
+
+      toast.error(
+        `Ruh Roh! ${error.message} ${JSON.stringify(
+          error?.response?.data?.message,
+        )}`,
+      );
+    }
   };
 
   function cancelFlagFormAndRevertFlagState() {

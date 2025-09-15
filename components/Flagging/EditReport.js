@@ -36,7 +36,7 @@ function EditReport({
     const fetchReport = async () => {
       try {
         const res = await axios.get("/api/flag/getSpecificReport", {
-          params: { contentId, userId: flaggedByUser },
+          params: { contentId, userId: flaggedByUser, status: "pending" },
         });
         console.log("response", res.data);
 
@@ -78,7 +78,7 @@ function EditReport({
       });
       console.log("response", res.data);
 
-      deleteReport(dataType, contentId);
+      deleteReport(dataType, contentId, reportId);
 
       if (res.data.report) {
         setReportcategories(res.data.report.reportcategories || []);

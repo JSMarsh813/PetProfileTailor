@@ -43,6 +43,7 @@ export default function FlagDialog({
           )}
           {reportStatus === "pending" && (
             <EditReport
+              dataType={dataType}
               contentInfo={target}
               contentId={contentId}
               flaggedByUser={signedInUsersId}
