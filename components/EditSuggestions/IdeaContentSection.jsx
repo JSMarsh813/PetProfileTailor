@@ -42,15 +42,15 @@ export default function IdeaContentSection({
   let createCopyOfContentBasedOnContentType = function (dataType, content) {
     if (dataType === "descriptions") {
       let copyOfContent = {
-        content: content.description,
+        content: content.content,
         notes: content.notes,
         relatednames: content.relatednames,
       };
       return copyOfContent;
     } else if (dataType === "names") {
       let copyOfContent = {
-        name: content.name,
-        description: content.description,
+        name: content.content,
+        description: content.notes,
       };
       return copyOfContent;
     } else if (dataType === "users") {

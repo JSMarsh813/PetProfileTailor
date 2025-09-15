@@ -32,12 +32,12 @@ export default async function handler(req, res) {
       const report = await FlagReport.create(req.body);
       res.status(201).send({
         report,
-        message: `Report for ${contentcopy.name} successfully submitted, thank you!`,
+        message: `Report for ${contentcopy.content} successfully submitted, thank you!`,
       });
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        message: `Report for ${contentcopy.name} not submitted ${err} !`,
+        message: `Report for ${contentcopy.content} not submitted ${err} !`,
       });
     }
   }

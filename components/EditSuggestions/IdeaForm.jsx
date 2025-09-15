@@ -197,11 +197,7 @@ export default function AddIdea({
           <Field className="mt-6 mx-4">
             <p className="text-center my-4">
               {" "}
-              {`"${
-                contentInfo.description[0] === ""
-                  ? "no description given"
-                  : contentInfo.description[0]
-              }"`}
+              {`"${contentInfo.notes === "" ? "no notes" : contentInfo.notes}"`}
             </p>
             <StyledTextarea
               onChange={(e) => setAdditionalCommentsState(e.target.value)}

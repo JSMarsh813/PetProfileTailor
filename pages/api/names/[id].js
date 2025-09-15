@@ -39,8 +39,8 @@ const putHandler = async (req, res) => {
 
   try {
     // update other fields
-    individualname.name = name;
-    individualname.description = description;
+    individualname.content = name;
+    individualname.notes = description;
 
     // create a Set of existing tag strings for quick lookup
     const existingTagStrings = new Set(

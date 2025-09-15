@@ -30,7 +30,7 @@ function NewDescriptionWithTagsData() {
     }
 
     const descriptionSubmission = {
-      description: newDescription,
+      content: newDescription,
       tags: tags,
       notes: notes,
       createdby: session.user.id.toString(),
@@ -43,7 +43,12 @@ function NewDescriptionWithTagsData() {
       .then((response) => {
         setIsPending(false);
         toast.success(
-          `Successfully added description: ${newDescription}. Heres 3 treat points as thanks for your contribution ${session.user.name}!`,
+          `Successfully added description: ${newDescription.slice(
+            0,
+            10,
+          )}. Heres 3 treat points as thanks for your contribution ${
+            session.user.name
+          }!`,
         );
       })
       .catch((error) => {

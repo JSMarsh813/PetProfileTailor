@@ -23,7 +23,7 @@ export default async function Postid({ params }) {
 
   const nameData = await leanWithStrings(
     Names.findOne({
-      name: { $regex: new RegExp(`^${spaceAddedBackName}$`, "i") }, // case-insensitive exact match
+      content: { $regex: new RegExp(`^${spaceAddedBackName}$`, "i") }, // case-insensitive exact match
     })
       .populate({
         path: "createdby",

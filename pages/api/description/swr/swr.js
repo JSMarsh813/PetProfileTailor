@@ -100,7 +100,7 @@ export default async function handler(req, res) {
         {
           $project: {
             _id: 1,
-            description: 1,
+            content: 1,
             notes: 1,
             tags: 1,
             createdby: 1,
@@ -111,7 +111,7 @@ export default async function handler(req, res) {
         // Final projection
         {
           $project: {
-            description: 1,
+            content: 1,
             notes: 1,
             tags: { tag: 1, _id: 1 },
             createdby: {

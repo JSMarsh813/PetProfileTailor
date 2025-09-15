@@ -110,8 +110,8 @@ export default async function handler(req, res) {
         {
           $project: {
             _id: 1,
-            name: 1,
-            description: 1,
+            content: 1,
+            notes: 1,
             tags: { tag: 1, _id: 1 },
             comments: 1,
             createdby: {

@@ -62,8 +62,8 @@ function NewNameWithTagsData() {
     setIsPending(true);
 
     const nameSubmission = {
-      name: newName,
-      description: description,
+      content: newName,
+      notes: description,
       tags: tagsToSubmit.map((tag) => tag.value),
       createdby: session.user._id.toString(),
     };
@@ -178,16 +178,16 @@ function NewNameWithTagsData() {
                                          bg-red-700
                                          border-2 border-yellow-200"
             >
-              {namesThatExist[0].name} already exists!
+              {namesThatExist[0].content} already exists!
               <Link
                 href={`${
                   process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                }name/${namesThatExist[0].name.toLowerCase()}`}
+                }name/${namesThatExist[0].content.toLowerCase()}`}
                 legacyBehavior
               >
                 <GeneralButton
                   className="ml-12 my-4"
-                  text={`Link to ${namesThatExist[0].name}'s page`}
+                  text={`Link to ${namesThatExist[0].content}'s page`}
                 ></GeneralButton>
               </Link>
             </p>

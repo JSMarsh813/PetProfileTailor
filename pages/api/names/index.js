@@ -38,10 +38,10 @@ export default async function handler(req, res) {
       // Only check if user is actually changing the name
       if (
         name &&
-        name.toLowerCase() !== (await toUpdateName.name.toLowerCase())
+        name.toLowerCase() !== (await toUpdateName.content.toLowerCase())
       ) {
         const existingNameCheck = await Names.findOne({
-          name: { $regex: new RegExp(`^${name}$`, "i") },
+          content: { $regex: new RegExp(`^${name}$`, "i") },
         });
 
         if (existingNameCheck) {
@@ -54,7 +54,7 @@ export default async function handler(req, res) {
         toUpdateName.description = description;
       }
       if (name) {
-        toUpdateName.name = name;
+        toUpdateName.content = name;
       }
 
       if (tags) {

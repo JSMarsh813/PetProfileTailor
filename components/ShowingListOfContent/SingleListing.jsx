@@ -64,7 +64,7 @@ export default function NameListingAsSections({
 
   const linkToShare =
     dataType === "name"
-      ? `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${content.name}`
+      ? `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${content.content}`
       : `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/description/${singleContent._id}`;
 
   const localLink =

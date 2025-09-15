@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       if (relatednames) {
         toUpdateDescription.relatednames = relatednames;
       }
-      toUpdateDescription.description = description;
+      toUpdateDescription.content = description;
 
       toUpdateDescription.tags = tags;
 
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
     //tags, notes, createdby, relatednames
 
     let existingDescriptionCheck = await Description.find({
-      description: description,
+      content: description,
     });
 
     if (existingDescriptionCheck && existingDescriptionCheck.length != 0) {

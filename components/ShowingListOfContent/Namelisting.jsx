@@ -28,11 +28,11 @@ function Namelisting({
       {/* end of likes checkbox section*/}
 
       <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">
-        {name.name}
+        {name.content}
       </td>
 
       <td className="border-b-2 border-amber-200 px-4 py-2 text-left font-medium">
-        {name.description}
+        {name.notes}
       </td>
 
       <td className="border-b-2 border-amber-100 px-4 py-2 text-left font-medium">

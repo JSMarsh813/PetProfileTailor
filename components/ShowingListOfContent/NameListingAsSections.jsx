@@ -71,12 +71,12 @@ export default function NameListingAsSections({
 
   const linkToShare =
     dataType === "names"
-      ? `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${singleContent.name}`
+      ? `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${singleContent.content}`
       : `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/description/${singleContent._id}`;
 
   const localLink =
     dataType === "names"
-      ? `/name/${singleContent.name}`
+      ? `/name/${singleContent.content}`
       : `/description/${singleContent._id}`;
 
   // TODO
@@ -274,7 +274,7 @@ export default function NameListingAsSections({
           </section>
 
           <span className="font-bold text-xl text-center block w-full mb-2">
-            {singleContent.name}{" "}
+            {singleContent.content}{" "}
           </span>
 
           {/* ###### DESCRIPTION SECTION #### */}

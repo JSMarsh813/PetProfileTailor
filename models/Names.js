@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 const NameSchema = new mongoose.Schema({
-  name: {
+  content: {
     type: String,
     required: true,
     unique: true,
   },
-  description: {
-    type: Array,
+  note: {
+    type: String,
     required: false,
   },
   tags: [

@@ -24,15 +24,15 @@ export default function EditName({ dataType, open, onClose, name, onSave }) {
   const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);
   console.log("dataType in tagList ", tagList);
 
-  const [newName, setName] = useState(name.name);
-  const [description, setDescription] = useState(name.description);
+  const [newName, setName] = useState(name.content);
+  const [description, setDescription] = useState(name.notes);
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange } =
     useTags(initialTags);
 
   const handleSubmit = () => {
     onSave({
-      name: newName,
-      description,
+      content: newName,
+      notes: description,
       tags: tagsToSubmit.map((t) => t.value),
     });
   };

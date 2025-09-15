@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 
 const DescriptionSchema = new mongoose.Schema(
   {
-    description: {
+    content: {
       type: String,
       required: true,
       unique: false,

@@ -17,7 +17,7 @@ export default function EditName({
   nameList,
   setEditedFunction,
 }) {
-  const [descriptionState, setDescription] = useState(description.description);
+  const [descriptionState, setDescription] = useState(description.content);
   const [notes, setNotes] = useState(description.notes);
   const [tags, setTags] = useState(
     description.tags.map((tag) => ({ label: tag.tag, value: tag._id })),
@@ -29,7 +29,7 @@ export default function EditName({
 
   const descriptionSubmission = async () => {
     const descriptionSubmission = {
-      description: descriptionState,
+      content: descriptionState,
       notes: notes,
       tags: tags.map((tag) => tag.value),
       //changing each {label: tag.tag, value:tag._id} into just an object id
