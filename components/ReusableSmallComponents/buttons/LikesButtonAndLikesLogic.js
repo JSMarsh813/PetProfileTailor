@@ -13,10 +13,12 @@ export default function LikesButtonAndLikesLogic({
   HeartIconTextStyling,
   likedSetRef,
   recentLikesRef,
+  dataType,
 }) {
   console.log("signedInUsersId in likes button", signedInUsersId);
   const { liked, likeCount, isProcessing, toggleLike } = useLikeState({
     data,
+    dataType,
     userId: signedInUsersId,
     likedSetRef,
     apiBaseLink,

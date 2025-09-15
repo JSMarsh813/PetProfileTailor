@@ -3,7 +3,12 @@
 import React, { useEffect, useState } from "react";
 import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 
-function Namelisting({ name, session, signedInUsersId }) {
+function Namelisting({
+  name,
+  session,
+  signedInUsersId,
+  dataType = { dataType },
+}) {
   let [currentTargetedId, setCurrentTargetedNameId] = useState(name._id);
   let [openComment, SetOpenComments] = useState(false);
   console.log("signedInUsersId in nameListing", signedInUsersId);
@@ -12,6 +17,7 @@ function Namelisting({ name, session, signedInUsersId }) {
       {/* start of likes checkbox section*/}
       <td className="text-purple-200 border-b-2 border-amber-300 px-4 py-2 text-left font-black">
         <LikesButtonAndLikesLogic
+          dataType={dataType}
           data={name}
           signedInUsersid={signedInUsersId}
           currentTargetedId={currentTargetedId}

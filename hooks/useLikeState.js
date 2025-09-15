@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { useToggleState } from "./useToggleState";
+import { useLikes } from "@/context/LikesContext";
 
-export function useLikeState({
-  data,
-  userId,
-  likedSetRef, // likes we got from the server
-  recentLikesRef, // tracking changes to likedSetRef
-  apiBaseLink,
-}) {
+export function useLikeState({ data, dataType, userId, apiBaseLink }) {
+  const { hasLiked, addLike, deleteLike, recentLikesRef } = useLikes();
+
   const contentId = data._id;
 
-  const initialLiked = likedSetRef?.current.has(contentId); // true, false
+  const initialLiked = hasLiked(dataType, contentId); // true, false
   const initialCount = data.likedbycount; // 10
 
   // Local state only for rendering
@@ -33,7 +30,6 @@ export function useLikeState({
     isProcessing,
     toggle,
   } = useToggleState({
-    id: userId,
     initialActive: initialLiked,
     body: { userId, id: contentId },
     apiUrl: `${apiBaseLink}/${contentId}/togglelike`,
@@ -48,10 +44,10 @@ export function useLikeState({
       recentLikesRef.current[contentId] = change;
 
       if (newLiked) {
-        likedSetRef.current.add(contentId);
+        addLike(dataType, contentId);
         setLikeCount((prev) => prev + 1);
       } else {
-        likedSetRef.current.delete(contentId);
+        deleteLike(dataType, contentId);
         setLikeCount((prev) => prev - 1);
       }
       // Return originalRecentLike so rollback can use it
@@ -60,9 +56,13 @@ export function useLikeState({
 
     onRollback: (originalRecentLike) => {
       // use the saved originalRecentLike from onApplyOptimistic
-      if (originalRecentLike === 1) likedSetRef.current.add(contentId); // restore previous like
+      if (originalRecentLike === 1) {
+        addLike(dataType, contentId);
+      }
+      if (originalRecentLike === -1) {
+        deleteLike(dataType, contentId);
+      }
 
-      if (originalRecentLike === -1) likedSetRef.current.delete(contentId); // restore previous unlike
       recentLikesRef.current[contentId] = originalRecentLike;
 
       const rollbackCount = initialCount + originalRecentLike;

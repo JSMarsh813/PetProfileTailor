@@ -291,6 +291,7 @@ export default function NameListingAsSections({
 
           <div className="w-full flex justify-evenly m-2 ">
             <LikesButtonAndLikesLogic
+              dataType={dataType}
               data={singleContent}
               HeartIconStyling="text-xl ml-2 my-auto mx-auto"
               HeartIconTextStyling="mx-2"

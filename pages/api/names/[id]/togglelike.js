@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   const { id: nameId } = req.query;
   const { userId } = req.body;
 
-  console.log("req.query",req.query)
+  console.log("req.query", req.query);
 
   if (!userId) return res.status(400).json({ error: "userId required" });
   if (req.method !== "POST") return res.status(405).end();
@@ -38,6 +38,9 @@ export default async function handler(req, res) {
         { session },
       );
       liked = false;
+
+      // Return the deleted likeId, for if we want to use the likedIs later to specifically reference it
+      res.status(200).json({ liked, likeId: existingLike._id.toString() });
     } else {
       // Like, insert the document, increment likedByCount
       await NameLikes.create([{ userId, nameId }], { session });
@@ -47,10 +50,12 @@ export default async function handler(req, res) {
         { session },
       );
       liked = true;
+
+      // Return the newly created likeId so the client, for if we want to use the likedIs later to specifically reference it
+      res.status(200).json({ liked, likeId: newLike._id.toString() });
     }
 
     await session.commitTransaction();
-    res.status(200).json({ liked });
   } catch (err) {
     await session.abortTransaction();
     res.status(500).json({ error: err.message });

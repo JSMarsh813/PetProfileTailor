@@ -90,6 +90,7 @@ export default function DescriptionListingAsSections({
         {/* ###### LIKES SECTION #### */}
 
         <LikesButtonAndLikesLogic
+          dataType={dataType}
           data={description}
           HeartIconStyling="text-2xl"
           HeartIconTextStyling="ml-2"

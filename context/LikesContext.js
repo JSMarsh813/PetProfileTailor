@@ -16,28 +16,20 @@ export function LikesProvider({ children, initialLikes = {} }) {
 
   // If the array is empty, .map() just returns another empty array. It won’t throw an error.
 
+  // Map keys = contentId, values are irrelevant
+  //map for fast lookups based on contentID
   const likesRef = useRef({
-    names: new Map(
-      names.map((r) => [
-        r.contentId.toString(),
-        { likeId: r.id?.toString?.() },
-      ]),
-    ),
+    names: new Map(names.map((r) => [r.contentId.toString(), null])),
     descriptions: new Map(
-      descriptions.map((r) => [
-        r.contentId.toString(),
-        { likeId: r.id?.toString?.() },
-      ]),
+      descriptions.map((r) => [r.contentId.toString(), null]),
     ),
   });
-  //map for fast lookups based on contentID
 
   console.log("likesRef in context", likesRef);
 
   const hasLiked = (type, contentId) => {
-    const map = likesRef.current[type];
-    if (!map) return false;
-    return map.has(contentId.toString());
+    const map = likesRef.current[type]?.has(contentId.toString()) ?? false;
+    // has returns a boolean, true or false
   };
 
   // const getLikeStatus = (type, contentId) => {
@@ -46,13 +38,11 @@ export function LikesProvider({ children, initialLikes = {} }) {
   //   return map.get(contentId.toString())?.status ?? null;
   // };
 
-  const addLike = (type, contentId, likeId, status = "pending") => {
-    const map = likesRef.current[type];
-    if (!map) return;
-    map.set(contentId.toString(), { likeId, status });
+  const addLike = (type, contentId) => {
+    likesRef.current[type]?.set(contentId.toString(), null);
   };
 
-  const deleteLike = (type, contentId, likeId) => {
+  const deleteLike = (type, contentId) => {
     console.log(
       "delete like type",
       type,
@@ -61,19 +51,17 @@ export function LikesProvider({ children, initialLikes = {} }) {
       "delete contentID",
       contentId,
     );
-
-    const map = likesRef.current[type];
-    console.log("in delete like, this is map", map);
-    if (!map) return;
-
-    const value = map.get(contentId.toString());
-    if (value && value.likeId === likeId) {
-      map.delete(contentId.toString());
-    }
+    likesRef.current[type]?.delete(contentId.toString());
   };
 
+  // track like adjustments for this session
+  const recentLikesRef = useRef({});
+  // object keyed by contentId, with values -1, 0, or 1
+
   return (
-    <LikesContext.Provider value={{ likesRef, hasLiked, addLike, deleteLike }}>
+    <LikesContext.Provider
+      value={{ likesRef, recentLikesRef, hasLiked, addLike, deleteLike }}
+    >
       {children}
     </LikesContext.Provider>
   );
