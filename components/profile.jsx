@@ -38,7 +38,7 @@ export default function profile({
   let userName = "";
   let profileImage = "";
   let signedInUsersId = "";
-  if (session) {
+  if (session?.user) {
     userName = session.user.name;
     profileImage = session.user.profileimage;
     signedInUsersId = session.user.id;

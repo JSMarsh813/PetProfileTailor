@@ -20,7 +20,7 @@ export default function FollowButton({
   let userId = "";
 
   useEffect(() => {
-    if (session) {
+    if (session?.user) {
       userId = session.user.id;
     }
 

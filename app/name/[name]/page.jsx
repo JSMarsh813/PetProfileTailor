@@ -38,7 +38,7 @@ export default async function Postid({ params }) {
 
   let userLiked = [];
 
-  if (session) {
+  if (session?.user) {
     const likedDoc =
       (await leanWithStrings(
         NameLikes.findOne({

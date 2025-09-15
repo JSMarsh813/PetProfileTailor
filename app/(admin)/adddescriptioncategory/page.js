@@ -5,6 +5,7 @@ import axios from "axios";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import DisabledButton from "@components/ReusableSmallComponents/buttons/DisabledButton";
 import { useAdmin } from "@/context/AdminContext";
+import StyledInput from "@/components/FormComponents/StyledInput";
 
 export default function AddDescriptionCategory() {
   const { isAdmin } = useAdmin();
@@ -29,11 +30,11 @@ export default function AddDescriptionCategory() {
     <div>
       <div className=" mx-auto flex justify-center ">
         <form onSubmit={handleCategorySubmission}>
-          <input
+          <StyledInput
             type="text"
             id="categoryInput"
             className="text-secondary w-full"
-            placeholder="enter a category to add"
+            label="enter a category to add"
             onChange={(e) => setNewCategory(e.target.value.toLowerCase())}
           />
 

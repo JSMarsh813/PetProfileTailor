@@ -40,7 +40,7 @@ export default function NameListingAsSections({
   const { data: session } = useSession();
 
   let signedInUsersId = "";
-  if (session) {
+  if (session?.user) {
     signedInUsersId = session.user.id;
   }
 
