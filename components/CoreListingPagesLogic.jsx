@@ -16,7 +16,7 @@ import GoToTopButton from "@components/ReusableSmallComponents/buttons/GoToTopBu
 
 import { signIn, useSession } from "next-auth/react";
 
-export default function CoreListingPageLogic({ dataType, usersLikedContent }) {
+export default function CoreListingPageLogic({ dataType }) {
   const { data: session } = useSession();
   const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
   const [remainingSortCooldown, setRemainingSortCooldown] = useState(0);
@@ -37,9 +37,6 @@ export default function CoreListingPageLogic({ dataType, usersLikedContent }) {
   }
 
   // store liked IDs in a ref so updates don't trigger full re-render
-  const likedSetRef = useRef(new Set(usersLikedContent));
-  const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
-  // tracks if the likes count has to be updated, important for if the user navigates backwards
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [IsOpen, setIsOpen] = useState(false);
@@ -221,8 +218,6 @@ export default function CoreListingPageLogic({ dataType, usersLikedContent }) {
                         singleContent={singleContent}
                         key={singleContent._id}
                         signedInUsersId={signedInUsersId}
-                        likedSetRef={likedSetRef}
-                        recentLikesRef={recentLikesRef}
                         mutate={mutate}
                       />
                     );

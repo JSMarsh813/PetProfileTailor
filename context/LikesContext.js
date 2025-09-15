@@ -57,6 +57,8 @@ export function LikesProvider({ children, initialLikes = {} }) {
   // track like adjustments for this session
   const recentLikesRef = useRef({});
   // object keyed by contentId, with values -1, 0, or 1
+  // { [nameId]: 1 | 0 | -1 }
+  // tracks if the likes count has to be updated, important for if the user navigates backwards
 
   return (
     <LikesContext.Provider

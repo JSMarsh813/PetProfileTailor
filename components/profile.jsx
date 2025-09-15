@@ -22,7 +22,6 @@ export default function profile({
   userData,
   nameList,
   likedNames,
-  usersLikedContent,
   createdDescriptions,
   likedDescriptions,
   usersFollowing,
@@ -31,9 +30,6 @@ export default function profile({
   const { data: session } = useSession();
 
   // store liked IDs in a ref so updates don't trigger full re-render
-  const likedSetRef = useRef(new Set(usersLikedContent));
-  const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
-  // tracks if the likes count has to be updated, important for if the user navigates backwards
 
   let userName = "";
   let profileImage = "";
@@ -243,8 +239,8 @@ export default function profile({
                           dataType="names"
                           setNameEditedFunction={setNameEditedFunction}
                           setDeleteThisContentId={setDeleteThisContentId}
-                          likedSetRef={likedSetRef}
-                          recentLikesRef={recentLikesRef}
+                  
+                  
                         />
                       );
                     })} */}

@@ -11,8 +11,7 @@ export default function LikesButtonAndLikesLogic({
   apiBaseLink,
   HeartIconStyling,
   HeartIconTextStyling,
-  likedSetRef,
-  recentLikesRef,
+
   dataType,
 }) {
   console.log("signedInUsersId in likes button", signedInUsersId);
@@ -20,9 +19,7 @@ export default function LikesButtonAndLikesLogic({
     data,
     dataType,
     userId: signedInUsersId,
-    likedSetRef,
     apiBaseLink,
-    recentLikesRef,
   });
 
   return (

@@ -33,8 +33,7 @@ import { useSession } from "next-auth/react";
 export default function NameListingAsSections({
   dataType,
   singleContent,
-  likedSetRef,
-  recentLikesRef,
+
   mutate,
 }) {
   const { data: session } = useSession();
@@ -298,8 +297,6 @@ export default function NameListingAsSections({
               currentTargetedId={currentTargetedId}
               signedInUsersId={signedInUsersId}
               apiBaseLink={apiBaseLink}
-              likedSetRef={likedSetRef}
-              recentLikesRef={recentLikesRef}
             />
 
             <ShareButton onClickShowShares={onClickShowShares} />
