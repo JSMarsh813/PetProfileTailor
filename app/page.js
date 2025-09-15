@@ -74,8 +74,13 @@ function HomePage() {
           alt="image of a guinea pig wearing a tiny pirate hat"
           style={{
             maxWidth: "100%",
+            width: "auto",
             height: "auto",
           }}
+          //Error: Image with src "/smallpirate.webp" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+
+          // When you pass both width and height to <Image>, Next.js assumes you want to preserve that ratio.
+          // Next wants you to set width AND height to auto, if you're overriding the width/height ratio to ensure the aspect ratio is preserved
         />
       </section>
       <div className="">

@@ -36,8 +36,7 @@ const HeroTop = ({
             src="/pugStillImage.png"
             fill
             className="opacity-80"
-            objectFit="cover"
-            objectPosition="center"
+            style={{ objectPosition: "center", objectFit: "cover" }}
             alt=""
           />
         ) : (
@@ -45,8 +44,7 @@ const HeroTop = ({
             priority
             src="/pugs.webp"
             fill
-            objectFit="cover"
-            objectPosition="center"
+            style={{ objectPosition: "center", objectFit: "cover" }}
             alt=""
           />
         )}

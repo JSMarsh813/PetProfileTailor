@@ -29,6 +29,7 @@ const MediaObject = ({
           alt={alttext}
           style={{
             maxWidth: "100%",
+            width: "auto",
             height: "auto",
           }}
         />
