@@ -1,6 +1,7 @@
 import db from "@utils/db";
 import FlagReport from "@/models/FlagReport";
 import mongoose from "mongoose";
+import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
 export default async function handler(req, res) {
   await db.connect();
@@ -10,18 +11,19 @@ export default async function handler(req, res) {
       const { contentId, userId } = req.query;
       await db.connect();
 
-      const report = await FlagReport.findOne(
-        { contentid: contentId, flaggedbyuser: userId },
-        {
-          reportcategories: 1,
-          comments: 1,
-          flaggedby: 1,
-          contentcreatedby: 1,
-          _id: 1,
-          status: 1,
-        },
-      ).lean(); //.lean() makes the query faster by returning plain JS objects.
-
+      const report = await leanWithStrings(
+        FlagReport.findOne(
+          { contentid: contentId, flaggedbyuser: userId },
+          {
+            reportcategories: 1,
+            comments: 1,
+            flaggedby: 1,
+            contentcreatedby: 1,
+            _id: 1,
+            status: 1,
+          },
+        ),
+      );
       if (!report) {
         return res.status(404).json({ error: "Report not found" });
       }
@@ -44,7 +46,7 @@ export default async function handler(req, res) {
           comments,
         },
         { new: true }, // return updated doc
-      ).lean();
+      );
 
       if (!updatedReport) {
         return res.status(404).json({ error: "Report not found" });

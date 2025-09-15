@@ -8,6 +8,7 @@ import User from "@models/User";
 import Profile from "@/components/profile";
 import { getServerSession } from "next-auth";
 import { serverAuthOptions } from "@/lib/auth";
+import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
 // const ObjectId = require("mongodb").ObjectId;
 
@@ -21,13 +22,14 @@ export default async function ProfilePage({ params }) {
   await dbConnect.connect();
 
   // ############# FIND A  USER ##################
-  const userData = await User.findOne({ profilename: usersProfileName })
-    .select("name followers profileimage profilename bioblurb location")
-    .populate(
-      "followers",
-      "_id name profileimage profilename bioblurb location",
-    )
-    .lean();
+  const userData = await leanWithStrings(
+    User.findOne({ profilename: usersProfileName })
+      .select("name followers profileimage profilename bioblurb location")
+      .populate(
+        "followers",
+        "_id name profileimage profilename bioblurb location",
+      ),
+  );
 
   console.log("userData", userData);
 
@@ -37,58 +39,67 @@ export default async function ProfilePage({ params }) {
   const userId = userData._id.toString();
 
   // ########## grab created names #############
-  const nameList = await Names.find({ createdby: userId })
-    .populate({
-      path: "createdby",
-      select: ["name", "profilename", "profileimage"],
-    })
-    .populate("tags", "tag")
-    .lean();
+  const nameList = await leanWithStrings(
+    Names.find({ createdby: userId })
+      .populate({
+        path: "createdby",
+        select: ["name", "profilename", "profileimage"],
+      })
+      .populate("tags", "tag"),
+  );
 
   //##### grabbing Tags for name edit function ###############
 
   //##### grabbing DESCRIPTIONS added by user
 
-  const createdDescriptions = await Descriptions.find({
-    createdby: userId,
-  })
-    .populate({
-      path: "createdby",
-      select: ["name", "profilename", "profileimage"],
+  const createdDescriptions = await leanWithStrings(
+    Descriptions.find({
+      createdby: userId,
     })
-    .populate("tags", "tag")
-    .lean();
+      .populate({
+        path: "createdby",
+        select: ["name", "profilename", "profileimage"],
+      })
+      .populate("tags", "tag"),
+  );
 
   //TO CALCULATE USERS POINTS
 
   //USERS FAVED NAMES //
 
-  const likedNames = await Names.find({
-    likedby: userId,
-  }).lean();
+  const likedNames = await leanWithStrings(
+    Names.find({
+      likedby: userId,
+    }),
+  );
 
-  const likedDescriptions = await Descriptions.find({
-    likedby: userId,
-  }).lean();
+  const likedDescriptions = await leanWithStrings(
+    Descriptions.find({
+      likedby: userId,
+    }),
+  );
 
   //### FOLLOWING LIST, followers is grabbed from userData
 
-  let usersFollowing = await User.find({
-    followers: userId,
-  })
-    .select("name followers name profileimage profilename bioblurb location")
-    .populate(
-      "followers",
-      "name followers name profileimage profilename bioblurb location",
-    )
-    .lean();
+  let usersFollowing = await leanWithStrings(
+    User.find({
+      followers: userId,
+    })
+      .select("name followers name profileimage profilename bioblurb location")
+      .populate(
+        "followers",
+        "name followers name profileimage profilename bioblurb location",
+      ),
+  );
 
   let usersLikedContent = [];
 
   if (session?.user) {
     const userId = session.user.id;
-    const likes = await NameLikes.find({ userId }).select("nameId -_id").lean();
-    usersLikedContent = likes.map((l) => l.nameId.toString());
+    usersLikedContent = await leanWithStrings(
+      NameLikes.find({ userId }).select("nameId -_id"),
+    );
+
     //TODO: change to likes context
   }
 

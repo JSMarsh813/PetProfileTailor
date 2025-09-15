@@ -7,6 +7,7 @@ import dbConnect from "@utils/db";
 import { getServerSession } from "next-auth";
 import { serverAuthOptions } from "@/lib/auth";
 import CoreListingPageLogic from "@/components/CoreListingPagesLogic";
+import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
 export default async function FetchDescriptions() {
   await dbConnect.connect();
@@ -24,26 +25,27 @@ export default async function FetchDescriptions() {
 
     console.log("session.user.id:", session.user.id, typeof session.user.id);
     // ######## Likes ###############
-    const likes = await DescriptionLikes.find({ userId }).select("nameId -_id");
-    usersLikedContent = likes.map((l) => l.nameId.toString());
+    usersLikedContent = await leanWithStrings(
+      DescriptionLikes.find({ userId }).select("nameId -_id"),
+    );
 
     // ############## Reports ################
 
-    const reports = await FlagReport.find(
-      {
-        reportedby: userId,
-        status: { $nin: ["dismissed", "deleted", "resolved"] }, // exclude these
-        contenttype: "description", // only get reports for descriptions
-      },
-      { contentid: 1, status: 1, _id: 0 },
-    ).lean(); //.lean() makes the query faster by returning plain JS objects.
+    const reports = await leanWithStrings(
+      FlagReport.find(
+        {
+          reportedby: userId,
+          status: { $nin: ["dismissed", "deleted", "resolved"] }, // exclude these
+          contenttype: "description", // only get reports for descriptions
+        },
+        { contentid: 1, status: 1, _id: 0 },
+      ),
+    );
     console.log("reports from DB:", reports);
-    // Extract contentIds into a simple array, convert objectIds to plain strings
+
     contentUserReported = reports.map((r) => ({
-      contentid: r.contentid.toString(),
       status: r.status ?? null,
     }));
-    // const contentWithSuggestions
   }
 
   return (

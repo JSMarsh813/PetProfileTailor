@@ -17,6 +17,9 @@ import DescriptionCategory from "@/models/DescriptionCategory";
 import { SessionProviderWrapper } from "@/wrappers/SessionProviderWrapper";
 import NavLayoutwithSettingsMenu from "@/components/NavBar/NavLayoutwithSettingsMenu";
 import CategTagsWrapper from "@/wrappers/CategTagsWrapper";
+import { leanWithStrings } from "@/utils/mongoDataCleanup";
+import { Suspense } from "react";
+import LoadingSkeleton from "@/components/LoadingScreen";
 
 export const metadata = {
   title:
@@ -32,29 +35,32 @@ export default async function RootLayout({ children }) {
 
   // connect to MongoDB + fetch categories
   await db.connect();
-  const nameCategories = await NameCategory.find()
-    .populate("tags")
-    .sort({ order: 1 })
-    .lean();
-  const descCategories = await DescriptionCategory.find()
-    .populate("tags")
-    .sort({ order: 1 })
-    .lean();
+  const nameCategories = await leanWithStrings(
+    NameCategory.find().populate("tags").sort({ order: 1 }),
+  );
+  const descCategories = await leanWithStrings(
+    DescriptionCategory.find().populate("tags").sort({ order: 1 }),
+  );
 
   // serialize for client hydration
   const nameCategoryJSON = JSON.parse(JSON.stringify(nameCategories));
   const descCategoryJSON = JSON.parse(JSON.stringify(descCategories));
 
   return (
-    <html lang="en">
-      <body>
+    <html
+      lang="en"
+      className="h-full"
+    >
+      <body className="h-full flex flex-col">
         <SessionProviderWrapper session={safeSession}>
           <CategTagsWrapper
             descrCateg={descCategoryJSON}
             nameCateg={nameCategoryJSON}
           >
             <NavLayoutwithSettingsMenu />
-            <main>{children}</main>
+            <Suspense fallback={<LoadingSkeleton />}>
+              <main className="flex-1">{children}</main>
+            </Suspense>
             <Analytics />
             <ToastProvider />
 
