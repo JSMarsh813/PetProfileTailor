@@ -78,7 +78,7 @@ function HomePage() {
           }}
         />
       </section>
-      <div className="max-w-7xl mx-auto">
+      <div className="">
         <section className="landingNamesSection">
           <WideCenteredHeading heading="Find the Purrfect Name" />
 

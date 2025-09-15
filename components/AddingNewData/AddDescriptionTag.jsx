@@ -62,7 +62,7 @@ export default function AddDescriptionTag({ isAdmin }) {
     }
   }
   return (
-    <div className="max-w-7xl mx-auto flex justify-center text-center">
+    <div className=" mx-auto flex justify-center text-center">
       <form onSubmit={handleDescriptionTagSubmission}>
         <input
           type="text"

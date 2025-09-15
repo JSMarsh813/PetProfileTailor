@@ -139,10 +139,13 @@ export default function Register() {
           Do you prefer passwordless sign in?
         </p>
 
-        <p className="mb-2"> You can sign in using a magic link!</p>
         <p className="mb-2">
-          We’ll send a “magic” link to your email, and clicking it is all it
-          takes to log in.
+          {" "}
+          Then good news! You can sign in using a magic link!
+        </p>
+        <p className="mb-2">
+          We’ll send a “magic” link to your email, and clicking the link is all
+          it takes to log in.
         </p>
 
         <p className="mb-4">
@@ -158,7 +161,7 @@ export default function Register() {
       </section>
       {/* #################### FORM #########################*/}
       <form
-        className="mx-auto max-w-screen-md"
+        className="max-w-screen-md text-center"
         onSubmit={handleSubmit(submitHandler)}
       >
         <RegisterInput

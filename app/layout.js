@@ -49,9 +49,9 @@ export default async function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className="h-full"
+      className="h-full bg-primary"
     >
-      <body className="h-full flex flex-col">
+      <body className="h-full flex flex-col ">
         <SessionProviderWrapper session={safeSession}>
           <CategTagsWrapper
             descrCateg={descCategoryJSON}
@@ -59,7 +59,7 @@ export default async function RootLayout({ children }) {
           >
             <NavLayoutwithSettingsMenu />
             <Suspense fallback={<LoadingSkeleton />}>
-              <main className="flex-1">{children}</main>
+              <main className=" mx-auto max-w-7xl ">{children}</main>
             </Suspense>
             <Analytics />
             <ToastProvider />

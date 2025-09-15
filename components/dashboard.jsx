@@ -35,7 +35,7 @@ export default function Dashboard({
   return (
     <section>
       <div
-        className="relative overflow-hidden bg-no-repeat bg-cover max-w-7xl mx-auto"
+        className="relative overflow-hidden bg-no-repeat bg-cover mx-auto"
         style={{
           backgroundPosition: "80%",
           backgroundImage: `url("/dogheaderfreewebheaders.jpg")`,
@@ -100,7 +100,7 @@ export default function Dashboard({
 
       {/* ############# FAVORITE LISTS SECTION ############ */}
 
-      <section className=" px-4 pt-4  max-w-7xl mx-auto  text-center">
+      <section className=" px-4 pt-4   mx-auto  text-center">
         <WideCenteredHeader heading="Your Favorites" />
 
         <div

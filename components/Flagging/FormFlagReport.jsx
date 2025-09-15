@@ -116,7 +116,7 @@ function AddFlagReport({
 
   return (
     <form
-      className=" mx-auto bg-primary rounded-lg max-w-7xl border border-subtleWhite "
+      className=" mx-auto bg-primary rounded-lg  border border-subtleWhite "
       onSubmit={handleSubmitReport}
     >
       <div className="flex items-center justify-end py-2   bg-secondary ">

@@ -26,11 +26,11 @@ const HeroTop = ({
   return (
     <div
       className="hero min-h-fit font-serif 
- max-w-7xl mx-auto overflow-hidden"
+  mx-auto overflow-hidden"
       onMouseEnter={handleMouseEnterForImage}
       onMouseLeave={handleMouseLeaveForImage}
     >
-      <div className="hero-overlay  relative max-w-7xl z-10 opacity-20 ">
+      <div className="hero-overlay  relative  z-10 opacity-20 ">
         {hover ? (
           <Image
             src="/pugStillImage.png"

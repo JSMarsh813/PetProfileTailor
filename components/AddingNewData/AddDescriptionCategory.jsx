@@ -26,7 +26,7 @@ export default function AddDescriptionCategory({ isAdmin }) {
 
   return (
     <div>
-      <div className="max-w-7xl mx-auto flex justify-center ">
+      <div className=" mx-auto flex justify-center ">
         <form onSubmit={handleCategorySubmission}>
           <input
             type="text"

@@ -23,7 +23,7 @@ export default function ProfileScreen() {
     }
   }, [status, router]);
 
-  if (status === "loading") {
+  if (status === "loading" || !session?.user) {
     return <LoadingScreen />;
   }
 

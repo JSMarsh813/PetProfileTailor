@@ -153,7 +153,7 @@ function EditReport({
   }
 
   return (
-    <div className=" mx-auto bg-primary rounded-lg max-w-7xl border border-subtleWhite ">
+    <div className=" mx-auto bg-primary rounded-lg  border border-subtleWhite ">
       {loading ? (
         <div className="flex items-center justify-center py-20">
           {/* Spinner can be a simple CSS loader or a reusable component */}

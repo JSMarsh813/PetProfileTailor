@@ -12,7 +12,7 @@ import { leanWithStrings } from "@/utils/mongoDataCleanup";
 export default async function DashboardPage() {
   const session = await getServerSession(serverAuthOptions);
 
-  if (!session.user) {
+  if (!session?.user) {
     return redirect("/login");
   }
   const userId = await session.user.id;

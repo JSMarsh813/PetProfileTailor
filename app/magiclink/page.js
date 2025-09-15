@@ -23,7 +23,7 @@ export default async function LoginScreen() {
       />
       <div className="px-6 h-full text-gray-100">
         <div className="flex xl:justify-center  justify-center items-center flex-wrap ">
-          <div className="max-w-7xl mx-auto mb-12 md:mb-0">
+          <div className="mx-auto mb-12 md:mb-0">
             <div className="text-center  mb-4 flex justify-center mt-2">
               <MagicRabbitSVG />
               <h2 className="text-4xl"> Magic link request sent! </h2>

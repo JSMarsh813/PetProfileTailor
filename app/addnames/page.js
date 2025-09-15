@@ -15,7 +15,7 @@ function AddNewNameWithTags() {
         title2="Name"
       />
 
-      <div className="max-w-7xl mx-auto mt-4 flex justify-center text-center flex-col">
+      <div className="mx-auto mt-4 flex justify-center text-center flex-col">
         {!session && (
           <div className="bg-red-800 p-2 text-white font-bold border-2 border-yellow-300 text-center">
             To avoid spam, users must sign in to add names

@@ -69,7 +69,7 @@ export default function forgotpassword() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className=" mx-auto">
       <section className="h-fit">
         <div className="px-6 h-full text-gray-100">
           <div className="flex justify-center items-center flex-wrap ">

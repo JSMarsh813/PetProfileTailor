@@ -59,7 +59,7 @@ export default function AddNameTag({ isAdmin }) {
     }
   }
   return (
-    <div className="max-w-7xl mx-auto flex justify-center text-center">
+    <div className=" mx-auto flex justify-center text-center">
       <form
         className="mx-2"
         onSubmit={handleNameTagSubmission}

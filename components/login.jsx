@@ -77,7 +77,7 @@ export default function Login() {
   };
 
   return (
-    <section className="h-fit max-w-7xl mx-auto ">
+    <section className="h-fit  mx-auto ">
       <div className="px-6 h-full text-gray-100">
         <div className="flex lg:justify-between xl:justify-center  justify-center items-center flex-wrap h- g-6">
           <div className="grow-0 shrink-1 md:shrink-0 basis-auto lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
