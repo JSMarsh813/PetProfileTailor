@@ -46,8 +46,7 @@ export function LikesProvider({ children, initialLikes = {} }) {
     console.log(
       "delete like type",
       type,
-      "delete like likeId",
-      likeId,
+
       "delete contentID",
       contentId,
     );

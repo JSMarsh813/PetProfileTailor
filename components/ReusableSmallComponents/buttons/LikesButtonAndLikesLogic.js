@@ -15,6 +15,7 @@ export default function LikesButtonAndLikesLogic({
   dataType,
 }) {
   console.log("signedInUsersId in likes button", signedInUsersId);
+  console.log("datatype in likesbutton", dataType);
   const { liked, likeCount, isProcessing, toggleLike } = useLikeState({
     data,
     dataType,

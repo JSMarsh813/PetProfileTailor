@@ -44,10 +44,8 @@ export default function NameListingAsSections({
   } = useDeleteConfirmation();
   const [content, setContent] = useState(singleContent);
 
+  console.log("dataType in singleListing", dataType);
   console.log("singleContent", singleContent);
-
-  const likedSetRef = useRef(new Set(userLiked));
-  const recentLikesRef = useRef({});
 
   const { reportsRef, hasReported, getStatus } = useReports();
 
@@ -289,8 +287,7 @@ export default function NameListingAsSections({
               currentTargetedId={currentTargetedId}
               signedInUsersId={signedInUsersId}
               apiBaseLink={apiBaseLink}
-              likedSetRef={likedSetRef}
-              recentLikesRef={recentLikesRef}
+              dataType={dataType}
             />
 
             <ShareButton onClickShowShares={onClickShowShares} />

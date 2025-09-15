@@ -39,8 +39,7 @@ export default async function handler(req, res) {
       );
       liked = false;
 
-      // Return the deleted likeId, for if we want to use the likedIs later to specifically reference it
-      res.status(200).json({ liked, likeId: existingLike._id.toString() });
+      res.status(200).json({ liked });
     } else {
       // Like, insert the document, increment likedByCount
       await NameLikes.create([{ userId, nameId }], { session });
@@ -51,8 +50,7 @@ export default async function handler(req, res) {
       );
       liked = true;
 
-      // Return the newly created likeId so the client, for if we want to use the likedIs later to specifically reference it
-      res.status(200).json({ liked, likeId: newLike._id.toString() });
+      res.status(200).json({ liked });
     }
 
     await session.commitTransaction();
