@@ -52,37 +52,37 @@ export default function NameListingAsSections({
     confirmDelete,
   } = useDeleteConfirmation();
 
-  const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);
+  const { tagList } = useCategoriesForDataType(dataType);
 
-  const { reportsRef, hasReported, getStatus } = useReports();
-  const userHasAlreadyReported = hasReported(singleContent._id.toString());
+  const { getStatus } = useReports();
 
-  const reportStatus = getStatus(singleContent._id.toString());
+  const reportStatus = getStatus(dataType, singleContent._id.toString());
   console.log("reportStatus", reportStatus);
-  const reportPendingOrUndef =
-    reportStatus === "pending" || reportStatus === null;
-  console.log("reportPendingOrUndef", reportPendingOrUndef);
 
-  const apiEndPoint = dataType === "name" ? "/api/names/" : "/api/description/";
+  const reportPendingOrNone =
+    reportStatus === "pending" || reportStatus === null;
+  console.log("reportPendingOrNone", reportPendingOrNone);
+
+  const apiEndPoint =
+    dataType === "names" ? "/api/names/" : "/api/description/";
 
   //SHARING
 
-  const apiBaseLink = dataType === "name" ? `/api/names` : `/api/description`;
+  const apiBaseLink = dataType === "names" ? `/api/names` : `/api/description`;
 
   const linkToShare =
-    dataType === "name"
+    dataType === "names"
       ? `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${singleContent.name}`
       : `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/description/${singleContent._id}`;
 
   const localLink =
-    dataType === "name"
+    dataType === "names"
       ? `/name/${singleContent.name}`
       : `/description/${singleContent._id}`;
 
   // TODO
 
-  const { showFlagDialog, flagTarget, openFlag, closeFlag } =
-    useFlagging(reportsRef);
+  const { showFlagDialog, flagTarget, openFlag, closeFlag } = useFlagging();
 
   const {
     showEditDialog,
@@ -250,8 +250,9 @@ export default function NameListingAsSections({
               />
             )}
 
-            {!userIsTheCreator && reportPendingOrUndef && showFlagDialog && (
+            {!userIsTheCreator && reportPendingOrNone && showFlagDialog && (
               <FlagDialog
+                dataType={dataType}
                 open={showFlagDialog}
                 target={flagTarget}
                 onClose={closeFlag}
@@ -315,7 +316,6 @@ export default function NameListingAsSections({
                 userIsTheCreator={userIsTheCreator}
                 signedInUsersId={signedInUsersId}
                 currentTargetedId={currentTargetedId}
-                contentType="name"
                 content={singleContent}
                 apiIdeaSubmission="/api/_______/"
                 apiaddUserToIdea="/api/_____"
@@ -325,16 +325,6 @@ export default function NameListingAsSections({
                 setIdeaFormToggled={setIdeaFormToggled}
                 dataType={dataType}
               />
-
-              // <FlaggingContentSection
-              //   userIsTheCreator={userIsTheCreator}
-              //   signedInUsersId={signedInUsersId}
-              //   currentTargetedId={currentTargetedId}
-              //   contentType="name"
-              //   content={name}
-              //   apiflagReportSubmission="/api/flag/flagreportsubmission/"
-              //   apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
-              // />
             )}
           </div>
         </div>

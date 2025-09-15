@@ -8,7 +8,7 @@ export default function DashboardChartForFavDescriptions({
   className,
 }) {
   const { categoriesWithTags, tagList } =
-    useCategoriesForDataType("description");
+    useCategoriesForDataType("descriptions");
   const { data: session } = useSession();
 
   return (

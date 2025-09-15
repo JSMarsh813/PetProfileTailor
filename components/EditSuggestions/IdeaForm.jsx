@@ -12,8 +12,8 @@ import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingX
 import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "@hooks/useTags";
 
-function AddFlagReport({
-  contentType,
+export default function AddIdea({
+  dataType,
   ideaByUser,
   contentInfo,
   copyOfContentForReport,
@@ -23,7 +23,6 @@ function AddFlagReport({
   ideaFormToggled,
   setIdeaIconClickedByNewUser,
   setUserAlreadySentIdea,
-  dataType = { dataType },
 }) {
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
@@ -73,7 +72,7 @@ function AddFlagReport({
     }
 
     const reportSubmission = {
-      contenttype: contentType,
+      contenttype: dataType,
       contentid: contentInfo._id,
       contentcopy: copyOfContentForReport,
       contentcreatedby: contentCreatedByUserId,
@@ -253,5 +252,3 @@ function AddFlagReport({
     </form>
   );
 }
-
-export default AddFlagReport;

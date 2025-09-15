@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 
 export default function AddDescriptionTag({ isAdmin }) {
   const { categoriesWithTags, tagList } =
-    useCategoriesForDataType("description");
+    useCategoriesForDataType("descriptions");
   const { data: session } = useSession();
   const [newDescriptionTag, setNewDescriptionTag] = useState("");
   const [categoryList, setCategoryList] = useState([]);

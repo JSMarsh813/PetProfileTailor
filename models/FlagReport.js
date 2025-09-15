@@ -4,7 +4,7 @@ const FlagReportSchema = new mongoose.Schema(
   {
     contenttype: {
       type: String,
-      enum: ["name", "description", "user"],
+      enum: ["names", "descriptions", "users"],
       required: true,
       unique: false,
     },

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function useFlagging(reportsSetRef) {
+export function useFlagging() {
   const [showFlagDialog, setShowFlagDialog] = useState(false);
   const [flagTarget, setFlagTarget] = useState(null);
 
@@ -14,8 +14,6 @@ export function useFlagging(reportsSetRef) {
     setShowFlagDialog(false);
   }
 
-  // update set with the new report reportsSetRef
-  // also add to state
   return {
     showFlagDialog,
     flagTarget,

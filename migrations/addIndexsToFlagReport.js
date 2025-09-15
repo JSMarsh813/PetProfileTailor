@@ -25,17 +25,17 @@ const createFlagReportIndexes = async () => {
     {
       key: { status: 1 },
       name: "status_name_index",
-      partialFilterExpression: { contenttype: "name" },
+      partialFilterExpression: { contenttype: "names" },
     },
     {
       key: { status: 1 },
       name: "status_description_index",
-      partialFilterExpression: { contenttype: "description" },
+      partialFilterExpression: { contenttype: "descriptions" },
     },
     {
       key: { status: 1 },
       name: "status_user_index",
-      partialFilterExpression: { contenttype: "user" },
+      partialFilterExpression: { contenttype: "users" },
     },
   ];
 

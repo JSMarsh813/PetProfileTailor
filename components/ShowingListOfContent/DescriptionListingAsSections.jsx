@@ -10,7 +10,7 @@ import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton";
 
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
-import FlaggingContentSection from "@components/Flagging/FlaggingContentSection";
+
 // import ParagraphRenderBasedOnArrayProperty from "./ParagraphRenderBasedOnArrayProperty";
 import ParagraphRenderBasedOnStringProperty from "./ParagraphRenderBasedOnStringProperty";
 import { signIn, useSession } from "next-auth/react";
@@ -162,18 +162,6 @@ export default function DescriptionListingAsSections({
           {description.relatednames
             .map((relatedname) => relatedname)
             .join(", ")}
-        </div>
-
-        <div className="w-full bg-violet-900 flex justify-center">
-          <FlaggingContentSection
-            userIsTheCreator={userIsTheCreator}
-            signedInUsersId={signedInUsersId}
-            currentTargetedId={currentTargetedId}
-            contentType="description"
-            content={description}
-            apiflagReportSubmission="/api/flag/flagreportsubmission/"
-            apiaddUserToFlaggedByArray="/api/flag/addToDescriptionsFlaggedByArray/"
-          />
         </div>
       </div>
 

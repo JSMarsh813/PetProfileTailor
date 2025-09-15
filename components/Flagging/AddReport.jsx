@@ -6,20 +6,17 @@ import { Field } from "@headlessui/react";
 import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
+import { useReports } from "@context/ReportsContext";
 
-function AddFlagReport({
-  contentType,
+export default function AddReport({
+  dataType,
   flaggedByUser,
   contentInfo,
   copyOfContentForReport,
   apiflagReportSubmission,
-  apiaddUserToFlaggedByArray,
-  flagFormIsToggled,
-  setFlagFormIsToggled,
-  setFlagIconClickedByNewUser,
-  setUserHasAlreadyReportedThis,
   onClose,
 }) {
+  const { addReport } = useReports();
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
 
@@ -66,7 +63,7 @@ function AddFlagReport({
     }
 
     const reportSubmission = {
-      contenttype: contentType,
+      contenttype: dataType,
       contentid: contentInfo._id,
       contentcopy: copyOfContentForReport,
       contentcreatedby: contentCreatedByUserId,
@@ -76,11 +73,6 @@ function AddFlagReport({
     };
     console.log(reportSubmission);
 
-    // const userAndNameId = {
-    //   contentid: contentInfo._id,
-    //   flaggedbyuser: flaggedByUser,
-    // };
-
     await axios
       .post(apiflagReportSubmission, reportSubmission)
       .then((response) => {
@@ -89,28 +81,20 @@ function AddFlagReport({
         );
       })
       // .then(() => callApiToaddUserToNamesArray(userAndNameId))
-      .then(() => setFlagFormIsToggled(false))
-      .then(() => setUserHasAlreadyReportedThis(true))
-
+      .then(() => addReport(dataType, contentInfo._id))
+      .then(() => onClose?.())
       .catch((error) => {
         console.log("this is an error", error);
 
         toast.error(
           `Ruh Roh! ${error.message} ${JSON.stringify(
-            error.response.data.message,
+            error?.response?.data?.message,
           )}`,
         );
       });
   };
 
-  // function callApiToaddUserToNamesArray(userAndNameId) {
-  //   axios
-  //     .put(apiaddUserToFlaggedByArray, userAndNameId)
-  //     .then(toast.success(`your name has been added to the reported array`));
-  // }
-
   function cancelFlagFormAndRevertFlagState() {
-    setFlagIconClickedByNewUser(false);
     onClose?.(); // <-- close the dialog
   }
 
@@ -255,5 +239,3 @@ function AddFlagReport({
     </form>
   );
 }
-
-export default AddFlagReport;

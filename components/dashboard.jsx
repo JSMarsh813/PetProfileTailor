@@ -128,7 +128,7 @@ export default function Dashboard({
                     <NameListingAsSections
                       name={name}
                       key={name._id}
-                      dataType="name"
+                      dataType="names"
                     />
                   );
                 })}

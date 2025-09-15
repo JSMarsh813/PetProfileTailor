@@ -15,7 +15,7 @@ import EditBioAndProfile from "@components/EditingData/EditBioAndProfile";
 import EditBioProfileButton from "@components/ReusableSmallComponents/buttons/EditBioProfileButton";
 import UsersFollowersList from "@components/ShowingListOfContent/UsersFollowersList";
 import UsersFollowingList from "@components/ShowingListOfContent/UsersFollowingList";
-import FlaggingContentSection from "@components/Flagging/FlaggingContentSection";
+
 import { useSession } from "next-auth/react";
 
 export default function profile({
@@ -172,16 +172,6 @@ export default function profile({
 
                     <span className="mr-2 text-lg">{userData.location}</span>
                   </div>
-
-                  {/* <FlaggingContentSection
-                    userIsTheCreator={userIsTheCreator}
-                    signedInUsersId={signedInUsersId}
-                    currentTargetedId={userData._id}
-                    contentType="user"
-                    content={userData}
-                    apiflagReportSubmission="/api/flag/flagreportsubmission/"
-                    apiaddUserToFlaggedByArray="/api/flag/addToUsersFlaggedByArray/"
-                  /> */}
                 </div>
 
                 <div className="py-2 border-t border-secondary text-center">
@@ -250,7 +240,7 @@ export default function profile({
                           name={name}
                           key={name._id}
                           signedInUsersId={signedInUsersId}
-                          dataType="name"
+                          dataType="names"
                           setNameEditedFunction={setNameEditedFunction}
                           setDeleteThisContentId={setDeleteThisContentId}
                           likedSetRef={likedSetRef}
@@ -288,7 +278,7 @@ export default function profile({
                 <section className="border-2 border-amber-300">
                   <DashboardChartForFavDescriptions
                     likedDescriptions={createdDescriptions}
-                    dataType="description"
+                    dataType="descriptions"
                     sessionFromServer={session}
                   />
                 </section>

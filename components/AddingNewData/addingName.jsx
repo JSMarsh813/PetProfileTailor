@@ -259,7 +259,7 @@ function NewNameWithTagsData() {
             </p>
           </div>
           <TagsSelectAndCheatSheet
-            dataType="name"
+            dataType="names"
             tagsToSubmit={tagsToSubmit}
             handleSelectChange={handleSelectChange}
             handleCheckboxChange={handleCheckboxChange}

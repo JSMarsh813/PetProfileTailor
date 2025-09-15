@@ -50,19 +50,19 @@ export default function NameListingAsSections({
   const recentLikesRef = useRef({});
 
   const { reportsRef, hasReported, getStatus } = useReports();
-  const userHasAlreadyReported = hasReported(singleContent._id.toString());
 
-  const reportStatus = getStatus(singleContent._id.toString());
+  const reportStatus = getStatus(dataType, singleContent._id.toString());
   console.log("reportStatus", reportStatus);
   const reportPendingOrUndef =
     reportStatus === "pending" || reportStatus === null;
   console.log("reportPendingOrUndef", reportPendingOrUndef);
 
-  const apiEndPoint = dataType === "name" ? "/api/names/" : "/api/description/";
+  const apiEndPoint =
+    dataType === "names" ? "/api/names/" : "/api/description/";
 
   //SHARING
 
-  const apiBaseLink = dataType === "name" ? `/api/names` : `/api/description`;
+  const apiBaseLink = dataType === "names" ? `/api/names` : `/api/description`;
 
   const linkToShare =
     dataType === "name"
@@ -308,7 +308,6 @@ export default function NameListingAsSections({
                 userIsTheCreator={userIsTheCreator}
                 signedInUsersId={signedInUsersId}
                 currentTargetedId={currentTargetedId}
-                contentType="name"
                 content={content}
                 apiIdeaSubmission="/api/_______/"
                 apiaddUserToIdea="/api/_____"

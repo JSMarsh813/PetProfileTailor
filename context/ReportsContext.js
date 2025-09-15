@@ -51,9 +51,15 @@ export function ReportsProvider({ children, initialReports = {} }) {
     map.set(id.toString(), status);
   };
 
+  const deleteReport = (type, id) => {
+    const map = reportsRef.current[type];
+    if (!map) return;
+    map.delete(id.toString());
+  };
+
   return (
     <ReportsContext.Provider
-      value={{ reportsRef, hasReported, getStatus, addReport }}
+      value={{ reportsRef, hasReported, getStatus, addReport, deleteReport }}
     >
       {children}
     </ReportsContext.Provider>

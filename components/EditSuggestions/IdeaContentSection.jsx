@@ -11,12 +11,11 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 
-export default function FlaggingContentSection({
+export default function IdeaContentSection({
   userIsTheCreator,
   signedInUsersId,
   currentTargetedId,
   content,
-  contentType,
   apiIdeaSubmission,
   apiaddUserToIdea,
   //STATE FOR FLAG COUNT AND COLOR AND FORM
@@ -40,35 +39,21 @@ export default function FlaggingContentSection({
     ideaFormToggled,
   );
 
-  let createCopyOfContentBasedOnContentType = function (contentType, content) {
-    if (contentType === "description") {
+  let createCopyOfContentBasedOnContentType = function (dataType, content) {
+    if (dataType === "descriptions") {
       let copyOfContent = {
         content: content.description,
         notes: content.notes,
         relatednames: content.relatednames,
       };
       return copyOfContent;
-    } else if (contentType === "name") {
+    } else if (dataType === "names") {
       let copyOfContent = {
         name: content.name,
         description: content.description,
       };
       return copyOfContent;
-    } else if (contentType === "comment") {
-      let copyOfContent = {
-        image: content.image,
-        description: content.description,
-        parentCommentId: content.parentcommentid,
-      };
-      return copyOfContent;
-    } else if (contentType === "post") {
-      let copyOfContent = {
-        image: content.image,
-        alttext: content.alttext,
-        title: content.description,
-      };
-      return copyOfContent;
-    } else if (contentType === "user") {
+    } else if (dataType === "users") {
       let copyOfContent = {
         name: content.name,
         profilename: content.profilename,
@@ -81,7 +66,7 @@ export default function FlaggingContentSection({
   };
 
   let copyOfContentForReport = createCopyOfContentBasedOnContentType(
-    contentType,
+    dataType,
     content,
   );
 
@@ -118,7 +103,7 @@ export default function FlaggingContentSection({
           >
             <DialogPanel className=" bg-secondary p-12 bg-opacity-80 h-fit">
               <IdeaForm
-                contentType={contentType}
+                dataType={dataType}
                 contentInfo={content}
                 copyOfContentForReport={copyOfContentForReport}
                 IdeaByUser={signedInUsersId}

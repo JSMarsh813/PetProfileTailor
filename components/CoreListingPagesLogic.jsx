@@ -140,8 +140,8 @@ export default function CoreListingPageLogic({ dataType, usersLikedContent }) {
         <PageTitleWithImages
           title="Fetch"
           title2={
-            (dataType === "name" && "Names") ||
-            (dataType == "description" && "Descriptions")
+            (dataType === "names" && "Names") ||
+            (dataType == "descriptions" && "Descriptions")
           }
         />
       </section>

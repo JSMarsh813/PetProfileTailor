@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 
 export default function AddNameTag({ isAdmin }) {
   const { data: session } = useSession();
-  const { categoriesWithTags, tagList } = useCategoriesForDataType("name");
+  const { categoriesWithTags, tagList } = useCategoriesForDataType("names");
   const [newNameTag, setNewNameTag] = useState("");
   const [categoriesChosen, setCategoriesChosen] = useState();
 

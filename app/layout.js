@@ -65,7 +65,7 @@ export default async function RootLayout({ children }) {
           {
             reportedby: userId,
             status: { $nin: ["dismissed", "deleted", "resolved"] },
-            contenttype: "name",
+            contenttype: "names",
           },
           { contentid: 1, status: 1, _id: 1 },
         ),
@@ -75,7 +75,7 @@ export default async function RootLayout({ children }) {
           {
             reportedby: userId,
             status: { $nin: ["dismissed", "deleted", "resolved"] },
-            contenttype: "description",
+            contenttype: "descriptions",
           },
           { contentid: 1, status: 1, _id: 0 },
         ),

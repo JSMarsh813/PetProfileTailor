@@ -30,7 +30,7 @@ export default async function FetchNames() {
 
   return (
     <CoreListingPageLogic
-      dataType="name"
+      dataType="names"
       sessionFromServer={session}
       usersLikedContent={usersLikedContent}
     />

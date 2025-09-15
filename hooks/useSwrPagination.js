@@ -27,11 +27,11 @@ export function useSwrPagination({
     if (index === undefined) return null; // stop fetching
     const page = index + 1; // SWR index starts at 0, but our API pages start at 1
     let url = "";
-    if (dataType === "name") {
+    if (dataType === "names") {
       url = `/api/names/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
-    } else if (dataType === "description") {
+    } else if (dataType === "descriptions") {
       url = `/api/description/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
-    } else if (dataType === "individualName") {
+    } else if (dataType === "individualNames") {
       url = `/api/names/findByName/${contentIdentifier}`;
     }
 

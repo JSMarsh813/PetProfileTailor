@@ -9,19 +9,20 @@ import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
 import DeleteContentNotification from "@components/DeletingData/DeleteContentNotification";
+import { useReports } from "@/context/ReportsContext";
 
 function EditReport({
   flaggedByUser,
   contentInfo,
   contentId,
-  setFlagFormIsToggled,
-  setFlagIconClickedByNewUser,
-  setUserHasAlreadyReportedThis,
   onClose,
+  dataType,
 }) {
   // api to grab content by contentId
 
   // pages\api\flag\getSpecificReport\route.js
+
+  const { deleteReport } = useReports();
 
   const [reportcategories, setReportcategories] = useState([]);
   const [comments, setComments] = useState([]);
@@ -66,6 +67,8 @@ function EditReport({
         );
   };
 
+  // ################ DELETION #################
+
   const handleDeletion = async (e) => {
     e.preventDefault();
 
@@ -74,6 +77,8 @@ function EditReport({
         data: { reportid: reportId, userid: flaggedByUser },
       });
       console.log("response", res.data);
+
+      deleteReport(dataType, contentId);
 
       if (res.data.report) {
         setReportcategories(res.data.report.reportcategories || []);
@@ -91,7 +96,8 @@ function EditReport({
     console.log("deleted");
   };
 
-  const handleSubmitReport = async (e) => {
+  // ################ EDIT #################
+  const handleSubmitEdit = async (e) => {
     e.preventDefault();
 
     if (reportcategories.length === 0) {
@@ -148,7 +154,6 @@ function EditReport({
   };
 
   function cancelFlagFormAndRevertFlagState() {
-    setFlagIconClickedByNewUser(false);
     onClose?.(); // <-- close the dialog
   }
 
@@ -161,10 +166,7 @@ function EditReport({
         </div>
       ) : (
         <>
-          <form onSubmit={handleSubmitReport}>
-            <span className="bg-white text-black">
-              reportcategories: {reportcategories}
-            </span>
+          <form onSubmit={handleSubmitEdit}>
             <div className="flex items-center justify-end py-2   bg-secondary ">
               <ClosingXButton
                 onClick={cancelFlagFormAndRevertFlagState}

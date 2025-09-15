@@ -4,11 +4,11 @@ export function useCategoriesForDataType(dataType) {
   const { nameCateg, descrCateg, nameTagList, descriptionTagList } =
     useCategAndTags();
 
-  if (dataType === "name") {
+  if (dataType === "names") {
     return { categoriesWithTags: nameCateg, tagList: nameTagList };
   }
 
-  if (dataType === "description") {
+  if (dataType === "descriptions") {
     return { categoriesWithTags: descrCateg, tagList: descriptionTagList };
   }
 

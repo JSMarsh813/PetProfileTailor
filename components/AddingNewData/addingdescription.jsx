@@ -12,7 +12,7 @@ import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 function NewDescriptionWithTagsData() {
   const { data: session } = useSession();
   const { categoriesWithTags, tagList } =
-    useCategoriesForDataType("description");
+    useCategoriesForDataType("descriptions");
 
   const [newDescription, setNewDescription] = useState("");
   const [tags, setTags] = useState([]);

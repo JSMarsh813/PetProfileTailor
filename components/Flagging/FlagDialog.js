@@ -1,9 +1,10 @@
 import { Dialog, DialogPanel } from "@headlessui/react";
-import FormFlagReport from "@components/Flagging/FormFlagReport";
+import AddReport from "@/components/Flagging/AddReport";
 import { useReports } from "@context/ReportsContext";
 import EditReport from "@components/Flagging/EditReport";
 
 export default function FlagDialog({
+  dataType,
   open,
   target,
   onClose,
@@ -12,8 +13,8 @@ export default function FlagDialog({
 }) {
   if (!open || !target) return null;
   const { getStatus } = useReports();
-  const reportStatus = getStatus(contentId.toString());
-  console.log("reportStatus", reportStatus);
+  const reportStatus = getStatus(dataType, contentId.toString());
+
   return (
     <Dialog
       open={open}
@@ -31,32 +32,21 @@ export default function FlagDialog({
           onClick={(e) => e.stopPropagation()}
         >
           {reportStatus === null && (
-            <FormFlagReport
+            <AddReport
+              dataType={dataType}
               contentInfo={target}
-              copyOfContentForReport={target} // adjust if needed
+              copyOfContentForReport={target}
               apiflagReportSubmission="/api/flag/flagreportsubmission/"
-              apiaddUserToFlaggedByArray="/api/flag/addToNamesFlaggedByArray/"
               flaggedByUser={signedInUsersId}
-              flagFormIsToggled={true} // form is visible when dialog opens
-              setFlagFormIsToggled={() => setFlagFormIsToggled()} // optional callback if needed
-              setFlagIconClickedByNewUser={() => {}} // optional
-              setUserHasAlreadyReportedThis={() => {}} // optional
-              contentType="name"
               onClose={onClose}
             />
           )}
-
           {reportStatus === "pending" && (
             <EditReport
               contentInfo={target}
               contentId={contentId}
               flaggedByUser={signedInUsersId}
               apiflagReportSubmission="/api/flag/flagreportsubmission/"
-              flagFormIsToggled={true} // form is visible when dialog opens
-              setFlagFormIsToggled={() => {}} // optional callback if needed
-              setFlagIconClickedByNewUser={() => {}} // optional
-              setUserHasAlreadyReportedThis={() => {}} // optional
-              contentType="name"
               onClose={onClose}
             />
           )}
