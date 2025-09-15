@@ -20,6 +20,11 @@ import CategTagsWrapper from "@/wrappers/CategTagsWrapper";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import { Suspense } from "react";
 import LoadingSkeleton from "@/components/LoadingScreen";
+import ReportsWrapper from "@/wrappers/ReportsWrapper";
+import { leanWithStrings } from "@/utils/mongoDataCleanup";
+
+import FlagReport from "@models/FlagReport";
+import mongoose from "mongoose";
 
 export const metadata = {
   title:
@@ -46,6 +51,43 @@ export default async function RootLayout({ children }) {
   const nameCategoryJSON = JSON.parse(JSON.stringify(nameCategories));
   const descCategoryJSON = JSON.parse(JSON.stringify(descCategories));
 
+  let nameReports = [];
+  let descriptionReports = [];
+  // ############## Reports ################
+  if (session?.user) {
+    const userId = session.user.id;
+
+    // Fetch both reports in parallel, so its faster
+    // ensures both are fetched before rendering the report wrapper
+    [nameReports, descriptionReports] = await Promise.all([
+      leanWithStrings(
+        FlagReport.find(
+          {
+            reportedby: userId,
+            status: { $nin: ["dismissed", "deleted", "resolved"] },
+            contenttype: "name",
+          },
+          { contentid: 1, status: 1, _id: 0 },
+        ),
+      ),
+      leanWithStrings(
+        FlagReport.find(
+          {
+            reportedby: userId,
+            status: { $nin: ["dismissed", "deleted", "resolved"] },
+            contenttype: "description",
+          },
+          { contentid: 1, status: 1, _id: 0 },
+        ),
+      ),
+    ]);
+  }
+
+  const initialReports = {
+    names: nameReports,
+    descriptions: descriptionReports,
+  };
+
   return (
     <html
       lang="en"
@@ -57,66 +99,69 @@ export default async function RootLayout({ children }) {
             descrCateg={descCategoryJSON}
             nameCateg={nameCategoryJSON}
           >
-            <NavLayoutwithSettingsMenu />
-            <Suspense fallback={<LoadingSkeleton />}>
-              <main className=" mx-auto max-w-7xl ">{children}</main>
-            </Suspense>
-            <Analytics />
-            <ToastProvider />
+            <ReportsWrapper initialReports={initialReports}>
+              <NavLayoutwithSettingsMenu />
+              <Suspense fallback={<LoadingSkeleton />}>
+                <main className="flex-1 mx-auto max-w-7xl ">{children}</main>
+                {/* main takes up the remaining flex space, so footer stays at the bottom */}
+              </Suspense>
+              <Analytics />
+              <ToastProvider />
 
-            <footer className="text-white py-4 px-4 bg-secondary border-t-2 border-violet-400 flex">
-              <div className="flex-1">
-                <h6> Credits: </h6>
-                <a
-                  className="text-xs block"
-                  href="https://thenounproject.com/icon/bat-72023/"
-                >
-                  <span>
-                    {" "}
-                    Bat icon by Megan Mitchell, from thenounproject.com.
-                  </span>
-                </a>
+              <footer className="text-white py-4 px-4 bg-secondary border-t-2 border-violet-400 flex">
+                <div className="flex-1">
+                  <h6> Credits: </h6>
+                  <a
+                    className="text-xs block"
+                    href="https://thenounproject.com/icon/bat-72023/"
+                  >
+                    <span>
+                      {" "}
+                      Bat icon by Megan Mitchell, from thenounproject.com.
+                    </span>
+                  </a>
 
-                <a
-                  className="text-xs block"
-                  href="https://www.freepik.com/author/freepik/icons/kawaii-flat_45#from_element=resource_detail"
-                >
-                  <span className="text-xs inline-block">
-                    Default user icons created by freepik, Kawaii Flat family
-                  </span>
-                </a>
-              </div>
+                  <a
+                    className="text-xs block"
+                    href="https://www.freepik.com/author/freepik/icons/kawaii-flat_45#from_element=resource_detail"
+                  >
+                    <span className="text-xs inline-block">
+                      Default user icons created by freepik, Kawaii Flat family
+                    </span>
+                  </a>
+                </div>
 
-              <div className="flex-end">
-                <h4> Contact: </h4>
+                <div className="flex-end">
+                  <h4> Contact: </h4>
 
-                <span className="block">
-                  <FontAwesomeIcon
-                    icon={faEnvelope}
-                    className="mr-2"
-                  />
-
-                  <button type="button">
-                    <a
-                      href="mailto:petprofiletailor@gmail.com"
-                      className="block w-full h-full"
-                    >
-                      Email
-                    </a>
-                  </button>
-                </span>
-
-                <span className="block">
-                  <a href="https://twitter.com/Janetthedev">
+                  <span className="block">
                     <FontAwesomeIcon
-                      icon={faMessage}
+                      icon={faEnvelope}
                       className="mr-2"
                     />
-                    Message On Twitter
-                  </a>
-                </span>
-              </div>
-            </footer>
+
+                    <button type="button">
+                      <a
+                        href="mailto:petprofiletailor@gmail.com"
+                        className="block w-full h-full"
+                      >
+                        Email
+                      </a>
+                    </button>
+                  </span>
+
+                  <span className="block">
+                    <a href="https://twitter.com/Janetthedev">
+                      <FontAwesomeIcon
+                        icon={faMessage}
+                        className="mr-2"
+                      />
+                      Message On Twitter
+                    </a>
+                  </span>
+                </div>
+              </footer>
+            </ReportsWrapper>
           </CategTagsWrapper>
         </SessionProviderWrapper>
       </body>

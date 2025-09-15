@@ -11,27 +11,39 @@ export function useReports() {
   return context;
 }
 
-export function ReportsProvider({ children, initialReports = [] }) {
-  console.log("initialReports", initialReports);
-  const reportsRef = useRef(
-    new Map(
-      initialReports.map((r) => [
-        r.contentid.toString(),
-        r.status ?? "pending",
-      ]),
+export function ReportsProvider({ children, initialReports = {} }) {
+  const names = initialReports.names || [];
+  const descriptions = initialReports.descriptions || [];
+  const users = initialReports.users || [];
+
+  // If the array is empty, .map() just returns another empty array. It won’t throw an error.
+
+  const reportsRef = useRef({
+    names: new Map(
+      names.map((r) => [r.contentid.toString(), r.status || "pending"]),
     ),
-  );
+    descriptions: new Map(
+      descriptions.map((r) => [r.contentid.toString(), r.status || "pending"]),
+    ),
+    users: new Map(
+      users.map((r) => [r.contentid.toString(), r.status || "pending"]),
+    ),
+  });
   //map for fast lookups based on userID
+
   console.log("reportsRef in context", reportsRef);
 
-  const hasReported = (id) => reportsRef.current.has(id.toString());
-  const getStatus = (id) => {
+  const hasReported = (type, id) => reportsRef.current[type].has(id.toString());
+
+  const getStatus = (type, id) => {
     const key = id.toString();
-    return reportsRef.current.has(key) ? reportsRef.current.get(key) : null;
+    return reportsRef.current[type].has(key)
+      ? reportsRef.current[type].get(key)
+      : null;
   };
 
-  const addReport = (id, status = "pending") =>
-    reportsRef.current.set(id, status);
+  const addReport = (type, id, status = "pending") =>
+    reportsRef.current[type].set(id.toString(), status);
 
   return (
     <ReportsContext.Provider
@@ -41,3 +53,15 @@ export function ReportsProvider({ children, initialReports = [] }) {
     </ReportsContext.Provider>
   );
 }
+
+//  reportsRef usage
+// const { reportsRef } = useReports();
+// console.log(reportsRef.current.names); // Map of name reports
+
+// hasReported and Add Report
+// if (!hasReported("names", contentId)) {
+//   addReport("names", contentId, "pending");
+// }
+
+//  status usage
+// const status = getStatus("users", userId);
