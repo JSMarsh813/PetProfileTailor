@@ -13,14 +13,10 @@ import CheckForMoreData from "@components/ReusableSmallComponents/buttons/CheckF
 import { useSwrPagination } from "@hooks/useSwrPagination";
 import startCooldown from "@utils/startCooldown";
 import GoToTopButton from "@components/ReusableSmallComponents/buttons/GoToTopButton";
-import { ReportsProvider } from "@context/ReportsContext";
+
 import { signIn, useSession } from "next-auth/react";
 
-export default function CoreListingPageLogic({
-  dataType,
-  usersLikedContent,
-  contentUserReported,
-}) {
+export default function CoreListingPageLogic({ dataType, usersLikedContent }) {
   const { data: session } = useSession();
   const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
   const [remainingSortCooldown, setRemainingSortCooldown] = useState(0);
@@ -44,8 +40,6 @@ export default function CoreListingPageLogic({
   const likedSetRef = useRef(new Set(usersLikedContent));
   const recentLikesRef = useRef({}); // { [nameId]: 1 | 0 | -1 }
   // tracks if the likes count has to be updated, important for if the user navigates backwards
-
-  console.log("contentUserReported", contentUserReported);
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [IsOpen, setIsOpen] = useState(false);
@@ -141,110 +135,108 @@ export default function CoreListingPageLogic({
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
 
   return (
-    <ReportsProvider initialReports={contentUserReported}>
-      <div>
-        <section className="sm:px-4  mx-auto">
-          <PageTitleWithImages
-            title="Fetch"
-            title2={
-              (dataType === "name" && "Names") ||
-              (dataType == "description" && "Descriptions")
+    <div>
+      <section className="sm:px-4  mx-auto">
+        <PageTitleWithImages
+          title="Fetch"
+          title2={
+            (dataType === "name" && "Names") ||
+            (dataType == "description" && "Descriptions")
+          }
+        />
+      </section>
+
+      <div className="flex  sm:px-2  mx-auto ">
+        <Drawer
+          open={IsOpen}
+          onClose={(event, reason) => {
+            if (reason === "backdropClick") {
+              // prevent closing when clicking on backdrop
+              return;
             }
+            toggleDrawer(false);
+          }}
+          anchor="left"
+        >
+          <FilteringSidebar
+            dataType={dataType}
+            handleFilterChange={handleFilterChange}
+            handleApplyFilters={handleApplyFilters}
+            filterTagsIds={filterTagsIds}
+            toggleDrawer={toggleDrawer}
+            isLoading={isLoading}
+            remainingFilterCooldown={remainingFilterCooldown}
+            filterCooldownRef={filterCooldownRef}
+            startCooldown={startCooldown}
           />
-        </section>
+        </Drawer>
+        {/*################# CONTENT DIV ################### */}
 
-        <div className="flex  sm:px-2  mx-auto ">
-          <Drawer
-            open={IsOpen}
-            onClose={(event, reason) => {
-              if (reason === "backdropClick") {
-                // prevent closing when clicking on backdrop
-                return;
-              }
-              toggleDrawer(false);
-            }}
-            anchor="left"
-          >
-            <FilteringSidebar
-              dataType={dataType}
-              handleFilterChange={handleFilterChange}
-              handleApplyFilters={handleApplyFilters}
-              filterTagsIds={filterTagsIds}
-              toggleDrawer={toggleDrawer}
-              isLoading={isLoading}
-              remainingFilterCooldown={remainingFilterCooldown}
-              filterCooldownRef={filterCooldownRef}
-              startCooldown={startCooldown}
-            />
-          </Drawer>
-          {/*################# CONTENT DIV ################### */}
+        <div className="grow bg-primary rounded-box place-items-center  ">
+          {/* Button that toggles the filter div */}
+          <GeneralButton
+            text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
+            onClick={() => setIsOpen(!IsOpen)}
+          />
 
-          <div className="grow bg-primary rounded-box place-items-center  ">
-            {/* Button that toggles the filter div */}
-            <GeneralButton
-              text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
-              onClick={() => setIsOpen(!IsOpen)}
-            />
+          <Pagination
+            itemsPerPage={itemsPerPage}
+            setItemsPerPageFunction={setItemsPerPageFunction}
+            setPageFunction={setPageFunction}
+            setSize={setSize}
+            size={size}
+            currentUiPage={currentUiPage}
+            setCurrentUiPage={setCurrentUiPage}
+            setSortingLogicFunction={setSortingLogicFunction}
+            totalPagesInDatabase={totalPagesInDatabase}
+            totalItems={totalItems}
+            amountOfDataLoaded={data?.length}
+            remainingSortCooldown={remainingSortCooldown}
+            sortingValue={sortingValue}
+            sortingProperty={sortingProperty}
+          />
 
-            <Pagination
-              itemsPerPage={itemsPerPage}
-              setItemsPerPageFunction={setItemsPerPageFunction}
-              setPageFunction={setPageFunction}
-              setSize={setSize}
-              size={size}
-              currentUiPage={currentUiPage}
-              setCurrentUiPage={setCurrentUiPage}
-              setSortingLogicFunction={setSortingLogicFunction}
-              totalPagesInDatabase={totalPagesInDatabase}
-              totalItems={totalItems}
-              amountOfDataLoaded={data?.length}
-              remainingSortCooldown={remainingSortCooldown}
-              sortingValue={sortingValue}
-              sortingProperty={sortingProperty}
-            />
+          <section className="w-full">
+            {isLoading && (
+              <div className="flex">
+                <span className="text-white text-3xl my-20 mx-auto">
+                  Fetching data ...
+                </span>
+              </div>
+            )}
 
-            <section className="w-full">
-              {isLoading && (
-                <div className="flex">
-                  <span className="text-white text-3xl my-20 mx-auto">
-                    Fetching data ...
-                  </span>
-                </div>
-              )}
+            <section className="whitespace-pre-line ">
+              {content?.length > 0 &&
+                content
+                  .slice(
+                    currentUiPage - 1 == 0
+                      ? 0
+                      : (currentUiPage - 1) * itemsPerPage,
+                    currentUiPage * itemsPerPage,
+                  )
+                  .map((singleContent) => {
+                    return (
+                      <NameListingAsSections
+                        dataType={dataType}
+                        singleContent={singleContent}
+                        key={singleContent._id}
+                        signedInUsersId={signedInUsersId}
+                        likedSetRef={likedSetRef}
+                        recentLikesRef={recentLikesRef}
+                        mutate={mutate}
+                      />
+                    );
+                  })}
 
-              <section className="whitespace-pre-line ">
-                {content?.length > 0 &&
-                  content
-                    .slice(
-                      currentUiPage - 1 == 0
-                        ? 0
-                        : (currentUiPage - 1) * itemsPerPage,
-                      currentUiPage * itemsPerPage,
-                    )
-                    .map((singleContent) => {
-                      return (
-                        <NameListingAsSections
-                          dataType={dataType}
-                          singleContent={singleContent}
-                          key={singleContent._id}
-                          signedInUsersId={signedInUsersId}
-                          likedSetRef={likedSetRef}
-                          recentLikesRef={recentLikesRef}
-                          mutate={mutate}
-                        />
-                      );
-                    })}
-
-                {/* <CheckForMoreData
+              {/* <CheckForMoreData
                 filteredListLastPage={filteredListLastPage} //deleted
                 setSize={setSize}
               /> */}
-              </section>
             </section>
-            <GoToTopButton top="280" />
-          </div>
+          </section>
+          <GoToTopButton top="280" />
         </div>
       </div>
-    </ReportsProvider>
+    </div>
   );
 }

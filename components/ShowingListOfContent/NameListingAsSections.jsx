@@ -219,6 +219,7 @@ export default function NameListingAsSections({
                             {({ active }) => (
                               <FlagButton
                                 content={singleContent}
+                                dataType={dataType}
                                 onClick={openFlag}
                                 userIsTheCreator={
                                   singleContent.createdby._id ===

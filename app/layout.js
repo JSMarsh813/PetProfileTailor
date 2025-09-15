@@ -17,7 +17,6 @@ import DescriptionCategory from "@/models/DescriptionCategory";
 import { SessionProviderWrapper } from "@/wrappers/SessionProviderWrapper";
 import NavLayoutwithSettingsMenu from "@/components/NavBar/NavLayoutwithSettingsMenu";
 import CategTagsWrapper from "@/wrappers/CategTagsWrapper";
-import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import { Suspense } from "react";
 import LoadingSkeleton from "@/components/LoadingScreen";
 import ReportsWrapper from "@/wrappers/ReportsWrapper";
@@ -55,10 +54,11 @@ export default async function RootLayout({ children }) {
   let descriptionReports = [];
   // ############## Reports ################
   if (session?.user) {
-    const userId = session.user.id;
+    const userId = mongoose.Types.ObjectId(session.user.id);
 
     // Fetch both reports in parallel, so its faster
     // ensures both are fetched before rendering the report wrapper
+
     [nameReports, descriptionReports] = await Promise.all([
       leanWithStrings(
         FlagReport.find(
@@ -67,7 +67,7 @@ export default async function RootLayout({ children }) {
             status: { $nin: ["dismissed", "deleted", "resolved"] },
             contenttype: "name",
           },
-          { contentid: 1, status: 1, _id: 0 },
+          { contentid: 1, status: 1, _id: 1 },
         ),
       ),
       leanWithStrings(
@@ -81,7 +81,13 @@ export default async function RootLayout({ children }) {
         ),
       ),
     ]);
+    const testReports = await FlagReport.find({}).limit(5);
+    console.log("first 5 reports:", testReports);
+
+    console.log("userId in layout", userId);
   }
+
+  console.log("name reports in layout", nameReports);
 
   const initialReports = {
     names: nameReports,

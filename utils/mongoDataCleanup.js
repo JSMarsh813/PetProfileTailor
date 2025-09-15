@@ -8,14 +8,13 @@ function deepTransform(obj) {
       // Skip unwanted fields
       if (key === "__v") continue;
 
-      // Convert ObjectId -> string
-      if (key === "_id" && value?.toString) {
+      // convert any ObjectId to string
+      if (value?._bsontype === "ObjectID") {
         newObj[key] = value.toString();
       } else {
         newObj[key] = deepTransform(value);
       }
     }
-
     return newObj;
   }
   return obj;

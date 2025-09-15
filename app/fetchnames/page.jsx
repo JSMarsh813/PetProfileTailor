@@ -14,8 +14,6 @@ export default async function FetchNames() {
 
   let usersLikedContent = [];
 
-  let contentUserReported = [];
-
   let contentUserSuggestedEdits = [];
 
   const session = await getServerSession(serverAuthOptions);
@@ -28,24 +26,6 @@ export default async function FetchNames() {
     usersLikedContent = await leanWithStrings(
       NameLikes.find({ userId }).select("nameId -_id"),
     );
-
-    // ############## Reports ################
-
-    const reports = await leanWithStrings(
-      FlagReport.find(
-        {
-          reportedby: userId,
-          status: { $nin: ["dismissed", "deleted", "resolved"] }, // exclude these
-          contenttype: "name", // only get reports for descriptions
-        },
-        { contentid: 1, status: 1, _id: 0 },
-      ),
-    );
-    console.log("reports from DB:", reports);
-
-    contentUserReported = reports.map((r) => ({
-      status: r.status ?? null,
-    }));
   }
 
   return (
@@ -53,7 +33,6 @@ export default async function FetchNames() {
       dataType="name"
       sessionFromServer={session}
       usersLikedContent={usersLikedContent}
-      contentUserReported={contentUserReported}
     />
   );
 }

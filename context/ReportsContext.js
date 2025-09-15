@@ -33,17 +33,23 @@ export function ReportsProvider({ children, initialReports = {} }) {
 
   console.log("reportsRef in context", reportsRef);
 
-  const hasReported = (type, id) => reportsRef.current[type].has(id.toString());
-
-  const getStatus = (type, id) => {
-    const key = id.toString();
-    return reportsRef.current[type].has(key)
-      ? reportsRef.current[type].get(key)
-      : null;
+  const hasReported = (type, id) => {
+    const map = reportsRef.current[type];
+    if (!map) return false; // type doesn’t exist
+    return map.has(id.toString());
   };
 
-  const addReport = (type, id, status = "pending") =>
-    reportsRef.current[type].set(id.toString(), status);
+  const getStatus = (type, id) => {
+    const map = reportsRef.current[type];
+    if (!map) return null;
+    return map.get(id.toString()) ?? null;
+  };
+
+  const addReport = (type, id, status = "pending") => {
+    const map = reportsRef.current[type];
+    if (!map) return;
+    map.set(id.toString(), status);
+  };
 
   return (
     <ReportsContext.Provider

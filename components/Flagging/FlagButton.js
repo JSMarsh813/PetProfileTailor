@@ -8,9 +8,12 @@ import { useReports } from "@context/ReportsContext";
 // Ah! That warning is coming from Headless UI’s MenuItem / Disclosure / Transition components, which try to attach a ref to whatever you pass inside. Regular function components (like your FlagButton) cannot receive refs unless you wrap them in React.forwardRef.
 
 const FlagButton = React.forwardRef(
-  ({ content, onClick, userIsTheCreator }, ref) => {
+  ({ content, onClick, dataType, userIsTheCreator }, ref) => {
     const { reportsRef, hasReported, getStatus } = useReports();
-    const userHasAlreadyReported = hasReported(content._id.toString());
+    const userHasAlreadyReported = hasReported(
+      dataType,
+      content._id.toString(),
+    );
     const flaggedColor = userHasAlreadyReported ? "red" : "white";
 
     return (
