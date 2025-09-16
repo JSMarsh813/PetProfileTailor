@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import DeleteButton from "@components/DeletingData/DeleteButton";
@@ -9,10 +9,7 @@ import EditButton from "@components/ReusableSmallComponents/buttons/EditButton";
 import EditName from "../EditingData/EditName";
 import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
-import { Dialog, DialogPanel } from "@headlessui/react";
-// import SeeCommentsButton from "../ReusableSmallComponents/buttons/SeeCommentsButton";
-// import CommentListing from "../ShowingListOfContent/CommentListing";
-// import AddComment from "../AddingNewData/AddComment";
+
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import IdeaContentSection from "../EditSuggestions/IdeaContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
@@ -27,7 +24,6 @@ import FlagButton from "@components/Flagging/FlagButton";
 import { useFlagging } from "@hooks/useFlagging";
 import { useEditHandler } from "@hooks/useEditHandler";
 import { useReports } from "@context/ReportsContext";
-import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 import { useSession } from "next-auth/react";
 
 export default function NameListingAsSections({
@@ -51,16 +47,12 @@ export default function NameListingAsSections({
     confirmDelete,
   } = useDeleteConfirmation();
 
-  const { tagList } = useCategoriesForDataType(dataType);
-
   const { getStatus } = useReports();
 
   const reportStatus = getStatus(dataType, singleContent._id.toString());
-  console.log("reportStatus", reportStatus);
 
   const reportPendingOrNone =
     reportStatus === "pending" || reportStatus === null;
-  console.log("reportPendingOrNone", reportPendingOrNone);
 
   const apiEndPoint =
     dataType === "names" ? "/api/names/" : "/api/description/";
@@ -97,43 +89,15 @@ export default function NameListingAsSections({
 
   const userIsTheCreator = singleContent.createdby._id === signedInUsersId;
 
-  let [currentTargetedId, setCurrentTargetedNameId] = useState(
-    singleContent._id,
-  );
-
-  // ##### STATE FOR EDITS ####
-  const [showEditPage, setShowEditPage] = useState(false);
-
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
-  // ############# FLAG ###################
-  //STATE FOR FLAG COUNT AND COLOR AND FORM
-
-  const [userAlreadySentIdea, setUserAlreadySentIdea] = useState(
-    singleContent.flaggedby != null
-      ? singleContent.flaggedby.includes(signedInUsersId)
-      : false,
-  );
-  // TODO: changed userAlreadySentIdea logic to reflect actual logic
-
   const [ideaFormToggled, setIdeaFormToggled] = useState(false);
-
-  // ### for the edit notification button
-  function onupdateEditState() {
-    setShowEditPage(!showEditPage);
-  }
 
   //for shares
   function onClickShowShares() {
     setShareSectionShowing(!shareSectionShowing);
   }
-
-  console.log(
-    "AddHashToArrayString(singleContent)",
-    AddHashToArrayString(singleContent),
-  );
-  console.log("singleContent.tags", singleContent.tags);
 
   const href = `${
     process.env.NEXT_PUBLIC_BASE_FETCH_URL
@@ -266,7 +230,6 @@ export default function NameListingAsSections({
                 open={showEditDialog}
                 onClose={closeEdit}
                 name={editTarget}
-                tagList={tagList}
                 onSave={confirmEdit}
                 signedInUsersId={signedInUsersId}
               />
@@ -279,9 +242,7 @@ export default function NameListingAsSections({
 
           {/* ###### DESCRIPTION SECTION #### */}
 
-          <p className="whitespace-pre-line">
-            {singleContent.description && singleContent.description}
-          </p>
+          <p className="whitespace-pre-line">{singleContent.notes}</p>
 
           {/* ###### TAGS SECTION #### */}
           <span className="my-4"> {AddHashToArrayString(singleContent)} </span>
@@ -294,7 +255,6 @@ export default function NameListingAsSections({
               data={singleContent}
               HeartIconStyling="text-xl ml-2 my-auto mx-auto"
               HeartIconTextStyling="mx-2"
-              currentTargetedId={currentTargetedId}
               signedInUsersId={signedInUsersId}
               apiBaseLink={apiBaseLink}
             />
@@ -313,12 +273,9 @@ export default function NameListingAsSections({
               <IdeaContentSection
                 userIsTheCreator={userIsTheCreator}
                 signedInUsersId={signedInUsersId}
-                currentTargetedId={currentTargetedId}
                 content={singleContent}
                 apiIdeaSubmission="/api/_______/"
                 apiaddUserToIdea="/api/_____"
-                userAlreadySentIdea={userAlreadySentIdea}
-                setUserAlreadySentIdea={setUserAlreadySentIdea}
                 ideaFormToggled={ideaFormToggled}
                 setIdeaFormToggled={setIdeaFormToggled}
                 dataType={dataType}

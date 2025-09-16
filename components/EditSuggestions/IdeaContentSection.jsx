@@ -14,13 +14,10 @@ import {
 export default function IdeaContentSection({
   userIsTheCreator,
   signedInUsersId,
-  currentTargetedId,
   content,
   apiIdeaSubmission,
   apiaddUserToIdea,
   //STATE FOR FLAG COUNT AND COLOR AND FORM
-  userAlreadySentIdea,
-  setUserAlreadySentIdea,
   ideaFormToggled,
   setIdeaFormToggled,
   dataType,
@@ -29,15 +26,7 @@ export default function IdeaContentSection({
   // the only user that can toggle the report flag because they are
   // 1. not the content's creator
   // 2. haven't successfully submitted a report
-  const [ideaIconClickedByNewUser, setIdeaIconClickedByNewUser] =
-    useState(userAlreadySentIdea);
-
-  console.log(
-    "userAlreadySentIdea",
-    userAlreadySentIdea,
-    "ideaFormToggled",
-    ideaFormToggled,
-  );
+  const [ideaIconClickedByNewUser, setIdeaIconClickedByNewUser] = useState();
 
   let createCopyOfContentBasedOnContentType = function (dataType, content) {
     if (dataType === "descriptions") {
@@ -76,48 +65,46 @@ export default function IdeaContentSection({
         <IdeaButton
           data={content}
           FlagIconStyling="text-xl"
-          currentTargetedId={currentTargetedId}
           signedInUsersId={signedInUsersId}
           ideaFormToggled={ideaFormToggled}
           setIdeaFormToggled={setIdeaFormToggled}
           ideaIconClickedByNewUser={ideaIconClickedByNewUser}
           setIdeaIconClickedByNewUser={setIdeaIconClickedByNewUser}
-          userAlreadySentIdea={userAlreadySentIdea}
           userIsTheCreator={userIsTheCreator}
         />
       </div>
 
-      {!userIsTheCreator && !userAlreadySentIdea && ideaFormToggled && (
-        <Dialog
-          open={ideaFormToggled}
-          onClose={() => {}}
-          // this way the form won't close when the user clicks on the backdrop
-          className="relative z-50 "
-          tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
-        >
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/50 overflow-y-auto"
-            aria-hidden="true"
+      {!userIsTheCreator &&
+        ideaFormToggled && ( //!userAlreadySentIdea
+          <Dialog
+            open={ideaFormToggled}
+            onClose={() => {}}
+            // this way the form won't close when the user clicks on the backdrop
+            className="relative z-50 "
             tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
           >
-            <DialogPanel className=" bg-secondary p-12 bg-opacity-80 h-fit">
-              <IdeaForm
-                dataType={dataType}
-                contentInfo={content}
-                copyOfContentForReport={copyOfContentForReport}
-                IdeaByUser={signedInUsersId}
-                setIdeaFormToggled={setIdeaFormToggled}
-                apiIdeaSubmission={apiIdeaSubmission}
-                setIdeaIconClickedByNewUser={setIdeaIconClickedByNewUser}
-                apiaddUserToIdea={apiaddUserToIdea}
-                ideaFormToggled={ideaFormToggled}
-                setUserAlreadySentIdea={setUserAlreadySentIdea}
-              />
-            </DialogPanel>
-          </div>
-        </Dialog>
-      )}
+            {/* Backdrop */}
+            <div
+              className="fixed inset-0 bg-black/50 overflow-y-auto"
+              aria-hidden="true"
+              tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
+            >
+              <DialogPanel className=" bg-secondary p-12 bg-opacity-80 h-fit">
+                <IdeaForm
+                  dataType={dataType}
+                  contentInfo={content}
+                  copyOfContentForReport={copyOfContentForReport}
+                  IdeaByUser={signedInUsersId}
+                  setIdeaFormToggled={setIdeaFormToggled}
+                  apiIdeaSubmission={apiIdeaSubmission}
+                  setIdeaIconClickedByNewUser={setIdeaIconClickedByNewUser}
+                  apiaddUserToIdea={apiaddUserToIdea}
+                  ideaFormToggled={ideaFormToggled}
+                />
+              </DialogPanel>
+            </div>
+          </Dialog>
+        )}
     </>
   );
 }

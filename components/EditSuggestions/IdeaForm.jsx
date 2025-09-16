@@ -22,7 +22,6 @@ export default function AddIdea({
   setIdeaFormToggled,
   ideaFormToggled,
   setIdeaIconClickedByNewUser,
-  setUserAlreadySentIdea,
 }) {
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
@@ -97,7 +96,7 @@ export default function AddIdea({
       })
       .then(() => callApiToaddUserToNamesArray(userAndNameId))
       .then(() => setIdeaFormToggled(false))
-      .then(() => setUserAlreadySentIdea(true))
+      // .then(() => setUserAlreadySentIdea(true))
 
       .catch((error) => {
         console.log("this is an error", error);
