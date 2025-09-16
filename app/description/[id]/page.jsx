@@ -34,7 +34,6 @@ export default async function Postid({ params }) {
 
   return (
     <div className="mx-2">
-      <span> it works!</span>
       <NameListingAsSections
         dataType={dataType}
         singleContent={singleContent}

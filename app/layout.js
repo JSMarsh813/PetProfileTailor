@@ -141,7 +141,7 @@ export default async function RootLayout({ children }) {
               <ReportsWrapper initialReports={initialReports}>
                 <NavLayoutwithSettingsMenu />
                 <Suspense fallback={<LoadingSkeleton />}>
-                  <main className="flex-1 border-4 border-yellow-300  px-4 sm:px-6 lg:px-8">
+                  <main className="flex-1  px-4 sm:px-6 lg:px-8">
                     {/* width behavior is controlled by globals.css since tailwind wasn't working correctly despite significant debugging, w-max-7xl wouldn't work with any other width value (w-full, w-90vw) ect*/}
                     {children}
                   </main>

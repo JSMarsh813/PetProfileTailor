@@ -49,7 +49,7 @@ export default function NameListingAsSections({
 
   const { getStatus } = useReports();
 
-  const [content, setContent] = useState(singleContent);
+  const [content, setLocalData] = useState(singleContent);
   // for names, we use content instead of singleContent for properties that can be edited (name, notes)
   // since pages for individual names don't have SWR
 

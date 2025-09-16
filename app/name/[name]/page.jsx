@@ -9,6 +9,7 @@ import { getServerSession } from "next-auth";
 import { serverAuthOptions } from "@/lib/auth";
 import SingleListing from "@components/ShowingListOfContent/SingleListing";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
+import NameListingAsSections from "@/components/ShowingListOfContent/NameListingAsSections";
 
 export default async function Postid({ params }) {
   const { name } = params;
@@ -36,31 +37,13 @@ export default async function Postid({ params }) {
     notFound(); // tells Next.js to show the 404 page
   }
 
-  let userLiked = [];
-
-  if (session?.user) {
-    const likedDoc =
-      (await leanWithStrings(
-        NameLikes.findOne({
-          userId: userId,
-          nameId: nameData._id,
-        }),
-      )) || null;
-
-    if (likedDoc) {
-      userLiked = [likedDoc.nameId.toString()];
-    }
-  }
-
   return (
-    <div className="mx-2 mt-6  bg-red-300">
+    <div className="mx-2 mt-6">
       {nameData && (
-        <SingleListing
+        <NameListingAsSections
           singleContent={nameData}
-          key={nameData._id}
           dataType="names"
-          signedInUsersId={session.user.id}
-          userLiked={userLiked}
+          mode="local"
         />
       )}
     </div>
