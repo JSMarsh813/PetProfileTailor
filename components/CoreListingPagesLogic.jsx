@@ -18,7 +18,9 @@ export default function CoreListingPageLogic({
   dataType,
   swrForThisUserID = "",
   showHeader = true,
+  restrictSwrToLikedNames = false,
 }) {
+  console.log("restrictSwrToLikedNames", restrictSwrToLikedNames);
   const { data: session } = useSession();
   const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
   const [remainingSortCooldown, setRemainingSortCooldown] = useState(0);
@@ -75,6 +77,7 @@ export default function CoreListingPageLogic({
     sortingProperty: sortingProperty,
     sortingValue: sortingValue,
     profileUserId,
+    restrictSwrToLikedNames,
   });
 
   console.log("SWR", Array.isArray(data)); // true

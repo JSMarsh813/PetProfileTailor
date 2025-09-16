@@ -25,6 +25,10 @@ export function LikesProvider({ children, initialLikes = {} }) {
     ),
   });
 
+  const getLikedIds = (type) => {
+    return Array.from(likesRef.current[type]?.keys() || []);
+  };
+
   console.log("likesRef in context", likesRef);
 
   const hasLiked = (type, contentId) => {
@@ -61,7 +65,14 @@ export function LikesProvider({ children, initialLikes = {} }) {
 
   return (
     <LikesContext.Provider
-      value={{ likesRef, recentLikesRef, hasLiked, addLike, deleteLike }}
+      value={{
+        likesRef,
+        getLikedIds,
+        recentLikesRef,
+        hasLiked,
+        addLike,
+        deleteLike,
+      }}
     >
       {children}
     </LikesContext.Provider>

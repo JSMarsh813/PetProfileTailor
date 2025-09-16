@@ -132,8 +132,9 @@ export default function Dashboard({
             <div>
               <CoreListingPageLogic
                 dataType="names"
-                swrForThisUserID={swrForThisUserID}
+                // swrForThisUserID={swrForThisUserID}
                 showHeader={false}
+                restrictSwrToLikedNames={true}
               />
             </div>
           )}

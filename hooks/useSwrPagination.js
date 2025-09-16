@@ -1,8 +1,24 @@
 import useSWRInfinite from "swr/infinite";
+import { useLikes } from "@/context/LikesContext";
+useLikes;
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-const ITEMS_PER_FETCH = 100; // number of items per DB chunk
+const fetcher = (key) => {
+  let url, options;
+  if (Array.isArray(key)) {
+    [url, options] = key;
+  } else {
+    url = key;
+    options = {};
+  }
 
+  const hasBody = options?.body && Object.keys(options.body).length > 0;
+
+  return fetch(url, {
+    method: hasBody ? options?.method || "POST" : "GET",
+    headers: { "Content-Type": "application/json" },
+    body: hasBody ? JSON.stringify(options.body) : undefined,
+  }).then((res) => res.json());
+};
 /**
  * Hook for SWR pagination with DB chunking
  *
@@ -21,8 +37,21 @@ export function useSwrPagination({
   sortingValue,
   contentIdentifier,
   profileUserId,
+  restrictSwrToLikedNames,
 }) {
   // SWR key function
+
+  console.log(
+    "restrictSwrToLikedNames in swr pagination",
+    restrictSwrToLikedNames,
+  );
+  let likedNameIds = [];
+
+  if (restrictSwrToLikedNames) {
+    const { getLikedIds } = useLikes();
+    likedNameIds = getLikedIds(dataType);
+    console.log("likedNameIds in swr pagination", likedNameIds);
+  }
 
   const getKey = (index, previousPageData) => {
     if (previousPageData && !previousPageData.data?.length) return null; // no more data
@@ -36,10 +65,13 @@ export function useSwrPagination({
     } else if (dataType === "individualNames") {
       url = `/api/names/findByName/${contentIdentifier}`;
     }
+    // POST in case likedIds is big, the method is decided in the fetchers fetch function
+    const body = {};
+    if (tags?.length) body.tags = tags;
+    if (profileUserId) body.profileUserId = profileUserId;
+    if (likedNameIds?.length) body.likedIds = likedNameIds;
 
-    if (tags?.length) url += `&tags=${tags.join(",")}`;
-    if (profileUserId?.length) url += `&profileUserId=${profileUserId}`;
-    return url;
+    return [url, Object.keys(body).length ? { body } : {}];
   };
 
   const { data, error, size, isLoading, isValidating, setSize, mutate } =
