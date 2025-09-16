@@ -133,6 +133,7 @@ export default function Dashboard({
               <CoreListingPageLogic
                 dataType="names"
                 swrForThisUserID={swrForThisUserID}
+                showHeader={false}
               />
             </div>
           )}

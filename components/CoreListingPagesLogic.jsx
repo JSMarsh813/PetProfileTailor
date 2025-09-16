@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 export default function CoreListingPageLogic({
   dataType,
   swrForThisUserID = "",
+  showHeader = true,
 }) {
   const { data: session } = useSession();
   const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
@@ -136,15 +137,17 @@ export default function CoreListingPageLogic({
 
   return (
     <div>
-      <section className="sm:px-4  mx-auto">
-        <PageTitleWithImages
-          title="Fetch"
-          title2={
-            (dataType === "names" && "Names") ||
-            (dataType == "descriptions" && "Descriptions")
-          }
-        />
-      </section>
+      {showHeader && (
+        <section className="sm:px-4  mx-auto">
+          <PageTitleWithImages
+            title="Fetch"
+            title2={
+              (dataType === "names" && "Names") ||
+              (dataType == "descriptions" && "Descriptions")
+            }
+          />
+        </section>
+      )}
 
       <div className="flex  sm:px-2  mx-auto ">
         <Drawer
