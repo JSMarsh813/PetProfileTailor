@@ -1,5 +1,5 @@
 import React from "react";
-import DescriptionListingAsSections from "./DescriptionListingAsSections";
+// import DescriptionListingAsSections from "./DescriptionListingAsSections";
 import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 import { useSession } from "next-auth/react";
 
@@ -13,7 +13,7 @@ export default function DashboardChartForFavDescriptions({
 
   return (
     <div className="bg-secondary">
-      {likedDescriptions.map((description) => {
+      {/* {likedDescriptions.map((description) => {
         return (
           <DescriptionListingAsSections
             description={description}
@@ -23,7 +23,7 @@ export default function DashboardChartForFavDescriptions({
             className={className}
           ></DescriptionListingAsSections>
         );
-      })}
+      })} */}
     </div>
   );
 }
