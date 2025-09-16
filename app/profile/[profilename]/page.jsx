@@ -63,21 +63,9 @@ export default async function ProfilePage({ params }) {
       .populate("tags", "tag"),
   );
 
+  console.log("created descriptions", createdDescriptions);
+
   //TO CALCULATE USERS POINTS
-
-  //USERS FAVED NAMES //
-
-  const likedNames = await leanWithStrings(
-    Names.find({
-      likedby: userId,
-    }),
-  );
-
-  const likedDescriptions = await leanWithStrings(
-    Descriptions.find({
-      likedby: userId,
-    }),
-  );
 
   //### FOLLOWING LIST, followers is grabbed from userData
 
@@ -106,10 +94,7 @@ export default async function ProfilePage({ params }) {
   return (
     <Profile
       nameList={JSON.parse(JSON.stringify(nameList))}
-      usersLikedContent={usersLikedContent}
-      likedNames={JSON.parse(JSON.stringify(likedNames))}
       createdDescriptions={JSON.parse(JSON.stringify(createdDescriptions))}
-      likedDescriptions={JSON.parse(JSON.stringify(likedDescriptions))}
       usersFollowing={JSON.parse(JSON.stringify(usersFollowing))}
       userData={JSON.parse(JSON.stringify(userData))}
     />

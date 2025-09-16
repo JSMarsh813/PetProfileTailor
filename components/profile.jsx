@@ -17,18 +17,20 @@ import UsersFollowersList from "@components/ShowingListOfContent/UsersFollowersL
 import UsersFollowingList from "@components/ShowingListOfContent/UsersFollowingList";
 
 import { useSession } from "next-auth/react";
+import ProfilePagesLogic from "./ProfilePagesLogic";
 
-export default function profile({
+export default function Profile({
   userData,
   nameList,
-  likedNames,
+
   createdDescriptions,
-  likedDescriptions,
+
   usersFollowing,
 }) {
   console.log("userData in profile", userData);
   const { data: session } = useSession();
 
+  console.log("namelist", nameList);
   // store liked IDs in a ref so updates don't trigger full re-render
 
   let userName = "";
@@ -70,10 +72,6 @@ export default function profile({
     setShowFollowingList(!showFollowingList);
   }
 
-  function setNameEditedFunction() {
-    setNameEdited(!nameEdited);
-  }
-
   // for names
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
 
@@ -89,10 +87,6 @@ export default function profile({
   }, [deleteThisContentId]);
   return (
     <div>
-      <p className="text-subtleWhite bg-red-700 text-center my-2">
-        Profile pages do not currently have SWR, so you will need to refresh to
-        see the changes you make
-      </p>
       <div className="flex flex-col md:flex-row">
         {/* ############## BIO ############## */}
         <section className=" sm:w-96 text-secondary ">
@@ -185,9 +179,7 @@ export default function profile({
                 <section className="relative pb-6 bg-secondary mb-4">
                   <div className="container mx-auto px-2">
                     <PointSystemList
-                      namesLikes={likedNames.length}
                       namesAdds={nameList.length}
-                      descriptionsLikes={likedDescriptions.length}
                       descriptionsAdds={createdDescriptions.length}
                     />
 
@@ -211,7 +203,7 @@ export default function profile({
           {/* ########## NAMES ADDED  ################*/}
           <section className="my-4">
             <h2
-              className="w-full text-center font-semibold text-amber-300
+              className="w-full text-center font-semibold text-subtleWhite
                             text-xl
                              p-2 
                             "
@@ -221,29 +213,19 @@ export default function profile({
             <div
               className=" flex-1 grid grid-cols-1 gap-4 mr-2  
  w-full
- border-2 border-amber-300"
+ "
             >
               {!nameList.length ? (
-                <section className="border-2 border-amber-300">
+                <section className="">
                   <span> no names added yet! </span>
                 </section>
               ) : (
-                <section className="border-2 border-amber-300 w-full">
+                <section className=" w-full">
                   <section className="">
-                    {/* {nameList.map((name) => {
-                      return (
-                        <ContentListing
-                          name={name}
-                          key={name._id}
-                          signedInUsersId={signedInUsersId}
-                          dataType="names"
-                          setNameEditedFunction={setNameEditedFunction}
-                          setDeleteThisContentId={setDeleteThisContentId}
-                  
-                  
-                        />
-                      );
-                    })} */}
+                    <ProfilePagesLogic
+                      dataType="names"
+                      profileUserId={userData._id}
+                    />
                   </section>
                 </section>
               )}
@@ -253,7 +235,7 @@ export default function profile({
           {/* ############## DESCRIPTIONS ADDED ##############*/}
           <section className="my-2">
             <h2
-              className="w-full text-center font-semibold text-amber-300 
+              className="w-full text-center font-semibold text-subtleWhite
             text-xl
             bg-secondary p-2 
             "
@@ -261,25 +243,10 @@ export default function profile({
               Descriptions Added
             </h2>
 
-            {/* <div
-              className=" flex-1 grid grid-cols-1 gap-4 mr-2  
- w-full
- border-2 border-amber-300"
-            >
-              {!createdDescriptions.length ? (
-                <section className="border-2 border-amber-300">
-                  <span> No descriptions added yet! </span>
-                </section>
-              ) : (
-                <section className="border-2 border-amber-300">
-                  <DashboardChartForFavDescriptions
-                    likedDescriptions={createdDescriptions}
-                    dataType="descriptions"
-                    sessionFromServer={session}
-                  />
-                </section>
-              )}
-            </div> */}
+            <ProfilePagesLogic
+              dataType="descriptions"
+              profileUserId={userData._id}
+            />
 
             {showProfileEditPage && (
               <EditBioAndProfile

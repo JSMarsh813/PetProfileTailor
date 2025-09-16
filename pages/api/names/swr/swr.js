@@ -9,20 +9,21 @@ export default async function handler(req, res) {
     sortingvalue = -1,
     sortingproperty = "createdAt",
     tags,
+    profileUserId,
   } = req.query;
   //https://stackoverflow.com/questions/70751313/how-can-i-pass-a-variable-in-sort-funtcion-of-mongobd
   let sortLogic = {};
   sortLogic[sortingproperty] = parseInt(sortingvalue);
 
-  console.log(
-    "sortLogic",
-    sortLogic,
-    "sortingproperty",
-    sortingproperty,
-    "sortingvalue",
-    sortingvalue,
-  );
-  console.log("tags", tags);
+  // console.log(
+  //   "sortLogic",
+  //   sortLogic,
+  //   "sortingproperty",
+  //   sortingproperty,
+  //   "sortingvalue",
+  //   sortingvalue,
+  // );
+  // console.log("tags", tags);
   const limit = 50;
 
   await dbConnect.connect();
@@ -39,10 +40,17 @@ export default async function handler(req, res) {
         filter.tags = { $all: tagIds };
       }
 
+      // Filter by user ID if provided
+      if (profileUserId) {
+        // Ensure it’s a valid ObjectId
+        filter.createdby = new mongoose.Types.ObjectId(profileUserId);
+      }
+
       const totalDocs = await Names.countDocuments(filter);
       const totalPagesInDatabase = Math.ceil(totalDocs / parseInt(limit));
 
       const names = await Names.aggregate([
+        // $match is at the top of the aggregation, so it’s efficient. Aka Mongo filters before doing $lookup or pagination
         { $match: filter },
 
         // Pagination

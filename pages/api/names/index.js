@@ -26,7 +26,7 @@ export default async function handler(req, res) {
   }
 
   if (method === "PUT") {
-    const { description, name, tags, nameId } = req.body.nameSubmission;
+    const { notes, content, tags, nameId } = req.body.nameSubmission;
 
     const toUpdateName = await Names.findById(nameId);
 
@@ -37,24 +37,24 @@ export default async function handler(req, res) {
     try {
       // Only check if user is actually changing the name
       if (
-        name &&
-        name.toLowerCase() !== (await toUpdateName.content.toLowerCase())
+        content &&
+        content.toLowerCase() !== (await toUpdateName.content.toLowerCase())
       ) {
         const existingNameCheck = await Names.findOne({
-          content: { $regex: new RegExp(`^${name}$`, "i") },
+          content: { $regex: new RegExp(`^${content}$`, "i") },
         });
 
         if (existingNameCheck) {
           return res.status(409).json({
-            message: `Ruh Roh! The name ${name} already exists`,
+            message: `Ruh Roh! The name ${content} already exists`,
           });
         }
       }
-      if (description) {
-        toUpdateName.description = description;
+      if (notes) {
+        toUpdateName.notes = notes;
       }
-      if (name) {
-        toUpdateName.content = name;
+      if (content) {
+        toUpdateName.content = content;
       }
 
       if (tags) {
@@ -80,27 +80,27 @@ export default async function handler(req, res) {
   }
 
   if (method === "POST") {
-    const { name, description, tags, createdby } = req.body;
+    const { content, notes, tags, createdby } = req.body;
 
     let existingNameCheck = await Names.find({
-      name: { $regex: new RegExp(`^${name}$`, "i") },
+      content: { $regex: new RegExp(`^${content}$`, "i") },
     });
     // case-insensitive query
     // "mike" will get the name already exists error if it matches a "Mike", "MIKE", "mikE", etc.
     // he ^ and $ anchors make sure it only matches the full string (not substrings).
 
-    let checkForInvalidInput = regexInvalidInput(name);
+    let checkForInvalidInput = regexInvalidInput(content);
     console.log(checkForInvalidInput);
 
     if (existingNameCheck && existingNameCheck.length != 0) {
       res.status(409).json({
-        message: `Ruh Roh! The name ${name} already exists`,
+        message: `Ruh Roh! The name ${content} already exists`,
         existingName: existingNameCheck,
       });
       return;
     } else if (checkForInvalidInput != null) {
       res.status(400).json({
-        message: `Ruh Roh! The name ${name} has invalid character(s) ${checkForInvalidInput}`,
+        message: `Ruh Roh! The name ${content} has invalid character(s) ${checkForInvalidInput}`,
       });
       return;
     } else {

@@ -1,5 +1,6 @@
 import dbConnect from "@utils/db";
 import Description from "@/models/Description";
+import mongoose from "mongoose";
 
 export default async function handler(req, res) {
   const method = req.method;
@@ -8,6 +9,7 @@ export default async function handler(req, res) {
     sortingvalue = -1,
     sortingproperty = "createdAt",
     tags,
+    profileUserId,
   } = req.query;
   //https://stackoverflow.com/questions/70751313/how-can-i-pass-a-variable-in-sort-funtcion-of-mongobd
 
@@ -37,6 +39,12 @@ export default async function handler(req, res) {
           .split(",")
           .map((id) => new mongoose.Types.ObjectId(id));
         filter.tags = { $all: tagIds };
+      }
+
+      // Filter by user ID if provided
+      if (profileUserId) {
+        // Ensure it’s a valid ObjectId
+        filter.createdby = new mongoose.Types.ObjectId(profileUserId);
       }
 
       const totalDocs = await Description.countDocuments(filter);

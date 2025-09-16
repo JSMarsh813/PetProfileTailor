@@ -27,7 +27,8 @@ function NewNameWithTagsData() {
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
   const [nameCheckInvalidInput, setNameCheckInvalidInput] = useState(null);
   const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
-  const { data: session } = useSession;
+
+  const { data: session, status } = useSession();
 
   //regex will return null if none of the characters are invalid, so start with null to begin with
 
@@ -65,7 +66,7 @@ function NewNameWithTagsData() {
       content: newName,
       notes: description,
       tags: tagsToSubmit.map((tag) => tag.value),
-      createdby: session.user._id.toString(),
+      createdby: session.user.id.toString(),
     };
 
     axios
@@ -91,6 +92,7 @@ function NewNameWithTagsData() {
           );
         }
       });
+    if (status === "loading") return <p>Loading...</p>;
   }
 
   return (

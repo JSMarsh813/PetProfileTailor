@@ -20,8 +20,10 @@ export function useSwrPagination({
   sortingProperty,
   sortingValue,
   contentIdentifier,
+  profileUserId,
 }) {
   // SWR key function
+
   const getKey = (index, previousPageData) => {
     if (previousPageData && !previousPageData.data?.length) return null; // no more data
     if (index === undefined) return null; // stop fetching
@@ -36,6 +38,7 @@ export function useSwrPagination({
     }
 
     if (tags?.length) url += `&tags=${tags.join(",")}`;
+    if (profileUserId?.length) url += `&profileUserId=${profileUserId}`;
     return url;
   };
 

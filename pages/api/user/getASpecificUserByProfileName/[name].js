@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Apply select/populate only in this API route
-    const detailedUser = await User.findById(user._id)
+    const detailedUser = await User.findById(user.id)
       .select("name followers profileimage profilename bioblurb location")
       .populate(
         "followers",

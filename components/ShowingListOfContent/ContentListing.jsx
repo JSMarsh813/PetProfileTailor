@@ -31,6 +31,7 @@ export default function ContentListing({
   singleContent,
   mutate,
   mode = "swr", //swr or local, local is or pages with a single piece of content
+  // needed for editing, since the non-swr page needs state to reflect the edits, since it doesn't use the swr logic
 }) {
   const { data: session } = useSession();
 
@@ -240,7 +241,11 @@ export default function ContentListing({
             )}
           </section>
 
-          <span className="font-bold text-xl text-center block w-full mb-2">
+          <span
+            className={`font-bold  text-center block w-full mb-2 ${
+              dataType === "names" ? "text-xl" : "text-base"
+            }`}
+          >
             {content.content}{" "}
           </span>
 

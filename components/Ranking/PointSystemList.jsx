@@ -1,22 +1,18 @@
 import RankingTotals from "./RankingTotals";
 
 export default function EngagementTable({
-  namesLikes,
   namesAdds,
-  descriptionsLikes,
+
   descriptionsAdds,
 }) {
   const addPoints = (descriptionsAdds + namesAdds) * 3;
-  const likePoints = descriptionsLikes + namesLikes;
-  const totalPoints = addPoints + likePoints;
+
+  const totalPoints = addPoints;
 
   console.log(
-    "nameLikes",
-    namesLikes,
     "namesAdd",
     namesAdds,
-    "descriptionLikes",
-    descriptionsLikes,
+
     "descriptionAdds",
     descriptionsAdds,
   );
@@ -36,11 +32,6 @@ export default function EngagementTable({
           </thead>
           <tbody className="border-b  border-subtleWhite ">
             <tr className="">
-              <th className="px-4 py-2 text-left">Likes</th>
-              <td className="px-4 py-2 text-center">{namesLikes}</td>
-              <td className="px-4 py-2 text-center">{descriptionsLikes}</td>
-            </tr>
-            <tr className="">
               <th className="px-4 py-2 text-left">Adds</th>
               <td className="px-4 py-2 text-center">{namesAdds}</td>
               <td className="px-4 py-2 text-center">{descriptionsAdds}</td>
@@ -54,12 +45,12 @@ export default function EngagementTable({
         {[
           {
             category: "Names",
-            Likes: namesLikes,
+
             Adds: namesAdds,
           },
           {
             category: "Descriptions",
-            Likes: descriptionsLikes,
+
             Adds: descriptionsAdds,
           },
         ].map((cat) => (
@@ -75,10 +66,7 @@ export default function EngagementTable({
             >
               {cat.category}
             </h3>
-            <div className="flex justify-between text-gray-100">
-              <span>Likes:</span>
-              <span>{cat.Likes}</span>
-            </div>
+
             <div className="flex justify-between text-gray-100 mt-1">
               <span>Adds:</span>
               <span>{cat.Adds}</span>

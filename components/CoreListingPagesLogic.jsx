@@ -76,6 +76,9 @@ export default function CoreListingPageLogic({ dataType }) {
   console.log("SWR", typeof data[0]); // "object"
   console.log("SWR first item", data[0] ? data[0]._id : "null"); // check first object's id
 
+  const content = data ?? [];
+  // console.log("content", content);
+
   // ############ Section for passing state into components as functions #######
 
   function setItemsPerPageFunction(event) {
@@ -116,9 +119,6 @@ export default function CoreListingPageLogic({ dataType }) {
     setCurrentUiPage(1);
     setSize(1);
   };
-
-  const content = data ?? [];
-  // console.log("content", content);
 
   //#################### END of SWR section ##############
 
