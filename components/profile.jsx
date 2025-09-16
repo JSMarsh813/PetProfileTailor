@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 
-import NameListingAsSections from "@components/ShowingListOfContent/NameListingAsSections";
+import ContentListing from "@/components/ShowingListOfContent/ContentListing";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faEnvelope } from "@fortawesome/free-solid-svg-icons";
@@ -232,7 +232,7 @@ export default function profile({
                   <section className="">
                     {/* {nameList.map((name) => {
                       return (
-                        <NameListingAsSections
+                        <ContentListing
                           name={name}
                           key={name._id}
                           signedInUsersId={signedInUsersId}

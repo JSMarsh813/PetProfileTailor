@@ -2,7 +2,7 @@ import React from "react";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import NameListingAsSections from "@/components/ShowingListOfContent/NameListingAsSections";
+import ContentListing from "@/components/ShowingListOfContent/ContentListing";
 import dbConnect from "@utils/db";
 import Descriptions from "@/models/Description";
 
@@ -33,7 +33,7 @@ export default async function Postid({ params }) {
 
   return (
     <div className="mx-2">
-      <NameListingAsSections
+      <ContentListing
         dataType="descriptions"
         singleContent={description}
         mode="local"

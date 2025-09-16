@@ -5,7 +5,7 @@ import { Drawer } from "@mui/material";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import FilteringSidebar from "@components/Filtering/FilteringSidebar";
 import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
-import NameListingAsSections from "@components/ShowingListOfContent/NameListingAsSections";
+import ContentListing from "@/components/ShowingListOfContent/ContentListing";
 import Pagination from "@components/ShowingListOfContent/pagination";
 import CheckForMoreData from "@components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 import { useSwrPagination } from "@hooks/useSwrPagination";
@@ -211,7 +211,7 @@ export default function CoreListingPageLogic({ dataType }) {
                   )
                   .map((singleContent) => {
                     return (
-                      <NameListingAsSections
+                      <ContentListing
                         dataType={dataType}
                         singleContent={singleContent}
                         key={singleContent._id}

@@ -2,7 +2,7 @@ import dbConnect from "@utils/db";
 import Names from "@models/Names";
 import { notFound } from "next/navigation";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
-import NameListingAsSections from "@/components/ShowingListOfContent/NameListingAsSections";
+import ContentListing from "@/components/ShowingListOfContent/ContentListing";
 
 export default async function Postid({ params }) {
   const { name } = params;
@@ -29,7 +29,7 @@ export default async function Postid({ params }) {
   return (
     <div className="mx-2 mt-6">
       {nameData && (
-        <NameListingAsSections
+        <ContentListing
           singleContent={nameData}
           dataType="names"
           mode="local"

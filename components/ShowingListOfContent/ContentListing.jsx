@@ -26,7 +26,7 @@ import { useEditHandler } from "@hooks/useEditHandler";
 import { useReports } from "@context/ReportsContext";
 import { useSession } from "next-auth/react";
 
-export default function NameListingAsSections({
+export default function ContentListing({
   dataType,
   singleContent,
   mutate,

@@ -8,7 +8,7 @@ import WideCenteredHeader from "@components/ReusableSmallComponents/TitlesOrHead
 
 import PointSystemList from "@components/Ranking/PointSystemList";
 import DashboardChartForFavDescriptions from "@components/ShowingListOfContent/DashboardChartForFavDescriptions";
-import NameListingAsSections from "@components/ShowingListOfContent/NameListingAsSections";
+import ContentListing from "@/components/ShowingListOfContent/ContentListing";
 
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
@@ -125,7 +125,7 @@ export default function Dashboard({
               <div>
                 {likedNames.map((name) => {
                   return (
-                    <NameListingAsSections
+                    <ContentListing
                       name={name}
                       key={name._id}
                       dataType="names"
