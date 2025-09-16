@@ -46,7 +46,7 @@ export default function Dashboard({
       <div className="container mx-auto px-4 md:px-12 xl:px-32 ">
         <div className="text-center text-subtleWhite bg-primary">
           <div
-            className="block rounded-lg shadow-lg px-6 py-12 md:py-16 md:px-12"
+            className="block rounded-2xl shadow-lg px-6 py-2 md:py-4 md:px-12"
             style={{
               marginTop: "-70px",
               background: "hsla(273, 98%, 35%, 0.4)",
@@ -57,41 +57,29 @@ export default function Dashboard({
               "Loading"
             ) : (
               <div>
-                <section className="flex items-center border-b-2 border-subtleWhite pb-10">
+                <section className="flex items-center">
                   <div className="flex-1">
-                    <h3 className="text-subtleWhite  font-bold mb-2 mx-auto font-semibold text-4xl mb-4">
+                    <h3 className="text-subtleWhite mx-auto font-semibold text-3xl mb-2">
                       {`Welcome Back ${userName}!`}
                     </h3>
 
-                    <div className="bg-secondary rounded-2xl flex flex-col py-2 max-w-96 mx-auto">
-                      <h4 className="pt-4"> Edit Contributions or Profile:</h4>
-                      <LinkButton
-                        href={`${
-                          process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                        }profile/${session.user.profilename.toLowerCase()}`}
-                        text="edit"
-                        className="w-48 mx-auto "
-                        subtle
-                      />
-                    </div>
+                    <PointSystemList
+                      namesLikes={likedNames.length}
+                      namesAdds={namesCreated.length}
+                      descriptionsLikes={likedDescriptions.length}
+                      descriptionsAdds={createdDescriptions.length}
+                    />
                   </div>
-
+                  {/* 
                   <ProfileImage
-                    divStyling="w-44"
+                    divStyling="w-28"
                     profileImage={profileImage}
                     layout="responsive"
                     className="ml-3  h-32 rounded-full inline  shadow-xl"
-                    width={200}
-                    height={200}
-                  />
+                    width={100}
+                    height={100}
+                  /> */}
                 </section>
-
-                <PointSystemList
-                  namesLikes={likedNames.length}
-                  namesAdds={namesCreated.length}
-                  descriptionsLikes={likedDescriptions.length}
-                  descriptionsAdds={createdDescriptions.length}
-                />
               </div>
             )}
           </div>
@@ -101,58 +89,56 @@ export default function Dashboard({
       {/* ############# FAVORITE LISTS SECTION ############ */}
 
       <section className=" px-4 pt-4   mx-auto  text-center">
-        <WideCenteredHeader heading="Your Favorites" />
-
         <div
           className="favoriteSubsections mt-5 text-subtleWhite  font-bold mb-2 text-lg 
        pb-2
-       border-b-2
-      border-subtleWhite w-full"
+       w-full"
         >
           {/* ############# FAVORITE NAMES LIST ############ */}
 
-          <section className="favoriteNames">
-            <div className="">
-              <GeneralOpenCloseButton
-                text="Names"
-                setStatus={setFavoritesListOpen}
-                className="mb-2 w-48"
-                status={favoritesListOpen}
-              />
-            </div>
-
-            {favoritesListOpen == true && (
-              <div>
-                {likedNames.map((name) => {
-                  return (
-                    <ContentListing
-                      name={name}
-                      key={name._id}
-                      dataType="names"
-                    />
-                  );
-                })}
-              </div>
-            )}
-          </section>
-
-          {/* ############# FAVORITE DESCRIPTIONS LIST ############ */}
-
-          <section className="favoriteDescriptions">
+          <section className="flex border-b border-subtleWhite items-center justify-center">
             <GeneralOpenCloseButton
-              text="Descriptions"
+              text="Fav Names"
+              setStatus={setFavoritesListOpen}
+              className="mb-2"
+              status={favoritesListOpen}
+            />
+
+            <GeneralOpenCloseButton
+              text="Fav Descriptions"
               setStatus={setFavDescriptionsOpen}
-              className="mb-2 w-48"
+              className="mb-2"
               status={favDescriptionsOpen}
             />
 
-            {favDescriptionsOpen && (
-              <DashboardChartForFavDescriptions
-                likedDescriptions={likedDescriptions}
-                className="text-base text-violet-100"
-              />
-            )}
+            <GeneralOpenCloseButton
+              text="Added Names"
+              setStatus={setFavDescriptionsOpen}
+              className="mb-2"
+              status={favDescriptionsOpen}
+            />
+
+            <GeneralOpenCloseButton
+              text="Added Descriptions"
+              setStatus={setFavDescriptionsOpen}
+              className="mb-2"
+              status={favDescriptionsOpen}
+            />
           </section>
+
+          {favoritesListOpen == true && (
+            <div>
+              {likedNames.map((name) => {
+                return (
+                  <ContentListing
+                    name={name}
+                    key={name._id}
+                    dataType="names"
+                  />
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
     </section>

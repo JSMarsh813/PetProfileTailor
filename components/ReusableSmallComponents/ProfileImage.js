@@ -38,6 +38,11 @@ export default function ProfileImage({
           unoptimized
           onMouseEnter={handleMouseEnterForImage}
           onMouseLeave={handleMouseLeaveForImage}
+          style={{
+            maxWidth: "100%",
+            width: "auto",
+            height: "auto",
+          }}
         />
       </a>
     </div>

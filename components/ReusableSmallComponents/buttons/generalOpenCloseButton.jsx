@@ -4,19 +4,16 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 function generalOpenCloseButton({ text, className, setStatus, status }) {
   return (
     <button
-      className={`bg-subtleBackground  border-b-4 border-subtleWhite rounded-2xl
+      className={`rounded-2xl
     text-subtleWhite  font-bold py-2 px-4 
     hover:bg-blue-500
-    hover:border-blue-600
+    hover:border-blue-600 text-base
    
     ${className} `}
       onClick={() => setStatus(!status)}
     >
-      {text}
-      <ChevronDownIcon
-        className="inline ml-2 h-5"
-        aria-hidden="true"
-      />
+      {/* bg-subtleBackground  border-b-4 border-subtleWhite  */}
+      <p className="whitespace-normal break-words">{text}</p>
     </button>
   );
 }

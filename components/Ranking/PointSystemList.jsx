@@ -5,9 +5,7 @@ export default function EngagementTable({
 
   descriptionsAdds,
 }) {
-  const addPoints = (descriptionsAdds + namesAdds) * 3;
-
-  const totalPoints = addPoints;
+  const totalPoints = descriptionsAdds + namesAdds;
 
   console.log(
     "namesAdd",
@@ -17,7 +15,7 @@ export default function EngagementTable({
     descriptionsAdds,
   );
   return (
-    <div className="w-full max-w-xl mx-auto  pt-10">
+    <div className="w-full max-w-xl mx-auto ">
       <RankingTotals totalPoints={totalPoints} />
 
       {/* Desktop Table */}
