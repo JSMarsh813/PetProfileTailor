@@ -53,15 +53,15 @@ const HeroTop = ({
         {/* hero-content is from daisy ui */}
         <div className="max-w-xl text-subtleWhite">
           <h1 className="mb-5 text-3xl md:text-4xl text-yellow-300 font-black">
-            Welcome to <br /> Tailored Pet Names!
+            Welcome to <br /> Homeward Tails!
           </h1>
           <p className="mb-5 text-base md:text-xl">
-            Naming your new pet or creating engaging profiles for adoptable pets
-            can feel ruff! We&apos;ve been there! And we&apos;re here to help.
+            Naming your new pet or creating profiles for adoptable pets can feel
+            ruff! We&apos;ve been there! And we&apos;re here to help.
           </p>
-          <p className="mb-5 text-base md:text-xl">
-            Tailored Pet Names is a community powered assistant which helps you
-            find that perfect name or create pet profiles which are:
+          <p className="mb-8 text-base md:text-xl">
+            Homeward Tails is a community thats helps you write creative "tales"
+            to get pets home! It's easier than ever to create pet bios that are:
           </p>
 
           <section className="flex justify-center gap-3 flex-wrap">

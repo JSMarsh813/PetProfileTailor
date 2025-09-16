@@ -18,7 +18,7 @@ export const EmailHeaderTemplate = ({
       as="h3"
       style={companyname}
     >
-      Tailored Pet Names
+      Homeward Tails
     </Heading>
 
     <Img

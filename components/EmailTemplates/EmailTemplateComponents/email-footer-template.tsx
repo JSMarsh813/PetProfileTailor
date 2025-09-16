@@ -6,7 +6,7 @@ interface EmailFooterTemplateProps {}
 
 export const EmailFooterTemplate = () => (
   <Container style={coloredcontainer}>
-    <Text style={footer}>Tailored Pet Names</Text>
+    <Text style={footer}>Homeward Tails</Text>
   </Container>
 );
 

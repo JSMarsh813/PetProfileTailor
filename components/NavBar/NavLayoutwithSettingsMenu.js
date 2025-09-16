@@ -56,7 +56,7 @@ export default function NavLayoutwithSettingsMenu() {
               hidden lg:block
               mx-auto ml-2 hover:text-subtleWhite"
               href="/"
-              text=" TailoredPetNames"
+              text="HomewardTails"
             />
 
             <NavBarNames />

@@ -1,4 +1,4 @@
-# Tailored Pet Names
+# Homeward Tails
 
 ## Inspiration Behind and Introduction to Project:
 
