@@ -87,12 +87,12 @@ export default function Profile({
   }, [deleteThisContentId]);
   return (
     <div>
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row mt-6">
         {/* ############## BIO ############## */}
-        <section className=" sm:w-96 text-secondary ">
+        <section className=" sm:w-96 text-subtleWhite ">
           <div className="px-2 ">
             <div
-              className="relative flex flex-col min-w-0 break-words bg-purple-50 mb-6 shadow-xl rounded-lg mt-16
+              className="relative flex flex-col min-w-0 break-words bg-violet-950 mb-6 shadow-xl rounded-lg mt-16
     shadow-slate-900/70"
             >
               <div className="px-0">
@@ -154,17 +154,19 @@ export default function Profile({
                     </div>
                   )}
 
-                  <div className="text-sm leading-normal mt-4 mb-2 font-bold ">
-                    <FontAwesomeIcon
-                      icon={faLocationDot}
-                      className="mr-2 text-lg "
-                    />
+                  {userData.location && (
+                    <div className="text-sm leading-normal mt-4 mb-2 font-bold ">
+                      <FontAwesomeIcon
+                        icon={faLocationDot}
+                        className="mr-2 text-lg "
+                      />
 
-                    <span className="mr-2 text-lg">{userData.location}</span>
-                  </div>
+                      <span className="mr-2 text-lg">{userData.location}</span>
+                    </div>
+                  )}
                 </div>
 
-                <div className="py-2 border-t border-secondary text-center">
+                <div className="py-2  text-center">
                   <div className="flex flex-wrap justify-center">
                     <div className="w-full px-4">
                       <span className="text-lg font-bold">About:</span>
@@ -199,7 +201,7 @@ export default function Profile({
 
         {/* ######## USERS CONTRIBUTIONS SECTION ##########*/}
 
-        <div className=" flex-1 grid grid-cols-1 gap-4 mr-2 h-fit text-white bg-secondary">
+        <div className=" flex-1 grid grid-cols-1 gap-4 mr-2 h-fit text-white bg-secondary rounded-2xl">
           {/* ########## NAMES ADDED  ################*/}
           <section className="my-4">
             <h2
@@ -208,7 +210,7 @@ export default function Profile({
                              p-2 
                             "
             >
-              Names Added
+              Names
             </h2>
             <div
               className=" flex-1 grid grid-cols-1 gap-4 mr-2  
@@ -240,7 +242,7 @@ export default function Profile({
             bg-secondary p-2 
             "
             >
-              Descriptions Added
+              Descriptions
             </h2>
 
             <ProfilePagesLogic

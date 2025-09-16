@@ -21,8 +21,8 @@ export default function EngagementTable({
       <RankingTotals totalPoints={totalPoints} />
 
       {/* Desktop Table */}
-      <div className="hidden sm:block bg-primary rounded-3xl shadow-lg overflow-hidden">
-        <table className="min-w-full text-gray-100 border-t  border-subtleWhite ">
+      <div className="hidden sm:block bg-primary rounded-xl shadow-lg overflow-hidden">
+        <table className="min-w-full text-gray-100  ">
           <thead className="bg-secondary">
             <tr>
               <th className="px-4 py-2"></th>
@@ -30,7 +30,7 @@ export default function EngagementTable({
               <th className="px-4 py-2 text-center">Descriptions</th>
             </tr>
           </thead>
-          <tbody className="border-b  border-subtleWhite ">
+          <tbody className="">
             <tr className="">
               <th className="px-4 py-2 text-left">Adds</th>
               <td className="px-4 py-2 text-center">{namesAdds}</td>

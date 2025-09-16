@@ -60,7 +60,7 @@ export default function FollowButton({
         <label
           className="justify-self-end
              mr-2 mx-auto bg-red-500 hover:bg-red-400 border-b-4 border-red-700 
-                      hover:border-yellow-500 text-center py-2 px-4 rounded"
+                      hover:border-yellow-500 text-center py-2 px-4 rounded-2xl"
         >
           <input
             style={{ display: "none" }}
@@ -79,7 +79,7 @@ export default function FollowButton({
         <label
           className="justify-self-end
              mr-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 text-secondary
-                      hover:border-yellow-500 text-center py-2 px-4 rounded"
+                      hover:border-yellow-500 text-center py-2 px-4 rounded-2xl"
         >
           <input
             style={{ display: "none" }}
