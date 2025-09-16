@@ -14,12 +14,16 @@ import GoToTopButton from "@components/ReusableSmallComponents/buttons/GoToTopBu
 
 import { useSession } from "next-auth/react";
 
-export default function CoreListingPageLogic({ dataType }) {
+export default function CoreListingPageLogic({
+  dataType,
+  swrForThisUserID = "",
+}) {
   const { data: session } = useSession();
   const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
   const [remainingSortCooldown, setRemainingSortCooldown] = useState(0);
   const filterCooldownRef = useRef(null);
   const sortIntervalRef = useRef(null);
+  let profileUserId = swrForThisUserID;
 
   // prevents overlapping cooldown intervals by attaching the interval to useRef, it will clear after 5 seconds
   // so we check if filterCooldownRef.current has no intervals currently going before running another interval
@@ -69,6 +73,7 @@ export default function CoreListingPageLogic({ dataType }) {
     tags: triggerApplyFilters,
     sortingProperty: sortingProperty,
     sortingValue: sortingValue,
+    profileUserId,
   });
 
   console.log("SWR", Array.isArray(data)); // true

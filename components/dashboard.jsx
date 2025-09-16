@@ -14,6 +14,7 @@ import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 
 import { useSession } from "next-auth/react";
+import CoreListingPageLogic from "./CoreListingPagesLogic";
 
 export default function Dashboard({
   likedNames,
@@ -30,6 +31,7 @@ export default function Dashboard({
   const [favDescriptionsOpen, setFavDescriptionsOpen] = useState(false);
 
   const userName = session?.user?.name || "Guest";
+  const swrForThisUserID = session?.user?.id || "";
   const profileImage = session?.user?.profileimage || "/default-profile.png";
 
   return (
@@ -128,15 +130,10 @@ export default function Dashboard({
 
           {favoritesListOpen == true && (
             <div>
-              {likedNames.map((name) => {
-                return (
-                  <ContentListing
-                    name={name}
-                    key={name._id}
-                    dataType="names"
-                  />
-                );
-              })}
+              <CoreListingPageLogic
+                dataType="names"
+                swrForThisUserID={swrForThisUserID}
+              />
             </div>
           )}
         </div>
