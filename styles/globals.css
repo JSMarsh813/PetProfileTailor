@@ -9,6 +9,18 @@
   font-size: 18px;
 }
 
+main {
+  width: clamp(
+    300px,
+    90vw,
+    1280px
+  ); /* min: 300px, preferred: 90vw, max: 7xl (1280px) */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem; /* optional, mirrors px-4 */
+  padding-right: 1rem;
+}
+
 input::file-selector-button {
   font-weight: bold;
   color: white;

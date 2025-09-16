@@ -53,8 +53,7 @@ export default async function Postid({ params }) {
   }
 
   return (
-    <div className="mx-2 mt-6 ">
-      <span> something </span>
+    <div className="mx-2 mt-6  bg-red-300">
       {nameData && (
         <SingleListing
           singleContent={nameData}

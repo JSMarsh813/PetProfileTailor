@@ -36,8 +36,9 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
         },
       });
 
-      const updatedItem = res.data ?? { ...editTarget, ...editedData };
-
+      const updatedItem = res.data?.data ??
+        res.data ?? { ...editTarget, ...editedData };
+      // normalized so updatedItem is always just the actual object to replace
       console.log("response data", res.data);
 
       console.log("updatedItem", updatedItem);
@@ -46,24 +47,21 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
         // the api sends us { data: {name object}, message: "name updated"
         // so we need to do page.data to look at the actual content data
         // since my fetcher flattens the swr pages, all the content objects are in a flat array
+
         mutate((pages = []) => {
-          const updatedPages = pages.map((page, pageIndex) => {
-            const updatedData = page.data.map((item) => {
-              if (item._id === updatedItem.data._id) {
-                return updatedItem.data;
+          return pages.map((page) => ({
+            ...page,
+            data: page.data.map((item) => {
+              if (item._id === updatedItem._id) {
+                return updatedItem;
               }
               return item;
-            });
-
-            return { ...page, data: updatedData };
-          });
-          return updatedPages;
+            }),
+          }));
         }, false);
-      }
-
-      // Single item page case: update local state
-      if (setLocalData) {
-        setLocalData(updatedItem.data);
+        // else if we're not using SWR (aka a single page), do this:
+      } else if (setLocalData) {
+        setLocalData(updatedItem);
       }
 
       toast.success("Successfully edited!");

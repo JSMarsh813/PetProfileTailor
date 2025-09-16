@@ -29,8 +29,8 @@ import { useSession } from "next-auth/react";
 export default function NameListingAsSections({
   dataType,
   singleContent,
-
   mutate,
+  mode = "swr", //swr or local, local is or pages with a single piece of content
 }) {
   const { data: session } = useSession();
 
@@ -49,6 +49,10 @@ export default function NameListingAsSections({
 
   const { getStatus } = useReports();
 
+  const [content, setContent] = useState(singleContent);
+  // for names, we use content instead of singleContent for properties that can be edited (name, notes)
+  // since pages for individual names don't have SWR
+
   const reportStatus = getStatus(dataType, singleContent._id.toString());
 
   const reportPendingOrNone =
@@ -63,12 +67,12 @@ export default function NameListingAsSections({
 
   const linkToShare =
     dataType === "names"
-      ? `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${singleContent.content}`
+      ? `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/name/${content.content}`
       : `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/description/${singleContent._id}`;
 
   const localLink =
     dataType === "names"
-      ? `/name/${singleContent.content}`
+      ? `/name/${content.content}`
       : `/description/${singleContent._id}`;
 
   // TODO
@@ -84,7 +88,7 @@ export default function NameListingAsSections({
     isSaving,
   } = useEditHandler({
     apiEndpoint: apiEndPoint,
-    mutate,
+    ...(mode === "swr" ? { mutate } : { setLocalData }),
   });
 
   const userIsTheCreator = singleContent.createdby._id === signedInUsersId;
@@ -104,7 +108,7 @@ export default function NameListingAsSections({
   }profile/${singleContent.createdby.profilename.toLowerCase()}`;
 
   return (
-    <div className="text-base flex border-t border-subtleWhite mb-4">
+    <div className="text-base flex border-t border-subtleWhite mb-4 ">
       <ProfileImage
         divStyling="min-h-10 max-w-12 mr-4 mt-3 min-w-10 max-h-12"
         profileImage={singleContent.createdby.profileimage}
@@ -237,12 +241,12 @@ export default function NameListingAsSections({
           </section>
 
           <span className="font-bold text-xl text-center block w-full mb-2">
-            {singleContent.content}{" "}
+            {content.content}{" "}
           </span>
 
           {/* ###### DESCRIPTION SECTION #### */}
 
-          <p className="whitespace-pre-line">{singleContent.notes}</p>
+          <p className="whitespace-pre-line">{content.notes}</p>
 
           {/* ###### TAGS SECTION #### */}
           <span className="my-4"> {AddHashToArrayString(singleContent)} </span>

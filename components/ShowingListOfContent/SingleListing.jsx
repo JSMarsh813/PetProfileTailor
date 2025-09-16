@@ -28,11 +28,12 @@ import { useFlagging } from "@hooks/useFlagging";
 import { useEditHandler } from "@hooks/useEditHandler";
 import { useReports } from "@context/ReportsContext";
 
-export default function NameListingAsSections({
+export default function SingleListing({
   dataType,
   singleContent,
   signedInUsersId,
   userLiked,
+
   mutate,
 }) {
   const {
@@ -122,12 +123,6 @@ export default function NameListingAsSections({
   function onClickShowShares() {
     setShareSectionShowing(!shareSectionShowing);
   }
-
-  console.log(
-    "AddHashToArrayString(singleContent)",
-    AddHashToArrayString(content),
-  );
-  console.log("singleContent.tags", content.tags);
 
   const href = `${
     process.env.NEXT_PUBLIC_BASE_FETCH_URL

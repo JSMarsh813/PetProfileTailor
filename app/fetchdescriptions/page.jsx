@@ -14,10 +14,6 @@ export default async function FetchDescriptions() {
 
   let usersLikedContent = [];
 
-  let contentUserReported = [];
-
-  let contentUserSuggestedEdits = [];
-
   const session = await getServerSession(serverAuthOptions);
 
   if (session?.user) {

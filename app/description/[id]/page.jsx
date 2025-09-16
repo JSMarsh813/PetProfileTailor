@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 
 const ObjectId = require("mongodb").ObjectId;
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
+import NameListingAsSections from "@/components/ShowingListOfContent/NameListingAsSections";
 
 export default async function Postid({ params }) {
   const { id } = params;
@@ -34,12 +35,13 @@ export default async function Postid({ params }) {
   return (
     <div className="mx-2">
       <span> it works!</span>
-      {/* <DescriptionListingAsSections
-        description={description}
-        key={description._id}
-        sessionFromServer={sessionFromServer}
-        tagList={tagList}
-      /> */}
+      <NameListingAsSections
+        dataType={dataType}
+        singleContent={singleContent}
+        key={singleContent._id}
+        signedInUsersId={signedInUsersId}
+        mutate={mutate}
+      />
     </div>
   );
 }

@@ -1,20 +1,18 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import Layout from "@components/NavBar/NavLayoutwithSettingsMenu";
 import { Drawer } from "@mui/material";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import FilteringSidebar from "@components/Filtering/FilteringSidebar";
 import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import NameListingAsSections from "@components/ShowingListOfContent/NameListingAsSections";
-import removeDeletedContent from "@components/DeletingData/removeDeletedContent";
 import Pagination from "@components/ShowingListOfContent/pagination";
 import CheckForMoreData from "@components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 import { useSwrPagination } from "@hooks/useSwrPagination";
 import startCooldown from "@utils/startCooldown";
 import GoToTopButton from "@components/ReusableSmallComponents/buttons/GoToTopButton";
 
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export default function CoreListingPageLogic({ dataType }) {
   const { data: session } = useSession();
