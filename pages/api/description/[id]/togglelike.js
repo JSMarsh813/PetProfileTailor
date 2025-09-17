@@ -1,0 +1,65 @@
+import dbConnect from "@/utils/db";
+import mongoose from "mongoose";
+import DescriptionLikes from "@/models/DescriptionLikes";
+import Description from "@/models/Description";
+
+export default async function handler(req, res) {
+  await dbConnect.connect();
+  const { id: descriptionId } = req.query;
+  const { userId } = req.body;
+
+  console.log("req.query", req.query);
+
+  if (!userId) return res.status(400).json({ error: "userId required" });
+  if (req.method !== "POST") return res.status(405).end();
+
+  const session = await mongoose.startSession();
+  console.log("toggle like api ran");
+  console.log("userId", userId);
+  console.log("userId", userId, "descriptionId", descriptionId);
+
+  try {
+    session.startTransaction();
+    // transaction to ensure likes count stay in sync, if both the collections aren't updated then cancel
+
+    const existingLike = await DescriptionLikes.findOne({
+      userId,
+      descriptionId,
+    }).session(session);
+
+    let liked = false;
+
+    if (existingLike) {
+      // Unlike, delete the document, decrement likedByCount
+      await DescriptionLikes.deleteOne({ _id: existingLike._id }).session(
+        session,
+      );
+      await Description.updateOne(
+        { _id: descriptionId },
+        { $inc: { likedbycount: -1 } },
+        { session },
+      );
+      liked = false;
+
+      res.status(200).json({ liked });
+    } else {
+      // Like, insert the document, increment likedByCount
+      await DescriptionLikes.create([{ userId, descriptionId }], { session });
+      await Description.updateOne(
+        { _id: descriptionId },
+        { $inc: { likedbycount: 1 } },
+        { session },
+      );
+      liked = true;
+
+      res.status(200).json({ liked });
+    }
+
+    await session.commitTransaction();
+  } catch (err) {
+    await session.abortTransaction();
+    res.status(500).json({ error: err.message });
+  } finally {
+    session.endSession();
+  }
+}
