@@ -45,13 +45,39 @@ export function useSwrPagination({
     "restrictSwrToLikedNames in swr pagination",
     restrictSwrToLikedNames,
   );
-  let likedNameIds = [];
+  let likedIds = [];
 
   if (restrictSwrToLikedNames) {
     const { getLikedIds } = useLikes();
-    likedNameIds = getLikedIds(dataType);
-    console.log("likedNameIds in swr pagination", likedNameIds);
+    likedIds = getLikedIds(dataType) || null;
+    console.log("likedIds in swr pagination", likedIds);
   }
+
+  // if restrict to liked content but there are no likes, return early
+
+  console.log(
+    "restrictSwrToLikedNames",
+    restrictSwrToLikedNames,
+    "likedIds",
+    likedIds,
+  );
+  if (
+    (restrictSwrToLikedNames && likedIds === null) ||
+    (restrictSwrToLikedNames && likedIds.length === 0)
+  ) {
+    return {
+      data: [],
+      isLoading: false,
+      error: null,
+      totalItems: 0,
+      totalPagesInDatabase: 0,
+      size: 0,
+      setSize: () => {},
+      isValidating: false,
+      mutate: () => {},
+    };
+  }
+  console.log("Fetching liked IDs for", dataType, likedIds);
 
   const getKey = (index, previousPageData) => {
     if (previousPageData && !previousPageData.data?.length) return null; // no more data
@@ -69,7 +95,7 @@ export function useSwrPagination({
     const body = {};
     if (tags?.length) body.tags = tags;
     if (profileUserId) body.profileUserId = profileUserId;
-    if (likedNameIds?.length) body.likedIds = likedNameIds;
+    if (likedIds?.length || likedIds === null) body.likedIds = likedIds;
 
     return [url, Object.keys(body).length ? { body } : {}];
   };

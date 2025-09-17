@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 export default async function handler(req, res) {
   await dbConnect.connect();
 
+  const limit = 50;
+
   const method = req.method;
   const {
     page = 1,
@@ -26,7 +28,6 @@ export default async function handler(req, res) {
   //   sortingvalue,
   // );
   // console.log("tags", tags);
-  const limit = 50;
 
   if (method === "DELETE" || method === "PUT") {
     res.status(405).json({ error: "Method not allowed" });
@@ -48,8 +49,8 @@ export default async function handler(req, res) {
     console.log("req.body in api", req.body, "req.query in api", req.query);
     // filtering by tags logic
     let filter = {};
+
     if (tags?.length) {
-      // Expect tags as a comma-separated string of ObjectId strings
       const tagIds = tags.map((id) => new mongoose.Types.ObjectId(id));
       filter.tags = { $all: tagIds };
     }

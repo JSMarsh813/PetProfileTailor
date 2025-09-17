@@ -14,6 +14,8 @@ export function LikesProvider({ children, initialLikes = {} }) {
   const names = initialLikes.names || [];
   const descriptions = initialLikes.descriptions || [];
 
+  console.log("intial descriptions liked", descriptions);
+
   // If the array is empty, .map() just returns another empty array. It won’t throw an error.
 
   // Map keys = contentId, values are irrelevant
