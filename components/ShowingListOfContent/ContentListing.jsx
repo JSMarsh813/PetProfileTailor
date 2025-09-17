@@ -5,6 +5,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import LikesButtonAndLikesLogic from "@components/ReusableSmallComponents/buttons/LikesButtonAndLikesLogic";
 import DeleteButton from "@components/DeletingData/DeleteButton";
 import EditButton from "@components/ReusableSmallComponents/buttons/EditButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import EditName from "../EditingData/EditName";
 import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton";
@@ -171,18 +172,42 @@ export default function ContentListing({
                         </MenuButton>
                       </div>
 
-                      <MenuItems className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-secondary border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50">
-                        {signedInUsersId &&
-                        singleContent.createdby._id == signedInUsersId ? (
-                          <MenuItem>
-                            {() => (
+                      {signedInUsersId &&
+                      singleContent.createdby._id == signedInUsersId ? (
+                        <MenuItems className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-secondary border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50 space-y-2">
+                          <MenuItem as="div">
+                            {/* MenuItem as="div" prevents Headless UI from treating your button as a MenuItem that auto-closes. this way the state has time to update*/}
+                            {({ focus }) => (
                               <DeleteButton
                                 content={singleContent}
-                                onDeleteClick={openDelete}
+                                onDeleteClick={(content, e) => {
+                                  e.stopPropagation(); // prevent Menu from closing immediately before the click bubbles up and closes the menu before the delete dialog state updates
+                                  openDelete(content);
+                                }}
+                                // focus == important for keyboard styling
+                                className={`ml-2 mr-6 w-full group flex items-center ${
+                                  focus ? "bg-blue-400 text-white" : ""
+                                }`}
                               />
                             )}
                           </MenuItem>
-                        ) : (
+                          <MenuItem as="div">
+                            {({ focus }) => (
+                              <EditButton
+                                content={singleContent}
+                                onupdateEditState={(content, e) => {
+                                  e.stopPropagation(); // prevent menu from closing
+                                  if (content) openEdit(content);
+                                }}
+                                className={`ml-2 mr-6 w-full group flex items-center ${
+                                  focus ? "bg-blue-400 text-white" : ""
+                                }`}
+                              />
+                            )}
+                          </MenuItem>
+                        </MenuItems>
+                      ) : (
+                        <MenuItems className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-secondary border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50">
                           <MenuItem>
                             {({ active }) => (
                               <FlagButton
@@ -196,8 +221,12 @@ export default function ContentListing({
                               />
                             )}
                           </MenuItem>
-                        )}
-                      </MenuItems>
+
+                          <MenuItem as="div">
+                            {({ focus }) => <span> Suggest Edits </span>}
+                          </MenuItem>
+                        </MenuItems>
+                      )}
                     </>
                   )}
                 </Menu>
@@ -206,6 +235,7 @@ export default function ContentListing({
 
             {/* Dialog rendered outside, it can't be placed in  <DeleteButton> in the MenuItem because headlessUi's menu will closed anything inside it when one of its button is clicked
             so the deletion confirmation dialog has to be outside of it, so it isn't immeditely sent to the abyss */}
+
             {showDeleteConfirmation && deleteTarget && (
               <DeleteDialog
                 open={showDeleteConfirmation}
@@ -270,13 +300,9 @@ export default function ContentListing({
 
             <ShareButton onClickShowShares={onClickShowShares} />
 
-            {singleContent && singleContent.createdby._id == signedInUsersId ? (
+            {/* {singleContent && singleContent.createdby._id == signedInUsersId ? (
               <ContainerForLikeShareFlag>
-                <EditButton
-                  onupdateEditState={() => {
-                    if (singleContent) openEdit(singleContent);
-                  }}
-                />
+                <span> something </span>
               </ContainerForLikeShareFlag>
             ) : (
               <IdeaContentSection
@@ -289,7 +315,7 @@ export default function ContentListing({
                 setIdeaFormToggled={setIdeaFormToggled}
                 dataType={dataType}
               />
-            )}
+            )} */}
           </div>
         </div>
         {/* ###### END OF LISTING #### */}
