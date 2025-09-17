@@ -30,9 +30,9 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
 
     try {
       const res = await axios.put(apiEndpoint, {
-        nameSubmission: {
+        submission: {
           ...editedData,
-          nameId: editTarget._id,
+          contentId: editTarget._id,
         },
       });
 
@@ -43,23 +43,19 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
 
       console.log("updatedItem", updatedItem);
       // SWR case: update the cached array
+      console.log("SWR pages before mutate:", res.data);
+
       if (mutate) {
         // the api sends us { data: {name object}, message: "name updated"
         // so we need to do page.data to look at the actual content data
         // since my fetcher flattens the swr pages, all the content objects are in a flat array
-
-        mutate((pages = []) => {
-          return pages.map((page) => ({
-            ...page,
-            data: page.data.map((item) => {
-              if (item._id === updatedItem._id) {
-                return updatedItem;
-              }
-              return item;
-            }),
-          }));
-        }, false);
-        // else if we're not using SWR (aka a single page), do this:
+        mutate(
+          (prev) =>
+            prev.map((item) =>
+              item._id === updatedItem._id ? updatedItem : item,
+            ),
+          { revalidate: false },
+        );
       } else if (setLocalData) {
         setLocalData(updatedItem);
       }
@@ -68,8 +64,8 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
 
       closeEdit();
     } catch (error) {
-      console.error("Error editing name:", error);
-      toast.error("Failed to edit name!");
+      console.error("Error editing content:", error);
+      toast.error("Failed to edit content!");
       setIsSaving(false);
     }
   };

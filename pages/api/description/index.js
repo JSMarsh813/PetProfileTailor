@@ -25,10 +25,10 @@ export default async function handler(req, res) {
   }
 
   if (method === "PUT") {
-    const { description, tags, notes, descriptionId, relatednames } =
-      req.body.descriptionSubmission;
+    const { notes, content, tags, contentId, relatednames } =
+      req.body.submission;
 
-    const toUpdateDescription = await Description.findById(descriptionId);
+    const toUpdateDescription = await Description.findById(contentId);
 
     try {
       if (notes) {
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       if (relatednames) {
         toUpdateDescription.relatednames = relatednames;
       }
-      toUpdateDescription.content = description;
+      toUpdateDescription.content = content;
 
       toUpdateDescription.tags = tags;
 

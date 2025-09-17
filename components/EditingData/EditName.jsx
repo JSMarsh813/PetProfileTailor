@@ -67,7 +67,7 @@ export default function EditName({ dataType, open, onClose, name, onSave }) {
         </div>
 
         <DialogTitle className="text-lg font-bold text-subtleWhite mb-4">
-          Edit Name
+          Edit Content
         </DialogTitle>
 
         {/* Name */}

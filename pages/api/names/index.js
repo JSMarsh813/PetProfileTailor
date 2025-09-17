@@ -26,9 +26,9 @@ export default async function handler(req, res) {
   }
 
   if (method === "PUT") {
-    const { notes, content, tags, nameId } = req.body.nameSubmission;
+    const { notes, content, tags, contentId } = req.body.submission;
 
-    const toUpdateName = await Names.findById(nameId);
+    const toUpdateName = await Names.findById(contentId);
 
     if (!toUpdateName) {
       return res.status(404).json({ message: "Name not found" });
@@ -63,7 +63,7 @@ export default async function handler(req, res) {
 
       await toUpdateName.save();
 
-      const populateName = await Names.findById(nameId)
+      const populateName = await Names.findById(contentId)
         .populate({
           path: "createdby",
           select: "name profilename profileimage",
