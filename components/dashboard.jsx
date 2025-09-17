@@ -30,6 +30,12 @@ export default function Dashboard({
 
   const [favDescriptionsOpen, setFavDescriptionsOpen] = useState(false);
 
+  const [openContent, setOpenContent] = useState(null);
+
+  function handleContentClick(contentKey) {
+    setOpenContent(openContent === contentKey ? null : contentKey);
+  }
+
   const userName = session?.user?.name || "Guest";
   const swrForThisUserID = session?.user?.id || "";
   const profileImage = session?.user?.profileimage || "/default-profile.png";
@@ -101,40 +107,77 @@ export default function Dashboard({
           <section className="flex border-b border-subtleWhite items-center justify-center">
             <GeneralOpenCloseButton
               text="Fav Names"
-              setStatus={setFavoritesListOpen}
+              setState={handleContentClick}
               className="mb-2"
-              status={favoritesListOpen}
+              value="Fav Names"
+              state={openContent}
             />
 
             <GeneralOpenCloseButton
               text="Fav Descriptions"
-              setStatus={setFavDescriptionsOpen}
+              setState={handleContentClick}
               className="mb-2"
-              status={favDescriptionsOpen}
+              value="Fav Descriptions"
+              state={openContent}
             />
 
             <GeneralOpenCloseButton
               text="Added Names"
-              setStatus={setFavDescriptionsOpen}
+              setState={handleContentClick}
               className="mb-2"
-              status={favDescriptionsOpen}
+              value="Added Names"
+              state={openContent}
             />
 
             <GeneralOpenCloseButton
               text="Added Descriptions"
-              setStatus={setFavDescriptionsOpen}
+              setState={handleContentClick}
               className="mb-2"
-              status={favDescriptionsOpen}
+              value="Added Descriptions"
+              state={openContent}
             />
           </section>
 
-          {favoritesListOpen == true && (
+          {openContent === "Fav Names" && (
             <div>
               <CoreListingPageLogic
                 dataType="names"
                 // swrForThisUserID={swrForThisUserID}
                 showHeader={false}
                 restrictSwrToLikedNames={true}
+              />
+            </div>
+          )}
+
+          {openContent === "Fav Descriptions" && (
+            <div>
+              <CoreListingPageLogic
+                dataType="descriptions"
+                // swrForThisUserID={swrForThisUserID}
+                showHeader={false}
+                restrictSwrToLikedNames={true}
+              />
+            </div>
+          )}
+
+          {openContent === "Added Names" && (
+            <div>
+              <CoreListingPageLogic
+                dataType="names"
+                swrForThisUserID={swrForThisUserID}
+                showHeader={false}
+                restrictSwrToLikedNames={false}
+              />
+            </div>
+          )}
+
+          {openContent === "Added Descriptions" && (
+            <div>
+              <CoreListingPageLogic
+                dataType="descriptions"
+                swrForThisUserID={swrForThisUserID}
+                showHeader={false}
+                restrictSwrToLikedNames={false}
               />
             </div>
           )}
