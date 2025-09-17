@@ -28,6 +28,13 @@ export default async function handler(req, res) {
   if (method === "PUT") {
     const { notes, content, tags, contentId } = req.body.submission;
 
+    console.log(
+      "notes in put request",
+      notes,
+      "put request",
+      req.body.submission,
+    );
+
     const toUpdateName = await Names.findById(contentId);
 
     if (!toUpdateName) {

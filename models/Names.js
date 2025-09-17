@@ -8,7 +8,7 @@ const NameSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    note: {
+    notes: {
       type: String,
       required: false,
     },

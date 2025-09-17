@@ -226,7 +226,7 @@ export default function CoreListingPageLogic({
                       <ContentListing
                         dataType={dataType}
                         singleContent={singleContent}
-                        key={`${singleContent._id}-${singleContent.updatedAt}`}
+                        key={singleContent._id}
                         // VITAL for the ui to see the mutation changes, if the key hasn't changed, then react will ignore the updates
                         signedInUsersId={signedInUsersId}
                         mutate={mutate}

@@ -33,7 +33,7 @@ export default function EditName({
       notes: notes,
       tags: tags.map((tag) => tag.value),
       //changing each {label: tag.tag, value:tag._id} into just an object id
-      descriptionId: description._id,
+      contentId: description._id,
       relatednames: relatedNames,
     };
     console.log(descriptionSubmission);

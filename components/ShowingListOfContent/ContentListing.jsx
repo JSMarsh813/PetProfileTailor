@@ -51,9 +51,11 @@ export default function ContentListing({
 
   const { getStatus } = useReports();
 
-  const [content, setLocalData] = useState(singleContent);
+  const [content, setLocalData] =
+    mode === "local" ? useState(singleContent) : [singleContent, null];
   // for names, we use content instead of singleContent for properties that can be edited (name, notes)
   // since pages for individual names don't have SWR
+  // in "swr" mode, you always render directly from singleContent, and updates from SWR flow straight into the UI.
 
   const reportStatus = getStatus(dataType, singleContent._id.toString());
 
