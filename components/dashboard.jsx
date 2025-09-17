@@ -104,7 +104,11 @@ export default function Dashboard({
         >
           {/* ############# FAVORITE NAMES LIST ############ */}
 
-          <section className="flex border-b border-subtleWhite items-center justify-center">
+          <section className="flex flex-wrap gap-1 items-center justify-center">
+            <h4 className="w-full text-xl mb-4">
+              {" "}
+              Select which content you wish to view{" "}
+            </h4>
             <GeneralOpenCloseButton
               text="Fav Names"
               setState={handleContentClick}
