@@ -85,8 +85,9 @@ export default function CoreListingPageLogic({
   console.log("SWR", typeof data[0]); // "object"
   console.log("SWR first item", data[0] ? data[0]._id : "null"); // check first object's id
 
-  const content = data ?? [];
-  // console.log("content", content);
+  let content = data ?? [];
+
+  console.log("content check", content);
 
   // ############ Section for passing state into components as functions #######
 
@@ -225,7 +226,8 @@ export default function CoreListingPageLogic({
                       <ContentListing
                         dataType={dataType}
                         singleContent={singleContent}
-                        key={singleContent._id}
+                        key={`${singleContent._id}-${singleContent.updatedAt}`}
+                        // VITAL for the ui to see the mutation changes, if the key hasn't changed, then react will ignore the updates
                         signedInUsersId={signedInUsersId}
                         mutate={mutate}
                       />

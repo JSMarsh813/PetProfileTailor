@@ -43,7 +43,15 @@ export default async function handler(req, res) {
 
       await toUpdateDescription.save();
 
+      const updatedDescription = await Description.findById(contentId)
+        .populate({
+          path: "createdby",
+          select: "name profilename profileimage",
+        })
+        .populate({ path: "tags", select: "tag" });
+
       res.send({
+        data: updatedDescription,
         message: "Description Updated",
       });
     } catch (err) {

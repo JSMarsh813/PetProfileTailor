@@ -21,15 +21,7 @@ export default async function FetchDescriptions() {
 
     console.log("session.user.id:", session.user.id, typeof session.user.id);
     // ######## Likes ###############
-    usersLikedContent = await leanWithStrings(
-      DescriptionLikes.find({ userId }).select("nameId -_id"),
-    );
   }
 
-  return (
-    <CoreListingPageLogic
-      dataType="descriptions"
-      usersLikedContent={usersLikedContent}
-    />
-  );
+  return <CoreListingPageLogic dataType="descriptions" />;
 }

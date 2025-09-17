@@ -19,16 +19,6 @@ export default async function DashboardPage() {
 
   await dbConnect.connect();
 
-  // ---- NAMES liked by user ----
-  const likedNames = await leanWithStrings(
-    Names.find({ likedby: userId })
-      .populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
-      })
-      .populate({ path: "tags" }),
-  );
-
   // const likedNames = likedNamesRaw.map((n) => ({
   //   ...n,
   //   _id: n._id.toString(),
@@ -87,16 +77,6 @@ export default async function DashboardPage() {
   //     : null,
   //   tags: d.tags?.map((t) => ({ _id: t._id.toString(), tag: t.tag })) || [],
   // }));
-
-  // ---- DESCRIPTIONS liked by user ----
-  const likedDescriptions = await leanWithStrings(
-    Description.find({ likedby: userId })
-      .populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
-      })
-      .populate({ path: "tags" }),
-  );
 
   // const likedDescriptions = likedDescriptionsRaw.map((d) => ({
   //   ...d,

@@ -50,11 +50,14 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
         // so we need to do page.data to look at the actual content data
         // since my fetcher flattens the swr pages, all the content objects are in a flat array
         mutate(
-          (prev) =>
-            prev.map((item) =>
-              item._id === updatedItem._id ? updatedItem : item,
-            ),
-          { revalidate: false },
+          (pages = []) =>
+            pages.map((page) => ({
+              ...page,
+              data: page.data.map((item) =>
+                item._id === updatedItem._id ? updatedItem : item,
+              ),
+            })),
+          false,
         );
       } else if (setLocalData) {
         setLocalData(updatedItem);

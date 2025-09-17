@@ -1,34 +1,37 @@
 import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
-const NameSchema = new mongoose.Schema({
-  content: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  note: {
-    type: String,
-    required: false,
-  },
-  tags: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      default: [],
-      ref: "NameTag",
+const NameSchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+      unique: true,
     },
-  ],
+    note: {
+      type: String,
+      required: false,
+    },
+    tags: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        default: [],
+        ref: "NameTag",
+      },
+    ],
 
-  likedbycount: {
-    type: Number,
-    default: 0,
+    likedbycount: {
+      type: Number,
+      default: 0,
+    },
+    createdby: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
   },
-  createdby: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
-  },
-});
+  { timestamps: true },
+);
 
 NameSchema.plugin(uniqueValidator);
 

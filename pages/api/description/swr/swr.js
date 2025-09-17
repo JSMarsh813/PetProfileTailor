@@ -134,6 +134,7 @@ export default async function handler(req, res) {
           createdby: 1,
           relatednames: 1,
           likedbycount: 1,
+          updatedAt: 1,
         },
       },
       // Final projection
@@ -150,6 +151,9 @@ export default async function handler(req, res) {
           },
           relatednames: 1,
           likedbycount: 1,
+          updatedAt: 1,
+          //vital for swr edit to work, its used as part of the content key
+          // the key needs to change, or react won't render the edit updates, so we need a field thats always different, which updatedAt is perfect for
         },
       },
     ]);
