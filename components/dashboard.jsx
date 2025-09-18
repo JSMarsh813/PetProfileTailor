@@ -1,20 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-
-import GeneralOpenCloseButton from "@components/ReusableSmallComponents/buttons/generalOpenCloseButton";
-
-import WideCenteredHeader from "@components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
-
+import React from "react";
 import PointSystemList from "@components/Ranking/PointSystemList";
-import DashboardChartForFavDescriptions from "@components/ShowingListOfContent/DashboardChartForFavDescriptions";
-import ContentListing from "@/components/ShowingListOfContent/ContentListing";
-
-import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
-import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
-
 import { useSession } from "next-auth/react";
-import CoreListingPageLogic from "./CoreListingPagesLogic";
+import ToggleOneContentPage from "./ShowingListOfContent/ToggleOneContentPage";
 
 export default function Dashboard({
   likedNames,
@@ -22,23 +11,30 @@ export default function Dashboard({
   createdDescriptions,
   likedDescriptions,
 }) {
-  //       descriptionTagListProp,
-  //   NameTagListProp,
-
   const { data: session } = useSession();
-  const [favoritesListOpen, setFavoritesListOpen] = useState(false);
-
-  const [favDescriptionsOpen, setFavDescriptionsOpen] = useState(false);
-
-  const [openContent, setOpenContent] = useState(null);
-
-  function handleContentClick(contentKey) {
-    setOpenContent(openContent === contentKey ? null : contentKey);
-  }
 
   const userName = session?.user?.name || "Guest";
-  const swrForThisUserID = session?.user?.id || "";
-  const profileImage = session?.user?.profileimage || "/default-profile.png";
+
+  const contentList = [
+    { text: "Fav Names", className: "mb-2", value: "Fav Names" },
+    {
+      text: "Fav Descriptions",
+      className: "mb-2",
+      value: "Fav Descriptions",
+    },
+    {
+      text: "Added Names",
+
+      className: "mb-2",
+      value: "Added Names",
+    },
+    {
+      text: "Added Descriptions",
+
+      className: "mb-2",
+      value: "Added Descriptions",
+    },
+  ];
 
   return (
     <section>
@@ -78,15 +74,6 @@ export default function Dashboard({
                       descriptionsAdds={createdDescriptions.length}
                     />
                   </div>
-                  {/* 
-                  <ProfileImage
-                    divStyling="w-28"
-                    profileImage={profileImage}
-                    layout="responsive"
-                    className="ml-3  h-32 rounded-full inline  shadow-xl"
-                    width={100}
-                    height={100}
-                  /> */}
                 </section>
               </div>
             )}
@@ -109,82 +96,12 @@ export default function Dashboard({
               {" "}
               Select which content you wish to view{" "}
             </h4>
-            <GeneralOpenCloseButton
-              text="Fav Names"
-              setState={handleContentClick}
-              className="mb-2"
-              value="Fav Names"
-              state={openContent}
-            />
 
-            <GeneralOpenCloseButton
-              text="Fav Descriptions"
-              setState={handleContentClick}
-              className="mb-2"
-              value="Fav Descriptions"
-              state={openContent}
-            />
-
-            <GeneralOpenCloseButton
-              text="Added Names"
-              setState={handleContentClick}
-              className="mb-2"
-              value="Added Names"
-              state={openContent}
-            />
-
-            <GeneralOpenCloseButton
-              text="Added Descriptions"
-              setState={handleContentClick}
-              className="mb-2"
-              value="Added Descriptions"
-              state={openContent}
+            <ToggleOneContentPage
+              contentList={contentList}
+              swrForThisUserID={session?.user?.id || ""}
             />
           </section>
-
-          {openContent === "Fav Names" && (
-            <div>
-              <CoreListingPageLogic
-                dataType="names"
-                // swrForThisUserID={swrForThisUserID}
-                showHeader={false}
-                restrictSwrToLikedNames={true}
-              />
-            </div>
-          )}
-
-          {openContent === "Fav Descriptions" && (
-            <div>
-              <CoreListingPageLogic
-                dataType="descriptions"
-                // swrForThisUserID={swrForThisUserID}
-                showHeader={false}
-                restrictSwrToLikedNames={true}
-              />
-            </div>
-          )}
-
-          {openContent === "Added Names" && (
-            <div>
-              <CoreListingPageLogic
-                dataType="names"
-                swrForThisUserID={swrForThisUserID}
-                showHeader={false}
-                restrictSwrToLikedNames={false}
-              />
-            </div>
-          )}
-
-          {openContent === "Added Descriptions" && (
-            <div>
-              <CoreListingPageLogic
-                dataType="descriptions"
-                swrForThisUserID={swrForThisUserID}
-                showHeader={false}
-                restrictSwrToLikedNames={false}
-              />
-            </div>
-          )}
         </div>
       </section>
     </section>

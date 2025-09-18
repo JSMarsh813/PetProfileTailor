@@ -15,6 +15,7 @@ import EditBioAndProfile from "@components/EditingData/EditBioAndProfile";
 import EditBioProfileButton from "@components/ReusableSmallComponents/buttons/EditBioProfileButton";
 import UsersFollowersList from "@components/ShowingListOfContent/UsersFollowersList";
 import UsersFollowingList from "@components/ShowingListOfContent/UsersFollowingList";
+import ToggleOneContentPage from "./ShowingListOfContent/ToggleOneContentPage";
 
 import { useSession } from "next-auth/react";
 import ProfilePagesLogic from "./ProfilePagesLogic";
@@ -71,6 +72,19 @@ export default function Profile({
   function showfollowingListFunction() {
     setShowFollowingList(!showFollowingList);
   }
+
+  const contentList = [
+    {
+      text: "Names",
+      className: "mb-2",
+      value: "Added Names",
+    },
+    {
+      text: "Descriptions",
+      className: "mb-2",
+      value: "Added Descriptions",
+    },
+  ];
 
   // for names
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
@@ -201,54 +215,21 @@ export default function Profile({
 
         {/* ######## USERS CONTRIBUTIONS SECTION ##########*/}
 
-        <div className=" flex-1 grid grid-cols-1 gap-4 mr-2 h-fit text-white bg-secondary rounded-2xl">
+        <div className=" flex-1 grid grid-cols-1 gap-4 mr-2 h-fit text-white pt-4  rounded-2xl">
           {/* ########## NAMES ADDED  ################*/}
-          <section className="my-4">
-            <h2
-              className="w-full text-center font-semibold text-subtleWhite
-                            text-xl
-                             p-2 
-                            "
-            >
-              Names
-            </h2>
-            <div
-              className=" flex-1 grid grid-cols-1 gap-4 mr-2  
- w-full
- "
-            >
-              {!nameList.length ? (
-                <section className="">
-                  <span> no names added yet! </span>
-                </section>
-              ) : (
-                <section className=" w-full">
-                  <section className="">
-                    <ProfilePagesLogic
-                      dataType="names"
-                      profileUserId={userData._id}
-                    />
-                  </section>
-                </section>
-              )}
-            </div>
-          </section>
+
+          <ToggleOneContentPage
+            contentList={contentList}
+            swrForThisUserID={userData._id || ""}
+            defaultOpen="Added Names"
+          />
 
           {/* ############## DESCRIPTIONS ADDED ##############*/}
           <section className="my-2">
-            <h2
-              className="w-full text-center font-semibold text-subtleWhite
-            text-xl
-            bg-secondary p-2 
-            "
-            >
-              Descriptions
-            </h2>
-
-            <ProfilePagesLogic
+            {/* <ProfilePagesLogic
               dataType="descriptions"
               profileUserId={userData._id}
-            />
+            /> */}
 
             {showProfileEditPage && (
               <EditBioAndProfile
