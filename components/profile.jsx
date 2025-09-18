@@ -141,7 +141,7 @@ export default function Profile({
 
                       <div className="text-center">
                         <span className="text-xl font-bold block tracking-wide">
-                          {userData.followers.length}
+                          {userData?.followers?.length || "0"}
                         </span>
                         <button
                           className="text-sm"
@@ -161,10 +161,11 @@ export default function Profile({
                     />
                   ) : (
                     <div className=" w-full pb-4">
-                      <FollowButton
+                      <span> Follow Button </span>
+                      {/* <FollowButton
                         data={userData}
                         session={session}
-                      />
+                      /> */}
                     </div>
                   )}
 

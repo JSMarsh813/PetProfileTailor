@@ -46,7 +46,7 @@ export default function UsersFollowersList({
                     <h1 className="text-white text-xl">Followers </h1>
                   </div>
 
-                  {userData.followers[0] ? (
+                  {userData?.followers && userData?.followers[0] ? (
                     userData.followers.map((follower) => (
                       <a
                         key={follower._id}

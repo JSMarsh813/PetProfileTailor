@@ -23,12 +23,9 @@ export default async function ProfilePage({ params }) {
 
   // ############# FIND A  USER ##################
   const userData = await leanWithStrings(
-    User.findOne({ profilename: usersProfileName })
-      .select("name followers profileimage profilename bioblurb location")
-      .populate(
-        "followers",
-        "_id name profileimage profilename bioblurb location",
-      ),
+    User.findOne({ profilename: usersProfileName }).select(
+      "name followers profileimage profilename bioblurb location",
+    ),
   );
 
   console.log("userData", userData);
@@ -72,12 +69,7 @@ export default async function ProfilePage({ params }) {
   let usersFollowing = await leanWithStrings(
     User.find({
       followers: userId,
-    })
-      .select("name followers name profileimage profilename bioblurb location")
-      .populate(
-        "followers",
-        "name followers name profileimage profilename bioblurb location",
-      ),
+    }).select("name followers name profileimage profilename bioblurb location"),
   );
 
   let usersLikedContent = [];
