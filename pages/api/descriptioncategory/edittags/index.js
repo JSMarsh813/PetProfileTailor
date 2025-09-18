@@ -2,6 +2,7 @@ import dbConnect from "@utils/db";
 
 import Category from "@/models/DescriptionCategory";
 import NameTag from "@models/NameTag";
+import { checkIfAdmin } from "@/utils/auth/CheckIfAdmin";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -9,6 +10,12 @@ export default async function handler(req, res) {
 
   await dbConnect.connect();
   console.log("request body", req.body);
+
+  const session = await checkIfAdmin({
+    req,
+    res,
+  });
+  if (!session) return;
 
   if (method === "PUT") {
     try {
