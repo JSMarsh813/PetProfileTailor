@@ -1,19 +1,18 @@
 import User from "@models/User";
 import db from "@utils/db";
 const mongoose = require("mongoose");
-import { getServerSession } from "next-auth/next";
-import { serverAuthOptions } from "@/lib/auth";
+import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 async function handler(req, res) {
   if (req.method !== "PUT") {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const session = await getServerSession(req, res, serverAuthOptions);
-  if (!session) {
-    res.status(401).json({ message: "Not authenticated" });
-    return null;
-  }
+  const session = await getSessionForApis({
+    req,
+    res,
+  });
+  if (!session) return null;
 
   const userId = session.user.id;
 

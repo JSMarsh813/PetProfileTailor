@@ -1,6 +1,6 @@
 import Names from "@models/Names";
 import db from "@utils/db";
-import { checkOwnership } from "@/utils/auth/checkOwnership";
+import { checkOwnership } from "@/utils/api/checkOwnership";
 
 const handler = async (req, res) => {
   if (req.method === "GET") {
@@ -43,7 +43,7 @@ const putHandler = async (req, res) => {
     res,
     resourceCreatorId: individualname.createdby,
   });
-  if (!session) return;
+  if (!session) return null;
 
   try {
     // update other fields

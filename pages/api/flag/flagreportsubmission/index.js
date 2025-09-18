@@ -1,20 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import db from "@utils/db";
 import FlagReport from "@models/FlagReport";
-import { getServerSession } from "next-auth/next";
-import { serverAuthOptions } from "@/lib/auth";
+import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 //wasn't working when everything was lowercase, had to be IndividualPosts not individualNames for it to work
 
 export default async function handler(req, res) {
   const { method } = req;
 
-  const session = await getServerSession(req, res, serverAuthOptions);
-
-  if (!session) {
-    res.status(401).json({ message: "Not authenticated" });
-    return null;
-  }
+  const session = await getSessionForApis({
+    req,
+    res,
+  });
+  if (!session) return null;
 
   const reportedByUserId = session.user.id;
 

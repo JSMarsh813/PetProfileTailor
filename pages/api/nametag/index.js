@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "@utils/db";
 import NameTag from "@models/NameTag";
-import { checkIfAdmin } from "@/utils/auth/CheckIfAdmin";
+import { checkIfAdmin } from "@/utils/api/CheckIfAdmin";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
         req,
         res,
       });
-      if (!session) return;
+      if (!session) return null;
       const nametag = await NameTag.create(req.body);
       res.status(201).json(nametag);
     } catch (err) {

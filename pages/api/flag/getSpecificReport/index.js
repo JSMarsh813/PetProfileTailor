@@ -2,7 +2,7 @@ import db from "@utils/db";
 import FlagReport from "@/models/FlagReport";
 import mongoose from "mongoose";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
-import { checkOwnership } from "@/utils/auth/checkOwnership";
+import { checkOwnership } from "@/utils/api/checkOwnership";
 
 export default async function handler(req, res) {
   await db.connect();
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     res,
     resourceCreatorId: toUpdateDescription.createdby,
   });
-  if (!session) return;
+  if (!session) return null;
 
   const userId = session.user.id;
 

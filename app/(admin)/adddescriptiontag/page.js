@@ -23,7 +23,7 @@ export default function AddDescriptionTag() {
   function handleDescriptionTagSubmission(e) {
     e.preventDefault();
 
-    if (!session) return;
+    if (!session) return null;
 
     const descriptionTagSubmission = {
       tag: newDescriptionTag,

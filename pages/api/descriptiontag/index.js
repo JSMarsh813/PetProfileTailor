@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import dbConnect from "@utils/db";
 import DescriptionTag from "@/models/DescriptionTag";
-import { checkIfAdmin } from "@/utils/auth/CheckIfAdmin";
+import { checkIfAdmin } from "@/utils/api/CheckIfAdmin";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -51,7 +51,7 @@ export default async function handler(req, res) {
         req,
         res,
       });
-      if (!session) return;
+      if (!session) return null;
 
       const descriptiontag = await DescriptionTag.create(req.body);
 

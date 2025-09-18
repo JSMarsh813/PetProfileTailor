@@ -3,14 +3,18 @@ import mongoose from "mongoose";
 import NameLikes from "@/models/NameLikes";
 import Names from "@/models/Names";
 import { idText } from "typescript";
-import { getServerSession } from "next-auth";
-import { serverAuthOptions } from "@/lib/auth";
+import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 export default async function handler(req, res) {
   await dbConnect.connect();
   const { id: nameId } = req.query;
 
-  const serverSession = await getServerSession(serverAuthOptions);
+  const serverSession = await getSessionForApis({
+    req,
+    res,
+  });
+  if (!serverSession) return null;
+
   const userId = serverSession.user.id;
 
   console.log("req.query", req.query);

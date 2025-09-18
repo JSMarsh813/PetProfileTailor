@@ -1,7 +1,6 @@
 import db from "@utils/db";
 import User from "@models/User";
-import { getServerSession } from "next-auth/next";
-import { serverAuthOptions } from "@/lib/auth";
+import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 export default async function handler(req, res) {
   const {
@@ -9,12 +8,11 @@ export default async function handler(req, res) {
     method,
   } = req;
 
-  const session = await getServerSession(req, res, serverAuthOptions);
-
-  if (!session) {
-    res.status(401).json({ message: "Not authenticated" });
-    return null;
-  }
+  const session = await getSessionForApis({
+    req,
+    res,
+  });
+  if (!session) return null;
 
   const signedInUser = session.user.id;
 

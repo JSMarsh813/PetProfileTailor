@@ -1,6 +1,4 @@
-// utils/authorizeUser.js
-import { getServerSession } from "next-auth/next";
-import { serverAuthOptions } from "@/lib/auth";
+import { getSessionForApis } from "./getSessionForApis";
 
 /**
  * Checks if the current session exists and matches the resource owner
@@ -11,17 +9,20 @@ import { serverAuthOptions } from "@/lib/auth";
  * @param {string} [params.resourceName] - Optional, used for error messages
  * @returns {Promise<Object|null>} session object if authorized, or null if unauthorized
  */
-export async function checkOwnership({ req, res, resourceCreatorId }) {
-  const session = await getServerSession(req, res, serverAuthOptions);
+export async function checkIfAdmin({ req, res }) {
+  const session = await getSessionForApis({ req, res });
 
   if (!session) {
-    res.status(401).json({ message: "Not authenticated" });
     return null;
   }
 
-  if (resourceCreatorId.toString() !== session.user.id) {
+  const { role, status } = session.user || {};
+
+  const isAdmin = role === "admin" && status === "active";
+
+  if (isAdmin) {
     res.status(403).json({
-      message: `Only the creator of this content is authorized to change it`,
+      message: `Unauthorized, you must be an admin to complete this action"`,
     });
     return null;
   }

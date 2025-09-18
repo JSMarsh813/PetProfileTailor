@@ -6,7 +6,8 @@ import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
 // eslint-disable-next-line no-unused-vars
 import tags from "@models/NameTag";
 //necessary or the tags won't populate
-import { checkOwnership } from "@/utils/auth/checkOwnership";
+import { checkOwnership } from "@/utils/api/checkOwnership";
+import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -46,7 +47,7 @@ export default async function handler(req, res) {
       res,
       resourceCreatorId: toUpdateName.createdby,
     });
-    if (!session) return;
+    if (!session) return null;
 
     try {
       // Only check if user is actually changing the name
@@ -103,12 +104,11 @@ export default async function handler(req, res) {
     // "mike" will get the name already exists error if it matches a "Mike", "MIKE", "mikE", etc.
     // he ^ and $ anchors make sure it only matches the full string (not substrings).
 
-    const session = await checkOwnership({
+    const session = await getSessionForApis({
       req,
       res,
-      resourceCreatorId: existingNameCheck.createdby,
     });
-    if (!session) return;
+    if (!session) return null;
 
     let checkForInvalidInput = regexInvalidInput(content);
     console.log(checkForInvalidInput);
@@ -142,5 +142,8 @@ export default async function handler(req, res) {
     } catch (err) {
       res.status(500).json(err);
     }
+  } else {
+    res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
+    res.status(405).end(`Method ${method} Not Allowed`);
   }
 }

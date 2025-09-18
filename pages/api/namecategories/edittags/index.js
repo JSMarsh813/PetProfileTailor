@@ -1,7 +1,7 @@
 import dbConnect from "@utils/db";
 import Category from "@models/NameCategory";
 import NameTag from "@models/NameTag";
-import { checkIfAdmin } from "@/utils/auth/CheckIfAdmin";
+import { checkIfAdmin } from "@/utils/api/CheckIfAdmin";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         req,
         res,
       });
-      if (!session) return;
+      if (!session) return null;
       const category = await Category.updateMany(
         {
           _id: { $in: categoriesToUpdate.map((category) => category) },
