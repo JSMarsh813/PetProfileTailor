@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import db from "@utils/db";
-import FlagReport from "@models/FlagReport";
+import Report from "@models/Report";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 //wasn't working when everything was lowercase, had to be IndividualPosts not individualNames for it to work
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const existingReport = await FlagReport.findOne({
+    const existingReport = await Report.findOne({
       reportedby: reportedByUserId,
       contentid,
       status: { $nin: ["dismissed", "deleted", "resolved"] },
@@ -61,7 +61,7 @@ export default async function handler(req, res) {
       });
     }
     try {
-      const report = await FlagReport.create({
+      const report = await Report.create({
         contenttype,
         contentid,
         contentcopy,

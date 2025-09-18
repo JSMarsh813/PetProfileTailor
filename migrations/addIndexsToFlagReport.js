@@ -2,15 +2,15 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import dbConnect from "../utils/db.js";
 
-const createFlagReportIndexes = async () => {
+const createReportIndexes = async () => {
   await dbConnect.connect();
 
-  const flagReportsCollection = mongoose.connection.collection("flagreports");
+  const reportsCollection = mongoose.connection.collection("reports");
 
   const indexesToCreate = [
     { key: { contenttype: 1 }, name: "contenttype_index" },
     { key: { contentid: 1 }, name: "contentid_index" },
-    { key: { contentcreatedbyuser: 1 }, name: "contentcreatedbyuser_index" },
+    { key: { contentcreatedby: 1 }, name: "contentcreatedby_index" },
     { key: { reportedbyuser: 1 }, name: "reportedbyuser_index" },
     { key: { status: 1 }, name: "status_index" },
     { key: { outcome: 1 }, name: "outcome_index" },
@@ -40,7 +40,7 @@ const createFlagReportIndexes = async () => {
   ];
 
   try {
-    const existingIndexes = await flagReportsCollection.indexes();
+    const existingIndexes = await reportsCollection.indexes();
     const existingIndexNames = existingIndexes.map((idx) => idx.name);
 
     for (const index of indexesToCreate) {
@@ -50,21 +50,21 @@ const createFlagReportIndexes = async () => {
           options.partialFilterExpression = index.partialFilterExpression;
         }
 
-        await flagReportsCollection.createIndex(index.key, options);
+        await reportsCollection.createIndex(index.key, options);
         console.log(`✅ Created index: ${index.name}`);
       } else {
         console.log(`ℹ️ Index already exists: ${index.name}`);
       }
     }
 
-    console.log("🎉 All FlagReport indexes processed successfully!");
+    console.log("🎉 All Report indexes processed successfully!");
   } catch (err) {
-    console.error("❌ Error creating FlagReport indexes:", err);
+    console.error("❌ Error creating Report indexes:", err);
   } finally {
     await mongoose.connection.close();
   }
 };
 
-createFlagReportIndexes();
+createReportIndexes();
 
-//node migrations/addIndexsToFlagReport.js
+//node migrations/addIndexsToReport.js

@@ -22,7 +22,7 @@ import LoadingSkeleton from "@/components/LoadingScreen";
 import ReportsWrapper from "@/wrappers/ReportsWrapper";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
-import FlagReport from "@models/FlagReport";
+import Report from "@models/Report";
 import NameLikes from "@/models/NameLikes";
 import DescriptionLikes from "@/models/DescriptionLikes";
 import Suggestion from "@/models/Suggestions";
@@ -75,7 +75,7 @@ export default async function RootLayout({ children }) {
 
     [nameReports, descriptionReports] = await Promise.all([
       leanWithStrings(
-        FlagReport.find(
+        Report.find(
           {
             reportedby: userId,
             status: { $nin: ["dismissed", "deleted", "resolved"] },
@@ -85,7 +85,7 @@ export default async function RootLayout({ children }) {
         ),
       ),
       leanWithStrings(
-        FlagReport.find(
+        Report.find(
           {
             reportedby: userId,
             status: "pending", // only get pending reports

@@ -1,5 +1,5 @@
 import db from "@utils/db";
-import FlagReport from "@/models/FlagReport";
+import Report from "@/models/Report";
 import mongoose from "mongoose";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import { checkOwnership } from "@/utils/api/checkOwnership";
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       await db.connect();
 
       const report = await leanWithStrings(
-        FlagReport.findOne(
+        Report.findOne(
           {
             contentid: contentId,
             flaggedbyuser: userId,
@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     try {
       const { reportid, reportcategories, comments } = req.body;
 
-      const existingReport = await FlagReport.findById(reportid);
+      const existingReport = await Report.findById(reportid);
 
       if (!existingReport) {
         return res.status(404).json({ error: "Report not found" });
@@ -83,7 +83,7 @@ export default async function handler(req, res) {
     try {
       const { reportid } = req.body;
 
-      const reportToUpdate = await FlagReport.findOneAndUpdate(
+      const reportToUpdate = await Report.findOneAndUpdate(
         { _id: reportid, reportedby: userId },
         { status: "deleted", outcome: "deletedByUser" },
         { new: true },

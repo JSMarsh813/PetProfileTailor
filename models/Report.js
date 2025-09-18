@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const FlagReportSchema = new mongoose.Schema(
+const ReportSchema = new mongoose.Schema(
   {
     contenttype: {
       type: String,
@@ -71,7 +71,7 @@ const FlagReportSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-FlagReportSchema.statics.fieldDescriptions = {
+ReportSchema.statics.fieldDescriptions = {
   status: "Current stage of moderation workflow",
   outcome: "Result of the moderation review",
   priority: "How urgent or serious the report is",
@@ -79,6 +79,5 @@ FlagReportSchema.statics.fieldDescriptions = {
   comments: "Optional notes provided by the user",
 };
 
-const FlagReport =
-  mongoose.models.FlagReport || mongoose.model("FlagReport", FlagReportSchema);
-export default FlagReport;
+const Report = mongoose.models.Report || mongoose.model("Report", ReportSchema);
+export default Report;
