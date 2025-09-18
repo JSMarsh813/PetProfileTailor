@@ -100,8 +100,6 @@ export const authOptions = {
           bioblurb: user.bioblurb || "",
           location: user.location || "",
           profileimage: user.profileimage,
-          followers: user.followers || [],
-          blockedusers: user.blockedusers || [],
         };
       }
       return token;

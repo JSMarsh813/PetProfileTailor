@@ -25,11 +25,6 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
     },
-
-    blockedusers: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-      default: [],
-    },
     status: {
       type: String,
       enum: ["active", "limited", "suspended", "banned", "pending"],
