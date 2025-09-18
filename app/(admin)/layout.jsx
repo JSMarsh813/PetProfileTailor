@@ -8,9 +8,9 @@ export default async function ProtectedLayout({ children }) {
 
   if (!session) redirect("/login");
 
-  const userId = (session.user?.id ?? "").toString();
+  const { role, status } = session.user || {};
 
-  const isAdmin = userId === process.env.admin_id;
+  const isAdmin = role === "admin" && status === "active";
 
   if (!isAdmin) redirect("/dashboard");
 
