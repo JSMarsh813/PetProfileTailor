@@ -1,6 +1,7 @@
 import dbConnect from "@utils/db";
 import Category from "@models/NameCategory";
 import NameTag from "@models/NameTag";
+import { checkIfAdmin } from "@/utils/auth/CheckIfAdmin";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -18,6 +19,11 @@ export default async function handler(req, res) {
   }
 
   if (method === "POST") {
+    const session = await checkIfAdmin({
+      req,
+      res,
+    });
+    if (!session) return;
     try {
       const category = await Category.create(newcategory);
       res.status(200).json(category);

@@ -2,13 +2,23 @@ import db from "@utils/db";
 import FlagReport from "@/models/FlagReport";
 import mongoose from "mongoose";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
+import { checkOwnership } from "@/utils/auth/checkOwnership";
 
 export default async function handler(req, res) {
   await db.connect();
 
+  const session = await checkOwnership({
+    req,
+    res,
+    resourceCreatorId: toUpdateDescription.createdby,
+  });
+  if (!session) return;
+
+  const userId = session.user.id;
+
   if (req.method === "GET") {
     try {
-      const { contentId, userId, status } = req.query;
+      const { contentId, status } = req.query;
       await db.connect();
 
       const report = await leanWithStrings(
@@ -43,18 +53,22 @@ export default async function handler(req, res) {
     try {
       const { reportid, reportcategories, comments } = req.body;
 
-      const updatedReport = await FlagReport.findByIdAndUpdate(
-        reportid, // don’t need to use _id: reportid inside findByIdAndUpdate, because that method specifically expects the id value directly, not an object.
-        {
-          reportcategories,
-          comments,
-        },
-        { new: true }, // return updated doc
-      );
+      const existingReport = await FlagReport.findById(reportid);
 
-      if (!updatedReport) {
+      if (!existingReport) {
         return res.status(404).json({ error: "Report not found" });
       }
+
+      if (existingReport.reportedby.toString() !== userId) {
+        return res.status(403).json({
+          error: "You are not authorized to update this report",
+        });
+      }
+
+      existingReport.reportcategories = reportcategories;
+      existingReport.comments = comments;
+
+      const updatedReport = await existingReport.save();
 
       return res
         .status(200)
@@ -67,10 +81,10 @@ export default async function handler(req, res) {
 
   if (req.method === "DELETE") {
     try {
-      const { reportid, userid } = req.body;
+      const { reportid } = req.body;
 
       const reportToUpdate = await FlagReport.findOneAndUpdate(
-        { _id: reportid, reportedby: userid },
+        { _id: reportid, reportedby: userId },
         { status: "deleted", outcome: "report_deleted_by_reporter" },
         { new: true },
       );
