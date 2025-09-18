@@ -18,14 +18,11 @@ export async function checkIfAdmin({ req, res }) {
     res.status(401).json({ message: "Not authenticated" });
     return null;
   }
+  const { role, status } = session.user || {};
 
-  console.log(
-    "this is session",
-    session.user.id,
-    "this is admin",
-    process.env.admin_id,
-  );
-  if (session.user.id !== process.env.admin_id) {
+  const isAdmin = role === "admin" && status === "active";
+
+  if (isAdmin) {
     res.status(403).json({
       message: `Unauthorized, you must be an admin to complete this action"`,
     });
