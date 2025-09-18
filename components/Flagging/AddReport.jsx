@@ -69,7 +69,7 @@ export default function AddReport({
       contentcreatedby: contentCreatedByUserId,
       reportedby: flaggedByUser,
       reportcategories: flagCategoriesState,
-      comments: additionalCommentsState,
+      comments: additionalCommentsState.toString(),
     };
     console.log(reportSubmission);
 

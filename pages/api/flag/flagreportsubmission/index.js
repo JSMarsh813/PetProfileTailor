@@ -49,6 +49,19 @@ export default async function handler(req, res) {
         message: `You cannot flag your own content`,
       });
     }
+
+    const existingReport = await FlagReport.findOne({
+      reportedby: reportedByUserId,
+      contentid,
+      status: { $nin: ["dismissed", "deleted", "resolved"] },
+    });
+
+    if (existingReport) {
+      res.status(201).send({
+        report,
+        message: `You cannot flag this content again until the review process is completed for your current report`,
+      });
+    }
     try {
       const report = await FlagReport.create({
         contenttype,
@@ -61,12 +74,12 @@ export default async function handler(req, res) {
       });
       res.status(201).send({
         report,
-        message: `Report for ${contentcopy.content} successfully submitted, thank you!`,
+        message: `Report successfully submitted, thank you!`,
       });
     } catch (err) {
       console.log(err);
       res.status(500).send({
-        message: `Report for ${contentcopy.content} not submitted ${err} !`,
+        message: `Report not submitted. There was an error!`,
       });
     }
   }
