@@ -78,8 +78,8 @@ export default function FollowButton({
       ) : (
         <label
           className="justify-self-end
-             mr-2 mx-auto bg-yellow-500 hover:bg-yellow-400 border-b-4 border-yellow-700 text-secondary
-                      hover:border-yellow-500 text-center py-2 px-4 rounded-2xl"
+             mr-2 mx-auto bg-subtleBackground hover:bg-blue-500 border-b-4 border-subtleWhite text-subtleWhite
+                      hover:border-blue-700 text-center py-2 px-4 rounded-2xl"
         >
           <input
             style={{ display: "none" }}
@@ -89,7 +89,7 @@ export default function FollowButton({
           />
           <FontAwesomeIcon
             icon={faUserPlus}
-            className={`mr-2${FollowIconStyling}`}
+            className={`mr-2 ${FollowIconStyling}`}
           />
 
           <span className={`${FollowTextStyling}`}>Follow</span>

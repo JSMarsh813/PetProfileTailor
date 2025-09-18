@@ -147,8 +147,7 @@ function NewNameWithTagsData() {
           />
 
           <button
-            className="inline-block bg-subtleBackground   p-2 border-2  hover:text-subtleWhite hover:border-blue-500 hover:bg-blue-400 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
-            //    "bg-subtleBackground text-white hover:text-white hover:border-blue-500 hover:bg-blue-400";
+            className="inline-block bg-subtleBackground   p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
             onClick={() => checkIfNameExists()}
             disabled={
               nameCheckInvalidInput !== null || nameCheck.length < 2
@@ -269,7 +268,7 @@ function NewNameWithTagsData() {
           {/* BUTTON */}
           {!isPending && (
             <button
-              className={`font-bold py-2 px-4 border-b-4 rounded my-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-400                       hover:text-subtleWhite                   hover:border-blue-500
+              className={`font-bold py-2 px-4 border-b-4 rounded my-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-500                       hover:text-subtleWhite                   hover:border-blue-700
                     disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor "             `}
               disabled={
                 !session || newNameInvalidInput !== null || newName.length < 2

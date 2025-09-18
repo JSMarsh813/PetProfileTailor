@@ -103,7 +103,7 @@ export default function Profile({
     <div>
       <div className="flex flex-col md:flex-row mt-6">
         {/* ############## BIO ############## */}
-        <section className=" sm:w-96 text-subtleWhite ">
+        <section className=" sm:w-80 text-subtleWhite ">
           <div className="px-2 ">
             <div
               className="relative flex flex-col min-w-0 break-words bg-violet-950 mb-6 shadow-xl rounded-lg mt-16
@@ -116,7 +116,7 @@ export default function Profile({
                       <img
                         src={userData.profileimage}
                         alt=""
-                        className="rounded-2xl align-middle -mt-16 h-36"
+                        className="rounded-2xl align-middle -mt-16 h-24"
                       />
                     </div>
                   </div>
@@ -192,19 +192,12 @@ export default function Profile({
                   </div>
                 </div>
 
-                <section className="relative pb-6 bg-secondary mb-4">
-                  <div className="container mx-auto px-2">
+                <section className="relative pb-6 bg-secondary my-3 pt-4">
+                  <div className="container mx-auto px-2 pt-2">
                     <PointSystemList
                       namesAdds={nameList.length}
                       descriptionsAdds={createdDescriptions.length}
                     />
-
-                    {/* <PointSystemList
-                      favNames={likedNames}
-                      namesCreated={nameList}
-                      createdDescriptions={createdDescriptions}
-                      likedDescriptions={likedDescriptions}
-                    /> */}
                   </div>
                 </section>
               </div>
@@ -216,21 +209,13 @@ export default function Profile({
         {/* ######## USERS CONTRIBUTIONS SECTION ##########*/}
 
         <div className=" flex-1 grid grid-cols-1 gap-4 mr-2 h-fit text-white pt-4  rounded-2xl">
-          {/* ########## NAMES ADDED  ################*/}
-
           <ToggleOneContentPage
             contentList={contentList}
             swrForThisUserID={userData._id || ""}
             defaultOpen="Added Names"
           />
 
-          {/* ############## DESCRIPTIONS ADDED ##############*/}
           <section className="my-2">
-            {/* <ProfilePagesLogic
-              dataType="descriptions"
-              profileUserId={userData._id}
-            /> */}
-
             {showProfileEditPage && (
               <EditBioAndProfile
                 userData={userData}

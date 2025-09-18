@@ -7,8 +7,8 @@ export default function RankingTotals({ totalPoints }) {
     return (
       <div className="w-full   ">
         {/* Icon and label */}
-        <section className="flex items-center w-fit  mx-auto mb-4  ">
-          <div className="flex  items-center">
+        <section className="flex  w-fit  mx-auto mb-4  ">
+          <div className="flex  align-text-top">
             <div className="mr-2 text-right">
               <FontAwesomeIcon
                 icon={faIcon}

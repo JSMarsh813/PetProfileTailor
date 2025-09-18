@@ -14,14 +14,14 @@ export default function UsersFollowersList({
     <>
       <div>
         <div
-          className="relative z-10"
+          className="relative z-30"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
-          <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="fixed inset-0 z-30 overflow-y-auto">
             {/* centers content */}
             <div
               className="            
@@ -40,7 +40,7 @@ export default function UsersFollowersList({
 
                   <div
                     className="mx-auto flex flex-col font-semibold text-secondary bg-violet-900
-                 border-2 border-violet-400 border-dotted 
+               
                  p-4 shadow-lg max-w-3xl"
                   >
                     <h1 className="text-white text-xl">Followers </h1>

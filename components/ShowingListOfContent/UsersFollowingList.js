@@ -14,7 +14,7 @@ export default function UsersFollowingList({
     <>
       <div>
         <div
-          className="relative z-10"
+          className="relative z-30"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
@@ -40,7 +40,7 @@ export default function UsersFollowingList({
 
                   <div
                     className="mx-auto flex flex-col font-semibold text-secondary bg-violet-900
-                 border-2 border-violet-400 border-dotted 
+             
                  p-4 shadow-lg max-w-3xl"
                   >
                     <h1 className="text-white text-xl">Following </h1>

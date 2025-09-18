@@ -19,18 +19,16 @@ export default function EngagementTable({
       <RankingTotals totalPoints={totalPoints} />
 
       {/* Desktop Table */}
-      <div className="hidden sm:block bg-primary rounded-xl shadow-lg overflow-hidden">
+      <div className="hidden sm:block rounded-xl shadow-lg overflow-hidden pt-2 ">
         <table className="min-w-full text-gray-100  ">
-          <thead className="bg-secondary">
+          <thead className="">
             <tr>
-              <th className="px-4 py-2"></th>
               <th className="px-4 py-2 text-center">Names</th>
               <th className="px-4 py-2 text-center">Descriptions</th>
             </tr>
           </thead>
           <tbody className="">
-            <tr className="">
-              <th className="px-4 py-2 text-left">Adds</th>
+            <tr className="bg-primary">
               <td className="px-4 py-2 text-center">{namesAdds}</td>
               <td className="px-4 py-2 text-center">{descriptionsAdds}</td>
             </tr>
@@ -54,18 +52,18 @@ export default function EngagementTable({
         ].map((cat) => (
           <div
             key={cat.category}
-            className="bg-primary rounded-lg shadow-lg p-4"
+            className=" rounded-lg shadow-lg p-4"
             role="region"
             aria-labelledby={`cat-${cat.category}`}
           >
             <h3
               id={`cat-${cat.category}`}
-              className="text-lg font-semibold text-subtleWhite mb-2 bg-secondary py-2 rounded-2xl border-b border-subtleWhite"
+              className="text-lg font-semibold text-subtleWhite mb-2  py-2 rounded-2xl"
             >
               {cat.category}
             </h3>
 
-            <div className="flex justify-between text-gray-100 mt-1">
+            <div className="flex justify-between text-gray-100 mt-1 py-2 px-6 rounded-2xl bg-primary">
               <span>Adds:</span>
               <span>{cat.Adds}</span>
             </div>

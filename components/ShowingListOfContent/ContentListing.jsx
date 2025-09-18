@@ -167,7 +167,7 @@ export default function ContentListing({
                           className={`px-2 py-1 rounded ${
                             open
                               ? " bg-subtleWhite text-secondary rounded-2xl"
-                              : "hover:bg-blue-400 rounded-2xl"
+                              : "hover:bg-blue-500 rounded-2xl"
                           }`}
                         >
                           <Ellipsis />
@@ -188,7 +188,7 @@ export default function ContentListing({
                                 }}
                                 // focus == important for keyboard styling
                                 className={`ml-2 mr-6 w-full group flex items-center ${
-                                  focus ? "bg-blue-400 text-white" : ""
+                                  focus ? "bg-blue-500 text-white" : ""
                                 }`}
                               />
                             )}
@@ -202,7 +202,7 @@ export default function ContentListing({
                                   if (content) openEdit(content);
                                 }}
                                 className={`ml-2 mr-6 w-full group flex items-center ${
-                                  focus ? "bg-blue-400 text-white" : ""
+                                  focus ? "bg-blue-500 text-white" : ""
                                 }`}
                               />
                             )}

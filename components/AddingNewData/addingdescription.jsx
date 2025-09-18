@@ -246,7 +246,7 @@ disabled:text-errorTextColor  bg-secondary border-subtleWhite"
             <button
               className={`font-bold py-2 px-4 border-b-4 rounded     
                 disabled:bg-errorBackgroundColor disabled:text-errorTextColor           
-                   mt-4 bg-yellow-300 text-violet-800 border-yellow-100   hover:bg-blue-400                       hover:text-subtleWhite                     hover:border-blue-500
+                   mt-4 bg-yellow-300 text-violet-800 border-yellow-100   hover:bg-blue-500                       hover:text-subtleWhite                     hover:border-blue-700
                `}
               disabled={
                 !session || newDescription.length < 10 ? "disabled" : ""
