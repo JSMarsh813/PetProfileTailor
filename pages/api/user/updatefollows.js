@@ -1,13 +1,23 @@
 import User from "@models/User";
 import db from "@utils/db";
 const mongoose = require("mongoose");
+import { getServerSession } from "next-auth/next";
+import { serverAuthOptions } from "@/lib/auth";
 
 async function handler(req, res) {
   if (req.method !== "PUT") {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const { userId, userToFollowId, userFollowed } = req.body;
+  const session = await getServerSession(req, res, serverAuthOptions);
+  if (!session) {
+    res.status(401).json({ message: "Not authenticated" });
+    return null;
+  }
+
+  const userId = session.user.id;
+
+  const { userToFollowId, userFollowed } = req.body;
   let idToObjectId = mongoose.Types.ObjectId(userToFollowId);
 
   await db.connect();
@@ -25,7 +35,7 @@ async function handler(req, res) {
 
   userFollowed
     ? (toUpdateUserFollowers.followers = toUpdateUserFollowers.followers.filter(
-        (userinfollowers) => userinfollowers != userId
+        (userinfollowers) => userinfollowers != userId,
       ))
     : (toUpdateUserFollowers.followers =
         toUpdateUserFollowers.followers.concat(userId));

@@ -1,13 +1,24 @@
 import User from "@models/User";
 import db from "@utils/db";
 const mongoose = require("mongoose");
+import { getServerSession } from "next-auth/next";
+import { serverAuthOptions } from "@/lib/auth";
 
 async function handler(req, res) {
   if (req.method !== "PUT") {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const { bio, location, userid } = req.body.bioSubmission;
+  const session = await getServerSession(req, res, serverAuthOptions);
+
+  if (!session) {
+    res.status(401).json({ message: "Not authenticated" });
+    return null;
+  }
+
+  const userid = session.user.id;
+
+  const { bio, location } = req.body.bioSubmission;
 
   let idToObjectId = mongoose.Types.ObjectId(userid);
 

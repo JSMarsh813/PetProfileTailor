@@ -1,5 +1,7 @@
 import db from "@utils/db";
 import User from "@models/User";
+import { getServerSession } from "next-auth/next";
+import { serverAuthOptions } from "@/lib/auth";
 
 export default async function handler(req, res) {
   const {
@@ -7,19 +9,21 @@ export default async function handler(req, res) {
     method,
   } = req;
 
-  //   const session = await getSession({ req });
-  //   if (!session) {
-  //     return res.status(401).send({ message: 'signin required' });
-  //   }
+  const session = await getServerSession(req, res, serverAuthOptions);
 
-  //   const { user } = session;
+  if (!session) {
+    res.status(401).json({ message: "Not authenticated" });
+    return null;
+  }
+
+  const signedInUser = session.user.id;
 
   await db.connect();
 
   switch (method) {
     case "GET" /* Get a user by its ID */:
       try {
-        const user = await User.findById(id);
+        const user = await User.findById(signedInUser);
         if (!user) {
           return res.status(400).json({ success: false });
         }
@@ -31,7 +35,7 @@ export default async function handler(req, res) {
 
     case "PUT" /* Edit a model by its ID */:
       try {
-        const user = await User.findByIdAndUpdate(id, req.body, {
+        const user = await User.findByIdAndUpdate(signedInUser, req.body, {
           new: true,
           runValidators: true,
         });

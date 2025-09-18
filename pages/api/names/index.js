@@ -6,6 +6,7 @@ import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
 // eslint-disable-next-line no-unused-vars
 import tags from "@models/NameTag";
 //necessary or the tags won't populate
+import { checkOwnership } from "@/utils/auth/checkOwnership";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -40,6 +41,12 @@ export default async function handler(req, res) {
     if (!toUpdateName) {
       return res.status(404).json({ message: "Name not found" });
     }
+    const session = await checkOwnership({
+      req,
+      res,
+      resourceCreatorId: toUpdateName.createdby,
+    });
+    if (!session) return;
 
     try {
       // Only check if user is actually changing the name
@@ -95,6 +102,13 @@ export default async function handler(req, res) {
     // case-insensitive query
     // "mike" will get the name already exists error if it matches a "Mike", "MIKE", "mikE", etc.
     // he ^ and $ anchors make sure it only matches the full string (not substrings).
+
+    const session = await checkOwnership({
+      req,
+      res,
+      resourceCreatorId: existingNameCheck.createdby,
+    });
+    if (!session) return;
 
     let checkForInvalidInput = regexInvalidInput(content);
     console.log(checkForInvalidInput);

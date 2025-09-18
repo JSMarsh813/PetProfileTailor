@@ -11,6 +11,11 @@ export default async function handler(req, res) {
 
   const session = await getServerSession(req, res, serverAuthOptions);
 
+  if (!session) {
+    res.status(401).json({ message: "Not authenticated" });
+    return null;
+  }
+
   const reportedByUserId = session.user.id;
 
   await db.connect();

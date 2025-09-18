@@ -1,5 +1,6 @@
 import Names from "@models/Names";
 import db from "@utils/db";
+import { checkOwnership } from "@/utils/auth/checkOwnership";
 
 const handler = async (req, res) => {
   if (req.method === "GET") {
@@ -36,6 +37,13 @@ const putHandler = async (req, res) => {
 
   if (!individualname)
     return res.status(404).send({ message: "Name not found" });
+
+  const session = await checkOwnership({
+    req,
+    res,
+    resourceCreatorId: individualname.createdby,
+  });
+  if (!session) return;
 
   try {
     // update other fields
