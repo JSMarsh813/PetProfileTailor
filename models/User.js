@@ -30,11 +30,6 @@ const UserSchema = new mongoose.Schema(
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
       default: [],
     },
-
-    followers: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-      default: [],
-    },
     status: {
       type: String,
       enum: ["active", "limited", "suspended", "banned", "pending"],
