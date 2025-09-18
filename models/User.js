@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-import chooseRandomDefaultAvatar from "@/utils/chooseRandomDefaultAvatar";
+import mongoose from "mongoose";
+import chooseRandomDefaultAvatar from "../utils/chooseRandomDefaultAvatar.js";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -17,38 +17,43 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      index: true,
+      lowercase: true,
+      trim: true,
     },
+    // this way emails are always lowercase, so theres less risk of duplication
     password: {
       type: String,
-      required: false,
     },
-    flaggedby: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        default: [],
-        ref: "User",
-      },
-    ],
-    blockedusers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        default: [],
-        ref: "User",
-      },
-    ],
-    followers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+
+    blockedusers: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+      default: [],
+    },
+
+    followers: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+      default: [],
+    },
+    status: {
+      type: String,
+      enum: ["active", "limited", "suspended", "banned", "pending"],
+      default: "active",
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: ["user", "moderator", "admin"],
+      default: "user",
+      required: true,
+    },
     bioblurb: {
       type: String,
       default: "",
     },
     location: {
       type: String,
-      required: false,
+
       default: "",
     },
     profileimage: {
@@ -59,15 +64,13 @@ const UserSchema = new mongoose.Schema(
     },
     passwordresettoken: {
       type: String,
-      required: false,
     },
     resettokenexpires: {
       type: Date,
-      required: false,
     },
   },
-  { timestamps: true },
   {
+    timestamps: true,
     strict: true,
     strictQuery: false, // Turn off strict mode for query filters
   },
