@@ -2,12 +2,15 @@ import bcryptjs from "bcryptjs";
 import User from "@models/User";
 import db from "@utils/db";
 
+import { getServerSession } from "next-auth";
+import { serverAuthOptions } from "@/lib/auth";
+
 async function handler(req, res) {
   if (req.method !== "PUT") {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const { name, email, password, userid } = req.body;
+  const { name, email, password } = req.body;
 
   if (!name || !email || !email.includes("@")) {
     res.status(422).json({
@@ -18,7 +21,10 @@ async function handler(req, res) {
 
   await db.connect();
 
-  const toUpdateUser = await User.findById(userid);
+  const session = await getServerSession(serverAuthOptions);
+  const userId = session.user.id;
+
+  const toUpdateUser = await User.findById(userId);
   toUpdateUser.name = name;
   toUpdateUser.email = email;
 

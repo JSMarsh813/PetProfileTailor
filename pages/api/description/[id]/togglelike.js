@@ -2,11 +2,15 @@ import dbConnect from "@/utils/db";
 import mongoose from "mongoose";
 import DescriptionLikes from "@/models/DescriptionLikes";
 import Description from "@/models/Description";
+import { getServerSession } from "next-auth";
+import { serverAuthOptions } from "@/lib/auth";
 
 export default async function handler(req, res) {
   await dbConnect.connect();
   const { id: descriptionId } = req.query;
-  const { userId } = req.body;
+
+  const serverSession = await getServerSession(serverAuthOptions);
+  const userId = serverSession.user.id;
 
   console.log("req.query", req.query);
 
