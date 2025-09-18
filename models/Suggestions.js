@@ -1,29 +1,23 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const ContentEditSuggestionSchema = new mongoose.Schema(
+const SuggestionsSchema = new mongoose.Schema(
   {
-    contenttype: {
+    contentType: {
       type: String,
       required: true,
       unique: false,
     },
-    contentid: {
+    contentId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       unique: false,
     },
-    contentcopy: {
-      type: Object,
-      default: {},
-      required: true,
-      unique: false,
-    },
-    createdbyuser: {
+    contentCreator: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    ideabyuser: {
+    suggestionBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
@@ -45,6 +39,7 @@ const ContentEditSuggestionSchema = new mongoose.Schema(
         "action_required",
         "resolved",
         "dismissed",
+        "deleted",
       ],
       default: "pending",
       required: true,
@@ -54,22 +49,17 @@ const ContentEditSuggestionSchema = new mongoose.Schema(
       enum: [
         "pending",
         "dismissed",
-        "added_content",
-        "edited_content",
-        "other",
+        "warningIssued",
+        "contentRemoved",
+        "deletedByUser",
       ],
       default: "none",
-    },
-    priority: {
-      type: String,
-      enum: ["unrated", "low", "medium", "high", "critical"],
-      default: "unrated",
     },
   },
   { timestamps: true },
 );
 
-ContentEditSuggestionSchema.statics.fieldDescriptions = {
+SuggestionsSchema.statics.fieldDescriptions = {
   status: "Current stage of moderation workflow",
   outcome: "Result of the moderation review",
   priority: "How urgent or serious the report is",
@@ -78,7 +68,7 @@ ContentEditSuggestionSchema.statics.fieldDescriptions = {
   comments: "Optional notes provided by the user",
 };
 
-const ContentEditSuggestion =
-  mongoose.models.ContentEditSuggestion ||
-  mongoose.model("ContentEditSuggestion", ContentEditSuggestionSchema);
-export default ContentEditSuggestion;
+const Suggestions =
+  mongoose.models.Suggestions ||
+  mongoose.model("Suggestions", SuggestionsSchema);
+export default Suggestions;

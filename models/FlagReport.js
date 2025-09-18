@@ -56,9 +56,9 @@ const FlagReportSchema = new mongoose.Schema(
       enum: [
         "pending",
         "dismissed",
-        "warning_issued",
-        "content_removed",
-        "report_deleted_by_reporter",
+        "warningIssued",
+        "contentRemoved",
+        "deletedByUser",
       ],
       default: "pending",
     },

@@ -25,9 +25,11 @@ import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import FlagReport from "@models/FlagReport";
 import NameLikes from "@/models/NameLikes";
 import DescriptionLikes from "@/models/DescriptionLikes";
+import Suggestion from "@/models/Suggestions";
 
 import mongoose from "mongoose";
 import LikesWrapper from "@/wrappers/LikesWrapper";
+import SuggestionsWrapper from "@/wrappers/SuggestionsWrapper";
 
 export const metadata = {
   title:
@@ -58,6 +60,8 @@ export default async function RootLayout({ children }) {
   let descriptionReports = [];
   let nameLikes = [];
   let descriptionLikes = [];
+  let nameSuggestions = [];
+  let descriptionSugggestions = [];
 
   // ########## Logged in user specific info ################
 
@@ -111,6 +115,31 @@ export default async function RootLayout({ children }) {
       ),
     ]);
 
+    // ############# Suggestions ###################
+
+    [nameSuggestions, descriptionSugggestions] = await Promise.all([
+      leanWithStrings(
+        Suggestion.find(
+          {
+            suggestionBy: userId,
+            status: { $nin: ["dismissed", "deleted", "resolved"] },
+            contenttype: "names",
+          },
+          { contentid: 1, status: 1, _id: 1 },
+        ),
+      ),
+      leanWithStrings(
+        Suggestion.find(
+          {
+            suggestionBy: userId,
+            status: "pending", // only get pending suggestions
+            contenttype: "descriptions",
+          },
+          { contentid: 1, status: 1, _id: 0 },
+        ),
+      ),
+    ]);
+
     console.log("userId in layout", userId);
   } // ############# End of user specific content ######
 
@@ -119,6 +148,11 @@ export default async function RootLayout({ children }) {
   const initialReports = {
     names: nameReports,
     descriptions: descriptionReports,
+  };
+
+  const initialSuggestions = {
+    names: nameSuggestions,
+    descriptions: descriptionSugggestions,
   };
 
   const initialLikes = {
@@ -139,31 +173,33 @@ export default async function RootLayout({ children }) {
           >
             <LikesWrapper initialLikes={initialLikes}>
               <ReportsWrapper initialReports={initialReports}>
-                <NavLayoutwithSettingsMenu />
-                <Suspense fallback={<LoadingSkeleton />}>
-                  <main className="flex-1  px-4 sm:px-6 lg:px-8">
-                    {/* width behavior is controlled by globals.css since tailwind wasn't working correctly despite significant debugging, w-max-7xl wouldn't work with any other width value (w-full, w-90vw) ect*/}
-                    {children}
-                  </main>
-                  {/*flex-1  in flex column means: main takes up the remaining flex space, so footer stays at the bottom */}
-                </Suspense>
-                <Analytics />
-                <ToastProvider />
+                <SuggestionsWrapper initialSuggestions={initialSuggestions}>
+                  <NavLayoutwithSettingsMenu />
+                  <Suspense fallback={<LoadingSkeleton />}>
+                    <main className="flex-1  px-4 sm:px-6 lg:px-8">
+                      {/* width behavior is controlled by globals.css since tailwind wasn't working correctly despite significant debugging, w-max-7xl wouldn't work with any other width value (w-full, w-90vw) ect*/}
+                      {children}
+                    </main>
+                    {/*flex-1  in flex column means: main takes up the remaining flex space, so footer stays at the bottom */}
+                  </Suspense>
+                  <Analytics />
+                  <ToastProvider />
 
-                <footer className="text-white text-sm py-4 px-4 bg-secondary border-t-2 border-violet-400 flex">
-                  <div className="flex flex-col gap-2">
-                    <h6 className="font-semibold">Credits:</h6>
-                    <small>
-                      <a
-                        className="text-xs block"
-                        href="https://www.freepik.com/author/freepik/icons/kawaii-flat_45#from_element=resource_detail"
-                      >
-                        Default user icons created by freepik, Kawaii Flat
-                        family
-                      </a>
-                    </small>
-                  </div>
-                </footer>
+                  <footer className="text-white text-sm py-4 px-4 bg-secondary border-t-2 border-violet-400 flex">
+                    <div className="flex flex-col gap-2">
+                      <h6 className="font-semibold">Credits:</h6>
+                      <small>
+                        <a
+                          className="text-xs block"
+                          href="https://www.freepik.com/author/freepik/icons/kawaii-flat_45#from_element=resource_detail"
+                        >
+                          Default user icons created by freepik, Kawaii Flat
+                          family
+                        </a>
+                      </small>
+                    </div>
+                  </footer>
+                </SuggestionsWrapper>
               </ReportsWrapper>
             </LikesWrapper>
           </CategTagsWrapper>
