@@ -1,7 +1,7 @@
 import { Dialog, DialogPanel } from "@headlessui/react";
-import AddSuggestion from "./AddThanks";
+import AddThanks from "./AddThanks";
 
-export default function SuggestionDialog({
+export default function ThanksDialog({
   dataType,
   open,
   target,
@@ -19,12 +19,12 @@ export default function SuggestionDialog({
       className="relative z-50 "
     >
       <div
-        className="fixed inset-0 bg-black/50 overflow-y-auto"
+        className="fixed inset-0 bg-black/50 flex items-center justify-center overflow-y-auto"
         aria-hidden="true"
         tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
       >
         <DialogPanel
-          className=" bg-secondary p-12 bg-opacity-40 h-fit"
+          className=" bg-secondary p-12 bg-opacity-40 h-fit "
           onClick={(e) => e.stopPropagation()}
         >
           <AddThanks

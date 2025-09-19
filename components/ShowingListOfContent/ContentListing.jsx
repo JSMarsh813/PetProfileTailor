@@ -30,7 +30,9 @@ import { useSession } from "next-auth/react";
 import SuggestButton from "../Suggestions/SuggestionButton";
 import SuggestionDialog from "../Suggestions/SuggestionDialog";
 
-import ThanksButton from "@components/Thanks/ThanksButton";
+import ThanksButton from "@/components/Thanks/ThanksButton";
+import { useThanksHandler } from "@/hooks/useThanksHandler";
+import ThanksDialog from "../Thanks/ThanksDialog";
 
 export default function ContentListing({
   dataType,
@@ -112,6 +114,14 @@ export default function ContentListing({
     apiEndpoint: apiEndPoint,
     ...(mode === "swr" ? { mutate } : { setLocalData }),
   });
+  const {
+    showThanksDialog,
+    thanksTarget,
+    isSavingThanks,
+    openThanks,
+    closeThanks,
+    confirmThanks,
+  } = useThanksHandler({ apiEndpoint: "api/thanks" });
 
   const userIsTheCreator = singleContent.createdby._id === signedInUsersId;
 
@@ -302,6 +312,21 @@ export default function ContentListing({
                 />
               )}
 
+            <span className="bg-yellow-300 text-black">
+              {" "}
+              Thanks {JSON.stringify(showThanksDialog)}{" "}
+            </span>
+            {!userIsTheCreator && showThanksDialog && (
+              <ThanksDialog
+                dataType={dataType}
+                open={showThanksDialog}
+                onClose={closeThanks}
+                target={thanksTarget}
+                onSave={confirmThanks}
+                signedInUsersId={signedInUsersId}
+              />
+            )}
+
             {showEditDialog && editTarget && (
               <EditName
                 dataType={dataType}
@@ -345,7 +370,7 @@ export default function ContentListing({
 
             {singleContent &&
               singleContent.createdby._id !== signedInUsersId && (
-                <ThanksButton />
+                <ThanksButton onClick={() => openThanks(singleContent._id)} />
               )}
           </div>
         </div>

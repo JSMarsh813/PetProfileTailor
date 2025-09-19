@@ -68,7 +68,7 @@ export default function AddThank({
 
   return (
     <form
-      className=" mx-auto bg-primary rounded-lg w-[94vw] border border-subtleWhite"
+      className=" mx-auto bg-primary rounded-lg max-w-7xl w-[94vw] border border-subtleWhite"
       onSubmit={handleSubmitThanks}
     >
       <div className="flex items-center justify-end py-2   bg-secondary ">
@@ -91,17 +91,32 @@ export default function AddThank({
 
           <section className="flex flex-col mx-5 my-8">
             <div className=" bg-secondary  rounded-sm flex">
-              <h3 className=" mb-2 text-xl mx-auto py-3 ">Incorrect Tags </h3>
+              <h3 className=" mb-2 text-xl mx-auto py-3 ">Thanks Options </h3>
             </div>
 
             <div className="flex flex-col gap-4 mt-4">
-              <div className="flex justify-center flex-wrap">
+              <p className="text-center">
+                {" "}
+                Choose as many options as you like. You can send an entire
+                litter worth of thanks if you're feeling it 🐶🐱!
+              </p>
+              <p className="text-center">
+                However to avoid spam, you can only thank a single piece of
+                content 5 times.
+              </p>
+              <div className="flex-col md:flex-row flex justify-center align-items-center md:flex-wrap gap-x-3 gap-y-8 mx-auto my-6">
                 {ThanksOptions.map((option) => (
                   <StyledCheckbox
                     key={option.tag}
                     label={option.tag}
                     checked={selectedThanks.includes(option.tag)}
-                    onChange={(e) => setSelectedThanks(e.target.value)}
+                    onChange={(e) =>
+                      setSelectedThanks((prev) =>
+                        prev.includes(e.target.value)
+                          ? prev.filter((tag) => tag !== e.target.value)
+                          : [...prev, e.target.value],
+                      )
+                    }
                     value={option.tag}
                   />
                 ))}
