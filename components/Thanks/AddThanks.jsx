@@ -104,6 +104,9 @@ export default function AddThank({
                 However to avoid spam, you can only thank a single piece of
                 content 5 times.
               </p>
+              <p className="text-center">
+                Thanks can not be edited or deleted.
+              </p>
               <div className="flex-col md:flex-row flex justify-center align-items-center md:flex-wrap gap-x-3 gap-y-8 mx-auto my-6">
                 {ThanksOptions.map((option) => (
                   <StyledCheckbox
