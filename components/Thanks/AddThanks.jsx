@@ -40,8 +40,7 @@ export default function AddThank({
       contentType: dataType,
       contentId: contentInfo._id,
       contentCreator: contentCreatedByUserId,
-      thanksBy: thanksBy,
-      selectedThanks,
+      messages: selectedThanks,
     };
     console.log(thanksSubmission);
 
@@ -49,6 +48,7 @@ export default function AddThank({
       const response = await axios.post(apiThanksSubmission, thanksSubmission);
 
       toast.success(`Thank you! Your thank your note was successfully sent`);
+      console.log("thanks response in add thanks", response);
 
       onClose?.();
     } catch (error) {
