@@ -7,6 +7,7 @@ export default function LinkButton({
   defaultStyle,
   basic,
   subtle,
+  icon,
   warning,
   active,
   disabled,
@@ -38,6 +39,7 @@ export default function LinkButton({
       href={href}
       className={` ${bgClass}  ${className} `}
     >
+      {icon && <>{icon}</>} {/* render icon if provided */}
       {text}
     </Link>
   );

@@ -11,6 +11,8 @@ import NavBarNames from "./NavBarPieces/DesktopNavBar/NavBarNames";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
+import NotificationsButton from "@components/Notifications/NotificationsButton";
+
 import { forwardRef } from "react";
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
@@ -61,6 +63,8 @@ export default function NavLayoutwithSettingsMenu() {
 
             <NavBarNames />
 
+            <NotificationsButton />
+
             <div className="mr-2">
               {userName != "" ? (
                 <Menu
@@ -75,10 +79,6 @@ export default function NavLayoutwithSettingsMenu() {
              focus-visible:ring-white focus-visible:ring-opacity-75
              hover:text-subtleWhite"
                   >
-                    <span className="text-base font-bold sm:ml-2">
-                      {userName}
-                    </span>
-
                     <ProfileImage
                       divStyling={"ml-3 h-8 w-8 relative"}
                       profileImage={profileImageLink}
