@@ -20,12 +20,10 @@ export default async function handler(req, res) {
     const { contentType, contentCreator, contentId, messages } = req.body;
 
     if (!contentType || !contentId || !contentCreator || !messages) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Missing required paramater of one of those types: contentType, contentId, contentCreator, messages",
-        });
+      return res.status(400).json({
+        error:
+          "Missing required paramater of one of those types: contentType, contentId, contentCreator, messages",
+      });
     }
 
     console.log("req.body for thanks", req.body);
@@ -39,14 +37,15 @@ export default async function handler(req, res) {
 
     checkIfValidContentType(contentType);
 
-    const nameOrDesciptionId =
-      contentType === "names" ? "nameId" : "descriptionId";
+    // Determine which field to populate
+    const nameId = contentType === "names" ? contentId : null;
+    const descriptionId = contentType === "description" ? contentId : null;
 
-    const result = await Thanks.find({
+    const existingThanksCount = await Thanks.countDocuments({
       thanksBy: userId,
-      [nameOrDesciptionId]: contentId,
+      nameId,
+      descriptionId,
     });
-    const existingThanksCount = result.length;
 
     if (existingThanksCount >= 10) {
       return res.status(400).json({
@@ -60,19 +59,17 @@ export default async function handler(req, res) {
         contentType,
         contentCreator,
         thanksBy: userId,
+        nameId,
+        descriptionId,
         messages,
       });
-
-      if (contentType === "names") thanksData.nameId = contentId;
-      else if (contentType === "descriptions")
-        thanksData.descriptionId = contentId;
 
       return res.status(201).json({
         thanks,
         message: "Thanks successfully submitted, thank you!",
       });
     } catch (err) {
-      console.error(err);
+      console.error("Error creating thanks:", err);
       return res.status(500).json({ message: "Server error" });
     }
   }
@@ -111,7 +108,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json({ thanks });
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching thanks:", err);
       return res.status(500).json({ error: "Server error" });
     }
   }

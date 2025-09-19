@@ -1,5 +1,5 @@
 // utils/validateContentType.js
-export const validContentTypes = ["names", "description"];
+export const validContentTypes = ["names", "descriptions"];
 
 /**
  * Validates that the given contentType is allowed.

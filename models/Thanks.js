@@ -7,8 +7,27 @@ const ThanksSchema = new mongoose.Schema(
   {
     contentCreator: { type: ObjectId, ref: "Users", required: true },
     thanksBy: { type: ObjectId, ref: "Users", required: true },
-    nameId: { type: ObjectId, ref: "Names", required: true },
-    descriptionId: { type: ObjectId, ref: "Description", required: true },
+    contentType: {
+      type: String,
+      required: true,
+      enum: ["names", "descriptions"],
+    },
+    nameId: {
+      type: ObjectId,
+      ref: "Names",
+      required: function () {
+        return this.contentType === "names";
+      },
+      default: null,
+    },
+    descriptionId: {
+      type: ObjectId,
+      ref: "Description",
+      required: function () {
+        return this.contentType === "description";
+      },
+      default: null,
+    },
     read: { type: Boolean, default: false },
     messages: {
       type: [

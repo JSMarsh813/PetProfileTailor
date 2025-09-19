@@ -5,19 +5,20 @@ import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralBu
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Field } from "@headlessui/react";
-import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
 import ThanksOptions from "@/data/ThanksOptions";
+import { useSession } from "next-auth/react";
 
 export default function AddThank({
   dataType,
-  thanksBy,
   contentInfo,
   apiThanksSubmission,
   onClose,
 }) {
   const [selectedThanks, setSelectedThanks] = useState([]);
+  const { data: session } = useSession();
+  const thanksBy = session?.user?.id;
 
   const handleSubmitThanks = async (e) => {
     e.preventDefault();
@@ -102,7 +103,7 @@ export default function AddThank({
               </p>
               <p className="text-center">
                 However to avoid spam, you can only thank a single piece of
-                content 5 times.
+                content 10 times.
               </p>
               <p className="text-center">
                 Thanks can not be edited or deleted.

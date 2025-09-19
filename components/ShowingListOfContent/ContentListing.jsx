@@ -320,6 +320,7 @@ export default function ContentListing({
               <ThanksDialog
                 dataType={dataType}
                 open={showThanksDialog}
+                contentInfo={content}
                 onClose={closeThanks}
                 target={thanksTarget}
                 onSave={confirmThanks}

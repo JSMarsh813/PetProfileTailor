@@ -6,6 +6,7 @@ export default function ThanksDialog({
   open,
   target,
   onClose,
+  contentInfo,
   signedInUsersId,
   contentId,
 }) {
@@ -30,7 +31,8 @@ export default function ThanksDialog({
           <AddThanks
             dataType={dataType}
             contentId={contentId}
-            apisuggestionSubmission="/api/suggestion/"
+            contentInfo={contentInfo}
+            apiThanksSubmission="/api/thanks"
             suggestionBy={signedInUsersId}
             onClose={onClose}
           />
