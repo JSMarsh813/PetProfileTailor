@@ -8,44 +8,70 @@ import { Field } from "@headlessui/react";
 import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
-import DeleteContentNotification from "@components/DeletingData/DeleteContentNotification";
-import { useSuggestions } from "@/context/SuggestionsContext";
+import { useSuggestions } from "@context/SuggestionsContext";
+import { useTags } from "@/hooks/useTags";
+import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
+import LoadingSpinner from "@components/ui/LoadingSpinner";
 
-function EditSuggestion({
-  flaggedByUser,
-  contentInfo,
-  contentId,
-  onClose,
+export default function EditSuggestion({
   dataType,
+  suggestionBy,
+  contentInfo,
+  apisuggestionSubmission,
+  onClose,
 }) {
-  // api to grab content by contentId
+  const { addSuggestion } = useSuggestions();
 
-  // pages\api\flag\getSpecificSuggestion\route.js
-
-  const { deleteSuggestion } = useSuggestions();
-
-  const [suggestioncategories, setSuggestioncategories] = useState([]);
-  const [comments, setComments] = useState([]);
-  const [message, setMessage] = useState("");
-  const [suggestionId, setSuggestionId] = useState("");
   const [loading, setLoading] = useState(true);
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [incorrectTags, setIncorrectTags] = useState([]);
+  const [description, setDescription] = useState("");
+  const [suggestionId, setSuggestionId] = useState("");
+
+  const { tagsToSubmit, tagIds, handleSelectChange, handleCheckboxChange } =
+    useTags();
 
   useEffect(() => {
-    console.log("edit suggestion ran", contentId);
     const fetchSuggestion = async () => {
       try {
-        const res = await axios.get("/api/flag/getSpecificSuggestion", {
-          params: { contentId, userId: flaggedByUser, status: "pending" },
+        const res = await axios.get("/api/suggestion", {
+          params: { contentId: contentInfo._id, status: "pending" },
         });
         console.log("response", res.data);
+        const existingSuggestion = res.data.suggestion;
 
-        if (res.data.suggestion) {
-          setSuggestioncategories(
-            res.data.suggestion.suggestioncategories || [],
-          );
-          setComments(res.data.suggestion.comments || "");
-          setSuggestionId(res.data.suggestion._id); // keep the id so we can update it later
+        if (existingSuggestion) {
+          const contentType = existingSuggestion.contentType;
+
+          setSuggestionId(existingSuggestion._id); // keep the id so we can update it later
+
+          setDescription(existingSuggestion.description || "");
+          setComments(existingSuggestion.comments || "");
+
+          // incorrect tags
+          if (contentType === "names") {
+            setIncorrectTags(existingSuggestion.incorrectNameTags || []);
+          } else if (contentType === "descriptions") {
+            setIncorrectTags(existingSuggestion.incorrectDescriptionTags || []);
+          }
+          // suggested tags
+          if (contentType === "names") {
+            existingSuggestion.nameTagsSuggested.forEach((tag) => {
+              handleCheckboxChange({
+                id: tag._id,
+                label: tag.tag,
+                checked: true,
+              });
+            });
+          } else if (contentType === "descriptions") {
+            existingSuggestion.descriptionTagsSuggested.forEach((tag) => {
+              handleCheckboxChange({
+                id: tag._id,
+                label: tag.tag,
+                checked: true,
+              });
+            });
+          }
         }
       } catch (err) {
         console.error("Error fetching specific suggestion", err);
@@ -54,77 +80,20 @@ function EditSuggestion({
       }
     };
 
-    if (flaggedByUser && contentId) {
-      fetchSuggestion();
-    }
-  }, [flaggedByUser, contentId]);
+    fetchSuggestion();
+  }, [contentInfo]);
 
-  const handleSuggestionCategories = (e) => {
-    const { value, checked } = e.target;
-
-    checked
-      ? setSuggestioncategories([...suggestioncategories, value])
-      : setSuggestioncategories(
-          suggestioncategories.filter((flagTitle) => flagTitle != value),
-        );
-  };
-
-  // ################ DELETION #################
-
-  const handleDeletion = async (e) => {
+  const handleSubmitSuggestion = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await axios.delete("/api/flag/getSpecificSuggestion", {
-        data: { suggestionid: suggestionId, userid: flaggedByUser },
-      });
-      console.log("response", res.data);
-
-      deleteSuggestion(dataType, contentId, suggestionId);
-
-      if (res.data.suggestion) {
-        setSuggestioncategories(res.data.suggestion.suggestioncategories || []);
-        setComments(res.data.suggestion.comments || "");
-        setSuggestionId(res.data.suggestion._id); // keep the id so we can update it later
-      }
-    } catch (err) {
-      console.error("Error fetching specific suggestion", err);
-    } finally {
-      setLoading(false);
-    }
-
-    setShowDeleteConfirmation(false);
-    onClose();
-    console.log("deleted");
-  };
-
-  // ################ EDIT #################
-  const handleSubmitEdit = async (e) => {
-    e.preventDefault();
-
-    if (suggestioncategories.length === 0) {
-      toast.error(
-        `Ruh Roh! You must click 1 or more of the checkboxes for suggestion type`,
-      );
-      return;
-    }
-    if (!flaggedByUser) {
+    if (!suggestionBy) {
       toast.error(`Ruh Roh! You must be signed in to suggestion content`);
       return;
     }
 
-    //dealing with the edge case because of profile pages, profile pages won't have a createdby property
-    let profileIsLoggedInUserCheck = contentInfo._id;
+    let contentCreatedByUserId = contentInfo.createdby._id;
 
-    let contentCreatedByUserId =
-      contentInfo.createdby != undefined
-        ? contentInfo.createdby._id
-        : profileIsLoggedInUserCheck;
-
-    if (
-      contentCreatedByUserId === flaggedByUser ||
-      profileIsLoggedInUserCheck === flaggedByUser
-    ) {
+    if (contentCreatedByUserId === suggestionBy) {
       toast.warn(
         `Ruh Roh! Nice try but you can't suggestion your own content silly goose :)`,
       );
@@ -132,200 +101,191 @@ function EditSuggestion({
     }
 
     const suggestionSubmission = {
-      suggestionid: suggestionId,
-      suggestioncategories,
-      comments,
+      contentType: dataType,
+      contentId: contentInfo._id,
+      suggestionId,
+      contentCreator: contentCreatedByUserId,
+      suggestionBy: suggestionBy,
+      incorrectTags,
+      description,
+      comments: comments.toString(),
+      tags: tagIds,
+      // api will use contentType to figure out if tags are names or description tags
     };
     console.log(suggestionSubmission);
 
-    await axios
-      .put("/api/flag/getSpecificSuggestion", suggestionSubmission)
-      .then((response) => {
-        toast.success(
-          `Thank you for your suggestion! Suggestion successfully updated`,
-        );
-      })
-      // .then(() => callApiToaddUserToNamesArray(userAndNameId))
-      .then(() => {
-        onClose();
-      })
+    try {
+      const response = await axios.put(
+        apisuggestionSubmission,
+        suggestionSubmission,
+      );
 
-      .catch((error) => {
-        console.log("this is an error", error);
+      toast.success(
+        `Thank you for your suggestion! Suggestion successfully sent`,
+      );
 
-        toast.error(`Ruh Roh! ${error.message}`);
-      });
+      addSuggestion(
+        dataType,
+        contentInfo._id,
+        response.data.updatedSuggestion._id,
+      );
+
+      onClose?.();
+    } catch (error) {
+      console.log("this is an error", error);
+
+      toast.error(
+        `Ruh Roh! ${error.message} ${JSON.stringify(
+          error?.response?.data?.message,
+        )}`,
+      );
+    }
   };
 
-  function cancelFlagFormAndRevertFlagState() {
+  function cancelSuggestionFormAndRevertSuggestionState() {
     onClose?.(); // <-- close the dialog
   }
 
   return (
-    <div className=" mx-auto bg-primary rounded-lg  border border-subtleWhite ">
+    <>
       {loading ? (
-        <div className="flex items-center justify-center py-20">
-          {/* Spinner can be a simple CSS loader or a reusable component */}
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
-        </div>
+        <LoadingSpinner />
       ) : (
-        <>
-          <form onSubmit={handleSubmitEdit}>
-            <div className="flex items-center justify-end py-2   bg-secondary ">
-              <ClosingXButton
-                onClick={cancelFlagFormAndRevertFlagState}
-                className="mr-5"
-              />
-            </div>
+        <form
+          className=" mx-auto bg-primary rounded-lg w-[94vw] border border-subtleWhite"
+          onSubmit={handleSubmitSuggestion}
+        >
+          <div className="flex items-center justify-end py-2   bg-secondary ">
+            <ClosingXButton
+              onClick={() => cancelSuggestionFormAndRevertSuggestionState()}
+              className="mr-5"
+            />
+          </div>
 
-            <div className={`-mx-3 mb-6`}>
-              {/* Area to Type a comment  */}
-
-              <div className=" mb-2 text-subtleWhite px-4 pt-2">
-                <h2 className="text-center text-xl ">
-                  {" "}
-                  Edit or Delete Suggestion
-                </h2>
+          <div className={` mb-4`}>
+            <div className=" mb-2 text-subtleWhite px-4 ">
+              <section className="my-6">
+                <h2 className="text-center  text-2xl ">Edit Suggestion</h2>
 
                 <p className="text-center mb-3">
                   ❗ Note:{" "}
                   <strong> one or more checkboxes must be selected</strong> to
                   submit this form
                 </p>
+              </section>
 
-                <div className=" bg-secondary border-white border-y-2 flex">
-                  <h3 className=" mb-2 text-xl mx-auto py-3">
-                    Suggestion Inappropriate Content
+              <section className="flex flex-col mx-5 my-8">
+                <div className=" bg-secondary  rounded-sm flex">
+                  <h3 className=" mb-2 text-xl mx-auto py-3 ">
+                    Incorrect Tags{" "}
                   </h3>
                 </div>
 
-                <div className="flex flex-col gap-4 my-4">
-                  <StyledCheckbox
-                    label="Hate"
-                    description="Slurs, racist or sexist stereotypes, Incitement of fear or discrimination..."
-                    checked={suggestioncategories.includes("Hate")}
-                    onChange={handleSuggestionCategories}
-                    className="ml-4"
-                    value="Hate"
-                  />
-
-                  <StyledCheckbox
-                    label="Violent Speech"
-                    description="Violent Threats, Wish of Harm, Coded Incitement of Violence"
-                    checked={suggestioncategories.includes("Violent Speech")}
-                    onChange={handleSuggestionCategories}
-                    className="ml-4"
-                    value="Violent Speech"
-                  />
-
-                  <StyledCheckbox
-                    label="Abuse and Harassment"
-                    description="Insults, unwanted advances, targeted harassment and inciting harassment"
-                    checked={suggestioncategories.includes(
-                      "Abuse and Harassment",
+                <div className="flex flex-col gap-4 mt-4">
+                  <p className="mx-auto">
+                    Select the incorrect tags and then please comment why the
+                    tags are incorrect in the textbox at the bottom. Thank you!
+                  </p>
+                  <div className="flex justify-center flex-wrap">
+                    {contentInfo.tags && contentInfo.tags.length > 0 ? (
+                      contentInfo.tags.map((tag) => (
+                        <StyledCheckbox
+                          key={tag._id}
+                          label={tag.tag}
+                          checked={incorrectTags.includes(tag._id)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setIncorrectTags((prev) => [...prev, tag._id]);
+                            } else {
+                              setIncorrectTags((prev) =>
+                                prev.filter((id) => id !== tag._id),
+                              );
+                            }
+                          }}
+                          value={tag._id}
+                        />
+                      ))
+                    ) : (
+                      <p>No tags</p>
                     )}
-                    onChange={handleSuggestionCategories}
-                    className="ml-4"
-                    value="Abuse and Harassment"
-                  />
-
-                  <StyledCheckbox
-                    label="Privacy"
-                    description="Sharing private information of others, threatening to share or expose private information"
-                    checked={suggestioncategories.includes("Privacy")}
-                    onChange={handleSuggestionCategories}
-                    className="ml-4"
-                    value="Privacy"
-                  />
-
-                  <StyledCheckbox
-                    label="Spam"
-                    description="Fake engagement, scams, malicious links"
-                    checked={suggestioncategories.includes("Spam")}
-                    onChange={handleSuggestionCategories}
-                    className="ml-4"
-                    value="Spam"
-                  />
-
-                  <StyledCheckbox
-                    label="Sensitive or disturbing content"
-                    description="Gratuitous gore or violence, nudity & sexual behavior"
-                    checked={suggestioncategories.includes(
-                      "Sensitive or disturbing content",
-                    )}
-                    onChange={handleSuggestionCategories}
-                    className="ml-4 text-"
-                    value="Sensitive or disturbing content"
-                  />
-
-                  <StyledCheckbox
-                    label="None of these"
-                    description="Please give us more information in the comments textbox below"
-                    checked={suggestioncategories.includes("None of these")}
-                    onChange={handleSuggestionCategories}
-                    className="ml-4"
-                    value="None of these"
-                  />
+                  </div>
                 </div>
+              </section>
 
-                <div className=" bg-secondary border-white border-y-2 flex">
-                  <h3 className=" mb-2 text-xl mx-auto py-3">
+              <div className=" bg-secondary  rounded-sm flex mt=6 mb-16">
+                <h3 className=" mb-2 text-xl mx-auto py-3 ">Add Tags </h3>
+              </div>
+
+              <TagsSelectAndCheatSheet
+                dataType={dataType}
+                tagsToSubmit={tagsToSubmit}
+                handleSelectChange={handleSelectChange}
+                handleCheckboxChange={handleCheckboxChange}
+              />
+
+              <div className=" bg-secondary rounded-sm flex mt-16">
+                <h3 className=" mb-2 text-xl mx-auto py-3 ">
+                  Suggest Changes to Notes{" "}
+                </h3>
+              </div>
+
+              <Field className="mt-6 mx-4">
+                <p className="text-center my-4">
+                  {" "}
+                  {`"${
+                    contentInfo.notes === "" ? "no notes" : contentInfo.notes
+                  }"`}
+                </p>
+                <StyledTextarea
+                  onChange={(e) => setDescription(e.target.value)}
+                  maxLength="500"
+                  placeholder=""
+                  ariaLabel="type-comments"
+                  name="body"
+                  value={description}
+                />
+              </Field>
+
+              <section>
+                <div className=" bg-secondary  rounded-sm mx-5 mb-10 flex mt-6">
+                  <h3 className=" my-2 text-xl mx-auto py-3 ">
                     Additional Comments
                   </h3>
                 </div>
-                <Field className="mt-4 mx-4 py-2">
+                <p className="text-center">
+                  Please give us more information in the comments textbox below
+                </p>
+
+                <Field className="mt-6 mx-4">
                   <StyledTextarea
-                    ariaLabel="type-comments"
-                    value={comments}
                     onChange={(e) => setComments(e.target.value)}
-                    name="body"
                     maxLength="500"
                     placeholder="Optional"
-                  />
-                  <span className="text-subtleWhite mt-4 block ml-1">
-                    {`${500 - comments.length}/500 characters left`}
-                  </span>
-                </Field>
-
-                <Field className="flex gap-24 justify-center">
-                  <GeneralButton
-                    subtle
-                    text="Cancel"
-                    onClick={cancelFlagFormAndRevertFlagState}
-                  />
-
-                  <GeneralButton
-                    type="submit"
-                    text="Submit"
-                    default
+                    ariaLabel="type-comments"
+                    name="body"
+                    value={comments}
                   />
                 </Field>
-              </div>
+              </section>
+
+              <Field className="flex gap-24 justify-center">
+                <GeneralButton
+                  text="Cancel"
+                  warning
+                  className="mx-2"
+                  onClick={() => cancelSuggestionFormAndRevertSuggestionState()}
+                />
+
+                <GeneralButton
+                  type="submit"
+                  text="Submit"
+                  default
+                />
+              </Field>
             </div>
-          </form>
-          <form className="text-center">
-            {" "}
-            <h2 className="text-center text-xl text-white ">
-              {" "}
-              Delete Suggestion
-            </h2>
-            <GeneralButton
-              type="button"
-              text="delete"
-              warning
-              onClick={() => setShowDeleteConfirmation(true)}
-            />
-            {showDeleteConfirmation && (
-              <DeleteContentNotification
-                setShowDeleteConfirmation={setShowDeleteConfirmation}
-                onConfirm={handleDeletion}
-              />
-            )}
-          </form>
-        </>
+          </div>
+        </form>
       )}
-    </div>
+    </>
   );
 }
-
-export default EditSuggestion;

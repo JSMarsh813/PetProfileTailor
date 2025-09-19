@@ -20,50 +20,25 @@ export default function AddSuggestion({
   onClose,
 }) {
   const { addSuggestion } = useSuggestions();
-  const [suggestionCategoriesState, setSuggestionCategoriesState] = useState(
-    [],
-  );
+
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
-  const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
+  const [incorrectTags, setIncorrectTags] = useState([]);
+  const [descriptionSuggestions, setDescriptionSuggestions] = useState("");
 
-  const handleSuggestionCategoriesState = (e) => {
-    const { value, checked } = e.target;
-
-    checked
-      ? setSuggestionCategoriesState([...suggestionCategoriesState, value])
-      : setSuggestionCategoriesState(
-          suggestionCategoriesState.filter(
-            (suggestionTitle) => suggestionTitle != value,
-          ),
-        );
-  };
+  const { tagsToSubmit, tagIds, handleSelectChange, handleCheckboxChange } =
+    useTags();
 
   const handleSubmitSuggestion = async (e) => {
     e.preventDefault();
 
-    if (suggestionCategoriesState.length === 0) {
-      toast.error(
-        `Ruh Roh! You must click 1 or more of the checkboxes for suggestion type`,
-      );
-      return;
-    }
     if (!suggestionBy) {
       toast.error(`Ruh Roh! You must be signed in to suggestion content`);
       return;
     }
 
-    //dealing with the edge case because of profile pages, profile pages won't have a createdby property
-    let profileIsLoggedInUserCheck = contentInfo._id;
+    let contentCreatedByUserId = contentInfo.createdby._id;
 
-    let contentCreatedByUserId =
-      contentInfo.createdby != undefined
-        ? contentInfo.createdby._id
-        : profileIsLoggedInUserCheck;
-
-    if (
-      contentCreatedByUserId === suggestionBy ||
-      profileIsLoggedInUserCheck === suggestionBy
-    ) {
+    if (contentCreatedByUserId === suggestionBy) {
       toast.warn(
         `Ruh Roh! Nice try but you can't suggestion your own content silly goose :)`,
       );
@@ -73,10 +48,13 @@ export default function AddSuggestion({
     const suggestionSubmission = {
       contentType: dataType,
       contentId: contentInfo._id,
-      contentCreatedby: contentCreatedByUserId,
+      contentCreator: contentCreatedByUserId,
       suggestionBy: suggestionBy,
-      suggestionCategories: suggestionCategoriesState,
+      incorrectTags,
+      description: descriptionSuggestions,
       comments: additionalCommentsState.toString(),
+      tags: tagIds,
+      // api will use contentType to figure out if tags are names or description tags
     };
     console.log(suggestionSubmission);
 
@@ -87,7 +65,7 @@ export default function AddSuggestion({
       );
 
       toast.success(
-        `Thank you for your suggestion! Suggestion for ${response.data.message} successfully sent`,
+        `Thank you for your suggestion! Suggestion successfully sent`,
       );
 
       addSuggestion(dataType, contentInfo._id, response.data.suggestion._id);
@@ -158,8 +136,8 @@ export default function AddSuggestion({
                     <StyledCheckbox
                       key={tag._id}
                       label={tag.tag}
-                      checked={suggestionCategoriesState.includes(tag._id)}
-                      onChange={handleSuggestionCategoriesState}
+                      checked={incorrectTags.includes(tag._id)}
+                      onChange={(e) => setIncorrectTags(e.target.value)}
                       value={tag._id}
                     />
                   ))
@@ -183,7 +161,7 @@ export default function AddSuggestion({
 
           <div className=" bg-secondary rounded-sm flex mt-16">
             <h3 className=" mb-2 text-xl mx-auto py-3 ">
-              Suggest Changes to Description{" "}
+              Suggest Changes to Notes{" "}
             </h3>
           </div>
 
@@ -193,7 +171,7 @@ export default function AddSuggestion({
               {`"${contentInfo.notes === "" ? "no notes" : contentInfo.notes}"`}
             </p>
             <StyledTextarea
-              onChange={(e) => setAdditionalCommentsState(e.target.value)}
+              onChange={(e) => setDescriptionSuggestions(e.target.value)}
               maxLength="500"
               placeholder=""
               ariaLabel="type-comments"

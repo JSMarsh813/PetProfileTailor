@@ -35,7 +35,7 @@ export default function SuggestionDialog({
             <AddSuggestion
               dataType={dataType}
               contentInfo={target}
-              apisuggestionSubmission="/api/suggestion/suggestionsubmission/"
+              apisuggestionSubmission="/api/suggestion/"
               suggestionBy={signedInUsersId}
               onClose={onClose}
             />
@@ -46,7 +46,7 @@ export default function SuggestionDialog({
               contentInfo={target}
               contentId={contentId}
               suggestionBy={signedInUsersId}
-              apisuggestionSubmission="/api/suggestion/suggestionsubmission/"
+              apisuggestionSubmission="/api/suggestion/"
               onClose={onClose}
             />
           )}

@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 export function useTags(initial = []) {
   const [tagsToSubmit, setTagsToSubmit] = useState(initial);
+
+  const tagIds = useMemo(
+    () => tagsToSubmit.map((tag) => tag.value),
+    [tagsToSubmit],
+  );
 
   const handleSelectChange = (selected) => {
     if (!selected) return setTagsToSubmit([]);
@@ -38,5 +43,5 @@ export function useTags(initial = []) {
     });
   };
 
-  return { tagsToSubmit, handleSelectChange, handleCheckboxChange };
+  return { tagsToSubmit, tagIds, handleSelectChange, handleCheckboxChange };
 }

@@ -20,13 +20,13 @@ export function SuggestionsProvider({ children, initialSuggestions = {} }) {
   const suggestionsRef = useRef({
     names: new Map(
       names.map((r) => [
-        r.contentid.toString(),
+        r?.contentId?.toString(),
         { suggestionId: r._id?.toString?.(), status: r.status || "pending" },
       ]),
     ),
     descriptions: new Map(
       descriptions.map((r) => [
-        r.contentid.toString(),
+        r?.contentId?.toString(),
         { suggestionId: r._id?.toString?.(), status: r.status || "pending" },
       ]),
     ),

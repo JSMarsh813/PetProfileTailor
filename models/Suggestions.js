@@ -15,22 +15,54 @@ const SuggestionsSchema = new mongoose.Schema(
     contentCreator: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
+      unique: false,
       ref: "User",
     },
     suggestionBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
+      unique: false,
       ref: "User",
     },
-    ideaCategories: {
+    categories: {
       type: Array,
       required: true,
       default: [],
     },
+    description: {
+      type: String,
+    },
     comments: {
       type: String,
-      required: false,
     },
+    incorrectNameTags: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        default: [],
+        ref: "NameTag",
+      },
+    ],
+    incorrectDescriptionTags: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        default: [],
+        ref: "DescriptionTag",
+      },
+    ],
+    nameTagsSuggested: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        default: [],
+        ref: "NameTag",
+      },
+    ],
+    descriptionTagsSuggested: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        default: [],
+        ref: "DescriptionTag",
+      },
+    ],
     status: {
       type: String,
       enum: [
@@ -53,7 +85,8 @@ const SuggestionsSchema = new mongoose.Schema(
         "contentRemoved",
         "deletedByUser",
       ],
-      default: "none",
+      default: "pending",
+      required: true,
     },
   },
   { timestamps: true },

@@ -125,7 +125,7 @@ export default async function RootLayout({ children }) {
             status: { $nin: ["dismissed", "deleted", "resolved"] },
             contenttype: "names",
           },
-          { contentid: 1, status: 1, _id: 1 },
+          { contentId: 1, status: 1, _id: 1 },
         ),
       ),
       leanWithStrings(
@@ -135,15 +135,15 @@ export default async function RootLayout({ children }) {
             status: "pending", // only get pending suggestions
             contenttype: "descriptions",
           },
-          { contentid: 1, status: 1, _id: 0 },
+          { contentId: 1, status: 1, _id: 0 },
         ),
       ),
     ]);
 
-    console.log("userId in layout", userId);
+    // console.log("userId in layout", userId);
   } // ############# End of user specific content ######
 
-  console.log("name reports in layout", nameReports);
+  // console.log("name reports in layout", nameReports);
 
   const initialReports = {
     names: nameReports,
