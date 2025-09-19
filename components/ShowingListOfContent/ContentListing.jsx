@@ -12,7 +12,7 @@ import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
-import IdeaContentSection from "../EditSuggestions/IdeaContentSection";
+import IdeaContentSection from "../Suggestions/SuggestionContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import AddHashToArrayString from "@utils/stringManipulation/addHashToArrayString";
 
@@ -23,9 +23,14 @@ import DeleteDialog from "@components/DeletingData/DeleteDialog";
 import FlagDialog from "@components/Flagging/FlagDialog";
 import FlagButton from "@components/Flagging/FlagButton";
 import { useFlagging } from "@hooks/useFlagging";
+import { useSuggest } from "@/hooks/useSuggest";
 import { useEditHandler } from "@hooks/useEditHandler";
 import { useReports } from "@context/ReportsContext";
+import { useSuggestions } from "@/context/SuggestionsContext";
+
 import { useSession } from "next-auth/react";
+import SuggestButton from "../Suggestions/SuggestionButton";
+import SuggestionDialog from "../Suggestions/SuggestionDialog";
 
 export default function ContentListing({
   dataType,
@@ -50,7 +55,7 @@ export default function ContentListing({
   } = useDeleteConfirmation();
 
   const { getStatus } = useReports();
-
+  const { getSuggestionStatus } = useSuggestions();
   const [content, setLocalData] =
     mode === "local" ? useState(singleContent) : [singleContent, null];
   // for names, we use content instead of singleContent for properties that can be edited (name, notes)
@@ -61,6 +66,13 @@ export default function ContentListing({
 
   const reportPendingOrNone =
     reportStatus === "pending" || reportStatus === null;
+
+  const suggestionStatus = getSuggestionStatus(
+    dataType,
+    singleContent._id.toString(),
+  );
+  const suggestionPendingOrNone =
+    suggestionStatus === "pending" || suggestionStatus === null;
 
   const apiEndPoint =
     dataType === "names" ? "/api/names/" : "/api/description/";
@@ -82,6 +94,12 @@ export default function ContentListing({
   // TODO
 
   const { showFlagDialog, flagTarget, openFlag, closeFlag } = useFlagging();
+  const {
+    showSuggestionDialog,
+    suggestionTarget,
+    openSuggestion,
+    closeSuggestion,
+  } = useSuggest();
 
   const {
     showEditDialog,
@@ -225,7 +243,17 @@ export default function ContentListing({
                           </MenuItem>
 
                           <MenuItem as="div">
-                            {({ focus }) => <span> Suggest Edits </span>}
+                            {({ focus }) => (
+                              <SuggestButton
+                                content={singleContent}
+                                dataType={dataType}
+                                onClick={openSuggestion}
+                                userIsTheCreator={
+                                  singleContent.createdby._id ===
+                                  signedInUsersId
+                                }
+                              />
+                            )}
                           </MenuItem>
                         </MenuItems>
                       )}
@@ -260,6 +288,19 @@ export default function ContentListing({
                 contentId={singleContent._id}
               />
             )}
+
+            {!userIsTheCreator &&
+              suggestionPendingOrNone &&
+              showSuggestionDialog && (
+                <SuggestionDialog
+                  dataType={dataType}
+                  open={showSuggestionDialog}
+                  target={suggestionTarget}
+                  onClose={closeSuggestion}
+                  signedInUsersId={signedInUsersId}
+                  contentId={singleContent._id}
+                />
+              )}
 
             {showEditDialog && editTarget && (
               <EditName

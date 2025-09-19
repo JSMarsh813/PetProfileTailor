@@ -23,37 +23,102 @@ export default function TagsSelectAndCheatSheet({
   const selectedOptions = tagsToSubmit.map(
     (tag) => tagList.find((option) => option.value === tag.value) || tag,
   );
+
+  const customSelectStyles = {
+    control: (provided) => ({
+      ...provided,
+      backgroundColor: "rgb(12 5 22)",
+      borderColor: "rgb(221 214 254)",
+      color: "rgb(221 214 254)",
+      width: "96%",
+      marginTop: "1rem",
+      paddingLeft: "0.5rem",
+      borderRadius: "0.25rem",
+      minHeight: "2.5rem",
+      boxShadow: "none",
+      "&:hover": {
+        borderColor: "rgb(221 214 254)",
+      },
+    }),
+    input: (provided) => ({
+      ...provided,
+      margin: 0,
+      padding: 0,
+      boxShadow: "none",
+      outline: "none",
+      background: "transparent",
+      caretColor: "rgb(221 214 254)",
+      color: "rgb(221 214 254)",
+      lineHeight: "1.2",
+      minWidth: "1px", // ensures the input isn’t zero-width
+      width: "auto", // prevents it from stretching across flex/grid
+      flex: "0 0 auto", // keeps input from expanding
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      display: "flex",
+      flexWrap: "wrap", // ensures multiple values don't collapse the input
+      gap: "0.25rem",
+      alignItems: "center",
+      paddingLeft: "0.25rem",
+      paddingRight: "0.25rem",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "rgb(12 5 22)",
+      color: "rgb(221 214 254)",
+      borderRadius: "0.5rem",
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      paddingLeft: "0.5rem",
+      paddingBottom: "0.5rem",
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? "#2563EB" : "rgb(12 5 22)",
+      color: "rgb(221 214 254)",
+      cursor: state.isDisabled ? "not-allowed" : "pointer",
+      paddingTop: "0.25rem",
+      paddingBottom: "0.25rem",
+    }),
+
+    multiValue: (provided) => ({
+      ...provided,
+      backgroundColor: "rgb(27 7 59)",
+      color: "rgb(221 214 254)",
+    }),
+    multiValueLabel: (provided) => ({
+      ...provided,
+      color: "rgb(221 214 254)",
+    }),
+    multiValueRemove: (provided) => ({
+      ...provided,
+      color: "rgb(221 214 254)",
+      ":hover": {
+        backgroundColor: "#2563EB",
+        color: "white",
+      },
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "rgb(221 214 254 / 50%)",
+    }),
+  };
+
   return (
     <div className="h-fit w-fit bg-secondary border-b-2 border-subtleWhite rounded-box py-2">
-      <label
-        className="font-bold block my-4 text-xl text-center text-subtleWhite"
-        htmlFor="nameTags"
-      >
-        Tags
-      </label>
-
       <Select
-        unstyled
-        className="text-subtleWhite border border-subtleWhite bg-secondary w-[96%] mx-auto"
-        styles={{
-          menu: (provided) => ({
-            ...provided,
-            backgroundColor: "rgb(20 2 35)",
-            color: "rgb(221 214 254)",
-            borderRadius: "0.5rem",
-          }),
-          option: (provided, state) => ({
-            ...provided,
-            backgroundColor: state.isFocused ? "#2563EB" : "rgb(20 2 35)",
-            color: "rgb(221 214 254)",
-            cursor: state.isDisabled ? "not-allowed" : "pointer",
-          }),
-        }}
+        styles={customSelectStyles}
         options={tagList}
-        value={selectedOptions} // mapped to options
+        value={selectedOptions}
         isMulti
         isSearchable
-        placeholder="Type tags here..."
+        filterOption={(option, inputValue) =>
+          option.label.toLowerCase().includes(inputValue.toLowerCase())
+        }
+        // ensures React-Select only looks at the label (or whatever you define in getOptionLabel) and ignores extra fields
+        // before if you typed ddd it would still show "summer", because it was looking at extra fields, not just the label
         onChange={handleSelectChange}
       />
 
@@ -78,8 +143,8 @@ export default function TagsSelectAndCheatSheet({
                 />
               </Disclosure.Button>
 
-              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-subtleWhite">
-                <div className="space-y-6 mb-4">
+              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-subtleWhite  bg-primary">
+                <div className="space-y-6 mb-4y">
                   {category.tags.map((tag) => {
                     const checked = tagsToSubmit.some(
                       (t) => t.value === tag._id,
@@ -88,7 +153,7 @@ export default function TagsSelectAndCheatSheet({
                       <label
                         key={tag._id}
                         htmlFor={tag._id}
-                        className="flex items-center space-x-2 cursor-pointer hover:bg-blue-700 px-1 py-1 rounded"
+                        className="flex items-center space-x-2 cursor-pointer group hover:bg-blue-700 px-1 py-1 rounded"
                       >
                         <input
                           id={tag._id}
@@ -108,8 +173,8 @@ export default function TagsSelectAndCheatSheet({
                           className={`
       border-2 border-violet-300 rounded flex items-center justify-center p-[7px]
       transition-colors duration-200
-      bg-secondary text-subtleWhite
-      peer-checked:bg-yellow-300 peer-checked:text-secondary
+      bg-secondary text-subtleWhite group
+      peer-checked:bg-yellow-300 peer-checked:text-secondary group-hover:bg-blue-700
       peer-focus:ring-2 peer-focus:ring-yellow-400 peer-focus:outline-none
     `}
                         >

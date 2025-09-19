@@ -41,7 +41,7 @@ export function SuggestionsProvider({ children, initialSuggestions = {} }) {
     return map.has(contentId.toString());
   };
 
-  const getStatus = (type, contentId) => {
+  const getSuggestionStatus = (type, contentId) => {
     const map = suggestionsRef.current[type];
     if (!map) return null;
     return map.get(contentId.toString())?.status ?? null;
@@ -78,7 +78,7 @@ export function SuggestionsProvider({ children, initialSuggestions = {} }) {
       value={{
         suggestionsRef,
         hasSuggested,
-        getStatus,
+        getSuggestionStatus,
         addSuggestion,
         deleteSuggestion,
       }}

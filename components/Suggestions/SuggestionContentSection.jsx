@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import IdeaButton from "./IdeaButton";
-import IdeaForm from "./IdeaForm";
+import IdeaButton from "./SuggestionButton";
+import IdeaForm from "./SuggestionForm";
 
 import {
   Description,
@@ -11,7 +11,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 
-export default function IdeaContentSection({
+export default function SuggestionContentSection({
   userIsTheCreator,
   signedInUsersId,
   content,

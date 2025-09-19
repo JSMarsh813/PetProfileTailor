@@ -1,54 +1,54 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import { toast } from "react-toastify";
 import axios from "axios";
-import CheckboxWithLabelAndDescription from "@components/FormComponents/CheckboxWithLabelAndDescription";
 import { Field } from "@headlessui/react";
 import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
-import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndCheatSheet";
-import { useTags } from "@hooks/useTags";
+import { useSuggestions } from "@context/SuggestionsContext";
+import { useTags } from "@/hooks/useTags";
+import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 
-export default function AddIdea({
+export default function AddSuggestion({
   dataType,
-  ideaByUser,
+  suggestionBy,
   contentInfo,
-  copyOfContentForReport,
-  apiIdeaSubmission,
-  apiaddUserToIdea,
-  setIdeaFormToggled,
-  ideaFormToggled,
-  setIdeaIconClickedByNewUser,
+  apisuggestionSubmission,
+  onClose,
 }) {
-  const [flagCategoriesState, setFlagCategoriesState] = useState([]);
+  const { addSuggestion } = useSuggestions();
+  const [suggestionCategoriesState, setSuggestionCategoriesState] = useState(
+    [],
+  );
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
-
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
 
-  const handleFlagCategoriesState = (e) => {
+  const handleSuggestionCategoriesState = (e) => {
     const { value, checked } = e.target;
 
     checked
-      ? setFlagCategoriesState([...flagCategoriesState, value])
-      : setFlagCategoriesState(
-          flagCategoriesState.filter((flagTitle) => flagTitle != value),
+      ? setSuggestionCategoriesState([...suggestionCategoriesState, value])
+      : setSuggestionCategoriesState(
+          suggestionCategoriesState.filter(
+            (suggestionTitle) => suggestionTitle != value,
+          ),
         );
   };
 
-  const handleSubmitIdea = async (e) => {
+  const handleSubmitSuggestion = async (e) => {
     e.preventDefault();
 
-    if (flagCategoriesState.length === 0) {
+    if (suggestionCategoriesState.length === 0) {
       toast.error(
-        `Ruh Roh! You must click 1 or more of the checkboxes for flag type`,
+        `Ruh Roh! You must click 1 or more of the checkboxes for suggestion type`,
       );
       return;
     }
-    if (ideaByUser == "") {
-      toast.error(`Ruh Roh! You must be signed in to flag content`);
+    if (!suggestionBy) {
+      toast.error(`Ruh Roh! You must be signed in to suggestion content`);
       return;
     }
 
@@ -61,74 +61,61 @@ export default function AddIdea({
         : profileIsLoggedInUserCheck;
 
     if (
-      contentCreatedByUserId === ideaByUser ||
-      profileIsLoggedInUserCheck === ideaByUser
+      contentCreatedByUserId === suggestionBy ||
+      profileIsLoggedInUserCheck === suggestionBy
     ) {
       toast.warn(
-        `Ruh Roh! Nice try but you can't flag your own content silly goose :)`,
+        `Ruh Roh! Nice try but you can't suggestion your own content silly goose :)`,
       );
       return;
     }
 
-    const reportSubmission = {
-      contenttype: dataType,
-      contentid: contentInfo._id,
-      contentcopy: copyOfContentForReport,
-      contentcreatedby: contentCreatedByUserId,
-      ideaByUser: ideaByUser,
-      // tagcategories: flagCategoriesState,
-      comments: additionalCommentsState,
-      descriptionedits: descriptionCommentsState,
+    const suggestionSubmission = {
+      contentType: dataType,
+      contentId: contentInfo._id,
+      contentCreatedby: contentCreatedByUserId,
+      suggestionBy: suggestionBy,
+      suggestionCategories: suggestionCategoriesState,
+      comments: additionalCommentsState.toString(),
     };
-    console.log(reportSubmission);
+    console.log(suggestionSubmission);
 
-    const userAndNameId = {
-      contentid: contentInfo._id,
-      ideaByUser: ideaByUser,
-    };
+    try {
+      const response = await axios.post(
+        apisuggestionSubmission,
+        suggestionSubmission,
+      );
 
-    await axios
-      .post(apiIdeaSubmission, reportSubmission)
-      .then((response) => {
-        toast.success(
-          `Thank you for your report! Report for ${response.data.message} successfully sent`,
-        );
-      })
-      .then(() => callApiToaddUserToNamesArray(userAndNameId))
-      .then(() => setIdeaFormToggled(false))
-      // .then(() => setUserAlreadySentIdea(true))
+      toast.success(
+        `Thank you for your suggestion! Suggestion for ${response.data.message} successfully sent`,
+      );
 
-      .catch((error) => {
-        console.log("this is an error", error);
+      addSuggestion(dataType, contentInfo._id, response.data.suggestion._id);
 
-        toast.error(
-          `Ruh Roh! ${error.message} ${JSON.stringify(
-            error.response.data.message,
-          )}`,
-        );
-      });
+      onClose?.();
+    } catch (error) {
+      console.log("this is an error", error);
+
+      toast.error(
+        `Ruh Roh! ${error.message} ${JSON.stringify(
+          error?.response?.data?.message,
+        )}`,
+      );
+    }
   };
 
-  function callApiToaddUserToNamesArray(userAndNameId) {
-    axios
-      .put(apiaddUserToIdea, userAndNameId)
-      .then(toast.success(`your name has been added to the flaggedby array`));
+  function cancelSuggestionFormAndRevertSuggestionState() {
+    onClose?.(); // <-- close the dialog
   }
-
-  function cancelFlagFormAndRevertFlagState() {
-    setIdeaIconClickedByNewUser(false);
-    setIdeaFormToggled(!ideaFormToggled);
-  }
-  console.log("contentInfo", contentInfo);
 
   return (
     <form
       className=" mx-auto bg-primary rounded-lg w-[94vw] border border-subtleWhite"
-      onSubmit={handleSubmitIdea}
+      onSubmit={handleSubmitSuggestion}
     >
       <div className="flex items-center justify-end py-2   bg-secondary ">
         <ClosingXButton
-          onClick={() => cancelFlagFormAndRevertFlagState()}
+          onClick={() => cancelSuggestionFormAndRevertSuggestionState()}
           className="mr-5"
         />
       </div>
@@ -165,14 +152,19 @@ export default function AddIdea({
                 Select the incorrect tags and then please comment why the tags
                 are incorrect in the textbox at the bottom. Thank you!
               </p>
-              {contentInfo.tags.map((tag) => (
-                <StyledCheckbox
-                  label={tag.tag}
-                  checked={flagCategoriesState.includes(tag._id)}
-                  onChange={handleFlagCategoriesState}
-                  value={tag._id}
-                />
-              ))}
+              {contentInfo.tags && contentInfo.tags.length > 0 ? (
+                contentInfo.tags.map((tag) => (
+                  <StyledCheckbox
+                    key={tag._id}
+                    label={tag.tag}
+                    checked={suggestionCategoriesState.includes(tag._id)}
+                    onChange={handleSuggestionCategoriesState}
+                    value={tag._id}
+                  />
+                ))
+              ) : (
+                <p>No tags</p>
+              )}
             </div>
           </section>
 
@@ -233,7 +225,7 @@ export default function AddIdea({
               text="Cancel"
               warning
               className="mx-2"
-              onClick={() => cancelFlagFormAndRevertFlagState()}
+              onClick={() => cancelSuggestionFormAndRevertSuggestionState()}
             />
 
             <GeneralButton

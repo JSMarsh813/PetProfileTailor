@@ -16,16 +16,18 @@ export function CategoriesAndTagsProvider({
   nameCateg = [],
 }) {
   const nameTagList = useMemo(() => {
-    return nameCateg.flatMap((cat) =>
+    const allTags = nameCateg.flatMap((cat) =>
       cat.tags.map((tag) => ({ label: tag.tag, value: tag._id })),
     );
+    return Array.from(new Map(allTags.map((tag) => [tag.value, tag])).values()); // gets rid of duplicates, keyed by value so if 2 have the same value, only one will be added
   }, [nameCateg]);
 
   const descriptionTagList = useMemo(() => {
-    return descrCateg.flatMap((cat) =>
+    const allTags = descrCateg.flatMap((cat) =>
       cat.tags.map((tag) => ({ label: tag.tag, value: tag._id })),
     );
-  }, [nameCateg]);
+    return Array.from(new Map(allTags.map((tag) => [tag.value, tag])).values());
+  }, [descrCateg]);
 
   return (
     <CategoriesAndTagsContext.Provider
