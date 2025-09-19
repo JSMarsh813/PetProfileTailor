@@ -1,7 +1,7 @@
 function RankNames(points) {
   let rankName = "";
   let rankTitlesByPoints = {
-    0: "Possessor of the Babiest Toe Beans",
+    0: "Baby Toe Beans",
     1: "Autodromkatzerl/Bumper Car Tail Kitten",
     2: "The Tiniest Woofer",
     3: "World Class Shoe Chewer",
