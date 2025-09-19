@@ -5,10 +5,11 @@ import thanksOptions from "@/data/ThanksOptions";
 const allowedMessages = thanksOptions.map((option) => option.tag);
 const ThanksSchema = new mongoose.Schema(
   {
-    creatorId: { type: ObjectId, ref: "Users", required: true },
-    thankedById: { type: ObjectId, ref: "Users", required: true },
+    contentCreator: { type: ObjectId, ref: "Users", required: true },
+    thanksBy: { type: ObjectId, ref: "Users", required: true },
     nameId: { type: ObjectId, ref: "Names", required: true },
     descriptionId: { type: ObjectId, ref: "Description", required: true },
+    read: { type: Boolean, default: false },
     messages: {
       type: [
         {
@@ -24,10 +25,10 @@ const ThanksSchema = new mongoose.Schema(
 );
 
 ThanksSchema.index({
-  userId: 1,
+  contentCreator: 1,
   nameId: 1,
   descriptionId: 1,
-  thankedById: 1,
+  thanksBy: 1,
 });
 
 const Thanks =
