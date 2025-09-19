@@ -12,12 +12,10 @@ import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 
 import ProfileImage from "@components/ReusableSmallComponents/ProfileImage";
-import IdeaContentSection from "../Suggestions/SuggestionContentSection";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 import AddHashToArrayString from "@utils/stringManipulation/addHashToArrayString";
 
 import { Ellipsis } from "lucide-react";
-import ContainerForLikeShareFlag from "@components/ReusableSmallComponents/buttons/ContainerForLikeShareFlag";
 import { useDeleteConfirmation } from "@hooks/useDeleteConfirmation";
 import DeleteDialog from "@components/DeletingData/DeleteDialog";
 import FlagDialog from "@components/Flagging/FlagDialog";
