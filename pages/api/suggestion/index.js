@@ -173,9 +173,9 @@ export default async function handler(req, res) {
   // ---------------- DELETE (mark as deleted) ----------------
   if (method === "DELETE") {
     try {
-      const { contentId } = req.body;
+      const { suggestionId } = req.body;
 
-      const contentToDelete = await Suggestion.findById(contentId);
+      const contentToDelete = await Suggestion.findById(suggestionId);
 
       if (!contentToDelete)
         return res.status(404).json({ error: "Suggestion not found" });

@@ -12,6 +12,7 @@ import { useSuggestions } from "@context/SuggestionsContext";
 import { useTags } from "@/hooks/useTags";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 import LoadingSpinner from "@components/ui/LoadingSpinner";
+import DeleteContentNotification from "../DeletingData/DeleteContentNotification";
 
 export default function EditSuggestion({
   dataType,
@@ -20,13 +21,14 @@ export default function EditSuggestion({
   apisuggestionSubmission,
   onClose,
 }) {
-  const { addSuggestion } = useSuggestions();
+  const { addSuggestion, deleteSuggestion } = useSuggestions();
 
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([]);
   const [incorrectTags, setIncorrectTags] = useState([]);
   const [description, setDescription] = useState("");
   const [suggestionId, setSuggestionId] = useState("");
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   const { tagsToSubmit, tagIds, handleSelectChange, handleCheckboxChange } =
     useTags();
@@ -82,6 +84,8 @@ export default function EditSuggestion({
 
     fetchSuggestion();
   }, [contentInfo]);
+
+  // ################# EDIT #####################
 
   const handleSubmitSuggestion = async (e) => {
     e.preventDefault();
@@ -146,146 +150,191 @@ export default function EditSuggestion({
     onClose?.(); // <-- close the dialog
   }
 
+  // ################ DELETION #################
+
+  const handleDeletion = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.delete("/api/suggestion", {
+        data: { suggestionId: suggestionId },
+      });
+      console.log("response", res.data);
+
+      deleteSuggestion(dataType, contentInfo._id, suggestionId);
+    } catch (err) {
+      console.error("Error fetching specific suggestion", err);
+    } finally {
+      setLoading(false);
+    }
+
+    setShowDeleteConfirmation(false);
+    onClose();
+    console.log("deleted");
+  };
+
   return (
-    <>
+    <div className=" mx-auto bg-primary rounded-lg  border border-subtleWhite ">
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <form
-          className=" mx-auto bg-primary rounded-lg w-[94vw] border border-subtleWhite"
-          onSubmit={handleSubmitSuggestion}
-        >
-          <div className="flex items-center justify-end py-2   bg-secondary ">
-            <ClosingXButton
-              onClick={() => cancelSuggestionFormAndRevertSuggestionState()}
-              className="mr-5"
-            />
-          </div>
-
-          <div className={` mb-4`}>
-            <div className=" mb-2 text-subtleWhite px-4 ">
-              <section className="my-6">
-                <h2 className="text-center  text-2xl ">Edit Suggestion</h2>
-
-                <p className="text-center mb-3">
-                  ❗ Note:{" "}
-                  <strong> one or more checkboxes must be selected</strong> to
-                  submit this form
-                </p>
-              </section>
-
-              <section className="flex flex-col mx-5 my-8">
-                <div className=" bg-secondary  rounded-sm flex">
-                  <h3 className=" mb-2 text-xl mx-auto py-3 ">
-                    Incorrect Tags{" "}
-                  </h3>
-                </div>
-
-                <div className="flex flex-col gap-4 mt-4">
-                  <p className="mx-auto">
-                    Select the incorrect tags and then please comment why the
-                    tags are incorrect in the textbox at the bottom. Thank you!
-                  </p>
-                  <div className="flex justify-center flex-wrap">
-                    {contentInfo.tags && contentInfo.tags.length > 0 ? (
-                      contentInfo.tags.map((tag) => (
-                        <StyledCheckbox
-                          key={tag._id}
-                          label={tag.tag}
-                          checked={incorrectTags.includes(tag._id)}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setIncorrectTags((prev) => [...prev, tag._id]);
-                            } else {
-                              setIncorrectTags((prev) =>
-                                prev.filter((id) => id !== tag._id),
-                              );
-                            }
-                          }}
-                          value={tag._id}
-                        />
-                      ))
-                    ) : (
-                      <p>No tags</p>
-                    )}
-                  </div>
-                </div>
-              </section>
-
-              <div className=" bg-secondary  rounded-sm flex mt=6 mb-16">
-                <h3 className=" mb-2 text-xl mx-auto py-3 ">Add Tags </h3>
-              </div>
-
-              <TagsSelectAndCheatSheet
-                dataType={dataType}
-                tagsToSubmit={tagsToSubmit}
-                handleSelectChange={handleSelectChange}
-                handleCheckboxChange={handleCheckboxChange}
+        <>
+          <form onSubmit={handleSubmitSuggestion}>
+            <div className="flex items-center justify-end py-2   bg-secondary ">
+              <ClosingXButton
+                onClick={() => cancelSuggestionFormAndRevertSuggestionState()}
+                className="mr-5"
               />
+            </div>
 
-              <div className=" bg-secondary rounded-sm flex mt-16">
-                <h3 className=" mb-2 text-xl mx-auto py-3 ">
-                  Suggest Changes to Notes{" "}
-                </h3>
-              </div>
+            <div className={` mb-4`}>
+              <div className=" mb-2 text-subtleWhite px-4 ">
+                <section className="my-6">
+                  <h2 className="text-center  text-2xl ">Edit Suggestion</h2>
 
-              <Field className="mt-6 mx-4">
-                <p className="text-center my-4">
-                  {" "}
-                  {`"${
-                    contentInfo.notes === "" ? "no notes" : contentInfo.notes
-                  }"`}
-                </p>
-                <StyledTextarea
-                  onChange={(e) => setDescription(e.target.value)}
-                  maxLength="500"
-                  placeholder=""
-                  ariaLabel="type-comments"
-                  name="body"
-                  value={description}
+                  <p className="text-center mb-3">
+                    ❗ Note:{" "}
+                    <strong> one or more checkboxes must be selected</strong> to
+                    submit this form
+                  </p>
+                </section>
+
+                <section className="flex flex-col mx-5 my-8">
+                  <div className=" bg-secondary  rounded-sm flex">
+                    <h3 className=" mb-2 text-xl mx-auto py-3 ">
+                      Incorrect Tags{" "}
+                    </h3>
+                  </div>
+
+                  <div className="flex flex-col gap-4 mt-4">
+                    <p className="mx-auto">
+                      Select the incorrect tags and then please comment why the
+                      tags are incorrect in the textbox at the bottom. Thank
+                      you!
+                    </p>
+                    <div className="flex justify-center flex-wrap">
+                      {contentInfo.tags && contentInfo.tags.length > 0 ? (
+                        contentInfo.tags.map((tag) => (
+                          <StyledCheckbox
+                            key={tag._id}
+                            label={tag.tag}
+                            checked={incorrectTags.includes(tag._id)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setIncorrectTags((prev) => [...prev, tag._id]);
+                              } else {
+                                setIncorrectTags((prev) =>
+                                  prev.filter((id) => id !== tag._id),
+                                );
+                              }
+                            }}
+                            value={tag._id}
+                          />
+                        ))
+                      ) : (
+                        <p>No tags</p>
+                      )}
+                    </div>
+                  </div>
+                </section>
+
+                <div className=" bg-secondary  rounded-sm flex mt=6 mb-16">
+                  <h3 className=" mb-2 text-xl mx-auto py-3 ">Add Tags </h3>
+                </div>
+
+                <TagsSelectAndCheatSheet
+                  dataType={dataType}
+                  tagsToSubmit={tagsToSubmit}
+                  handleSelectChange={handleSelectChange}
+                  handleCheckboxChange={handleCheckboxChange}
                 />
-              </Field>
 
-              <section>
-                <div className=" bg-secondary  rounded-sm mx-5 mb-10 flex mt-6">
-                  <h3 className=" my-2 text-xl mx-auto py-3 ">
-                    Additional Comments
+                <div className=" bg-secondary rounded-sm flex mt-16">
+                  <h3 className=" mb-2 text-xl mx-auto py-3 ">
+                    Suggest Changes to Notes{" "}
                   </h3>
                 </div>
-                <p className="text-center">
-                  Please give us more information in the comments textbox below
-                </p>
 
                 <Field className="mt-6 mx-4">
+                  <p className="text-center my-4">
+                    {" "}
+                    {`"${
+                      contentInfo.notes === "" ? "no notes" : contentInfo.notes
+                    }"`}
+                  </p>
                   <StyledTextarea
-                    onChange={(e) => setComments(e.target.value)}
+                    onChange={(e) => setDescription(e.target.value)}
                     maxLength="500"
-                    placeholder="Optional"
+                    placeholder=""
                     ariaLabel="type-comments"
                     name="body"
-                    value={comments}
+                    value={description}
                   />
                 </Field>
-              </section>
 
-              <Field className="flex gap-24 justify-center">
-                <GeneralButton
-                  text="Cancel"
-                  warning
-                  className="mx-2"
-                  onClick={() => cancelSuggestionFormAndRevertSuggestionState()}
-                />
+                <section>
+                  <div className=" bg-secondary  rounded-sm mx-5 mb-10 flex mt-6">
+                    <h3 className=" my-2 text-xl mx-auto py-3 ">
+                      Additional Comments
+                    </h3>
+                  </div>
+                  <p className="text-center">
+                    Please give us more information in the comments textbox
+                    below
+                  </p>
 
-                <GeneralButton
-                  type="submit"
-                  text="Submit"
-                  default
-                />
-              </Field>
+                  <Field className="mt-6 mx-4">
+                    <StyledTextarea
+                      onChange={(e) => setComments(e.target.value)}
+                      maxLength="500"
+                      placeholder="Optional"
+                      ariaLabel="type-comments"
+                      name="body"
+                      value={comments}
+                    />
+                  </Field>
+                </section>
+
+                <Field className="flex gap-24 justify-center">
+                  <GeneralButton
+                    text="Cancel"
+                    warning
+                    className="mx-2"
+                    onClick={() =>
+                      cancelSuggestionFormAndRevertSuggestionState()
+                    }
+                  />
+
+                  <GeneralButton
+                    type="submit"
+                    text="Submit"
+                    default
+                  />
+                </Field>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+          <form className="text-center">
+            {" "}
+            <h2 className="text-center text-xl text-white ">
+              {" "}
+              Delete Suggestion
+            </h2>
+            <GeneralButton
+              type="button"
+              text="delete"
+              warning
+              onClick={() => setShowDeleteConfirmation(true)}
+            />
+            {showDeleteConfirmation && (
+              <DeleteContentNotification
+                setShowDeleteConfirmation={setShowDeleteConfirmation}
+                onConfirm={handleDeletion}
+              />
+            )}
+          </form>
+        </>
       )}
-    </>
+    </div>
   );
 }
