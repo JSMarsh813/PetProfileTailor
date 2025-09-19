@@ -197,6 +197,14 @@ export default async function RootLayout({ children }) {
                           family
                         </a>
                       </small>
+                      <small>
+                        <a
+                          className="text-xs block"
+                          href="https://thenounproject.com/browse/icons/term/thank-you/"
+                        >
+                          Thank you icon by Arfan Haq from Noun Project
+                        </a>
+                      </small>
                     </div>
                   </footer>
                 </SuggestionsWrapper>

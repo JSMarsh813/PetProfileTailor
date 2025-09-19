@@ -30,6 +30,8 @@ import { useSession } from "next-auth/react";
 import SuggestButton from "../Suggestions/SuggestionButton";
 import SuggestionDialog from "../Suggestions/SuggestionDialog";
 
+import ThanksButton from "@components/Thanks/ThanksButton";
+
 export default function ContentListing({
   dataType,
   singleContent,
@@ -341,22 +343,10 @@ export default function ContentListing({
 
             <ShareButton onClickShowShares={onClickShowShares} />
 
-            {/* {singleContent && singleContent.createdby._id == signedInUsersId ? (
-              <ContainerForLikeShareFlag>
-                <span> something </span>
-              </ContainerForLikeShareFlag>
-            ) : (
-              <IdeaContentSection
-                userIsTheCreator={userIsTheCreator}
-                signedInUsersId={signedInUsersId}
-                content={singleContent}
-                apiIdeaSubmission="/api/_______/"
-                apiaddUserToIdea="/api/_____"
-                ideaFormToggled={ideaFormToggled}
-                setIdeaFormToggled={setIdeaFormToggled}
-                dataType={dataType}
-              />
-            )} */}
+            {singleContent &&
+              singleContent.createdby._id !== signedInUsersId && (
+                <ThanksButton />
+              )}
           </div>
         </div>
         {/* ###### END OF LISTING #### */}
