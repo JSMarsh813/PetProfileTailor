@@ -40,6 +40,24 @@ export default function TagsSelectAndCheatSheet({
         borderColor: "rgb(221 214 254)",
       },
     }),
+    dropdownIndicator: (provided, state) => ({
+      ...provided,
+      color: "rgb(221 214 254)", // arrow color
+      backgroundColor: "transparent",
+      "&:hover": {
+        backgroundColor: "rgb(59 130 246)",
+        color: "rgb(221 214 254)",
+      },
+    }),
+    clearIndicator: (provided, state) => ({
+      ...provided,
+      color: "rgb(221 214 254)", // x color
+      backgroundColor: "transparent",
+      "&:hover": {
+        backgroundColor: "rgb(59 130 246)",
+        color: "rgb(221 214 254)",
+      },
+    }),
     input: (provided) => ({
       ...provided,
       margin: 0,
@@ -59,6 +77,7 @@ export default function TagsSelectAndCheatSheet({
       display: "flex",
       flexWrap: "wrap", // ensures multiple values don't collapse the input
       gap: "0.25rem",
+
       alignItems: "center",
       paddingLeft: "0.25rem",
       paddingRight: "0.25rem",
@@ -102,7 +121,7 @@ export default function TagsSelectAndCheatSheet({
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: "rgb(221 214 254 / 50%)",
+      color: "rgb(221 214 254)",
     }),
   };
 
@@ -125,72 +144,75 @@ export default function TagsSelectAndCheatSheet({
       <p className="my-4 text-subtleWhite text-center">
         Or use the tags cheat sheet
       </p>
+      <div className="flex flex-wrap justify-center">
+        {categoriesWithTags.map((category) => (
+          <Disclosure
+            key={category._id}
+            as="div"
+            className="inline-block align-top mb-6 text-center "
+          >
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="flex justify-between w-[306px]  bg-primary px-2 py-2 text-base font-medium text-subtleWhite hover:bg-blue-700 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
+                  <span className="mx-auto">{category.category}</span>
+                  <ChevronUpIcon
+                    className={`${
+                      open ? "rotate-180 transform" : ""
+                    } h-5 w-5 bg-blue-00`}
+                  />
+                </Disclosure.Button>
 
-      {categoriesWithTags.map((category) => (
-        <Disclosure
-          key={category._id}
-          as="div"
-          className="inline-block align-top mb-6 "
-        >
-          {({ open }) => (
-            <>
-              <Disclosure.Button className="flex justify-between w-[306px] border-t-2 border-subtleWhite bg-primary px-2 py-2 text-base font-medium text-subtleWhite hover:bg-blue-100 hover:text-blue-900 focus:outline-none focus-visible:ring focus-visible:ring-blue-500 focus-visible:ring-opacity-75">
-                <span className="mx-auto">{category.category}</span>
-                <ChevronUpIcon
-                  className={`${
-                    open ? "rotate-180 transform" : ""
-                  } h-5 w-5 text-blue-200`}
-                />
-              </Disclosure.Button>
+                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-subtleWhite  bg-primary  w-[306px]">
+                  <div className="space-y-6 mb-4y">
+                    {category.tags.map((tag) => {
+                      const checked = tagsToSubmit.some(
+                        (t) => t.value === tag._id,
+                      );
+                      return (
+                        <label
+                          key={tag._id}
+                          htmlFor={tag._id}
+                          className="flex items-center space-x-2 cursor-pointer group hover:bg-blue-700 px-1 py-1 rounded"
+                        >
+                          <input
+                            id={tag._id}
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={checked}
+                            onChange={(e) =>
+                              handleCheckboxChange({
+                                id: tag._id,
+                                label: tag.tag,
+                                checked: e.target.checked,
+                              })
+                            }
+                          />
 
-              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-subtleWhite  bg-primary">
-                <div className="space-y-6 mb-4y">
-                  {category.tags.map((tag) => {
-                    const checked = tagsToSubmit.some(
-                      (t) => t.value === tag._id,
-                    );
-                    return (
-                      <label
-                        key={tag._id}
-                        htmlFor={tag._id}
-                        className="flex items-center space-x-2 cursor-pointer group hover:bg-blue-700 px-1 py-1 rounded"
-                      >
-                        <input
-                          id={tag._id}
-                          type="checkbox"
-                          className="sr-only peer"
-                          checked={checked}
-                          onChange={(e) =>
-                            handleCheckboxChange({
-                              id: tag._id,
-                              label: tag.tag,
-                              checked: e.target.checked,
-                            })
-                          }
-                        />
-
-                        <span
-                          className={`
+                          <span
+                            className={`
       border-2 border-violet-300 rounded flex items-center justify-center p-[7px]
       transition-colors duration-200
       bg-secondary text-subtleWhite group
       peer-checked:bg-yellow-300 peer-checked:text-secondary group-hover:bg-blue-700
       peer-focus:ring-2 peer-focus:ring-yellow-400 peer-focus:outline-none
     `}
-                        >
-                          <FontAwesomeIcon icon={faPaw} />
-                        </span>
+                          >
+                            <FontAwesomeIcon icon={faPaw} />
+                          </span>
 
-                        <span className="text-subtleWhite">{tag.tag}</span>
-                      </label>
-                    );
-                  })}
-                </div>
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-      ))}
+                          <span className="text-subtleWhite text-left">
+                            {tag.tag}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+        ))}
+      </div>
     </div>
   );
 }

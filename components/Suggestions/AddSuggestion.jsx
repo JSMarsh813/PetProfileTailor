@@ -143,7 +143,7 @@ export default function AddSuggestion({
           </section>
 
           <section className="flex flex-col mx-5 my-8">
-            <div className=" bg-secondary border-white border-y rounded-sm flex">
+            <div className=" bg-secondary  rounded-sm flex">
               <h3 className=" mb-2 text-xl mx-auto py-3 ">Incorrect Tags </h3>
             </div>
 
@@ -152,23 +152,25 @@ export default function AddSuggestion({
                 Select the incorrect tags and then please comment why the tags
                 are incorrect in the textbox at the bottom. Thank you!
               </p>
-              {contentInfo.tags && contentInfo.tags.length > 0 ? (
-                contentInfo.tags.map((tag) => (
-                  <StyledCheckbox
-                    key={tag._id}
-                    label={tag.tag}
-                    checked={suggestionCategoriesState.includes(tag._id)}
-                    onChange={handleSuggestionCategoriesState}
-                    value={tag._id}
-                  />
-                ))
-              ) : (
-                <p>No tags</p>
-              )}
+              <div className="flex justify-center flex-wrap">
+                {contentInfo.tags && contentInfo.tags.length > 0 ? (
+                  contentInfo.tags.map((tag) => (
+                    <StyledCheckbox
+                      key={tag._id}
+                      label={tag.tag}
+                      checked={suggestionCategoriesState.includes(tag._id)}
+                      onChange={handleSuggestionCategoriesState}
+                      value={tag._id}
+                    />
+                  ))
+                ) : (
+                  <p>No tags</p>
+                )}
+              </div>
             </div>
           </section>
 
-          <div className=" bg-secondary border-white border-y rounded-sm flex my-6">
+          <div className=" bg-secondary  rounded-sm flex mt=6 mb-16">
             <h3 className=" mb-2 text-xl mx-auto py-3 ">Add Tags </h3>
           </div>
 
@@ -179,7 +181,7 @@ export default function AddSuggestion({
             handleCheckboxChange={handleCheckboxChange}
           />
 
-          <div className=" bg-secondary border-white border-y rounded-sm flex mt-6">
+          <div className=" bg-secondary rounded-sm flex mt-16">
             <h3 className=" mb-2 text-xl mx-auto py-3 ">
               Suggest Changes to Description{" "}
             </h3>
@@ -200,7 +202,7 @@ export default function AddSuggestion({
           </Field>
 
           <section>
-            <div className=" bg-secondary border-white border-y rounded-sm mx-5 mb-10 flex mt-6">
+            <div className=" bg-secondary  rounded-sm mx-5 mb-10 flex mt-6">
               <h3 className=" my-2 text-xl mx-auto py-3 ">
                 Additional Comments
               </h3>
