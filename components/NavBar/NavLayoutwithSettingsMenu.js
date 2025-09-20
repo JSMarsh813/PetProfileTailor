@@ -62,8 +62,7 @@ export default function NavLayoutwithSettingsMenu() {
             />
 
             <NavBarNames />
-
-            <NotificationsButton />
+            {userName != "" && <NotificationsButton />}
 
             <div className="mr-2">
               {userName != "" ? (
@@ -150,10 +149,7 @@ export default function NavLayoutwithSettingsMenu() {
                   </MenuItems>
                 </Menu>
               ) : (
-                <Menu
-                  as="div"
-                  className="relative inline-block text-left z-30"
-                >
+                <div className="flex gap-2">
                   <LinkButton
                     basic
                     href="/login"
@@ -166,18 +162,7 @@ export default function NavLayoutwithSettingsMenu() {
                     text="register"
                     className="text-sm"
                   />
-                  {/* <MenuButton
-                    className="inline-flex justify-center rounded-2xl  py-2 px-4 text-sm font-semibold  text-subtleWhite bg-primary 
-                
-                
-                
-                hover:bg-opacity-30 hover:border-b-yellow-400
-
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                  >
-                    <Link href="/login">login</Link>
-                  </MenuButton> */}
-                </Menu>
+                </div>
               )}
             </div>
           </nav>
