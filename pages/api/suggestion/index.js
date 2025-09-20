@@ -12,8 +12,10 @@ export default async function handler(req, res) {
   await db.connect();
 
   // Get session (authentication)
-  const session = await getSessionForApis({ req, res });
-  if (!session) return res.status(401).json({ error: "Not authenticated" });
+  const { ok, session } = await getSessionForApis({ req, res });
+  if (!ok) {
+    return;
+  }
 
   const userId = session.user.id;
 
@@ -131,12 +133,14 @@ export default async function handler(req, res) {
       if (!existingSuggestion)
         return res.status(404).json({ error: "Suggestion not found" });
 
-      const session = await checkOwnership({
+      const { ok } = await checkOwnership({
         req,
         res,
         resourceCreatorId: existingSuggestion.suggestionBy.toString(),
       });
-      if (!session) return null;
+      if (!ok) {
+        return;
+      }
 
       const nameTagsSuggested =
         existingSuggestion.contentType === "names" ? tags : [];

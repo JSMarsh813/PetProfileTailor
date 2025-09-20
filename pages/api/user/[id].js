@@ -8,11 +8,13 @@ export default async function handler(req, res) {
     method,
   } = req;
 
-  const session = await getSessionForApis({
+  const { ok, session } = await getSessionForApis({
     req,
     res,
   });
-  if (!session) return null;
+  if (!ok) {
+    return;
+  }
 
   const signedInUser = session.user.id;
 

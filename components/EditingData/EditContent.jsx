@@ -12,32 +12,40 @@ import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndChe
 import { useTags } from "@hooks/useTags";
 import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 
-export default function EditName({ dataType, open, onClose, name, onSave }) {
+export default function EditContent({
+  dataType,
+  open,
+  onClose,
+  content,
+  onSave,
+}) {
   if (!open) return null;
 
-  const initialTags = name.tags.map((tag) => ({
+  const initialTags = content.tags.map((tag) => ({
     label: tag.tag,
     value: tag._id,
   }));
 
-  console.log("dataType in edit name", dataType);
+  console.log("dataType in edit content", dataType);
   const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);
   console.log("dataType in tagList ", tagList);
 
-  const [newName, setName] = useState(name.content);
-  const [description, setDescription] = useState(name.notes);
+  const [updatedContent, setUpdatedContent] = useState(content.content);
+  const [notes, setNotes] = useState(content.notes);
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange } =
     useTags(initialTags);
 
   const handleSubmit = () => {
     onSave({
-      content: newName,
-      notes: description,
+      content: updatedContent,
+      notes: notes,
       tags: tagsToSubmit.map((t) => t.value),
     });
   };
 
   const panelRef = useRef(null);
+
+  const maxContentLength = dataType === "names" ? 40 : 2000;
 
   return (
     <Dialog
@@ -70,26 +78,40 @@ export default function EditName({ dataType, open, onClose, name, onSave }) {
           Edit Content
         </DialogTitle>
 
-        {/* Name */}
-        <h4 className="text-subtleWhite mb-2 text-lg">Name</h4>
-        <StyledInput
-          value={newName}
-          onChange={(e) => setName(e.target.value)}
-          maxLength={40}
-        />
+        {/* ############ CONTENT ################# */}
+        <h4 className="text-subtleWhite mb-2 text-lg">
+          {dataType === "names" ? "Name" : "Description"}
+        </h4>
+
+        {dataType === "names" && (
+          <StyledInput
+            value={updatedContent}
+            onChange={(e) => setUpdatedContent(e.target.value)}
+            maxLength={maxContentLength}
+          />
+        )}
+        {dataType === "descriptions" && (
+          <StyledTextarea
+            value={updatedContent}
+            onChange={(e) => setUpdatedContent(e.target.value)}
+            maxLength={maxContentLength}
+          />
+        )}
         <span className="block text-subtleWhite mb-2">
-          {`${40 - newName.length}/40 characters left`}
+          {`${
+            maxContentLength - updatedContent.length
+          }/ ${maxContentLength} characters left`}
         </span>
 
-        {/* Description */}
-        <h4 className="text-subtleWhite mb-2 text-lg">Description</h4>
+        {/* notes */}
+        <h4 className="text-subtleWhite mb-2 text-lg">Notes</h4>
         <StyledTextarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
           maxLength={500}
         />
         <span className="block text-subtleWhite mb-2">
-          {`${500 - description.length}/500 characters left`}
+          {`${500 - notes.length}/500 characters left`}
         </span>
 
         {/* Tags */}

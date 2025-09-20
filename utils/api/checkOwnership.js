@@ -10,18 +10,18 @@ import { getSessionForApis } from "./getSessionForApis";
  * @returns {Promise<Object|null>} session object if authorized, or null if unauthorized
  */
 export async function checkOwnership({ req, res, resourceCreatorId }) {
-  const session = await getSessionForApis({ req, res });
+  const { ok, session } = await getSessionForApis({ req, res });
 
-  if (!session) {
-    return null;
+  if (!ok) {
+    return;
   }
 
   if (resourceCreatorId.toString() !== session.user.id) {
     res.status(403).json({
       message: `Only the creator of this content is authorized to change it`,
     });
-    return null;
+    return { ok: false };
   }
 
-  return session;
+  return { ok: true, session };
 }

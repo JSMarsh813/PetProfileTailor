@@ -9,11 +9,13 @@ export default async function handler(req, res) {
   await dbConnect.connect();
   const { id: nameId } = req.query;
 
-  const serverSession = await getSessionForApis({
+  const { ok, serverSession } = await getSessionForApis({
     req,
     res,
   });
-  if (!serverSession) return null;
+  if (!ok) {
+    return;
+  }
 
   const userId = serverSession.user.id;
 

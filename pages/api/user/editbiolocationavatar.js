@@ -8,11 +8,13 @@ async function handler(req, res) {
     return res.status(400).send({ message: `${req.method} not supported` });
   }
 
-  const session = await getSessionForApis({
+  const { ok, session } = await getSessionForApis({
     req,
     res,
   });
-  if (!session) return null;
+  if (!ok) {
+    return;
+  }
 
   const userid = session.user.id;
 

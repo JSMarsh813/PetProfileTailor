@@ -8,11 +8,13 @@ import { getSessionForApis } from "@/utils/api/getSessionForApis";
 export default async function handler(req, res) {
   const { method } = req;
 
-  const session = await getSessionForApis({
+  const { ok, session } = await getSessionForApis({
     req,
     res,
   });
-  if (!session) return null;
+  if (!ok) {
+    return;
+  }
 
   const reportedByUserId = session.user.id;
 
@@ -27,11 +29,6 @@ export default async function handler(req, res) {
   }
 
   if (method === "POST") {
-    if (!session) {
-      res.status(401).json({ message: "Not authenticated" });
-      return null;
-    }
-
     const {
       contenttype,
       contentid,

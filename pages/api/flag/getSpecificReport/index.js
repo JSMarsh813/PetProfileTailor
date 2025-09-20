@@ -7,12 +7,14 @@ import { checkOwnership } from "@/utils/api/checkOwnership";
 export default async function handler(req, res) {
   await db.connect();
 
-  const session = await checkOwnership({
+  const { ok } = await checkOwnership({
     req,
     res,
     resourceCreatorId: toUpdateDescription.createdby,
   });
-  if (!session) return null;
+  if (!ok) {
+    return;
+  }
 
   const userId = session.user.id;
 

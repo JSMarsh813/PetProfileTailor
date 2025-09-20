@@ -20,11 +20,13 @@ export default async function handler(req, res) {
 
   if (method === "POST") {
     try {
-      const session = await checkIfAdmin({
+      const { ok, session } = await checkIfAdmin({
         req,
         res,
       });
-      if (!session) return null;
+      if (!ok) {
+        return;
+      }
       const nametag = await NameTag.create(req.body);
       res.status(201).json(nametag);
     } catch (err) {

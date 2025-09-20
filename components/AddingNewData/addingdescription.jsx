@@ -1,40 +1,36 @@
 "use client";
 
-import Select from "react-select";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
 
 import { toast } from "react-toastify";
+
+import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
+import { useTags } from "@/hooks/useTags";
 import { useSession } from "next-auth/react";
-import { useCategoriesForDataType } from "@/hooks/useCategoriesForDataType";
 
 function NewDescriptionWithTagsData() {
-  const { data: session } = useSession();
-  const { categoriesWithTags, tagList } =
-    useCategoriesForDataType("descriptions");
-
   const [newDescription, setNewDescription] = useState("");
   const [tags, setTags] = useState([]);
   const [notes, setNotes] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [descriptionAlreadyExists, setDescriptionExists] = useState(false);
-  const [relatedNames, setRelatedNames] = useState([]);
+
+  const { data: session } = useSession();
+
+  const { tagsToSubmit, tagIds, handleSelectChange, handleCheckboxChange } =
+    useTags();
 
   function handleDescriptionSubmission(e) {
     e.preventDefault();
     setIsPending(true);
-    let relatedNamesArray = [];
-    if (relatedNames.length) {
-      relatedNamesArray = relatedNames.split(",");
-    }
 
     const descriptionSubmission = {
       content: newDescription,
-      tags: tags,
+      tags: tagIds,
       notes: notes,
       createdby: session.user.id.toString(),
-      relatednames: relatedNamesArray,
     };
 
     // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true and do not allow the new description
@@ -166,80 +162,13 @@ disabled:text-errorTextColor "
             If you type in the tags field, it will filter the tags. Enter at
             least 1 tag.
           </span>
-          <Select
-            unstyled
-            className="text-subtleWhite border border-subtleWhite bg-secondary "
-            // className styles the input
-            // styles is needed to style the dropdown
-            styles={{
-              menu: (provided, state) => ({
-                ...provided,
-                backgroundColor: "rgb(20 2 35)", // dark purple
-                color: "rgb(221 214 254)",
-                borderRadius: "0.5rem", // optional rounding
-              }),
-              option: (provided, state) => ({
-                ...provided,
-                backgroundColor: state.isFocused
-                  ? "#2563EB" // Tailwind bg-blue-600 on hover
-                  : "rgb(20 2 35)", // dark purple
-                color: "rgb(221 214 254)", //subtle white
-                cursor: state.isDisabled ? "not-allowed" : "pointer",
-              }),
-            }}
-            id="descriptionTags"
-            options={tagList.map((opt, index) => ({
-              label: opt.tag,
-              value: opt._id,
-            }))}
-            isMulti
-            isSearchable
-            disabled
-            onChange={(opt) => setTags(opt.map((tag) => tag.value))}
+          <TagsSelectAndCheatSheet
+            dataType="descriptions"
+            tagsToSubmit={tagsToSubmit}
+            handleSelectChange={handleSelectChange}
+            handleCheckboxChange={handleCheckboxChange}
           />
 
-          {/* RELATED NAMES SECTION */}
-          <label
-            className="font-bold block mt-4 text-lg"
-            htmlFor="relatedNames"
-          >
-            Related Names
-          </label>
-          <input
-            className="text-subtleWhite mb-4 
-disabled:bg-errorBackgroundColor
-disabled:text-errorTextColor  bg-secondary border-subtleWhite"
-            id="relatedNames"
-            type="text"
-            value={relatedNames}
-            disabled={session ? "" : "disabled"}
-            onChange={(e) =>
-              setRelatedNames(e.target.value.toLowerCase().trim())
-            }
-          ></input>
-          <p>
-            {" "}
-            Please seperate multiple names with a comma. Example:
-            Jedi,Luke,obiwan,Darth
-          </p>
-          {/* <Select
-            className="text-secondary mb-4"
-            id="descriptionTags"
-            options={nameList.map((opt, index) => ({
-              label: opt,
-              value: opt,
-            }))}
-            isMulti
-            isSearchable
-            placeholder="If you type in the tags field, it will filter the tags"
-            onChange={(opt) =>
-              setRelatedNames(
-                opt.map((tag) => {
-                  tag.label;
-                })
-              )
-            }
-          /> */}
           {/* BUTTON */}
 
           {!isPending && (

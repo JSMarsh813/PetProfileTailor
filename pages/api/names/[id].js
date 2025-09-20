@@ -38,12 +38,14 @@ const putHandler = async (req, res) => {
   if (!individualname)
     return res.status(404).send({ message: "Name not found" });
 
-  const session = await checkOwnership({
+  const { ok } = await checkOwnership({
     req,
     res,
     resourceCreatorId: individualname.createdby,
   });
-  if (!session) return null;
+  if (!ok) {
+    return;
+  }
 
   try {
     // update other fields

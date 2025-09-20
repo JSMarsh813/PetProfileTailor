@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 import Description from "@/models/Description";
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 import { checkOwnership } from "@/utils/api/checkOwnership";
+import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -31,13 +32,14 @@ export default async function handler(req, res) {
 
     const toUpdateDescription = await Description.findById(contentId);
 
-    const session = await checkOwnership({
+    const { ok } = await checkOwnership({
       req,
       res,
       resourceCreatorId: toUpdateDescription.createdby,
     });
-    if (!session) return null;
-
+    if (!ok) {
+      return;
+    }
     try {
       if (notes) {
         toUpdateDescription.notes = notes;
@@ -75,12 +77,11 @@ export default async function handler(req, res) {
       content: description,
     });
 
-    const session = await checkOwnership({
-      req,
-      res,
-      resourceCreatorId: existingDescriptionCheck.createdby,
-    });
-    if (!session) return null;
+    const { ok } = await getSessionForApis({ req, res });
+
+    if (!ok) {
+      return;
+    }
 
     if (existingDescriptionCheck && existingDescriptionCheck.length != 0) {
       res.status(409).json({
@@ -103,12 +104,14 @@ export default async function handler(req, res) {
       let idToObjectId = mongoose.Types.ObjectId(req.body.contentId);
       const nameToBeDeleted = await Description.findById(idToObjectId);
 
-      const session = await checkOwnership({
+      const { ok } = await checkOwnership({
         req,
         res,
         resourceCreatorId: nameToBeDeleted.createdby,
       });
-      if (!session) return null;
+      if (!ok) {
+        return;
+      }
       const test = await Description.deleteOne({ _id: idToObjectId });
 
       res.status(200).json({

@@ -11,11 +11,14 @@ export default async function handler(req, res) {
 
   if (method === "PUT") {
     try {
-      const session = await checkIfAdmin({
+      const { ok, session } = await checkIfAdmin({
         req,
         res,
       });
-      if (!session) return null;
+      if (!ok) {
+        return;
+      }
+
       const category = await Category.updateMany(
         {
           _id: { $in: categoriesToUpdate.map((category) => category) },

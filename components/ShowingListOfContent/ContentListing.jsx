@@ -7,7 +7,7 @@ import DeleteButton from "@components/DeletingData/DeleteButton";
 import EditButton from "@components/ReusableSmallComponents/buttons/EditButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import EditName from "../EditingData/EditName";
+import EditContent from "../EditingData/EditContent";
 import ShareButton from "@components/ReusableSmallComponents/buttons/ShareButton";
 import SharingOptionsBar from "../ReusableMediumComponents/SharingOptionsBar";
 
@@ -312,10 +312,6 @@ export default function ContentListing({
                 />
               )}
 
-            <span className="bg-yellow-300 text-black">
-              {" "}
-              Thanks {JSON.stringify(showThanksDialog)}{" "}
-            </span>
             {!userIsTheCreator && showThanksDialog && (
               <ThanksDialog
                 dataType={dataType}
@@ -329,11 +325,11 @@ export default function ContentListing({
             )}
 
             {showEditDialog && editTarget && (
-              <EditName
+              <EditContent
                 dataType={dataType}
                 open={showEditDialog}
                 onClose={closeEdit}
-                name={editTarget}
+                content={editTarget}
                 onSave={confirmEdit}
                 signedInUsersId={signedInUsersId}
               />

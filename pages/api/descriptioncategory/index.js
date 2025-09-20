@@ -19,11 +19,13 @@ export default async function handler(req, res) {
 
   if (method === "POST") {
     try {
-      const session = await checkIfAdmin({
+      const { ok, session } = await checkIfAdmin({
         req,
         res,
       });
-      if (!session) return null;
+      if (!ok) {
+        return;
+      }
 
       const newDescriptionCategory = await Category.create(req.body);
       res.status(201).json(newDescriptionCategory);

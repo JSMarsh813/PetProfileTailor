@@ -16,8 +16,8 @@ export async function getSessionForApis({ req, res }) {
 
   if (!session) {
     res.status(401).json({ message: "Not authenticated" });
-    return null;
+    return { ok: false };
   }
 
-  return session;
+  return { ok: true, session };
 }

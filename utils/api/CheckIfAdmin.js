@@ -10,22 +10,26 @@ import { getSessionForApis } from "./getSessionForApis";
  * @returns {Promise<Object|null>} session object if authorized, or null if unauthorized
  */
 export async function checkIfAdmin({ req, res }) {
-  const session = await getSessionForApis({ req, res });
+  const { ok, session } = await getSessionForApis({ req, res });
 
   if (!session) {
-    return null;
+    res.status(401).json({ message: "Not authenticated" });
+    return { ok: false };
   }
 
+  console.log("session in checkAdmin", session);
   const { role, status } = session.user || {};
 
   const isAdmin = role === "admin" && status === "active";
+
+  console.log("isAdmin", isAdmin, "role", role, "status", status);
 
   if (isAdmin) {
     res.status(403).json({
       message: `Unauthorized, you must be an admin to complete this action"`,
     });
-    return null;
+    return { ok: false };
   }
 
-  return session;
+  return { ok: true, session };
 }

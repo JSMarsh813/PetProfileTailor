@@ -18,7 +18,7 @@ export default function AddDescriptionTag() {
   const { data: session } = useSession();
   const [newDescriptionTag, setNewDescriptionTag] = useState("");
   const [categoryList, setCategoryList] = useState([]);
-  const [categoriesChosen, setCategoriesChosen] = useState();
+  const [categoriesChosen, setCategoriesChosen] = useState([]);
 
   function handleDescriptionTagSubmission(e) {
     e.preventDefault();
@@ -29,7 +29,7 @@ export default function AddDescriptionTag() {
       tag: newDescriptionTag,
       createdby: session.user.id,
     };
-
+    console.log(descriptionTagSubmission);
     axios
       .post("/api/descriptiontag", descriptionTagSubmission)
       .then((response) => {
@@ -44,7 +44,7 @@ export default function AddDescriptionTag() {
   function addTagToCategories(newDescriptionTagId) {
     const addTagsToCategorySubmission = {
       newtagid: newDescriptionTagId,
-      categoriesToUpdate: categoriesChosen,
+      categoriesToUpdate: categoriesChosen.map((option) => option._id),
     };
 
     try {
@@ -79,7 +79,7 @@ export default function AddDescriptionTag() {
           id="descriptionTags"
           options={categoriesWithTags}
           value={categoriesChosen}
-          onChange={(selected) => setCategoriesChosen(selected)}
+          onChange={setCategoriesChosen}
           labelProperty="category"
           valueProperty="_id"
         />

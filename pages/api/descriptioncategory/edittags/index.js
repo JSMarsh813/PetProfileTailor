@@ -11,11 +11,13 @@ export default async function handler(req, res) {
   await dbConnect.connect();
   console.log("request body", req.body);
 
-  const session = await checkIfAdmin({
+  const { ok, session } = await checkIfAdmin({
     req,
     res,
   });
-  if (!session) return null;
+  if (!ok) {
+    return;
+  }
 
   if (method === "PUT") {
     try {

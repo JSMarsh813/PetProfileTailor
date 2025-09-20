@@ -100,6 +100,8 @@ export const authOptions = {
           bioblurb: user.bioblurb || "",
           location: user.location || "",
           profileimage: user.profileimage,
+          role: user.role,
+          status: user.status,
         };
       }
       return token;
@@ -130,6 +132,8 @@ export const authOptions = {
             profilename: user.profilename,
             email: user.email,
             profileimage: user.profileimage,
+            role: user.role,
+            status: user.status,
           };
         }
         throw new Error("Invalid email or password");

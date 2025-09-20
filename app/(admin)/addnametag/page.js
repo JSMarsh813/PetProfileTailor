@@ -15,7 +15,7 @@ export default function AddNameTag() {
   const { data: session } = useSession();
   const { categoriesWithTags, tagList } = useCategoriesForDataType("names");
   const [newNameTag, setNewNameTag] = useState("");
-  const [categoriesChosen, setCategoriesChosen] = useState();
+  const [categoriesChosen, setCategoriesChosen] = useState([]);
 
   //for Nav menu profile name and image
   let userName = "";
@@ -51,6 +51,7 @@ export default function AddNameTag() {
       newtagid: newNameTagId,
       categoriesToUpdate: categoriesChosen,
     };
+    console.log(add);
 
     try {
       axios.put("/api/namecategories/edittags", {
@@ -77,16 +78,16 @@ export default function AddNameTag() {
         {/* TAG AREA */}
         <label
           className="font-bold block mt-4 text-white"
-          htmlFor="nameTags"
+          htmlFor="categoryTags"
         >
           Categories
         </label>
 
         <StyledSelect
-          id="nameTags"
+          id="categoryTags"
           options={categoriesWithTags}
           value={categoriesChosen}
-          onChange={(selected) => setCategoriesChosen(selected)}
+          onChange={setCategoriesChosen}
           labelProperty="category"
           valueProperty="_id"
         />

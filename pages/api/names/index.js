@@ -42,12 +42,14 @@ export default async function handler(req, res) {
     if (!toUpdateName) {
       return res.status(404).json({ message: "Name not found" });
     }
-    const session = await checkOwnership({
+    const { ok } = await checkOwnership({
       req,
       res,
       resourceCreatorId: toUpdateName.createdby,
     });
-    if (!session) return null;
+    if (!ok) {
+      return;
+    }
 
     try {
       // Only check if user is actually changing the name
@@ -104,11 +106,13 @@ export default async function handler(req, res) {
     // "mike" will get the name already exists error if it matches a "Mike", "MIKE", "mikE", etc.
     // he ^ and $ anchors make sure it only matches the full string (not substrings).
 
-    const session = await getSessionForApis({
+    const { ok, session } = await getSessionForApis({
       req,
       res,
     });
-    if (!session) return null;
+    if (!ok) {
+      return;
+    }
 
     let checkForInvalidInput = regexInvalidInput(content);
     console.log(checkForInvalidInput);

@@ -10,8 +10,10 @@ export default async function handler(req, res) {
 
   await db.connect();
 
-  const session = await getSessionForApis({ req, res });
-  if (!session) return res.status(401).json({ error: "Not authenticated" });
+  const { ok, session } = await getSessionForApis({ req, res });
+  if (!ok) {
+    return;
+  }
 
   const userId = session.user.id;
 
