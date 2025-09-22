@@ -19,6 +19,8 @@ function NewDescriptionWithTagsData() {
 
   const { data: session } = useSession();
 
+  const disabled = session === null ? true : false;
+
   const { tagsToSubmit, tagIds, handleSelectChange, handleCheckboxChange } =
     useTags();
 
@@ -103,7 +105,7 @@ function NewDescriptionWithTagsData() {
           {/* needs label and value for Select to work  */}
 
           <label
-            className="font-bold block mt-4 text-lg"
+            className="font-bold block mt-4 text-lg "
             htmlFor="descriptionInput"
           >
             Description *required
@@ -112,11 +114,11 @@ function NewDescriptionWithTagsData() {
           <textarea
             type="text"
             id="nameDescription"
-            className="text-subtleWhite block w-full disabled:bg-errorBackgroundColor bg-secondary border-subtleWhite 
+            className="text-subtleWhite block w-full rounded-2xl disabled:bg-errorBackgroundColor bg-secondary border-subtleWhite 
 disabled:text-errorTextColor "
             onChange={(e) => setNewDescription(e.target.value.toLowerCase())}
             maxLength="4000"
-            disabled={session ? "" : "disabled"}
+            disabled={disabled}
             onClick={(e) => setDescriptionExists(false)}
           ></textarea>
 
@@ -129,7 +131,7 @@ disabled:text-errorTextColor "
           {/* NOTES SECTION           */}
 
           <label
-            className="font-bold block mt-4 text-lg"
+            className="font-bold block mt-4 text-lg "
             htmlFor="notesinput"
           >
             Notes
@@ -143,10 +145,10 @@ disabled:text-errorTextColor "
             type="text"
             id="noteinput"
             className="text-subtleWhite block w-full disabled:bg-errorBackgroundColor  bg-secondary border-subtleWhite
-disabled:text-errorTextColor "
+disabled:text-errorTextColor rounded-2xl"
             maxLength="800"
             onChange={(e) => setNotes(e.target.value.toLowerCase())}
-            disabled={session ? "" : "disabled"}
+            disabled={disabled}
           ></textarea>
 
           <span> {`${800 - notes.length}/800 characters left`}</span>
@@ -167,6 +169,7 @@ disabled:text-errorTextColor "
             tagsToSubmit={tagsToSubmit}
             handleSelectChange={handleSelectChange}
             handleCheckboxChange={handleCheckboxChange}
+            isDisabled={disabled}
           />
 
           {/* BUTTON */}

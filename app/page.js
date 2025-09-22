@@ -31,7 +31,7 @@ function HomePage() {
     setOpenVideo(openVideo === videoKey ? null : videoKey);
   }
   return (
-    <div>
+    <div className="w-screen sm:w-full ">
       <HeroTop
         updateImpactfulState={() => handleVideoClick("impactful")}
         updateFunState={() => handleVideoClick("fun")}

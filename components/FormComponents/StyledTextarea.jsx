@@ -6,16 +6,18 @@ export default function StyledTextarea({
   value,
   ariaLabel,
   name,
+  disabled = false,
 }) {
   return (
     <textarea
-      className={`bg-secondary border-subtleWhite text-subtleWhite block w-full rounded-2xl h-32 ${className}`}
+      className={`bg-secondary border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:cursor-not-allowed text-subtleWhite block rounded-2xl h-32 min-w-[200px] w-[95%] sm:min-w-[400px] mx-auto ${className}`}
       aria-label={ariaLabel}
       onChange={onChange}
       required={required}
       maxLength={maxLength}
       value={value}
       name={name}
+      disabled={disabled}
     ></textarea>
   );
 }

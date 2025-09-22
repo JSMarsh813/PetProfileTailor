@@ -20,7 +20,7 @@ function NewNameWithTagsData() {
   const [newName, setNewName] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [nameAlreadyExists, setNameExists] = useState(false);
-  const [description, setDescription] = useState("");
+  const [note, setNote] = useState("");
   const [namesThatExist, setNamesThatExist] = useState([]);
   const [nameCheck, setNameCheck] = useState("");
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
@@ -28,6 +28,15 @@ function NewNameWithTagsData() {
   const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
 
   const { data: session, status } = useSession();
+
+  const disabled = session === null ? true : false;
+
+  console.log(
+    "session in adding names",
+    session,
+    session === null,
+    session === null ? false : true,
+  );
 
   //regex will return null if none of the characters are invalid, so start with null to begin with
 
@@ -63,7 +72,7 @@ function NewNameWithTagsData() {
 
     const nameSubmission = {
       content: newName,
-      notes: description,
+      notes: note,
       tags: tagsToSubmit.map((tag) => tag.value),
       createdby: session.user.id.toString(),
     };
@@ -95,7 +104,7 @@ function NewNameWithTagsData() {
   }
 
   return (
-    <div className="mx-2 w-full text-subtleWhite">
+    <div className="sm:mx-2 w-full text-subtleWhite">
       <section className="mx-auto text-center">
         <p className="font-bold block mt-4 mb-2 text-xl ">
           {" "}
@@ -138,15 +147,19 @@ function NewNameWithTagsData() {
 
           <input
             type="text"
-            className="bg-secondary border-subtleWhite "
+            className={`bg-secondary border-subtleWhite ${
+              disabled &&
+              "disabled:bg-errorBackgroundColor rounded-2xl mr-2 disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
+            }`}
             value={nameCheck}
             id="checkNameExists"
+            disabled={disabled}
             maxLength="40"
             onChange={(e) => resetData(e)}
           />
 
           <button
-            className="inline-block bg-subtleBackground   p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
+            className="inline-block bg-subtleBackground   p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor rounded-2xl disabled:border-errorBorderColor disabled:cursor-not-allowed"
             onClick={() => checkIfNameExists()}
             disabled={
               nameCheckInvalidInput !== null || nameCheck.length < 2
@@ -156,7 +169,7 @@ function NewNameWithTagsData() {
           >
             <FontAwesomeIcon
               icon={faSearch}
-              className="text-2xl"
+              className="text-xl"
               color={"rgb(221 214 254)"} //subtle white
             />
 
@@ -218,11 +231,11 @@ function NewNameWithTagsData() {
           <input
             type="text"
             id="nameInput"
-            className="bg-secondary border-subtleWhite "
+            className="bg-secondary border-subtleWhite rounded-2xl disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:cursor-not-allowed"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             maxLength="40"
-            disabled={session ? "" : "disabled"}
+            disabled={disabled}
           ></input>
           {newNameInvalidInput !== null && (
             <WarningMessage
@@ -232,25 +245,26 @@ function NewNameWithTagsData() {
           <span className="block my-3">
             {`${40 - newName.length}/40 characters left`}
           </span>
-          {/* setDescription */}
+          {/* setNote */}
           <label
             className="font-bold block mt-4 mb-2 text-xl "
-            htmlFor="nameDescription"
+            htmlFor="nameNote"
           >
-            Description (optional)
+            Note (optional)
           </label>
 
           <StyledTextarea
             type="text"
-            id="nameDescription"
+            id="nameNote"
             maxLength="1000"
-            className="bg-secondary border-subtleWhite  block w-full"
-            onChange={(e) => setDescription(e.target.value.trim())}
+            className="bg-secondary border-subtleWhite  block "
+            onChange={(e) => setNote(e.target.value.trim())}
+            disabled={disabled}
           />
           <div className="mb-8 flex flex-col gap-2">
             <span className="mt-3  block">
               {" "}
-              {`${1000 - description.length}/1000 characters left`}{" "}
+              {`${1000 - note.length}/1000 characters left`}{" "}
             </span>
             <p>Add anything that would be useful to know.</p>{" "}
             <p>
@@ -263,12 +277,13 @@ function NewNameWithTagsData() {
             tagsToSubmit={tagsToSubmit}
             handleSelectChange={handleSelectChange}
             handleCheckboxChange={handleCheckboxChange}
+            isDisabled={session === null ? true : false}
           />
           {/* BUTTON */}
           {!isPending && (
             <button
               className={`font-bold py-2 px-4 border-b-4 rounded my-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-500                       hover:text-subtleWhite                   hover:border-blue-700
-                    disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor "             `}
+                    disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"             `}
               disabled={
                 !session || newNameInvalidInput !== null || newName.length < 2
                   ? "disabled"

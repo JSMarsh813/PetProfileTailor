@@ -10,8 +10,10 @@ export default function TagsSelectAndCheatSheet({
   tagsToSubmit,
   handleSelectChange,
   handleCheckboxChange,
+  isDisabled,
 }) {
   console.log({ tagsToSubmit, handleSelectChange, handleCheckboxChange });
+  const disabledColor = "rgb(30 41 59)";
 
   const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);
 
@@ -26,7 +28,8 @@ export default function TagsSelectAndCheatSheet({
   const customSelectStyles = {
     control: (provided) => ({
       ...provided,
-      backgroundColor: "rgb(12 5 22)",
+      backgroundColor: isDisabled ? disabledColor : "rgb(12 5 22)",
+      pointerEvents: isDisabled ? "auto" : "auto",
       borderColor: "rgb(221 214 254)",
       color: "rgb(221 214 254)",
       width: "96%",
@@ -42,6 +45,7 @@ export default function TagsSelectAndCheatSheet({
     dropdownIndicator: (provided, state) => ({
       ...provided,
       color: "rgb(221 214 254)", // arrow color
+      cursor: isDisabled ? "not-allowed" : "pointer",
       backgroundColor: "transparent",
       "&:hover": {
         backgroundColor: "rgb(59 130 246)",
@@ -49,6 +53,7 @@ export default function TagsSelectAndCheatSheet({
       },
     }),
     clearIndicator: (provided, state) => ({
+      cursor: isDisabled ? "not-allowed" : "pointer",
       ...provided,
       color: "rgb(221 214 254)", // x color
       backgroundColor: "transparent",
@@ -63,6 +68,7 @@ export default function TagsSelectAndCheatSheet({
       padding: 0,
       boxShadow: "none",
       outline: "none",
+      cursor: isDisabled ? "not-allowed" : "pointer",
       background: "transparent",
       caretColor: "rgb(221 214 254)",
       color: "rgb(221 214 254)",
@@ -74,6 +80,7 @@ export default function TagsSelectAndCheatSheet({
     valueContainer: (provided) => ({
       ...provided,
       display: "flex",
+      cursor: isDisabled ? "not-allowed" : "pointer",
       flexWrap: "wrap", // ensures multiple values don't collapse the input
       gap: "0.25rem",
 
@@ -132,6 +139,7 @@ export default function TagsSelectAndCheatSheet({
         value={selectedOptions}
         isMulti
         isSearchable
+        isDisabled={isDisabled}
         filterOption={(option, inputValue) =>
           option.label.toLowerCase().includes(inputValue.toLowerCase())
         }
@@ -161,8 +169,13 @@ export default function TagsSelectAndCheatSheet({
                   />
                 </Disclosure.Button>
 
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-subtleWhite  bg-primary  w-[306px]">
-                  <div className="space-y-6 mb-4y">
+                <Disclosure.Panel
+                  className={`px-4 pt-4 pb-2 text-sm text-subtleWhite  bg-primary  w-[306px] ${
+                    isDisabled &&
+                    "bg-errorBackgroundColor [&_*]:cursor-not-allowed" // Tailwind arbitrary variant, it sets not-allowed on every descendant of this panel
+                  }`}
+                >
+                  <div className={`space-y-6 mb-4y `}>
                     {category.tags.map((tag) => {
                       const checked = tagsToSubmit.some(
                         (t) => t.value === tag._id,
@@ -171,12 +184,13 @@ export default function TagsSelectAndCheatSheet({
                         <label
                           key={tag._id}
                           htmlFor={tag._id}
-                          className="flex items-center space-x-2 cursor-pointer group hover:bg-blue-700 px-1 py-1 rounded"
+                          className={`flex items-center space-x-2 cursor-pointer group hover:bg-blue-700 px-1 py-1 rounded  `}
                         >
                           <input
                             id={tag._id}
                             type="checkbox"
-                            className="sr-only peer"
+                            className={`sr-only peer `}
+                            disabled={isDisabled}
                             checked={checked}
                             onChange={(e) =>
                               handleCheckboxChange({
@@ -193,13 +207,15 @@ export default function TagsSelectAndCheatSheet({
       transition-colors duration-200
       bg-secondary text-subtleWhite group
       peer-checked:bg-yellow-300 peer-checked:text-secondary group-hover:bg-blue-700
-      peer-focus:ring-2 peer-focus:ring-yellow-400 peer-focus:outline-none
+      peer-focus:ring-2 peer-focus:ring-yellow-400 peer-focus:outline-none ${
+        isDisabled && "bg-errorBackgroundColor"
+      }
     `}
                           >
                             <FontAwesomeIcon icon={faPaw} />
                           </span>
 
-                          <span className="text-subtleWhite text-left">
+                          <span className={`text-subtleWhite text-left`}>
                             {tag.tag}
                           </span>
                         </label>

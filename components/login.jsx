@@ -99,7 +99,7 @@ export default function Login() {
           {/* ################ Right Side Section with login #################### */}
           <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0 md:mt-3 lg:mt-0">
             <form
-              className="mx-auto max-w-screen-md border-x  border-subtleWhite"
+              className="mx-auto max-w-screen-md"
               onSubmit={handleSubmit(submitHandler)}
             >
               <div className="flex justify-center text-2xl my-4 "> Login </div>
@@ -172,9 +172,16 @@ export default function Login() {
             {/* ################ Magic Link ##################### */}
 
             <section className="bg-secondary p-2 ">
-              <h4 className="text-center mb-2 pb-2 font-semibold border-b-2 border-white">
-                Login with a magic link (for current users)
+              <div className="flex justify-center py-2">
+                <NounBlackCatIcon fill="purple" />
+              </div>
+              <h4 className="text-center  pb-1 font-semibold ">
+                Login with a magic link
               </h4>
+              <p className="text-center mb-2 pb-4 font-semibold border-b-2 border-white">
+                {" "}
+                (for registered users){" "}
+              </p>
 
               <form
                 method="post"
@@ -190,28 +197,24 @@ export default function Login() {
                   type="email"
                   id="magiclinkemail"
                   name="email"
-                  className="lg:min-w-64"
+                  className="lg:min-w-64 mt-4 "
                 />
 
                 <GeneralButton
                   text="sign in"
-                  className="ml-2 mb-2 text-center"
+                  className="sm:ml-2 sm:mb-2 text-center mt-0"
                   type="submit"
                   subtle
                 />
               </form>
 
-              <div className="flex mt-2">
-                <MagicRabbitSVG />
-                <p className="text-center rounded-lg">
-                  Sign in without a password! We&apos;ll send a magic link to
-                  this email, so you can click the link to sign in.
-                </p>
+              <p className="text-center mb-2">Sign in without a password!</p>
+              <p className="text-center mb-2">
+                We&apos;ll send a magic link to this email, so you can click the
+                link to sign in.
+              </p>
 
-                <NounBlackCatIcon fill="purple" />
-              </div>
-
-              <p className="text-center rounded-lg">
+              <p className="text-center">
                 <strong> No email? </strong> Please check for typos and check
                 your spam folder.
               </p>
@@ -221,38 +224,29 @@ export default function Login() {
 
             {/* <!-- Registration Link--> */}
 
-            <section className=" border-x border-subtleWhite my-4">
-              <p className="font-semibold mt-2 pt-1 mb-0 text-center">
+            <section className="  my-4">
+              <div className="font-semibold mt-2 pt-1 mb-0 text-center">
                 <FontAwesomeIcon
                   className="fa-bounce text-yellow-300 mr-2 text-xl "
                   icon={faPaw}
                 />
-                Don&apos;t have an account? Welcome! &nbsp;
+                <p className="mb-4">Don&apos;t have an account? Welcome! </p>
+
                 <LinkButton
                   href={`/register`}
                   defaultStyle
                   text="Register"
                 />
-              </p>
-              <section className="flex flex-col text-center">
-                <small className="mt-4">Icons from Noun Project:</small>
-                <small>
-                  <a
-                    href="https://thenounproject.com/browse/icons/term/magic/"
-                    title="magic Icons"
-                  >
-                    Magic by Monkik{" "}
-                  </a>
-                </small>
-                <small>
-                  <a
-                    href="https://thenounproject.com/browse/icons/term/black-cat/"
-                    title="black cat Icons"
-                  >
-                    Black Cat by Narakorn Chanchittakarm{" "}
-                  </a>
-                </small>
-              </section>
+              </div>
+
+              <small className="text-center  w-full inline-block py-2 mt-4">
+                <a
+                  href="https://thenounproject.com/browse/icons/term/magic/"
+                  title="magic Icons"
+                >
+                  Magic by Monkik from Noun Project{" "}
+                </a>
+              </small>
             </section>
           </div>
         </div>

@@ -9,6 +9,13 @@
   font-size: 18px;
 }
 
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 main {
   width: clamp(
     300px,
@@ -17,8 +24,6 @@ main {
   ); /* min: 300px, preferred: 90vw, max: 7xl (1280px) */
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem; /* optional, mirrors px-4 */
-  padding-right: 1rem;
 }
 
 input::file-selector-button {

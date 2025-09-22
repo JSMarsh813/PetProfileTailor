@@ -161,7 +161,7 @@ export default function Register() {
       </section>
       {/* #################### FORM #########################*/}
       <form
-        className="max-w-screen-md text-center"
+        className="max-w-screen-md text-center mx-auto"
         onSubmit={handleSubmit(submitHandler)}
       >
         <RegisterInput
@@ -178,7 +178,7 @@ export default function Register() {
             </p>,
             "30 characters max",
           ]}
-          inputStyling="w-full"
+          inputStyling=""
         />
 
         <RegisterInput
@@ -255,6 +255,7 @@ export default function Register() {
             },
           }}
           inputStyling="w-full"
+          helperText="Recommended but not required for magic link users"
           error={errors.confirmPassword}
         />
 

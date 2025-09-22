@@ -163,7 +163,7 @@ export default async function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className="h-full bg-primary"
+      className="h-full bg-primary w-full"
     >
       <body className="h-full flex flex-col w-full">
         <SessionProviderWrapper session={safeSession}>
@@ -176,7 +176,7 @@ export default async function RootLayout({ children }) {
                 <SuggestionsWrapper initialSuggestions={initialSuggestions}>
                   <NavLayoutwithSettingsMenu />
                   <Suspense fallback={<LoadingSkeleton />}>
-                    <main className="flex-1  px-4 sm:px-6 lg:px-8">
+                    <main className="flex-1   sm:px-6 lg:px-8 w-full">
                       {/* width behavior is controlled by globals.css since tailwind wasn't working correctly despite significant debugging, w-max-7xl wouldn't work with any other width value (w-full, w-90vw) ect*/}
                       {children}
                     </main>
