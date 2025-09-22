@@ -125,6 +125,8 @@ export default function ContentListing({
 
   const userIsTheCreator = singleContent.createdby._id === signedInUsersId;
 
+  const [showLikesSignInMessage, setShowLikesSignInMessage] = useState(false);
+
   //STATE FOR SHOWING SHARE OPTIONS
   const [shareSectionShowing, setShareSectionShowing] = useState(false);
 
@@ -357,6 +359,7 @@ export default function ContentListing({
             <LikesButtonAndLikesLogic
               dataType={dataType}
               data={singleContent}
+              setShowLikesSignInMessage={setShowLikesSignInMessage}
               HeartIconStyling="text-xl ml-2 my-auto mx-auto"
               HeartIconTextStyling="mx-2"
               signedInUsersId={signedInUsersId}
@@ -382,6 +385,14 @@ export default function ContentListing({
               localLink={localLink}
             />
           </section>
+        )}
+
+        {showLikesSignInMessage && (
+          <ToggeableAlert
+            text="You must be signed in to like content"
+            setToggleState={setShowLikesSignInMessage}
+            toggleState={showLikesSignInMessage}
+          />
         )}
 
         {ideaFormToggled && userIsTheCreator && (
