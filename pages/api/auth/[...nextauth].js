@@ -92,6 +92,14 @@ export const authOptions = {
     },
     async jwt({ token, user }) {
       // Only populate the token on first sign in
+
+      const user = await User.findById(token.user?.id).select("status");
+
+      if (!user || user.status === "banned") {
+        // strip user data so session() will return null
+        return {};
+      }
+
       if (user) {
         token.user = {
           id: user.id || user._id,
@@ -108,6 +116,12 @@ export const authOptions = {
     },
     async session({ session, token }) {
       //used to be session, user, token
+
+      if (!token.user) {
+        // No valid user on the token → kill the session
+        return null;
+      }
+
       if (token) {
         // Only expose safe fields in session, aka what we listed above in the token
         session.user = token.user;
