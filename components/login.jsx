@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { getError } from "@utils/error";
@@ -18,15 +18,30 @@ import MagicRabbitSVG from "@components/ReusableSmallComponents/iconsOrSvgImages
 import RegisterInput from "@components/FormComponents/RegisterInput";
 import StyledInput from "@components/FormComponents/StyledInput";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getCsrfToken } from "next-auth/react";
 
 export default function Login() {
   const { data: session } = useSession();
   const [csrfToken, setCsrfToken] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const hasShownError = useRef(false);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+
+  useEffect(() => {
+    if (!hasShownError.current) {
+      if (error === "Banned") {
+        toast.error("This account has been banned. Contact support.");
+        hasShownError.current = true;
+      } else if (error === "UserNotFound") {
+        toast.error("User not found.");
+        hasShownError.current = true;
+      }
+    }
+  }, [error]);
 
   useEffect(() => {
     let isMounted = true;

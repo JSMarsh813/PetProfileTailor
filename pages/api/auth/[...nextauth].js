@@ -41,6 +41,13 @@ export const authOptions = {
         email: user.email, //the user object has an email property, which contains the email the user entered.
       });
 
+      if (!userExists) return "/login?error=UserNotFound";
+
+      if (userExists.status === "banned") {
+        // for magic link users that are banned
+        return "/login?error=Banned";
+      }
+
       // ######################## MAGIC ID  Magic link submits to
       console.log(`this is user ${JSON.stringify(user)}`);
       //this is user {"id":"642ff957967ccc12cb6a66e3","name":"test","profilename":"test","email":"kyunyu@gmail.com","password":"$2a$10$rM/Wey8Ozj0v5AjlZovu5uQuv8attFIEazY2JNmR24NpV6IEZH0na","blockedusers":[],"followers":[],"bioblurb":"test","location":"somewhere","profileimage":"https://res.cloudinary.com/dujellms1/image/upload/v1680869990/profileimage/ypfn3bcukspvfcc6qyyc.jpg","createdAt":"2023-04-07T11:07:03.089Z","updatedAt":"2024-03-07T05:06:56.646Z","__v":16,"passwordresettoken":"d815dd793f58a8a84d146735399ce513460dcda981745a9ed598b8ed27aa44a1","resettokenexpires":"2024-03-07T05:12:01.846Z"}
@@ -93,13 +100,6 @@ export const authOptions = {
     async jwt({ token, user }) {
       // Only populate the token on first sign in
 
-      const user = await User.findById(token.user?.id).select("status");
-
-      if (!user || user.status === "banned") {
-        // strip user data so session() will return null
-        return {};
-      }
-
       if (user) {
         token.user = {
           id: user.id || user._id,
@@ -112,16 +112,18 @@ export const authOptions = {
           status: user.status,
         };
       }
+      const userCheck = await User.findById(token.user?.id).select("status");
+
+      if (!userCheck || userCheck.status === "banned") {
+        console.log("in next auth", userCheck, userCheck.status);
+        // strip user data so session() will return null
+        return {};
+      }
+
       return token;
     },
     async session({ session, token }) {
       //used to be session, user, token
-
-      if (!token.user) {
-        // No valid user on the token → kill the session
-        return null;
-      }
-
       if (token) {
         // Only expose safe fields in session, aka what we listed above in the token
         session.user = token.user;
@@ -137,6 +139,12 @@ export const authOptions = {
         const user = await User.findOne({
           email: credentials.email,
         });
+
+        if (!user) throw new Error("Invalid email or password");
+
+        if (user.status === "banned") {
+          throw new Error("This account has been banned. Contact support.");
+        }
 
         if (user && bcryptjs.compareSync(credentials.password, user.password)) {
           return {

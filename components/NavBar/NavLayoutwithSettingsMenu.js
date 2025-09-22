@@ -1,5 +1,7 @@
 "use client";
+
 import { useSession, signOut } from "next-auth/react";
+import { useEffect } from "react";
 import Link from "next/link";
 // //Special jsx code that allows us to build links. Allows us to keep everything on a single page (makes it a SPA), rather than using a href="page link", which would make us lose any state and require that we get a new file sent from the server
 
@@ -43,6 +45,14 @@ export default function NavLayoutwithSettingsMenu() {
     profileImageLink = session.user.profileimage || "";
     signedInUsersId = session.user.id || "";
   }
+
+  useEffect(() => {
+    console.log("nav check", status, session);
+    if (status === "authenticated" && !session?.user) {
+      // waits until the session has been fetched (authenticated)
+      signOut(); // ensures cookies cleared if token nuked, aka for a banner user
+    }
+  }, [session]);
 
   return (
     <>
