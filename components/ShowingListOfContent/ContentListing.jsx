@@ -181,6 +181,7 @@ export default function ContentListing({
                   }profile/${singleContent.createdby.profilename.toLowerCase()}`}
                   className="flex-1 min-w-0 flex flex-col"
                 >
+                  {/* flex-1 min-w-0 use remaining space but still wrap. Without min-w-0, text might overflow instead of wrapping.*/}
                   <span className="font-bold text-lg break-words">
                     {singleContent.createdby.name}
                   </span>
