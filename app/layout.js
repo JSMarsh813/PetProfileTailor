@@ -176,7 +176,10 @@ export default async function RootLayout({ children }) {
                 <SuggestionsWrapper initialSuggestions={initialSuggestions}>
                   <NavLayoutwithSettingsMenu />
                   <Suspense fallback={<LoadingSkeleton />}>
-                    <main className="flex-1   sm:px-6 lg:px-8 mx-auto w-full max-w-[1280px] min-w-[300px] md:w-[clamp(300px,90vw,1280px)]">
+                    <main
+                      className="flex-1   sm:px-6 lg:px-8 mx-auto w-full" // w-full so it the element doesn't start off as collapsed
+                      style={{ width: "clamp(300px, 90vw, 1280px)" }}
+                    >
                       {children}
                     </main>
                     {/*flex-1  in flex column means: main takes up the remaining flex space, so footer stays at the bottom */}
