@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
 
+mongoose.set("strictQuery", true);
+// queries don't accept fields not in schema
+// in mongoose 7 it will default to false, this will also turn off the strictQuery wraning
+
 const source = process.env.MONGODB_URI;
 
 const connection = {};

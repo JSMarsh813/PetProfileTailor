@@ -174,26 +174,24 @@ export default function ContentListing({
             {/* height needed otherwise the nonpositioned elements will move up */}
 
             <div className="">
-              <div className="w-full flex flex-wrap items-center justify-between p-2">
+              <div className="w-full p-2 flex items-start">
                 <a
                   href={`${
                     process.env.NEXT_PUBLIC_BASE_FETCH_URL
                   }profile/${singleContent.createdby.profilename.toLowerCase()}`}
-                  className="flex"
+                  className="flex-1 min-w-0 flex flex-col"
                 >
-                  <div className="flex flex-wrap">
-                    <span className="font-bold text-lg mr-2">
-                      {singleContent.createdby.name}
-                    </span>
-                    <span className="font-thin text-base">
-                      @{singleContent.createdby.profilename}
-                    </span>
-                  </div>
+                  <span className="font-bold text-lg break-words">
+                    {singleContent.createdby.name}
+                  </span>
+                  <span className="font-thin text-base text-gray-500 break-words">
+                    @{singleContent.createdby.profilename}
+                  </span>
                 </a>
 
                 <Menu
                   as="div"
-                  className="relative inline-block text-left"
+                  className="relative inline-block text-left ml-2"
                 >
                   {({ open }) => (
                     <>
