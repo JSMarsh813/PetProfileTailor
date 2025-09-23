@@ -177,7 +177,6 @@ export default async function RootLayout({ children }) {
                   <NavLayoutwithSettingsMenu />
                   <Suspense fallback={<LoadingSkeleton />}>
                     <main className="flex-1   sm:px-6 lg:px-8 mx-auto w-full max-w-[1280px] min-w-[300px] md:w-[clamp(300px,90vw,1280px)]">
-                      {/* width behavior is controlled by globals.css since tailwind wasn't working correctly despite significant debugging, w-max-7xl wouldn't work with any other width value (w-full, w-90vw) ect*/}
                       {children}
                     </main>
                     {/*flex-1  in flex column means: main takes up the remaining flex space, so footer stays at the bottom */}
