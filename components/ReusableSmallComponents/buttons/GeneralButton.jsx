@@ -41,8 +41,8 @@ const GeneralButton = ({
       disabled={disabled}
       data-modal-toggle={dataModalToggle}
     >
-      {text}
-      {children}
+      <span>{text}</span>
+      {children && <span className="flex items-center">{children}</span>}
     </button>
   );
 };

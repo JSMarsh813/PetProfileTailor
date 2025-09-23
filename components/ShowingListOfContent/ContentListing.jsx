@@ -58,8 +58,13 @@ export default function ContentListing({
 
   const { getStatus } = useReports();
   const { getSuggestionStatus } = useSuggestions();
-  const [content, setLocalData] =
-    mode === "local" ? useState(singleContent) : [singleContent, null];
+  const [localContent, setLocalContent] = useState(singleContent);
+
+  // Decide which content to use based on mode
+  const content = mode === "local" ? localContent : singleContent;
+
+  // const [content, setLocalData] =
+  //   mode === "local" ? useState(singleContent) : [singleContent, null];
   // for names, we use content instead of singleContent for properties that can be edited (name, notes)
   // since pages for individual names don't have SWR
   // in "swr" mode, you always render directly from singleContent, and updates from SWR flow straight into the UI.
@@ -112,7 +117,7 @@ export default function ContentListing({
     isSaving,
   } = useEditHandler({
     apiEndpoint: apiEndPoint,
-    ...(mode === "swr" ? { mutate } : { setLocalData }),
+    ...(mode === "swr" ? { mutate } : { setLocalData: setLocalContent }),
   });
   const {
     showThanksDialog,

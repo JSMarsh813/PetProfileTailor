@@ -14,7 +14,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import NounBlackCatIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImages/NounBlackCatIcon";
 import MagicRabbitSVG from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImages/MagicRabbitSVG";
 
-export default async function LoginScreen() {
+export default function LoginScreen() {
   return (
     <section className="h-fit">
       <PageTitleWithImages

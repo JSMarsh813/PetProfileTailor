@@ -16,16 +16,6 @@ html {
   overflow-x: hidden;
 }
 
-main {
-  width: clamp(
-    300px,
-    90vw,
-    1280px
-  ); /* min: 300px, preferred: 90vw, max: 7xl (1280px) */
-  margin-left: auto;
-  margin-right: auto;
-}
-
 input::file-selector-button {
   font-weight: bold;
   color: white;

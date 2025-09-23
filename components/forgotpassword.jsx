@@ -9,7 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import StyledInput from "./FormComponents/StyledInput";
 
-export default function forgotpassword() {
+export default function ForgotPassword() {
   const { data: session } = useSession();
   const router = useRouter();
   //useSession needed in order to grab session after the page is loaded, aka so we can grab session once we login

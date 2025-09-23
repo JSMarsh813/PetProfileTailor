@@ -11,8 +11,9 @@ export default function FlagDialog({
   signedInUsersId,
   contentId,
 }) {
-  if (!open || !target) return null;
   const { getStatus } = useReports();
+  if (!open || !target) return null;
+
   const reportStatus = getStatus(dataType, contentId.toString());
 
   return (

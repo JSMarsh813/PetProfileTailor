@@ -19,6 +19,16 @@ export default function EditContent({
   content,
   onSave,
 }) {
+    const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);
+
+      const { tagsToSubmit, handleSelectChange, handleCheckboxChange } =
+    useTags(initialTags);
+
+      const panelRef = useRef(null);
+
+        const [updatedContent, setUpdatedContent] = useState(content.content);
+  const [notes, setNotes] = useState(content.notes);
+
   if (!open) return null;
 
   const initialTags = content.tags.map((tag) => ({
@@ -26,14 +36,10 @@ export default function EditContent({
     value: tag._id,
   }));
 
-  console.log("dataType in edit content", dataType);
-  const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);
-  console.log("dataType in tagList ", tagList);
+  // console.log("dataType in edit content", dataType);
 
-  const [updatedContent, setUpdatedContent] = useState(content.content);
-  const [notes, setNotes] = useState(content.notes);
-  const { tagsToSubmit, handleSelectChange, handleCheckboxChange } =
-    useTags(initialTags);
+  // console.log("dataType in tagList ", tagList);
+
 
   const handleSubmit = () => {
     onSave({
@@ -43,7 +49,7 @@ export default function EditContent({
     });
   };
 
-  const panelRef = useRef(null);
+
 
   const maxContentLength = dataType === "names" ? 40 : 2000;
 

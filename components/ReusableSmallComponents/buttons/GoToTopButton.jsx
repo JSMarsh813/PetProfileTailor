@@ -30,18 +30,15 @@ export default function GoToTopButton({ top }) {
       {isVisible && (
         <>
           <GeneralButton
-            children={
-              <>
-                <FontAwesomeIcon
-                  size="xl"
-                  icon={faArrowUp}
-                />
-              </>
-            }
             aria-label="Go to top"
             onClick={scrollToTop}
             className="fixed bottom-16 right-6 py-3 px-5 rounded-full transition"
-          />
+          >
+            <FontAwesomeIcon
+              size="xl"
+              icon={faArrowUp}
+            />
+          </GeneralButton>
         </>
       )}
     </>

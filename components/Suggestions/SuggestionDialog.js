@@ -11,8 +11,10 @@ export default function SuggestionDialog({
   signedInUsersId,
   contentId,
 }) {
-  if (!open || !target) return null;
   const { getSuggestionStatus } = useSuggestions();
+
+  if (!open || !target) return null;
+
   const suggestionStatus = getSuggestionStatus(dataType, contentId.toString());
 
   return (

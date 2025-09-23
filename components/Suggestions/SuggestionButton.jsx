@@ -42,4 +42,6 @@ const SuggestButton = React.forwardRef(
   },
 );
 
+SuggestButton.displayName = "SuggestButton";
+
 export default SuggestButton;

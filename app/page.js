@@ -21,8 +21,6 @@ function HomePage() {
   //for Nav menu profile name and image
   //let section exists in case the user is not signed in
 
-  let userName = session?.user?.name || "";
-  let profileImage = session?.user?.profileimage || "";
   //end of section for nav menu
 
   const [openVideo, setOpenVideo] = useState(null);

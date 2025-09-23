@@ -22,14 +22,13 @@ export default function EditBioProfileButton({
         subtle
         type="button"
         text="edt profile"
-        children={
-          <FontAwesomeIcon
-            icon={faUserPlus}
-            className={`ml-2 ${FollowIconStyling}`}
-            onClick={() => setShowProfileEditPage(true)}
-          />
-        }
-      />
+        onClick={() => setShowProfileEditPage(true)}
+      >
+        <FontAwesomeIcon
+          icon={faUserPlus}
+          className={`ml-2 ${FollowIconStyling}`}
+        />
+      </GeneralButton>
     </>
   );
 }

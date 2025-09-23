@@ -99,7 +99,7 @@ export default function AddThank({
               <p className="text-center">
                 {" "}
                 Choose as many options as you like. You can send an entire
-                litter worth of thanks if you're feeling it 🐶🐱!
+                litter worth of thanks if you&apos;re feeling it 🐶🐱!
               </p>
               <p className="text-center">
                 However to avoid spam, you can only thank a single piece of

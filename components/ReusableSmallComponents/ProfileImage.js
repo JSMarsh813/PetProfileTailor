@@ -30,7 +30,8 @@ export default function ProfileImage({
     <div className={divStyling}>
       <a href={href}>
         <Image
-          src={hoverProfileImage}
+          src={hoverProfileImage?.trimEnd()}
+          // remove any trailing spaces
           alt=""
           className={className}
           width={width}

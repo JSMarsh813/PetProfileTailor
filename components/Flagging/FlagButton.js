@@ -37,4 +37,6 @@ const FlagButton = React.forwardRef(({ content, onClick, dataType }, ref) => {
   );
 });
 
+FlagButton.displayName = "FlagButton";
+
 export default FlagButton;

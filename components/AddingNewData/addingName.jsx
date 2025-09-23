@@ -268,7 +268,7 @@ function NewNameWithTagsData() {
             </span>
             <p>Add anything that would be useful to know.</p>{" "}
             <p>
-              Examples: the name's meaning, popular fictional or historical
+              Examples: the name&apos;s meaning, popular fictional or historical
               figures with this name.
             </p>
           </div>

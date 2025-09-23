@@ -14,6 +14,23 @@ import RegisterInput from "@components/FormComponents/RegisterInput";
 import LoadingScreen from "@/components/LoadingScreen";
 
 export default function ProfileScreen() {
+
+    const {
+    handleSubmit,
+    register,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+    useEffect(() => {
+    if (!session?.user){
+      return
+    }
+    setValue("name", session.user.name);
+    setValue("userid", session.user.id);
+  }, [session.user, setValue]);
+
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -31,18 +48,9 @@ export default function ProfileScreen() {
     return null; // redirect is in progress
   }
 
-  const {
-    handleSubmit,
-    register,
-    getValues,
-    setValue,
-    formState: { errors },
-  } = useForm();
 
-  useEffect(() => {
-    setValue("name", session.user.name);
-    setValue("userid", session.user.id);
-  }, [session.user, setValue]);
+
+
 
   const submitHandler = async ({ name, email, password, userid }) => {
     try {
