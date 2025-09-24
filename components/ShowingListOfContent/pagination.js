@@ -59,17 +59,7 @@ export default function Pagination({
   }, [windowStart, windowEnd, totalLoadedPages]);
   // useMemo only recalculates when the dependencies actually change, not on every render
 
-  const lastPageHandler = () => {
-    // If we have more pages loaded, just move to the next UI page
-
-    if (currentUiPage < totalLoadedPages) {
-      updateWindow(currentUiPage + 1);
-      setCurrentUiPage(currentUiPage + 1);
-    }
-
-    if ((remainingPaginationCooldown > 0) & (currentUiPage > totalLoadedPages))
-      return;
-
+  const preLoadNextPage = () => {
     // If we're at the last loaded page and there's more data to fetch
     if (
       // we're going to pretend we're 2 pages ahead, so we can have the next pages loaded ahead of time
@@ -82,6 +72,30 @@ export default function Pagination({
       startCooldown(paginationCooldownRef, setRemainingPaginationCooldown, 15);
       return;
     }
+  };
+
+  const resetItemsPerPage = (selection) => {
+    const newPerPage = Number(selection);
+    setItemsPerPageFunction(newPerPage);
+    // move user back to page 1 visually and through swr, since we're changing how we're switching to new database logic
+    setCurrentUiPage(1);
+    setWindowStart(1); // reset visible pagination window, so we're seeing items 1-50 instead of being stuck at 150 of 233 ect
+    preLoadNextPage();
+  };
+
+  const lastPageHandler = () => {
+    // If we have more pages loaded, just move to the next UI page
+
+    if (currentUiPage < totalLoadedPages) {
+      updateWindow(currentUiPage + 1);
+      setCurrentUiPage(currentUiPage + 1);
+    }
+
+    if ((remainingPaginationCooldown > 0) & (currentUiPage > totalLoadedPages))
+      return;
+
+    // If we're at the last loaded page and there's more data to fetch
+    preLoadNextPage();
   };
 
   const updateWindow = (page) => {
@@ -112,7 +126,7 @@ export default function Pagination({
             id="per-page"
             className="bg-secondary text-subtleWhite ml-2 rounded-2xl border-subtleWhite"
             value={itemsPerPage}
-            onChange={(e) => setItemsPerPageFunction(e.target.value)}
+            onChange={(e) => resetItemsPerPage(e.target.value)}
           >
             <option value="5">5</option>
             <option value="10">10</option>
