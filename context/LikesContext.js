@@ -11,8 +11,8 @@ export function useLikes() {
 }
 
 export function LikesProvider({ children, initialLikes = {} }) {
-  const names = initialLikes.names || [];
-  const descriptions = initialLikes.descriptions || [];
+  const names = initialLikes?.names || [];
+  const descriptions = initialLikes?.descriptions || [];
 
   console.log("intial descriptions liked", descriptions);
 

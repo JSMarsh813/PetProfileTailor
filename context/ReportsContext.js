@@ -12,9 +12,9 @@ export function useReports() {
 }
 
 export function ReportsProvider({ children, initialReports = {} }) {
-  const names = initialReports.names || [];
-  const descriptions = initialReports.descriptions || [];
-  const users = initialReports.users || [];
+  const names = initialReports?.names || [];
+  const descriptions = initialReports?.descriptions || [];
+  const users = initialReports?.users || [];
 
   // If the array is empty, .map() just returns another empty array. It won’t throw an error.
 

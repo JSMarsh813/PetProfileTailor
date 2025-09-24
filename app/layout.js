@@ -43,122 +43,10 @@ export default async function RootLayout({ children }) {
   const safeSession = session ? { user: session.user || {} } : null;
   //Guarantees session.user exists (or is an empty object).
 
-  // connect to MongoDB + fetch categories
-  await db.connect();
-  const nameCategories = await leanWithStrings(
-    NameCategory.find().populate("tags").sort({ order: 1 }),
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/categories-and-tags`,
   );
-  const descCategories = await leanWithStrings(
-    DescriptionCategory.find().populate("tags").sort({ order: 1 }),
-  );
-
-  // serialize for client hydration
-  const nameCategoryJSON = JSON.parse(JSON.stringify(nameCategories));
-  const descCategoryJSON = JSON.parse(JSON.stringify(descCategories));
-
-  let nameReports = [];
-  let descriptionReports = [];
-  let nameLikes = [];
-  let descriptionLikes = [];
-  let nameSuggestions = [];
-  let descriptionSugggestions = [];
-
-  // ########## Logged in user specific info ################
-
-  if (session?.user) {
-    const userId = mongoose.Types.ObjectId(session.user.id);
-
-    // ############# Reports ###################
-
-    // Fetch both reports in parallel, so its faster
-    // ensures both are fetched before rendering the report wrapper
-
-    [nameReports, descriptionReports] = await Promise.all([
-      leanWithStrings(
-        Report.find(
-          {
-            reportedby: userId,
-            status: { $nin: ["dismissed", "deleted", "resolved"] },
-            contenttype: "names",
-          },
-          { contentid: 1, status: 1, _id: 1 },
-        ),
-      ),
-      leanWithStrings(
-        Report.find(
-          {
-            reportedby: userId,
-            status: "pending", // only get pending reports
-            contenttype: "descriptions",
-          },
-          { contentid: 1, status: 1, _id: 0 },
-        ),
-      ),
-    ]);
-
-    // ############# Likes ###################
-
-    [nameLikes, descriptionLikes] = await Promise.all([
-      leanWithStrings(NameLikes.find({ userId }, { nameId: 1, _id: 1 })).then(
-        (docs) => docs.map((d) => ({ id: d._id, contentId: d.nameId })),
-      ),
-      leanWithStrings(
-        DescriptionLikes.find(
-          { userId },
-          { descriptionId: 1, userId: 1, _id: 1 },
-        ),
-      ).then((docs) =>
-        docs.map((d) => ({
-          id: d._id,
-          contentId: d.descriptionId,
-        })),
-      ),
-    ]);
-
-    // ############# Suggestions ###################
-
-    [nameSuggestions, descriptionSugggestions] = await Promise.all([
-      leanWithStrings(
-        Suggestion.find(
-          {
-            suggestionBy: userId,
-            status: { $nin: ["dismissed", "deleted", "resolved"] },
-            contenttype: "names",
-          },
-          { contentId: 1, status: 1, _id: 1 },
-        ),
-      ),
-      leanWithStrings(
-        Suggestion.find(
-          {
-            suggestionBy: userId,
-            status: "pending", // only get pending suggestions
-            contenttype: "descriptions",
-          },
-          { contentId: 1, status: 1, _id: 0 },
-        ),
-      ),
-    ]);
-
-    // console.log("userId in layout", userId);
-  } // ############# End of user specific content ######
-
-  // console.log("name reports in layout", nameReports);
-
-  const initialReports = {
-    names: nameReports,
-    descriptions: descriptionReports,
-  };
-
-  const initialSuggestions = {
-    names: nameSuggestions,
-    descriptions: descriptionSugggestions,
-  };
-
-  const initialLikes = {
-    names: nameLikes,
-    descriptions: descriptionLikes,
-  };
+  const { names, descriptions } = await res.json();
 
   return (
     <html
@@ -168,12 +56,12 @@ export default async function RootLayout({ children }) {
       <body className="h-full flex flex-col w-full">
         <SessionProviderWrapper session={safeSession}>
           <CategTagsWrapper
-            descrCateg={descCategoryJSON}
-            nameCateg={nameCategoryJSON}
+            descrCateg={descriptions}
+            nameCateg={names}
           >
-            <LikesWrapper initialLikes={initialLikes}>
-              <ReportsWrapper initialReports={initialReports}>
-                <SuggestionsWrapper initialSuggestions={initialSuggestions}>
+            <LikesWrapper>
+              <ReportsWrapper>
+                <SuggestionsWrapper>
                   <NavLayoutwithSettingsMenu />
                   <Suspense fallback={<LoadingSkeleton />}>
                     <main

@@ -12,8 +12,8 @@ export function useSuggestions() {
 }
 
 export function SuggestionsProvider({ children, initialSuggestions = {} }) {
-  const names = initialSuggestions.names || [];
-  const descriptions = initialSuggestions.descriptions || [];
+  const names = initialSuggestions?.names || [];
+  const descriptions = initialSuggestions?.descriptions || [];
 
   // If the array is empty, .map() just returns another empty array. It won’t throw an error.
 
