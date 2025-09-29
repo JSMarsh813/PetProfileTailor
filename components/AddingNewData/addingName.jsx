@@ -147,9 +147,9 @@ function NewNameWithTagsData() {
 
           <input
             type="text"
-            className={`bg-secondary border-subtleWhite ${
+            className={`bg-secondary border-subtleWhite rounded-2xl mr-2 ${
               disabled &&
-              "disabled:bg-errorBackgroundColor rounded-2xl mr-2 disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
+              "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
             }`}
             value={nameCheck}
             id="checkNameExists"

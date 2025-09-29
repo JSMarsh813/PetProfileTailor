@@ -32,7 +32,7 @@ const RegisterInput = ({
         placeholder={placeholder}
         maxLength={maxLength}
         autoFocus={autoFocus}
-        className={`border bg-secondary text-subtleWhite border-violet-200 p-2 mb-2 outline-none placeholder-secondary min-w-[250px] w-[95vw] sm:min-w-[400px] sm:w-full ${inputStyling} `}
+        className={`border rounded-2xl bg-secondary text-subtleWhite border-violet-200 p-2 mb-2 outline-none placeholder-secondary min-w-[250px] w-[95vw] sm:min-w-[400px] sm:w-full ${inputStyling} `}
         {...register(id, validation)}
       />
       {/* helper text if provided */}

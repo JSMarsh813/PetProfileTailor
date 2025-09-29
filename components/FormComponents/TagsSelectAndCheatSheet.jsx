@@ -27,15 +27,17 @@ export default function TagsSelectAndCheatSheet({
 
   const customSelectStyles = {
     control: (provided) => ({
+      // is the outer box
       ...provided,
       backgroundColor: isDisabled ? disabledColor : "rgb(12 5 22)",
       pointerEvents: isDisabled ? "auto" : "auto",
       borderColor: "rgb(221 214 254)",
       color: "rgb(221 214 254)",
       width: "96%",
+      borderRadius: "9999px",
       marginTop: "1rem",
       paddingLeft: "0.5rem",
-      borderRadius: "0.25rem",
+
       minHeight: "2.5rem",
       boxShadow: "none",
       "&:hover": {
@@ -68,6 +70,7 @@ export default function TagsSelectAndCheatSheet({
       padding: 0,
       boxShadow: "none",
       outline: "none",
+
       cursor: isDisabled ? "not-allowed" : "pointer",
       background: "transparent",
       caretColor: "rgb(221 214 254)",
@@ -92,6 +95,7 @@ export default function TagsSelectAndCheatSheet({
       ...provided,
       backgroundColor: "rgb(12 5 22)",
       color: "rgb(221 214 254)",
+
       borderRadius: "0.5rem",
     }),
     menuList: (provided) => ({
@@ -106,6 +110,7 @@ export default function TagsSelectAndCheatSheet({
       cursor: state.isDisabled ? "not-allowed" : "pointer",
       paddingTop: "0.25rem",
       paddingBottom: "0.25rem",
+      borderRadius: "9999px",
     }),
 
     multiValue: (provided) => ({
