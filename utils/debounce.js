@@ -5,6 +5,7 @@ export function debounce(fn, delay = 500) {
 
   function debounced(...args) {
     if (timeout) clearTimeout(timeout); // reset timer if still counting down
+    lastArgs = args; // save the latest args
     timeout = setTimeout(() => {
       fn(...lastArgs); // call fn with latest args if no new arguements hit before the delay/timer is finished
       timeout = null; // reset timer

@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -19,7 +17,8 @@ export default function LikesButtonAndLikesLogic({
   setShowLikesSignInMessage,
   dataType,
 }) {
-  const { session } = useSession();
+  const { data: session } = useSession();
+  console.log("session in likes button", session);
 
   console.log("signedInUsersId in likes button", signedInUsersId);
   console.log("datatype in likesbutton", dataType);

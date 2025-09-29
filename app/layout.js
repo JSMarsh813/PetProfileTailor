@@ -40,7 +40,12 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(serverAuthOptions);
-  const safeSession = session ? { user: session.user || {} } : null;
+  const safeSession = session
+    ? {
+        ...session,
+        user: session.user || {},
+      }
+    : null;
   //Guarantees session.user exists (or is an empty object).
 
   const res = await fetch(

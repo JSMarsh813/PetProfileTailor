@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { debounce } from "@/utils/debounce";
 import { useApiRateLimiter } from "./useApiRateLimiter";
 
