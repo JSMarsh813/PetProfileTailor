@@ -12,7 +12,7 @@ So I was inspired to create this site which empowers animal lovers to help adopt
 
 ## How It's Made:
 
-Next.js, React, Next-Auth, JavaScript, Tailwindcss, CSS, HTML5, MongoDB, Mongoose, Cloudinary, Node Mailer, SendGrid, SWR
+Next.js, React, Next-Auth, JavaScript, Tailwindcss, CSS, HTML5, MongoDB, Mongoose, Cloudinary, Node Mailer, SWR
 
 ##Optimizations:
 

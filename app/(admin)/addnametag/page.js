@@ -23,7 +23,7 @@ export default function AddNameTag() {
 
   if (session?.user) {
     userName = session.user.name;
-    profileImage = session.user.profileimage;
+    profileImage = session.user.profileImage;
   }
   //end of section for nav menu
 

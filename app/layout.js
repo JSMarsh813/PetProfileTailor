@@ -7,27 +7,14 @@ import { getServerSession } from "next-auth";
 import { serverAuthOptions } from "@/lib/auth";
 
 import ToastProvider from "@/wrappers/ToastWrapper";
-import "react-toastify/dist/ReactToastify.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 
-import db from "@utils/db";
-import NameCategory from "@models/NameCategory";
-import DescriptionCategory from "@/models/DescriptionCategory";
 import { SessionProviderWrapper } from "@/wrappers/SessionProviderWrapper";
 import NavLayoutwithSettingsMenu from "@/components/NavBar/NavLayoutwithSettingsMenu";
 import CategTagsWrapper from "@/wrappers/CategTagsWrapper";
 import { Suspense } from "react";
 import LoadingSkeleton from "@/components/LoadingScreen";
 import ReportsWrapper from "@/wrappers/ReportsWrapper";
-import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
-import Report from "@models/Report";
-import NameLikes from "@/models/NameLikes";
-import DescriptionLikes from "@/models/DescriptionLikes";
-import Suggestion from "@/models/Suggestions";
-
-import mongoose from "mongoose";
 import LikesWrapper from "@/wrappers/LikesWrapper";
 import SuggestionsWrapper from "@/wrappers/SuggestionsWrapper";
 
