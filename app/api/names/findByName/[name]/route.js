@@ -1,9 +1,10 @@
 import dbConnect from "@utils/db";
 import Names from "@models/Name";
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
   await dbConnect.connect();
 
+  const { params } = context;
   const name = params.name;
 
   try {
