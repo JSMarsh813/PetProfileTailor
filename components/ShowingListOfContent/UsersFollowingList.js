@@ -52,7 +52,7 @@ export default function UsersFollowingList({
                         key={person._id}
                         href={`${
                           process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                        }profile/${person.profilename.toLowerCase()}`}
+                        }profile/${person.profileName.toLowerCase()}`}
                       >
                         <section
                           className="grid 
@@ -68,21 +68,21 @@ export default function UsersFollowingList({
 
                           <ProfileImage
                             divStyling="w-16"
-                            profileImage={person.profileimage}
+                            profileImage={person.profileImage}
                             layout="responsive"
                             className="rounded-2xl h-16"
                             width={100}
                             height={100}
                           />
 
-                          {/* ###### PROFILE name, profile and bioblurb #### */}
+                          {/* ###### PROFILE name, profile and bio #### */}
                           <section>
                             <span className="block"> {person.name}</span>
 
-                            <span className="block">@{person.profilename}</span>
+                            <span className="block">@{person.profileName}</span>
                           </section>
 
-                          <p>{person.bioblurb}</p>
+                          <p>{person.bio}</p>
                           {/* makes it so you can't follow yourself */}
                           {!(person._id == sessionFromServer.user.id) && (
                             <section>

@@ -16,8 +16,8 @@ export default async function handler(req, res) {
   console.log(`this is hashedToken ${hashedToken}`);
 
   const user = await User.findOne({
-    passwordresettoken: hashedToken,
-    resettokenexpires: { $gt: Date.now() },
+    passwordResetToken: hashedToken,
+    resetTokenExpires: { $gt: Date.now() },
   });
 
   console.log(`this is USER ${JSON.stringify(user)}`);

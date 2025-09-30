@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     try {
       const category = await Category.create({
         ...newCategory,
-        createdby: session.user.id,
+        createdBy: session.user.id,
       });
       res.status(200).json(category);
     } catch (err) {

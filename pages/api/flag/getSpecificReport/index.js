@@ -16,15 +16,15 @@ export default async function handler(req, res) {
       const report = await leanWithStrings(
         Report.findOne(
           {
-            contentid: contentId,
-            flaggedbyuser: userId,
+            contentId: contentId,
+            reportedBy: userId,
             status,
           },
           {
-            reportcategories: 1,
+            reportCategories: 1,
             comments: 1,
-            flaggedby: 1,
-            contentcreatedby: 1,
+            reportedBy: 1,
+            contentCreatedBy: 1,
             _id: 1,
             status: 1,
           },
@@ -43,9 +43,9 @@ export default async function handler(req, res) {
 
   if (req.method === "PUT") {
     try {
-      const { reportid, reportcategories, comments } = req.body;
+      const { reportId, reportCategories, comments } = req.body;
 
-      const existingReport = await Report.findById(reportid);
+      const existingReport = await Report.findById(reportId);
 
       if (!existingReport) {
         return res.status(404).json({ error: "Report not found" });
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
         });
       }
 
-      existingReport.reportcategories = reportcategories;
+      existingReport.reportCategories = reportCategories;
       existingReport.comments = comments;
 
       const updatedReport = await existingReport.save();
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
 
   if (req.method === "DELETE") {
     try {
-      const { reportid } = req.body;
+      const { reportId } = req.body;
 
       if (!userId) {
         return res.status(403).json({
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
       }
 
       const reportToUpdate = await Report.findOneAndUpdate(
-        { _id: reportid, reportedby: userId },
+        { _id: reportId, reportedBy: userId },
         { status: "deleted", outcome: "deletedByUser" },
         { new: true },
       );

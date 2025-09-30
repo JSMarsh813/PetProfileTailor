@@ -16,8 +16,8 @@ export default async function Postid({ params }) {
       content: { $regex: new RegExp(`^${spaceAddedBackName}$`, "i") }, // case-insensitive exact match
     })
       .populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
+        path: "createdBy",
+        select: ["name", "profileName", "profileImage"],
       })
       .populate({ path: "tags", select: ["tag"] }),
   );

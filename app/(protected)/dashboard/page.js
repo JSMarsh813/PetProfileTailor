@@ -19,77 +19,25 @@ export default async function DashboardPage() {
 
   await dbConnect.connect();
 
-  // const likedNames = likedNamesRaw.map((n) => ({
-  //   ...n,
-  //   _id: n._id.toString(),
-  //   createdby: n.createdby
-  //     ? {
-  //         name: n.createdby.name,
-  //         profilename: n.createdby.profilename,
-  //         profileimage: n.createdby.profileimage,
-  //       }
-  //     : null,
-  //   tags: n.tags?.map((t) => ({ _id: t._id.toString(), tag: t.tag })) || [],
-  // }));
-
   // ---- NAMES created by user ----
   const namesCreated = await leanWithStrings(
-    Names.find({ createdby: userId })
+    Names.find({ createdBy: userId })
       .populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
+        path: "createdBy",
+        select: ["name", "profileName", "profileImage"],
       })
       .populate({ path: "tags" }),
   );
-
-  // const namesCreated = namesCreatedRaw.map((n) => ({
-  //   ...n,
-  //   _id: n._id.toString(),
-  //   createdby: n.createdby
-  //     ? {
-  //         name: n.createdby.name,
-  //         profilename: n.createdby.profilename,
-  //         profileimage: n.createdby.profileimage,
-  //       }
-  //     : null,
-  //   tags: n.tags?.map((t) => ({ _id: t._id.toString(), tag: t.tag })) || [],
-  // }));
 
   // ---- DESCRIPTIONS created by user ----
   const createdDescriptions = await leanWithStrings(
-    Description.find({ createdby: userId })
+    Description.find({ createdBy: userId })
       .populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
+        path: "createdBy",
+        select: ["name", "profileName", "profileImage"],
       })
       .populate({ path: "tags" }),
   );
-
-  // const createdDescriptions = createdDescriptionsRaw.map((d) => ({
-  //   ...d,
-  //   _id: d._id.toString(),
-  //   createdby: d.createdby
-  //     ? {
-  //         name: d.createdby.name,
-  //         profilename: d.createdby.profilename,
-  //         profileimage: d.createdby.profileimage,
-  //       }
-  //     : null,
-  //   tags: d.tags?.map((t) => ({ _id: t._id.toString(), tag: t.tag })) || [],
-  // }));
-
-  // const likedDescriptions = likedDescriptionsRaw.map((d) => ({
-  //   ...d,
-  //   _id: d._id.toString(),
-  //   createdby: d.createdby
-  //     ? {
-  //         name: d.createdby.name,
-  //         profilename: d.createdby.profilename,
-  //         profileimage: d.createdby.profileimage,
-  //       }
-  //     : null,
-  //   tags: d.tags?.map((t) => ({ _id: t._id.toString(), tag: t.tag })) || [],
-  // }));
 
   return (
     <Dashboard

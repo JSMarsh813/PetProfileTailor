@@ -39,7 +39,7 @@ export default function Profile({
   let signedInUsersId = "";
   if (session?.user) {
     userName = session.user.name;
-    profileImage = session.user.profileimage;
+    profileImage = session.user.profileImage;
     signedInUsersId = session.user.id;
   }
 
@@ -114,7 +114,7 @@ export default function Profile({
                   <div className="w-full px-4 flex justify-center">
                     <div className="relative">
                       <img
-                        src={userData.profileimage}
+                        src={userData.profileImage}
                         alt=""
                         className="rounded-2xl align-middle -mt-16 h-24"
                       />
@@ -124,7 +124,7 @@ export default function Profile({
                     <span className="text-xl font-bold leading-normal ">
                       {userData.name}
                     </span>
-                    <span> @{userData.profilename} </span>
+                    <span> @{userData.profileName} </span>
 
                     <div className="flex justify-center py-4">
                       <div className="mr-4 text-center">
@@ -187,7 +187,7 @@ export default function Profile({
                       <span className="text-lg font-bold">About:</span>
 
                       <p className="leading-relaxed">
-                        {userData.bioblurb || "No bio written yet"}
+                        {userData.bio || "No bio written yet"}
                       </p>
                     </div>
                   </div>

@@ -41,7 +41,7 @@ const putHandler = async (req, res) => {
   const { ok } = await checkOwnership({
     req,
     res,
-    resourceCreatorId: individualname.createdby,
+    resourceCreatorId: individualname.createdBy,
   });
   if (!ok) {
     return;

@@ -34,11 +34,11 @@ export default async function handler(req, res) {
 
   const passwordResetExpires = Date.now() + 3600000; //will expire in 1 hour
 
-  existingUser.passwordresettoken = databaseResetPasswordToken;
-  existingUser.resettokenexpires = passwordResetExpires;
+  existingUser.passwordResetToken = databaseResetPasswordToken;
+  existingUser.resetTokenExpires = passwordResetExpires;
 
   const resetUrl = `${process.env.NEXTAUTH_URL}/resetpassword/${emailResetPasswordToken}`;
-  const userName = existingUser.profilename;
+  const userName = existingUser.profileName;
 
   try {
     await existingUser.save();

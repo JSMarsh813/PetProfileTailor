@@ -6,13 +6,13 @@ await db.connect();
 console.log("✅ Connected to MongoDB");
 
 try {
-  // Step 1: Add the new field likedbycount with default 0
+  // Step 1: Add the new field likedByCount with default 0
   const result = await Descriptions.collection.updateMany(
-    { likedbycount: { $exists: false } }, // only add if not already present
-    { $set: { likedbycount: 0 } },
+    { likedByCount: { $exists: false } }, // only add if not already present
+    { $set: { likedByCount: 0 } },
   );
 
-  console.log(`✅ Added likedbycount to ${result.modifiedCount} documents.`);
+  console.log(`✅ Added likedByCount to ${result.modifiedCount} documents.`);
 
   // Step 2: Verify a sample
   const check = await Descriptions.collection.findOne({});

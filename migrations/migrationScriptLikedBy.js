@@ -10,7 +10,7 @@ try {
   const result = await Names.updateMany({}, [
     {
       $set: {
-        likedbycount: {
+        likedByCount: {
           $cond: [{ $isArray: "$likedby" }, { $size: "$likedby" }, 0],
         },
       },
@@ -24,7 +24,7 @@ try {
 
 // Step 2: Create index
 try {
-  await Names.collection.createIndex({ likedbycount: -1 });
+  await Names.collection.createIndex({ likedByCount: -1 });
   console.log("Index on likedByLength created successfully.");
 } catch (err) {
   console.error("Failed to create index:", err);

@@ -25,7 +25,7 @@ async function handler(req, res) {
 
   await db.connect();
   const toUpdateUser = await User.findById(userId);
-  toUpdateUser.profileimage = newProfileImage;
+  toUpdateUser.profileImage = newProfileImage;
 
   await toUpdateUser.save();
 

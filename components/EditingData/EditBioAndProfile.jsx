@@ -13,9 +13,9 @@ export default function EditBioAndProfile({
   sessionFromServer,
   setProfileChange,
 }) {
-  const [bio, setBio] = useState(userData.bioblurb);
+  const [bio, setBio] = useState(userData.bio);
   const [location, setLocation] = useState(userData.location);
-  const [avatar, setAvatar] = useState(userData.profileimage);
+  const [avatar, setAvatar] = useState(userData.profileImage);
 
   const bioSubmission = async () => {
     const bioSubmission = {

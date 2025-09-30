@@ -15,8 +15,8 @@ export default async function handler(req, res) {
     try {
       const descriptions = await Description.find()
         .populate({
-          path: "createdby",
-          select: ["name", "profilename", "profileimage"],
+          path: "createdBy",
+          select: ["name", "profileName", "profileImage"],
         })
         .populate({ path: "tags", select: ["tag"] });
 
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     const { ok } = await checkOwnership({
       req,
       res,
-      resourceCreatorId: toUpdateDescription.createdby,
+      resourceCreatorId: toUpdateDescription.createdBy,
     });
     if (!ok) {
       return;
@@ -52,8 +52,8 @@ export default async function handler(req, res) {
 
       const updatedDescription = await Description.findById(contentId)
         .populate({
-          path: "createdby",
-          select: "name profilename profileimage",
+          path: "createdBy",
+          select: "name profileName profileImage",
         })
         .populate({ path: "tags", select: "tag" });
 
@@ -68,7 +68,7 @@ export default async function handler(req, res) {
 
   if (method === "POST") {
     const { description } = req.body;
-    //tags, notes, createdby
+    //tags, notes, createdBy
 
     const { ok, session } = await getSessionForApis({
       req,
@@ -92,7 +92,7 @@ export default async function handler(req, res) {
       try {
         const test = await Description.create({
           ...req.body,
-          createdby: session.user.id,
+          createdBy: session.user.id,
         });
         res.status(201).json(test);
       } catch (err) {
@@ -109,7 +109,7 @@ export default async function handler(req, res) {
       const { ok } = await checkOwnership({
         req,
         res,
-        resourceCreatorId: nameToBeDeleted.createdby,
+        resourceCreatorId: nameToBeDeleted.createdBy,
       });
       if (!ok) {
         return;

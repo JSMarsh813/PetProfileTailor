@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
     // Apply select/populate only in this API route
     const detailedUser = await User.findById(user.id).select(
-      "name followers profileimage profilename bioblurb location",
+      "name followers profileImage profileName bio location",
     );
 
     res.status(200).json(detailedUser);

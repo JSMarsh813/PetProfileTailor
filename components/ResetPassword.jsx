@@ -36,7 +36,7 @@ export default function ResetPassword({ token }) {
 
   if (sessionFromServer) {
     userName = sessionFromServer.user.name;
-    profileImage = sessionFromServer.user.profileimage;
+    profileImage = sessionFromServer.user.profileImage;
   }
   //end of section for nav menu
 

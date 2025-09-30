@@ -44,7 +44,7 @@ export default async function handler(req, res) {
       await NameLikes.deleteOne({ _id: existingLike._id }).session(session);
       await Names.updateOne(
         { _id: nameId },
-        { $inc: { likedbycount: -1 } },
+        { $inc: { likedByCount: -1 } },
         { session },
       );
       liked = false;
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
       await NameLikes.create([{ userId, nameId }], { session });
       await Names.updateOne(
         { _id: nameId },
-        { $inc: { likedbycount: 1 } },
+        { $inc: { likedByCount: 1 } },
         { session },
       );
       liked = true;

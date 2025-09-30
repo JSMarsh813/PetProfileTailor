@@ -9,7 +9,7 @@ export function useLikeState({ data, dataType, userId, apiBaseLink }) {
 
   const initialLiked = hasLiked(dataType, contentId); // true, false
   console.log("dataType", dataType, "contentId", contentId);
-  const initialCount = data.likedbycount; // 10
+  const initialCount = data.likedByCount; // 10
 
   // Local state only for rendering
   const [likeCount, setLikeCount] = useState(

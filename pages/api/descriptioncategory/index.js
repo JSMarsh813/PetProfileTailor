@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
       const newDescriptionCategory = await Category.create({
         ...req.body,
-        createdby: session.user.id,
+        createdBy: session.user.id,
       });
       res.status(201).json(newDescriptionCategory);
     } catch (err) {

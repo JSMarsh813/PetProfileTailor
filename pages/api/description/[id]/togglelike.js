@@ -47,7 +47,7 @@ export default async function handler(req, res) {
       );
       await Description.updateOne(
         { _id: descriptionId },
-        { $inc: { likedbycount: -1 } },
+        { $inc: { likedByCount: -1 } },
         { session },
       );
       liked = false;
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
       await DescriptionLikes.create([{ userId, descriptionId }], { session });
       await Description.updateOne(
         { _id: descriptionId },
-        { $inc: { likedbycount: 1 } },
+        { $inc: { likedByCount: 1 } },
         { session },
       );
       liked = true;

@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   if (method === "GET") {
     try {
       const user = await Users.findById(userId).select(
-        "name followers name profileimage profilename bioblurb location"
+        "name followers name profileImage profileName bio location",
       );
       res.status(200).json(user);
     } catch (err) {

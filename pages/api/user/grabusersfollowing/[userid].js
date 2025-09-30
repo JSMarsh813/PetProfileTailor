@@ -14,7 +14,7 @@ async function handler(req, res) {
   try {
     const usersFollowing = await User.find({
       followers: userid.toString(),
-    }).select("name followers name profileimage profilename bioblurb location");
+    }).select("name followers name profileImage profileName bio location");
 
     res.status(200).json(usersFollowing);
   } catch (err) {

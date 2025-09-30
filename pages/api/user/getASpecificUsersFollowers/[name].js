@@ -9,7 +9,7 @@ import Users from "@models/User";
 //wasn't working when everything was lowercase, had to be IndividualNames not individualNames for it to work
 
 export default async function handler(req, res) {
-  const profilename = req.query.name;
+  const profileName = req.query.name;
 
   const method = req.method;
 
@@ -17,10 +17,8 @@ export default async function handler(req, res) {
 
   if (method === "GET") {
     try {
-      const user = await Users.find({ profilename: profilename })
-        .select(
-          "name followers name profileimage profilename bioblurb location"
-        )
+      const user = await Users.find({ profileName })
+        .select("name followers name profileImage profileName bio location")
         .populate("followers");
       if (user == []) {
         console.log("error");

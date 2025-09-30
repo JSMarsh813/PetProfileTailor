@@ -61,7 +61,7 @@ export default function Register() {
         name,
         email,
         password,
-        profilename: profilename.toLowerCase(),
+        profileName: profilename.toLowerCase(),
       });
 
       // ###### magic-link signups ######

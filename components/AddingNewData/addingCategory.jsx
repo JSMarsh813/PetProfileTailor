@@ -22,7 +22,7 @@
 //       name: newName,
 //       description: description,
 //       tags: tags,
-//       createdby: userId.toString(),
+//       createdBy: userId.toString(),
 //     };
 
 //     // #######if the collection does not have the name, do this (allow post): otherwise update setNameExists to true and do not allow the post

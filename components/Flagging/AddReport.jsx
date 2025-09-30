@@ -44,12 +44,12 @@ export default function AddReport({
       return;
     }
 
-    //dealing with the edge case because of profile pages, profile pages won't have a createdby property
+    //dealing with the edge case because of profile pages, profile pages won't have a createdBy property
     let profileIsLoggedInUserCheck = contentInfo._id;
 
     let contentCreatedByUserId =
-      contentInfo.createdby != undefined
-        ? contentInfo.createdby._id
+      contentInfo.createdBy != undefined
+        ? contentInfo.createdBy._id
         : profileIsLoggedInUserCheck;
 
     if (
@@ -63,12 +63,12 @@ export default function AddReport({
     }
 
     const reportSubmission = {
-      contenttype: dataType,
-      contentid: contentInfo._id,
-      contentcopy: copyOfContentForReport,
-      contentcreatedby: contentCreatedByUserId,
-      reportedby: flaggedByUser,
-      reportcategories: flagCategoriesState,
+      contentType: dataType,
+      contentId: contentInfo._id,
+      contentCopy: copyOfContentForReport,
+      contentCreatedBy: contentCreatedByUserId,
+      reportedBy: flaggedByUser,
+      reportCategories: flagCategoriesState,
       comments: additionalCommentsState.toString(),
     };
     console.log(reportSubmission);

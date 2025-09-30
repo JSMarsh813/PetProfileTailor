@@ -25,21 +25,21 @@ export async function GET() {
       leanWithStrings(
         Report.find(
           {
-            reportedby: userId,
+            reportedBy: userId,
             status: { $nin: ["dismissed", "deleted", "resolved"] },
-            contenttype: "names",
+            contentType: "names",
           },
-          { contentid: 1, status: 1, _id: 1 },
+          { contentId: 1, status: 1, _id: 1 },
         ),
       ),
       leanWithStrings(
         Report.find(
           {
-            reportedby: userId,
+            reportedBy: userId,
             status: "pending", // only get pending reports
-            contenttype: "descriptions",
+            contentType: "descriptions",
           },
-          { contentid: 1, status: 1, _id: 0 },
+          { contentId: 1, status: 1, _id: 0 },
         ),
       ),
     ]);

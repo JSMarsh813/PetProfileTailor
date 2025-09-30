@@ -20,8 +20,8 @@ export default async function Postid({ params }) {
   let description = await leanWithStrings(
     Descriptions.findById(descriptionId)
       .populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
+        path: "createdBy",
+        select: ["name", "profileName", "profileImage"],
       })
       .populate({ path: "tags", select: ["tag"] }),
   );

@@ -128,7 +128,7 @@ export default function ContentListing({
     confirmThanks,
   } = useThanksHandler({ apiEndpoint: "api/thanks" });
 
-  const userIsTheCreator = singleContent.createdby._id === signedInUsersId;
+  const userIsTheCreator = singleContent.createdBy._id === signedInUsersId;
 
   const [showLikesSignInMessage, setShowLikesSignInMessage] = useState(false);
 
@@ -144,13 +144,13 @@ export default function ContentListing({
 
   const href = `${
     process.env.NEXT_PUBLIC_BASE_FETCH_URL
-  }profile/${singleContent.createdby.profilename.toLowerCase()}`;
+  }profile/${singleContent.createdBy.profileName.toLowerCase()}`;
 
   return (
     <div className="text-base flex border-t border-subtleWhite mb-4 ">
       <ProfileImage
         divStyling="min-h-10 max-w-12 mr-4 mt-3 min-w-10 max-h-12"
-        profileImage={singleContent.createdby.profileimage}
+        profileImage={singleContent.createdBy.profileImage}
         layout="responsive"
         className="rounded-2xl"
         width={80}
@@ -178,15 +178,15 @@ export default function ContentListing({
                 <a
                   href={`${
                     process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                  }profile/${singleContent.createdby.profilename.toLowerCase()}`}
+                  }profile/${singleContent.createdBy.profileName.toLowerCase()}`}
                   className="flex-1 min-w-0 flex flex-col"
                 >
                   {/* flex-1 min-w-0 use remaining space but still wrap. Without min-w-0, text might overflow instead of wrapping.*/}
                   <span className="font-bold text-lg break-words">
-                    {singleContent.createdby.name}
+                    {singleContent.createdBy.name}
                   </span>
                   <span className="font-thin text-base text-gray-500 break-words">
-                    @{singleContent.createdby.profilename}
+                    @{singleContent.createdBy.profileName}
                   </span>
                 </a>
 
@@ -209,7 +209,7 @@ export default function ContentListing({
                       </div>
 
                       {signedInUsersId &&
-                      singleContent.createdby._id == signedInUsersId ? (
+                      singleContent.createdBy._id == signedInUsersId ? (
                         <MenuItems className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-secondary border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50 space-y-2">
                           <MenuItem as="div">
                             {/* MenuItem as="div" prevents Headless UI from treating your button as a MenuItem that auto-closes. this way the state has time to update*/}
@@ -251,7 +251,7 @@ export default function ContentListing({
                                 dataType={dataType}
                                 onClick={openFlag}
                                 userIsTheCreator={
-                                  singleContent.createdby._id ===
+                                  singleContent.createdBy._id ===
                                   signedInUsersId
                                 }
                               />
@@ -265,7 +265,7 @@ export default function ContentListing({
                                 dataType={dataType}
                                 onClick={openSuggestion}
                                 userIsTheCreator={
-                                  singleContent.createdby._id ===
+                                  singleContent.createdBy._id ===
                                   signedInUsersId
                                 }
                               />
@@ -373,7 +373,7 @@ export default function ContentListing({
             <ShareButton onClickShowShares={onClickShowShares} />
 
             {singleContent &&
-              singleContent.createdby._id !== signedInUsersId && (
+              singleContent.createdBy._id !== signedInUsersId && (
                 <ThanksButton onClick={() => openThanks(singleContent._id)} />
               )}
           </div>

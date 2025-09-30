@@ -30,24 +30,24 @@ export default async function handler(req, res) {
 
   if (method === "POST") {
     const {
-      contenttype,
-      contentid,
-      contentcopy,
-      contentcreatedby,
-      reportcategories,
+      contentType,
+      contentId,
+      contentCopy,
+      contentCreatedBy,
+      reportCategories,
       comments,
     } = req.body;
 
-    if (contentcreatedby === reportedByUserId) {
+    if (contentCreatedBy === reportedByUserId) {
       res.status(201).send({
-        report,
+        report: req.body,
         message: `You cannot flag your own content`,
       });
     }
 
     const existingReport = await Report.findOne({
-      reportedby: reportedByUserId,
-      contentid,
+      reportedBy: reportedByUserId,
+      contentId,
       status: { $nin: ["dismissed", "deleted", "resolved"] },
     });
 
@@ -59,12 +59,12 @@ export default async function handler(req, res) {
     }
     try {
       const report = await Report.create({
-        contenttype,
-        contentid,
-        contentcopy,
-        contentcreatedby,
-        reportedby: reportedByUserId,
-        reportcategories,
+        contentType,
+        contentId,
+        contentCopy,
+        contentCreatedBy,
+        reportedBy: reportedByUserId,
+        reportCategories,
         comments,
       });
       res.status(201).send({

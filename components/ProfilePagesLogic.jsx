@@ -25,7 +25,7 @@ export default function ProfilePagesLogic({ dataType, profileUserId }) {
 
   if (session?.user) {
     userName = session.user.name;
-    profileImage = session.user.profileimage;
+    profileImage = session.user.profileImage;
     signedInUsersId = session.user.id;
   }
 

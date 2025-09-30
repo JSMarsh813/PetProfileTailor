@@ -24,7 +24,7 @@ function EditReport({
 
   const { deleteReport } = useReports();
 
-  const [reportcategories, setReportcategories] = useState([]);
+  const [reportCategories, setReportCategories] = useState([]);
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState("");
   const [reportId, setReportId] = useState("");
@@ -41,7 +41,7 @@ function EditReport({
         console.log("response", res.data);
 
         if (res.data.report) {
-          setReportcategories(res.data.report.reportcategories || []);
+          setReportCategories(res.data.report.reportCategories || []);
           setComments(res.data.report.comments || "");
           setReportId(res.data.report._id); // keep the id so we can update it later
         }
@@ -61,9 +61,9 @@ function EditReport({
     const { value, checked } = e.target;
 
     checked
-      ? setReportcategories([...reportcategories, value])
-      : setReportcategories(
-          reportcategories.filter((flagTitle) => flagTitle != value),
+      ? setReportCategories([...reportCategories, value])
+      : setReportCategories(
+          reportCategories.filter((flagTitle) => flagTitle != value),
         );
   };
 
@@ -74,14 +74,14 @@ function EditReport({
 
     try {
       const res = await axios.delete("/api/flag/getSpecificReport", {
-        data: { reportid: reportId, userid: flaggedByUser },
+        data: { reportId },
       });
       console.log("response", res.data);
 
       deleteReport(dataType, contentId, reportId);
 
       if (res.data.report) {
-        setReportcategories(res.data.report.reportcategories || []);
+        setReportCategories(res.data.report.reportCategories || []);
         setComments(res.data.report.comments || "");
         setReportId(res.data.report._id); // keep the id so we can update it later
       }
@@ -100,7 +100,7 @@ function EditReport({
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
 
-    if (reportcategories.length === 0) {
+    if (reportCategories.length === 0) {
       toast.error(
         `Ruh Roh! You must click 1 or more of the checkboxes for report type`,
       );
@@ -111,12 +111,12 @@ function EditReport({
       return;
     }
 
-    //dealing with the edge case because of profile pages, profile pages won't have a createdby property
+    //dealing with the edge case because of profile pages, profile pages won't have a createdBy property
     let profileIsLoggedInUserCheck = contentInfo._id;
 
     let contentCreatedByUserId =
-      contentInfo.createdby != undefined
-        ? contentInfo.createdby._id
+      contentInfo.createdBy != undefined
+        ? contentInfo.createdBy._id
         : profileIsLoggedInUserCheck;
 
     if (
@@ -130,8 +130,8 @@ function EditReport({
     }
 
     const reportSubmission = {
-      reportid: reportId,
-      reportcategories,
+      reportId,
+      reportCategories,
       comments,
     };
     console.log(reportSubmission);
@@ -196,7 +196,7 @@ function EditReport({
                   <StyledCheckbox
                     label="Hate"
                     description="Slurs, racist or sexist stereotypes, Incitement of fear or discrimination..."
-                    checked={reportcategories.includes("Hate")}
+                    checked={reportCategories.includes("Hate")}
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Hate"
@@ -205,7 +205,7 @@ function EditReport({
                   <StyledCheckbox
                     label="Violent Speech"
                     description="Violent Threats, Wish of Harm, Coded Incitement of Violence"
-                    checked={reportcategories.includes("Violent Speech")}
+                    checked={reportCategories.includes("Violent Speech")}
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Violent Speech"
@@ -214,7 +214,7 @@ function EditReport({
                   <StyledCheckbox
                     label="Abuse and Harassment"
                     description="Insults, unwanted advances, targeted harassment and inciting harassment"
-                    checked={reportcategories.includes("Abuse and Harassment")}
+                    checked={reportCategories.includes("Abuse and Harassment")}
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Abuse and Harassment"
@@ -223,7 +223,7 @@ function EditReport({
                   <StyledCheckbox
                     label="Privacy"
                     description="Sharing private information of others, threatening to share or expose private information"
-                    checked={reportcategories.includes("Privacy")}
+                    checked={reportCategories.includes("Privacy")}
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Privacy"
@@ -232,7 +232,7 @@ function EditReport({
                   <StyledCheckbox
                     label="Spam"
                     description="Fake engagement, scams, malicious links"
-                    checked={reportcategories.includes("Spam")}
+                    checked={reportCategories.includes("Spam")}
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Spam"
@@ -241,7 +241,7 @@ function EditReport({
                   <StyledCheckbox
                     label="Sensitive or disturbing content"
                     description="Gratuitous gore or violence, nudity & sexual behavior"
-                    checked={reportcategories.includes(
+                    checked={reportCategories.includes(
                       "Sensitive or disturbing content",
                     )}
                     onChange={handleReportCategories}
@@ -252,7 +252,7 @@ function EditReport({
                   <StyledCheckbox
                     label="None of these"
                     description="Please give us more information in the comments textbox below"
-                    checked={reportcategories.includes("None of these")}
+                    checked={reportCategories.includes("None of these")}
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="None of these"

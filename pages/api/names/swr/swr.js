@@ -58,7 +58,7 @@ export default async function handler(req, res) {
     // Filter by user ID if provided
     if (profileUserId) {
       // Ensure it’s a valid ObjectId
-      filter.createdby = new mongoose.Types.ObjectId(profileUserId);
+      filter.createdBy = new mongoose.Types.ObjectId(profileUserId);
     }
 
     if (likedIds?.length) {
@@ -84,20 +84,13 @@ export default async function handler(req, res) {
       {
         $lookup: {
           from: "users",
-          localField: "createdby",
+          localField: "createdBy",
           foreignField: "_id",
-          as: "createdby",
+          as: "createdBy",
         },
       },
-      { $unwind: "$createdby" },
-      {
-        $lookup: {
-          from: "namecomments",
-          localField: "comments",
-          foreignField: "_id",
-          as: "namecomments",
-        },
-      },
+      { $unwind: "$createdBy" },
+
       {
         // will fill out the tags data from the objectIds stored in the name, but lookup will reorder the tags
         $lookup: {
@@ -143,15 +136,13 @@ export default async function handler(req, res) {
           content: 1,
           notes: 1,
           tags: { tag: 1, _id: 1 },
-          comments: 1,
-          createdby: {
+          createdBy: {
             name: 1,
-            profilename: 1,
-            profileimage: 1,
+            profileName: 1,
+            profileImage: 1,
             _id: 1,
           },
-          likedbycount: 1, // use precomputed field
-          flaggedby: 1,
+          likedByCount: 1, // use precomputed field
           updatedAt: 1,
           //vital for swr edit to work, its used as part of the content key
           // the key needs to change, or react won't render the edit updates, so we need a field thats always different, which updatedAt is perfect for

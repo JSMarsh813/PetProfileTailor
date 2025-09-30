@@ -95,7 +95,7 @@ export default function EditSuggestion({
       return;
     }
 
-    let contentCreatedByUserId = contentInfo.createdby._id;
+    let contentCreatedByUserId = contentInfo.createdBy._id;
 
     if (contentCreatedByUserId === suggestionBy) {
       toast.warn(

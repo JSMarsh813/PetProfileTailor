@@ -8,7 +8,7 @@ async function handler(req, res) {
   if (req.method !== "POST") {
     return;
   }
-  const { name, email, password, profilename } = req.body;
+  const { name, email, password, profileName } = req.body;
 
   const errors = {};
 
@@ -17,16 +17,16 @@ async function handler(req, res) {
   if (!email) errors.email = "Please enter an email";
   if (email && !email.includes("@"))
     errors.email = "Please enter a valid email";
-  if (!profilename) errors.profilename = "Please enter a profile name";
+  if (!profileName) errors.profilename = "Please enter a profile name";
 
   // ############ Profile name checks ###############
-  if (profilename) {
-    const invalidProfileNameInput = regexInvalidInput(profilename);
+  if (profileName) {
+    const invalidProfileNameInput = regexInvalidInput(profileName);
     if (invalidProfileNameInput != null) {
       errors.profilename = `Invalid characters entered: ${invalidProfileNameInput}`;
     }
 
-    const existingUserProfile = await getUserByProfileName(profilename);
+    const existingUserProfile = await getUserByProfileName(profileName);
     if (existingUserProfile) {
       errors.profilename = "That profile name is already used!";
     }
@@ -58,7 +58,7 @@ async function handler(req, res) {
   const newUser = new User({
     name,
     email,
-    profilename: profilename.toLowerCase(),
+    profileName: profileName.toLowerCase(),
     ...(passwordChecked != null && {
       password: bcryptjs.hashSync(passwordChecked),
     }),
@@ -71,7 +71,7 @@ async function handler(req, res) {
   res.status(201).send({
     message: "Created user!",
     _id: user._id,
-    profilename: user.profilename,
+    profileName: user.profileName,
     name: user.name,
     email: user.email,
   });

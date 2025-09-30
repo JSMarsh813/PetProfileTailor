@@ -8,34 +8,34 @@ const createReportIndexes = async () => {
   const reportsCollection = mongoose.connection.collection("reports");
 
   const indexesToCreate = [
-    { key: { contenttype: 1 }, name: "contenttype_index" },
-    { key: { contentid: 1 }, name: "contentid_index" },
-    { key: { contentcreatedby: 1 }, name: "contentcreatedby_index" },
-    { key: { reportedbyuser: 1 }, name: "reportedbyuser_index" },
+    { key: { contentType: 1 }, name: "contentType_index" },
+    { key: { contentId: 1 }, name: "contentId_index" },
+    { key: { contentCreatedBy: 1 }, name: "contentCreatedBy_index" },
+    { key: { reportedByUser: 1 }, name: "reportedByUser_index" },
     { key: { status: 1 }, name: "status_index" },
     { key: { outcome: 1 }, name: "outcome_index" },
     { key: { priority: 1 }, name: "priority_index" },
     { key: { status: 1, priority: -1 }, name: "status_priority_index" },
     {
-      key: { contenttype: 1, status: 1, createdAt: -1 },
-      name: "contenttype_status_createdAt_index",
+      key: { contentType: 1, status: 1, createdAt: -1 },
+      name: "contentType_status_createdAt_index",
     },
 
     // Partial indexes
     {
       key: { status: 1 },
       name: "status_name_index",
-      partialFilterExpression: { contenttype: "names" },
+      partialFilterExpression: { contentType: "names" },
     },
     {
       key: { status: 1 },
       name: "status_description_index",
-      partialFilterExpression: { contenttype: "descriptions" },
+      partialFilterExpression: { contentType: "descriptions" },
     },
     {
       key: { status: 1 },
       name: "status_user_index",
-      partialFilterExpression: { contenttype: "users" },
+      partialFilterExpression: { contentType: "users" },
     },
   ];
 

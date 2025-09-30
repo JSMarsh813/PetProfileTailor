@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       }
       const nametag = await NameTag.create({
         ...req.body,
-        createdby: session.user.id,
+        createdBy: session.user.id,
       });
       res.status(201).json(nametag);
     } catch (err) {

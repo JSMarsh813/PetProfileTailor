@@ -17,8 +17,8 @@ export default async function handler(req, res) {
     try {
       const individualNames = await Names.find()
         .populate({
-          path: "createdby",
-          select: ["name", "profilename", "profileimage"],
+          path: "createdBy",
+          select: ["name", "profileName", "profileImage"],
         })
         .populate({ path: "tags", select: ["tag"] });
       res.status(200).json(individualNames);
@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     const { ok } = await checkOwnership({
       req,
       res,
-      resourceCreatorId: toUpdateName.createdby,
+      resourceCreatorId: toUpdateName.createdBy,
     });
     if (!ok) {
       return;
@@ -82,8 +82,8 @@ export default async function handler(req, res) {
 
       const populateName = await Names.findById(contentId)
         .populate({
-          path: "createdby",
-          select: "name profilename profileimage",
+          path: "createdBy",
+          select: "name profileName profileImage",
         })
         .populate({ path: "tags", select: "tag" });
 
@@ -105,7 +105,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    const { content, notes, tags, createdby } = req.body;
+    const { content, notes, tags, createdBy } = req.body;
 
     let existingNameCheck = await Names.find({
       content: { $regex: new RegExp(`^${content}$`, "i") },
@@ -132,7 +132,7 @@ export default async function handler(req, res) {
       try {
         const test = await Names.create({
           ...req.body,
-          createdby: session.user.id,
+          createdBy: session.user.id,
         });
         res.status(201).json(test);
       } catch (err) {

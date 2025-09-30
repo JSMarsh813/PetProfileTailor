@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const NameTagSchema = new mongoose.Schema({
   tag: { type: String, required: true },
-  createdby: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 const NameTag =

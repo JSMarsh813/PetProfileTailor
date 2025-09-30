@@ -23,8 +23,8 @@ export default async function ProfilePage({ params }) {
 
   // ############# FIND A  USER ##################
   const userData = await leanWithStrings(
-    User.findOne({ profilename: usersProfileName }).select(
-      "name followers profileimage profilename bioblurb location",
+    User.findOne({ profileName: usersProfileName }).select(
+      "name followers profileImage profileName bio location",
     ),
   );
 
@@ -37,10 +37,10 @@ export default async function ProfilePage({ params }) {
 
   // ########## grab created names #############
   const nameList = await leanWithStrings(
-    Names.find({ createdby: userId })
+    Names.find({ createdBy: userId })
       .populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
+        path: "createdBy",
+        select: ["name", "profileName", "profileImage"],
       })
       .populate("tags", "tag"),
   );
@@ -51,11 +51,11 @@ export default async function ProfilePage({ params }) {
 
   const createdDescriptions = await leanWithStrings(
     Descriptions.find({
-      createdby: userId,
+      createdBy: userId,
     })
       .populate({
-        path: "createdby",
-        select: ["name", "profilename", "profileimage"],
+        path: "createdBy",
+        select: ["name", "profileName", "profileImage"],
       })
       .populate("tags", "tag"),
   );
@@ -69,7 +69,7 @@ export default async function ProfilePage({ params }) {
   let usersFollowing = await leanWithStrings(
     User.find({
       followers: userId,
-    }).select("name followers name profileimage profilename bioblurb location"),
+    }).select("name followers name profileImage profileName bio location"),
   );
 
   let usersLikedContent = [];

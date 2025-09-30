@@ -26,7 +26,7 @@ async function handler(req, res) {
 
   const toUpdateUserBioLocationAvatar = await User.findById(idToObjectId);
 
-  toUpdateUserBioLocationAvatar.bioblurb = bio;
+  toUpdateUserBioLocationAvatar.bio = bio;
 
   toUpdateUserBioLocationAvatar.location = location;
 

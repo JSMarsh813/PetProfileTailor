@@ -32,7 +32,7 @@ export default function AddNameTag() {
 
     const nameTagSubmission = {
       tag: newNameTag,
-      createdby: session.user.id,
+      createdBy: session.user.id,
     };
 
     axios

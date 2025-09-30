@@ -98,8 +98,8 @@ export default async function handler(req, res) {
           thanksBy: userId,
         })
           .sort({ createdAt: -1 })
-          .populate({ path: "contentCreator", select: ["name", "profilename"] })
-          .populate({ path: "thanksBy", select: ["name", "profilename"] })
+          .populate({ path: "contentCreator", select: ["name", "profileName"] })
+          .populate({ path: "thanksBy", select: ["name", "profileName"] })
           .populate({ path: "nameId", select: ["content"] })
           .populate({ path: "descriptionId", select: ["content"] }),
       );

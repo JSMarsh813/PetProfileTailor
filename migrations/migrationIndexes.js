@@ -30,8 +30,8 @@ const createIndexes = async () => {
     console.log("tags + likedbylength compound index created");
 
     // Index for filtering/sorting by createdBy
-    await namesCollection.createIndex({ createdby: 1 });
-    console.log("createdby index created");
+    await namesCollection.createIndex({ createdBy: 1 });
+    console.log("createdBy index created");
 
     console.log("All indexes created successfully!");
   } catch (err) {

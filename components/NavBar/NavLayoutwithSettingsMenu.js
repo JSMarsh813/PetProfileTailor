@@ -42,7 +42,7 @@ export default function NavLayoutwithSettingsMenu() {
 
   if (session?.user) {
     userName = session.user.name || "";
-    profileImageLink = session.user.profileimage || "";
+    profileImageLink = session.user.profileImage || "";
     signedInUsersId = session.user.id || "";
   }
 
@@ -114,13 +114,13 @@ export default function NavLayoutwithSettingsMenu() {
                       )}
                     </MenuItem>
 
-                    {session.user.profilename && (
+                    {session.user.profileName && (
                       <MenuItem>
                         {({ focus }) => (
                           <Link
                             href={`${
                               process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                            }profile/${session.user.profilename.toLowerCase()}`}
+                            }profile/${session.user.profileName.toLowerCase()}`}
                             className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
                               focus ? "bg-white/10 text-subtleWhite" : ""
                             }`}

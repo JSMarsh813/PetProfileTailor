@@ -27,7 +27,7 @@ export async function GET() {
           {
             suggestionBy: userId,
             status: { $nin: ["dismissed", "deleted", "resolved"] },
-            contenttype: "names",
+            contentType: "names",
           },
           { contentId: 1, status: 1, _id: 1 },
         ),
@@ -37,7 +37,7 @@ export async function GET() {
           {
             suggestionBy: userId,
             status: "pending", // only get pending suggestions
-            contenttype: "descriptions",
+            contentType: "descriptions",
           },
           { contentId: 1, status: 1, _id: 0 },
         ),

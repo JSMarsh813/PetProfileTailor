@@ -28,7 +28,7 @@ export default function AddThank({
       return;
     }
 
-    let contentCreatedByUserId = contentInfo.createdby._id;
+    let contentCreatedByUserId = contentInfo.createdBy._id;
 
     if (contentCreatedByUserId === thanksBy) {
       toast.warn(

@@ -52,7 +52,7 @@ export default function UsersFollowersList({
                         key={follower._id}
                         href={`${
                           process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                        }profile/${follower.profilename.toLowerCase()}`}
+                        }profile/${follower.profileName.toLowerCase()}`}
                       >
                         <section
                           className="grid 
@@ -68,24 +68,24 @@ export default function UsersFollowersList({
 
                           <ProfileImage
                             divStyling="w-16"
-                            profileImage={follower.profileimage}
+                            profileImage={follower.profileImage}
                             layout="responsive"
                             className="rounded-2xl h-16"
                             width={100}
                             height={100}
                           />
 
-                          {/* ###### PROFILE name, profile and bioblurb #### */}
+                          {/* ###### PROFILE name, profile and bio#### */}
                           <section>
                             <span className="block"> {follower.name}</span>
 
                             <span className="block">
                               {" "}
-                              @{follower.profilename}
+                              @{follower.profileName}
                             </span>
                           </section>
 
-                          <p>{follower.bioblurb}</p>
+                          <p>{follower.bio}</p>
 
                           <section>
                             {!(follower._id == sessionFromServer.user.id) && (
