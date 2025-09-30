@@ -46,7 +46,7 @@ const UserSchema = new mongoose.Schema(
 
       default: "",
     },
-    profileimage: {
+    profileImage: {
       type: String,
       default: chooseRandomDefaultAvatar,
       //why no () after chooseRandomDefaultAvatar?

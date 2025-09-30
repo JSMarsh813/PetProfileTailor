@@ -10,10 +10,7 @@ import { migrateField } from "../utils/api/migrateField.js";
 
   try {
     // ----- Namess collection -----
-    await migrateField(User, "bioblurb", "bio", true);
-    await migrateField(User, "profilename", "profileName", true);
-    await migrateField(User, "passwordresettoken", "passwordResetToken", true);
-    await migrateField(User, "resettokenexpires", "resetTokenExpires", true);
+    await migrateField(User, "profileimage", "profileImage", true);
   } catch (err) {
     console.error("❌ Migration error:", err);
   } finally {

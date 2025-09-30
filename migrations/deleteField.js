@@ -11,7 +11,7 @@ if (!MONGO_URI) throw new Error("MONGODB_URI not defined");
   console.log("✅ Connected to MongoDB");
 
   try {
-    const collection = mongoose.connection.db.collection("nametags");
+    const collection = mongoose.connection.db.collection("users");
 
     const result = await collection.updateMany(
       {},
