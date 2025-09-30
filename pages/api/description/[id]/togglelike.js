@@ -1,6 +1,6 @@
 import dbConnect from "@/utils/db";
 import mongoose from "mongoose";
-import DescriptionLikes from "@/models/DescriptionLikes";
+import DescriptionLikes from "@/models/DescriptionLike";
 import Description from "@/models/Description";
 
 import { getSessionForApis } from "@/utils/api/getSessionForApis";

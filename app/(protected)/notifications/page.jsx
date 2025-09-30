@@ -1,5 +1,5 @@
 import dbConnect from "@utils/db";
-import Names from "@models/Names";
+import Names from "@models/Name";
 
 import Description from "@/models/Description";
 

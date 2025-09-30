@@ -1,6 +1,6 @@
 import dbConnect from "@utils/db";
 
-import NameLikes from "@models/NameLikes";
+import NameLikes from "@/models/NameLike";
 import mongoose from "mongoose";
 
 import CoreListingPageLogic from "@/components/CoreListingPagesLogic";

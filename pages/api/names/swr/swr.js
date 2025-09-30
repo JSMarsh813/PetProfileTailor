@@ -1,5 +1,5 @@
 import dbConnect from "@utils/db.js";
-import Names from "@models/Names.js";
+import Names from "@models/Name.js";
 import mongoose from "mongoose";
 
 export default async function handler(req, res) {

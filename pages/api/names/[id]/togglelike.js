@@ -1,7 +1,7 @@
 import dbConnect from "@/utils/db";
 import mongoose from "mongoose";
-import NameLikes from "@/models/NameLikes";
-import Names from "@/models/Names";
+import NameLikes from "@/models/NameLike";
+import Names from "@/models/Name";
 import { idText } from "typescript";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 

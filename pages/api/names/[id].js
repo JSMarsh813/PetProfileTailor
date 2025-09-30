@@ -1,4 +1,4 @@
-import Names from "@models/Names";
+import Names from "@models/Name";
 import db from "@utils/db";
 import { checkOwnership } from "@/utils/api/checkOwnership";
 

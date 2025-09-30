@@ -1,5 +1,5 @@
 import db from "@utils/db";
-import Thanks from "@/models/Thanks";
+import Thanks from "@/models/Thank";
 import mongoose from "mongoose";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";

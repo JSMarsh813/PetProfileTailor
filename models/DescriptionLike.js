@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
-const DescriptionLikesSchema = new mongoose.Schema(
+const DescriptionLikeSchema = new mongoose.Schema(
   {
     userId: { type: ObjectId, ref: "Users", required: true },
     descriptionId: { type: ObjectId, ref: "Descriptions", required: true },
@@ -11,7 +11,7 @@ const DescriptionLikesSchema = new mongoose.Schema(
 );
 
 // prevent duplicate likes
-DescriptionLikesSchema.index({ userId: 1, descriptionId: 1 }, { unique: true });
+DescriptionLikeSchema.index({ userId: 1, descriptionId: 1 }, { unique: true });
 // DescriptionLikesSchema.index
 // An index in MongoDB is like a sorted lookup table for faster queries.
 // Instead of scanning the entire collection to find matches, MongoDB jumps straight to the right place in the index.
@@ -24,12 +24,8 @@ DescriptionLikesSchema.index({ userId: 1, descriptionId: 1 }, { unique: true });
 // { unique: true }
 //makes the combination of userId + descriptionId unique across the entire collection, so it can only be liked once
 
-const DescriptionLikes =
-  mongoose.models.DescriptionLikes ||
-  mongoose.model(
-    "DescriptionLikes",
-    DescriptionLikesSchema,
-    "descriptionlikes",
-  );
+const DescriptionLike =
+  mongoose.models.DescriptionLike ||
+  mongoose.model("DescriptionLike", DescriptionLikeSchema, "descriptionlikes");
 
-export default DescriptionLikes;
+export default DescriptionLike;

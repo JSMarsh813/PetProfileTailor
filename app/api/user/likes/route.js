@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import db from "@/utils/db";
-import NameLikes from "@/models/NameLikes";
-import DescriptionLikes from "@/models/DescriptionLikes";
+import NameLikes from "@/models/NameLike";
+import DescriptionLikes from "@/models/DescriptionLike";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
 import { getServerSession } from "next-auth";

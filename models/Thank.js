@@ -3,7 +3,7 @@ const { ObjectId } = mongoose.Schema.Types;
 import thanksOptions from "@/data/ThanksOptions";
 
 const allowedMessages = thanksOptions.map((option) => option.tag);
-const ThanksSchema = new mongoose.Schema(
+const ThankSchema = new mongoose.Schema(
   {
     contentCreator: { type: ObjectId, ref: "Users", required: true },
     thanksBy: { type: ObjectId, ref: "Users", required: true },
@@ -43,14 +43,14 @@ const ThanksSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-ThanksSchema.index({
+ThankSchema.index({
   contentCreator: 1,
   nameId: 1,
   descriptionId: 1,
   thanksBy: 1,
 });
 
-const Thanks =
-  mongoose.models.Thanks || mongoose.model("Thanks", ThanksSchema, "thanks");
+const Thank =
+  mongoose.models.Thank || mongoose.model("Thank", ThankSchema, "thanks");
 
-export default Thanks;
+export default Thank;

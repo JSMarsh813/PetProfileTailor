@@ -1,7 +1,7 @@
 // migrations/add-read-field.js
 import "dotenv/config";
 import db from "../utils/db.js";
-import NameLikes from "../models/NameLikes.js";
+import NameLikes from "../models/NameLike.js";
 
 await db.connect();
 console.log("✅ Connected to MongoDB");

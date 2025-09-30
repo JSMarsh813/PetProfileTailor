@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import db from "@/utils/db";
-import Suggestion from "@/models/Suggestions"; // adjust import if your model path differs
+import Suggestion from "@/models/Suggestion";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
 import { getServerSession } from "next-auth";

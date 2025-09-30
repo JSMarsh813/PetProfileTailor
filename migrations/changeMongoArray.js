@@ -1,6 +1,6 @@
 import "dotenv/config";
 import db from "../utils/db.js";
-import Names from "@models/Names.js";
+import Names from "@models/Name.js";
 
 await db.connect();
 console.log("✅ Connected to MongoDB");

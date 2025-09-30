@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const SuggestionsSchema = new mongoose.Schema(
+const SuggestionSchema = new mongoose.Schema(
   {
     contentType: {
       type: String,
@@ -92,7 +92,7 @@ const SuggestionsSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-SuggestionsSchema.statics.fieldDescriptions = {
+SuggestionSchema.statics.fieldDescriptions = {
   status: "Current stage of moderation workflow",
   outcome: "Result of the moderation review",
   priority: "How urgent or serious the report is",
@@ -101,7 +101,6 @@ SuggestionsSchema.statics.fieldDescriptions = {
   comments: "Optional notes provided by the user",
 };
 
-const Suggestions =
-  mongoose.models.Suggestions ||
-  mongoose.model("Suggestions", SuggestionsSchema);
-export default Suggestions;
+const Suggestion =
+  mongoose.models.Suggestion || mongoose.model("Suggestion", SuggestionSchema);
+export default Suggestion;

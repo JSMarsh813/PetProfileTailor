@@ -1,5 +1,5 @@
 import db from "@utils/db";
-import Suggestion from "@/models/Suggestions";
+import Suggestion from "@/models/Suggestion";
 import mongoose from "mongoose";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";

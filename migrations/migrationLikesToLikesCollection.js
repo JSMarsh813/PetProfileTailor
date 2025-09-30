@@ -1,8 +1,8 @@
 // scripts/migrateLikedBy.js
 import "dotenv/config";
 import db from "../utils/db.js";
-import Names from "../models/Names.js";
-import NameLikes from "../models/NameLikes.js";
+import Names from "../models/Name.js";
+import NameLikes from "../models/NameLike.js";
 
 await db.connect();
 

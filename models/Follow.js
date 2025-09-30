@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
-const FollowsSchema = new mongoose.Schema(
+const FollowSchema = new mongoose.Schema(
   {
     userId: { type: ObjectId, ref: "Users", required: true },
     followedBy: { type: ObjectId, ref: "Users", required: true },
@@ -10,7 +10,7 @@ const FollowsSchema = new mongoose.Schema(
 );
 
 // prevent duplicate likes
-FollowsSchema.index({ userId: 1, followedBy: 1 }, { unique: true });
+FollowSchema.index({ userId: 1, followedBy: 1 }, { unique: true });
 // FollowsSchema.index
 // An index in MongoDB is like a sorted lookup table for faster queries.
 // Instead of scanning the entire collection to find matches, MongoDB jumps straight to the right place in the index.
@@ -23,8 +23,7 @@ FollowsSchema.index({ userId: 1, followedBy: 1 }, { unique: true });
 // { unique: true }
 //makes the combination of userId + nameId unique across the entire collection, so it can only be liked once
 
-const Follows =
-  mongoose.models.Follows ||
-  mongoose.model("Follows", FollowsSchema, "follows");
+const Follow =
+  mongoose.models.Follow || mongoose.model("Follow", FollowSchema, "follows");
 
-export default Follows;
+export default Follow;
