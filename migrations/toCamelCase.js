@@ -1,7 +1,7 @@
 // migrations/toCamelCase.js
 import "dotenv/config";
 import db from "../utils/db.js";
-import Names from "../models/Names.js";
+import User from "../models/User.js";
 import { migrateField } from "../utils/api/migrateField.js";
 
 (async () => {
@@ -10,8 +10,10 @@ import { migrateField } from "../utils/api/migrateField.js";
 
   try {
     // ----- Namess collection -----
-    await migrateField(Names, "createdby", "createdBy", true);
-    await migrateField(Names, "likedbycount", "likedByCount", true);
+    await migrateField(User, "bioblurb", "bio", true);
+    await migrateField(User, "profilename", "profileName", true);
+    await migrateField(User, "passwordresettoken", "passwordResetToken", true);
+    await migrateField(User, "resettokenexpires", "resetTokenExpires", true);
   } catch (err) {
     console.error("❌ Migration error:", err);
   } finally {

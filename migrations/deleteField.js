@@ -11,11 +11,18 @@ if (!MONGO_URI) throw new Error("MONGODB_URI not defined");
   console.log("✅ Connected to MongoDB");
 
   try {
-    const collection = mongoose.connection.db.collection("names");
+    const collection = mongoose.connection.db.collection("nametags");
 
     const result = await collection.updateMany(
       {},
-      { $unset: { relatedNames: "", likedbycount: "" } },
+      {
+        $unset: {
+          resettokenexpires: "",
+          passwordresettoken: "",
+          profilename: "",
+          bioblurb: "",
+        },
+      },
     );
 
     console.log(`✅ Removed old fields from ${result.modifiedCount} documents`);

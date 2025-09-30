@@ -2,34 +2,34 @@ import mongoose from "mongoose";
 
 const ReportSchema = new mongoose.Schema(
   {
-    contenttype: {
+    contentType: {
       type: String,
       enum: ["names", "descriptions", "users"],
       required: true,
       unique: false,
     },
-    contentid: {
+    contentId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       unique: false,
     },
-    contentcopy: {
+    contentCopy: {
       type: Object,
       default: {},
       required: true,
       unique: false,
     },
-    contentcreatedby: {
+    contentCreatedBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    reportedby: {
+    reportedBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    reportcategories: {
+    reportCategories: {
       type: Array,
       required: true,
       default: [],
@@ -75,7 +75,7 @@ ReportSchema.statics.fieldDescriptions = {
   status: "Current stage of moderation workflow",
   outcome: "Result of the moderation review",
   priority: "How urgent or serious the report is",
-  reportcategories: "Categories applied by the user when reporting",
+  reportCategories: "Categories applied by the user when reporting",
   comments: "Optional notes provided by the user",
 };
 

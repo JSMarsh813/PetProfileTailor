@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: false,
     },
-    profilename: {
+    profileName: {
       type: String,
       required: true,
       unique: true,
@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema(
       default: "user",
       required: true,
     },
-    bioblurb: {
+    bio: {
       type: String,
       default: "",
     },
@@ -52,10 +52,10 @@ const UserSchema = new mongoose.Schema(
       //why no () after chooseRandomDefaultAvatar?
       // Because Mongoose will call it for you every time it needs a default value, so you pass the function, not its result.
     },
-    passwordresettoken: {
+    passwordResetToken: {
       type: String,
     },
-    resettokenexpires: {
+    resetTokenExpires: {
       type: Date,
     },
   },
