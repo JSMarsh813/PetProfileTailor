@@ -4,11 +4,11 @@ import NameLikes from "@/models/NameLike";
 import Names from "@/models/Name";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
-export async function POST(req) {
+export async function POST(req, { params }) {
   await dbConnect.connect();
 
-  const { searchParams } = new URL(req.url);
-  const nameId = searchParams.get("id");
+  const nameId = params.id;
+  console.log("this is nameid", nameId);
 
   const body = await req.json();
   const { createdBy } = body;

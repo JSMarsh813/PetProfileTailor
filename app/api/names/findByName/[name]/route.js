@@ -1,11 +1,10 @@
 import dbConnect from "@utils/db";
 import Names from "@models/Name";
 
-export async function GET(req) {
+export async function GET(req, { params }) {
   await dbConnect.connect();
 
-  const { searchParams } = new URL(req.url);
-  const name = searchParams.get("name");
+  const name = params.name;
 
   try {
     const individualNames = await Names.find({ content: name }).populate({

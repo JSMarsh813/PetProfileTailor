@@ -85,9 +85,9 @@ export function useSwrPagination({
     const page = index + 1; // SWR index starts at 0, but our API pages start at 1
     let url = "";
     if (dataType === "names") {
-      url = `/api/names/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
+      url = `/api/names/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
     } else if (dataType === "descriptions") {
-      url = `/api/description/swr/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
+      url = `/api/description/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
     } else if (dataType === "individualNames") {
       url = `/api/names/findByName/${contentIdentifier}`;
     }

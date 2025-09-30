@@ -3,11 +3,10 @@ import db from "@utils/db";
 import mongoose from "mongoose";
 import { checkOwnership } from "@/utils/api/checkOwnership";
 
-export async function GET(req) {
+export async function GET(req, { params }) {
   await db.connect();
 
-  const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id"); // get the id from query string
+  const id = params.id;
 
   console.log("GET individual name id:", id);
 
