@@ -27,8 +27,7 @@ export default async function handler(req, res) {
   }
 
   if (method === "PUT") {
-    const { notes, content, tags, contentId, relatednames } =
-      req.body.submission;
+    const { notes, content, tags, contentId } = req.body.submission;
 
     const toUpdateDescription = await Description.findById(contentId);
 
@@ -44,9 +43,7 @@ export default async function handler(req, res) {
       if (notes) {
         toUpdateDescription.notes = notes;
       }
-      if (relatednames) {
-        toUpdateDescription.relatednames = relatednames;
-      }
+
       toUpdateDescription.content = content;
 
       toUpdateDescription.tags = tags;
@@ -71,7 +68,7 @@ export default async function handler(req, res) {
 
   if (method === "POST") {
     const { description } = req.body;
-    //tags, notes, createdby, relatednames
+    //tags, notes, createdby
 
     const { ok, session } = await getSessionForApis({
       req,

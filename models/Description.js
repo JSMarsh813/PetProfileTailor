@@ -12,7 +12,7 @@ const DescriptionSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    createdby: {
+    createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,
       ref: "User",
@@ -25,19 +25,15 @@ const DescriptionSchema = new mongoose.Schema(
         ref: "DescriptionTag",
       },
     ],
-    likedbycount: {
+    likedByCount: {
       type: Number,
       default: 0,
-    },
-
-    relatednames: {
-      type: Array,
     },
   },
   { timestamps: true },
 );
 
 const Description =
-  mongoose.models.description ||
-  mongoose.model("description", DescriptionSchema);
+  mongoose.models.Description ||
+  mongoose.model("Description", DescriptionSchema);
 export default Description;

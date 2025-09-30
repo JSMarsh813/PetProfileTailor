@@ -132,7 +132,6 @@ export default async function handler(req, res) {
           notes: 1,
           tags: 1,
           createdby: 1,
-          relatednames: 1,
           likedbycount: 1,
           updatedAt: 1,
         },
@@ -149,7 +148,6 @@ export default async function handler(req, res) {
             profilename: 1,
             profileimage: 1,
           },
-          relatednames: 1,
           likedbycount: 1,
           updatedAt: 1,
           //vital for swr edit to work, its used as part of the content key

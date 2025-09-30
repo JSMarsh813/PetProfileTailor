@@ -20,11 +20,11 @@ const NameSchema = new mongoose.Schema(
       },
     ],
 
-    likedbycount: {
+    likedByCount: {
       type: Number,
       default: 0,
     },
-    createdby: {
+    createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
