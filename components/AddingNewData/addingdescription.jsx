@@ -32,7 +32,6 @@ function NewDescriptionWithTagsData() {
       content: newDescription,
       tags: tagIds,
       notes: notes,
-      createdby: session.user.id.toString(),
     };
 
     // #######if the collection does not have the name, do this (allow post):  ..... otherwise update setNameExists to true and do not allow the new description

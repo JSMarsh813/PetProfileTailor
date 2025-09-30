@@ -97,6 +97,14 @@ export default async function handler(req, res) {
   }
 
   if (method === "POST") {
+    const { ok, session } = await getSessionForApis({
+      req,
+      res,
+    });
+    if (!ok) {
+      return;
+    }
+
     const { content, notes, tags, createdby } = req.body;
 
     let existingNameCheck = await Names.find({
@@ -105,14 +113,6 @@ export default async function handler(req, res) {
     // case-insensitive query
     // "mike" will get the name already exists error if it matches a "Mike", "MIKE", "mikE", etc.
     // he ^ and $ anchors make sure it only matches the full string (not substrings).
-
-    const { ok, session } = await getSessionForApis({
-      req,
-      res,
-    });
-    if (!ok) {
-      return;
-    }
 
     let checkForInvalidInput = regexInvalidInput(content);
     console.log(checkForInvalidInput);
@@ -130,7 +130,10 @@ export default async function handler(req, res) {
       return;
     } else {
       try {
-        const test = await Names.create(req.body);
+        const test = await Names.create({
+          ...req.body,
+          createdby: session.user.id,
+        });
         res.status(201).json(test);
       } catch (err) {
         res.status(500).json(err);

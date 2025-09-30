@@ -73,15 +73,17 @@ export default async function handler(req, res) {
     const { description } = req.body;
     //tags, notes, createdby, relatednames
 
-    let existingDescriptionCheck = await Description.find({
-      content: description,
+    const { ok, session } = await getSessionForApis({
+      req,
+      res,
     });
-
-    const { ok } = await getSessionForApis({ req, res });
-
     if (!ok) {
       return;
     }
+
+    let existingDescriptionCheck = await Description.find({
+      content: description,
+    });
 
     if (existingDescriptionCheck && existingDescriptionCheck.length != 0) {
       res.status(409).json({
@@ -91,7 +93,10 @@ export default async function handler(req, res) {
       return;
     } else {
       try {
-        const test = await Description.create(req.body);
+        const test = await Description.create({
+          ...req.body,
+          createdby: session.user.id,
+        });
         res.status(201).json(test);
       } catch (err) {
         res.status(500).json(err);

@@ -74,7 +74,6 @@ function NewNameWithTagsData() {
       content: newName,
       notes: note,
       tags: tagsToSubmit.map((tag) => tag.value),
-      createdby: session.user.id.toString(),
     };
 
     axios

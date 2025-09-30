@@ -54,7 +54,10 @@ export default async function handler(req, res) {
       if (!ok) {
         return;
       }
-      const descriptiontag = await DescriptionTag.create(req.body);
+      const descriptiontag = await DescriptionTag.create({
+        ...req.body,
+        createdby: session.user.id,
+      });
 
       res.status(201).json(descriptiontag);
     } catch (err) {

@@ -53,7 +53,7 @@ export default async function handler(req, res) {
 
     if (existingReport) {
       res.status(201).send({
-        report,
+        report: existingReport,
         message: `You cannot flag this content again until the review process is completed for your current report`,
       });
     }

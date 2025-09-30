@@ -5,7 +5,7 @@ import { checkIfAdmin } from "@/utils/api/CheckIfAdmin";
 
 export default async function handler(req, res) {
   const { method } = req;
-  const newcategory = req.body;
+  const newCategory = req.body;
 
   await dbConnect.connect();
 
@@ -28,7 +28,10 @@ export default async function handler(req, res) {
     }
 
     try {
-      const category = await Category.create(newcategory);
+      const category = await Category.create({
+        ...newCategory,
+        createdby: session.user.id,
+      });
       res.status(200).json(category);
     } catch (err) {
       res.status(500).json(err);

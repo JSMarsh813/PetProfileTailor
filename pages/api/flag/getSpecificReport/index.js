@@ -2,19 +2,9 @@ import db from "@utils/db";
 import Report from "@/models/Report";
 import mongoose from "mongoose";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
-import { checkOwnership } from "@/utils/api/checkOwnership";
 
 export default async function handler(req, res) {
   await db.connect();
-
-  const { ok } = await checkOwnership({
-    req,
-    res,
-    resourceCreatorId: toUpdateDescription.createdby,
-  });
-  if (!ok) {
-    return;
-  }
 
   const userId = session.user.id;
 
@@ -85,6 +75,12 @@ export default async function handler(req, res) {
     try {
       const { reportid } = req.body;
 
+      if (!userId) {
+        return res.status(403).json({
+          error: "You must be signed in to delete a report",
+        });
+      }
+
       const reportToUpdate = await Report.findOneAndUpdate(
         { _id: reportid, reportedby: userId },
         { status: "deleted", outcome: "deletedByUser" },
@@ -92,7 +88,10 @@ export default async function handler(req, res) {
       );
 
       if (!reportToUpdate) {
-        return res.status(404).json({ error: "Report not found" });
+        return res.status(404).json({
+          error:
+            "Report not found or you are not authorized to delete this document, because you are not the reporter",
+        });
       }
 
       return res
