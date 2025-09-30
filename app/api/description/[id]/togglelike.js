@@ -1,39 +1,33 @@
+// app/api/descriptions/[id]/like/route.js
 import dbConnect from "@/utils/db";
 import mongoose from "mongoose";
 import DescriptionLikes from "@/models/DescriptionLike";
 import Description from "@/models/Description";
-
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
-export default async function handler(req, res) {
+export async function POST(req, { params }) {
   await dbConnect.connect();
-  const { id: descriptionId } = req.query;
-  const { createdBy } = req.body;
 
-  const { ok, serverSession } = await getSessionForApis({
-    req,
-    res,
-  });
+  const descriptionId = params.id;
+  const body = await req.json();
+  const { createdBy } = body;
+
+  const { ok, session: serverSession } = await getSessionForApis();
   if (!ok) {
-    return;
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const userId = serverSession.user.id;
-
-  console.log("req.query", req.query);
-
-  if (!userId) return res.status(400).json({ error: "userId required" });
-  if (req.method !== "POST") return res.status(405).end();
+  if (!userId) {
+    return Response.json({ error: "userId required" }, { status: 400 });
+  }
 
   const session = await mongoose.startSession();
-  console.log("toggle like api ran");
-  console.log("userId", userId);
-  console.log("userId", userId, "descriptionId", descriptionId);
+  console.log("toggle like api ran", { userId, descriptionId });
 
   try {
     session.startTransaction();
     // transaction to ensure likes count stay in sync, if both the collections aren't updated then cancel
-
     const existingLike = await DescriptionLikes.findOne({
       userId,
       descriptionId,
@@ -43,7 +37,6 @@ export default async function handler(req, res) {
 
     if (existingLike) {
       // Unlike, delete the document, decrement likedByCount
-
       await DescriptionLikes.deleteOne({ _id: existingLike._id }).session(
         session,
       );
@@ -53,11 +46,9 @@ export default async function handler(req, res) {
         { session },
       );
       liked = false;
-
-      res.status(200).json({ liked });
     } else {
-      const likingOwnContent = sessionUserId === createdBy;
       // Like, insert the document, increment likedByCount
+      const likingOwnContent = userId === createdBy;
       await DescriptionLikes.create(
         [{ userId, descriptionId, read: likingOwnContent }],
         { session },
@@ -68,15 +59,18 @@ export default async function handler(req, res) {
         { session },
       );
       liked = true;
-
-      res.status(200).json({ liked });
     }
 
     await session.commitTransaction();
+    return Response.json({ liked });
   } catch (err) {
     await session.abortTransaction();
-    res.status(500).json({ error: err.message });
+    return Response.json({ error: err.message }, { status: 500 });
   } finally {
     session.endSession();
   }
+}
+
+export function GET() {
+  return new Response("Method Not Allowed", { status: 405 });
 }
