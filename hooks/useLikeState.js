@@ -32,7 +32,7 @@ export function useLikeState({ data, dataType, userId, apiBaseLink }) {
     toggle,
   } = useToggleState({
     initialActive: initialLiked,
-    body: { userId, id: contentId },
+    body: { id: contentId, createdBy: data.createdBy },
     apiUrl: `${apiBaseLink}/${contentId}/togglelike`,
     onApplyOptimistic: (newLiked) => {
       // newLiked = true or false, opposite of its initial liked/unliked state

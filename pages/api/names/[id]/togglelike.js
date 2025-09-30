@@ -8,6 +8,7 @@ import { getSessionForApis } from "@/utils/api/getSessionForApis";
 export default async function handler(req, res) {
   await dbConnect.connect();
   const { id: nameId } = req.query;
+  const { createdBy } = req.body;
 
   const { ok, session: serverSession } = await getSessionForApis({
     req,
@@ -51,8 +52,11 @@ export default async function handler(req, res) {
 
       res.status(200).json({ liked });
     } else {
+      const likingOwnContent = sessionUserId === createdBy;
       // Like, insert the document, increment likedByCount
-      await NameLikes.create([{ userId, nameId }], { session });
+      await NameLikes.create([{ userId, nameId, read: likingOwnContent }], {
+        session,
+      });
       await Names.updateOne(
         { _id: nameId },
         { $inc: { likedByCount: 1 } },

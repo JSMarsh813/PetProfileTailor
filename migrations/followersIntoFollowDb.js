@@ -3,7 +3,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import db from "../utils/db.js";
 import User from "../models/User.js";
-import Follows from "../models/Follows.js";
+import Follows from "../models/Follow.js";
 
 async function migrateFollowers() {
   await db.connect();

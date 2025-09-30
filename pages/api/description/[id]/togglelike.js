@@ -8,6 +8,7 @@ import { getSessionForApis } from "@/utils/api/getSessionForApis";
 export default async function handler(req, res) {
   await dbConnect.connect();
   const { id: descriptionId } = req.query;
+  const { createdBy } = req.body;
 
   const { ok, serverSession } = await getSessionForApis({
     req,
@@ -42,6 +43,7 @@ export default async function handler(req, res) {
 
     if (existingLike) {
       // Unlike, delete the document, decrement likedByCount
+
       await DescriptionLikes.deleteOne({ _id: existingLike._id }).session(
         session,
       );
@@ -54,8 +56,12 @@ export default async function handler(req, res) {
 
       res.status(200).json({ liked });
     } else {
+      const likingOwnContent = sessionUserId === createdBy;
       // Like, insert the document, increment likedByCount
-      await DescriptionLikes.create([{ userId, descriptionId }], { session });
+      await DescriptionLikes.create(
+        [{ userId, descriptionId, read: likingOwnContent }],
+        { session },
+      );
       await Description.updateOne(
         { _id: descriptionId },
         { $inc: { likedByCount: 1 } },
