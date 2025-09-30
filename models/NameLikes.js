@@ -5,6 +5,7 @@ const NameLikesSchema = new mongoose.Schema(
   {
     userId: { type: ObjectId, ref: "Users", required: true },
     nameId: { type: ObjectId, ref: "Names", required: true },
+    read: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
