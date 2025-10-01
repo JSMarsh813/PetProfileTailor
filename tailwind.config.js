@@ -2,7 +2,7 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     /*https://www.youtube.com/watch?v=kap8xrWMNDM&ab_channel=simonswiss */
     /*https://tailwindcss.com/docs/guides/nextjs*/

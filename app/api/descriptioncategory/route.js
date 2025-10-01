@@ -3,13 +3,6 @@ import Category from "@/models/DescriptionCategory";
 import descriptiontag from "@/models/DescriptionTag";
 import { checkIfAdmin } from "@/utils/api/checkIfAdmin";
 
-// app/api/descriptionCategories/route.js
-
-import dbConnect from "@utils/db";
-import Category from "@/models/DescriptionCategory";
-import descriptiontag from "@/models/DescriptionTag";
-import { checkIfAdmin } from "@/utils/api/checkIfAdmin";
-
 export async function GET() {
   await dbConnect.connect();
 
