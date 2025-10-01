@@ -40,7 +40,7 @@ export async function POST(req) {
       { value: content, type: "names", fieldName: "content" },
     ]);
 
-    const errorResponse = respondIfBlocked(blockResult, existingNameCheck);
+    const errorResponse = respondIfBlocked(blockResult);
     if (errorResponse) return errorResponse;
 
     const normalizedString = normalizeString(content);
@@ -71,6 +71,7 @@ export async function POST(req) {
 
     const newName = await Names.create({
       content,
+      normalizedContent: normalizedString,
       notes,
       tags,
       createdBy: session.user.id,
@@ -83,18 +84,20 @@ export async function POST(req) {
   }
 }
 
+// ######################### PUT ############################################## //
+
 export async function PUT(req) {
   await dbConnect.connect();
 
   const { submission } = await req.json();
   const { contentId, content, notes, tags } = submission;
 
-  if (notes | content) {
+  if (content | notes) {
     const blockResult = checkMultipleFieldsBlocklist([
       { value: content, type: "names", fieldName: "content" },
     ]);
 
-    const errorResponse = respondIfBlocked(blockResult, existingNameCheck);
+    const errorResponse = respondIfBlocked(blockResult);
     if (errorResponse) return errorResponse;
   }
   const toUpdateName = await Names.findById(contentId);
@@ -109,6 +112,7 @@ export async function PUT(req) {
   if (!ok) return Response.json({ message: "Not authorized" }, { status: 403 });
 
   try {
+    // if the content is changing, make sure it doesn't already exist
     if (
       content &&
       content.toLowerCase() !== toUpdateName.content.toLowerCase()
@@ -124,6 +128,7 @@ export async function PUT(req) {
         );
       }
       toUpdateName.content = content;
+      toUpdateName.normalizedContent = normalizedString;
     }
 
     if (notes) toUpdateName.notes = notes;

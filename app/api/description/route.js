@@ -7,6 +7,37 @@ import { checkMultipleFieldsBlocklist } from "@/utils/api/checkMultipleBlocklist
 import { respondIfBlocked } from "@/utils/api/checkMultipleBlocklists";
 import normalizeString from "@/utils/api/normalizeString";
 
+async function checkDuplicateDescription(content, existingDescription) {
+  if (
+    content?.toLowerCase() &&
+    content !== existingDescription.content?.toLowerCase()
+    // ? handles when content is null
+  ) {
+    const normalizedSnippet = normalizeString(content).slice(0, 120);
+    const existingDescriptionCheck = await Description.findOne({
+      normalizedContent: { $regex: new RegExp(`^${normalizedSnippet}$`, "i") },
+    });
+    return returnExistingMessage(existingDescriptionCheck);
+  }
+  return null;
+}
+
+function returnExistingMessage(existingDescriptionCheck) {
+  if (existingDescriptionCheck) {
+    // existing description check is an object or null
+    return Response.json(
+      {
+        message: "Description already exists",
+        existingDescription: existingDescriptionCheck,
+      },
+      { status: 409 },
+    );
+  }
+  return null;
+}
+
+// ############################ GET ################################################### //
+
 export async function GET(req) {
   await dbConnect.connect();
 
@@ -24,6 +55,8 @@ export async function GET(req) {
   }
 }
 
+// ############################ POST ################################################### //
+
 export async function POST(req) {
   await dbConnect.connect();
 
@@ -39,25 +72,15 @@ export async function POST(req) {
     { value: content, type: "descriptions", fieldName: "content" },
   ]);
 
-  const errorResponse = respondIfBlocked(blockResult, existingNameCheck);
+  const errorResponse = respondIfBlocked(blockResult);
   if (errorResponse) return errorResponse;
 
-  const normalizedStringSnippet = normalizeString(content).slice(0, 120);
-  const existingDescriptionCheck = await Description.find({
-    normalizedContent: { $regex: normalizedStringSnippet, $options: "i" },
-  });
-  // this will return positive if there is a partial match, because of the regex
-  // $regex searches for substring matches
+  // ****************** checking for duplicates with snippet ****************************
 
-  if (existingDescriptionCheck && existingDescriptionCheck.length !== 0) {
-    return Response.json(
-      {
-        message: "Description already exists",
-        existingDescription: existingDescriptionCheck,
-      },
-      { status: 409 },
-    );
-  }
+  const existingMessage = await checkDuplicateDescription(content, {
+    content: null,
+  });
+  if (existingMessage) return existingMessage;
 
   try {
     const newDescription = await Description.create({
@@ -72,41 +95,52 @@ export async function POST(req) {
   }
 }
 
+// ############################ PUT ################################################### //
+
 export async function PUT(req) {
   await dbConnect.connect();
 
   const body = await req.json();
   const { notes, content, tags, contentId } = body.submission;
+  const existingDescription = await Description.findById(contentId);
 
-  if (content | notes) {
+  // ************** content or notes checks *************************** //
+
+  if (content || notes) {
     const blockResult = checkMultipleFieldsBlocklist([
       { value: content, type: "descriptions", fieldName: "content" },
     ]);
 
-    const errorResponse = respondIfBlocked(blockResult, existingNameCheck);
+    const errorResponse = respondIfBlocked(blockResult);
     if (errorResponse) return errorResponse;
+
+    const existingMessage = await checkDuplicateDescription(
+      content,
+      existingDescription,
+    );
+    if (existingMessage) return existingMessage;
   }
 
-  const toUpdateDescription = await Description.findById(contentId);
+  // ************* checking ownership and updating ***************** //
 
   const { ok } = await checkOwnership({
     req,
-    resourceCreatorId: toUpdateDescription.createdBy,
+    resourceCreatorId: existingDescription.createdBy,
   });
   if (!ok) return new Response("Unauthorized", { status: 401 });
 
   try {
-    if (notes) toUpdateDescription.notes = notes;
+    if (notes) existingDescription.notes = notes;
     if (content) {
-      (toUpdateDescription.content = content),
-        (toUpdateDescription.normalizedContent = normalizeString(content).slice(
+      (existingDescription.content = content),
+        (existingDescription.normalizedContent = normalizeString(content).slice(
           0,
           120,
         ));
     }
-    toUpdateDescription.tags = tags;
+    existingDescription.tags = tags;
 
-    await toUpdateDescription.save();
+    await existingDescription.save();
 
     const updatedDescription = await Description.findById(contentId)
       .populate({
@@ -123,6 +157,8 @@ export async function PUT(req) {
     return Response.json({ error: err.message }, { status: 500 });
   }
 }
+
+// ############################ DELETE ################################################### //
 
 export async function DELETE(req) {
   await dbConnect.connect();
