@@ -6,12 +6,17 @@ const DescriptionSchema = new mongoose.Schema(
     content: {
       type: String,
       required: true,
-      unique: false,
+      unique: true,
+    },
+    normalizedContent: {
+      type: String,
+      required: true,
     },
     notes: {
       type: String,
       required: false,
     },
+
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: false,

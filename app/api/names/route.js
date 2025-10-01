@@ -4,6 +4,9 @@ import Names from "@models/Name";
 import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
 import { checkOwnership } from "@/utils/api/checkOwnership";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
+import { checkMultipleFieldsBlocklist } from "@/utils/api/checkMultipleBlocklists";
+import { respondIfBlocked } from "@/utils/api/checkMultipleBlocklists";
+import normalizeString from "@/utils/api/normalizeString";
 
 export async function GET(req) {
   await dbConnect.connect();
@@ -33,8 +36,16 @@ export async function POST(req) {
   const { content, notes, tags } = await req.json();
 
   try {
+    const blockResult = checkMultipleFieldsBlocklist([
+      { value: content, type: "names", fieldName: "content" },
+    ]);
+
+    const errorResponse = respondIfBlocked(blockResult, existingNameCheck);
+    if (errorResponse) return errorResponse;
+
+    const normalizedString = normalizeString(content);
     const existingNameCheck = await Names.find({
-      content: { $regex: new RegExp(`^${content}$`, "i") },
+      normalizedContent: { $regex: new RegExp(`^${normalizedString}$`, "i") },
     });
 
     const invalidChars = regexInvalidInput(content);
@@ -78,6 +89,14 @@ export async function PUT(req) {
   const { submission } = await req.json();
   const { contentId, content, notes, tags } = submission;
 
+  if (notes | content) {
+    const blockResult = checkMultipleFieldsBlocklist([
+      { value: content, type: "names", fieldName: "content" },
+    ]);
+
+    const errorResponse = respondIfBlocked(blockResult, existingNameCheck);
+    if (errorResponse) return errorResponse;
+  }
   const toUpdateName = await Names.findById(contentId);
   if (!toUpdateName)
     return Response.json({ message: "Name not found" }, { status: 404 });
@@ -94,8 +113,9 @@ export async function PUT(req) {
       content &&
       content.toLowerCase() !== toUpdateName.content.toLowerCase()
     ) {
+      const normalizedString = normalizeString(content);
       const existingNameCheck = await Names.findOne({
-        content: { $regex: new RegExp(`^${content}$`, "i") },
+        normalizedContent: { $regex: new RegExp(`^${normalizedString}$`, "i") },
       });
       if (existingNameCheck) {
         return Response.json(
