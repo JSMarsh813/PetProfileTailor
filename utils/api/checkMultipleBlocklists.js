@@ -3,7 +3,8 @@ import { checkBlocklists } from "@/lib/checkBlocklist";
 import bannedWordsMessage from "@/utils/api/bannedWordsMessage";
 // 1️⃣ Check multiple fields for blocklist violations
 export function checkMultipleFieldsBlocklist(fields) {
-  // fields = [{ value, type, fieldName }, ...]
+  // fields = [{ value, fieldName }, ...]
+  // value is content not normalizedContent
   for (const { value, fieldName } of fields) {
     const { allowed, blockedBy, type: blockType } = checkBlocklists(value);
     if (!allowed) {
