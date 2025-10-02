@@ -39,6 +39,7 @@ export default function ContentListing({
   singleContent,
   mutate,
   mode = "swr", //swr or local, local is or pages with a single piece of content
+  className,
   // needed for editing, since the non-swr page needs state to reflect the edits, since it doesn't use the swr logic
 }) {
   const { data: session } = useSession();
@@ -147,7 +148,9 @@ export default function ContentListing({
   }profile/${singleContent.createdBy.profileName.toLowerCase()}`;
 
   return (
-    <div className="text-base flex border-t border-subtleWhite mb-4 ">
+    <div
+      className={`text-base flex border-t border-subtleWhite mb-4 ${className}`}
+    >
       <ProfileImage
         divStyling="min-h-10 max-w-12 mr-4 mt-3 min-w-10 max-h-12"
         profileImage={singleContent.createdBy.profileImage}

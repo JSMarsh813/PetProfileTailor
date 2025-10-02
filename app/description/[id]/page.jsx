@@ -5,14 +5,13 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import ContentListing from "@/components/ShowingListOfContent/ContentListing";
 import dbConnect from "@utils/db";
 import Descriptions from "@/models/Description";
-
 import { notFound } from "next/navigation";
-
 const ObjectId = require("mongodb").ObjectId;
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
+import ReturnToPreviousPage from "@/components/ReusableSmallComponents/buttons/ReturnToPreviousPage";
 
 export default async function Postid({ params }) {
-  const { id } = params;
+  const { id } = await params;
 
   await dbConnect.connect();
   const descriptionId = ObjectId(id);
@@ -33,10 +32,16 @@ export default async function Postid({ params }) {
 
   return (
     <div className="mx-2">
+      <ReturnToPreviousPage
+        text="return to fetch descriptions"
+        href="/fetchdescriptions"
+      />
+
       <ContentListing
         dataType="descriptions"
         singleContent={description}
         mode="local"
+        className="mt-4"
       />
     </div>
   );

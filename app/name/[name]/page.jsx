@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import ContentListing from "@/components/ShowingListOfContent/ContentListing";
 
+import ReturnToPreviousPage from "@/components/ReusableSmallComponents/buttons/ReturnToPreviousPage";
+
 export default async function Postid({ params }) {
-  const { name } = params;
+  const { name } = await params;
   const spaceAddedBackName = decodeURIComponent(name);
   // gets rid of %20, replaces with a space
 
@@ -28,11 +30,17 @@ export default async function Postid({ params }) {
 
   return (
     <div className="mx-2 mt-6">
+      <ReturnToPreviousPage
+        text="return to fetch names"
+        href="/fetchnames"
+      />
+
       {nameData && (
         <ContentListing
           singleContent={nameData}
           dataType="names"
           mode="local"
+          className="mt-4"
         />
       )}
     </div>

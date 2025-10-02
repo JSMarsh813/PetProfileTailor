@@ -14,7 +14,7 @@ import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
 export default async function ProfilePage({ params }) {
   const session = await getServerSession(serverAuthOptions);
-  const { profilename } = params;
+  const { profilename } = await params;
 
   console.log("profileName", profilename);
   const usersProfileName = profilename.toLowerCase();
