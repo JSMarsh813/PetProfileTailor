@@ -7,6 +7,7 @@ import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
 import { useReports } from "@context/ReportsContext";
+import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 
 export default function AddReport({
   dataType,
@@ -133,6 +134,11 @@ export default function AddReport({
           <p className="text-center mb-3">
             ❗ Note: <strong> one or more checkboxes must be selected</strong>{" "}
             to submit this form
+          </p>
+
+          <p className="text-center mb-3">
+            {" "}
+            reports can be edited <strong>until they are being reviewed</strong>
           </p>
 
           <div className=" bg-secondary border-white border-y-2 flex">

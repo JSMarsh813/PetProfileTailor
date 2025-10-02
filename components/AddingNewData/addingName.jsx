@@ -160,7 +160,11 @@ function NewNameWithTagsData() {
         <hr className="mt-4" />
 
         <form onSubmit={handleNameSubmission}>
+          {!session && (
+            <WarningMessage message="please sign in to submit a name" />
+          )}
           {/* needs label and value for Select to work  */}
+
           <label
             className="font-bold block mt-4 mb-2 text-xl "
             htmlFor="nameInput"
@@ -241,9 +245,6 @@ function NewNameWithTagsData() {
               {" "}
               Adding name ...{" "}
             </button>
-          )}
-          {!session && (
-            <WarningMessage message="please sign in to submit a name" />
           )}
         </form>
 

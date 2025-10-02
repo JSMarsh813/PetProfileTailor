@@ -118,6 +118,11 @@ export default function AddSuggestion({
               ❗ Note: <strong> one or more checkboxes must be selected</strong>{" "}
               to submit this form
             </p>
+
+            <p className="text-center mb-3">
+              suggestions can be edited{" "}
+              <strong>until they are being reviewed</strong>
+            </p>
           </section>
 
           <section className="flex flex-col mx-5 my-8">

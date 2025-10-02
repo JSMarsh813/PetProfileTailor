@@ -107,6 +107,11 @@ function NewDescriptionWithTagsData() {
         />
 
         <form onSubmit={handleDescriptionSubmission}>
+          {!session && (
+            <span className="mt-4 bg-red-800 p-2 text-subtleWhite font-bold border-2 border-yellow-300 block text-center">
+              Please sign in to submit a description{" "}
+            </span>
+          )}
           {/* needs label and value for Select to work  */}
 
           <label
@@ -202,12 +207,6 @@ disabled:text-errorTextColor rounded-2xl"
               {" "}
               Adding description ...{" "}
             </button>
-          )}
-
-          {!session && (
-            <span className="mt-4 bg-red-800 p-2 text-subtleWhite font-bold border-2 border-yellow-300 block text-center">
-              Please sign in to submit a description{" "}
-            </span>
           )}
         </form>
 

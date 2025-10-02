@@ -186,6 +186,11 @@ function EditReport({
                   submit this form
                 </p>
 
+                <p className="text-center mb-3">
+                  reports can be edited{" "}
+                  <strong>until they are being reviewed</strong>
+                </p>
+
                 <div className=" bg-secondary border-white border-y-2 flex">
                   <h3 className=" mb-2 text-xl mx-auto py-3">
                     Report Inappropriate Content

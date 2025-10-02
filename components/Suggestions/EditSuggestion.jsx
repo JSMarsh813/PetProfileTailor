@@ -190,6 +190,10 @@ export default function EditSuggestion({
             <div className={` mb-4`}>
               <div className=" mb-2 text-subtleWhite px-4 ">
                 <section className="my-6">
+                  <p className="text-center mb-3">
+                    suggestions can be edited{" "}
+                    <strong>until they are being reviewed</strong>
+                  </p>
                   <h2 className="text-center  text-2xl ">Edit Suggestion</h2>
 
                   <p className="text-center mb-3">
