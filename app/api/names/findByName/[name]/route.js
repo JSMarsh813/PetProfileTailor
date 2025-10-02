@@ -1,7 +1,7 @@
 import dbConnect from "@utils/db";
 import Names from "@models/Name";
 import { checkMultipleFieldsBlocklist } from "@/utils/api/checkMultipleBlocklists";
-import normalizeString from "@/utils/api/normalizeString";
+import normalizeString from "@/utils/stringManipulation/normalizeString";
 import { respondIfBlocked } from "@/utils/api/checkMultipleBlocklists";
 import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-names";
 

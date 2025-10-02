@@ -3,7 +3,7 @@ import Suggestion from "@/models/Suggestion";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 import { checkOwnership } from "@/utils/api/checkOwnership";
-import convertStringToMongooseId from "@/utils/api/convertStringToMongooseId";
+import convertStringToMongooseId from "@/utils/stringManipulation/convertStringToMongooseId";
 import { NextResponse } from "next/server";
 
 // Shared auth helper

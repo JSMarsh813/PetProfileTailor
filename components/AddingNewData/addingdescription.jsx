@@ -9,12 +9,14 @@ import { toast } from "react-toastify";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "@/hooks/useTags";
 import { useSession } from "next-auth/react";
+import CheckIfContentExists from "./CheckIfContentExists";
 
 function NewDescriptionWithTagsData() {
   const [newDescription, setNewDescription] = useState("");
   const [tags, setTags] = useState([]);
   const [notes, setNotes] = useState("");
   const [isPending, setIsPending] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState("");
   const [descriptionAlreadyExists, setDescriptionExists] = useState(false);
 
   const { data: session } = useSession();
@@ -51,14 +53,11 @@ function NewDescriptionWithTagsData() {
       .catch((error) => {
         console.log("this is error", error);
         setIsPending(false);
-        if (error.response.status == 409) {
-          setDescriptionExists(true);
-          toast.error(`Ruh Roh! ${newDescription} already exists`);
-        } else {
-          toast.error(
-            `Ruh Roh! ${newDescription} not added. An error has occurred. Status code ${error.response.status}`,
-          );
-        }
+
+        const msg =
+          error.response?.data?.message ||
+          "Ruh Roh! Something went wrong. Please try again.";
+        setSubmissionMessage(msg);
       });
   }
 
@@ -99,6 +98,12 @@ function NewDescriptionWithTagsData() {
             long
           </li>
         </ul>
+
+        <CheckIfContentExists
+          apiString="/api/names/findByName/"
+          disabled={disabled}
+          contentType="descriptions"
+        />
 
         <form onSubmit={handleDescriptionSubmission}>
           {/* needs label and value for Select to work  */}
@@ -204,6 +209,13 @@ disabled:text-errorTextColor rounded-2xl"
             </span>
           )}
         </form>
+
+        {submissionMessage && (
+          <WarningMessage
+            state={setSubmissionMessage}
+            message={submissionMessage}
+          />
+        )}
       </section>
     </div>
   );

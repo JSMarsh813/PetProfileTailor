@@ -6,7 +6,7 @@ import { checkOwnership } from "@/utils/api/checkOwnership";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 import { checkMultipleFieldsBlocklist } from "@/utils/api/checkMultipleBlocklists";
 import { respondIfBlocked } from "@/utils/api/checkMultipleBlocklists";
-import normalizeString from "@/utils/api/normalizeString";
+import normalizeString from "@/utils/stringManipulation/normalizeString";
 
 export async function GET(req) {
   await dbConnect.connect();

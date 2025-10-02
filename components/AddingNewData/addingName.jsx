@@ -5,10 +5,7 @@ import axios from "axios";
 import Image from "next/image";
 
 import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
-import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
+
 import WarningMessage from "@components/ReusableSmallComponents/buttons/WarningMessage";
 import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
 import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndCheatSheet";
@@ -16,87 +13,74 @@ import { useTags } from "@hooks/useTags";
 import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import { useSession } from "next-auth/react";
 
+import CheckIfContentExists from "./CheckIfContentExists";
+
 function NewNameWithTagsData() {
   const [newName, setNewName] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [nameAlreadyExists, setNameExists] = useState(false);
   const [note, setNote] = useState("");
-  const [namesThatExist, setNamesThatExist] = useState([]);
-  const [checkNameMessage, setCheckNameMessage] = useState("");
+
   const [nameSubmissionMessage, setNameSubmissionMessage] = useState("");
-  const [nameCheck, setNameCheck] = useState("");
-  const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
-  const [nameCheckInvalidInput, setNameCheckInvalidInput] = useState(null);
+
   const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
 
   const { data: session, status } = useSession();
 
   const disabled = session === null ? true : false;
 
-  console.log(
-    "session in adding names",
-    session,
-    session === null,
-    session === null ? false : true,
-  );
+  // console.log(
+  //   "session in adding names",
+  //   session,
+  //   session === null,
+  //   session === null ? false : true,
+  // );
 
   //regex will return null if none of the characters are invalid, so start with null to begin with
 
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
 
-  async function checkIfNameExists() {
-    try {
-      let nameResponse = await fetch("/api/names/findByName/" + nameCheck);
-      let nameData = await nameResponse.json();
-      setNameCheckFunctionRun(true);
+  // async function checkIfNameExists() {
+  //   try {
+  //     let nameResponse = await fetch("/api/names/findByName/" + nameCheck);
+  //     let nameData = await nameResponse.json();
+  //     setNameCheckFunctionRun(true);
 
-      if (!nameResponse.ok) {
-        // Handles 400, 409, and other error statuses
-        // so this shows the invalid error message
-        setCheckNameMessage(
-          nameData.message || "Unexpected response from server",
-        );
-        setNamesThatExist(nameData.data || []);
-        return;
-      }
+  //     if (!nameResponse.ok) {
+  //       // Handles 400, 409, and other error statuses
+  //       // so this shows the invalid error message
+  //       setCheckContentMessage(
+  //         nameData.message || "Unexpected response from server",
+  //       );
+  //       setNamesThatExist(nameData.data || []);
+  //       return;
+  //     }
 
-      switch (nameData.type) {
-        case "duplicate":
-          setCheckNameMessage(`Ruh Roh! The name ${nameCheck} already exists`);
-          setNamesThatExist(nameData.data);
-          break;
+  //     switch (nameData.type) {
+  //       case "duplicate":
+  //         setCheckContentMessage(`Ruh Roh! The name ${nameCheck} already exists`);
+  //         setNamesThatExist(nameData.data);
+  //         break;
 
-        case "success":
-          setCheckNameMessage(nameData.message); // "Success! That name is not in the database"
-          setNamesThatExist([]);
-          break;
+  //       case "success":
+  //         setCheckContentMessage(nameData.message); // "Success! That name is not in the database"
+  //         setNamesThatExist([]);
+  //         break;
 
-        default:
-          setCheckNameMessage("Unexpected response");
-          setNamesThatExist([]);
-      }
-    } catch (err) {
-      setCheckNameMessage("Error checking name: " + err.message);
-      setNamesThatExist([]);
-    }
-  }
-
-  //client side validation for "check if name already exists" section
-  useEffect(() => {
-    const invalidCharacters = regexInvalidInput(nameCheck);
-    setNameCheckInvalidInput(invalidCharacters);
-  }, [nameCheck]);
+  //       default:
+  //         setCheckContentMessage("Unexpected response");
+  //         setNamesThatExist([]);
+  //     }
+  //   } catch (err) {
+  //     setCheckContentMessage("Error checking name: " + err.message);
+  //     setNamesThatExist([]);
+  //   }
+  // }
 
   //client side validation for name submission section
   useEffect(() => {
     setNewNameInvalidInput(regexInvalidInput(newName));
   }, [newName]);
-
-  function resetData(e) {
-    setNameCheck(e.target.value.toLowerCase());
-    setNameCheckFunctionRun(false);
-    setNamesThatExist(null);
-  }
 
   function handleNameSubmission(e) {
     e.preventDefault();
@@ -126,7 +110,9 @@ function NewNameWithTagsData() {
           "Ruh Roh! Something went wrong. Please try again.";
         setNameSubmissionMessage(msg);
       });
-    if (status === "loading") return <p>Loading...</p>;
+    {
+      status === "loading" && <p>Loading...</p>;
+    }
   }
 
   return (
@@ -165,86 +151,11 @@ function NewNameWithTagsData() {
           <li>buttons will turn on when this criteria is met</li>
         </ul>
 
-        <section className="text-center mt-4">
-          <h4 className="font-bold block mt-4 mb-2 text-xl ">
-            {" "}
-            Check if a name exists:{" "}
-          </h4>
-
-          <input
-            type="text"
-            className={`bg-secondary border-subtleWhite rounded-2xl mr-2 ${
-              disabled &&
-              "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
-            }`}
-            value={nameCheck}
-            id="checkNameExists"
-            disabled={disabled}
-            maxLength="40"
-            onChange={(e) => resetData(e)}
-          />
-
-          <button
-            className="inline-block bg-subtleBackground   p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor rounded-2xl disabled:border-errorBorderColor disabled:cursor-not-allowed"
-            onClick={() => checkIfNameExists()}
-            disabled={
-              nameCheckInvalidInput !== null || nameCheck.length < 2
-                ? "disabled"
-                : ""
-            }
-          >
-            <FontAwesomeIcon
-              icon={faSearch}
-              className="text-xl"
-              color={"rgb(221 214 254)"} //subtle white
-            />
-
-            <span
-              className="mx-2
-                                   text-purple"
-            >
-              Search
-            </span>
-          </button>
-          <span className="block my-3">
-            {`${40 - nameCheck.length}/40 characters left`}{" "}
-          </span>
-
-          {nameCheckFunctionRun && (
-            <div>
-              {checkNameMessage && (
-                <p className="text-sm">{checkNameMessage}</p>
-              )}
-
-              {namesThatExist.length > 0 && (
-                <p
-                  className="mt-2 
-                                        text-yellow-200 font-bold
-                                         bg-red-700
-                                         border-2 border-yellow-200"
-                >
-                  <Link
-                    href={`${
-                      process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                    }name/${namesThatExist[0].content.toLowerCase()}`}
-                    legacyBehavior
-                  >
-                    <GeneralButton
-                      className="ml-12 my-4"
-                      text={`Link to ${namesThatExist[0].content}'s page`}
-                    ></GeneralButton>
-                  </Link>
-                </p>
-              )}
-            </div>
-          )}
-
-          {nameCheckInvalidInput !== null && (
-            <WarningMessage
-              message={`${nameCheckInvalidInput} is not a valid character`}
-            />
-          )}
-        </section>
+        <CheckIfContentExists
+          apiString="/api/names/findByName/"
+          disabled={disabled}
+          contentType="names"
+        />
 
         <hr className="mt-4" />
 

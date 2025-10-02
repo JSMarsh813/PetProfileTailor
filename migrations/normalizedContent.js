@@ -1,7 +1,7 @@
 import "dotenv/config";
 import db from "../utils/db.js";
 import Name from "../models/Name.js";
-import normalizeString from "../utils/api/normalizeString.js";
+import normalizeString from "../utils/stringManipulation/normalizeString.js";
 
 await db.connect();
 console.log("✅ Connected to MongoDB");
