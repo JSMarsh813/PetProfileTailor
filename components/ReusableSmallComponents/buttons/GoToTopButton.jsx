@@ -5,41 +5,53 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import GeneralButton from "components/ReusableSmallComponents/buttons/GeneralButton";
 
-export default function GoToTopButton({ top }) {
+export default function GoToTopButton({ top = "280" }) {
   const [isVisible, setIsVisible] = useState(false);
 
   // show button only after scrolling down a bit
   useEffect(() => {
+    // window wasn't working i Had to directly target the scroll element I saw when inspecting the page (body)
+    // why?
+    // In a normal page, the document (html + body) don’t have scrollTop — you'd use window.scrollY
+    // In this Next.js layout, because of the h-full flex flex-col setup, body itself has become the scroll container. That’s why body.scrollTop works, while window.scrollY doesn’t update.
+    const scrollContainer = document.querySelector("body");
+    if (!scrollContainer) return;
+
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 300); // show after 300px scroll
+      setIsVisible(scrollContainer.scrollTop > 300); // show after 300px scroll
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    // set initial visibility right after mount
+    handleScroll();
+    console.log("window", scrollContainer.scrollTop > 300);
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top,
-      behavior: "smooth",
-    });
+    const scrollContainer = document.querySelector("body");
+    if (scrollContainer) {
+      scrollContainer.scrollTo({
+        top,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
     <>
       {isVisible && (
-        <>
-          <GeneralButton
-            aria-label="Go to top"
-            onClick={scrollToTop}
-            className="fixed bottom-16 right-6 py-3 px-5 rounded-full transition"
-          >
-            <FontAwesomeIcon
-              size="xl"
-              icon={faArrowUp}
-            />
-          </GeneralButton>
-        </>
+        <GeneralButton
+          aria-label="Go to top"
+          onClick={scrollToTop}
+          className="fixed bottom-16 right-6 py-3 px-5 rounded-full transition"
+        >
+          <FontAwesomeIcon
+            size="xl"
+            icon={faArrowUp}
+          />
+        </GeneralButton>
       )}
     </>
   );

@@ -68,6 +68,8 @@ export async function POST(req) {
       );
     }
 
+    const normalizedString = normalizeString(content);
+
     const newName = await Names.create({
       content,
       normalizedContent: normalizedString,
@@ -124,6 +126,7 @@ export async function PUT(req) {
           { status: 409 },
         );
       }
+      const normalizedString = normalizeString(content);
       toUpdateName.content = content;
       toUpdateName.normalizedContent = normalizedString;
     }
