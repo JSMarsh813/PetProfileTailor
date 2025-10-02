@@ -1,7 +1,7 @@
 import dbConnect from "@utils/db";
 import mongoose from "mongoose";
 import Names from "@models/Name";
-import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
+import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
 import { checkOwnership } from "@/utils/api/checkOwnership";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 import { checkMultipleFieldsBlocklist } from "@/utils/api/checkMultipleBlocklists";
@@ -37,7 +37,7 @@ export async function POST(req) {
 
   try {
     const blockResult = checkMultipleFieldsBlocklist([
-      { value: content, type: "names", fieldName: "content" },
+      { value: content, fieldName: "content" },
     ]);
 
     const errorResponse = respondIfBlocked(blockResult);
@@ -101,7 +101,7 @@ export async function PUT(req) {
 
   if (content | notes) {
     const blockResult = checkMultipleFieldsBlocklist([
-      { value: content, type: "names", fieldName: "content" },
+      { value: content, fieldName: "content" },
     ]);
 
     const errorResponse = respondIfBlocked(blockResult);

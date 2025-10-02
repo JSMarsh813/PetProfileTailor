@@ -4,12 +4,8 @@ import bannedWordsMessage from "@/utils/api/bannedWordsMessage";
 // 1️⃣ Check multiple fields for blocklist violations
 export function checkMultipleFieldsBlocklist(fields) {
   // fields = [{ value, type, fieldName }, ...]
-  for (const { value, type, fieldName } of fields) {
-    const {
-      allowed,
-      blockedBy,
-      type: blockType,
-    } = checkBlocklists(value, type);
+  for (const { value, fieldName } of fields) {
+    const { allowed, blockedBy, type: blockType } = checkBlocklists(value);
     if (!allowed) {
       return { fieldName, value, blockedBy, blockType };
     }

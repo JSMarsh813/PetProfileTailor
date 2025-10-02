@@ -1,8 +1,8 @@
 export default function normalizeString(content) {
   const normalized = content
     .trim()
-    .replace(/\s+/g, "")
-    // Collapses spaces, aka gets rid of spaces
+    .replace(/\s+/g, " ")
+    // Collapses spaces into one space
     .replace(/[^\w\s]/g, "")
     // strip punctuation & special chars
     //[^\w\s] is a negated character class, meaning “anything not a word character (\w) or whitespace (\s)”.

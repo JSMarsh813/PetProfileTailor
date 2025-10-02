@@ -88,9 +88,10 @@ export function useSwrPagination({
       url = `/api/names/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
     } else if (dataType === "descriptions") {
       url = `/api/description/swr?page=${page}&sortingproperty=${sortingProperty}&sortingvalue=${sortingValue}`;
-    } else if (dataType === "individualNames") {
-      url = `/api/names/findByName/${contentIdentifier}`;
     }
+    // else if (dataType === "individualNames") {
+    //   url = `/api/names/check-if-content-exists/${contentIdentifier}`;
+    // }
     // POST in case likedIds is big, the method is decided in the fetchers fetch function
     const body = {};
     if (tags?.length) body.tags = tags;

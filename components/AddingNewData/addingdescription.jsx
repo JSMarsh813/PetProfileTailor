@@ -100,7 +100,7 @@ function NewDescriptionWithTagsData() {
         </ul>
 
         <CheckIfContentExists
-          apiString="/api/names/findByName/"
+          apiString="/api/description/check-if-content-exists/"
           disabled={disabled}
           contentType="descriptions"
         />

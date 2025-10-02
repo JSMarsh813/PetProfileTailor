@@ -1,7 +1,7 @@
 import bcryptjs from "bcryptjs";
 import User from "@models/User";
 import db from "@utils/db";
-import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
+import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
 import { getUserByProfileName } from "@utils/getUserByProfileName";
 import { NextResponse } from "next/server";
 

@@ -13,7 +13,7 @@ async function checkDuplicateDescription(content, existingDescription) {
     content !== existingDescription.content?.toLowerCase()
     // ? handles when content is null
   ) {
-    const normalizedSnippet = normalizeString(content).slice(0, 120);
+    const normalizedSnippet = normalizeString(content).slice(0, 400);
     const existingDescriptionCheck = await Description.findOne({
       normalizedContent: { $regex: new RegExp(`^${normalizedSnippet}$`, "i") },
     });
@@ -69,7 +69,7 @@ export async function POST(req) {
   }
 
   const blockResult = checkMultipleFieldsBlocklist([
-    { value: content, type: "descriptions", fieldName: "content" },
+    { value: content, fieldName: "content" },
   ]);
 
   const errorResponse = respondIfBlocked(blockResult);
@@ -85,7 +85,7 @@ export async function POST(req) {
   try {
     const newDescription = await Description.create({
       ...body,
-      normalizedContent: normalizeString(content).slice(0, 120),
+      normalizedContent: normalizeString(content).slice(0, 400),
       createdBy: session.user.id,
     });
 
@@ -108,7 +108,7 @@ export async function PUT(req) {
 
   if (content || notes) {
     const blockResult = checkMultipleFieldsBlocklist([
-      { value: content, type: "descriptions", fieldName: "content" },
+      { value: content, fieldName: "content" },
     ]);
 
     const errorResponse = respondIfBlocked(blockResult);
@@ -135,7 +135,7 @@ export async function PUT(req) {
       (existingDescription.content = content),
         (existingDescription.normalizedContent = normalizeString(content).slice(
           0,
-          120,
+          400,
         ));
     }
     existingDescription.tags = tags;

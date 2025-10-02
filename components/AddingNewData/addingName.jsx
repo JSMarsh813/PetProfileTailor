@@ -7,7 +7,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 
 import WarningMessage from "@components/ReusableSmallComponents/buttons/WarningMessage";
-import regexInvalidInput from "@utils/stringManipulation/check-for-valid-names";
+import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
 import TagsSelectAndCheatSheet from "@components/FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "@hooks/useTags";
 import StyledTextarea from "@components/FormComponents/StyledTextarea";
@@ -42,7 +42,7 @@ function NewNameWithTagsData() {
 
   // async function checkIfNameExists() {
   //   try {
-  //     let nameResponse = await fetch("/api/names/findByName/" + nameCheck);
+  //     let nameResponse = await fetch("/api/names/check-if-content-exists/" + nameCheck);
   //     let nameData = await nameResponse.json();
   //     setNameCheckFunctionRun(true);
 
@@ -152,7 +152,7 @@ function NewNameWithTagsData() {
         </ul>
 
         <CheckIfContentExists
-          apiString="/api/names/findByName/"
+          apiString="/api/names/check-if-content-exists/"
           disabled={disabled}
           contentType="names"
         />

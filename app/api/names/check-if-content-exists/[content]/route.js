@@ -3,36 +3,36 @@ import Names from "@models/Name";
 import { checkMultipleFieldsBlocklist } from "@/utils/api/checkMultipleBlocklists";
 import normalizeString from "@/utils/stringManipulation/normalizeString";
 import { respondIfBlocked } from "@/utils/api/checkMultipleBlocklists";
-import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-names";
+import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
 
 export async function GET(req, { params }) {
   await dbConnect.connect();
 
-  const { name } = await params;
+  const { content } = await params;
 
   // 1. Blocklist check
   const blockResult = checkMultipleFieldsBlocklist([
-    { value: name, type: "names", fieldName: "content" },
+    { value: content, fieldName: "content" },
   ]);
 
   const errorResponse = respondIfBlocked(blockResult);
   if (errorResponse) return errorResponse;
 
   // 2. Invalid character check
-  const invalidChars = regexInvalidInput(name);
+  const invalidChars = regexInvalidInput(content);
 
   if (invalidChars) {
     return Response.json(
       {
         type: "invalid",
-        message: `Ruh Roh! The name ${name} has invalid character(s) ${invalidChars}`,
+        message: `Ruh Roh! The content ${content} has invalid character(s) ${invalidChars}`,
       },
       { status: 400 },
     );
   }
 
   try {
-    const normalizedString = normalizeString(name);
+    const normalizedString = normalizeString(content);
     const existingNameCheck = await Names.find({
       normalizedContent: { $regex: new RegExp(`^${normalizedString}$`, "i") },
     }).populate({
@@ -49,7 +49,7 @@ export async function GET(req, { params }) {
     } else {
       return Response.json({
         type: "success",
-        message: "Success! That name is not in the database",
+        message: "Success! That content is not in the database",
       });
     }
   } catch (err) {

@@ -6,7 +6,8 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import WarningMessage from "@components/ReusableSmallComponents/buttons/WarningMessage";
-import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-names";
+import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
+import StyledTextarea from "../FormComponents/StyledTextarea";
 
 export default function CheckIfContentExists({
   apiString,
@@ -18,11 +19,14 @@ export default function CheckIfContentExists({
   const [existingContent, setExistingContent] = useState([]);
   const [nameCheckInvalidInput, setContentCheckInvalidInput] = useState(null);
   const [contentCheck, setContentCheck] = useState("");
+  const maxContentLength = contentType === "names" ? 40 : 400;
 
   //client side validation for "check if name already exists" section
   useEffect(() => {
-    const invalidCharacters = regexInvalidInput(contentCheck);
-    setContentCheckInvalidInput(invalidCharacters);
+    if (contentType === "names") {
+      const invalidCharacters = regexInvalidInput(contentCheck);
+      setContentCheckInvalidInput(invalidCharacters);
+    }
   }, [contentCheck]);
 
   const existingContentHref =
@@ -30,7 +34,7 @@ export default function CheckIfContentExists({
       ? `${
           process.env.NEXT_PUBLIC_BASE_FETCH_URL
         }name/${existingContent[0]?.content.toLowerCase()}`
-      : `descriptionhref`;
+      : `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}description/${existingContent[0]?._id}`;
 
   function resetData(e) {
     setContentCheck(e.target.value.toLowerCase());
@@ -41,7 +45,7 @@ export default function CheckIfContentExists({
 
   async function contentExistsCheck() {
     try {
-      //"/api/names/findByName/"
+      //"/api/names/check-if-content-exists/"
       let response = await fetch(apiString + contentCheck);
       let data = await response.json();
       setContentCheckFunctionRun(true);
@@ -59,7 +63,7 @@ export default function CheckIfContentExists({
       switch (data.type) {
         case "duplicate":
           setCheckContentMessage(
-            `Ruh Roh! The name ${contentCheck} already exists`,
+            `Ruh Roh! This content already exists: ${contentCheck} `,
           );
           setExistingContent(data.data);
           break;
@@ -82,21 +86,40 @@ export default function CheckIfContentExists({
     <section className="text-center mt-4">
       <h4 className="font-bold block mt-4 mb-2 text-xl ">
         {" "}
-        Check if content exists:{" "}
+        {`Check if ${contentType === "names" ? "name" : "description"} exists:`}
       </h4>
 
-      <input
-        type="text"
-        className={`bg-secondary border-subtleWhite rounded-2xl mr-2 ${
-          disabled &&
-          "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
-        }`}
-        value={contentCheck}
-        id="checkNameExists"
-        disabled={disabled}
-        maxLength="40"
-        onChange={(e) => resetData(e)}
-      />
+      {contentType === "descriptions" && (
+        <p className="mb-2"> Submit up to the first 400 characters</p>
+      )}
+
+      {contentType === "names" ? (
+        <input
+          type="text"
+          className={`bg-secondary border-subtleWhite rounded-2xl mr-2 ${
+            disabled &&
+            "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
+          }`}
+          value={contentCheck}
+          id="checkNameExists"
+          disabled={disabled}
+          maxLength={maxContentLength}
+          onChange={(e) => resetData(e)}
+        />
+      ) : (
+        <StyledTextarea
+          className={`bg-secondary border-subtleWhite rounded-2xl mr-2 ${
+            disabled &&
+            "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
+          }`}
+          value={contentCheck}
+          ariaLabel="check if content exists"
+          id="checkNameExists"
+          disabled={disabled}
+          maxLength={maxContentLength}
+          onChange={(e) => resetData(e)}
+        />
+      )}
 
       <button
         className="inline-block bg-subtleBackground   p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor rounded-2xl disabled:border-errorBorderColor disabled:cursor-not-allowed"
@@ -117,7 +140,9 @@ export default function CheckIfContentExists({
         </span>
       </button>
       <span className="block my-3">
-        {`${40 - contentCheck.length}/40 characters left`}{" "}
+        {`${
+          maxContentLength - contentCheck.length
+        }/${maxContentLength} characters left`}{" "}
       </span>
 
       {contentCheckFunctionRun && (
@@ -126,23 +151,20 @@ export default function CheckIfContentExists({
             <p className="text-sm">{checkContentMessage}</p>
           )}
 
+          {/* {existingContent} */}
           {existingContent.length > 0 && (
             <p
               className="mt-2 
                                             text-yellow-200 font-bold
                                              bg-red-700
-                                             border-2 border-yellow-200"
+                                             border-2 border-yellow-200 rounded-2xl"
             >
-              <Link
-                href={existingContentHref}
-                legacyBehavior
-              >
+              <Link href={existingContentHref}>
                 <GeneralButton
-                  className="ml-12 my-4"
-                  text={`Link to ${existingContent[0].content.slice(
-                    0,
-                    15,
-                  )}'s page`}
+                  className="ml-12 my-4 "
+                  text={`Link to ${existingContent[0].content.slice(0, 15)} ${
+                    existingContent[0].content.length > 15 && "..."
+                  }`}
                 ></GeneralButton>
               </Link>
             </p>
