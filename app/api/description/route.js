@@ -6,6 +6,7 @@ import { getSessionForApis } from "@/utils/api/getSessionForApis";
 import { checkMultipleFieldsBlocklist } from "@/utils/api/checkMultipleBlocklists";
 import { respondIfBlocked } from "@/utils/api/checkMultipleBlocklists";
 import normalizeString from "@/utils/stringManipulation/normalizeString";
+import { findExactNormalized } from "@/utils/stringManipulation/findNormalizedMatch";
 
 async function checkDuplicateDescription(content, existingDescription) {
   if (
@@ -13,10 +14,11 @@ async function checkDuplicateDescription(content, existingDescription) {
     content !== existingDescription.content?.toLowerCase()
     // ? handles when content is null
   ) {
-    const normalizedSnippet = normalizeString(content).slice(0, 400);
-    const existingDescriptionCheck = await Description.findOne({
-      normalizedContent: { $regex: new RegExp(`^${normalizedSnippet}$`, "i") },
-    });
+    const existingDescriptionCheck = await findExactNormalized(
+      Description,
+      content,
+    );
+
     return returnExistingMessage(existingDescriptionCheck);
   }
   return null;
@@ -70,6 +72,7 @@ export async function POST(req) {
 
   const blockResult = checkMultipleFieldsBlocklist([
     { value: content, fieldName: "content" },
+    { value: notes, fieldName: "notes" },
   ]);
 
   const errorResponse = respondIfBlocked(blockResult);
@@ -109,6 +112,7 @@ export async function PUT(req) {
   if (content || notes) {
     const blockResult = checkMultipleFieldsBlocklist([
       { value: content, fieldName: "content" },
+      { value: notes, fieldName: "notes" },
     ]);
 
     const errorResponse = respondIfBlocked(blockResult);

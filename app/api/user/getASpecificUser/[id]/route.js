@@ -2,11 +2,11 @@ import dbConnect from "@utils/db";
 import Users from "@models/User";
 import { ObjectId } from "mongodb";
 
-export async function GET(req, context) {
+export async function GET(req, { params }) {
   await dbConnect.connect();
-  const { params } = context;
+  const { id } = await params;
   try {
-    const userId = ObjectId(params.id);
+    const userId = ObjectId(id);
 
     const user = await Users.findById(userId).select(
       "name followers profileImage profileName bio location",

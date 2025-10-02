@@ -5,11 +5,10 @@ import DescriptionLikes from "@/models/DescriptionLike";
 import Description from "@/models/Description";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
-export async function POST(req, context) {
+export async function POST(req, { params }) {
   await dbConnect.connect();
 
-  const { params } = context;
-  const descriptionId = params.id;
+  const { id } = await params;
   const body = await req.json();
   const { createdBy } = body;
 

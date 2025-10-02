@@ -1,14 +1,13 @@
 import dbConnect from "@utils/db";
 import Users from "@models/User";
 
-export async function GET(req, context) {
+export async function GET(req, { params }) {
   await dbConnect.connect();
 
-  const { params } = context;
-  const profileName = params.name;
+  const { name } = await params;
 
   try {
-    const user = await Users.findOne({ profileName })
+    const user = await Users.findOne({ name })
       .select("name followers profileImage profileName bio location")
       .populate("followers", "name profileName profileImage"); // select fields for followers
 

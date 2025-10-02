@@ -4,12 +4,10 @@ import NameLikes from "@/models/NameLike";
 import Names from "@/models/Name";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
-export async function POST(req, context) {
+export async function POST(req, { params }) {
   await dbConnect.connect();
 
-  const { params } = context;
-  const nameId = params.id;
-  // console.log("this is nameid", nameId);
+  const { id } = await params;
 
   const body = await req.json();
   const { createdBy } = body;
@@ -32,7 +30,7 @@ export async function POST(req, context) {
     dbSession.startTransaction();
     // transaction to ensure likes count stay in sync, if both the collections aren't updated then cancel
 
-    const existingLike = await NameLikes.findOne({ userId, nameId }).session(
+    const existingLike = await NameLikes.findOne({ userId, id }).session(
       dbSession,
     );
 
@@ -42,7 +40,7 @@ export async function POST(req, context) {
       // Unlike, delete the document, decrement likedByCount
       await NameLikes.deleteOne({ _id: existingLike._id }).session(dbSession);
       await Names.updateOne(
-        { _id: nameId },
+        { _id: id },
         { $inc: { likedByCount: -1 } },
         { session: dbSession },
       );
@@ -50,11 +48,11 @@ export async function POST(req, context) {
     } else {
       // Like, insert the document, increment likedByCount
       const likingOwnContent = userId === createdBy;
-      await NameLikes.create([{ userId, nameId, read: likingOwnContent }], {
+      await NameLikes.create([{ userId, id, read: likingOwnContent }], {
         session: dbSession,
       });
       await Names.updateOne(
-        { _id: nameId },
+        { _id: id },
         { $inc: { likedByCount: 1 } },
         { session: dbSession },
       );

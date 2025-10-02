@@ -1,13 +1,10 @@
 import dbConnect from "@utils/db";
 import Description from "@/models/Description";
 import { checkMultipleFieldsBlocklist } from "@/utils/api/checkMultipleBlocklists";
-import normalizeString from "@/utils/stringManipulation/normalizeString";
-import { respondIfBlocked } from "@/utils/api/checkMultipleBlocklists";
-import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
 
-function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
+import { respondIfBlocked } from "@/utils/api/checkMultipleBlocklists";
+
+import { findStartNormalized } from "@/utils/stringManipulation/findNormalizedMatch";
 
 export async function GET(req, { params }) {
   await dbConnect.connect();
@@ -36,22 +33,10 @@ export async function GET(req, { params }) {
   // }
 
   try {
-    const normalizedString = normalizeString(content);
-
-    console.log("normalized string", normalizedString);
-
-    const existingContentCheck = await Description.find({
-      normalizedContent: {
-        $regex: escapeRegex(normalizedString),
-        $options: "i",
-      },
-    }).populate({
-      path: "createdBy",
-      select: ["name", "profileName", "profileImage"],
-    });
+    const existingContentCheck = findStartNormalized(Description, content);
 
     // find returns an array
-    if (existingContentCheck.length > 0) {
+    if (existingContentCheck.length) {
       return Response.json({
         type: "duplicate",
         data: existingContentCheck,

@@ -10,6 +10,6 @@ export default async function ResetPasswordPage({ params }) {
     return redirect("/dashboard");
   }
 
-  const { token } = params;
+  const { token } = await params;
   return <ResetPassword token={token} />;
 }

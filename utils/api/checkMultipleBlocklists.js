@@ -21,7 +21,7 @@ export function respondIfBlocked(blockResult) {
   const { value, blockedBy, blockType } = blockResult;
   return Response.json(
     {
-      message: bannedWordsMessage(value, blockedBy, blockType),
+      message: bannedWordsMessage(value, fieldName, blockedBy, blockType),
     },
     { status: 403 },
   );

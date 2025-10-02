@@ -7,6 +7,7 @@ import { getSessionForApis } from "@/utils/api/getSessionForApis";
 import { checkMultipleFieldsBlocklist } from "@/utils/api/checkMultipleBlocklists";
 import { respondIfBlocked } from "@/utils/api/checkMultipleBlocklists";
 import normalizeString from "@/utils/stringManipulation/normalizeString";
+import { findExactNormalized } from "@/utils/stringManipulation/findNormalizedMatch";
 
 export async function GET(req) {
   await dbConnect.connect();
@@ -38,26 +39,17 @@ export async function POST(req) {
   try {
     const blockResult = checkMultipleFieldsBlocklist([
       { value: content, fieldName: "content" },
+      { value: notes, fieldName: "notes" },
     ]);
 
     const errorResponse = respondIfBlocked(blockResult);
     if (errorResponse) return errorResponse;
-    //   return Response.json(
-    //     {
-    //       message: bannedWordsMessage(value, blockedBy, blockType),
-    //     },
-    //     { status: 403 },
-    //   );
-    // }
 
-    const normalizedString = normalizeString(content);
-    const existingNameCheck = await Names.find({
-      normalizedContent: { $regex: new RegExp(`^${normalizedString}$`, "i") },
-    });
+    const existingNameCheck = await findExactNormalized(Names, content);
 
     const invalidChars = regexInvalidInput(content);
 
-    if (existingNameCheck.length) {
+    if (existingNameCheck) {
       return Response.json(
         {
           message: `Ruh Roh! The name ${content} already exists`,
@@ -102,6 +94,7 @@ export async function PUT(req) {
   if (content | notes) {
     const blockResult = checkMultipleFieldsBlocklist([
       { value: content, fieldName: "content" },
+      { value: notes, fieldName: "notes" },
     ]);
 
     const errorResponse = respondIfBlocked(blockResult);
@@ -124,10 +117,7 @@ export async function PUT(req) {
       content &&
       content.toLowerCase() !== toUpdateName.content.toLowerCase()
     ) {
-      const normalizedString = normalizeString(content);
-      const existingNameCheck = await Names.findOne({
-        normalizedContent: { $regex: new RegExp(`^${normalizedString}$`, "i") },
-      });
+      const existingNameCheck = await findExactNormalized(Names, content);
       if (existingNameCheck) {
         return Response.json(
           { message: `Ruh Roh! The name ${content} already exists` },

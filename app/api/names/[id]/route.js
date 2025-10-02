@@ -3,11 +3,10 @@ import db from "@utils/db";
 import mongoose from "mongoose";
 import { checkOwnership } from "@/utils/api/checkOwnership";
 
-export async function GET(req, context) {
+export async function GET(req, { params }) {
   await db.connect();
 
-  const { params } = context;
-  const id = params.id;
+  const { id } = await params;
 
   console.log("GET individual name id:", id);
 

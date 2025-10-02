@@ -2,14 +2,13 @@ import { getUserByProfileName } from "@utils/getUserByProfileName";
 import User from "@/models/User";
 import dbConnect from "@utils/db";
 
-export async function GET(req, context) {
+export async function GET(req, { params }) {
   await dbConnect.connect();
 
-  const { params } = context;
-  const { profilename } = params.name;
+  const { name } = await params;
 
   try {
-    const user = await getUserByProfileName(profilename);
+    const user = await getUserByProfileName(name);
 
     if (!user) {
       return new Response(JSON.stringify({ message: "User not found" }), {

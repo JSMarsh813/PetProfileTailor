@@ -1,11 +1,9 @@
 import User from "@models/User";
 import db from "@utils/db";
 
-export async function GET(req, context) {
+export async function GET(req, { params }) {
   await db.connect();
-
-  const { params } = context;
-  const userid = params.userid;
+  const { userid } = await params;
 
   try {
     const usersFollowing = await User.find({
