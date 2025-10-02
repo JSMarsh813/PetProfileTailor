@@ -22,6 +22,8 @@ function NewNameWithTagsData() {
   const [nameAlreadyExists, setNameExists] = useState(false);
   const [note, setNote] = useState("");
   const [namesThatExist, setNamesThatExist] = useState([]);
+  const [checkNameMessage, setCheckNameMessage] = useState("");
+  const [nameSubmissionMessage, setNameSubmissionMessage] = useState("");
   const [nameCheck, setNameCheck] = useState("");
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
   const [nameCheckInvalidInput, setNameCheckInvalidInput] = useState(null);
@@ -43,10 +45,40 @@ function NewNameWithTagsData() {
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
 
   async function checkIfNameExists() {
-    let nameResponse = await fetch("/api/names/findByName/" + nameCheck);
-    let nameData = await nameResponse.json();
-    setNamesThatExist(nameData);
-    setNameCheckFunctionRun(true);
+    try {
+      let nameResponse = await fetch("/api/names/findByName/" + nameCheck);
+      let nameData = await nameResponse.json();
+      setNameCheckFunctionRun(true);
+
+      if (!nameResponse.ok) {
+        // Handles 400, 409, and other error statuses
+        // so this shows the invalid error message
+        setCheckNameMessage(
+          nameData.message || "Unexpected response from server",
+        );
+        setNamesThatExist(nameData.data || []);
+        return;
+      }
+
+      switch (nameData.type) {
+        case "duplicate":
+          setCheckNameMessage(`Ruh Roh! The name ${nameCheck} already exists`);
+          setNamesThatExist(nameData.data);
+          break;
+
+        case "success":
+          setCheckNameMessage(nameData.message); // "Success! That name is not in the database"
+          setNamesThatExist([]);
+          break;
+
+        default:
+          setCheckNameMessage("Unexpected response");
+          setNamesThatExist([]);
+      }
+    } catch (err) {
+      setCheckNameMessage("Error checking name: " + err.message);
+      setNamesThatExist([]);
+    }
   }
 
   //client side validation for "check if name already exists" section
@@ -89,15 +121,10 @@ function NewNameWithTagsData() {
         setNameExists(true);
         setIsPending(false);
 
-        if (error.response.status == 409) {
-          toast.error(`${error.response.data.message}!`);
-        } else if (error.response.status == 400) {
-          toast.error(`${error.response.data.message}`);
-        } else {
-          toast.error(
-            `Ruh Roh! ${newName} not added. An error has occurred. Status code ${error.response.status}`,
-          );
-        }
+        const msg =
+          error.response?.data?.message ||
+          "Ruh Roh! Something went wrong. Please try again.";
+        setNameSubmissionMessage(msg);
       });
     if (status === "loading") return <p>Loading...</p>;
   }
@@ -183,37 +210,39 @@ function NewNameWithTagsData() {
             {`${40 - nameCheck.length}/40 characters left`}{" "}
           </span>
 
-          {nameCheckFunctionRun && namesThatExist.length != 0 && (
-            <p
-              className="mt-2 
+          {nameCheckFunctionRun && (
+            <div>
+              {checkNameMessage && (
+                <p className="text-sm">{checkNameMessage}</p>
+              )}
+
+              {namesThatExist.length > 0 && (
+                <p
+                  className="mt-2 
                                         text-yellow-200 font-bold
                                          bg-red-700
                                          border-2 border-yellow-200"
-            >
-              {namesThatExist[0].content} already exists!
-              <Link
-                href={`${
-                  process.env.NEXT_PUBLIC_BASE_FETCH_URL
-                }name/${namesThatExist[0].content.toLowerCase()}`}
-                legacyBehavior
-              >
-                <GeneralButton
-                  className="ml-12 my-4"
-                  text={`Link to ${namesThatExist[0].content}'s page`}
-                ></GeneralButton>
-              </Link>
-            </p>
+                >
+                  <Link
+                    href={`${
+                      process.env.NEXT_PUBLIC_BASE_FETCH_URL
+                    }name/${namesThatExist[0].content.toLowerCase()}`}
+                    legacyBehavior
+                  >
+                    <GeneralButton
+                      className="ml-12 my-4"
+                      text={`Link to ${namesThatExist[0].content}'s page`}
+                    ></GeneralButton>
+                  </Link>
+                </p>
+              )}
+            </div>
           )}
+
           {nameCheckInvalidInput !== null && (
             <WarningMessage
               message={`${nameCheckInvalidInput} is not a valid character`}
             />
-          )}
-
-          {nameCheckFunctionRun && !namesThatExist.length && (
-            <span className="block">
-              Success! {nameCheck} does NOT exist yet.
-            </span>
           )}
         </section>
 
@@ -306,6 +335,13 @@ function NewNameWithTagsData() {
             <WarningMessage message="please sign in to submit a name" />
           )}
         </form>
+
+        {nameSubmissionMessage && (
+          <WarningMessage
+            state={setNameSubmissionMessage}
+            message={nameSubmissionMessage}
+          />
+        )}
       </section>
     </div>
   );

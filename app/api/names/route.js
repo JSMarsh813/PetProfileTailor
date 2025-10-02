@@ -42,6 +42,13 @@ export async function POST(req) {
 
     const errorResponse = respondIfBlocked(blockResult);
     if (errorResponse) return errorResponse;
+    //   return Response.json(
+    //     {
+    //       message: bannedWordsMessage(value, blockedBy, blockType),
+    //     },
+    //     { status: 403 },
+    //   );
+    // }
 
     const normalizedString = normalizeString(content);
     const existingNameCheck = await Names.find({
