@@ -20,7 +20,7 @@ export default function CoreListingPageLogic({
   showHeader = true,
   restrictSwrToLikedNames = false,
 }) {
-  console.log("restrictSwrToLikedNames", restrictSwrToLikedNames);
+  // console.log("restrictSwrToLikedNames", restrictSwrToLikedNames);
   const { data: session } = useSession();
   const [remainingFilterCooldown, setRemainingFilterCooldown] = useState(0);
   const [remainingSortCooldown, setRemainingSortCooldown] = useState(0);
@@ -80,14 +80,14 @@ export default function CoreListingPageLogic({
     restrictSwrToLikedNames,
   });
 
-  console.log("SWR", Array.isArray(data)); // true
-  console.log("SWR", data.length);
-  console.log("SWR", typeof data[0]); // "object"
-  console.log("SWR first item", data[0] ? data[0]._id : "null"); // check first object's id
+  // console.log("SWR", Array.isArray(data)); // true
+  // console.log("SWR", data.length);
+  // console.log("SWR", typeof data[0]); // "object"
+  // console.log("SWR first item", data[0] ? data[0]._id : "null"); // check first object's id
 
   let content = data ?? [];
 
-  console.log("content check", content);
+  // console.log("content check", content);
 
   // ############ Section for passing state into components as functions #######
 

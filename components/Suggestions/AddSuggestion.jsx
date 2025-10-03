@@ -56,7 +56,7 @@ export default function AddSuggestion({
       tags: tagIds,
       // api will use contentType to figure out if tags are names or description tags
     };
-    console.log(suggestionSubmission);
+    // console.log(suggestionSubmission);
 
     try {
       const response = await axios.post(

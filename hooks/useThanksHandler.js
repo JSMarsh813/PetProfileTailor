@@ -14,7 +14,7 @@ export function useThanksHandler({ apiEndpoint }) {
       console.warn("openThanks called with invalid target!", target);
       return;
     }
-    console.log("this is id", id);
+    // console.log("this is id", id);
     setThanksTarget(id);
     setShowThanksDialog(true);
   };
@@ -41,9 +41,9 @@ export function useThanksHandler({ apiEndpoint }) {
       const submittedThanks = res.data?.data ??
         res.data ?? { ...thanksTarget, ...thanksData };
       // normalized so submittedThanks is always just the actual object to replace
-      console.log("response data", res.data);
+      // console.log("response data", res.data);
 
-      console.log("submittedThanks", submittedThanks);
+      // console.log("submittedThanks", submittedThanks);
 
       toast.success("Successfully thanked!");
 

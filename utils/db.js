@@ -16,7 +16,7 @@ if (!cached) {
 
 async function connect() {
   if (cached.conn) {
-    console.log("Using cached connection");
+    // console.log("Using cached connection");
     return cached.conn;
   }
 
@@ -31,9 +31,9 @@ async function connect() {
 
   try {
     cached.conn = await cached.promise;
-    console.log("New MongoDB connection established");
+    // console.log("New MongoDB connection established");
   } catch (err) {
-    console.error("MongoDB connection error:", err);
+    // console.error("MongoDB connection error:", err);
     throw err; // don't silently continue
   }
 

@@ -40,7 +40,7 @@ export function ReportsProvider({ children, initialReports = {} }) {
   });
   //map for fast lookups based on contentID
 
-  console.log("reportsRef in context", reportsRef);
+  // console.log("reportsRef in context", reportsRef);
 
   const hasReported = (type, contentId) => {
     const map = reportsRef.current[type];
@@ -61,17 +61,17 @@ export function ReportsProvider({ children, initialReports = {} }) {
   };
 
   const deleteReport = (type, contentId, reportId) => {
-    console.log(
-      "delete report type",
-      type,
-      "delete report reportId",
-      reportId,
-      "delete contentID",
-      contentId,
-    );
+    // console.log(
+    //   "delete report type",
+    //   type,
+    //   "delete report reportId",
+    //   reportId,
+    //   "delete contentID",
+    //   contentId,
+    // );
 
     const map = reportsRef.current[type];
-    console.log("in delete report, this is map", map);
+    // console.log("in delete report, this is map", map);
     if (!map) return;
 
     const value = map.get(contentId.toString());

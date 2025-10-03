@@ -58,11 +58,11 @@ export default function ProfilePagesLogic({ dataType, profileUserId }) {
     profileUserId,
   });
 
-  console.log("SWR", Array.isArray(data)); // true
-  console.log("SWR", data.length);
-  console.log("SWR", typeof data[0]); // "object"
-  console.log("SWR first item", data[0] ? data[0]._id : "null"); // check first object's id
-  console.log("porifleUsersId in profile Pages", profileUserId);
+  // console.log("SWR", Array.isArray(data)); // true
+  // console.log("SWR", data.length);
+  // console.log("SWR", typeof data[0]); // "object"
+  // console.log("SWR first item", data[0] ? data[0]._id : "null"); // check first object's id
+  // console.log("porifleUsersId in profile Pages", profileUserId);
 
   const content = data ?? [];
 

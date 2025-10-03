@@ -2,8 +2,8 @@
 
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
+
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import XSvgIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/XSvgIcon";
 import StyledInput from "@components/FormComponents/StyledInput";
@@ -33,19 +33,21 @@ export default function EditContent({
 
   const [updatedContent, setUpdatedContent] = useState(content.content);
   const [notes, setNotes] = useState(content.notes);
+  const [isSaving, setIsSaving] = useState(false);
 
   if (!open) return null;
 
-  // console.log("dataType in edit content", dataType);
+  const handleSubmit = async () => {
+    if (isSaving) return; // prevent double click
+    setIsSaving(true);
 
-  // console.log("dataType in tagList ", tagList);
-
-  const handleSubmit = () => {
-    onSave({
+    await onSave({
       content: updatedContent,
       notes: notes,
       tags: tagsToSubmit.map((t) => t.value),
     });
+
+    setIsSaving(false);
   };
 
   const maxContentLength = dataType === "names" ? 40 : 2000;
@@ -89,14 +91,14 @@ export default function EditContent({
         {dataType === "names" && (
           <StyledInput
             value={updatedContent}
-            onChange={(e) => setUpdatedContent(e.target.value)}
+            onChange={(e) => setUpdatedContent(e.target.value.trimStart())}
             maxLength={maxContentLength}
           />
         )}
         {dataType === "descriptions" && (
           <StyledTextarea
             value={updatedContent}
-            onChange={(e) => setUpdatedContent(e.target.value)}
+            onChange={(e) => setUpdatedContent(e.target.value.trimStart())}
             maxLength={maxContentLength}
           />
         )}
@@ -110,11 +112,11 @@ export default function EditContent({
         <h4 className="text-subtleWhite mb-2 text-lg">Notes</h4>
         <StyledTextarea
           value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          maxLength={500}
+          onChange={(e) => setNotes(e.target.value.trimStart())}
+          maxLength={1000}
         />
         <span className="block text-subtleWhite mb-2">
-          {`${500 - notes.length}/500 characters left`}
+          {`${1000 - notes.length}/1000 characters left`}
         </span>
 
         {/* Tags */}
@@ -136,6 +138,7 @@ export default function EditContent({
             text="Save"
             subtle
             onClick={handleSubmit}
+            disabled={isSaving}
           />
         </div>
       </DialogPanel>

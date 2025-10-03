@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Button, Disclosure } from "@headlessui/react";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import { ButtonGroup } from "@mui/material";
@@ -46,7 +50,7 @@ function FilteringSidebar({
               {({ open }) => (
                 <>
                   {/* Category Name shows here ("species", "food") */}
-                  <Disclosure.Button
+                  <DisclosureButton
                     className="flex w-full justify-between bg-primary px-2 py-2 text-left text-base font-medium text-subtleWhite
                  hover:text-slate-400   focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 "
                   >
@@ -65,9 +69,9 @@ function FilteringSidebar({
                         open ? "rotate-180 transform" : ""
                       } h-5 w-5 text-subtleWhite`}
                     />
-                  </Disclosure.Button>
+                  </DisclosureButton>
 
-                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                  <DisclosurePanel className="px-4 pt-4 pb-2 text-sm text-gray-500">
                     <div className="space-y-6 ">
                       {/* mapping through category options and assigning them a button (ex: male, female, unisex)*/}
 
@@ -99,7 +103,7 @@ function FilteringSidebar({
                         // </div>
                       ))}
                     </div>
-                  </Disclosure.Panel>
+                  </DisclosurePanel>
                 </>
               )}
             </Disclosure>

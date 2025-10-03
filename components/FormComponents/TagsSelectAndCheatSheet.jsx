@@ -12,7 +12,7 @@ export default function TagsSelectAndCheatSheet({
   handleCheckboxChange,
   isDisabled,
 }) {
-  console.log({ tagsToSubmit, handleSelectChange, handleCheckboxChange });
+  // console.log({ tagsToSubmit, handleSelectChange, handleCheckboxChange });
   const disabledColor = "rgb(30 41 59)";
 
   const { categoriesWithTags, tagList } = useCategoriesForDataType(dataType);

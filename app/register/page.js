@@ -74,7 +74,7 @@ export default function Register() {
 
         if (magicLinkSignUp.error) {
           toast.error(magicLinkSignUp.error);
-          console.log(JSON.stringify(magicLinkSignUp));
+          // console.log(JSON.stringify(magicLinkSignUp));
         } else {
           toast.success(
             "Successfully signed up! A magic link has been sent to your email",
@@ -95,7 +95,7 @@ export default function Register() {
 
       if (result.error) {
         toast.error(result.error);
-        console.log(JSON.stringify(result));
+        // console.log(JSON.stringify(result));
       } else {
         toast.success("Successfully signed up! Sending to dashboard");
 

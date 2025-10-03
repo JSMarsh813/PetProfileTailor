@@ -32,13 +32,13 @@ function EditReport({
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   useEffect(() => {
-    console.log("edit report ran", contentId);
+    // console.log("edit report ran", contentId);
     const fetchReport = async () => {
       try {
         const res = await axios.get("/api/flag/getSpecificReport", {
           params: { contentId, userId: flaggedByUser, status: "pending" },
         });
-        console.log("response", res.data);
+        // console.log("response", res.data);
 
         if (res.data.report) {
           setReportCategories(res.data.report.reportCategories || []);
@@ -76,7 +76,7 @@ function EditReport({
       const res = await axios.delete("/api/flag/getSpecificReport", {
         data: { reportId },
       });
-      console.log("response", res.data);
+      // console.log("response", res.data);
 
       deleteReport(dataType, contentId, reportId);
 
@@ -93,7 +93,7 @@ function EditReport({
 
     setShowDeleteConfirmation(false);
     onClose();
-    console.log("deleted");
+    // console.log("deleted");
   };
 
   // ################ EDIT #################
@@ -134,7 +134,7 @@ function EditReport({
       reportCategories,
       comments,
     };
-    console.log(reportSubmission);
+    // console.log(reportSubmission);
 
     await axios
       .put("/api/flag/getSpecificReport", reportSubmission)

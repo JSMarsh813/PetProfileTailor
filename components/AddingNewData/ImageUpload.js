@@ -20,7 +20,7 @@ function ImageUpload() {
   const [newProfileImage, setNewProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState();
 
-  console.log(session);
+  // console.log(session);
   const handleImageAttachment = (e) => {
     e.preventDefault();
     setSelectedImage(e.target.files[0]);

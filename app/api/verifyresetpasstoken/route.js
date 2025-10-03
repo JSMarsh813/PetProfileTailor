@@ -11,14 +11,14 @@ export async function POST(req) {
   await db.connect();
 
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-  console.log("Hashed token:", hashedToken);
+  // console.log("Hashed token:", hashedToken);
 
   const user = await User.findOne({
     passwordResetToken: hashedToken,
     resetTokenExpires: { $gt: Date.now() },
   });
 
-  console.log("Found user:", user);
+  // console.log("Found user:", user);
 
   if (!user) {
     return NextResponse.json(

@@ -28,10 +28,10 @@ export default function Profile({
 
   usersFollowing,
 }) {
-  console.log("userData in profile", userData);
+  // console.log("userData in profile", userData);
   const { data: session } = useSession();
 
-  console.log("namelist", nameList);
+  // console.log("namelist", nameList);
   // store liked IDs in a ref so updates don't trigger full re-render
 
   let userName = "";

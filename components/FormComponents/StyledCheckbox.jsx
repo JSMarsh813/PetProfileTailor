@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
 
 export default function StyledCheckbox({
-  id,
   label,
   description,
   checked = false,
@@ -12,15 +11,19 @@ export default function StyledCheckbox({
   value,
   className = "",
 }) {
-  const inputId = id || label;
-
+  // id={`filter-mobile-${index}`} wasn't working, htmlFor={id} and <input id={id} kept breaking
+  // why?
+  // Once a panel opens, closes, or React remounts, index-based ids break uniqueness across multiple panels
+  //`filter-mobile-${0} would of been shared by multiple boxes that were open
+  // this fixed the “mouse click stuck/focus jumping” bug because the first focusable element Headless UI sees is actually the right one, and it doesn’t collide with duplicates or indices that might have changed.
+  // value works because this will always be globally unique
   return (
     <label
-      htmlFor={inputId}
+      htmlFor={value}
       className="flex items-center space-x-2 cursor-pointer"
     >
       <input
-        id={inputId}
+        id={value}
         value={value} // important so your handler sees it
         type="checkbox"
         checked={checked}

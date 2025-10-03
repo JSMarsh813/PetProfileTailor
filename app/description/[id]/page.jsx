@@ -25,7 +25,7 @@ export default async function Postid({ params }) {
       .populate({ path: "tags", select: ["tag"] }),
   );
 
-  console.log(description, "description");
+  // console.log(description, "description");
   if (!description) {
     notFound();
   }

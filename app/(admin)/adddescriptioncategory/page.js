@@ -14,12 +14,10 @@ export default function AddDescriptionCategory() {
   function handleCategorySubmission(e) {
     e.preventDefault();
 
-    const categorySubmission = {
-      category: newCategory,
-    };
-
     axios
-      .post("/api/descriptioncategory", categorySubmission)
+      .post("/api/descriptioncategory", {
+        category: newCategory,
+      })
       .then((response) => {})
       .catch((error) => {
         console.log("this is error", error);

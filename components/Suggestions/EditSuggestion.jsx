@@ -39,7 +39,7 @@ export default function EditSuggestion({
         const res = await axios.get("/api/suggestion", {
           params: { contentId: contentInfo._id, status: "pending" },
         });
-        console.log("response", res.data);
+        // console.log("response", res.data);
         const existingSuggestion = res.data.suggestion;
 
         if (existingSuggestion) {
@@ -116,7 +116,7 @@ export default function EditSuggestion({
       tags: tagIds,
       // api will use contentType to figure out if tags are names or description tags
     };
-    console.log(suggestionSubmission);
+    // console.log(suggestionSubmission);
 
     try {
       const response = await axios.put(
@@ -159,7 +159,7 @@ export default function EditSuggestion({
       const res = await axios.delete("/api/suggestion", {
         data: { suggestionId: suggestionId },
       });
-      console.log("response", res.data);
+      // console.log("response", res.data);
 
       deleteSuggestion(dataType, contentInfo._id, suggestionId);
     } catch (err) {
@@ -170,7 +170,7 @@ export default function EditSuggestion({
 
     setShowDeleteConfirmation(false);
     onClose();
-    console.log("deleted");
+    // console.log("deleted");
   };
 
   return (

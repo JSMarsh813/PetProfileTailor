@@ -43,13 +43,12 @@ export default function AddThank({
       contentCreator: contentCreatedByUserId,
       messages: selectedThanks,
     };
-    console.log(thanksSubmission);
+    // console.log(thanksSubmission);
 
     try {
       const response = await axios.post(apiThanksSubmission, thanksSubmission);
 
       toast.success(`Thank you! Your thank your note was successfully sent`);
-      console.log("thanks response in add thanks", response);
 
       onClose?.();
     } catch (error) {

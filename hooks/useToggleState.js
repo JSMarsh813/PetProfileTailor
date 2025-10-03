@@ -28,7 +28,7 @@ export function useToggleState({
       const newState = latestStateRef.current;
 
       if (!canSend()) {
-        console.log("Rate limit reached, skipping API call");
+        console.warn("Rate limit reached, skipping API call");
         return;
       }
 

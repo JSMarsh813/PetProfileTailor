@@ -7,7 +7,7 @@ export const sendVerificationRequest = async (
   params: SendVerificationRequestParams,
 ) => {
   let { identifier: email, url, provider } = params;
-  console.log(params);
+  // console.log(params);
   try {
     await resend.emails.send({
       from: `${process.env.RESEND_EMAIL_FROM}`,
@@ -19,7 +19,7 @@ export const sendVerificationRequest = async (
       }),
     });
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
   }
 };
 

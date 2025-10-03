@@ -18,10 +18,10 @@ export default function LikesButtonAndLikesLogic({
   dataType,
 }) {
   const { data: session } = useSession();
-  console.log("session in likes button", session);
+  // console.log("session in likes button", session);
 
-  console.log("signedInUsersId in likes button", signedInUsersId);
-  console.log("datatype in likesbutton", dataType);
+  // console.log("signedInUsersId in likes button", signedInUsersId);
+  // console.log("datatype in likesbutton", dataType);
   const { liked, likeCount, isProcessing, toggleLike } = useLikeState({
     data,
     dataType,

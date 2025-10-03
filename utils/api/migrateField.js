@@ -15,7 +15,7 @@ export async function migrateField(
   removeOld = true,
   defaultValue = null,
 ) {
-  console.log(`🚀 Migrating ${model.modelName}: ${oldField} → ${newField}`);
+  console.log(`Migrating ${model.modelName}: ${oldField} → ${newField}`);
 
   try {
     let result;
@@ -27,7 +27,7 @@ export async function migrateField(
         [{ $set: { [newField]: `$${oldField}` } }],
       );
       console.log(
-        `✅ Copied ${oldField} → ${newField} in ${result.modifiedCount} docs`,
+        `Copied ${oldField} → ${newField} in ${result.modifiedCount} docs`,
       );
     }
 
@@ -38,7 +38,7 @@ export async function migrateField(
         { $set: { [newField]: defaultValue } },
       );
       console.log(
-        `✅ Set default for ${newField} in ${result.modifiedCount} docs`,
+        `Set default for ${newField} in ${result.modifiedCount} docs`,
       );
     }
 
@@ -48,13 +48,13 @@ export async function migrateField(
         { [oldField]: { $exists: true } },
         { $unset: { [oldField]: "" } },
       );
-      console.log(`🧹 Removed ${oldField} from ${cleanup.modifiedCount} docs`);
+      console.log(` Removed ${oldField} from ${cleanup.modifiedCount} docs`);
     }
 
     // Step 4: Verify a sample
     const check = await model.findOne({});
-    console.log("🔎 Sample document after migration:", check);
+    console.log(" Sample document after migration:", check);
   } catch (err) {
-    console.error(`❌ Migration failed for ${model.modelName}:`, err);
+    console.error(` Migration failed for ${model.modelName}:`, err);
   }
 }

@@ -29,7 +29,7 @@ export default function AddDescriptionTag() {
       tag: newDescriptionTag,
       createdBy: session.user.id,
     };
-    console.log(descriptionTagSubmission);
+    // console.log(descriptionTagSubmission);
     axios
       .post("/api/descriptiontag", descriptionTagSubmission)
       .then((response) => {
@@ -42,14 +42,10 @@ export default function AddDescriptionTag() {
   }
 
   function addTagToCategories(newDescriptionTagId) {
-    const addTagsToCategorySubmission = {
-      newtagid: newDescriptionTagId,
-      categoriesToUpdate: categoriesChosen.map((option) => option._id),
-    };
-
     try {
       axios.put("/api/descriptioncategory/edittags", {
-        addTagsToCategorySubmission,
+        newtagid: newDescriptionTagId,
+        categoriesToUpdate: categoriesChosen.map((option) => option._id),
       });
     } catch (err) {
       console.log("tag not added to categories :(", err);

@@ -72,7 +72,7 @@ export default function AddReport({
       reportCategories: flagCategoriesState,
       comments: additionalCommentsState.toString(),
     };
-    console.log(reportSubmission);
+    // console.log(reportSubmission);
 
     try {
       const response = await axios.post(

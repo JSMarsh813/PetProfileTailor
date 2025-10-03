@@ -33,7 +33,7 @@ export function SuggestionsProvider({ children, initialSuggestions = {} }) {
   });
   //map for fast lookups based on contentID
 
-  console.log("suggestionsRef in context", suggestionsRef);
+  // console.log("suggestionsRef in context", suggestionsRef);
 
   const hasSuggested = (type, contentId) => {
     const map = suggestionsRef.current[type];
@@ -54,17 +54,17 @@ export function SuggestionsProvider({ children, initialSuggestions = {} }) {
   };
 
   const deleteSuggestion = (type, contentId, suggestionId) => {
-    console.log(
-      "delete suggestion type",
-      type,
-      "delete suggestion suggestionId",
-      suggestionId,
-      "delete contentID",
-      contentId,
-    );
+    // console.log(
+    //   "delete suggestion type",
+    //   type,
+    //   "delete suggestion suggestionId",
+    //   suggestionId,
+    //   "delete contentID",
+    //   contentId,
+    // );
 
     const map = suggestionsRef.current[type];
-    console.log("in delete suggestion, this is map", map);
+    // console.log("in delete suggestion, this is map", map);
     if (!map) return;
 
     const value = map.get(contentId.toString());

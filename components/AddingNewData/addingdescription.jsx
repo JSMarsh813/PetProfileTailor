@@ -46,7 +46,7 @@ function NewDescriptionWithTagsData() {
           `Successfully added description: ${newDescription.slice(
             0,
             10,
-          )}. Heres 3 treat points as thanks for your contribution ${
+          )}. Heres a treat point as thanks for your contribution ${
             session.user.name
           }!`,
         );
@@ -126,7 +126,10 @@ function NewDescriptionWithTagsData() {
             id="nameDescription"
             className="text-subtleWhite block w-full rounded-2xl disabled:bg-errorBackgroundColor bg-secondary border-subtleWhite 
 disabled:text-errorTextColor "
-            onChange={(e) => setNewDescription(e.target.value.toLowerCase())}
+            value={newDescription}
+            onChange={(e) =>
+              setNewDescription(e.target.value.trimStart().toLowerCase())
+            }
             maxLength="4000"
             disabled={disabled}
             onClick={(e) => setDescriptionExists(false)}
@@ -156,8 +159,9 @@ disabled:text-errorTextColor "
             id="noteinput"
             className="text-subtleWhite block w-full disabled:bg-errorBackgroundColor  bg-secondary border-subtleWhite
 disabled:text-errorTextColor rounded-2xl"
+            value={notes}
             maxLength="800"
-            onChange={(e) => setNotes(e.target.value.toLowerCase())}
+            onChange={(e) => setNotes(e.target.value.trimStart().toLowerCase())}
             disabled={disabled}
           ></textarea>
 

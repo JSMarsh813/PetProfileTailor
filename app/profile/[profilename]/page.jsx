@@ -16,7 +16,7 @@ export default async function ProfilePage({ params }) {
   const session = await getServerSession(serverAuthOptions);
   const { profilename } = await params;
 
-  console.log("profileName", profilename);
+  // console.log("profileName", profilename);
   const usersProfileName = profilename.toLowerCase();
 
   await dbConnect.connect();
@@ -28,7 +28,7 @@ export default async function ProfilePage({ params }) {
     ),
   );
 
-  console.log("userData", userData);
+  // console.log("userData", userData);
 
   if (!userData) {
     return <div>User not found</div>;

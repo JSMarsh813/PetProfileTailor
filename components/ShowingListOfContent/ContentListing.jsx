@@ -338,7 +338,7 @@ export default function ContentListing({
                 dataType={dataType}
                 open={showEditDialog}
                 onClose={closeEdit}
-                content={editTarget}
+                content={localContent} // needed because the hook won't rerender after the changes we made with the edits, so we use localContent to show the changes
                 onSave={confirmEdit}
                 signedInUsersId={signedInUsersId}
               />

@@ -20,7 +20,7 @@ export default async function FetchNames() {
   if (session?.user) {
     const userId = mongoose.Types.ObjectId(session.user.id);
 
-    console.log("session.user.id:", session.user.id, typeof session.user.id);
+    // console.log("session.user.id:", session.user.id, typeof session.user.id);
     // ######## Likes ###############
     usersLikedContent = await leanWithStrings(
       NameLikes.find({ userId }).select("nameId -_id"),

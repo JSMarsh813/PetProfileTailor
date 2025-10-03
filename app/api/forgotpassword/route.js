@@ -8,12 +8,12 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req) {
   const { email } = await req.json();
-  console.log(email);
+  // console.log(email);
 
   await db.connect();
 
   const existingUser = await User.findOne({ email });
-  console.log(existingUser);
+  // console.log(existingUser);
 
   if (!existingUser) {
     return Response.json({ message: "Email does not exist" }, { status: 404 });

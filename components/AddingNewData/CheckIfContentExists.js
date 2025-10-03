@@ -36,8 +36,11 @@ export default function CheckIfContentExists({
         }name/${existingContent[0]?.content.toLowerCase()}`
       : `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}description/${existingContent[0]?._id}`;
 
-  function resetData(e) {
-    setContentCheck(e.target.value.toLowerCase());
+  function resetData(value) {
+    // const value = e.target.value;
+    // const valueNoLeadingSpace = value.replace(/^\s+/u, "");
+    // needed for when .trimStart() doesn't recognize the space
+    setContentCheck(value.toLowerCase());
     setContentCheckFunctionRun(false);
     setExistingContent([]);
     // [] instead of null so it won't break when we check .length later
@@ -104,7 +107,7 @@ export default function CheckIfContentExists({
           id="checkNameExists"
           disabled={disabled}
           maxLength={maxContentLength}
-          onChange={(e) => resetData(e)}
+          onChange={(e) => resetData(e.target.value.trimStart())}
         />
       ) : (
         <StyledTextarea

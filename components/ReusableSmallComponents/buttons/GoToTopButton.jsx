@@ -23,7 +23,6 @@ export default function GoToTopButton({ top = "280" }) {
 
     // set initial visibility right after mount
     handleScroll();
-    console.log("window", scrollContainer.scrollTop > 300);
 
     scrollContainer.addEventListener("scroll", handleScroll);
     return () => scrollContainer.removeEventListener("scroll", handleScroll);

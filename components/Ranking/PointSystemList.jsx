@@ -7,13 +7,13 @@ export default function EngagementTable({
 }) {
   const totalPoints = descriptionsAdds + namesAdds;
 
-  console.log(
-    "namesAdd",
-    namesAdds,
+  // console.log(
+  //   "namesAdd",
+  //   namesAdds,
 
-    "descriptionAdds",
-    descriptionsAdds,
-  );
+  //   "descriptionAdds",
+  //   descriptionsAdds,
+  // );
   return (
     <div className="w-full max-w-xl mx-auto ">
       <RankingTotals totalPoints={totalPoints} />

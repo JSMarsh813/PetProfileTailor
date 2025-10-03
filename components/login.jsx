@@ -70,7 +70,7 @@ export default function Login() {
   } = useForm();
 
   const submitHandler = async ({ email, password }) => {
-    console.log("email", email, "password", password);
+    // console.log("email", email, "password", password);
     if (!email || !password) return;
 
     try {

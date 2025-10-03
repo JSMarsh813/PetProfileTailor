@@ -14,7 +14,7 @@ export function LikesProvider({ children, initialLikes = {} }) {
   const names = initialLikes?.names || [];
   const descriptions = initialLikes?.descriptions || [];
 
-  console.log("intial descriptions liked", descriptions);
+  // console.log("intial descriptions liked", descriptions);
 
   // If the array is empty, .map() just returns another empty array. It won’t throw an error.
 
@@ -31,7 +31,7 @@ export function LikesProvider({ children, initialLikes = {} }) {
     return Array.from(likesRef.current[type]?.keys() || []);
   };
 
-  console.log("likesRef in context", likesRef);
+  // console.log("likesRef in context", likesRef);
 
   const hasLiked = (type, contentId) => {
     return likesRef.current[type]?.has(contentId.toString()) ?? false;
@@ -49,13 +49,13 @@ export function LikesProvider({ children, initialLikes = {} }) {
   };
 
   const deleteLike = (type, contentId) => {
-    console.log(
-      "delete like type",
-      type,
+    // console.log(
+    //   "delete like type",
+    //   type,
 
-      "delete contentID",
-      contentId,
-    );
+    //   "delete contentID",
+    //   contentId,
+    // );
     likesRef.current[type]?.delete(contentId.toString());
   };
 

@@ -97,7 +97,7 @@ function NewNameWithTagsData() {
       .then((response) => {
         setIsPending(false);
         toast.success(
-          `Successfully added name: ${newName}. Heres 3 treat points as thanks for your contribution ${session.user.name}!`,
+          `Successfully added name: ${newName}. Heres a treat point as thanks for your contribution ${session.user.name}!`,
         );
       })
       .catch((error) => {
@@ -176,7 +176,7 @@ function NewNameWithTagsData() {
             id="nameInput"
             className="bg-secondary border-subtleWhite rounded-2xl disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:cursor-not-allowed"
             value={newName}
-            onChange={(e) => setNewName(e.target.value)}
+            onChange={(e) => setNewName(e.target.value.trimStart())}
             maxLength="40"
             disabled={disabled}
           ></input>
@@ -200,8 +200,9 @@ function NewNameWithTagsData() {
             type="text"
             id="nameNote"
             maxLength="1000"
+            value={note}
             className="bg-secondary border-subtleWhite  block "
-            onChange={(e) => setNote(e.target.value.trim())}
+            onChange={(e) => setNote(e.target.value.trimStart())}
             disabled={disabled}
           />
           <div className="mb-8 flex flex-col gap-2">

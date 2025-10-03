@@ -8,7 +8,7 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
   const [isSaving, setIsSaving] = useState(false);
 
   const openEdit = (target) => {
-    console.log("openEdit called with target:", target);
+    // console.log("openEdit called with target:", target);
     if (!target?._id) {
       console.warn("openEdit called with invalid target!", target);
       return;
@@ -39,11 +39,11 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
       const updatedItem = res.data?.data ??
         res.data ?? { ...editTarget, ...editedData };
       // normalized so updatedItem is always just the actual object to replace
-      console.log("response data", res.data);
+      // console.log("response data", res.data);
 
-      console.log("updatedItem", updatedItem);
+      // console.log("updatedItem", updatedItem);
       // SWR case: update the cached array
-      console.log("SWR pages before mutate:", res.data);
+      // console.log("SWR pages before mutate:", res.data);
 
       if (mutate) {
         // the api sends us { data: {name object}, message: "name updated"
@@ -62,6 +62,8 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
       } else if (setLocalData) {
         setLocalData(updatedItem);
       }
+
+      setEditTarget(updatedItem); // <-- update modal’s editTarget so the edit form sees the update
 
       toast.success("Successfully edited!");
 

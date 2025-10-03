@@ -23,7 +23,7 @@ export async function POST(req, { params }) {
   }
 
   const session = await mongoose.startSession();
-  console.log("toggle like api ran", { userId, descriptionId });
+  // console.log("toggle like api ran", { userId, descriptionId });
 
   try {
     session.startTransaction();

@@ -41,26 +41,26 @@ export function useSwrPagination({
 }) {
   // SWR key function
 
-  console.log(
-    "restrictSwrToLikedNames in swr pagination",
-    restrictSwrToLikedNames,
-  );
+  // console.log(
+  //   "restrictSwrToLikedNames in swr pagination",
+  //   restrictSwrToLikedNames,
+  // );
   let likedIds = [];
 
   if (restrictSwrToLikedNames) {
     const { getLikedIds } = useLikes();
     likedIds = getLikedIds(dataType) || null;
-    console.log("likedIds in swr pagination", likedIds);
+    // console.log("likedIds in swr pagination", likedIds);
   }
 
   // if restrict to liked content but there are no likes, return early
 
-  console.log(
-    "restrictSwrToLikedNames",
-    restrictSwrToLikedNames,
-    "likedIds",
-    likedIds,
-  );
+  // console.log(
+  //   "restrictSwrToLikedNames",
+  //   restrictSwrToLikedNames,
+  //   "likedIds",
+  //   likedIds,
+  // );
   if (
     (restrictSwrToLikedNames && likedIds === null) ||
     (restrictSwrToLikedNames && likedIds.length === 0)
@@ -77,7 +77,7 @@ export function useSwrPagination({
       mutate: () => {},
     };
   }
-  console.log("Fetching liked IDs for", dataType, likedIds);
+  // console.log("Fetching liked IDs for", dataType, likedIds);
 
   const getKey = (index, previousPageData) => {
     if (previousPageData && !previousPageData.data?.length) return null; // no more data
@@ -112,9 +112,9 @@ export function useSwrPagination({
   const totalItems = data?.[0]?.totalDocs || 0;
   const totalPagesInDatabase = Math.ceil(totalItems / itemsPerUiPage);
 
-  console.log("SWR data:", data);
-  console.log("SWR size:", size);
-  console.log("hook return:", { allItems, totalItems, totalPagesInDatabase });
+  // console.log("SWR data:", data);
+  // console.log("SWR size:", size);
+  // console.log("hook return:", { allItems, totalItems, totalPagesInDatabase });
 
   return {
     data: allItems,

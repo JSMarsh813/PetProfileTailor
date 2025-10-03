@@ -47,7 +47,7 @@ export default function NavLayoutwithSettingsMenu() {
   }
 
   useEffect(() => {
-    console.log("nav check", status, session);
+    // console.log("nav check", status, session);
     if (status === "authenticated" && !session?.user) {
       // waits until the session has been fetched (authenticated)
       signOut(); // ensures cookies cleared if token nuked, aka for a banner user

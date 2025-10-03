@@ -59,7 +59,7 @@ export default function ResetPassword({ token }) {
             token,
           }),
         });
-        console.log(res);
+        // console.log(res);
         if (res.status === 404) {
           setMessage("Invalid reset token or token has expired");
           setError(true);
@@ -136,7 +136,7 @@ export default function ResetPassword({ token }) {
   const loginAfterPasswordChange = async () => {
     try {
       //import signIn on line 3 from nextAuth, which will be handled in the nextauth.js handler
-      console.log(`this is password ${passwordstate}`);
+      // console.log(`this is password ${passwordstate}`);
       const result = await signIn("credentials", {
         redirect: false,
         //gets rid of callback url @10:20 https://www.youtube.com/watch?v=EFucgPdjeNg&t=594s&ab_channel=FullStackNiraj
