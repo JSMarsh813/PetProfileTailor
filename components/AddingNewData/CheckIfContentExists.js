@@ -8,6 +8,7 @@ import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralBu
 import WarningMessage from "@components/ReusableSmallComponents/buttons/WarningMessage";
 import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
 import StyledTextarea from "../FormComponents/StyledTextarea";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 export default function CheckIfContentExists({
   apiString,
@@ -18,6 +19,7 @@ export default function CheckIfContentExists({
   const [contentCheckFunctionRun, setContentCheckFunctionRun] = useState(false);
   const [existingContent, setExistingContent] = useState([]);
   const [nameCheckInvalidInput, setContentCheckInvalidInput] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [contentCheck, setContentCheck] = useState("");
   const maxContentLength = contentType === "names" ? 40 : 400;
 
@@ -48,6 +50,8 @@ export default function CheckIfContentExists({
 
   async function contentExistsCheck() {
     try {
+      if (isProcessing) return;
+      setIsProcessing(true);
       //"/api/names/check-if-content-exists/"
       let response = await fetch(apiString + contentCheck);
       let data = await response.json();
@@ -80,7 +84,9 @@ export default function CheckIfContentExists({
           setCheckContentMessage("Unexpected response");
           setExistingContent([]);
       }
+      setIsProcessing(false);
     } catch (err) {
+      setIsProcessing(false);
       setCheckContentMessage("Error checking name: " + err.message);
       setExistingContent([]);
     }
@@ -127,7 +133,11 @@ export default function CheckIfContentExists({
       <button
         className="inline-block bg-subtleBackground   p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor rounded-2xl disabled:border-errorBorderColor disabled:cursor-not-allowed"
         onClick={() => contentExistsCheck()}
-        disabled={nameCheckInvalidInput !== null || contentCheck.length < 2}
+        disabled={
+          nameCheckInvalidInput !== null ||
+          contentCheck.length < 2 ||
+          isProcessing
+        }
       >
         <FontAwesomeIcon
           icon={faSearch}
@@ -148,6 +158,7 @@ export default function CheckIfContentExists({
         }/${maxContentLength} characters left`}{" "}
       </span>
 
+      {isProcessing && <LoadingSpinner />}
       {contentCheckFunctionRun && (
         <div>
           {checkContentMessage && (
@@ -166,7 +177,7 @@ export default function CheckIfContentExists({
                 <GeneralButton
                   className="ml-12 my-4 "
                   text={`Link to ${existingContent[0].content.slice(0, 15)} ${
-                    existingContent[0].content.length > 15 && "..."
+                    existingContent[0].content.length > 15 ? "..." : ""
                   }`}
                 ></GeneralButton>
               </Link>

@@ -2,6 +2,9 @@ import useSWRInfinite from "swr/infinite";
 import { useLikes } from "@/context/LikesContext";
 useLikes;
 
+// using useSWRInfinite since the array-of-pages behavior is handy for flattening the chunks of items, so that way the front end page 1 doesn't have to be equal to a swr page 1
+// useSWR would instead return a single data object, which doesn't work in our case since we're letting users chose if they want to view 5,10,20,50 ect items at a time
+
 const fetcher = (key) => {
   let url, options;
   if (Array.isArray(key)) {
@@ -102,7 +105,15 @@ export function useSwrPagination({
   };
 
   const { data, error, size, isLoading, isValidating, setSize, mutate } =
-    useSWRInfinite(getKey, fetcher);
+    useSWRInfinite(getKey, fetcher, {
+      initialSize: 2,
+      revalidateAll: false,
+      revalidateOnMount: true, // recheck when mounting, aka when the user uses a link to return to this page, it'll refetch the 1st page
+      revalidateFirstPage: false, // don't recheck first page whenever the page size changes
+      revalidateIfStale: false, // don’t recheck if cache exists
+      revalidateOnFocus: false, // don’t recheck on tab switch
+      revalidateOnReconnect: false,
+    });
 
   // Flatten all fetched DB chunks
   const allItems = data ? data.flatMap((chunk) => chunk?.data ?? []) : [];
