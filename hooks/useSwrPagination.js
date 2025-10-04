@@ -106,7 +106,7 @@ export function useSwrPagination({
 
   const { data, error, size, isLoading, isValidating, setSize, mutate } =
     useSWRInfinite(getKey, fetcher, {
-      initialSize: 2,
+      initialSize: 1,
       revalidateAll: false,
       revalidateOnMount: true, // recheck when mounting, aka when the user uses a link to return to this page, it'll refetch the 1st page
       revalidateFirstPage: false, // don't recheck first page whenever the page size changes
