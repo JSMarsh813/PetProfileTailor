@@ -1,5 +1,6 @@
 import dbConnect from "@utils/db";
 import mongoose from "mongoose";
+import DescriptionTag from "@/models/DescriptionTag";
 import Description from "@/models/Description";
 import { checkOwnership } from "@/utils/api/checkOwnership";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";

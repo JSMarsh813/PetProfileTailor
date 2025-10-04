@@ -1,6 +1,8 @@
 import dbConnect from "@utils/db";
+// although not directly used, needed for populate to work since it uses these tags models
+import NameTag from "@/models/NameTag";
+import DescriptionTag from "@/models/DescriptionTag";
 import Names from "@models/Name";
-
 import Description from "@/models/Description";
 
 import Dashboard from "@/components/dashboard";

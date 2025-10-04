@@ -21,7 +21,7 @@ export default function CheckIfContentExists({
   const [nameCheckInvalidInput, setContentCheckInvalidInput] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [contentCheck, setContentCheck] = useState("");
-  const maxContentLength = contentType === "names" ? 40 : 400;
+  const maxContentLength = contentType === "names" ? 40 : 4000;
 
   //client side validation for "check if name already exists" section
   useEffect(() => {
@@ -126,7 +126,7 @@ export default function CheckIfContentExists({
           id="checkNameExists"
           disabled={disabled}
           maxLength={maxContentLength}
-          onChange={(e) => resetData(e)}
+          onChange={(e) => resetData(e.target.value.trimStart())}
         />
       )}
 

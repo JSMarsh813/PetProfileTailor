@@ -1,4 +1,5 @@
 import dbConnect from "@utils/db";
+import NameTag from "@/models/NameTag";
 import Names from "@models/Name";
 import { notFound } from "next/navigation";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";

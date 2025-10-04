@@ -1,4 +1,7 @@
 import db from "@utils/db";
+import Name from "@/models/Name";
+import Description from "@/models/Description";
+import User from "@/models/User";
 import Thanks from "@/models/Thank";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";

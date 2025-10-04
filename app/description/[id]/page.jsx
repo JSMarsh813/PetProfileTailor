@@ -4,6 +4,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import ContentListing from "@/components/ShowingListOfContent/ContentListing";
 import dbConnect from "@utils/db";
+import DescriptionTag from "@/models/DescriptionTag";
 import Descriptions from "@/models/Description";
 import { notFound } from "next/navigation";
 const ObjectId = require("mongodb").ObjectId;

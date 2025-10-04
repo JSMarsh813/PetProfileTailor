@@ -1,4 +1,6 @@
 import db from "@utils/db";
+import NameTag from "@/models/NameTag";
+import DescriptionTag from "@/models/DescriptionTag";
 import Suggestion from "@/models/Suggestion";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";

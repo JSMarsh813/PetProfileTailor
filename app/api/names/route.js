@@ -1,5 +1,6 @@
 import dbConnect from "@utils/db";
 import mongoose from "mongoose";
+import NameTag from "@/models/NameTag";
 import Names from "@models/Name";
 import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
 import { checkOwnership } from "@/utils/api/checkOwnership";
