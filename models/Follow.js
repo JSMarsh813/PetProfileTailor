@@ -3,8 +3,8 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const FollowSchema = new mongoose.Schema(
   {
-    userId: { type: ObjectId, ref: "Users", required: true },
-    followedBy: { type: ObjectId, ref: "Users", required: true },
+    userId: { type: ObjectId, ref: "User", required: true },
+    followedBy: { type: ObjectId, ref: "User", required: true },
   },
   { timestamps: true },
 );

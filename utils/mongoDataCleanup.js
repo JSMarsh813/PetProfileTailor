@@ -13,6 +13,9 @@ function deepTransform(obj) {
     return obj.toString();
   }
 
+  // Handle Dates
+  if (obj instanceof Date) return obj; // keep as Date
+
   if (Array.isArray(obj)) {
     return obj.map((item) => {
       // If item is a plain ObjectId, stringify

@@ -10,8 +10,8 @@ export default function PageTitleWithImages({ imgSrc, title, title2 }) {
         height: "200px",
       }}
     >
-      <h3
-        className="text-center pt-2 
+      <div
+        className="text-center  
      mx-auto  h-32
     text-4xl text-white bg-secondary
     font-semibold
@@ -21,10 +21,12 @@ export default function PageTitleWithImages({ imgSrc, title, title2 }) {
           backdropFilter: "blur(20px)",
         }}
       >
-        {title}
+        <h3 className="flex flex-col justify-center items-center h-full ">
+          <span> {title} </span>
 
-        {title2 && <span className="block -mt-2">{title2}</span>}
-      </h3>
+          {title2 && <span className="block -mt-2">{title2}</span>}
+        </h3>
+      </div>
     </div>
   );
 }

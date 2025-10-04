@@ -3,20 +3,20 @@ const thanksOptions = [
   { tag: "Pet adopted with this" },
   { tag: "Used for personal pet" },
   {
-    tag: "Was inspiration for what I created for an adoptable pet",
-  },
-  {
-    tag: "Was inspiration for what I created for an adoptable pet and they were adopted",
-  },
-  {
-    tag: "Was inspiration for what I created for a personal pet",
+    tag: "gave me inspiration for a personal pet's name",
   },
   { tag: "Made me smile or laugh" },
 
   { tag: "I just really, really liked this" },
+  {
+    tag: "That pun/rhyme/meme/ect hit the spot",
+  },
   { tag: "Clever!" },
   {
-    tag: "That pun/rhyme/meme/ect hit me right where it hurts in the best way, thanks. Well crafted!",
+    tag: "Was inspiration for what I wrote for an adoptable pet",
+  },
+  {
+    tag: "Was inspiration for what I wrote for an adoptable pet and they were adopted",
   },
 ];
 

@@ -5,8 +5,8 @@ import thanksOptions from "@/data/ThanksOptions";
 const allowedMessages = thanksOptions.map((option) => option.tag);
 const ThankSchema = new mongoose.Schema(
   {
-    contentCreator: { type: ObjectId, ref: "Users", required: true },
-    thanksBy: { type: ObjectId, ref: "Users", required: true },
+    contentCreator: { type: ObjectId, ref: "User", required: true },
+    thanksBy: { type: ObjectId, ref: "User", required: true },
     contentType: {
       type: String,
       required: true,
@@ -14,7 +14,7 @@ const ThankSchema = new mongoose.Schema(
     },
     nameId: {
       type: ObjectId,
-      ref: "Names",
+      ref: "Name",
       required: function () {
         return this.contentType === "names";
       },
