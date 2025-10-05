@@ -23,7 +23,7 @@ export default function ToggleOneNotificationPage({
     <div
       className={`rounded-2xl px-4 mt-2 p-4 text-subtleWhite ml-5 my-2   hover:bg-secondary/60 `}
     >
-      <p className="my-1">Woah, it's so empty! 😿</p>
+      <p className="my-1">Woah, it&apos;s so empty! 😿</p>
       <p className="my-1">
         These pets will use this as a cozy nap spot until you get a notification
         🐈🐕.
