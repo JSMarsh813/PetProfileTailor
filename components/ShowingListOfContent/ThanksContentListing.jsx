@@ -20,7 +20,7 @@ export default function ThanksContentListing({ singleContent }) {
     contentType === "names"
       ? `/name/${nameId?.content}`
       : `/description/${descriptionId?._id}`;
-  const descriptionContent = "";
+  let descriptionContent = "";
 
   if (descriptionId?.content) {
     const content = descriptionId.content;
