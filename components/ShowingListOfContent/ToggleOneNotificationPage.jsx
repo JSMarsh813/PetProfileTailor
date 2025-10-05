@@ -17,6 +17,19 @@ export default function ToggleOneNotificationPage({
     setOpenContent(openContent === contentKey ? null : contentKey);
   }
 
+  const noNotificationsMessage = (
+    // this is a JSX literal not a JSX component
+    // so we render it directly, rather than calling it like a JSX component/function
+    <div
+      className={`rounded-2xl px-4 mt-2 p-4 text-subtleWhite ml-5 my-2   hover:bg-secondary/60 `}
+    >
+      <p className="my-1">Woah, it's so empty! 😿</p>
+      <p className="my-1">
+        These pets will use this as a cozy nap spot until you get a notification
+        🐈🐕.
+      </p>
+    </div>
+  );
   return (
     <section className="w-full  max-w-[800px]">
       <div className="flex justify-around">
@@ -50,6 +63,7 @@ export default function ToggleOneNotificationPage({
                   />
                 );
               })}
+          {thankDocs.length === 0 && noNotificationsMessage}
 
           {/* <CheckForMoreData
                       filteredListLastPage={filteredListLastPage} //deleted
@@ -58,9 +72,9 @@ export default function ToggleOneNotificationPage({
         </section>
       )}
 
-      {openContent === "Name Likes" && <span> Test </span>}
+      {openContent === "Name Likes" && noNotificationsMessage}
 
-      {openContent === "Description Likes" && <span> Test </span>}
+      {openContent === "Description Likes" && noNotificationsMessage}
 
       {/* {openContent === "Added Descriptions" && (
         <CoreListingPageLogic

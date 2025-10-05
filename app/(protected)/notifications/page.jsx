@@ -11,6 +11,7 @@ import { redirect } from "next/navigation";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import ToggleOneNotificationPage from "@/components/ShowingListOfContent/ToggleOneNotificationPage";
 import PageTitleWithImages from "@/components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
+import MarkThanksRead from "@/components/Thanks/markThanksRead";
 
 export default async function Notifications() {
   const session = await getServerSession(serverAuthOptions);
@@ -69,6 +70,7 @@ export default async function Notifications() {
           contentList={contentList}
           thankDocs={thankDocs}
         />
+        {/* <MarkThanksRead /> */}
       </section>
     </div>
   );
