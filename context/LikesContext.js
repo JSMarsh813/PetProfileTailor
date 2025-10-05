@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useRef, useState, useEffect } from "react";
 
 const LikesContext = createContext(null);
 
@@ -10,11 +10,19 @@ export function useLikes() {
   return context;
 }
 
-export function LikesProvider({ children, initialLikes = {} }) {
-  const names = initialLikes?.names || [];
-  const descriptions = initialLikes?.descriptions || [];
+export function LikesProvider({
+  children,
+  initialLikes = { names: [], descriptions: [] },
+}) {
+  //  // to avoid a null provider (aka it breaking during sign in/out)
+  // likes || { names: [], descriptions: [] }
+  const [likesData, setLikesData] = useState(initialLikes);
+  const names = likesData?.names || [];
+  const descriptions = likesData?.descriptions || [];
 
-  // console.log("intial descriptions liked", descriptions);
+  useEffect(() => {
+    setLikesData(initialLikes || { names: [], descriptions: [] });
+  }, [initialLikes]);
 
   // If the array is empty, .map() just returns another empty array. It won’t throw an error.
 
@@ -26,6 +34,16 @@ export function LikesProvider({ children, initialLikes = {} }) {
       descriptions.map((r) => [r.contentId.toString(), null]),
     ),
   });
+
+  // responsive for if the user signs in or out
+  useEffect(() => {
+    likesRef.current = {
+      names: new Map(names?.map((r) => [r.contentId.toString(), null])),
+      descriptions: new Map(
+        descriptions?.map((r) => [r.contentId.toString(), null]),
+      ),
+    };
+  }, [likesData]);
 
   const getLikedIds = (type) => {
     return Array.from(likesRef.current[type]?.keys() || []);
