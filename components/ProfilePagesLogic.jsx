@@ -7,7 +7,6 @@ import ContentListing from "@/components/ShowingListOfContent/ContentListing";
 import Pagination from "@components/ShowingListOfContent/pagination";
 import { useSwrPagination } from "@hooks/useSwrPagination";
 import startCooldown from "@utils/startCooldown";
-import GoToTopButton from "@components/ReusableSmallComponents/buttons/GoToTopButton";
 
 import { useSession } from "next-auth/react";
 
@@ -148,7 +147,6 @@ export default function ProfilePagesLogic({ dataType, profileUserId }) {
               /> */}
           </section>
         </section>
-        <GoToTopButton top="280" />
       </div>
     </div>
   );

@@ -10,7 +10,6 @@ import Pagination from "@components/ShowingListOfContent/pagination";
 import CheckForMoreData from "@components/ReusableSmallComponents/buttons/CheckForMoreDataButton";
 import { useSwrPagination } from "@hooks/useSwrPagination";
 import startCooldown from "@utils/startCooldown";
-import GoToTopButton from "@components/ReusableSmallComponents/buttons/GoToTopButton";
 
 import { useSession } from "next-auth/react";
 
@@ -44,7 +43,7 @@ export default function CoreListingPageLogic({
   // store liked IDs in a ref so updates don't trigger full re-render
 
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [IsOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [filterTagsIds, setFilterTagsIds] = useState([]);
 
   const [currentUiPage, setCurrentUiPage] = useState(1);
@@ -155,7 +154,7 @@ export default function CoreListingPageLogic({
 
       <div className="flex  sm:px-2  mx-auto ">
         <Drawer
-          open={IsOpen}
+          open={isOpen}
           onClose={(event, reason) => {
             if (reason === "backdropClick") {
               // prevent closing when clicking on backdrop
@@ -182,8 +181,8 @@ export default function CoreListingPageLogic({
         <div className="grow bg-primary rounded-box place-items-center  ">
           {/* Button that toggles the filter div */}
           <GeneralButton
-            text={`${IsOpen ? "Close Filters" : "Open Filters"}`}
-            onClick={() => setIsOpen(!IsOpen)}
+            text={`${isOpen ? "Close Filters" : "Open Filters"}`}
+            onClick={() => setIsOpen(!isOpen)}
           />
 
           <Pagination
@@ -240,7 +239,6 @@ export default function CoreListingPageLogic({
               /> */}
             </section>
           </section>
-          <GoToTopButton top="280" />
         </div>
       </div>
     </div>

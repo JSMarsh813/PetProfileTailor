@@ -27,6 +27,7 @@ export function useTags(initial = []) {
       return newTags.filter((t) => selected.some((s) => s.value === t.value));
     });
   };
+  const clearTags = () => setTagsToSubmit([]);
 
   const handleCheckboxChange = ({ id, label, checked }) => {
     setTagsToSubmit((prev) => {
@@ -43,5 +44,11 @@ export function useTags(initial = []) {
     });
   };
 
-  return { tagsToSubmit, tagIds, handleSelectChange, handleCheckboxChange };
+  return {
+    tagsToSubmit,
+    tagIds,
+    handleSelectChange,
+    handleCheckboxChange,
+    clearTags,
+  };
 }

@@ -17,6 +17,7 @@ import ReportsWrapper from "@/wrappers/ReportsWrapper";
 
 import LikesWrapper from "@/wrappers/LikesWrapper";
 import SuggestionsWrapper from "@/wrappers/SuggestionsWrapper";
+import GoToTopButton from "@/components/ReusableSmallComponents/buttons/GoToTopButton";
 
 export const metadata = {
   title:
@@ -63,6 +64,7 @@ export default async function RootLayout({ children }) {
                       }}
                     >
                       {children}
+                      <GoToTopButton top="280" />
                     </main>
                     {/*flex-1  in flex column means: main takes up the remaining flex space, so footer stays at the bottom */}
                   </Suspense>

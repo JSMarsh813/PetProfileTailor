@@ -11,10 +11,11 @@ import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 import { useTags } from "@/hooks/useTags";
 import { useSession } from "next-auth/react";
 import CheckIfContentExists from "./CheckIfContentExists";
+import PreserveTextAfterSubmission from "./preserveTextAfterSubmission";
 
 function NewDescriptionWithTagsData() {
   const [newDescription, setNewDescription] = useState("");
-  const [tags, setTags] = useState([]);
+  const [doNotClear, setDoNotClear] = useState(false);
   const [notes, setNotes] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState("");
@@ -184,6 +185,11 @@ disabled:text-errorTextColor rounded-2xl"
             handleSelectChange={handleSelectChange}
             handleCheckboxChange={handleCheckboxChange}
             isDisabled={disabled}
+          />
+
+          <PreserveTextAfterSubmission
+            doNotClear={doNotClear}
+            setDoNotClear={setDoNotClear}
           />
 
           {/* BUTTON */}

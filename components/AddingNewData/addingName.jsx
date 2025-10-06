@@ -14,13 +14,16 @@ import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import { useSession } from "next-auth/react";
 
 import CheckIfContentExists from "./CheckIfContentExists";
+import CheckboxWithLabelAndDescription from "../FormComponents/CheckboxWithLabelAndDescription";
+import StyledCheckbox from "../FormComponents/StyledCheckbox";
+import PreserveTextAfterSubmission from "./preserveTextAfterSubmission";
 
 function NewNameWithTagsData() {
   const [newName, setNewName] = useState("");
   const [isPending, setIsPending] = useState(false);
-  const [nameAlreadyExists, setNameExists] = useState(false);
-  const [note, setNote] = useState("");
 
+  const [note, setNote] = useState("");
+  const [doNotClear, setDoNotClear] = useState(false);
   const [nameSubmissionMessage, setNameSubmissionMessage] = useState("");
 
   const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
@@ -38,7 +41,8 @@ function NewNameWithTagsData() {
 
   //regex will return null if none of the characters are invalid, so start with null to begin with
 
-  const { tagsToSubmit, handleSelectChange, handleCheckboxChange } = useTags();
+  const { tagsToSubmit, handleSelectChange, handleCheckboxChange, clearTags } =
+    useTags();
 
   // async function checkIfNameExists() {
   //   try {
@@ -99,10 +103,14 @@ function NewNameWithTagsData() {
         toast.success(
           `Successfully added name: ${newName}. Heres a treat point as thanks for your contribution ${session.user.name}!`,
         );
+        if (!doNotClear) {
+          setNewName("");
+          setNote("");
+          clearTags();
+        }
       })
       .catch((error) => {
         console.log("this is error", error);
-        setNameExists(true);
         setIsPending(false);
 
         const msg =
@@ -223,7 +231,14 @@ function NewNameWithTagsData() {
             handleCheckboxChange={handleCheckboxChange}
             isDisabled={session === null ? true : false}
           />
-          {/* BUTTON */}
+
+          <PreserveTextAfterSubmission
+            doNotClear={doNotClear}
+            setDoNotClear={setDoNotClear}
+          />
+
+          {/* SUBMISSION */}
+
           {!isPending && (
             <button
               className={`font-bold py-2 px-4 border-b-4 rounded my-4 bg-yellow-300 text-violet-800 border-yellow-100                         hover:bg-blue-500                       hover:text-subtleWhite                   hover:border-blue-700
@@ -233,11 +248,12 @@ function NewNameWithTagsData() {
                   ? "disabled"
                   : ""
               }
-              onClick={handleNameSubmission}
+              type="submit"
             >
               Add name
             </button>
           )}
+
           {isPending && (
             <button
               className="btn my-4 disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:border-errorBorderColor"
