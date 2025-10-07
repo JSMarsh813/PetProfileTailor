@@ -41,6 +41,9 @@ export default function TagsSelectAndCheatSheet({
       width: "96%",
       borderRadius: "10px",
       marginTop: "1rem",
+
+      paddingTop: "1rem",
+      paddingBottom: "1rem",
       paddingLeft: "0.5rem",
       margin: "1rem auto",
       minHeight: "2.5rem",
@@ -150,6 +153,7 @@ export default function TagsSelectAndCheatSheet({
   return (
     <div className="h-fit w-full bg-secondary border-b-2 border-subtleWhite rounded-box py-2 mx-auto">
       <Select
+        instanceId={`tags-select-${dataType}`} // stable ID per data type to avoid the error: A tree hydrated but some attributes of the server rendered HTML didn't match the client properties.
         styles={customSelectStyles}
         options={tagList}
         value={selectedOptions}
