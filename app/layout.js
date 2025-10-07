@@ -18,6 +18,7 @@ import ReportsWrapper from "@/wrappers/ReportsWrapper";
 import LikesWrapper from "@/wrappers/LikesWrapper";
 import SuggestionsWrapper from "@/wrappers/SuggestionsWrapper";
 import GoToTopButton from "@/components/ReusableSmallComponents/buttons/GoToTopButton";
+import NotificationsWrapper from "@/wrappers/NotificationWrapper";
 
 export const metadata = {
   title:
@@ -53,48 +54,50 @@ export default async function RootLayout({ children }) {
             nameCateg={names}
           >
             <LikesWrapper>
-              <ReportsWrapper>
-                <SuggestionsWrapper>
-                  <NavLayoutwithSettingsMenu />
-                  <Suspense fallback={<LoadingSkeleton />}>
-                    <main
-                      className="flex-1  sm:px-6 lg:px-8  mx-auto  w-full" // w-full so it the element doesn't start off as collapsed
-                      style={{
-                        maxWidth: "1280px", // since tailwind is ignoring maxwidth in classNames
-                      }}
-                    >
-                      {children}
-                      <GoToTopButton top="280" />
-                    </main>
-                    {/*flex-1  in flex column means: main takes up the remaining flex space, so footer stays at the bottom */}
-                  </Suspense>
-                  <Analytics />
-                  <ToastProvider />
+              <NotificationsWrapper>
+                <ReportsWrapper>
+                  <SuggestionsWrapper>
+                    <NavLayoutwithSettingsMenu />
+                    <Suspense fallback={<LoadingSkeleton />}>
+                      <main
+                        className="flex-1  sm:px-6 lg:px-8  mx-auto  w-full" // w-full so it the element doesn't start off as collapsed
+                        style={{
+                          maxWidth: "1280px", // since tailwind is ignoring maxwidth in classNames
+                        }}
+                      >
+                        {children}
+                        <GoToTopButton top="280" />
+                      </main>
+                      {/*flex-1  in flex column means: main takes up the remaining flex space, so footer stays at the bottom */}
+                    </Suspense>
+                    <Analytics />
+                    <ToastProvider />
 
-                  <footer className="text-white text-sm py-4 px-4 bg-secondary border-t-2 border-violet-400 flex">
-                    <div className="flex flex-col gap-2">
-                      <h6 className="font-semibold">Credits:</h6>
-                      <small>
-                        <a
-                          className="text-xs block"
-                          href="https://www.freepik.com/author/freepik/icons/kawaii-flat_45#from_element=resource_detail"
-                        >
-                          Default user icons created by freepik, Kawaii Flat
-                          family
-                        </a>
-                      </small>
-                      <small>
-                        <a
-                          className="text-xs block"
-                          href="https://thenounproject.com/browse/icons/term/thank-you/"
-                        >
-                          Thank you icon by Arfan Haq from Noun Project
-                        </a>
-                      </small>
-                    </div>
-                  </footer>
-                </SuggestionsWrapper>
-              </ReportsWrapper>
+                    <footer className="text-white text-sm py-4 px-4 bg-secondary border-t-2 border-violet-400 flex">
+                      <div className="flex flex-col gap-2">
+                        <h6 className="font-semibold">Credits:</h6>
+                        <small>
+                          <a
+                            className="text-xs block"
+                            href="https://www.freepik.com/author/freepik/icons/kawaii-flat_45#from_element=resource_detail"
+                          >
+                            Default user icons created by freepik, Kawaii Flat
+                            family
+                          </a>
+                        </small>
+                        <small>
+                          <a
+                            className="text-xs block"
+                            href="https://thenounproject.com/browse/icons/term/thank-you/"
+                          >
+                            Thank you icon by Arfan Haq from Noun Project
+                          </a>
+                        </small>
+                      </div>
+                    </footer>
+                  </SuggestionsWrapper>
+                </ReportsWrapper>
+              </NotificationsWrapper>
             </LikesWrapper>
           </CategTagsWrapper>
         </SessionProviderWrapper>

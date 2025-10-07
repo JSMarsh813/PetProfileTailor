@@ -48,17 +48,20 @@ export default async function Notifications() {
     {
       text: "Thanks",
       className: "mb-2",
-      value: "Thanks",
+      value: "thanks",
+      type: "thanks",
     },
     {
       text: "Description Likes",
       className: "mb-2",
-      value: "Description Likes",
+      value: "descriptions",
+      type: "descriptions",
     },
     {
       text: "Name Likes",
       className: "mb-2",
-      value: "Name Likes",
+      value: "names",
+      type: "names",
     },
   ];
 
@@ -68,7 +71,7 @@ export default async function Notifications() {
       <section className="text-subtleWhite flex justify-center items-center h-full">
         <ToggleOneNotificationPage
           contentList={contentList}
-          thankDocs={thankDocs}
+          thankDocsFromServer={thankDocs}
         />
         {/* <MarkThanksRead /> */}
       </section>

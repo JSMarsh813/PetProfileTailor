@@ -1,7 +1,15 @@
 import React from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-function generalOpenCloseButton({ state, text, value, className, setState }) {
+function generalOpenCloseButton({
+  state,
+  text,
+  value,
+  className,
+  setState,
+  sideText,
+}) {
+  console.log("sidetext", sideText);
   return (
     <button
       className={`hover:rounded-2xl
@@ -13,7 +21,10 @@ function generalOpenCloseButton({ state, text, value, className, setState }) {
       onClick={() => setState(value)}
     >
       {/* bg-subtleBackground  border-b-4 border-subtleWhite  */}
-      <p className="whitespace-normal break-words">{text}</p>
+      <div className="flex">
+        <p className="whitespace-normal break-words mr-2">{text}</p>
+        {sideText && <span> {sideText}</span>}
+      </div>
     </button>
   );
 }
