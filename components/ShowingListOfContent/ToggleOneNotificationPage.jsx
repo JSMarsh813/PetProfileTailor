@@ -6,18 +6,17 @@ import CoreListingPageLogic from "../CoreListingPagesLogic";
 import ThanksContentListing from "./ThanksContentListing";
 import { useNotifications } from "@/context/notificationsContext";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
+import { useSWRSimple } from "@/hooks/useSwrSimple";
 
 export default function ToggleOneNotificationPage({
   contentList,
   swrForThisUserID,
   defaultOpen = "thanks",
-  thankDocsFromServer,
+  initialThankDocs,
 }) {
   const [openContent, setOpenContent] = useState(defaultOpen);
-  const [thankDocs, setThankDocs] = useState(thankDocsFromServer);
+
   // wait to load name and desc docs until after the user clicks those notifications sections
-  const [nameDocs, setNameDocs] = useState([]);
-  const [descriptionDocs, setDescriptionDocs] = useState([]);
 
   const {
     notifications,
@@ -28,6 +27,52 @@ export default function ToggleOneNotificationPage({
   } = useNotifications();
 
   console.log("notifications in toggle", notifications);
+
+  //############## SWR #################
+
+  const thankSWR = useSWRSimple("thanks", {
+    initialPage: initialThankDocs,
+    revalidateFirstPage: false,
+  });
+
+  console.log("initialThankDocs", initialThankDocs);
+  console.log("thankDocs", thankSWR);
+
+  const nameSWR = useSWRSimple("names", {
+    revalidateFirstPage: false,
+    enabled: openContent === "names",
+  });
+
+  console.log("nameSwr", nameSWR);
+  // The hook is mounted all the time, so size, mutate, cache, etc. are preserved.
+  // SWR will remember previously loaded pages.
+  // The first fetch is truly lazy: it only fires when enabled === true.
+  // Switching tabs doesn’t reset anything because the hook never unmounted.
+
+  // const descSWR =
+  //   openContent === "descriptions"
+  //     ? useSWRSimple("descriptions", { revalidateFirstPage: false })
+  //     : null;
+
+  // Extract notifications if SWR exists
+  const thankDocs = thankSWR?.SWRNotifications || [];
+  const nameDocs = nameSWR?.SWRNotifications || [];
+
+  console.log("nameDocs", nameDocs);
+  // const descDocs = descSWR?.SWRNotifications || [];
+
+  // swr properties:
+  // SWRNotifications,
+  // error,
+  // isLoading,
+  // SWRisReachingEnd,
+  // size,
+  // setSize,
+  // mutate,
+
+  const loadMore = () => {
+    if (!SWRisReachingEnd) setSize((s) => s + 1);
+  };
 
   function handleContentClick(contentKey) {
     setOpenContent(openContent === contentKey ? null : contentKey);
@@ -131,7 +176,6 @@ export default function ToggleOneNotificationPage({
           />
         ))}
       </div>
-
       {openContent === "thanks" && (
         <section className="whitespace-pre-line ">
           <div className="flex justify-center">
@@ -142,27 +186,39 @@ export default function ToggleOneNotificationPage({
             />
           </div>
           {thankDocs?.length > 0 &&
-            thankDocs
-              // .slice(
-              //   currentUiPage - 1 == 0
-              //     ? 0
-              //     : (currentUiPage - 1) * itemsPerPage,
-              //   currentUiPage * itemsPerPage,
-              // )
-              .map((singleContent) => {
-                return (
-                  <ThanksContentListing
-                    singleContent={singleContent}
-                    key={singleContent._id}
-                  />
-                );
-              })}
+            thankDocs.map((singleContent) => {
+              return (
+                <ThanksContentListing
+                  singleContent={singleContent}
+                  key={singleContent._id}
+                />
+              );
+            })}
           {thankDocs?.length === 0 && noNotificationsMessage}
         </section>
       )}
 
-      {openContent === "names" && noNotificationsMessage}
-
+      {openContent === "names" && (
+        <section className="whitespace-pre-line ">
+          <div className="flex justify-center">
+            <GeneralButton
+              type="button"
+              text="recheck"
+              subtle
+            />
+          </div>
+          {nameDocs?.length > 0 &&
+            nameDocs.map((singleContent) => {
+              return (
+                <ThanksContentListing
+                  singleContent={singleContent}
+                  key={singleContent._id}
+                />
+              );
+            })}
+          {nameDocs?.length === 0 && noNotificationsMessage}
+        </section>
+      )}
       {openContent === "descriptions" && noNotificationsMessage}
     </section>
   );

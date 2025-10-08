@@ -12,6 +12,7 @@ import { leanWithStrings } from "@/utils/mongoDataCleanup";
 import ToggleOneNotificationPage from "@/components/ShowingListOfContent/ToggleOneNotificationPage";
 import PageTitleWithImages from "@/components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import MarkThanksRead from "@/components/Thanks/markThanksRead";
+import { getPaginatedNotifications } from "@/utils/api/getPaginatedNotifications";
 
 export default async function Notifications() {
   const session = await getServerSession(serverAuthOptions);
@@ -19,27 +20,19 @@ export default async function Notifications() {
   if (!session?.user) {
     return redirect("/login");
   }
-  const userId = await session.user.id;
+  const userId = session.user.id;
 
   await dbConnect.connect();
 
-  const thankDocs = await leanWithStrings(
-    Thank.find({
-      contentCreator: userId,
-    })
-      .populate({
-        path: "thanksBy",
-        select: ["profileName", "profileImage", "name"],
-      })
-      .populate({
-        path: "nameId",
-        select: ["content", "createdBy", "tags"], // include what fields you need
-      })
-      .populate({
-        path: "descriptionId",
-        select: ["content", "createdBy", "tags"],
-      })
-      .sort({ createdAt: -1 }), //  newest first
+  const thankDocs = await getPaginatedNotifications(
+    Thank,
+    { contentCreator: userId },
+    [
+      { path: "thanksBy", select: ["profileName", "profileImage", "name"] },
+      { path: "nameId", select: ["content", "createdBy", "tags"] },
+      { path: "descriptionId", select: ["content", "createdBy", "tags"] },
+    ],
+    { page: 1, limit: 25 },
   );
 
   console.log("thanks docs", thankDocs);
@@ -71,7 +64,7 @@ export default async function Notifications() {
       <section className="text-subtleWhite flex justify-center items-center h-full">
         <ToggleOneNotificationPage
           contentList={contentList}
-          thankDocsFromServer={thankDocs}
+          initialThankDocs={thankDocs}
         />
         {/* <MarkThanksRead /> */}
       </section>

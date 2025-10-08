@@ -3,7 +3,8 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const DescriptionLikeSchema = new mongoose.Schema(
   {
-    userId: { type: ObjectId, ref: "User", required: true },
+    likedBy: { type: ObjectId, ref: "User", required: true },
+    contentCreator: { type: ObjectId, ref: "User", required: true },
     descriptionId: { type: ObjectId, ref: "Description", required: true },
     read: { type: Boolean, default: false },
   },

@@ -3,8 +3,9 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const NameLikeSchema = new mongoose.Schema(
   {
-    userId: { type: ObjectId, ref: "Users", required: true },
-    nameId: { type: ObjectId, ref: "Names", required: true },
+    likedBy: { type: ObjectId, ref: "User", required: true },
+    contentCreator: { type: ObjectId, ref: "User", required: true },
+    nameId: { type: ObjectId, ref: "Name", required: true },
     read: { type: Boolean, default: false },
   },
   { timestamps: true },
