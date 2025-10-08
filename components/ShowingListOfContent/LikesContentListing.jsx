@@ -7,12 +7,10 @@ import ProfileImage from "../ReusableSmallComponents/ProfileImage";
 import Thanks from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImages/thanks";
 import { useRouter } from "next/navigation";
 
-export default function ThanksContentListing({ singleContent }) {
+export default function LikesContentListing({ singleContent }) {
   const { contentType, likedBy, contentCreator, read } = singleContent;
 
-  const content = singleContent?.nameId
-    ? singleContent.nameId
-    : singleContent.descriptionId;
+  const content = singleContent?.contentId;
 
   const contentSliced =
     content.slice(0, 60) + (content.length > 60 ? "..." : "");

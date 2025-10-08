@@ -17,6 +17,7 @@ export function LikesProvider({
   //  // to avoid a null provider (aka it breaking during sign in/out)
   // likes || { names: [], descriptions: [] }
   const [likesData, setLikesData] = useState(initialLikes);
+
   const names = likesData?.names || [];
   const descriptions = likesData?.descriptions || [];
 

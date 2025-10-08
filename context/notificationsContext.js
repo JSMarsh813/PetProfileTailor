@@ -44,7 +44,7 @@ export function NotificationsProvider({ children, initialNotifications = {} }) {
     }
 
     if (type === "descriptions") {
-      fetch("/api/descriptions/likes/mark-read", { method: "PATCH" }).catch(
+      fetch("/api/description/likes/mark-read", { method: "PATCH" }).catch(
         (err) => console.error("Failed to mark notifications as read:", err),
       );
     }

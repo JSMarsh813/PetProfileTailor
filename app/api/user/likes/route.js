@@ -15,20 +15,21 @@ export async function GET() {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const userId = new mongoose.Types.ObjectId(session.user.id);
+    const likedBy = new mongoose.Types.ObjectId(session.user.id);
 
-    // ✅ Connect to Mongo (use a global singleton inside db.connect for best performance)
     await db.connect();
 
-    // ✅ Run the queries in parallel
+    // Run the queries in parallel
     const [nameLikes, descriptionLikes] = await Promise.all([
-      leanWithStrings(NameLikes.find({ userId }, { nameId: 1, _id: 1 })).then(
-        (docs) => docs.map((d) => ({ id: d._id, contentId: d.nameId })),
+      leanWithStrings(
+        NameLikes.find({ likedBy }, { contentId: 1, _id: 1 }),
+      ).then((docs) =>
+        docs.map((d) => ({ id: d._id, contentId: d.contentId })),
       ),
       leanWithStrings(
-        DescriptionLikes.find({ userId }, { descriptionId: 1, _id: 1 }),
+        DescriptionLikes.find({ likedBy }, { contentId: 1, _id: 1 }),
       ).then((docs) =>
-        docs.map((d) => ({ id: d._id, contentId: d.descriptionId })),
+        docs.map((d) => ({ id: d._id, contentId: d.contentId })),
       ),
     ]);
 

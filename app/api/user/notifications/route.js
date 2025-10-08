@@ -26,18 +26,21 @@ export async function GET() {
       leanWithStrings(
         DescriptionLike.countDocuments({
           contentCreator: userId,
+          likedBy: { $ne: userId }, // only where likedBy is NOT equal to userId
           read: false,
         }),
       ),
       leanWithStrings(
         NameLike.countDocuments({
           contentCreator: userId,
+          likedBy: { $ne: userId },
           read: false,
         }),
       ),
       leanWithStrings(
         Thank.countDocuments({
           contentCreator: userId,
+          likedBy: { $ne: userId },
           read: false,
         }),
       ),

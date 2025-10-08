@@ -5,14 +5,17 @@ const DescriptionLikeSchema = new mongoose.Schema(
   {
     likedBy: { type: ObjectId, ref: "User", required: true },
     contentCreator: { type: ObjectId, ref: "User", required: true },
-    descriptionId: { type: ObjectId, ref: "Description", required: true },
+    contentId: { type: ObjectId, ref: "Description", required: true },
     read: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
 
 // prevent duplicate likes
-DescriptionLikeSchema.index({ userId: 1, descriptionId: 1 }, { unique: true });
+DescriptionLikeSchema.index({ likedBy: 1, contentId: 1 }, { unique: true });
+
+// quick lookup + sorting
+DescriptionLikeSchema.index({ contentCreator: 1, read: 1, createdAt: -1 });
 // DescriptionLikesSchema.index
 // An index in MongoDB is like a sorted lookup table for faster queries.
 // Instead of scanning the entire collection to find matches, MongoDB jumps straight to the right place in the index.

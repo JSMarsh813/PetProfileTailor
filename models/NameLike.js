@@ -5,14 +5,20 @@ const NameLikeSchema = new mongoose.Schema(
   {
     likedBy: { type: ObjectId, ref: "User", required: true },
     contentCreator: { type: ObjectId, ref: "User", required: true },
-    nameId: { type: ObjectId, ref: "Name", required: true },
+    contentId: { type: ObjectId, ref: "Name", required: true },
     read: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
 
 // prevent duplicate likes
-NameLikeSchema.index({ userId: 1, nameId: 1 }, { unique: true });
+NameLikeSchema.index({ likedBy: 1, contentId: 1 }, { unique: true });
+
+// quick lookup + sorting
+NameLikeSchema.index({ contentCreator: 1, read: 1, createdAt: -1 });
+//read: 1 → ensures unread (read: false) come first if you sort { read: 1 }.
+//createdAt: -1 → ensures newest first within each read/unread group.
+
 // NameLikesSchema.index
 // An index in MongoDB is like a sorted lookup table for faster queries.
 // Instead of scanning the entire collection to find matches, MongoDB jumps straight to the right place in the index.

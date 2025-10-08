@@ -21,10 +21,10 @@ export const GET = async (req) => {
 
     const thankNotifs = await getPaginatedNotifications(
       NameLike,
-      { contentCreator: userId },
+      { contentCreator: userId, likedBy: { $ne: userId } },
       [
-        { path: "userId", select: ["profileName", "profileImage", "name"] },
-        { path: "nameId", select: ["content", "createdBy", "tags"] },
+        { path: "likedBy", select: ["profileName", "profileImage", "name"] },
+        { path: "contentId", select: ["content", "createdBy", "tags"] },
       ],
       { page, limit },
     );

@@ -8,17 +8,17 @@ import { getSessionForApis } from "@/utils/api/getSessionForApis";
 export async function POST(req, { params }) {
   await dbConnect.connect();
 
-  const { id } = await params;
+  const { contentId } = await params;
   const body = await req.json();
-  const { createdBy } = body;
+  const { contentCreator } = body;
 
   const { ok, session: serverSession } = await getSessionForApis();
   if (!ok) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const userId = serverSession.user.id;
-  if (!userId) {
+  const likedBy = serverSession.user.id;
+  if (!likedBy) {
     return Response.json({ error: "userId required" }, { status: 400 });
   }
 
@@ -29,8 +29,8 @@ export async function POST(req, { params }) {
     session.startTransaction();
     // transaction to ensure likes count stay in sync, if both the collections aren't updated then cancel
     const existingLike = await DescriptionLikes.findOne({
-      userId,
-      descriptionId,
+      likedBy,
+      contentId,
     }).session(session);
 
     let liked = false;
@@ -41,20 +41,20 @@ export async function POST(req, { params }) {
         session,
       );
       await Description.updateOne(
-        { _id: descriptionId },
+        { _id: contentId },
         { $inc: { likedByCount: -1 } },
         { session },
       );
       liked = false;
     } else {
       // Like, insert the document, increment likedByCount
-      const likingOwnContent = userId === createdBy;
+      const likingOwnContent = likedBy === contentCreator;
       await DescriptionLikes.create(
-        [{ userId, descriptionId, read: likingOwnContent }],
+        [{ likedBy, contentCreator, contentId, read: likingOwnContent }],
         { session },
       );
       await Description.updateOne(
-        { _id: descriptionId },
+        { _id: contentId },
         { $inc: { likedByCount: 1 } },
         { session },
       );

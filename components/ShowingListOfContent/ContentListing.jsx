@@ -87,7 +87,8 @@ export default function ContentListing({
 
   //SHARING
 
-  const apiBaseLink = dataType === "names" ? `/api/names` : `/api/description`;
+  const apiBaseLink =
+    dataType === "names" ? `/api/names/likes` : `/api/description/likes`;
 
   const linkToShare =
     dataType === "names"

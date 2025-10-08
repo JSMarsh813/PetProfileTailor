@@ -36,7 +36,6 @@ export default function ToggleOneNotificationPage({
   });
 
   console.log("initialThankDocs", initialThankDocs);
-  console.log("thankDocs", thankSWR);
 
   const nameSWR = useSWRSimple("names", {
     revalidateFirstPage: false,
@@ -139,13 +138,6 @@ export default function ToggleOneNotificationPage({
     <div
       className={`rounded-2xl px-4 mt-2 p-4 text-subtleWhite ml-5 my-2   hover:bg-secondary/60 `}
     >
-      <div className="flex justify-center">
-        <GeneralButton
-          type="button"
-          text="recheck"
-          subtle
-        />
-      </div>
       <p className="my-1">Woah, it&apos;s so empty! 😿</p>
       <p className="my-1">
         These pets will use this as a cozy nap spot until you get a notification
@@ -201,13 +193,15 @@ export default function ToggleOneNotificationPage({
       {openContent === "names" && (
         <section className="whitespace-pre-line ">
           <div className="flex justify-center">
+            {/* needs to go inside content listing */}
             <GeneralButton
               type="button"
               text="recheck"
               subtle
             />
           </div>
-          {nameDocs?.length > 0 &&
+          {Array.isArray(nameDocs) &&
+            nameDocs?.length > 0 &&
             nameDocs.map((singleContent) => {
               return (
                 <ThanksContentListing
