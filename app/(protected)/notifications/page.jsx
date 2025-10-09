@@ -9,7 +9,7 @@ import { serverAuthOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
-import ToggleOneNotificationPage from "@/components/ShowingListOfContent/ToggleOneNotificationPage";
+import ToggleOneNotificationPage from "@/components/Notifications/ToggleOneNotificationPage";
 import PageTitleWithImages from "@/components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import MarkThanksRead from "@/components/Thanks/markThanksRead";
 import { getPaginatedNotifications } from "@/utils/api/getPaginatedNotifications";

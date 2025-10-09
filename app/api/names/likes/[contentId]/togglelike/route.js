@@ -9,10 +9,10 @@ export async function POST(req, { params }) {
 
   const { contentId } = await params;
 
-  console.log("contentId in toggle", params);
-
   const body = await req.json();
-  const { contentCreator } = body;
+  const { _id, name, profileName, profileImage } = body.contentCreator;
+
+  const creatorId = _id;
 
   const { ok, session } = await getSessionForApis({ req });
   if (!ok) {
@@ -37,6 +37,8 @@ export async function POST(req, { params }) {
       contentId,
     }).session(dbSession);
 
+    // console.log("existing like worked", existingLike);
+
     let liked = false;
 
     if (existingLike) {
@@ -50,9 +52,24 @@ export async function POST(req, { params }) {
       liked = false;
     } else {
       // Like, insert the document, increment likedByCount
-      const likingOwnContent = likedBy === contentCreator;
+      const likingOwnContent = likedBy === creatorId;
+      // console.log(
+      //   "likngOwnContent",
+      //   likingOwnContent,
+      //   "likedBy",
+      //   likedBy,
+      //   "contentCreator._id",
+      //   creatorId,
+      // );
       await NameLikes.create(
-        [{ likedBy, contentCreator, contentId, read: likingOwnContent }],
+        [
+          {
+            likedBy,
+            contentCreator: creatorId,
+            contentId,
+            read: likingOwnContent,
+          },
+        ],
         {
           session: dbSession,
         },

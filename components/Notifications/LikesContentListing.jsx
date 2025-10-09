@@ -4,8 +4,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { formatDistanceStrict } from "date-fns";
 import Link from "next/link";
 import ProfileImage from "../ReusableSmallComponents/ProfileImage";
-import Thanks from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImages/thanks";
 import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 export default function LikesContentListing({ singleContent }) {
   const { contentType, contentId, likedBy, contentCreator, read, createdAt } =
@@ -74,7 +76,10 @@ export default function LikesContentListing({ singleContent }) {
       } hover:bg-secondary/60`}
     >
       <span className="mr-4 mt-3">
-        <Thanks fill="#ec4899" />
+        <FontAwesomeIcon
+          icon={faHeart}
+          color={"red"}
+        />
       </span>
 
       <section>

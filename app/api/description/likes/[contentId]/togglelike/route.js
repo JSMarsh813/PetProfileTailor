@@ -10,7 +10,9 @@ export async function POST(req, { params }) {
 
   const { contentId } = await params;
   const body = await req.json();
-  const { contentCreator } = body;
+  const { _id, name, profileName, profileImage } = body.contentCreator;
+
+  const creatorId = _id;
 
   const { ok, session: serverSession } = await getSessionForApis();
   if (!ok) {
@@ -48,9 +50,16 @@ export async function POST(req, { params }) {
       liked = false;
     } else {
       // Like, insert the document, increment likedByCount
-      const likingOwnContent = likedBy === contentCreator;
+      const likingOwnContent = likedBy === creatorId;
       await DescriptionLikes.create(
-        [{ likedBy, contentCreator, contentId, read: likingOwnContent }],
+        [
+          {
+            likedBy,
+            contentCreator: creatorId,
+            contentId,
+            read: likingOwnContent,
+          },
+        ],
         { session },
       );
       await Description.updateOne(
