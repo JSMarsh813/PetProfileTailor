@@ -9,12 +9,12 @@ import { checkIfValidContentType } from "@/utils/api/checkIfValidContentType";
 
 // ---------------- POST (create a thank you) ----------------
 export async function POST(req) {
-  await db.connect();
-
   const { ok, session, response } = await getSessionForApis({ req });
   if (!ok) return response;
 
   const userId = session.user.id;
+
+  await db.connect();
 
   try {
     const { contentType, contentCreator, contentId, messages } =
@@ -86,10 +86,10 @@ export async function POST(req) {
 
 // ---------------- GET (fetch thanks) ----------------
 export async function GET(req) {
-  await db.connect();
-
   const { ok, session, response } = await getSessionForApis({ req });
   if (!ok) return response;
+
+  await db.connect();
 
   const userId = session.user.id;
 

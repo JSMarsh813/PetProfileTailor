@@ -4,8 +4,6 @@ import mongoose from "mongoose";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 export async function PUT(req) {
-  await db.connect();
-
   const { ok, session } = await getSessionForApis({ req });
   if (!ok) {
     return new Response(JSON.stringify({ message: "Not authenticated" }), {
@@ -14,6 +12,8 @@ export async function PUT(req) {
   }
 
   const userId = session.user.id;
+
+  await db.connect();
   const body = await req.json();
   const { userToFollowId, userFollowed } = body;
 

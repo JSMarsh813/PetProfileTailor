@@ -21,9 +21,10 @@ async function requireAuth(req) {
 
 // ---------------- POST (create a suggestion) ----------------
 export async function POST(req) {
-  await db.connect();
   const { session, error } = await requireAuth(req);
   if (error) return error;
+
+  await db.connect();
 
   const userId = session.user.id;
   const {
@@ -93,9 +94,10 @@ export async function POST(req) {
 
 // ---------------- GET (fetch suggestion) ----------------
 export async function GET(req) {
-  await db.connect();
   const { session, error } = await requireAuth(req);
   if (error) return error;
+
+  await db.connect();
 
   const userId = session.user.id;
   const { searchParams } = new URL(req.url);
@@ -130,9 +132,10 @@ export async function GET(req) {
 
 // ---------------- PUT (update suggestion) ----------------
 export async function PUT(req) {
-  await db.connect();
   const { session, error } = await requireAuth(req);
   if (error) return error;
+
+  await db.connect();
 
   const userId = session.user.id;
   const {
@@ -194,9 +197,10 @@ export async function PUT(req) {
 
 // ---------------- DELETE (mark as deleted) ----------------
 export async function DELETE(req) {
-  await db.connect();
   const { session, error } = await requireAuth(req);
   if (error) return error;
+
+  await db.connect();
 
   const { suggestionId } = await req.json();
 

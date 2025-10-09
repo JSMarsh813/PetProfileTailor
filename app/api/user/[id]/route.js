@@ -3,8 +3,6 @@ import User from "@models/User";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 export async function GET(req) {
-  await db.connect();
-
   const { ok, session } = await getSessionForApis({ req });
   if (!ok) {
     return new Response(
@@ -12,6 +10,7 @@ export async function GET(req) {
       { status: 401 },
     );
   }
+  await db.connect();
 
   try {
     const user = await User.findById(session.user.id);
@@ -28,8 +27,6 @@ export async function GET(req) {
 }
 
 export async function PUT(req) {
-  await db.connect();
-
   const { ok, session } = await getSessionForApis({ req });
   if (!ok) {
     return new Response(
@@ -37,6 +34,8 @@ export async function PUT(req) {
       { status: 401 },
     );
   }
+
+  await db.connect();
 
   const body = await req.json();
 

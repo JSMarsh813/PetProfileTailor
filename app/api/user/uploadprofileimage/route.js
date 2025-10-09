@@ -3,8 +3,6 @@ import db from "@utils/db";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 
 export async function PUT(req) {
-  await db.connect();
-
   const { ok, session } = await getSessionForApis({ req });
   if (!ok) {
     return new Response(JSON.stringify({ message: "Not authenticated" }), {
@@ -12,6 +10,7 @@ export async function PUT(req) {
     });
   }
 
+  await db.connect();
   const userId = session.user.id;
   const body = await req.json();
   const { newProfileImage } = body;

@@ -9,7 +9,6 @@ import { serverAuthOptions } from "@/lib/auth";
 
 export async function GET() {
   try {
-    // 🔑 Authenticate user
     const session = await getServerSession(serverAuthOptions);
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
@@ -17,10 +16,8 @@ export async function GET() {
 
     const userId = new mongoose.Types.ObjectId(session.user.id);
 
-    // ✅ Connect to MongoDB (ensure db.connect uses a global singleton)
     await db.connect();
 
-    // ✅ Fetch both name and description suggestions in parallel
     const [nameSuggestions, descriptionSuggestions] = await Promise.all([
       leanWithStrings(
         Suggestion.find(
@@ -36,7 +33,7 @@ export async function GET() {
         Suggestion.find(
           {
             suggestionBy: userId,
-            status: "pending", // only get pending suggestions
+            status: "pending",
             contentType: "descriptions",
           },
           { contentId: 1, status: 1, _id: 0 },
@@ -44,7 +41,6 @@ export async function GET() {
       ),
     ]);
 
-    // ✅ Return JSON response
     return NextResponse.json({
       names: nameSuggestions,
       descriptions: descriptionSuggestions,

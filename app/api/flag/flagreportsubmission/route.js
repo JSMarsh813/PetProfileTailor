@@ -4,12 +4,12 @@ import { getSessionForApis } from "@/utils/api/getSessionForApis";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  await db.connect();
-
   const { ok, session } = await getSessionForApis({ req });
   if (!ok) {
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
   }
+
+  await db.connect();
 
   const reportedByUserId = session.user.id;
   const {

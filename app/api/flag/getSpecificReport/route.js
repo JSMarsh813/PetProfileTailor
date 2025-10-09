@@ -5,12 +5,12 @@ import { getSessionForApis } from "@/utils/api/getSessionForApis";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {
-  await db.connect();
-
   const { ok, session } = await getSessionForApis({ req });
   if (!ok) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
+
+  await db.connect();
 
   const userId = session.user.id;
   const { searchParams } = new URL(req.url);
@@ -44,12 +44,12 @@ export async function GET(req) {
 }
 
 export async function PUT(req) {
-  await db.connect();
-
   const { ok, session } = await getSessionForApis({ req });
   if (!ok) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
+
+  await db.connect();
 
   const userId = session.user.id;
   const { reportId, reportCategories, comments } = await req.json();
@@ -84,12 +84,12 @@ export async function PUT(req) {
 }
 
 export async function DELETE(req) {
-  await db.connect();
-
   const { ok, session } = await getSessionForApis({ req });
   if (!ok) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
+
+  await db.connect();
 
   const userId = session.user.id;
   const { reportId } = await req.json();

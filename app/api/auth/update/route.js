@@ -12,12 +12,12 @@ export async function PUT(req) {
     return NextResponse.json({ message: "Validation error" }, { status: 422 });
   }
 
-  await db.connect();
-
   const { ok, session } = await getSessionForApis({ req });
   if (!ok || !session) {
     return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
   }
+
+  await db.connect();
 
   const userId = session.user.id;
   const toUpdateUser = await User.findById(userId);
