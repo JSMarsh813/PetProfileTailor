@@ -4,8 +4,8 @@ import NameCategory from "@/models/NameCategory";
 import DescriptionCategory from "@/models/DescriptionCategory";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
-// ✅ Control revalidation (cache TTL in seconds)
-// export const revalidate = 10800; // cache for 3 hours
+// Control revalidation (cache TTL in seconds)
+export const revalidate = 10800; // cache for 3 hours
 
 export async function GET() {
   try {
