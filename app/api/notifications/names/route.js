@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import db from "@utils/db";
 // necessary for populate
 import Name from "@/models/Name";
@@ -11,7 +12,13 @@ export const GET = async (req) => {
     const { ok, session, response } = await getSessionForApis({ req });
     if (!ok) return response;
 
-    const userId = session.user.id;
+    const userId = new mongoose.Types.ObjectId(session.user.id);
+    // was failing with $ne: userId
+    // found out ne doesn't automatically cast the type to objectId
+
+    // Mongoose knows contentCreator is an ObjectId field, so it automatically casts userId (even if it’s a string) into an ObjectId for you.
+    // query operators like $ne, $in, $nin, $gte, etc., Mongoose can’t always infer the expected type cleanly
+    // So it skips automatic casting for safety — you have to pass an ObjectId yourself.
 
     await db.connect();
 
@@ -21,7 +28,10 @@ export const GET = async (req) => {
 
     const thankNotifs = await getPaginatedNotifications(
       NameLike,
-      { contentCreator: userId, likedBy: { $ne: userId } },
+      {
+        contentCreator: userId,
+        likedBy: { $ne: userId },
+      },
       [
         { path: "likedBy", select: ["profileName", "profileImage", "name"] },
         { path: "contentId", select: ["content", "createdBy", "tags"] },

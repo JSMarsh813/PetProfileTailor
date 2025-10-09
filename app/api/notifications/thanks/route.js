@@ -2,13 +2,15 @@ import db from "@utils/db";
 import Thank from "@/models/Thank";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 import { getPaginatedNotifications } from "@/utils/api/getPaginatedNotifications";
+import mongoose from "mongoose";
 
 export const GET = async (req) => {
   try {
     const { ok, session, response } = await getSessionForApis({ req });
+
     if (!ok) return response;
 
-    const userId = session.user.id;
+    const userId = new mongoose.Types.ObjectId(session.user.id);
 
     console.log("nameNotifs userId", userId);
 
@@ -30,6 +32,8 @@ export const GET = async (req) => {
       ],
       { page, limit },
     );
+
+    console.log("thanksNotifs", thankNotifs, "page", page, "limit", limit);
 
     return new Response(JSON.stringify(thankNotifs), { status: 200 });
   } catch (err) {

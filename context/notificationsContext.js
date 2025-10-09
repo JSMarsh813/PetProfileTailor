@@ -38,19 +38,23 @@ export function NotificationsProvider({ children, initialNotifications = {} }) {
 
   const resetNotificationType = (type) => {
     if (type === "thanks") {
-      fetch("/api/thanks/mark-read", { method: "PATCH" }).catch((err) =>
-        console.error("Failed to mark notifications as read:", err),
-      );
-    }
-
-    if (type === "descriptions") {
-      fetch("/api/description/likes/mark-read", { method: "PATCH" }).catch(
+      fetch("/api/notifications/thanks/mark-read", { method: "PATCH" }).catch(
         (err) => console.error("Failed to mark notifications as read:", err),
       );
     }
 
+    if (type === "descriptions") {
+      fetch("/api/notifications/description/likes/mark-read", {
+        method: "PATCH",
+      }).catch((err) =>
+        console.error("Failed to mark notifications as read:", err),
+      );
+    }
+
     if (type === "names") {
-      fetch("/api/names/likes/mark-read", { method: "PATCH" }).catch((err) =>
+      fetch("/api/notifications/names/likes/mark-read", {
+        method: "PATCH",
+      }).catch((err) =>
         console.error("Failed to mark notifications as read:", err),
       );
     }

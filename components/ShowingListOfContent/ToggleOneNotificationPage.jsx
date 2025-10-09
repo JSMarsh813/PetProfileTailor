@@ -7,6 +7,8 @@ import ThanksContentListing from "./ThanksContentListing";
 import { useNotifications } from "@/context/notificationsContext";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import { useSWRSimple } from "@/hooks/useSwrSimple";
+import LikesContentListing from "./LikesContentListing";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 export default function ToggleOneNotificationPage({
   contentList,
@@ -32,17 +34,25 @@ export default function ToggleOneNotificationPage({
 
   const thankSWR = useSWRSimple("thanks", {
     initialPage: initialThankDocs,
+    // below is because we're getting data from the server, so don't grab the 1st page
     revalidateFirstPage: false,
+    revalidateIfStale: false,
+    revalidateOnMount: false,
   });
-
-  console.log("initialThankDocs", initialThankDocs);
 
   const nameSWR = useSWRSimple("names", {
     revalidateFirstPage: false,
     enabled: openContent === "names",
   });
 
-  console.log("nameSwr", nameSWR);
+  // console.log("nameSwr", nameSWR);
+
+  const descSWR = useSWRSimple("descriptions", {
+    revalidateFirstPage: false,
+    enabled: openContent === "descriptions",
+  });
+
+  console.log("descSWR ", descSWR);
   // The hook is mounted all the time, so size, mutate, cache, etc. are preserved.
   // SWR will remember previously loaded pages.
   // The first fetch is truly lazy: it only fires when enabled === true.
@@ -56,8 +66,9 @@ export default function ToggleOneNotificationPage({
   // Extract notifications if SWR exists
   const thankDocs = thankSWR?.SWRNotifications || [];
   const nameDocs = nameSWR?.SWRNotifications || [];
+  const descDocs = descSWR?.SWRNotifications || [];
 
-  console.log("nameDocs", nameDocs);
+  console.log("descDocs", descDocs);
   // const descDocs = descSWR?.SWRNotifications || [];
 
   // swr properties:
@@ -136,7 +147,7 @@ export default function ToggleOneNotificationPage({
     // this is a JSX literal not a JSX component
     // so we render it directly, rather than calling it like a JSX component/function
     <div
-      className={`rounded-2xl px-4 mt-2 p-4 text-subtleWhite ml-5 my-2   hover:bg-secondary/60 `}
+      className={`rounded-2xl px-4 mt-2 p-4 text-subtleWhite ml-5 my-2   hover:bg-secondary/60 text-center `}
     >
       <p className="my-1">Woah, it&apos;s so empty! 😿</p>
       <p className="my-1">
@@ -175,8 +186,10 @@ export default function ToggleOneNotificationPage({
               type="button"
               text="recheck"
               subtle
+              disabled={thankSWR.isLoading}
             />
           </div>
+
           {thankDocs?.length > 0 &&
             thankDocs.map((singleContent) => {
               return (
@@ -186,7 +199,11 @@ export default function ToggleOneNotificationPage({
                 />
               );
             })}
-          {thankDocs?.length === 0 && noNotificationsMessage}
+
+          {thankSWR.isLoading && <LoadingSpinner />}
+          {!thankSWR.isLoading &&
+            thankDocs?.length === 0 &&
+            noNotificationsMessage}
         </section>
       )}
 
@@ -198,22 +215,56 @@ export default function ToggleOneNotificationPage({
               type="button"
               text="recheck"
               subtle
+              disabled={nameSWR.isLoading}
             />
           </div>
+          {nameSWR.isLoading && <LoadingSpinner />}
+
           {Array.isArray(nameDocs) &&
             nameDocs?.length > 0 &&
             nameDocs.map((singleContent) => {
               return (
-                <ThanksContentListing
+                <LikesContentListing
                   singleContent={singleContent}
                   key={singleContent._id}
                 />
               );
             })}
-          {nameDocs?.length === 0 && noNotificationsMessage}
+          {!nameSWR.isLoading &&
+            nameDocs?.length === 0 &&
+            noNotificationsMessage}
         </section>
       )}
-      {openContent === "descriptions" && noNotificationsMessage}
+
+      {/* ################ descriptions #################*/}
+      {openContent === "descriptions" && (
+        <section className="whitespace-pre-line ">
+          <div className="flex justify-center">
+            {/* needs to go inside content listing */}
+            <GeneralButton
+              type="button"
+              text="recheck"
+              subtle
+              disabled={descSWR.isLoading}
+            />
+          </div>
+          {descSWR.isLoading && <LoadingSpinner />}
+
+          {Array.isArray(descDocs) &&
+            descDocs?.length > 0 &&
+            descDocs.map((singleContent) => {
+              return (
+                <LikesContentListing
+                  singleContent={singleContent}
+                  key={singleContent._id}
+                />
+              );
+            })}
+          {!descSWR.isLoading &&
+            descDocs?.length === 0 &&
+            noNotificationsMessage}
+        </section>
+      )}
     </section>
   );
 }

@@ -9,7 +9,6 @@ import MediaObjectLeft from "@components/ReusableMediumComponents/MediaObjectLef
 import MediaObjectRight from "@components/ReusableMediumComponents/MediaObjectRight";
 
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 
 import WideCenteredHeading from "@components/ReusableSmallComponents/TitlesOrHeadings/WideCenteredHeading";
 
@@ -17,7 +16,6 @@ import YoutubeEmbed from "@components/ShowingListOfContent/YoutubeEmbed";
 import { useState } from "react";
 
 function HomePage() {
-  const { data: session } = useSession(); // now client-side
   //for Nav menu profile name and image
   //let section exists in case the user is not signed in
 

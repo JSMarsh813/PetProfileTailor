@@ -8,10 +8,12 @@ import Thanks from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImag
 import { useRouter } from "next/navigation";
 
 export default function LikesContentListing({ singleContent }) {
-  const { contentType, likedBy, contentCreator, read } = singleContent;
+  const { contentType, contentId, likedBy, contentCreator, read, createdAt } =
+    singleContent;
 
-  const content = singleContent?.contentId;
-
+  const content = contentId?.content;
+  console.log("this is singleContent", singleContent);
+  console.log("this is content", content);
   const contentSliced =
     content.slice(0, 60) + (content.length > 60 ? "..." : "");
 
@@ -59,8 +61,8 @@ export default function LikesContentListing({ singleContent }) {
   }profile/${likedBy.profileName.toLowerCase()}`;
   const contentLink =
     contentType === "names"
-      ? `/name/${nameId?.content}`
-      : `/description/${descriptionId?._id}`;
+      ? `/name/${contentId?._id}`
+      : `/description/${contentId?._id}`;
 
   const currentDate = new Date();
 
@@ -108,12 +110,6 @@ export default function LikesContentListing({ singleContent }) {
               currentDate,
             )} ago`}
           </p>
-
-          <ul className="my-2">
-            {messages.map((message) => (
-              <li key={message}>{`• ${message}`}</li>
-            ))}
-          </ul>
 
           <p>{contentSliced}</p>
         </Link>

@@ -19,31 +19,31 @@ export async function GET() {
 
     const userId = new mongoose.Types.ObjectId(session.user.id);
 
+    console.log("session user id", session.user.id, typeof session.user.id);
+    console.log("userid mongoose", userId instanceof mongoose.Types.ObjectId);
+
+    console.log("userid in api/user/notifications", userId);
     await db.connect();
 
     //  Fetch in parallel
     const [descriptionLikes, nameLikes, thanks] = await Promise.all([
-      leanWithStrings(
-        DescriptionLike.countDocuments({
-          contentCreator: userId,
-          likedBy: { $ne: userId }, // only where likedBy is NOT equal to userId
-          read: false,
-        }),
-      ),
-      leanWithStrings(
-        NameLike.countDocuments({
-          contentCreator: userId,
-          likedBy: { $ne: userId },
-          read: false,
-        }),
-      ),
-      leanWithStrings(
-        Thank.countDocuments({
-          contentCreator: userId,
-          likedBy: { $ne: userId },
-          read: false,
-        }),
-      ),
+      DescriptionLike.countDocuments({
+        contentCreator: userId,
+        likedBy: { $ne: userId }, // only where likedBy is NOT equal to userId
+        read: false,
+      }),
+
+      NameLike.countDocuments({
+        contentCreator: userId,
+        likedBy: { $ne: userId },
+        read: false,
+      }),
+
+      Thank.countDocuments({
+        contentCreator: userId,
+        thanksBy: { $ne: userId },
+        read: false,
+      }),
     ]);
     console.log(
       "thanks",
