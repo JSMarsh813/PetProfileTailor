@@ -43,18 +43,21 @@ export default async function Notifications() {
       className: "mb-2",
       value: "thanks",
       type: "thanks",
+      icon: "thanks",
     },
     {
-      text: "Description Likes",
+      text: "Descriptions",
       className: "mb-2",
       value: "descriptions",
       type: "descriptions",
+      icon: "faHeart",
     },
     {
-      text: "Name Likes",
+      text: "Names",
       className: "mb-2",
       value: "names",
       type: "names",
+      icon: "faHeart",
     },
   ];
 

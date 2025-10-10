@@ -3,12 +3,15 @@
 import React, { useState, useEffect } from "react";
 import GeneralOpenCloseButton from "../ReusableSmallComponents/buttons/generalOpenCloseButton";
 import CoreListingPageLogic from "../CoreListingPagesLogic";
-import ThanksContentListing from "./ThanksContentListing";
+import ThanksContentListing from "./ThankNotificationListing";
 import { useNotifications } from "@/context/notificationsContext";
 import GeneralButton from "../ReusableSmallComponents/buttons/GeneralButton";
 import { useSWRSimple } from "@/hooks/useSwrSimple";
-import LikesContentListing from "./LikesContentListing";
+import LikesContentListing from "./LikeNotificationListing";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import NotifListingWrapper from "./NotifListingWrapper";
+import LikeNotificationListing from "@/components/Notifications/LikeNotificationListing";
+import IconOpenCloseButton from "../ReusableSmallComponents/buttons/iconOpenCloseButton";
 
 export default function ToggleOneNotificationPage({
   contentList,
@@ -32,7 +35,7 @@ export default function ToggleOneNotificationPage({
 
   //############## SWR #################
 
-  const thankSWR = useSWRSimple("thanks", {
+  const thanksSWR = useSWRSimple("thanks", {
     initialPage: initialThankDocs,
     // below is because we're getting data from the server, so don't grab the 1st page
     revalidateFirstPage: false,
@@ -40,36 +43,36 @@ export default function ToggleOneNotificationPage({
     revalidateOnMount: false,
   });
 
-  const nameSWR = useSWRSimple("names", {
+  const namesSWR = useSWRSimple("names", {
     revalidateFirstPage: false,
     enabled: openContent === "names",
   });
 
-  // console.log("nameSwr", nameSWR);
+  // console.log("namesSWR ", namesSWR );
 
-  const descSWR = useSWRSimple("descriptions", {
+  const descriptionsSWR = useSWRSimple("descriptions", {
     revalidateFirstPage: false,
     enabled: openContent === "descriptions",
   });
 
-  console.log("descSWR ", descSWR);
+  console.log("descriptionsSWR  ", descriptionsSWR);
   // The hook is mounted all the time, so size, mutate, cache, etc. are preserved.
   // SWR will remember previously loaded pages.
   // The first fetch is truly lazy: it only fires when enabled === true.
   // Switching tabs doesn’t reset anything because the hook never unmounted.
 
-  // const descSWR =
+  // const descriptionsSWR  =
   //   openContent === "descriptions"
   //     ? useSWRSimple("descriptions", { revalidateFirstPage: false })
   //     : null;
 
   // Extract notifications if SWR exists
-  const thankDocs = thankSWR?.SWRNotifications || [];
-  const nameDocs = nameSWR?.SWRNotifications || [];
-  const descDocs = descSWR?.SWRNotifications || [];
+  const thankDocs = thanksSWR?.SWRNotifications || [];
+  const nameDocs = namesSWR?.SWRNotifications || [];
+  const descDocs = descriptionsSWR?.SWRNotifications || [];
 
   console.log("descDocs", descDocs);
-  // const descDocs = descSWR?.SWRNotifications || [];
+  // const descDocs = descriptionsSWR ?.SWRNotifications || [];
 
   // swr properties:
   // SWRNotifications,
@@ -80,8 +83,9 @@ export default function ToggleOneNotificationPage({
   // setSize,
   // mutate,
 
-  const loadMore = () => {
-    if (!SWRisReachingEnd) setSize((s) => s + 1);
+  const handleLoadMore = (SWRType) => {
+    console.log("handle load more ran");
+    if (!SWRType.SWRisReachingEnd) SWRType.setSize((s) => s + 1);
   };
 
   function handleContentClick(contentKey) {
@@ -101,7 +105,7 @@ export default function ToggleOneNotificationPage({
       names: notifications.names,
       descriptions: notifications.descriptions,
     };
-    return lookup[content.type] ?? 0;
+    return lookup[content] ?? 0;
   }
 
   function setNotificationCountToZero() {
@@ -122,26 +126,61 @@ export default function ToggleOneNotificationPage({
     }
   }
 
-  // helper function to pause
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
   useEffect(() => {
-    let cancelled = false;
+    const swrMap = {
+      thanks: thanksSWR,
+      names: namesSWR,
+      descriptions: descriptionsSWR,
+    };
 
-    const resetNotification = async () => {
-      await sleep(2000); // wait 2 seconds
-      if (!cancelled) {
-        setNotificationCountToZero();
+    const currentCount = notificationCount(openContent);
+
+    if (currentCount === 0) return;
+    let canceled = false;
+
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    // When the timer finishes, it calls resolve(), the Promise completes, and the reference is released
+    // React GC (garbage collection) cleans it up once it resolves
+
+    const currentSWR = swrMap[openContent];
+
+    const waitForSWRAndReset = async () => {
+      if (!currentSWR) return;
+
+      // Wait for SWR to finish loading
+      while (currentSWR.isLoading) {
+        await sleep(200);
+        if (canceled) return;
       }
+
+      // Wait 3 seconds before resetting
+      await sleep(3000);
+      if (canceled) return;
+
+      setNotificationCountToZero();
     };
 
-    resetNotification();
+    waitForSWRAndReset();
 
-    // cleanup in case openContent changes before timeout, this way if the user jumps to another notification field the notifications they didn't read don't get set to 0
+    // cleanup function
+    // in case openContent changes before timeout
+    // this way if the user jumps to another notification field the notifications they didn't read don't get set to 0
+
+    // 1. The local variable canceled is initialized to false inside that effect’s closure.
+    // 2. React registers this cleanup function
+    // 3. Before re-running the effect (because dependencies changed) or before the component unmounts, React calls the cleanup function
+    // means cleanup runs and resets this specific useEffect's canceled = true (closure), just before the next effect execution or component removal
+
     return () => {
-      cancelled = true;
+      canceled = true;
     };
-  }, [openContent]);
+  }, [
+    openContent,
+    notifications,
+    thanksSWR.isLoading,
+    namesSWR.isLoading,
+    descriptionsSWR.isLoading,
+  ]);
 
   const noNotificationsMessage = (
     // this is a JSX literal not a JSX component
@@ -158,112 +197,52 @@ export default function ToggleOneNotificationPage({
   );
   return (
     <section className="w-full  max-w-[800px]">
-      <section className="flex flex-col items-center gap-2">
-        {" "}
-        <p className="text-center">
-          {" "}
-          Notifications can be manually rechecked every 5 minutes.
-        </p>
-        <p>Why? To reduce the server load to keep the app free.</p>
-      </section>
       <div className="flex justify-around">
         {contentList.map((category) => (
-          <GeneralOpenCloseButton
+          <IconOpenCloseButton
             key={category.value}
             text={category.text}
             setState={handleContentClick}
             className={category.className}
             value={category.value}
             state={openContent}
-            sideText={notificationCount(category)}
+            icon={category.icon}
+            unreadCount={notificationCount(category.type)}
           />
         ))}
       </div>
       {openContent === "thanks" && (
-        <section className="whitespace-pre-line ">
-          <div className="flex justify-center">
-            <GeneralButton
-              type="button"
-              text="recheck"
-              subtle
-              disabled={thankSWR.isLoading}
-            />
-          </div>
-
-          {thankDocs?.length > 0 &&
-            thankDocs.map((singleContent) => {
-              return (
-                <ThanksContentListing
-                  singleContent={singleContent}
-                  key={singleContent._id}
-                />
-              );
-            })}
-
-          {thankSWR.isLoading && <LoadingSpinner />}
-          {!thankSWR.isLoading &&
-            thankDocs?.length === 0 &&
-            noNotificationsMessage}
-        </section>
+        <NotifListingWrapper
+          swrHook={thanksSWR}
+          docs={thankDocs}
+          swrType="thanks"
+          noNotificationsMessage={noNotificationsMessage}
+          handleLoadMore={handleLoadMore}
+          ListingComponent={ThanksContentListing}
+        />
       )}
 
       {openContent === "names" && (
-        <section className="whitespace-pre-line ">
-          <div className="flex justify-center">
-            {/* needs to go inside content listing */}
-            <GeneralButton
-              type="button"
-              text="recheck"
-              subtle
-              disabled={nameSWR.isLoading}
-            />
-          </div>
-          {nameSWR.isLoading && <LoadingSpinner />}
-
-          {Array.isArray(nameDocs) &&
-            nameDocs?.length > 0 &&
-            nameDocs.map((singleContent) => {
-              return (
-                <LikesContentListing
-                  singleContent={singleContent}
-                  key={singleContent._id}
-                />
-              );
-            })}
-          {!nameSWR.isLoading &&
-            nameDocs?.length === 0 &&
-            noNotificationsMessage}
-        </section>
+        <NotifListingWrapper
+          swrHook={namesSWR}
+          swrType="names"
+          docs={nameDocs}
+          noNotificationsMessage={noNotificationsMessage}
+          handleLoadMore={handleLoadMore}
+          ListingComponent={LikesContentListing}
+        />
       )}
 
       {/* ################ descriptions #################*/}
       {openContent === "descriptions" && (
-        <section className="whitespace-pre-line ">
-          <div className="flex justify-center">
-            {/* needs to go inside content listing */}
-            <GeneralButton
-              type="button"
-              text="recheck"
-              subtle
-              disabled={descSWR.isLoading}
-            />
-          </div>
-          {descSWR.isLoading && <LoadingSpinner />}
-
-          {Array.isArray(descDocs) &&
-            descDocs?.length > 0 &&
-            descDocs.map((singleContent) => {
-              return (
-                <LikesContentListing
-                  singleContent={singleContent}
-                  key={singleContent._id}
-                />
-              );
-            })}
-          {!descSWR.isLoading &&
-            descDocs?.length === 0 &&
-            noNotificationsMessage}
-        </section>
+        <NotifListingWrapper
+          swrHook={descriptionsSWR}
+          docs={descDocs}
+          swrType="descriptions"
+          noNotificationsMessage={noNotificationsMessage}
+          handleLoadMore={handleLoadMore}
+          ListingComponent={LikesContentListing}
+        />
       )}
     </section>
   );

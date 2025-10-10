@@ -37,24 +37,17 @@ export function NotificationsProvider({ children, initialNotifications = {} }) {
     notifications.names + notifications.descriptions + notifications.thanks;
 
   const resetNotificationType = (type) => {
-    if (type === "thanks") {
-      fetch("/api/notifications/thanks/mark-read", { method: "PATCH" }).catch(
-        (err) => console.error("Failed to mark notifications as read:", err),
-      );
-    }
+    const urlMap = {
+      thanks: "/api/notifications/thanks/mark-read",
+      //app\api\notifications\thanks\mark-read\route.js
+      descriptions: "/api/notifications/description/likes/mark-read",
+      // app\api\notifications\descriptions\mark-read
+      names: "/api/notifications/names/likes/mark-read",
+      // app\api\notifications\names\mark-read\route.js
+    };
 
-    if (type === "descriptions") {
-      fetch("/api/notifications/description/likes/mark-read", {
-        method: "PATCH",
-      }).catch((err) =>
-        console.error("Failed to mark notifications as read:", err),
-      );
-    }
-
-    if (type === "names") {
-      fetch("/api/notifications/names/likes/mark-read", {
-        method: "PATCH",
-      }).catch((err) =>
+    if (urlMap[type]) {
+      fetch(urlMap[type], { method: "PATCH" }).catch((err) =>
         console.error("Failed to mark notifications as read:", err),
       );
     }

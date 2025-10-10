@@ -21,7 +21,7 @@ export function useSWRSimple(
   // allows us to preload server the first swr data for the thanksNotifications, but to let the other 2 notifications load normally
   const getKey = (pageIndex, previousPageData) => {
     if (!enabled) return null; // <-- prevents fetching of names and description likes until the list is toggled
-    if (previousPageData && !previousPageData.length) return null; // reached end
+    if (previousPageData && !previousPageData.length) return null; // reached end, do not request more pages after the empty one
     return `/api/notifications/${modelType}?&page=${
       pageIndex + 1
     }&limit=${PAGE_SIZE}`;
