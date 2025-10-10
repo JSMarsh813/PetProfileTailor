@@ -70,7 +70,7 @@ export default function NotifListingWrapper({
         </div>
       ) : (
         <div className="text-center my-6">
-          <p>We dug deep but there's no more content hidden here!</p>
+          <p>We dug deep but there&apos;s no more content hidden here!</p>
           <Image
             src="/digging-dog.svg"
             alt="dog digging a hole"
