@@ -39,11 +39,8 @@ export function NotificationsProvider({ children, initialNotifications = {} }) {
   const resetNotificationType = (type) => {
     const urlMap = {
       thanks: "/api/notifications/thanks/mark-read",
-      //app\api\notifications\thanks\mark-read\route.js
-      descriptions: "/api/notifications/description/likes/mark-read",
-      // app\api\notifications\descriptions\mark-read
-      names: "/api/notifications/names/likes/mark-read",
-      // app\api\notifications\names\mark-read\route.js
+      descriptions: "/api/notifications/descriptions/mark-read",
+      names: "/api/notifications/names/mark-read",
     };
 
     if (urlMap[type]) {

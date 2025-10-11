@@ -72,7 +72,7 @@ export async function POST(req) {
     const normalizedString = normalizeString(content);
 
     const newName = await Names.create({
-      content,
+      content: content.trim(),
       normalizedContent: normalizedString,
       notes,
       tags,
@@ -128,7 +128,7 @@ export async function PUT(req) {
         );
       }
       const normalizedString = normalizeString(content);
-      toUpdateName.content = content;
+      toUpdateName.content = content.trim();
       toUpdateName.normalizedContent = normalizedString;
     }
 

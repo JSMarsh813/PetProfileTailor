@@ -137,7 +137,7 @@ export async function PUT(req) {
   try {
     if (notes) existingDescription.notes = notes;
     if (content) {
-      (existingDescription.content = content),
+      (existingDescription.content = content.trim()),
         (existingDescription.normalizedContent = normalizeString(content).slice(
           0,
           400,

@@ -5,6 +5,7 @@ import Name from "@/models/Name";
 import Description from "@/models/Description";
 
 import Thank from "@/models/Thank";
+import NameLike from "@/models/NameLike";
 import { serverAuthOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -24,26 +25,25 @@ export default async function Notifications() {
 
   await dbConnect.connect();
 
-  const thankDocs = await getPaginatedNotifications(
-    Thank,
+  const nameDocs = await getPaginatedNotifications(
+    NameLike,
     { contentCreator: userId },
     [
-      { path: "thanksBy", select: ["profileName", "profileImage", "name"] },
-      { path: "nameId", select: ["content", "createdBy", "tags"] },
-      { path: "descriptionId", select: ["content", "createdBy", "tags"] },
+      { path: "likedBy", select: ["profileName", "profileImage", "name"] },
+      { path: "contentId", select: ["content", "createdBy", "tags"] },
     ],
     { page: 1, limit: 25 },
   );
 
-  console.log("thanks docs", thankDocs);
+  console.log("name docs", nameDocs);
 
   const contentList = [
     {
-      text: "Thanks",
+      text: "Names",
       className: "mb-2",
-      value: "thanks",
-      type: "thanks",
-      icon: "thanks",
+      value: "names",
+      type: "names",
+      icon: "faHeart",
     },
     {
       text: "Descriptions",
@@ -53,11 +53,11 @@ export default async function Notifications() {
       icon: "faHeart",
     },
     {
-      text: "Names",
+      text: "Thanks",
       className: "mb-2",
-      value: "names",
-      type: "names",
-      icon: "faHeart",
+      value: "thanks",
+      type: "thanks",
+      icon: "thanks",
     },
   ];
 
@@ -67,7 +67,7 @@ export default async function Notifications() {
       <section className="text-subtleWhite flex justify-center items-center h-full">
         <ToggleOneNotificationPage
           contentList={contentList}
-          initialThankDocs={thankDocs}
+          initialNamesDocs={nameDocs}
         />
         {/* <MarkThanksRead /> */}
       </section>

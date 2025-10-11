@@ -16,8 +16,8 @@ import IconOpenCloseButton from "../ReusableSmallComponents/buttons/iconOpenClos
 export default function ToggleOneNotificationPage({
   contentList,
   swrForThisUserID,
-  defaultOpen = "thanks",
-  initialThankDocs,
+  defaultOpen = "names",
+  initialNamesDocs,
 }) {
   const [openContent, setOpenContent] = useState(defaultOpen);
 
@@ -36,16 +36,17 @@ export default function ToggleOneNotificationPage({
   //############## SWR #################
 
   const thanksSWR = useSWRSimple("thanks", {
-    initialPage: initialThankDocs,
-    // below is because we're getting data from the server, so don't grab the 1st page
     revalidateFirstPage: false,
-    revalidateIfStale: false,
-    revalidateOnMount: false,
+    enabled: openContent === "thanks",
   });
 
   const namesSWR = useSWRSimple("names", {
+    initialPage: initialNamesDocs,
+    // below is because we're getting data from the server, so don't grab the 1st page
     revalidateFirstPage: false,
-    enabled: openContent === "names",
+    // revalidateFirstPage: only about automatic revalidations (like after focus, reconnect, or cache invalidation).
+    revalidateIfStale: false,
+    revalidateOnMount: false,
   });
 
   // console.log("namesSWR ", namesSWR );
