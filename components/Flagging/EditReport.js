@@ -10,6 +10,8 @@ import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
 import DeleteContentNotification from "@components/DeletingData/DeleteContentNotification";
 import { useReports } from "@/context/ReportsContext";
+import { useSession } from "next-auth/react";
+import MustLoginMessage from "@components/ui/MustLoginMessage";
 
 function EditReport({
   flaggedByUser,
@@ -23,6 +25,8 @@ function EditReport({
   // pages\api\flag\getSpecificReport\route.js
 
   const { deleteReport } = useReports();
+  const { data: session } = useSession();
+  const signedInUser = session?.user?.id;
 
   const [reportCategories, setReportCategories] = useState([]);
   const [comments, setComments] = useState([]);
@@ -178,6 +182,9 @@ function EditReport({
               {/* Area to Type a comment  */}
 
               <div className=" mb-2 text-subtleWhite px-4 pt-2">
+                {!signedInUser && (
+                  <MustLoginMessage text="edit or delete a report" />
+                )}
                 <h2 className="text-center text-xl "> Edit or Delete Report</h2>
 
                 <p className="text-center mb-3">
@@ -205,6 +212,7 @@ function EditReport({
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Hate"
+                    disabled={!signedInUser}
                   />
 
                   <StyledCheckbox
@@ -214,6 +222,7 @@ function EditReport({
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Violent Speech"
+                    disabled={!signedInUser}
                   />
 
                   <StyledCheckbox
@@ -223,6 +232,7 @@ function EditReport({
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Abuse and Harassment"
+                    disabled={!signedInUser}
                   />
 
                   <StyledCheckbox
@@ -232,6 +242,7 @@ function EditReport({
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Privacy"
+                    disabled={!signedInUser}
                   />
 
                   <StyledCheckbox
@@ -241,6 +252,7 @@ function EditReport({
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="Spam"
+                    disabled={!signedInUser}
                   />
 
                   <StyledCheckbox
@@ -252,6 +264,7 @@ function EditReport({
                     onChange={handleReportCategories}
                     className="ml-4 text-"
                     value="Sensitive or disturbing content"
+                    disabled={!signedInUser}
                   />
 
                   <StyledCheckbox
@@ -261,6 +274,7 @@ function EditReport({
                     onChange={handleReportCategories}
                     className="ml-4"
                     value="None of these"
+                    disabled={!signedInUser}
                   />
                 </div>
 
@@ -277,6 +291,7 @@ function EditReport({
                     name="body"
                     maxLength="500"
                     placeholder="Optional"
+                    disabled={!signedInUser}
                   />
                   <span className="text-subtleWhite mt-4 block ml-1">
                     {`${500 - comments.length}/500 characters left`}
@@ -294,6 +309,7 @@ function EditReport({
                     type="submit"
                     text="Submit"
                     default
+                    disabled={!signedInUser}
                   />
                 </Field>
               </div>
@@ -307,6 +323,7 @@ function EditReport({
               text="delete"
               warning
               onClick={() => setShowDeleteConfirmation(true)}
+              disabled={!signedInUser}
             />
             {showDeleteConfirmation && (
               <DeleteContentNotification

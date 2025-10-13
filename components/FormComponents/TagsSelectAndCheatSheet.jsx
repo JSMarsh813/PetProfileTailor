@@ -171,12 +171,13 @@ export default function TagsSelectAndCheatSheet({
       <p className="my-4 text-subtleWhite text-center">
         Or use the tags cheat sheet
       </p>
-
-      <GeneralButton
-        text={`${isOpen ? "Close" : "Open"}`}
-        onClick={() => setIsOpen(!isOpen)}
-        type="button"
-      />
+      <div className="flex justify-center">
+        <GeneralButton
+          text={`${isOpen ? "Close" : "Open"}`}
+          onClick={() => setIsOpen(!isOpen)}
+          type="button"
+        />
+      </div>
       {isOpen && (
         <div className="flex flex-wrap justify-center">
           {categoriesWithTags.map((category) => (
@@ -235,7 +236,7 @@ export default function TagsSelectAndCheatSheet({
       bg-secondary text-subtleWhite group
       peer-checked:bg-yellow-300 peer-checked:text-secondary group-hover:bg-blue-700
       peer-focus:ring-2 peer-focus:ring-yellow-400 peer-focus:outline-none ${
-        isDisabled && "bg-errorBackgroundColor"
+        isDisabled && "bg-errorBackgroundColor cursor-not-allowed"
       }
     `}
                             >

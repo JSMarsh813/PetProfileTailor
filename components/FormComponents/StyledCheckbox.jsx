@@ -10,6 +10,7 @@ export default function StyledCheckbox({
   onChange,
   value,
   className = "",
+  disabled = false,
 }) {
   // id={`filter-mobile-${index}`} wasn't working, htmlFor={id} and <input id={id} kept breaking
   // why?
@@ -29,6 +30,7 @@ export default function StyledCheckbox({
         checked={checked}
         onChange={onChange}
         className="peer sr-only"
+        disabled={disabled}
       />
 
       <span
@@ -37,7 +39,9 @@ export default function StyledCheckbox({
           transition-colors duration-200
           bg-secondary text-subtleWhite
           peer-checked:bg-yellow-300 peer-checked:text-secondary
-          peer-focus:ring-2 peer-focus:ring-yellow-400 peer-focus:outline-none
+          peer-focus:ring-2 peer-focus:ring-yellow-400 peer-focus:outline-none ${
+            disabled && "cursor-not-allowed"
+          }
         `}
       >
         <FontAwesomeIcon icon={faPaw} />

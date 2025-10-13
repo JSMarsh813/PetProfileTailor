@@ -9,6 +9,7 @@ import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
 import ThanksOptions from "@/data/ThanksOptions";
 import { useSession } from "next-auth/react";
+import MustLoginMessage from "@components/ui/MustLoginMessage";
 
 export default function AddThank({
   dataType,
@@ -18,19 +19,19 @@ export default function AddThank({
 }) {
   const [selectedThanks, setSelectedThanks] = useState([]);
   const { data: session } = useSession();
-  const thanksBy = session?.user?.id;
+  const signedInUser = session?.user?.id;
 
   const handleSubmitThanks = async (e) => {
     e.preventDefault();
 
-    if (!thanksBy) {
+    if (!signedInUser) {
       toast.error(`Ruh Roh! You must be signed in to thank content`);
       return;
     }
 
     let contentCreatedByUserId = contentInfo.createdBy._id;
 
-    if (contentCreatedByUserId === thanksBy) {
+    if (contentCreatedByUserId === signedInUser) {
       toast.warn(
         `Ruh Roh! Nice try but you can't send thanks to your own content silly goose :)`,
       );
@@ -81,6 +82,9 @@ export default function AddThank({
       <div className={` mb-4`}>
         <div className=" mb-2 text-subtleWhite px-4 ">
           <section className="my-6">
+            {!signedInUser && (
+              <MustLoginMessage text="submit thank you notes" />
+            )}
             <h2 className="text-center  text-2xl ">Send Thanks</h2>
 
             <p className="text-center mb-3">
@@ -121,6 +125,7 @@ export default function AddThank({
                       )
                     }
                     value={option.tag}
+                    disabled={!signedInUser}
                   />
                 ))}
               </div>
@@ -139,6 +144,7 @@ export default function AddThank({
               type="submit"
               text="Submit"
               default
+              disabled={!signedInUser}
             />
           </Field>
         </div>

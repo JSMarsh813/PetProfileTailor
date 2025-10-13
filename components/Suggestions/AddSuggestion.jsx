@@ -11,6 +11,8 @@ import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingX
 import { useSuggestions } from "@context/SuggestionsContext";
 import { useTags } from "@/hooks/useTags";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
+import { useSession } from "next-auth/react";
+import MustLoginMessage from "@components/ui/MustLoginMessage";
 
 export default function AddSuggestion({
   dataType,
@@ -19,6 +21,9 @@ export default function AddSuggestion({
   apisuggestionSubmission,
   onClose,
 }) {
+  const { data: session } = useSession();
+  const signedInUser = session?.user?.id;
+
   const { addSuggestion } = useSuggestions();
 
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
@@ -102,6 +107,7 @@ export default function AddSuggestion({
         <div className=" mb-2 text-subtleWhite px-4 ">
           <section className="my-6">
             <h2 className="text-center  text-2xl ">Suggestions</h2>
+            {!signedInUser && <MustLoginMessage text="submit suggestions" />}
             <p className="text-center mt-3">
               Thank you for taking the time to help improve our community
               powered database! 🙏🙇
@@ -122,6 +128,12 @@ export default function AddSuggestion({
             <p className="text-center mb-3">
               suggestions can be edited{" "}
               <strong>until they are being reviewed</strong>
+            </p>
+
+            <p>
+              {" "}
+              To prevent harrassment, the submissions will be sent to an admin
+              not the original poster
             </p>
           </section>
 
@@ -144,6 +156,7 @@ export default function AddSuggestion({
                       checked={incorrectTags.includes(tag._id)}
                       onChange={(e) => setIncorrectTags(e.target.value)}
                       value={tag._id}
+                      disabled={!signedInUser}
                     />
                   ))
                 ) : (
@@ -162,6 +175,7 @@ export default function AddSuggestion({
             tagsToSubmit={tagsToSubmit}
             handleSelectChange={handleSelectChange}
             handleCheckboxChange={handleCheckboxChange}
+            isDisabled={!signedInUser}
           />
 
           <div className=" bg-secondary rounded-sm flex mt-16">
@@ -181,6 +195,7 @@ export default function AddSuggestion({
               placeholder=""
               ariaLabel="type-comments"
               name="body"
+              disabled={!signedInUser}
             />
           </Field>
 
@@ -201,6 +216,7 @@ export default function AddSuggestion({
                 placeholder="Optional"
                 ariaLabel="type-comments"
                 name="body"
+                disabled={!signedInUser}
               />
             </Field>
           </section>
@@ -217,6 +233,7 @@ export default function AddSuggestion({
               type="submit"
               text="Submit"
               default
+              disabled={!signedInUser}
             />
           </Field>
         </div>

@@ -13,6 +13,8 @@ import { useTags } from "@/hooks/useTags";
 import TagsSelectAndCheatSheet from "../FormComponents/TagsSelectAndCheatSheet";
 import LoadingSpinner from "@components/ui/LoadingSpinner";
 import DeleteContentNotification from "../DeletingData/DeleteContentNotification";
+import { useSession } from "next-auth/react";
+import MustLoginMessage from "../ui/MustLoginMessage";
 
 export default function EditSuggestion({
   dataType,
@@ -22,6 +24,8 @@ export default function EditSuggestion({
   onClose,
 }) {
   const { addSuggestion, deleteSuggestion } = useSuggestions();
+  const { data: session } = useSession();
+  const signedInUser = session?.user?.id;
 
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([]);
@@ -194,6 +198,16 @@ export default function EditSuggestion({
                     suggestions can be edited{" "}
                     <strong>until they are being reviewed</strong>
                   </p>
+                  <p>
+                    {" "}
+                    To prevent harrassment, the submissions will be sent to an
+                    admin not the original poster
+                  </p>
+
+                  {!session && (
+                    <MustLoginMessage text="edit or delete a suggestion" />
+                  )}
+
                   <h2 className="text-center  text-2xl ">Edit Suggestion</h2>
 
                   <p className="text-center mb-3">
@@ -251,6 +265,7 @@ export default function EditSuggestion({
                   tagsToSubmit={tagsToSubmit}
                   handleSelectChange={handleSelectChange}
                   handleCheckboxChange={handleCheckboxChange}
+                  isDisabled={!signedInUser}
                 />
 
                 <div className=" bg-secondary rounded-sm flex mt-16">
@@ -273,6 +288,7 @@ export default function EditSuggestion({
                     ariaLabel="type-comments"
                     name="body"
                     value={description}
+                    disabled={!signedInUser}
                   />
                 </Field>
 
@@ -295,6 +311,7 @@ export default function EditSuggestion({
                       ariaLabel="type-comments"
                       name="body"
                       value={comments}
+                      disabled={!signedInUser}
                     />
                   </Field>
                 </section>
@@ -307,6 +324,7 @@ export default function EditSuggestion({
                     onClick={() =>
                       cancelSuggestionFormAndRevertSuggestionState()
                     }
+                    disabled={!signedInUser}
                   />
 
                   <GeneralButton
@@ -329,6 +347,7 @@ export default function EditSuggestion({
               text="delete"
               warning
               onClick={() => setShowDeleteConfirmation(true)}
+              disabled={!signedInUser}
             />
             {showDeleteConfirmation && (
               <DeleteContentNotification

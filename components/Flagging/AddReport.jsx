@@ -7,7 +7,8 @@ import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
 import { useReports } from "@context/ReportsContext";
-import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
+import { useSession } from "next-auth/react";
+import MustLoginMessage from "@components/ui/MustLoginMessage";
 
 export default function AddReport({
   dataType,
@@ -18,6 +19,9 @@ export default function AddReport({
   onClose,
 }) {
   const { addReport } = useReports();
+  const { data: session } = useSession();
+  const signedInUser = session?.user?.id;
+
   const [flagCategoriesState, setFlagCategoriesState] = useState([]);
   const [additionalCommentsState, setAdditionalCommentsState] = useState([]);
 
@@ -118,6 +122,7 @@ export default function AddReport({
         {/* Area to Type a comment  */}
 
         <div className=" mb-2 text-subtleWhite px-4 pt-2">
+          {!signedInUser && <MustLoginMessage text="submit a report" />}
           <h2 className="text-center text-xl ">Report Content</h2>
           <p className="text-center mt-3">
             Thank you for taking the time to help improve our community powered
@@ -155,6 +160,7 @@ export default function AddReport({
               onChange={handleFlagCategoriesState}
               className="ml-4"
               value="Hate"
+              disabled={!signedInUser}
             />
 
             <StyledCheckbox
@@ -164,6 +170,7 @@ export default function AddReport({
               onChange={handleFlagCategoriesState}
               className="ml-4"
               value="Violent Speech"
+              disabled={!signedInUser}
             />
 
             <StyledCheckbox
@@ -173,6 +180,7 @@ export default function AddReport({
               onChange={handleFlagCategoriesState}
               className="ml-4"
               value="Abuse and Harassment"
+              disabled={!signedInUser}
             />
 
             <StyledCheckbox
@@ -182,6 +190,7 @@ export default function AddReport({
               onChange={handleFlagCategoriesState}
               className="ml-4"
               value="Privacy"
+              disabled={!signedInUser}
             />
 
             <StyledCheckbox
@@ -191,6 +200,7 @@ export default function AddReport({
               onChange={handleFlagCategoriesState}
               className="ml-4"
               value="Spam"
+              disabled={!signedInUser}
             />
 
             <StyledCheckbox
@@ -202,6 +212,7 @@ export default function AddReport({
               onChange={handleFlagCategoriesState}
               className="ml-4"
               value="Sensitive or disturbing content"
+              disabled={!signedInUser}
             />
 
             <StyledCheckbox
@@ -211,6 +222,7 @@ export default function AddReport({
               onChange={handleFlagCategoriesState}
               className="ml-4"
               value="None of these"
+              disabled={!signedInUser}
             />
           </div>
 
@@ -224,6 +236,7 @@ export default function AddReport({
               name="body"
               maxLength="500"
               placeholder="Optional"
+              disabled={!signedInUser}
             />
             <span className="text-subtleWhite mt-4 block ml-1">
               {`${500 - additionalCommentsState.length}/500 characters left`}
@@ -241,6 +254,7 @@ export default function AddReport({
               type="submit"
               text="Submit"
               default
+              disabled={!signedInUser}
             />
           </Field>
         </div>
