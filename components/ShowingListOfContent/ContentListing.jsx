@@ -43,11 +43,7 @@ export default function ContentListing({
   // needed for editing, since the non-swr page needs state to reflect the edits, since it doesn't use the swr logic
 }) {
   const { data: session } = useSession();
-
-  let signedInUsersId = "";
-  if (session?.user) {
-    signedInUsersId = session.user.id;
-  }
+  const { role, status, id: signedInUsersId } = session?.user || {};
 
   const {
     showDeleteConfirmation,
@@ -212,8 +208,9 @@ export default function ContentListing({
                         </MenuButton>
                       </div>
 
-                      {signedInUsersId &&
-                      singleContent.createdBy._id == signedInUsersId ? (
+                      {(signedInUsersId &&
+                        singleContent.createdBy._id == signedInUsersId) ||
+                      (role === "admin" && status === "active") ? (
                         <MenuItems className="absolute right-0 mt-2 w-48 py-3 origin-top-right bg-secondary border text-subtleWhite border-subtleWhite rounded-md shadow-lg focus:outline-none z-50 space-y-2">
                           <MenuItem as="div">
                             {/* MenuItem as="div" prevents Headless UI from treating your button as a MenuItem that auto-closes. this way the state has time to update*/}

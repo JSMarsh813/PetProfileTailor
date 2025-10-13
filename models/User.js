@@ -46,6 +46,10 @@ const UserSchema = new mongoose.Schema(
 
       default: "",
     },
+    over13: {
+      type: Boolean,
+      required: true,
+    },
     profileImage: {
       type: String,
       default: chooseRandomDefaultAvatar,

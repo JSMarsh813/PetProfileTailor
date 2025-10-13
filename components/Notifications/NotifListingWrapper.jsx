@@ -30,10 +30,10 @@ export default function NotifListingWrapper({
           className="text-center my-6 py-3 border-t-2 border-subtleWhite"
         >
           <p className="mt-2 mb-2">
-            To keep the app free, the recheck button can only be clicked once
-            every 2 minutes.
+            To keep the app free, the recheck button can only be clicked every 2
+            minutes.
           </p>
-          <p> Thanks for your patience! 🐶</p>
+          <p> Thanks for your patience! </p>
 
           <GeneralButton
             type="button"
@@ -70,7 +70,9 @@ export default function NotifListingWrapper({
         </div>
       ) : (
         <div className="text-center my-6">
-          <p>We dug deep but there&apos;s no more content hidden here!</p>
+          <p className="mb-4">
+            We dug deep but there&apos;s no more content hidden here!
+          </p>
           <Image
             src="/digging-dog.svg"
             alt="dog digging a hole"

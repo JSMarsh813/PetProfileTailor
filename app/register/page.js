@@ -55,12 +55,27 @@ export default function Register() {
     watch,
   } = useForm();
 
-  const submitHandler = async ({ name, email, password, profilename }) => {
+  const submitHandler = async ({
+    name,
+    email,
+    password,
+    profilename,
+    over13,
+  }) => {
     try {
+      if (!over13) {
+        setError("over13", {
+          type: "manual",
+          message: "You must confirm you are over 13",
+        });
+        return;
+      }
+
       await axios.post("/api/auth/signup", {
         name,
         email,
         password,
+        over13,
         profileName: profilename.toLowerCase(),
       });
 
@@ -164,6 +179,31 @@ export default function Register() {
         className="max-w-screen-md text-center mx-auto"
         onSubmit={handleSubmit(submitHandler)}
       >
+        <div className="mb-4 flex items-center">
+          <p>
+            {" "}
+            Due to the community nature of this app and the possibility of
+            lightly suggestive or controversial content, users must be over 13{" "}
+          </p>
+          <input
+            id="over13"
+            type="checkbox"
+            {...register("over13", {
+              required: "You must confirm you are over 13",
+            })}
+            className="h-5 w-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+          />
+          <label
+            htmlFor="over13"
+            className="ml-2 text-subtleWhite"
+          >
+            I confirm that I am over 13 years old
+          </label>
+        </div>
+        {errors.over13 && (
+          <p className="text-red-500 text-sm mt-1">{errors.over13.message}</p>
+        )}
+
         <RegisterInput
           id="name"
           label="User Name"

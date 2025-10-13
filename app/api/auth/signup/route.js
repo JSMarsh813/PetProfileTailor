@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
   const body = await req.json();
-  const { name, email, password, profileName } = body;
+  const { name, email, password, profileName, over13 } = body;
 
   const errors = {};
 
@@ -17,6 +17,7 @@ export async function POST(req) {
   if (email && !email.includes("@"))
     errors.email = "Please enter a valid email";
   if (!profileName) errors.profilename = "Please enter a profile name";
+  if (!over13) errors.over13 = "You must confirm you are over 13";
 
   // ############ Profile name checks ###############
   if (profileName) {
@@ -56,6 +57,7 @@ export async function POST(req) {
     name,
     email,
     profileName: profileName.toLowerCase(),
+    over13,
     ...(password && { password: bcryptjs.hashSync(password) }),
   });
 
@@ -68,6 +70,7 @@ export async function POST(req) {
       profileName: user.profileName,
       name: user.name,
       email: user.email,
+      over13: user.over13,
     },
     { status: 201 },
   );

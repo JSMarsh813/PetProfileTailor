@@ -11,12 +11,18 @@ import { getSessionForApis } from "./getSessionForApis";
  */
 export async function checkOwnership({ req, res, resourceCreatorId }) {
   const { ok, session } = await getSessionForApis({ req, res });
+  const { user } = session;
+
+  console.log("session in checkOwnership", session);
 
   if (!ok) {
     return;
   }
 
-  if (resourceCreatorId.toString() !== session.user.id) {
+  const isTheCreator = resourceCreatorId.toString() === user.id;
+  const isActiveAdmin = user.role === "admin" && user.status === "active";
+
+  if (!(isTheCreator || isActiveAdmin)) {
     res.status(403).json({
       message: `Only the creator of this content is authorized to change it`,
     });
