@@ -145,7 +145,6 @@ function HomePage() {
               "Add new names and descriptions.",
               "Make someones day by sending them thank you notes about their submissions!",
               "Edit or delete your own content",
-              "Report questionable content.",
             ]}
             buttonText="Sign Up"
             buttonTextLink="/register"
