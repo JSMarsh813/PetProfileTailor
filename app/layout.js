@@ -13,9 +13,16 @@ import NavLayoutwithSettingsMenu from "@/components/NavBar/NavLayoutwithSettings
 import CategTagsWrapper from "@/wrappers/CategTagsWrapper";
 import { Suspense } from "react";
 import LoadingSkeleton from "@/components/LoadingScreen";
+
+// empty wrappers are needed for the providers, since providers need to be inside a client component to safely run hooks even with having "use client" at the top of the provider
+
+// Otherwise the app will fail if the provider is directly placed here, since the layout is a server component
+
+// wrappers are a client component what wraps the provider and {children} so the provider can safely run hooks.
+
+// Server layout: stays server component, just renders wrappers around {children}.
 import ReportsWrapper from "@/wrappers/ReportsWrapper";
 
-// empty wrappers are needed for the providers, since providers need to be inside a client component. Otherwise it will fail if directly placed her, since the layout is a server component
 import LikesWrapper from "@/wrappers/LikesWrapper";
 import SuggestionsWrapper from "@/wrappers/SuggestionsWrapper";
 import GoToTopButton from "@/components/ReusableSmallComponents/buttons/GoToTopButton";
