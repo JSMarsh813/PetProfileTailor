@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useRef, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 const ReportsContext = createContext(null);
 
@@ -12,32 +13,56 @@ export function useReports() {
 }
 
 export function ReportsProvider({ children, initialReports = {} }) {
-  const names = initialReports?.names || [];
-  const descriptions = initialReports?.descriptions || [];
-  const users = initialReports?.users || [];
-
-  // If the array is empty, .map() just returns another empty array. It won’t throw an error.
+  const { data: session, status } = useSession();
+  const userId = session?.user?.id;
 
   const reportsRef = useRef({
-    names: new Map(
-      names.map((r) => [
-        r.contentId.toString(),
-        { reportId: r._id?.toString?.(), status: r.status || "pending" },
-      ]),
-    ),
-    descriptions: new Map(
-      descriptions.map((r) => [
-        r.contentId.toString(),
-        { reportId: r._id?.toString?.(), status: r.status || "pending" },
-      ]),
-    ),
-    users: new Map(
-      users.map((r) => [
-        r.contentId.toString(),
-        { reportId: r._id?.toString?.(), status: r.status || "pending" },
-      ]),
-    ),
+    names: new Map(),
+    descriptions: new Map(),
+    users: new Map(),
   });
+
+  useEffect(() => {
+    if (status === "loading") return;
+
+    if (!userId) {
+      // Clear all maps when user logs out
+      reportsRef.current.names.clear();
+      reportsRef.current.descriptions.clear();
+      reportsRef.current.users.clear();
+      return;
+    }
+
+    // Fetch reports for the logged-in user
+    fetch("/api/user/reports", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        const { names = [], descriptions = [], users = [] } = data;
+
+        reportsRef.current.names = new Map(
+          names.map((r) => [
+            r.contentId.toString(),
+            { reportId: r._id?.toString?.(), status: r.status || "pending" },
+          ]),
+        );
+
+        reportsRef.current.descriptions = new Map(
+          descriptions.map((r) => [
+            r.contentId.toString(),
+            { reportId: r._id?.toString?.(), status: r.status || "pending" },
+          ]),
+        );
+
+        reportsRef.current.users = new Map(
+          users.map((r) => [
+            r.contentId.toString(),
+            { reportId: r._id?.toString?.(), status: r.status || "pending" },
+          ]),
+        );
+      })
+      .catch(console.error);
+  }, [userId, status]);
+
   //map for fast lookups based on contentID
 
   // console.log("reportsRef in context", reportsRef);

@@ -15,6 +15,7 @@ import { Suspense } from "react";
 import LoadingSkeleton from "@/components/LoadingScreen";
 import ReportsWrapper from "@/wrappers/ReportsWrapper";
 
+// empty wrappers are needed for the providers, since providers need to be inside a client component. Otherwise it will fail if directly placed her, since the layout is a server component
 import LikesWrapper from "@/wrappers/LikesWrapper";
 import SuggestionsWrapper from "@/wrappers/SuggestionsWrapper";
 import GoToTopButton from "@/components/ReusableSmallComponents/buttons/GoToTopButton";

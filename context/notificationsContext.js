@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 const NotificationsContext = createContext(null);
 
@@ -13,7 +14,10 @@ export function useNotifications() {
   return context;
 }
 
-export function NotificationsProvider({ children, initialNotifications = {} }) {
+export function NotificationsProvider({ children }) {
+  const { data: session, status } = useSession();
+  const userId = session?.user?.id;
+
   const [notifications, setNotifications] = useState({
     names: 0,
     descriptions: 0,
@@ -23,15 +27,27 @@ export function NotificationsProvider({ children, initialNotifications = {} }) {
   const [timeGrabbed, setTimeGrabbed] = useState(null);
 
   useEffect(() => {
-    if (initialNotifications) {
-      setNotifications({
-        names: initialNotifications.names || 0,
-        descriptions: initialNotifications.descriptions || 0,
-        thanks: initialNotifications.thanks || 0,
-      });
-      setTimeGrabbed(new Date());
+    if (status === "loading") return;
+
+    if (!userId) {
+      // Clear notifications when logged out
+      setNotifications({ names: 0, descriptions: 0, thanks: 0 });
+      setTimeGrabbed(null);
+      return;
     }
-  }, [initialNotifications]);
+
+    fetch("/api/user/notifications", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        setNotifications({
+          names: data.names || 0,
+          descriptions: data.descriptions || 0,
+          thanks: data.thanks || 0,
+        });
+        setTimeGrabbed(new Date());
+      })
+      .catch(console.error);
+  }, [userId, status]);
 
   const notificationsTotal =
     notifications.names + notifications.descriptions + notifications.thanks;

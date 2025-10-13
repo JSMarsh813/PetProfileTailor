@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { serverAuthOptions } from "@/lib/auth";
 import AdminWrapper from "@/wrappers/AdminWrapper";
+import { AdminProvider } from "@/context/AdminContext";
 
 export default async function ProtectedLayout({ children }) {
   const session = await getServerSession(serverAuthOptions);

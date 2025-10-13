@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useRef, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 const LikesContext = createContext(null);
 
@@ -10,41 +11,44 @@ export function useLikes() {
   return context;
 }
 
-export function LikesProvider({
-  children,
-  initialLikes = { names: [], descriptions: [] },
-}) {
-  //  // to avoid a null provider (aka it breaking during sign in/out)
-  // likes || { names: [], descriptions: [] }
-  const [likesData, setLikesData] = useState(initialLikes);
+export function LikesProvider({ children }) {
+  const { data: session, status } = useSession();
+  const userId = session?.user?.id;
 
-  const names = likesData?.names || [];
-  const descriptions = likesData?.descriptions || [];
+  const likesRef = useRef({ names: new Map(), descriptions: new Map() });
+  const recentLikesRef = useRef({}); // track like adjustments for this session
+  // object keyed by contentId, with values -1, 0, or 1
+  // { [nameId]: 1 | 0 | -1 }
+  // tracks if the likes count has to be updated, important for if the user navigates backwards
 
   useEffect(() => {
-    setLikesData(initialLikes || { names: [], descriptions: [] });
-  }, [initialLikes]);
+    if (status === "loading") return;
 
-  // If the array is empty, .map() just returns another empty array. It won’t throw an error.
+    if (!userId) {
+      // reset likes when logged out
+      likesRef.current = { names: new Map(), descriptions: new Map() };
+      recentLikesRef.current = {};
+      return;
+    }
 
-  // Map keys = contentId, values are irrelevant
-  //map for fast lookups based on contentID
-  const likesRef = useRef({
-    names: new Map(names.map((r) => [r.contentId.toString(), null])),
-    descriptions: new Map(
-      descriptions.map((r) => [r.contentId.toString(), null]),
-    ),
-  });
+    // fetch likes for the logged-in user
+    fetch("/api/user/likes", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        const names = data?.names || [];
+        const descriptions = data?.descriptions || [];
 
-  // responsive for if the user signs in or out
-  useEffect(() => {
-    likesRef.current = {
-      names: new Map(names?.map((r) => [r.contentId.toString(), null])),
-      descriptions: new Map(
-        descriptions?.map((r) => [r.contentId.toString(), null]),
-      ),
-    };
-  }, [likesData]);
+        likesRef.current = {
+          names: new Map(names.map((r) => [r.contentId.toString(), null])),
+          descriptions: new Map(
+            descriptions.map((r) => [r.contentId.toString(), null]),
+          ),
+        };
+
+        recentLikesRef.current = {};
+      })
+      .catch(console.error);
+  }, [userId, status]);
 
   const getLikedIds = (type) => {
     return Array.from(likesRef.current[type]?.keys() || []);
@@ -77,12 +81,6 @@ export function LikesProvider({
     // );
     likesRef.current[type]?.delete(contentId.toString());
   };
-
-  // track like adjustments for this session
-  const recentLikesRef = useRef({});
-  // object keyed by contentId, with values -1, 0, or 1
-  // { [nameId]: 1 | 0 | -1 }
-  // tracks if the likes count has to be updated, important for if the user navigates backwards
 
   return (
     <LikesContext.Provider
