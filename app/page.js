@@ -126,7 +126,6 @@ function HomePage() {
               "We appreciate our community members donating their time and want them to see the impact they've made.",
               "Find out if your submissions helped: get a pet adopted, name a personal pet, or more!",
               "Recieve in-app notifications about likes and thank you notes!",
-              ,
             ]}
             buttonText="Sign Up"
             buttonTextLink="/register"
