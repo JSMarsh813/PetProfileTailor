@@ -86,15 +86,16 @@ function HomePage() {
           <MediaObjectLeft
             image="/chamil.jpg"
             listOfText={[
-              "Find eye-catching pet names you wouldn't find on regular name sites",
-              "Easily sort by personality, species, physical traits, and more",
+              "Find eye-catching names you wouldn't find on regular sites.",
+              "Easily sort by personality, species, physical traits, and more.",
               "Find names for themes such as Christmas, just in time for your adoption event!",
             ]}
-            buttonTextLeft="Search Names"
-            buttonTextLeftLink="/fetchnames"
+            buttonText="Find Names"
+            buttonTextLink="/fetchnames"
             alttext="a picture of a chameleon with a cartoony bling necklace drawn on his neck. The text underneath says: chamillionare, young, lizard, 210 miles away"
             imgwidth="220"
             imgheight="330"
+            buttonStyle="subtle"
           />
         </section>
 
@@ -104,51 +105,55 @@ function HomePage() {
           <MediaObjectRight
             image="/obviousplant.webp"
             listOfText={[
-              "Engaging and creative descriptions",
-              "Honest and engaging wording for problem behaviors",
-              "Easily sort by personality, species, physical traits, and more",
+              "Engaging and creative descriptions.",
+              "Honest and engaging wording for problem behaviors.",
+              "Easily sort by personality, species, physical traits, and more.",
             ]}
-            buttonTextLeft="Search Descriptions"
-            buttonTextLeftLink="/fetchdescriptions"
+            buttonText="Find Descriptions"
+            buttonTextLink="/fetchdescriptions"
             alttext="Picture of an adoption sign. There is a black and white cat with the text Honey next to it. Underneath it reads: Likes: catnip. Dislikes: Birds. And in quotation marks is They are lousy sky wizards that need to obey the laws of gravity! - honey. Sante D'or adoption center obvious plant"
             imgwidth="128"
             imgheight="113"
+            buttonStyle="subtle"
           />
         </section>
         <section className="landingSignUpSection">
-          <WideCenteredHeading heading="Create a free profile to access extra features" />
+          <WideCenteredHeading heading="Feel your impact!" />
 
           <MediaObjectLeft
-            image="/profile.png"
+            image="/thanks.png"
             listOfText={[
-              "Save your favorite names, descriptions, posts and comments for easy access",
-              "Add new names, descriptions and posts",
-              "Add comments and like posts",
-              "Follow other users",
+              "We appreciate our community members donating their time and want them to see the impact they've made.",
+              "Find out if your submissions helped: get a pet adopted, name a personal pet, or more!",
+              "Recieve in-app notifications about likes and thank you notes!",
+              ,
             ]}
-            buttonTextLeft="Sign Up"
-            buttonTextLeftLink="/register"
-            alttext="screenshot of the dashboard for the site. It says welcome back, treats earned, shows the profile image and shows a your favorite section. A list of names is seen underneath it, all which have red hearts"
-            imgwidth="517"
-            imgheight="508"
+            buttonText="Sign Up"
+            buttonTextLink="/register"
+            imgwidth="400"
+            imgheight="100"
+            alttext="Screenshot of the notificatiosn page with 3 areas: names, descriptions and thanks. The thank menu is clicked and 2 thank you notes are shown. THey include thanks such as was inspiration for what i wrote for an adoptable pet and they were adopted, clever, used for a personal pet, I just really really liked this"
+            buttonStyle="default"
           />
         </section>
         <section className="LandingWantToHelpSection">
-          <WideCenteredHeading heading="Psst...Want To Help Some Pets 😸🐹?" />
+          <WideCenteredHeading heading="Create a free profile" />
 
           <MediaObjectRight
-            image="/freepikhalloween.avif"
+            image="/profile.png"
             listOfText={[
-              "Do you want to help pets get adopted but you can't volunteer or foster? Excellent, you're barking up the right tree!",
-              "Sign up to add names or descriptions. Animal welfare professionals can use your contributions to create creative profiles to help pets get adopted! ",
+              "Like your favorite names and descriptions for easy access & sorting.",
+              "Add new names and descriptions.",
+              "Make someones day by sending them thank you notes about their submissions!",
+              "Edit or delete your own content",
+              "Report questionable content.",
             ]}
-            buttonTextRight="Sign Up"
-            buttonTextRightLink="/register"
-            imgwidth="70"
-            imgheight="100"
-            alttext="picture of a cute white pomeranian sitting and lifting a paw up. Its wearing a black mask and a black cape, its tongue is sticking out in a relaxed manner."
-            credit="By gpointstudio"
-            creditLink="https://www.freepik.com/free-photo/portrait-playful-dog-halloween-costume_13452943.htm"
+            buttonText="Sign Up"
+            buttonTextLink="/register"
+            alttext="screenshot of the dashboard for the site. It says welcome back, treats earned, shows the profile image and shows a favorites section with a list of names."
+            imgwidth="600"
+            imgheight="600"
+            buttonStyle="default"
           />
         </section>
       </div>

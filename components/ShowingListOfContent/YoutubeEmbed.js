@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 export default function YoutubeEmbed({
   embedId,
@@ -11,7 +12,7 @@ export default function YoutubeEmbed({
 
   return (
     <div className="mt-2 py-4 text-center bg-secondary">
-      {!loaded && <span className=" text-white text-xl"> Loading ... </span>}
+      {!loaded && <LoadingSpinner />}
 
       <GeneralButton
         text="close X"

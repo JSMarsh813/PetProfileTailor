@@ -6,10 +6,10 @@ import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 const MediaObject = ({
   image,
   listOfText,
-  buttonTextLeft,
-  buttonTextRight,
-  buttonTextLeftLink,
-  buttonTextRightLink,
+  buttonText,
+  buttonTextLink,
+
+  buttonStyle,
   alttext,
   imgwidth,
   imgheight,
@@ -18,8 +18,8 @@ const MediaObject = ({
     <div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
       <div
         className="self-center 
-            shadow-lg shadow-slate-900/70
-            border-t-8  border-l-8 border-amber-300"
+           
+          "
       >
         <Image
           className=""
@@ -48,17 +48,16 @@ const MediaObject = ({
         </ul>
 
         <div className="flex items-center max-w-2xl ml-4">
-          {buttonTextLeft && (
+          {buttonText && buttonStyle === "subtle" ? (
             <LinkButton
-              href={buttonTextLeftLink}
-              text={buttonTextLeft}
-              defaultStyle
+              href={buttonTextLink}
+              text={buttonText}
+              subtle
             />
-          )}
-          {buttonTextRight && (
+          ) : (
             <LinkButton
-              href={buttonTextRightLink}
-              text={buttonTextRight}
+              href={buttonTextLink}
+              text={buttonText}
               defaultStyle
             />
           )}

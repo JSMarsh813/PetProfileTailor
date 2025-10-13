@@ -33,7 +33,11 @@ export default function IconBadge({
       )}
 
       {count > 0 && (
-        <span className="absolute -top-2 -right-3 text-xs text-subtleWhite px-1 bg-blue-700 rounded-full">
+        <span
+          className={`absolute  text-xs ${
+            icon === "thanks" ? " -top-1 -right-1" : "-top-2 -right-3"
+          } text-subtleWhite px-1 bg-blue-700 rounded-full`}
+        >
           {count > 99 ? "99+" : count}
         </span>
       )}

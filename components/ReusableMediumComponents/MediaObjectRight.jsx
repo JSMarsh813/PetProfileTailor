@@ -6,15 +6,15 @@ import Image from "next/image";
 const MediaObjectRight = ({
   image,
   listOfText,
-  buttonTextLeft,
-  buttonTextRight,
-  buttonTextLeftLink,
-  buttonTextRightLink,
+  buttonText,
+  buttonTextLink,
+
   alttext,
   imgwidth,
   imgheight,
   credit,
   creditLink,
+  buttonStyle,
 }) => {
   return (
     <div className="flex justify-center my-6 flex-col md:flex-row sm:ml-2">
@@ -32,26 +32,24 @@ const MediaObjectRight = ({
         </ul>
 
         <div className="flex items-center mb-4">
-          {buttonTextLeft && (
+          {buttonText && buttonStyle === "subtle" ? (
             <LinkButton
-              href={buttonTextLeftLink}
-              text={buttonTextLeft}
-              defaultStyle
+              href={buttonTextLink}
+              text={buttonText}
+              subtle
             />
-          )}
-
-          {buttonTextRight && (
+          ) : (
             <LinkButton
-              href={buttonTextRightLink}
-              text={buttonTextRight}
+              href={buttonText}
+              text={buttonText}
               defaultStyle
             />
           )}
         </div>
       </div>
       <div
-        className="self-center w-80  shadow-xl shadow-slate-900/70
-        border-b-8  border-r-8 border-amber-300 "
+        className="self-center w-80 
+     "
       >
         <Image
           className=""
@@ -61,7 +59,8 @@ const MediaObjectRight = ({
           alt={alttext}
           sizes="100vw"
           style={{
-            width: "100%",
+            maxWidth: "100%",
+            width: "auto",
             height: "auto",
           }}
         />
