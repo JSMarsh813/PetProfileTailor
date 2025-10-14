@@ -2,19 +2,23 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import Image from "next/image";
 import {
   faBullseye,
   faFaceGrinWink,
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import Image from "next/image";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotions";
+
 const HeroTop = ({
   updateImpactfulState,
   updateFunState,
   updateTailorState,
 }) => {
   const [hover, setHover] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   const handleMouseEnterForImage = () => {
     setHover(true);
   };
@@ -22,6 +26,9 @@ const HeroTop = ({
   const handleMouseLeaveForImage = () => {
     setHover(false);
   };
+
+  const imageSrc =
+    prefersReducedMotion || hover ? "/pugStillImage.png" : "/pugs.webp";
 
   return (
     <div
@@ -31,23 +38,14 @@ const HeroTop = ({
       onMouseLeave={handleMouseLeaveForImage}
     >
       <div className="hero-overlay  relative  z-10 opacity-20 ">
-        {hover ? (
-          <Image
-            src="/pugStillImage.png"
-            fill
-            className="opacity-80"
-            style={{ objectPosition: "center", objectFit: "cover" }}
-            alt=""
-          />
-        ) : (
-          <Image
-            priority
-            src="/pugs.webp"
-            fill
-            style={{ objectPosition: "center", objectFit: "cover" }}
-            alt=""
-          />
-        )}
+        <Image
+          src={imageSrc}
+          fill
+          priority
+          className="opacity-80"
+          style={{ objectPosition: "center", objectFit: "cover" }}
+          alt=""
+        />
       </div>
       <div className="hero-content text-center text-neutral-content mb-10 z-20  ">
         {/* hero-content is from daisy ui */}

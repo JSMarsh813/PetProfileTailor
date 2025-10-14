@@ -12,6 +12,7 @@ import DeleteContentNotification from "@components/DeletingData/DeleteContentNot
 import { useReports } from "@/context/ReportsContext";
 import { useSession } from "next-auth/react";
 import MustLoginMessage from "@components/ui/MustLoginMessage";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 function EditReport({
   flaggedByUser,
@@ -164,10 +165,7 @@ function EditReport({
   return (
     <div className=" mx-auto bg-primary rounded-lg  border border-subtleWhite ">
       {loading ? (
-        <div className="flex items-center justify-center py-20">
-          {/* Spinner can be a simple CSS loader or a reusable component */}
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
-        </div>
+        <LoadingSpinner />
       ) : (
         <>
           <form onSubmit={handleSubmitEdit}>

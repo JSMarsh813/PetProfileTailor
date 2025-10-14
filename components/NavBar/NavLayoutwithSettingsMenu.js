@@ -125,7 +125,7 @@ export default function NavLayoutwithSettingsMenu() {
                               focus ? "bg-white/10 text-subtleWhite" : ""
                             }`}
                           >
-                            Profle
+                            Profile
                           </Link>
                         )}
                       </MenuItem>

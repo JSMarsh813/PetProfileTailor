@@ -9,12 +9,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralButton";
 import Image from "next/image";
-
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotions";
 
 import RegisterInput from "@components/FormComponents/RegisterInput";
 
 export default function Register() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   const [namesThatExist, setNamesThatExist] = useState([]);
   const [nameCheck, setNameCheck] = useState("");
   const [nameCheckFunctionRun, setNameCheckFunctionRun] = useState(false);
@@ -29,6 +31,10 @@ export default function Register() {
       router.push(redirect || "/");
     }
   }, [router, session, redirect]);
+
+  const imageSrc = prefersReducedMotion
+    ? "/welcometothepack_static.png" // your static fallback (png, jpg, etc)
+    : "/welcometothepack.webp"; // animated webp
 
   async function checkIfNameExists() {
     let nameResponse = await fetch(
@@ -137,7 +143,7 @@ export default function Register() {
       <h1 className="flex justify-center text-3xl mb-1"> Register </h1>
       <div className="flex justify-center">
         <Image
-          src="/welcometothepack.webp"
+          src={imageSrc}
           alt="A dog is highfiving a human hand and the text on the bottom says welcome to the pack!"
           width={220}
           height={220}

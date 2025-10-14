@@ -1,38 +1,27 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-
-import ContentListing from "@/components/ShowingListOfContent/ContentListing";
+import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationDot, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import PointSystemList from "@components/Ranking/PointSystemList";
-import DashboardChartForFavDescriptions from "@components/ShowingListOfContent/DashboardChartForFavDescriptions";
-import FollowButton from "@components/ReusableSmallComponents/buttons/FollowButton";
 import EditBioAndProfile from "@components/EditingData/EditBioAndProfile";
-import EditBioProfileButton from "@components/ReusableSmallComponents/buttons/EditBioProfileButton";
-import UsersFollowersList from "@components/ShowingListOfContent/UsersFollowersList";
-import UsersFollowingList from "@components/ShowingListOfContent/UsersFollowingList";
+
 import ToggleOneContentPage from "./ShowingListOfContent/ToggleOneContentPage";
 
+import GeneralButton from "./ReusableSmallComponents/buttons/GeneralButton";
 import { useSession } from "next-auth/react";
-import ProfilePagesLogic from "./ProfilePagesLogic";
+import ProfileImage from "./ReusableSmallComponents/ProfileImage";
 
 export default function Profile({
   userData,
   nameList,
 
   createdDescriptions,
-
-  usersFollowing,
 }) {
-  // console.log("userData in profile", userData);
   const { data: session } = useSession();
-
-  // console.log("namelist", nameList);
-  // store liked IDs in a ref so updates don't trigger full re-render
 
   let userName = "";
   let profileImage = "";
@@ -43,19 +32,12 @@ export default function Profile({
     signedInUsersId = session.user.id;
   }
 
-  let userIsTheCreator = userData._id === signedInUsersId;
-
   const [showProfileEditPage, setShowProfileEditPage] = useState(false);
   const [profileChanged, setProfileChange] = useState(false);
 
-  const [showFollowersList, setShowFollowersListPage] = useState(false);
+  // const [showFollowersList, setShowFollowersListPage] = useState(false);
 
-  const [showFollowingList, setShowFollowingList] = useState(false);
-
-  const [nameEdited, setNameEdited] = useState(false);
-
-  // for names
-  const [deleteThisContentId, setDeleteThisContentId] = useState(null);
+  // const [showFollowingList, setShowFollowingList] = useState(false);
 
   function updateSetShowProfileEditPage() {
     setShowProfileEditPage(!showProfileEditPage);
@@ -65,13 +47,13 @@ export default function Profile({
     setProfileChange(!profileChanged);
   }
 
-  function showListOfFollowers() {
-    setShowFollowersListPage(!showFollowersList);
-  }
+  // function showListOfFollowers() {
+  //   setShowFollowersListPage(!showFollowersList);
+  // }
 
-  function showfollowingListFunction() {
-    setShowFollowingList(!showFollowingList);
-  }
+  // function showfollowingListFunction() {
+  //   setShowFollowingList(!showFollowingList);
+  // }
 
   const contentList = [
     {
@@ -89,16 +71,6 @@ export default function Profile({
   // for names
   //########### Section that allows the deleted content to be removed without having to refresh the page, react notices that a key has been removed from the content list and unmounts that content ###########
 
-  useEffect(() => {
-    if (deleteThisContentId !== null) {
-      removeDeletedContent(
-        // setFilteredNames,
-        // filteredNames,
-        deleteThisContentId,
-        setDeleteThisContentId,
-      );
-    }
-  }, [deleteThisContentId]);
   return (
     <div>
       <div className="flex flex-col md:flex-row mt-6">
@@ -113,11 +85,19 @@ export default function Profile({
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full px-4 flex justify-center">
                     <div className="relative">
-                      <img
-                        src={userData.profileImage}
-                        alt=""
-                        className="rounded-2xl align-middle -mt-16 h-24"
+                      <ProfileImage
+                        divStyling="min-h-20 max-w-20 mr-4 mt-3 min-w-10 max-h-12"
+                        profileImage={userData.profileImage}
+                        layout="responsive"
+                        className="rounded-2xl"
+                        width={100}
+                        height={100}
                       />
+
+                      {/* //   src={userData.profileImage}
+                      //   alt=""
+                      //   className="rounded-2xl align-middle -mt-16 h-24"
+                      //  */}
                     </div>
                   </div>
                   <div className="w-full text-center mt-2">
@@ -126,7 +106,7 @@ export default function Profile({
                     </span>
                     <span> @{userData.profileName} </span>
 
-                    <div className="flex justify-center py-4">
+                    {/* <div className="flex justify-center py-4">
                       <div className="mr-4 text-center">
                         <span className="text-xl font-bold block tracking-wide">
                           {usersFollowing.length}
@@ -150,23 +130,18 @@ export default function Profile({
                           Followers
                         </button>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
                 <div className="text-center">
-                  {userName != "" && session.user.id == userData._id ? (
-                    <EditBioProfileButton
-                      setShowProfileEditPage={updateSetShowProfileEditPage}
+                  {userName != "" && session.user.id == userData._id && (
+                    <GeneralButton
+                      subtle
+                      type="button"
+                      text="edit"
+                      onClick={() => setShowProfileEditPage(true)}
                     />
-                  ) : (
-                    <div className=" w-full pb-4">
-                      <span> Follow Button </span>
-                      {/* <FollowButton
-                        data={userData}
-                        session={session}
-                      /> */}
-                    </div>
                   )}
 
                   {userData.location && (
@@ -226,7 +201,7 @@ export default function Profile({
               />
             )}
 
-            {showFollowersList && (
+            {/* {showFollowersList && (
               <UsersFollowersList
                 userData={userData}
                 sessionFromServer={session}
@@ -240,7 +215,7 @@ export default function Profile({
                 sessionFromServer={session}
                 setShowUsersListPage={showfollowingListFunction}
               />
-            )}
+            )} */}
           </section>
         </div>
       </div>

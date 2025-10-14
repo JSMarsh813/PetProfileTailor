@@ -66,11 +66,11 @@ export default async function ProfilePage({ params }) {
 
   //### FOLLOWING LIST, followers is grabbed from userData
 
-  let usersFollowing = await leanWithStrings(
-    User.find({
-      followers: userId,
-    }).select("name followers name profileImage profileName bio location"),
-  );
+  // let usersFollowing = await leanWithStrings(
+  //   User.find({
+  //     followers: userId,
+  //   }).select("name followers name profileImage profileName bio location"),
+  // );
 
   let usersLikedContent = [];
 
@@ -87,7 +87,6 @@ export default async function ProfilePage({ params }) {
     <Profile
       nameList={JSON.parse(JSON.stringify(nameList))}
       createdDescriptions={JSON.parse(JSON.stringify(createdDescriptions))}
-      usersFollowing={JSON.parse(JSON.stringify(usersFollowing))}
       userData={JSON.parse(JSON.stringify(userData))}
     />
   );

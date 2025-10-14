@@ -22,15 +22,13 @@ export default function CustomError() {
         &quot;mouse&quot; 😿.
       </p>
 
-      <GifHover
-        divStyling="w-60 mx-auto my-4"
-        className="mb-4 rounded-full"
-        layout="responsive"
-        gifSrc="/server.gif"
-        stillImageSrc="/server.png"
-        alt="a man has his hand on a computer mouse, his pet weasel then jumps over and begins to wrestle his hand"
-        width={300}
-        height={300}
+      <Image
+        src="/server.jpg"
+        fill
+        priority
+        className="opacity-80"
+        style={{ objectPosition: "center", objectFit: "cover" }}
+        alt=""
       />
 
       <ul className="text-center text-white bg-secondary max-w-4xl mx-auto h-fit pt-4 sm:px-2">

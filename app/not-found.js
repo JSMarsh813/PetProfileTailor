@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import { useState } from "react";
 import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import ListWithPawPrintIcon from "@components/ReusableSmallComponents/ListWithPawPrintIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,9 +9,23 @@ import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
 import GifHover from "@components/ReusableSmallComponents/GifHover";
 import Link from "next/link";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotions";
 
 export default function Custom404() {
   //grab data from Session and rename data to session
+
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [hover, setHover] = useState(false);
+
+  const handleMouseEnterForImage = () => {
+    setHover(true);
+  };
+
+  const handleMouseLeaveForImage = () => {
+    setHover(false);
+  };
+
+  const imageSrc = prefersReducedMotion || hover ? "/404.png" : "/404.gif";
 
   return (
     <>
@@ -22,16 +38,23 @@ export default function Custom404() {
         been removed.
       </p>
 
-      <GifHover
-        divStyling="w-60 mx-auto my-4"
-        className="mb-4 rounded-full"
-        layout="responsive"
-        gifSrc="/404.gif"
-        stillImageSrc="/404.png"
-        alt="gif of a dog and their owner which is hiding behind a blanket, the blanket falls and the owner is not there. The dog looks very confused"
-        width={90}
-        height={90}
-      />
+      <div
+        className="flex justify-center py-4"
+        onMouseEnter={handleMouseEnterForImage}
+        onMouseLeave={handleMouseLeaveForImage}
+      >
+        <Image
+          src={imageSrc}
+          alt="A dog is highfiving a human hand and the text on the bottom says welcome to the pack!"
+          width={220}
+          height={220}
+          style={{
+            maxWidth: "100%",
+            height: "auto",
+            borderRadius: 30,
+          }}
+        />
+      </div>
 
       <ul className="text-center text-white bg-secondary max-w-4xl mx-auto h-fit pt-4 sm:px-2">
         <ListWithPawPrintIcon

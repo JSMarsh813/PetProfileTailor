@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ImageUpload from "@components/AddingNewData/ImageUpload";
 import RegisterInput from "@components/FormComponents/RegisterInput";
-import LoadingScreen from "@/components/LoadingScreen";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 export default function ProfileScreen() {
   const {
@@ -41,7 +41,7 @@ export default function ProfileScreen() {
   }, [status, router]);
 
   if (status === "loading" || !session?.user) {
-    return <LoadingScreen />;
+    return <LoadingSpinner />;
   }
 
   if (!session?.user) {

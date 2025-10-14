@@ -84,12 +84,13 @@ function ImageUpload() {
         Change Your Avatar{" "}
       </h1>
       <p className="mb-4  text-center">
-        Accepted image formats are .jpg, jpeg, and .png and .gif. Gifs will
-        appear as a still image until they are hovered over.
+        Accepted image formats are jpg, jpeg, png and webp
       </p>
+      {/* .gif. Gifs will
+        appear as a still image until they are hovered over. */}
       <input
         onChange={handleImageAttachment}
-        accept=".jpg, .png, .jpeg, .gif"
+        accept=".jpg, .png, .jpeg, .webp"
         className="mb-4 w-full text-center b"
         type="file"
       ></input>
