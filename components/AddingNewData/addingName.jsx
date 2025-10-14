@@ -182,7 +182,10 @@ function NewNameWithTagsData() {
           contentType="names"
         />
         <hr className="mt-4" />
-        <form onSubmit={handleNameSubmission}>
+        <form
+          onSubmit={handleNameSubmission}
+          className="w-full max-w-xl mx-auto min-h-fit overflow-hidden"
+        >
           {!session && (
             <WarningMessage message="please sign in to submit a name" />
           )}
