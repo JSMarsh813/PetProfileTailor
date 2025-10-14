@@ -130,7 +130,6 @@ function NewNameWithTagsData() {
           {" "}
           Add a name with one or more tags.{" "}
         </p>
-
         <h6 className="mt-4 mb-2 text-center"> Example: A dog named batman </h6>
         <div className="w-52 mx-auto">
           <Image
@@ -151,7 +150,6 @@ function NewNameWithTagsData() {
           #tough, serious or macho #fictional characters #action or superhero
           #male #black
         </p>
-
         <h4 className="mt-4 underline font-bold"> Submission Guidelines </h4>
         <ul className="">
           <li className="mt-2">
@@ -160,7 +158,6 @@ function NewNameWithTagsData() {
           <li className="my-2"> must be 2-40 characters</li>
           <li>buttons will turn on when this criteria is met</li>
         </ul>
-
         <h5 className="mt-4 underline font-bold">
           {" "}
           The guiding rules when adding content is:
@@ -174,22 +171,17 @@ function NewNameWithTagsData() {
         <p className="mt-2">
           {" "}
           If there's a small risk, then slap one of these tags on it:
-          <ul className="list-inside list-disc ">
-            <li className="my-2">
-              somewhat negative or slightly controversial{" "}
-            </li>
-            <li>slightly suggestive </li>
-          </ul>{" "}
         </p>
-
+        <ul className="list-inside list-disc ">
+          <li className="my-2">somewhat negative or slightly controversial </li>
+          <li>slightly suggestive </li>
+        </ul>{" "}
         <CheckIfContentExists
           apiString="/api/names/check-if-content-exists/"
           disabled={disabled}
           contentType="names"
         />
-
         <hr className="mt-4" />
-
         <form onSubmit={handleNameSubmission}>
           {!session && (
             <WarningMessage message="please sign in to submit a name" />
@@ -287,7 +279,6 @@ function NewNameWithTagsData() {
             </button>
           )}
         </form>
-
         {nameSubmissionMessage && (
           <WarningMessage
             state={setNameSubmissionMessage}
