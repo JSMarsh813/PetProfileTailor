@@ -8,7 +8,7 @@ function AddNewNameWithTags() {
   const { data: session } = useSession();
 
   return (
-    <div className=" h-full text-white w-full">
+    <div className="min-h-fit text-white w-full">
       <PageTitleWithImages
         imgSrc="bg-[url('https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/Z5QQMNJZGJDSVJFNHHR3QYNMCE.jpg')] "
         title="Add A"
