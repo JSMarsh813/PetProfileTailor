@@ -131,10 +131,10 @@ function NewNameWithTagsData() {
           Add a name with one or more tags.{" "}
         </p>
 
-        <h6 className="mt-4 text-center"> Example: A dog named batman </h6>
+        <h6 className="mt-4 mb-2 text-center"> Example: A dog named batman </h6>
         <div className="w-52 mx-auto">
           <Image
-            className="rounded mb-4"
+            className="rounded-2xl mb-4"
             src="/batdog.jpg"
             width={80}
             height={90}
@@ -146,18 +146,41 @@ function NewNameWithTagsData() {
             }}
           />
         </div>
-        <p className="text-center">
-          Batman could have the tags: comics, superheroes, batman, male, edgy
+        <p className="text-center">Batman could have the tags: </p>
+        <p>
+          #tough, serious or macho #fictional characters #action or superhero
+          #male #black
         </p>
 
         <h4 className="mt-4 underline font-bold"> Submission Guidelines </h4>
         <ul className="">
-          <li>
+          <li className="mt-2">
             <strong> Valid characters: </strong> a-z A-Z 0-9 & &apos; - ! ? .
           </li>
-          <li> must be 2-40 characters</li>
+          <li className="my-2"> must be 2-40 characters</li>
           <li>buttons will turn on when this criteria is met</li>
         </ul>
+
+        <h5 className="mt-4 underline font-bold">
+          {" "}
+          The guiding rules when adding content is:
+        </h5>
+        <ol className="list-decimal list-inside ">
+          <li className="my-2">
+            Is it likely to get a shelter worker in trouble?
+          </li>
+          <li>Will this lead to donors pulling much needed funding?</li>
+        </ol>
+        <p className="mt-2">
+          {" "}
+          If there's a small risk, then slap one of these tags on it:
+          <ul className="list-inside list-disc ">
+            <li className="my-2">
+              somewhat negative or slightly controversial{" "}
+            </li>
+            <li>slightly suggestive </li>
+          </ul>{" "}
+        </p>
 
         <CheckIfContentExists
           apiString="/api/names/check-if-content-exists/"
