@@ -45,7 +45,7 @@ export default function Custom404() {
       >
         <Image
           src={imageSrc}
-          alt="A dog is highfiving a human hand and the text on the bottom says welcome to the pack!"
+          alt="A dog looks confused as they watch their human hide behind a blanket, only for the human to disappear when it falls to the ground "
           width={220}
           height={220}
           style={{

@@ -6,10 +6,17 @@ import AddItemsDropDownMenu from "./AddItemsDropDownMenu";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import NavBarLink from "../NavBarLink";
+import { useSession } from "next-auth/react";
+import AdminDropdownMenu from "@components/NavBar/NavBarPieces/DesktopNavBar/AdminDropdownMenu";
 
 //onclick wrapped in spans due to this error https://github.com/vercel/next.js/discussions/39212
 
+// HERE
 const NavBarNames = () => {
+  const { data: session } = useSession();
+  const { role, status, id: signedInUsersId } = session?.user || {};
+  const isAdmin = role === "admin" && status === "active";
+
   return (
     <div className="divWhichHasBothMenus w-full">
       {/* DESKTOP MENU */}
@@ -29,6 +36,8 @@ const NavBarNames = () => {
           <NavBarLink href="/fetchdescriptions">Descriptions</NavBarLink>
 
           <AddItemsDropDownMenu />
+
+          {isAdmin && <AdminDropdownMenu />}
         </ul>
       </section>
     </div>

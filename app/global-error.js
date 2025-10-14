@@ -8,7 +8,7 @@ import ListWithPawPrintIcon from "@components/ReusableSmallComponents/ListWithPa
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
-import GifHover from "@components/ReusableSmallComponents/GifHover";
+import Image from "next/image";
 
 export default function CustomError() {
   return (
