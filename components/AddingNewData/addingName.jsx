@@ -170,7 +170,7 @@ function NewNameWithTagsData() {
         </ol>
         <p className="mt-2">
           {" "}
-          If there's a small risk, then slap one of these tags on it:
+          If there&apos;s a small risk, then slap one of these tags on it:
         </p>
         <ul className="list-inside list-disc ">
           <li className="my-2">somewhat negative or slightly controversial </li>
