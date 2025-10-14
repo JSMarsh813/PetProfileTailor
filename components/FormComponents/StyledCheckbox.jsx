@@ -29,7 +29,9 @@ export default function StyledCheckbox({
         type="checkbox"
         checked={checked}
         onChange={onChange}
-        className="peer sr-only"
+        //  Don't use sr-only here — Chrome mobile scroll bug
+        // Instead, physically remove from layout but keep focusable and accessible
+        className="peer absolute left-[-9999px] top-auto w-px h-px overflow-hidden"
         disabled={disabled}
       />
 
