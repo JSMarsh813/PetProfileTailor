@@ -164,7 +164,7 @@ export default function CoreListingPageLogic({
           }}
           anchor="left"
         >
-          <div className="w-full max-w-[451px] h-full overflow-hidden flex flex-col">
+          <div className="w-full max-w-[451px] h-full  flex flex-col">
             <FilteringSidebar
               dataType={dataType}
               handleFilterChange={handleFilterChange}
