@@ -21,7 +21,7 @@ export default function StyledCheckbox({
   return (
     <label
       htmlFor={value}
-      className="flex items-center space-x-2 cursor-pointer"
+      className="flex items-start space-x-2 cursor-pointer w-full max-w-96"
     >
       <input
         id={value}
@@ -56,7 +56,7 @@ export default function StyledCheckbox({
         <FontAwesomeIcon icon={faPaw} />
       </span>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col text-left min-w-0  break-words">
         {label && <span className="text-subtleWhite font-bold">{label}</span>}
         {description && (
           <span className="text-subtleWhite text-sm">{description}</span>

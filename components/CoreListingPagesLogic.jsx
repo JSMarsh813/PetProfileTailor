@@ -152,7 +152,7 @@ export default function CoreListingPageLogic({
         </section>
       )}
 
-      <div className="flex w-full  mx-auto ">
+      <div className="flex w-screen sm:px-2  mx-auto ">
         <Drawer
           open={isOpen}
           onClose={(event, reason) => {
@@ -164,21 +164,23 @@ export default function CoreListingPageLogic({
           }}
           anchor="left"
         >
-          <FilteringSidebar
-            dataType={dataType}
-            handleFilterChange={handleFilterChange}
-            handleApplyFilters={handleApplyFilters}
-            filterTagsIds={filterTagsIds}
-            toggleDrawer={toggleDrawer}
-            isLoading={isLoading}
-            remainingFilterCooldown={remainingFilterCooldown}
-            filterCooldownRef={filterCooldownRef}
-            startCooldown={startCooldown}
-          />
+          <div className="w-full max-w-[451px] h-full overflow-hidden flex flex-col">
+            <FilteringSidebar
+              dataType={dataType}
+              handleFilterChange={handleFilterChange}
+              handleApplyFilters={handleApplyFilters}
+              filterTagsIds={filterTagsIds}
+              toggleDrawer={toggleDrawer}
+              isLoading={isLoading}
+              remainingFilterCooldown={remainingFilterCooldown}
+              filterCooldownRef={filterCooldownRef}
+              startCooldown={startCooldown}
+            />
+          </div>
         </Drawer>
         {/*################# CONTENT DIV ################### */}
 
-        <div className="w-[95vw] bg-primary rounded-box place-items-center  ">
+        <div className="grow bg-primary rounded-box place-items-center  ">
           {/* Button that toggles the filter div */}
           <GeneralButton
             text={`${isOpen ? "Close Filters" : "Open Filters"}`}
