@@ -152,7 +152,7 @@ export default function CoreListingPageLogic({
         </section>
       )}
 
-      <div className="flex w-screen sm:px-2  mx-auto ">
+      <div className="flex w-full  mx-auto ">
         <Drawer
           open={isOpen}
           onClose={(event, reason) => {
@@ -178,7 +178,7 @@ export default function CoreListingPageLogic({
         </Drawer>
         {/*################# CONTENT DIV ################### */}
 
-        <div className="grow bg-primary rounded-box place-items-center  ">
+        <div className="w-[95vw] bg-primary rounded-box place-items-center  ">
           {/* Button that toggles the filter div */}
           <GeneralButton
             text={`${isOpen ? "Close Filters" : "Open Filters"}`}

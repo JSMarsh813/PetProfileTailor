@@ -32,7 +32,7 @@ function FilteringSidebar({
   };
 
   return (
-    <div className="flex flex-col  bg-primary sm:w-96">
+    <div className="flex flex-col  w-full bg-primary">
       <div className="flex justify-between text-xl items-center border-b border-white">
         <h4 className="text-subtleWhite text-center pl-4 ">All Filters </h4>
         <ClosingXButton
@@ -41,7 +41,7 @@ function FilteringSidebar({
         />
       </div>
       {/* scrollable content */}
-      <div className="  overflow-y-auto bg-primary px-2">
+      <div className="overflow-y-auto w-full bg-primary">
         {/* mapping through categories ex: gender, holidays */}
         {categoriesWithTags.map((category, index) => {
           return (
