@@ -108,7 +108,7 @@ export default function AddReport({
 
   return (
     <form
-      className=" mx-auto bg-primary rounded-lg  border border-subtleWhite "
+      className=" mx-auto bg-primary rounded-lg  border border-subtleWhite max-w-4xl"
       onSubmit={handleSubmitReport}
     >
       <div className="flex items-center justify-end py-2   bg-secondary ">
@@ -123,36 +123,32 @@ export default function AddReport({
 
         <div className=" mb-2 text-subtleWhite px-4 pt-2">
           {!signedInUser && <MustLoginMessage text="submit a report" />}
-          <h2 className="text-center text-xl ">Report Content</h2>
-          <p className="text-center mt-3">
-            Thank you for taking the time to help improve our community powered
-            database! 🙏🙇
-          </p>
-          <p className="text-center ">
-            Your input is the secret sauce we need to make this site the best
-            resource possible.
-          </p>
-          <p className="text-center mb-3">
-            You&apos;re paw~esome, we couldn&apos;t do it without you! 😉
-          </p>
+          <section className="p-1">
+            <h2 className="text-center text-xl ">Report Content</h2>
+            <p className="text-center mt-3 mb-2">
+              Thank you for taking the time to help improve our community
+              powered database! 🙏🙇
+            </p>
 
-          <p className="text-center mb-3">
-            ❗ Note: <strong> one or more checkboxes must be selected</strong>{" "}
-            to submit this form
-          </p>
+            <p className="text-center mb-3">
+              ❗ Note: <strong> one or more checkboxes must be selected</strong>{" "}
+              to submit this form
+            </p>
 
-          <p className="text-center mb-3">
-            {" "}
-            reports can be edited <strong>until they are being reviewed</strong>
-          </p>
+            <p className="text-center mb-3">
+              {" "}
+              Reports can be edited{" "}
+              <strong>until they are being reviewed</strong>
+            </p>
+          </section>
 
-          <div className=" bg-secondary border-white border-y-2 flex">
-            <h3 className=" mb-2 text-xl mx-auto py-3">
+          <div className=" bg-secondary border-white border-y-2 ">
+            <h3 className=" mb-2 text-xl  text-center py-3">
               Report Inappropriate Content
             </h3>
           </div>
 
-          <div className="flex flex-col gap-4 my-4">
+          <div className="flex flex-col gap-4 my-4 mx-4">
             <StyledCheckbox
               label="Hate"
               description="Slurs, racist or sexist stereotypes, Incitement of fear or discrimination..."

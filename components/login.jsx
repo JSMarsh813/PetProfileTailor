@@ -14,7 +14,6 @@ import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralBu
 
 import Image from "next/image";
 import NounBlackCatIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImages/NounBlackCatIcon";
-import MagicRabbitSVG from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImages/MagicRabbitSVG";
 import RegisterInput from "@components/FormComponents/RegisterInput";
 import StyledInput from "@components/FormComponents/StyledInput";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
@@ -95,7 +94,7 @@ export default function Login() {
     <section className="h-fit  mx-auto ">
       <div className="px-6 h-full text-gray-100">
         <div className="flex lg:justify-between xl:justify-center  justify-center items-center flex-wrap h- g-6">
-          <div className="grow-0 shrink-1 md:shrink-0 basis-auto lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
+          <div className="grow-0 shrink-1 md:shrink-0 basis-auto lg:w-6/12 md:w-9/12 my-3 md:mb-0">
             <Image
               src="https://cdn.pixabay.com/photo/2020/03/31/16/17/animal-4988403_960_720.jpg"
               className="max-w-[300px] lg:max-w-lg rounded-full shadow-lg border-2 border-yellow-300 border-dashed mx-auto"

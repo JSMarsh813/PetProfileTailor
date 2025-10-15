@@ -7,7 +7,11 @@ import axios from "axios";
 import { Field } from "@headlessui/react";
 import StyledCheckbox from "@components/FormComponents/StyledCheckbox";
 import ClosingXButton from "@components/ReusableSmallComponents/buttons/ClosingXButton";
-import ThanksOptions from "@/data/ThanksOptions";
+import {
+  thanksOptionsProfessional,
+  thanksOptionsPetOwners,
+  thanksOptionsAnyone,
+} from "@/data/ThanksOptions";
 import { useSession } from "next-auth/react";
 import MustLoginMessage from "@components/ui/MustLoginMessage";
 
@@ -69,7 +73,7 @@ export default function AddThank({
 
   return (
     <form
-      className=" mx-auto bg-primary rounded-lg max-w-7xl w-[94vw] border border-subtleWhite"
+      className=" mx-auto bg-primary rounded-lg max-w-4xl border border-subtleWhite"
       onSubmit={handleSubmitThanks}
     >
       <div className="flex items-center justify-end py-2   bg-secondary ">
@@ -80,7 +84,7 @@ export default function AddThank({
       </div>
 
       <div className={` mb-4`}>
-        <div className=" mb-2 text-subtleWhite px-4 ">
+        <div className=" mb-2 text-subtleWhite sm:px-4 ">
           <section className="my-6">
             {!signedInUser && (
               <MustLoginMessage text="submit thank you notes" />
@@ -101,8 +105,9 @@ export default function AddThank({
             <div className="flex flex-col gap-4 mt-4">
               <p className="text-center">
                 {" "}
-                Choose as many options as you like. You can send an entire
-                litter worth of thanks if you&apos;re feeling it 🐶🐱!
+                Choose as many options as you like. You can mix and match
+                between the lists. You can send an entire litter worth of thanks
+                if you&apos;re feeling it 🐶🐱!
               </p>
               <p className="text-center">
                 However to avoid spam, you can only thank a single piece of
@@ -111,8 +116,46 @@ export default function AddThank({
               <p className="text-center">
                 Thanks can not be edited or deleted.
               </p>
-              <div className="flex-col md:flex-row flex justify-center align-items-center md:flex-wrap gap-x-3 gap-y-8 mx-auto my-6">
-                {ThanksOptions.map((option) => (
+              <div className="flex-col flex justify-center align-items-center md:flex-wrap gap-x-3 gap-y-8 mx-auto my-6">
+                <h4 className="text-center"> For Professionals </h4>
+                {thanksOptionsProfessional.map((option) => (
+                  <StyledCheckbox
+                    key={option.tag}
+                    label={option.tag}
+                    checked={selectedThanks.includes(option.tag)}
+                    onChange={(e) =>
+                      setSelectedThanks((prev) =>
+                        prev.includes(e.target.value)
+                          ? prev.filter((tag) => tag !== e.target.value)
+                          : [...prev, e.target.value],
+                      )
+                    }
+                    value={option.tag}
+                    disabled={!signedInUser}
+                  />
+                ))}
+
+                <h4 className="text-center"> For Pet Owners </h4>
+
+                {thanksOptionsPetOwners.map((option) => (
+                  <StyledCheckbox
+                    key={option.tag}
+                    label={option.tag}
+                    checked={selectedThanks.includes(option.tag)}
+                    onChange={(e) =>
+                      setSelectedThanks((prev) =>
+                        prev.includes(e.target.value)
+                          ? prev.filter((tag) => tag !== e.target.value)
+                          : [...prev, e.target.value],
+                      )
+                    }
+                    value={option.tag}
+                    disabled={!signedInUser}
+                  />
+                ))}
+
+                <h4 className="text-center"> For Anyone </h4>
+                {thanksOptionsAnyone.map((option) => (
                   <StyledCheckbox
                     key={option.tag}
                     label={option.tag}

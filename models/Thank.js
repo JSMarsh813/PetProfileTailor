@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
-import thanksOptions from "@/data/ThanksOptions";
+import { thanksOptions } from "@/data/ThanksOptions";
 
 const allowedMessages = thanksOptions.map((option) => option.tag);
 const ThankSchema = new mongoose.Schema(

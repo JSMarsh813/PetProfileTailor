@@ -169,7 +169,7 @@ function EditReport({
       ) : (
         <>
           <form onSubmit={handleSubmitEdit}>
-            <div className="flex items-center justify-end py-2   bg-secondary ">
+            <div className="flex items-center justify-end py-2   bg-secondary max-w-4xl">
               <ClosingXButton
                 onClick={cancelFlagFormAndRevertFlagState}
                 className="mr-5"
@@ -179,7 +179,7 @@ function EditReport({
             <div className={`-mx-3 mb-6`}>
               {/* Area to Type a comment  */}
 
-              <div className=" mb-2 text-subtleWhite px-4 pt-2">
+              <div className=" mb-2 text-subtleWhite sm:px-4 pt-2">
                 {!signedInUser && (
                   <MustLoginMessage text="edit or delete a report" />
                 )}

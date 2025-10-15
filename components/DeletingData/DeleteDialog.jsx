@@ -16,8 +16,15 @@ export default function DeleteDialog({
       onClose={onClose}
       className="relative z-50"
     >
-      <div className="fixed inset-0 flex w-screen justify-center items-start overflow-auto">
-        <DialogPanel className="bg-secondary p-12 bg-opacity-80 rounded-md">
+      <div
+        className="fixed inset-0 bg-black/50 overflow-y-auto"
+        aria-hidden="true"
+        tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
+      >
+        <DialogPanel
+          className=" bg-secondary sm:p-12 bg-opacity-40 h-fit"
+          onClick={(e) => e.stopPropagation()}
+        >
           <DeleteContentNotification
             setShowDeleteConfirmation={onClose}
             contentId={target._id}

@@ -93,7 +93,7 @@ export default function AddSuggestion({
 
   return (
     <form
-      className=" mx-auto bg-primary rounded-lg w-[94vw] border border-subtleWhite"
+      className=" mx-auto bg-primary rounded-lg  border border-subtleWhite max-w-4xl"
       onSubmit={handleSubmitSuggestion}
     >
       <div className="flex items-center justify-end py-2   bg-secondary ">
@@ -104,20 +104,13 @@ export default function AddSuggestion({
       </div>
 
       <div className={` mb-4`}>
-        <div className=" mb-2 text-subtleWhite px-4 ">
-          <section className="my-6">
+        <div className=" mb-2 text-subtleWhite sm:px-4 ">
+          <section className="my-6 p-1">
             <h2 className="text-center  text-2xl ">Suggestions</h2>
             {!signedInUser && <MustLoginMessage text="submit suggestions" />}
-            <p className="text-center mt-3">
+            <p className="text-center mt-3 mb-2">
               Thank you for taking the time to help improve our community
               powered database! 🙏🙇
-            </p>
-            <p className="text-center ">
-              Your input is the secret sauce we need to make this site the best
-              resource possible.
-            </p>
-            <p className="text-center mb-3">
-              You&apos;re paw~esome, we couldn&apos;t do it without you! 😉
             </p>
 
             <p className="text-center mb-3">
@@ -126,11 +119,11 @@ export default function AddSuggestion({
             </p>
 
             <p className="text-center mb-3">
-              suggestions can be edited{" "}
+              Suggestions can be edited{" "}
               <strong>until they are being reviewed</strong>
             </p>
 
-            <p>
+            <p className="text-center">
               {" "}
               To prevent harrassment, the submissions will be sent to an admin
               not the original poster
@@ -147,7 +140,7 @@ export default function AddSuggestion({
                 Select the incorrect tags and then please comment why the tags
                 are incorrect in the textbox at the bottom. Thank you!
               </p>
-              <div className="flex justify-center flex-wrap">
+              <div className="flex flex-col justify-center gap-4 ">
                 {contentInfo.tags && contentInfo.tags.length > 0 ? (
                   contentInfo.tags.map((tag) => (
                     <StyledCheckbox

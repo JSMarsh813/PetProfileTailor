@@ -192,7 +192,7 @@ export default function EditSuggestion({
             </div>
 
             <div className={` mb-4`}>
-              <div className=" mb-2 text-subtleWhite px-4 ">
+              <div className=" mb-2 text-subtleWhite sm:px-4 ">
                 <section className="my-6">
                   <p className="text-center mb-3">
                     suggestions can be edited{" "}

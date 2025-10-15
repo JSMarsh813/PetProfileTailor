@@ -29,7 +29,7 @@ export default function FlagDialog({
         tabIndex={0} // <-- make it focusable, so we can scroll up and down with arrow keys
       >
         <DialogPanel
-          className=" bg-secondary p-12 bg-opacity-40 h-fit"
+          className=" bg-secondary sm:p-12 bg-opacity-40 h-fit"
           onClick={(e) => e.stopPropagation()}
         >
           {reportStatus === null && (
