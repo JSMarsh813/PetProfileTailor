@@ -152,7 +152,7 @@ export default function CoreListingPageLogic({
         </section>
       )}
 
-      <div className="flex w-screen sm:px-2  mx-auto ">
+      <div className="flex sm:px-2  mx-auto ">
         <Drawer
           open={isOpen}
           onClose={(event, reason) => {
