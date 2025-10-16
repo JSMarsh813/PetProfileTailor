@@ -29,30 +29,40 @@ export function SuggestionsProvider({ children, initialSuggestions = {} }) {
       return;
     }
 
-    fetch("/api/user/suggestions", { cache: "no-store" })
+    const controller = new AbortController();
+
+    fetch("/api/user/suggestions", {
+      cache: "no-store",
+      signal: controller.signal,
+    })
       .then((res) => res.json())
       .then((data) => {
-        const { names = [], descriptions = [] } = data;
-        suggestionsRef.current.names = new Map(
-          names.map((r) => [
-            r?.contentId?.toString(),
-            {
-              suggestionId: r._id?.toString?.(),
-              status: r.status || "pending",
-            },
-          ]),
-        );
-        suggestionsRef.current.descriptions = new Map(
-          descriptions.map((r) => [
-            r?.contentId?.toString(),
-            {
-              suggestionId: r._id?.toString?.(),
-              status: r.status || "pending",
-            },
-          ]),
-        );
+        if (!controller.signal.aborted) {
+          const { names = [], descriptions = [] } = data;
+          suggestionsRef.current.names = new Map(
+            names.map((r) => [
+              r?.contentId?.toString(),
+              {
+                suggestionId: r._id?.toString?.(),
+                status: r.status || "pending",
+              },
+            ]),
+          );
+          suggestionsRef.current.descriptions = new Map(
+            descriptions.map((r) => [
+              r?.contentId?.toString(),
+              {
+                suggestionId: r._id?.toString?.(),
+                status: r.status || "pending",
+              },
+            ]),
+          );
+        }
       })
-      .catch(console.error);
+      .catch((err) => {
+        if (err.name !== "AbortError") console.error(err);
+      });
+    return () => controller.abort();
   }, [userId, status]);
 
   //map for fast lookups based on contentID

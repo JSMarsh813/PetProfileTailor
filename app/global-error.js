@@ -27,7 +27,7 @@ export default function CustomError() {
         fill
         priority
         className="opacity-80"
-        style={{ objectPosition: "center", objectFit: "cover" }}
+        style={{ objectPosition: "center", objectFit: "contain" }}
         alt=""
       />
 

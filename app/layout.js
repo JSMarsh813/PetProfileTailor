@@ -28,12 +28,44 @@ import SuggestionsWrapper from "@/wrappers/SuggestionsWrapper";
 import GoToTopButton from "@/components/ReusableSmallComponents/buttons/GoToTopButton";
 import NotificationsWrapper from "@/wrappers/NotificationWrapper";
 
+import db from "@/utils/db";
+import NameCategory from "@/models/NameCategory";
+import DescriptionCategory from "@/models/DescriptionCategory";
+import { leanWithStrings } from "@/utils/mongoDataCleanup";
+
 export const metadata = {
   title:
     "Improve Adoption Rates by Creating Impactful, Fun, and Tailor-Fitted Pet Adoption Profiles!",
   description:
     "Homeward Tails is a community powered database which helps you find the perfect pet name or create pet profiles which are impactful, fun, and tailor fitted. Animal welfare professionals can use the community submitted names or descriptions to create engaging pet profiles to improve adoption rates!",
 };
+
+// 🧠 3-hour TTL cache
+let cachedCategories = null;
+let lastFetched = 0;
+
+async function getCategoriesAndTagsWithTTL() {
+  const THREE_HOURS = 3 * 60 * 60 * 1000;
+  const now = Date.now();
+
+  if (cachedCategories && now - lastFetched < THREE_HOURS) {
+    return cachedCategories;
+  }
+
+  await db.connect();
+
+  const [nameCategories, descCategories] = await Promise.all([
+    leanWithStrings(NameCategory.find().populate("tags").sort({ order: 1 })),
+    leanWithStrings(
+      DescriptionCategory.find().populate("tags").sort({ order: 1 }),
+    ),
+  ]);
+
+  cachedCategories = { names: nameCategories, descriptions: descCategories };
+  lastFetched = now;
+
+  return cachedCategories;
+}
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(serverAuthOptions);
@@ -45,10 +77,10 @@ export default async function RootLayout({ children }) {
     : null;
   //Guarantees session.user exists (or is an empty object).
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}/api/categories-and-tags`,
-  );
-  const { names, descriptions } = await res.json();
+  await db.connect();
+
+  // Cached DB data
+  const { names, descriptions } = await getCategoriesAndTagsWithTTL();
 
   return (
     <html

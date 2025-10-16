@@ -11,11 +11,33 @@ import GeneralButton from "@components/ReusableSmallComponents/buttons/GeneralBu
 import Image from "next/image";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotions";
+import ReCAPTCHA from "react-google-recaptcha";
+
+import {
+  GoogleReCaptchaProvider,
+  useGoogleReCaptcha,
+} from "react-google-recaptcha-v3";
 
 import RegisterInput from "@components/FormComponents/RegisterInput";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
 export default function Register() {
+  return (
+    <GoogleReCaptchaProvider
+      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+    >
+      <RegisterForm />
+    </GoogleReCaptchaProvider>
+  );
+}
+
+export function RegisterForm() {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const [showV2, setShowV2] = useState(false);
+  const [v2Token, setV2Token] = useState(null);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [namesThatExist, setNamesThatExist] = useState([]);
   const [nameCheck, setNameCheck] = useState("");
@@ -68,22 +90,58 @@ export default function Register() {
     profilename,
     over13,
   }) => {
+    let captchaToken;
+    setIsLoading(true);
+
     try {
       if (!over13) {
         setError("over13", {
           type: "manual",
           message: "You must confirm you are over 13",
         });
+        setIsLoading(false);
+        return;
+      }
+      if (!executeRecaptcha && !v2Token) {
+        setIsLoading(false);
+        toast.error("reCAPTCHA is not ready. Please try again.");
         return;
       }
 
-      await axios.post("/api/auth/signup", {
+      // Use v3 first
+      if (!showV2) {
+        captchaToken = await executeRecaptcha("register");
+
+        if (!captchaToken) {
+          // v3 token missing or not generated
+          setShowV2(true); // show v2 fallback
+          setIsLoading(false);
+          return;
+        }
+      } else {
+        // fallback to v2 token
+        if (!v2Token) {
+          alert("Please complete the CAPTCHA");
+          setIsLoading(false);
+          return;
+        }
+        captchaToken = v2Token;
+      }
+
+      console.log("captchaToken", captchaToken);
+      const res = await axios.post("/api/auth/signup", {
         name,
         email,
         password,
         over13,
         profileName: profilename.toLowerCase(),
+        captchaToken,
       });
+      // v3 score too low => show v2 fallback
+      if (res.data?.captchaLowScore) {
+        setShowV2(true);
+        return;
+      }
 
       // ###### magic-link signups ######
 
@@ -92,15 +150,16 @@ export default function Register() {
           redirect: false,
           email,
         });
-
-        if (magicLinkSignUp.error) {
+        if (!magicLinkSignUp) {
+          setIsLoading(false);
+          toast.error("Magic link sign in failed. Please try again.");
+        } else if (magicLinkSignUp.error) {
+          setIsLoading(false);
           toast.error(magicLinkSignUp.error);
-          // console.log(JSON.stringify(magicLinkSignUp));
         } else {
           toast.success(
             "Successfully signed up! A magic link has been sent to your email",
           );
-
           router.push(`/magiclink?email=${encodeURIComponent(email)}`);
         }
         return;
@@ -114,12 +173,14 @@ export default function Register() {
         password,
       });
 
-      if (result.error) {
+      if (!result) {
+        setIsLoading(false);
+        toast.error("Sign in failed. Please try again.");
+      } else if (result.error) {
+        setIsLoading(false);
         toast.error(result.error);
-        // console.log(JSON.stringify(result));
       } else {
         toast.success("Successfully signed up! Sending to dashboard");
-
         router.push("/dashboard");
       }
     } catch (err) {
@@ -130,7 +191,9 @@ export default function Register() {
         Object.entries(apiErrors).forEach(([field, message]) => {
           setError(field, { type: "server", message });
         });
+        setIsLoading(false);
       } else {
+        setIsLoading(false);
         toast.error(err.response?.data?.message || "Something went wrong");
       }
     }
@@ -308,9 +371,21 @@ export default function Register() {
         />
 
         <div className="w-full flex justify-center mb-4">
-          <GeneralButton text="register" />
+          <GeneralButton
+            text="register"
+            disabled={isLoading}
+          />
         </div>
+        {showV2 && (
+          <div className="flex justify-center mb-4">
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_V2_SITE_KEY}
+              onChange={(token) => setV2Token(token)}
+            />
+          </div>
+        )}
       </form>
+      {isLoading && <LoadingSpinner />}
     </div>
   );
 }

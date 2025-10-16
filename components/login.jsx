@@ -19,11 +19,18 @@ import StyledInput from "@components/FormComponents/StyledInput";
 import LinkButton from "@components/ReusableSmallComponents/buttons/LinkButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getCsrfToken } from "next-auth/react";
+import LoadingSpinner from "./ui/LoadingSpinner";
+
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export default function Login() {
   const { data: session } = useSession();
+  // const { executeRecaptcha } = useGoogleReCaptcha();
   const [csrfToken, setCsrfToken] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [loadingLogin, setLoadingLogin] = useState(false);
+  const [loadingMagicLink, setLoadingMagicLink] = useState(false);
+
   const hasShownError = useRef(false);
 
   const router = useRouter();
@@ -73,6 +80,7 @@ export default function Login() {
     if (!email || !password) return;
 
     try {
+      setLoadingLogin(true);
       const result = await signIn("credentials", {
         redirect: false,
         //gets rid of callback url @10:20 https://www.youtube.com/watch?v=EFucgPdjeNg&t=594s&ab_channel=FullStackNiraj
@@ -80,6 +88,7 @@ export default function Login() {
         password,
       });
       if (result.error) {
+        setLoadingLogin(false);
         toast.error(result.error);
       } else {
         toast.success("Successfully signed in! Sending to dashboard");
@@ -87,6 +96,7 @@ export default function Login() {
       setRedirect(true);
     } catch (err) {
       toast.error(getError(err));
+      setLoadingLogin(false);
     }
   };
 
@@ -173,9 +183,12 @@ export default function Login() {
                   className=""
                   type="submit"
                   subtle
+                  disabled={loadingLogin}
                 />
               </div>
             </form>
+
+            {loadingLogin && <LoadingSpinner />}
 
             {/* ################ Or Divider ##################### */}
 
@@ -198,27 +211,31 @@ export default function Login() {
               </p>
 
               <form
+                className="text-center"
                 onSubmit={async (e) => {
                   e.preventDefault();
                   const email = e.currentTarget.email.value;
                   if (!email) return toast.error("Please enter your email.");
+                  setLoadingMagicLink(true);
 
-                  const result = await signIn("email", {
-                    email,
-                    redirect: false, // we’ll handle redirect manually
-                  });
+                  try {
+                    const result = await signIn("email", {
+                      email,
+                      redirect: false, // we’ll handle redirect manually
+                    });
 
-                  if (result?.ok) {
-                    router.push(
-                      `/magiclink?email=${encodeURIComponent(email)}`,
-                    );
-                  } else {
-                    toast.error(
-                      "If this email exists, a magic link will be sent.",
-                    );
+                    if (result) {
+                      // we want them sent to the magic link, no matter the result
+                      router.push(
+                        `/magiclink?email=${encodeURIComponent(email)}`,
+                      );
+                      toast("If this email exists, a magic link will be sent.");
+                    }
+                  } catch (error) {
+                    toast.error("Something went wrong. Please try again.");
+                    setLoadingMagicLink(false); // only stop spinner if there's an error
                   }
                 }}
-                className="text-center"
               >
                 <input
                   name="csrfToken"
@@ -237,8 +254,11 @@ export default function Login() {
                   className="sm:ml-2 sm:mb-2 text-center mt-0"
                   type="submit"
                   subtle
+                  disabled={loadingMagicLink}
                 />
               </form>
+
+              {loadingMagicLink && <LoadingSpinner />}
 
               <p className="text-center mb-2">Sign in without a password!</p>
               <p className="text-center mb-2">

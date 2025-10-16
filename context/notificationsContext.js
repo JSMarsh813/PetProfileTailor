@@ -36,17 +36,28 @@ export function NotificationsProvider({ children }) {
       return;
     }
 
-    fetch("/api/user/notifications", { cache: "no-store" })
+    const controller = new AbortController();
+
+    fetch("/api/user/notifications", {
+      cache: "no-store",
+      signal: controller.signal,
+    })
       .then((res) => res.json())
       .then((data) => {
-        setNotifications({
-          names: data.names || 0,
-          descriptions: data.descriptions || 0,
-          thanks: data.thanks || 0,
-        });
-        setTimeGrabbed(new Date());
+        if (!controller.signal.aborted) {
+          setNotifications({
+            names: data.names || 0,
+            descriptions: data.descriptions || 0,
+            thanks: data.thanks || 0,
+          });
+          setTimeGrabbed(new Date());
+        }
       })
-      .catch(console.error);
+      .catch((err) => {
+        if (err.name !== "AbortError") console.error(err);
+      });
+
+    return () => controller.abort();
   }, [userId, status]);
 
   const notificationsTotal =

@@ -4,10 +4,51 @@ import db from "@utils/db";
 import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
 import { getUserByProfileName } from "@utils/getUserByProfileName";
 import { NextResponse } from "next/server";
+import { createSecretKey } from "crypto";
+import axios from "axios";
 
 export async function POST(req) {
   const body = await req.json();
-  const { name, email, password, profileName, over13 } = body;
+  const { name, email, password, profileName, over13, captchaToken } = body;
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+
+  // Google reCAPTCHA v3 expects the verification request to be form-encoded POST data, not query parameters (even though GET sometimes works, it’s unreliable).
+  const params = new URLSearchParams();
+  params.append("secret", secretKey);
+  params.append("response", captchaToken);
+
+  // ############ Verify reCAPTCHA v3 ###############
+  if (!captchaToken) {
+    return NextResponse.json(
+      { message: "Captcha token missing" },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const captchaRes = await axios.post(
+      "https://www.google.com/recaptcha/api/siteverify",
+      params.toString(), // send as form-encoded string
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      },
+    );
+
+    const { success, score } = captchaRes.data;
+    if (!success || score < 0.5) {
+      return NextResponse.json(
+        { message: "Captcha verification failed" },
+        { status: 400 },
+      );
+    }
+  } catch (err) {
+    return NextResponse.json(
+      { message: "Captcha verification error" },
+      { status: 500 },
+    );
+  }
 
   const errors = {};
 

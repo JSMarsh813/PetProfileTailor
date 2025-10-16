@@ -33,34 +33,42 @@ export function ReportsProvider({ children, initialReports = {} }) {
       return;
     }
 
+    const controller = new AbortController();
+
     // Fetch reports for the logged-in user
-    fetch("/api/user/reports", { cache: "no-store" })
+    fetch("/api/user/reports", { cache: "no-store", signal: controller.signal })
       .then((res) => res.json())
       .then((data) => {
-        const { names = [], descriptions = [], users = [] } = data;
+        if (!controller.signal.aborted) {
+          const { names = [], descriptions = [], users = [] } = data;
 
-        reportsRef.current.names = new Map(
-          names.map((r) => [
-            r.contentId.toString(),
-            { reportId: r._id?.toString?.(), status: r.status || "pending" },
-          ]),
-        );
+          reportsRef.current.names = new Map(
+            names.map((r) => [
+              r.contentId.toString(),
+              { reportId: r._id?.toString?.(), status: r.status || "pending" },
+            ]),
+          );
 
-        reportsRef.current.descriptions = new Map(
-          descriptions.map((r) => [
-            r.contentId.toString(),
-            { reportId: r._id?.toString?.(), status: r.status || "pending" },
-          ]),
-        );
+          reportsRef.current.descriptions = new Map(
+            descriptions.map((r) => [
+              r.contentId.toString(),
+              { reportId: r._id?.toString?.(), status: r.status || "pending" },
+            ]),
+          );
 
-        reportsRef.current.users = new Map(
-          users.map((r) => [
-            r.contentId.toString(),
-            { reportId: r._id?.toString?.(), status: r.status || "pending" },
-          ]),
-        );
+          reportsRef.current.users = new Map(
+            users.map((r) => [
+              r.contentId.toString(),
+              { reportId: r._id?.toString?.(), status: r.status || "pending" },
+            ]),
+          );
+        }
       })
-      .catch(console.error);
+      .catch((err) => {
+        if (err.name !== "AbortError") console.error(err);
+      });
+
+    return () => controller.abort();
   }, [userId, status]);
 
   //map for fast lookups based on contentID

@@ -31,23 +31,35 @@ export function LikesProvider({ children }) {
       return;
     }
 
+    //controller ensures that if your page unmounts or the fetch is canceled during redirect/hydration, the promise cleanly aborts
+    // for example when logging in with magic links I kept getting the:
+    //TypeError: NetworkError when attempting to fetch resource.
+
+    const controller = new AbortController();
+
     // fetch likes for the logged-in user
-    fetch("/api/user/likes", { cache: "no-store" })
+    fetch("/api/user/likes", { cache: "no-store", signal: controller.signal })
       .then((res) => res.json())
       .then((data) => {
-        const names = data?.names || [];
-        const descriptions = data?.descriptions || [];
+        if (!controller.signal.aborted) {
+          const names = data?.names || [];
+          const descriptions = data?.descriptions || [];
 
-        likesRef.current = {
-          names: new Map(names.map((r) => [r.contentId.toString(), null])),
-          descriptions: new Map(
-            descriptions.map((r) => [r.contentId.toString(), null]),
-          ),
-        };
+          likesRef.current = {
+            names: new Map(names.map((r) => [r.contentId.toString(), null])),
+            descriptions: new Map(
+              descriptions.map((r) => [r.contentId.toString(), null]),
+            ),
+          };
 
-        recentLikesRef.current = {};
+          recentLikesRef.current = {};
+        }
       })
-      .catch(console.error);
+      .catch((err) => {
+        if (err.name !== "AbortError") console.error(err);
+      });
+
+    return () => controller.abort();
   }, [userId, status]);
 
   const getLikedIds = (type) => {
