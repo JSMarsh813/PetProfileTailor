@@ -28,7 +28,7 @@ export default function Register() {
 
   useEffect(() => {
     if (session?.user) {
-      router.push(redirect || "/");
+      router.push(redirect || "/dashboard");
     }
   }, [router, session, redirect]);
 
@@ -101,7 +101,7 @@ export default function Register() {
             "Successfully signed up! A magic link has been sent to your email",
           );
 
-          router.push("/magiclink");
+          router.push(`/magiclink?email=${encodeURIComponent(email)}`);
         }
         return;
       }
@@ -185,26 +185,28 @@ export default function Register() {
         className="max-w-screen-md text-center mx-auto"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <div className="mb-4 flex items-center">
+        <div className="flex flex-col gap-2 items-center my-4">
           <p>
             {" "}
             Due to the community nature of this app and the possibility of
-            lightly suggestive or controversial content, users must be over 13{" "}
+            lightly suggestive or controversial content, users must be over 13.{" "}
           </p>
-          <input
-            id="over13"
-            type="checkbox"
-            {...register("over13", {
-              required: "You must confirm you are over 13",
-            })}
-            className="h-5 w-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
-          />
-          <label
-            htmlFor="over13"
-            className="ml-2 text-subtleWhite"
-          >
-            I confirm that I am over 13 years old
-          </label>
+          <div>
+            <input
+              id="over13"
+              type="checkbox"
+              {...register("over13", {
+                required: "You must confirm you are over 13",
+              })}
+              className="h-5 w-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+            />
+            <label
+              htmlFor="over13"
+              className="ml-2 text-subtleWhite"
+            >
+              I confirm that I am over 13 years old
+            </label>
+          </div>
         </div>
         {errors.over13 && (
           <p className="text-red-500 text-sm mt-1">{errors.over13.message}</p>

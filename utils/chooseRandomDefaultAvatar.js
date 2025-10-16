@@ -6,7 +6,7 @@ export default function chooseRandomDefaultAvatar() {
     "/avatar-llama.png",
     "/avatar-panda.png",
     "/avatar-tiger.png",
-    "/avatr-whale.png",
+    "/avatar-whale.png",
   ];
 
   // Pick a random one

@@ -198,8 +198,26 @@ export default function Login() {
               </p>
 
               <form
-                method="post"
-                action="/api/auth/signin/email"
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const email = e.currentTarget.email.value;
+                  if (!email) return toast.error("Please enter your email.");
+
+                  const result = await signIn("email", {
+                    email,
+                    redirect: false, // we’ll handle redirect manually
+                  });
+
+                  if (result?.ok) {
+                    router.push(
+                      `/magiclink?email=${encodeURIComponent(email)}`,
+                    );
+                  } else {
+                    toast.error(
+                      "If this email exists, a magic link will be sent.",
+                    );
+                  }
+                }}
                 className="text-center"
               >
                 <input

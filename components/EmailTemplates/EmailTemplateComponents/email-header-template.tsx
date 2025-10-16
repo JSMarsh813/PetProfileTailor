@@ -70,5 +70,5 @@ const companyname = {
   fontSize: "1.4rem",
   background: "rgba(124,58,237,1)",
   padding: "12px 0",
-  border: "1px solid white",
+  border: "0px",
 };

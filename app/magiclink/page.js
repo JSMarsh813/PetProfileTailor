@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
@@ -15,6 +16,9 @@ import NounBlackCatIcon from "@components/ReusableSmallComponents/iconsOrSvgImag
 import MagicRabbitSVG from "@components/ReusableSmallComponents/iconsOrSvgImages/svgImages/MagicRabbitSVG";
 
 export default function LoginScreen() {
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+
   return (
     <section className="h-fit">
       <PageTitleWithImages
@@ -34,6 +38,13 @@ export default function LoginScreen() {
               Congrats! If the email you entered is in our system, you will
               recieve a magic link in your inbox.
             </p>
+
+            {email && (
+              <p className="text-center text-yellow-200 font-semibold mb-4">
+                Sent to: <span className="underline">{email}</span>
+              </p>
+            )}
+
             <p className="text-center rounded-lg mb-2">
               Click the link in the email to be signed in.
             </p>
@@ -43,7 +54,7 @@ export default function LoginScreen() {
 
               <p className="text-center rounded-lg ">
                 <strong> No email? </strong> Please check for typos and check
-                your spam folder.
+                your spam & junk folder.
               </p>
               <p className="text-center rounded-lg ">
                 It may take several minutes for the email to arrive.
