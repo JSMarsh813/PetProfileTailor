@@ -2,7 +2,6 @@ import { serverAuthOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Login from "@components/login";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 export default async function LoginScreen() {
   const session = await getServerSession(serverAuthOptions);
@@ -15,11 +14,5 @@ export default async function LoginScreen() {
   //if the session exists, then the user is already signed in. So if this is true, push back to the homepage
   //we need to use router (line 8) to redirect user
 
-  return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-    >
-      <Login />
-    </GoogleReCaptchaProvider>
-  );
+  return <Login />;
 }

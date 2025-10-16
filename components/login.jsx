@@ -21,8 +21,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { getCsrfToken } from "next-auth/react";
 import LoadingSpinner from "./ui/LoadingSpinner";
 
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-
 export default function Login() {
   const { data: session } = useSession();
   // const { executeRecaptcha } = useGoogleReCaptcha();
