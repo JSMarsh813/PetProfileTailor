@@ -67,7 +67,7 @@ function FilteringSidebar({
                     <ChevronUpIcon
                       className={`${
                         open ? "rotate-180 transform" : ""
-                      } h-5 w-5 text-subtleWhite`}
+                      } h-5 w-5 mr-3 text-subtleWhite`}
                     />
                   </DisclosureButton>
 

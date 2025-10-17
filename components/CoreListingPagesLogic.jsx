@@ -152,7 +152,7 @@ export default function CoreListingPageLogic({
         </section>
       )}
 
-      <div className="flex sm:px-2  mx-auto ">
+      <div className="flex w-screen sm:px-2  mx-auto ">
         <Drawer
           open={isOpen}
           onClose={(event, reason) => {
@@ -164,7 +164,7 @@ export default function CoreListingPageLogic({
           }}
           anchor="left"
         >
-          <div className="w-full max-w-[451px] h-full  flex flex-col">
+          <div className="w-full max-w-[451px] h-full  flex flex-col overflow-x-clip">
             <FilteringSidebar
               dataType={dataType}
               handleFilterChange={handleFilterChange}
