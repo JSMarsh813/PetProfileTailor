@@ -203,7 +203,7 @@ function NewNameWithTagsData() {
             className="bg-secondary border-subtleWhite rounded-2xl disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:cursor-not-allowed"
             value={newName}
             onChange={(e) => setNewName(e.target.value.trimStart())}
-            maxLength="40"
+            maxLength="50"
             disabled={disabled}
           ></input>
           {newNameInvalidInput !== null && (
@@ -212,7 +212,7 @@ function NewNameWithTagsData() {
             />
           )}
           <span className="block my-3">
-            {`${40 - newName.length}/40 characters left`}
+            {`${50 - newName.length}/50 characters left`}
           </span>
           {/* setNote */}
           <label

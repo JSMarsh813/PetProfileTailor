@@ -37,6 +37,15 @@ export async function POST(req) {
 
   const { content, notes, tags } = await req.json();
 
+  if (content.length > 50) {
+    return Response.json(
+      {
+        message: `Ruh Roh! The name ${content} has more than 50 characters. It is ${content.length} characters`,
+      },
+      { status: 400 },
+    );
+  }
+
   try {
     const blockResult = checkMultipleFieldsBlocklist([
       { value: content, fieldName: "content" },
@@ -93,6 +102,15 @@ export async function PUT(req) {
 
   const { submission } = await req.json();
   const { contentId, content, notes, tags } = submission;
+
+  if (content.length > 50) {
+    return Response.json(
+      {
+        message: `Ruh Roh! The name ${content} has more than 50 characters. It is ${content.length} characters`,
+      },
+      { status: 400 },
+    );
+  }
 
   if (content | notes) {
     const blockResult = checkMultipleFieldsBlocklist([

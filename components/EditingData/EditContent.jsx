@@ -50,7 +50,7 @@ export default function EditContent({
     setIsSaving(false);
   };
 
-  const maxContentLength = dataType === "names" ? 40 : 2000;
+  const maxContentLength = dataType === "names" ? 50 : 2000;
 
   return (
     <Dialog
