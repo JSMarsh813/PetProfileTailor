@@ -174,7 +174,7 @@ export default function ContentListing({
             {/* height needed otherwise the nonpositioned elements will move up */}
 
             <div className="">
-              <div className="w-full p-2 flex items-start">
+              <div className="w-full p-2 flex items-start text-left">
                 <a
                   href={`${
                     process.env.NEXT_PUBLIC_BASE_FETCH_URL
