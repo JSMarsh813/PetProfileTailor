@@ -115,7 +115,8 @@ export default function ContentListing({
     isSaving,
   } = useEditHandler({
     apiEndpoint: apiEndPoint,
-    ...(mode === "swr" ? { mutate } : { setLocalData: setLocalContent }),
+    mutate,
+    setLocalData: setLocalContent,
   });
   const {
     showThanksDialog,
@@ -170,11 +171,11 @@ export default function ContentListing({
           //  items-center
         >
           {/* ###### CREATEDBY SECTION #### */}
-          <section className="w-full pt-2 ">
+          <section className="w-full pt-2 text-left">
             {/* height needed otherwise the nonpositioned elements will move up */}
 
             <div className="">
-              <div className="w-full p-2 flex items-start text-left">
+              <div className="w-full p-2 flex items-start">
                 <a
                   href={`${
                     process.env.NEXT_PUBLIC_BASE_FETCH_URL

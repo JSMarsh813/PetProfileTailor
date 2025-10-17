@@ -59,10 +59,15 @@ export function useEditHandler({ apiEndpoint, mutate, setLocalData }) {
             })),
           false,
         );
-      } else if (setLocalData) {
-        setLocalData(updatedItem);
       }
-
+      // } else if (setLocalData) {
+      //   setLocalData(updatedItem);
+      // }
+      setLocalData(updatedItem);
+      // need to always set the local data, because the edit logic form grabs from the local state
+      // since the edit hook itself won't rerender after the data's been edited
+      // so whether its swr or local, the edit dialog will use state
+      // this way, if the user edits the form, and goes to edit a 2nd time, they'll see the updated data
       setEditTarget(updatedItem); // <-- update modal’s editTarget so the edit form sees the update
 
       toast.success("Successfully edited!");
