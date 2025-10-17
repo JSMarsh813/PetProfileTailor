@@ -21,7 +21,7 @@ export default function StyledCheckbox({
   return (
     <label
       htmlFor={value}
-      className="flex items-start space-x-2 cursor-pointer w-full max-w-96"
+      className="flex items-start space-x-2 cursor-pointer max-w-96"
     >
       <input
         id={value}
