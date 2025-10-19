@@ -21,7 +21,7 @@ const EditButton = forwardRef(
     >
       <FontAwesomeIcon
         icon={faPencil}
-        className="text-xl w-4 h-4"
+        className="text-xl w-4 h-4 mr-2"
       />
       <span>Edit</span>
     </button>

@@ -12,9 +12,9 @@ const DeleteButton = forwardRef(
     >
       <FontAwesomeIcon
         icon={faTrashCan}
-        className="text-xl w-4 h-4"
+        className="text-xl w-4 h-4 mr-2"
       />
-      Delete
+      <span> Delete</span>
     </button>
   ),
 );
