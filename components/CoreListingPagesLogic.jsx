@@ -163,6 +163,13 @@ export default function CoreListingPageLogic({
             toggleDrawer(false);
           }}
           anchor="left"
+          // gets rid of white background of mui drawer
+          sx={{
+            "& .MuiDrawer-paper": {
+              backgroundColor: "transparent",
+              boxShadow: "none",
+            },
+          }}
         >
           <div className="w-full max-w-[451px] h-full  flex flex-col overflow-x-clip">
             <FilteringSidebar

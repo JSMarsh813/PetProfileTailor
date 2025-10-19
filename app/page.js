@@ -102,7 +102,7 @@ function HomePage() {
         </section>
 
         <section className="landingDescriptionsSection">
-          <WideCenteredHeading heading="Find Tailor-fit Descriptions" />
+          <WideCenteredHeading heading="Find Tailor-Fit Descriptions" />
 
           <MediaObjectRight
             image="/obviousplant.webp"

@@ -24,7 +24,7 @@ const FlagButton = React.forwardRef(({ content, onClick, dataType }, ref) => {
     <button
       ref={ref} // <- forward ref here
       type="button"
-      className="ml-2 mr-6 w-full group flex items-center hover:bg-blue-500"
+      className="ml-2 mr-6 rounded-sm w-[90%] group flex items-center hover:bg-blue-500"
       onClick={() => onClick(content)}
     >
       <FontAwesomeIcon

@@ -12,6 +12,7 @@ const GeneralButton = ({
   disabled,
   children,
   dataModalToggle,
+  ariaLabel,
 }) => {
   const baseClasses =
     "font-bold my-3 py-1 px-4 border-b-4 shadow-lg shadow-stone-900/70 rounded-2xl text-base";
@@ -42,6 +43,7 @@ const GeneralButton = ({
       type={type}
       disabled={disabled}
       data-modal-toggle={dataModalToggle}
+      aria-label={ariaLabel}
     >
       <span>{text}</span>
       {children && <span className="flex items-center">{children}</span>}

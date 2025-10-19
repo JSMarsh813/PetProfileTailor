@@ -45,6 +45,7 @@ export default function LikesButtonAndLikesLogic({
         disabled={isProcessing}
         onClick={() => toggleLikeIfSignedIn()}
         style={{ background: "transparent", border: "none", cursor: "pointer" }}
+        aria-label={liked ? "Unlike" : "Like"}
       >
         <FontAwesomeIcon
           icon={faHeart}

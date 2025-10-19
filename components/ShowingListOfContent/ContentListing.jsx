@@ -186,7 +186,7 @@ export default function ContentListing({
                   <span className="font-bold text-lg break-words">
                     {singleContent.createdBy.name}
                   </span>
-                  <span className="font-thin text-base text-gray-500 break-words">
+                  <span className="font-thin text-base text-gray-300 break-words">
                     @{singleContent.createdBy.profileName}
                   </span>
                 </a>
@@ -205,7 +205,11 @@ export default function ContentListing({
                               : "hover:bg-blue-500 rounded-2xl"
                           }`}
                         >
-                          <Ellipsis />
+                          <Ellipsis
+                            aria-hidden="true"
+                            focusable="false"
+                          />
+                          <span className="sr-only">More options</span>
                         </MenuButton>
                       </div>
 
@@ -223,7 +227,7 @@ export default function ContentListing({
                                   openDelete(content);
                                 }}
                                 // focus == important for keyboard styling
-                                className={`ml-2 mr-6 w-full group flex items-center ${
+                                className={`ml-2 mr-6 rounded-sm w-[90%] group flex items-center ${
                                   focus ? "bg-blue-500 text-white" : ""
                                 }`}
                               />
@@ -237,7 +241,7 @@ export default function ContentListing({
                                   e.stopPropagation(); // prevent menu from closing
                                   if (content) openEdit(content);
                                 }}
-                                className={`ml-2 mr-6 w-full group flex items-center ${
+                                className={`ml-2 mr-6 w-[90%] rounded-sm group flex items-center ${
                                   focus ? "bg-blue-500 text-white" : ""
                                 }`}
                               />

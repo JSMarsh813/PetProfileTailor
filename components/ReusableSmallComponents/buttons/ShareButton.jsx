@@ -18,6 +18,7 @@ export default function ShareButton({
         type="button"
         onClick={onClickShowShares}
         tabIndex="0"
+        aria-label="toggle sharing options"
       >
         <FontAwesomeIcon
           icon={faShareFromSquare}

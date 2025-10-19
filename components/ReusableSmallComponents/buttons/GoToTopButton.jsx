@@ -42,7 +42,7 @@ export default function GoToTopButton({ top = "280" }) {
     <>
       {isVisible && (
         <GeneralButton
-          aria-label="Go to top"
+          ariaLabel="Go to top"
           onClick={scrollToTop}
           className="fixed bottom-16 right-6 py-3 px-5 rounded-full transition"
         >

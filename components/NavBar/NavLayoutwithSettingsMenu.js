@@ -31,7 +31,7 @@ export default function NavLayoutwithSettingsMenu() {
     "absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none";
 
   const menuItemStyling = function (focus) {
-    return `block px-4 py-2 text-sm text-gray-300 ${
+    return `block px-4 py-2 text-xs text-gray-300 ${
       focus ? "bg-white/10 text-white" : ""
     }`;
   };
@@ -105,7 +105,7 @@ export default function NavLayoutwithSettingsMenu() {
                       {({ focus }) => (
                         <Link
                           href="/dashboard"
-                          className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                          className={`flex items-center px-4 py-2 text-xs text-subtleWhite ${
                             focus ? "bg-white/10 text-subtleWhite" : ""
                           }`}
                         >
@@ -121,7 +121,7 @@ export default function NavLayoutwithSettingsMenu() {
                             href={`${
                               process.env.NEXT_PUBLIC_BASE_FETCH_URL
                             }profile/${session.user.profileName.toLowerCase()}`}
-                            className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                            className={`flex items-center px-4 py-2 text-xs text-subtleWhite ${
                               focus ? "bg-white/10 text-subtleWhite" : ""
                             }`}
                           >
@@ -135,7 +135,7 @@ export default function NavLayoutwithSettingsMenu() {
                       {({ focus }) => (
                         <Link
                           href={`/editsettings`}
-                          className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                          className={`flex items-center px-4 py-2 text-xs text-subtleWhite ${
                             focus ? "bg-white/10 text-subtleWhite" : ""
                           }`}
                         >
@@ -164,13 +164,13 @@ export default function NavLayoutwithSettingsMenu() {
                     basic
                     href="/login"
                     text="login"
-                    className="text-sm"
+                    className="text-xs"
                   />
                   <LinkButton
                     defaultStyle
                     href="/register"
                     text="register"
-                    className="text-sm"
+                    className="text-xs"
                   />
                 </div>
               )}

@@ -22,6 +22,7 @@ export default function NotificationsButton() {
   return (
     <Link
       href="/notifications"
+      aria-label="Go to notifications"
       className={` className="mr-2 py-[6px] px-[10px] rounded-full hover:bg-blue-500 `}
     >
       <IconBadge
