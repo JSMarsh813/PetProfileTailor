@@ -17,6 +17,7 @@ import CheckIfContentExists from "./CheckIfContentExists";
 import CheckboxWithLabelAndDescription from "../FormComponents/CheckboxWithLabelAndDescription";
 import StyledCheckbox from "../FormComponents/StyledCheckbox";
 import PreserveTextAfterSubmission from "./preserveTextAfterSubmission";
+import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 
 function NewNameWithTagsData() {
   const [newName, setNewName] = useState("");
@@ -25,6 +26,7 @@ function NewNameWithTagsData() {
   const [note, setNote] = useState("");
   const [doNotClear, setDoNotClear] = useState(false);
   const [nameSubmissionMessage, setNameSubmissionMessage] = useState("");
+  const [resetCheckContent, setResetCheckContent] = useState(false);
 
   const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
 
@@ -32,7 +34,6 @@ function NewNameWithTagsData() {
 
   const disabled = session === null ? true : false;
 
-  // console.log(
   //   "session in adding names",
   //   session,
   //   session === null,
@@ -44,7 +45,6 @@ function NewNameWithTagsData() {
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange, clearTags } =
     useTags();
 
-  // async function checkIfNameExists() {
   //   try {
   //     let nameResponse = await fetch("/api/names/check-if-content-exists/" + nameCheck);
   //     let nameData = await nameResponse.json();
@@ -180,6 +180,7 @@ function NewNameWithTagsData() {
           apiString="/api/names/check-if-content-exists/"
           disabled={disabled}
           contentType="names"
+          resetTrigger={resetCheckContent}
         />
         <hr className="mt-4" />
         <form
@@ -202,7 +203,13 @@ function NewNameWithTagsData() {
             id="nameInput"
             className="bg-secondary border-subtleWhite rounded-2xl disabled:bg-errorBackgroundColor disabled:text-errorTextColor disabled:cursor-not-allowed"
             value={newName}
-            onChange={(e) => setNewName(e.target.value.trimStart())}
+            onChange={(e) => {
+              setNewName(e.target.value.trimStart());
+              if (nameSubmissionMessage !== "") {
+                setNameSubmissionMessage("");
+              }
+              setResetCheckContent((prev) => !prev);
+            }}
             maxLength="50"
             disabled={disabled}
           ></input>
@@ -228,7 +235,13 @@ function NewNameWithTagsData() {
             maxLength="1000"
             value={note}
             className="bg-secondary border-subtleWhite  block "
-            onChange={(e) => setNote(e.target.value.trimStart())}
+            onChange={(e) => {
+              setNote(e.target.value.trimStart());
+              if (nameSubmissionMessage !== "") {
+                setNameSubmissionMessage("");
+              }
+              setResetCheckContent((prev) => !prev);
+            }}
             disabled={disabled}
           />
           <div className="mb-8 flex flex-col gap-2">
@@ -283,9 +296,14 @@ function NewNameWithTagsData() {
           )}
         </form>
         {nameSubmissionMessage && (
-          <WarningMessage
-            state={setNameSubmissionMessage}
-            message={nameSubmissionMessage}
+          // <WarningMessage
+          //   state={setNameSubmissionMessage}
+          //   message={nameSubmissionMessage}
+          // />
+          <ToggeableAlert
+            text={nameSubmissionMessage}
+            setToggleState={setNameSubmissionMessage}
+            toggleState={nameSubmissionMessage}
           />
         )}
       </section>

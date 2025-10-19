@@ -20,6 +20,7 @@ function NewDescriptionWithTagsData() {
   const [isPending, setIsPending] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState("");
   const [descriptionAlreadyExists, setDescriptionExists] = useState(false);
+  const [resetCheckContent, setResetCheckContent] = useState(false);
 
   const { data: session } = useSession();
 
@@ -88,7 +89,10 @@ function NewDescriptionWithTagsData() {
           well-behaved.
         </p>
 
-        <h4 className="mt-4  font-black text-lg"> Submission Guidelines </h4>
+        <h4 className="mt-4  font-black text-lg mb-2">
+          {" "}
+          Submission Guidelines{" "}
+        </h4>
         <ul className="">
           <li>
             {" "}
@@ -105,6 +109,7 @@ function NewDescriptionWithTagsData() {
           apiString="/api/description/check-if-content-exists/"
           disabled={disabled}
           contentType="descriptions"
+          resetTrigger={resetCheckContent}
         />
 
         <form onSubmit={handleDescriptionSubmission}>
@@ -116,7 +121,7 @@ function NewDescriptionWithTagsData() {
           {/* needs label and value for Select to work  */}
 
           <label
-            className="font-bold block mt-4 text-lg "
+            className="font-bold block my-4 text-lg "
             htmlFor="descriptionInput"
           >
             Description *required
@@ -128,24 +133,33 @@ function NewDescriptionWithTagsData() {
             className="text-subtleWhite block w-full rounded-2xl disabled:bg-errorBackgroundColor bg-secondary border-subtleWhite 
 disabled:text-errorTextColor "
             value={newDescription}
-            onChange={(e) =>
-              setNewDescription(e.target.value.trimStart().toLowerCase())
-            }
+            onChange={(e) => {
+              setNewDescription(e.target.value.trimStart().toLowerCase());
+              if (submissionMessage !== "") {
+                setSubmissionMessage("");
+              }
+              setResetCheckContent((prev) => !prev);
+            }}
             maxLength="4000"
             disabled={disabled}
             onClick={(e) => setDescriptionExists(false)}
           ></textarea>
 
-          <span> {`${4000 - newDescription.length}/4000 characters left`}</span>
+          <span className="mt-2 inline-block">
+            {" "}
+            {`${4000 - newDescription.length}/4000 characters left`}
+          </span>
 
           {descriptionAlreadyExists == true && (
-            <p className="text-red-500 font-bold">Description already exists</p>
+            <p className="text-red-500 font-bold">
+              Ruh Roh! This description already exists!
+            </p>
           )}
 
           {/* NOTES SECTION           */}
 
           <label
-            className="font-bold block mt-4 text-lg "
+            className="font-bold block mt-4 mb-2 text-lg "
             htmlFor="notesinput"
           >
             Notes
@@ -162,15 +176,24 @@ disabled:text-errorTextColor "
 disabled:text-errorTextColor rounded-2xl"
             value={notes}
             maxLength="800"
-            onChange={(e) => setNotes(e.target.value.trimStart().toLowerCase())}
+            onChange={(e) => {
+              setNotes(e.target.value.trimStart().toLowerCase());
+              if (submissionMessage !== "") {
+                setSubmissionMessage("");
+              }
+              setResetCheckContent((prev) => !prev);
+            }}
             disabled={disabled}
           ></textarea>
 
-          <span> {`${800 - notes.length}/800 characters left`}</span>
+          <span className="mt-2 inline-block">
+            {" "}
+            {`${800 - notes.length}/800 characters left`}
+          </span>
 
           {/* TAGS SECTION */}
           <label
-            className="font-bold block mt-4 text-lg"
+            className="font-bold block mt-4 mb-2 text-lg"
             htmlFor="descriptionTags"
           >
             Tags *required

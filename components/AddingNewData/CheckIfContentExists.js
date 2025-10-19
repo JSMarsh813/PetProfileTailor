@@ -14,6 +14,7 @@ export default function CheckIfContentExists({
   apiString,
   disabled,
   contentType,
+  resetTrigger,
 }) {
   const [checkContentMessage, setCheckContentMessage] = useState("");
   const [contentCheckFunctionRun, setContentCheckFunctionRun] = useState(false);
@@ -30,6 +31,10 @@ export default function CheckIfContentExists({
       setContentCheckInvalidInput(invalidCharacters);
     }
   }, [contentCheck]);
+
+  useEffect(() => {
+    resetData("");
+  }, [resetTrigger]);
 
   const existingContentHref =
     contentType === "names"
@@ -103,31 +108,45 @@ export default function CheckIfContentExists({
       )}
 
       {contentType === "names" ? (
-        <input
-          type="text"
-          className={`bg-secondary border-subtleWhite rounded-2xl mr-2 ${
-            disabled &&
-            "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
-          }`}
-          value={contentCheck}
-          id="checkNameExists"
-          disabled={disabled}
-          maxLength={maxContentLength}
-          onChange={(e) => resetData(e.target.value.trimStart())}
-        />
+        <div>
+          <input
+            type="text"
+            className={`bg-secondary border-subtleWhite rounded-2xl mr-2 ${
+              disabled &&
+              "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
+            }`}
+            value={contentCheck}
+            id="checkExists"
+            disabled={disabled}
+            maxLength={maxContentLength}
+            onChange={(e) => resetData(e.target.value.trimStart())}
+          />
+          <span className="block my-3">
+            {`${
+              maxContentLength - contentCheck.length
+            }/${maxContentLength} characters left`}{" "}
+          </span>
+        </div>
       ) : (
-        <StyledTextarea
-          className={`bg-secondary border-subtleWhite rounded-2xl mr-2 ${
-            disabled &&
-            "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
-          }`}
-          value={contentCheck}
-          ariaLabel="check if content exists"
-          id="checkNameExists"
-          disabled={disabled}
-          maxLength={maxContentLength}
-          onChange={(e) => resetData(e.target.value.trimStart())}
-        />
+        <div>
+          <StyledTextarea
+            className={`bg-secondary border-subtleWhite rounded-2xl mr-2 mb-4 ${
+              disabled &&
+              "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
+            }`}
+            value={contentCheck}
+            ariaLabel="check if content exists"
+            id="checkExists"
+            disabled={disabled}
+            maxLength={maxContentLength}
+            onChange={(e) => resetData(e.target.value.trimStart())}
+          />
+          <span className="block my-3">
+            {`${
+              maxContentLength - contentCheck.length
+            }/${maxContentLength} characters left`}{" "}
+          </span>
+        </div>
       )}
 
       <button
@@ -152,15 +171,10 @@ export default function CheckIfContentExists({
           Search
         </span>
       </button>
-      <span className="block my-3">
-        {`${
-          maxContentLength - contentCheck.length
-        }/${maxContentLength} characters left`}{" "}
-      </span>
 
       {isProcessing && <LoadingSpinner />}
       {contentCheckFunctionRun && (
-        <div>
+        <div className="mx-auto max-w-[90%] mt-4">
           {checkContentMessage && (
             <p className="text-sm">{checkContentMessage}</p>
           )}
@@ -170,12 +184,12 @@ export default function CheckIfContentExists({
             <p
               className="mt-2 
                                             text-yellow-200 font-bold
-                                             bg-red-700
+                                            bg-red-900
                                              border-2 border-yellow-200 rounded-2xl"
             >
               <Link href={existingContentHref}>
                 <GeneralButton
-                  className="ml-12 my-4 "
+                  className=" my-4 "
                   text={`Link to ${existingContent[0].content.slice(0, 15)} ${
                     existingContent[0].content.length > 15 ? "..." : ""
                   }`}

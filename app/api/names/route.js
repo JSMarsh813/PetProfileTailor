@@ -62,7 +62,7 @@ export async function POST(req) {
     if (existingNameCheck) {
       return Response.json(
         {
-          message: `Ruh Roh! The name ${content} already exists`,
+          message: `Ruh Roh! The name ${content} already exists!`,
           existingName: existingNameCheck,
         },
         { status: 409 },
@@ -141,7 +141,7 @@ export async function PUT(req) {
       const existingNameCheck = await findExactNormalized(Names, content);
       if (existingNameCheck) {
         return Response.json(
-          { message: `Ruh Roh! The name ${content} already exists` },
+          { message: `Ruh Roh! The name ${content} already exists!` },
           { status: 409 },
         );
       }

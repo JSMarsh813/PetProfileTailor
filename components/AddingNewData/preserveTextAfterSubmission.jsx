@@ -7,7 +7,7 @@ export default function PreserveTextAfterSubmission({
 }) {
   return (
     <div className="mt-8 mx-auto">
-      <h6 className="text-lg"> Entering lots of similar content?</h6>
+      <h6 className="text-lg mb-2"> Entering lots of similar content?</h6>
       <p>
         {" "}
         Click this checkbox to preserve the text and tags after you submit.

@@ -30,7 +30,7 @@ function returnExistingMessage(existingDescriptionCheck) {
     // existing description check is an object or null
     return Response.json(
       {
-        message: "Description already exists",
+        message: "Ruh Roh! This description already exists!",
         existingDescription: existingDescriptionCheck,
       },
       { status: 409 },
