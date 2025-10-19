@@ -34,7 +34,7 @@ export default async function Postid({ params }) {
   return (
     <div className="mx-2">
       <ReturnToPreviousPage
-        text="return to fetch descriptions"
+        text="Go to fetch descriptions"
         href="/fetchdescriptions"
       />
 

@@ -128,17 +128,19 @@ export default function EditContent({
         />
 
         {/* Buttons */}
-        <div className="mt-4 grid grid-cols-2 gap-4">
+        <div className="mt-6 flex justify-evenly px-8">
           <GeneralButton
             text="Cancel"
             warning
             onClick={onClose}
+            className="w-44"
           />
           <GeneralButton
             text="Save"
             subtle
             onClick={handleSubmit}
             disabled={isSaving}
+            className="w-44"
           />
         </div>
       </DialogPanel>

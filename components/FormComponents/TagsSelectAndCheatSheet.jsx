@@ -171,11 +171,12 @@ export default function TagsSelectAndCheatSheet({
       <p className="my-4 text-subtleWhite text-center">
         Or use the tags cheat sheet
       </p>
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-4">
         <GeneralButton
           text={`${isOpen ? "Close" : "Open"}`}
           onClick={() => setIsOpen(!isOpen)}
           type="button"
+          subtle
         />
       </div>
       {isOpen && (

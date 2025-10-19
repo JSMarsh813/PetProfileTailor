@@ -32,7 +32,7 @@ export default async function Postid({ params }) {
   return (
     <div className="mx-2 mt-6">
       <ReturnToPreviousPage
-        text="return to fetch names"
+        text="Go to fetch names"
         href="/fetchnames"
       />
 
