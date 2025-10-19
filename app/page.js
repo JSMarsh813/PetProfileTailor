@@ -62,22 +62,24 @@ function HomePage() {
       )}
       <section className=" h-24 flex place-items-center justify-center">
         <h5 className="text-white text-xl md:text-2xl pr-2">Adoptions Ahoy!</h5>
+        <div className="w-[110px] h-[110px] flex items-center justify-center">
+          <Image
+            unoptimized
+            width={110}
+            height={110}
+            src="/smallpirate.webp"
+            alt="image of a guinea pig wearing a tiny pirate hat"
+            style={{
+              maxWidth: "100%",
+              width: "auto",
+              height: "auto",
+            }}
+          />
+          {/* //Error: Image with src "/smallpirate.webp" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
 
-        <Image
-          width={110}
-          height={110}
-          src="/smallpirate.webp"
-          alt="image of a guinea pig wearing a tiny pirate hat"
-          style={{
-            maxWidth: "100%",
-            width: "auto",
-            height: "auto",
-          }}
-          //Error: Image with src "/smallpirate.webp" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-
-          // When you pass both width and height to <Image>, Next.js assumes you want to preserve that ratio.
-          // Next wants you to set width AND height to auto, if you're overriding the width/height ratio to ensure the aspect ratio is preserved
-        />
+            // When you pass both width and height to <Image>, Next.js assumes you want to preserve that ratio.
+            // Next wants you to set width AND height to auto, if you're overriding the width/height ratio to ensure the aspect ratio is preserved */}
+        </div>
       </section>
       <div className="">
         <section className="landingNamesSection">
