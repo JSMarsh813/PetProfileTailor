@@ -98,6 +98,7 @@ export default function NavLayoutwithSettingsMenu() {
                       className="ml-1 h-5 w-5 text-violet-200 hover:text-amber-300"
                       aria-hidden="true"
                     />
+                    <span className="sr-only">Open profile menu</span>
                   </MenuButton>
 
                   <MenuItems className={MenuItemsStyling}>
