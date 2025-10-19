@@ -22,14 +22,16 @@ export default function CustomError() {
         &quot;mouse&quot; 😿.
       </p>
 
-      <Image
-        src="/server.jpg"
-        fill
-        priority
-        className="opacity-80"
-        style={{ objectPosition: "center", objectFit: "contain" }}
-        alt=""
-      />
+      <div className="relative w-[240px] h-[240px] mx-auto">
+        <Image
+          src="/server.jpg"
+          fill
+          priority
+          className=""
+          style={{ objectPosition: "center", objectFit: "scale-down" }}
+          alt=""
+        />
+      </div>
 
       <ul className="text-center text-white bg-secondary max-w-4xl mx-auto h-fit pt-4 sm:px-2">
         <ListWithPawPrintIcon
