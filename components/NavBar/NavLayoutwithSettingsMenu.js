@@ -2,6 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 // //Special jsx code that allows us to build links. Allows us to keep everything on a single page (makes it a SPA), rather than using a href="page link", which would make us lose any state and require that we get a new file sent from the server
 
@@ -69,6 +70,19 @@ export default function NavLayoutwithSettingsMenu() {
               mx-auto ml-2 hover:text-subtleWhite"
               href="/"
               text="HomewardTails"
+              classForDiv="flex gap-1 justify-center"
+              icon={
+                <Image
+                  src="/icon.png"
+                  width="28"
+                  height="28"
+                  priority
+                  unoptimized
+                  className=""
+                  style={{ objectPosition: "center", objectFit: "scale-down" }}
+                  alt=""
+                />
+              }
             />
 
             <NavBarNames />

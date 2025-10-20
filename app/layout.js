@@ -38,6 +38,9 @@ export const metadata = {
     "Improve Adoption Rates by Creating Impactful, Fun, and Tailor-Fitted Pet Adoption Profiles!",
   description:
     "Homeward Tails is a community powered database which helps you find the perfect pet name or create pet profiles which are impactful, fun, and tailor fitted. Animal welfare professionals can use the community submitted names or descriptions to create engaging pet profiles to improve adoption rates!",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 // 🧠 3-hour TTL cache
