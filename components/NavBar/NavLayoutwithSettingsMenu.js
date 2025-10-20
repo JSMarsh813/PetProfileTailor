@@ -59,7 +59,11 @@ export default function NavLayoutwithSettingsMenu() {
     <>
       <div className="flex flex-col justify-between bg-primary">
         <header className="my-1">
-          <nav className="flex h-12 items-center pl-2 justify-between  bg-primary">
+          <nav
+            className="flex h-12 items-center pl-2 justify-between  bg-primary"
+            role="navigation"
+            aria-label="Primary navigation"
+          >
             {/* HAMBURGER MENU BUTTON */}
 
             <MobileNavBar />

@@ -34,6 +34,7 @@ import DescriptionCategory from "@/models/DescriptionCategory";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
 
 export const metadata = {
+  metadataBase: new URL("https://homewardtails.com"),
   title:
     "Improve Adoption Rates by Creating Impactful, Fun, and Tailor-Fitted Pet Adoption Profiles!",
   description:
@@ -100,7 +101,9 @@ export default async function RootLayout({ children }) {
               <NotificationsWrapper>
                 <ReportsWrapper>
                   <SuggestionsWrapper>
-                    <NavLayoutwithSettingsMenu />
+                    <header>
+                      <NavLayoutwithSettingsMenu />
+                    </header>
                     <Suspense fallback={<LoadingSkeleton />}>
                       <main
                         className="flex-1  sm:px-6 lg:px-8  mx-auto  w-full" // w-full so it the element doesn't start off as collapsed
