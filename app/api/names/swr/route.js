@@ -30,6 +30,11 @@ async function handleRequest(req) {
       // If parsing fails (empty body), treat as GET
       source = {};
     }
+    //  Merge in query parameters too (so ?page=2 still works, otherwise you'll get page 1 over and over again because it won't see the page 2, 3, ect from the params)
+    const { searchParams } = new URL(req.url);
+    searchParams.forEach((value, key) => {
+      if (!source[key]) source[key] = value;
+    });
   } else if (method === "GET") {
     const { searchParams } = new URL(req.url);
     searchParams.forEach((value, key) => {
@@ -81,8 +86,10 @@ async function handleRequest(req) {
   let filter = {};
 
   if (tags?.length) {
+    console.log("tags in swr", tags);
     const tagIds = tags.map((id) => new mongoose.Types.ObjectId(id));
     filter.tags = { $all: tagIds };
+    console.log("tag ids in swr", tagIds);
   }
 
   if (profileUserId) {
@@ -99,6 +106,16 @@ async function handleRequest(req) {
   try {
     const totalDocs = await Names.countDocuments(filter);
     const totalPagesInDatabase = Math.ceil(totalDocs / limit);
+    console.log("filter in swr", filter);
+
+    console.log(
+      "sortLogic",
+      sortLogic,
+      "page",
+      page,
+      "skip",
+      (page - 1) * limit,
+    );
 
     const names = await Names.aggregate([
       { $match: filter },
