@@ -50,7 +50,7 @@ export default function CustomError() {
               className="mr-2"
             />
             <a
-              href="mailto:petprofiletailor@gmail.com"
+              href="mailto:homewardtailsdev@gmail.com"
               className="underline"
             >
               Email
