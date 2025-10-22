@@ -15,8 +15,8 @@ import { useSession } from "next-auth/react";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import SmallCenteredHeading from "@/components/ReusableSmallComponents/TitlesOrHeadings/SmallCenteredheading";
 
-function ImageUpload() {
-  const { data: session } = useSession();
+function ImageUpload({ setAvatar = false, setShowDialog = false }) {
+  const { data: session, update } = useSession();
   const fileInputRef = useRef(null);
 
   const [selectedImage, setSelectedImage] = useState();
@@ -72,15 +72,26 @@ function ImageUpload() {
         user: session.user.id,
       });
 
+      // Force a new token refresh, so the new profile image will show on the navBar
+      const refreshed = await axios.post("/api/auth/session/refresh");
+      await update({ user: refreshed.data });
+
       const message = res.data?.message || "Avatar updated!";
 
       if (fileInputRef.current) fileInputRef.current.value = "";
 
       if (res.status == 200) {
         toast.success(message);
+        if (setAvatar) {
+          setAvatar(newProfileImage.toString());
+        }
         setSelectedImage("");
         setImagePreview("");
         setUploadingImage(false);
+
+        if (setShowDialog) {
+          setShowDialog(false);
+        }
       } else {
         toast.error(`Error: ${message}`);
         setUploadingImage(false);
@@ -123,11 +134,6 @@ function ImageUpload() {
       {/* styled in globals.css input::file-selector-button
        */}
       <div>
-        <p className="my-4">
-          To finish updating your avatar please log out and log back in after
-          uploading{" "}
-        </p>
-
         {/* ##### IMAGE PREVIEW AREA  ######*/}
         {imagePreview && (
           <div className="flex justify-center">

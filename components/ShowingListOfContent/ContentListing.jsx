@@ -129,6 +129,10 @@ export default function ContentListing({
 
   const userIsTheCreator = singleContent.createdBy._id === signedInUsersId;
 
+  const contentProfileImage = userIsTheCreator
+    ? session.user.profileImage
+    : singleContent.createdBy.profileImage;
+
   const [showLikesSignInMessage, setShowLikesSignInMessage] = useState(false);
 
   //STATE FOR SHOWING SHARE OPTIONS
@@ -151,7 +155,7 @@ export default function ContentListing({
     >
       <ProfileImage
         divStyling="min-h-10 max-w-12 mr-4 mt-3 min-w-10 max-h-12"
-        profileImage={singleContent.createdBy.profileImage}
+        profileImage={contentProfileImage}
         layout="responsive"
         className="rounded-2xl"
         width={80}

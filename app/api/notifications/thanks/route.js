@@ -12,15 +12,15 @@ export const GET = async (req) => {
 
     const userId = new mongoose.Types.ObjectId(session.user.id);
 
-    console.log("nameNotifs userId", userId);
+    // console.log("nameNotifs userId", userId);
 
     await db.connect();
 
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || 1);
-    console.log("nameNotifs page", page);
+    // console.log("nameNotifs page", page);
     const limit = parseInt(searchParams.get("limit") || 25);
-    console.log("nameNotifs limit", limit);
+    // console.log("nameNotifs limit", limit);
 
     const thankNotifs = await getPaginatedNotifications(
       Thank,
@@ -33,7 +33,7 @@ export const GET = async (req) => {
       { page, limit },
     );
 
-    console.log("thanksNotifs", thankNotifs, "page", page, "limit", limit);
+    // console.log("thanksNotifs", thankNotifs, "page", page, "limit", limit);
 
     return new Response(JSON.stringify(thankNotifs), { status: 200 });
   } catch (err) {

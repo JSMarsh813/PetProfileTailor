@@ -75,8 +75,7 @@ export async function PUT(req) {
 
     return new Response(
       JSON.stringify({
-        message:
-          "Avatar updated! Please sign back in to finish updating your avatar",
+        message: "Avatar updated! ",
       }),
       {
         status: 200,
