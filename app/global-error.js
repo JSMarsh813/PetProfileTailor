@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faMessage } from "@fortawesome/free-solid-svg-icons";
 import PawPrintIcon from "@components/ReusableSmallComponents/iconsOrSvgImages/PawPrintIcon";
 import Image from "next/image";
+import ErrorContactMessage from "@/components/Contact/ErrorContactMessage";
 
 export default function CustomError() {
   return (
