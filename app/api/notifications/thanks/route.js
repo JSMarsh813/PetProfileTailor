@@ -1,4 +1,7 @@
 import db from "@utils/db";
+import Description from "@/models/Description";
+import User from "@/models/User";
+import Name from "@/models/Name";
 import Thank from "@/models/Thank";
 import { getSessionForApis } from "@/utils/api/getSessionForApis";
 import { getPaginatedNotifications } from "@/utils/api/getPaginatedNotifications";
