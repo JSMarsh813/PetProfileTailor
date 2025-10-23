@@ -42,10 +42,8 @@ export default function LinkButton({
       href={href}
       className={` ${bgClass}  ${className} `}
     >
-      <div className={`${classForDiv} w-fit`}>
-        {icon && <>{icon}</>} {/* render icon if provided */}
-        {text}
-      </div>
+      {icon && <>{icon}</>} {/* render icon if provided */}
+      {text}
     </Link>
   );
 }

@@ -32,7 +32,7 @@ export default function NavLayoutwithSettingsMenu() {
     "absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none";
 
   const menuItemStyling = function (focus) {
-    return `block px-4 py-2 text-xs text-gray-300 ${
+    return `block px-4 py-2 text-sm text-gray-300 ${
       focus ? "bg-white/10 text-white" : ""
     }`;
   };
@@ -69,12 +69,10 @@ export default function NavLayoutwithSettingsMenu() {
             <MobileNavBar />
 
             <LinkButton
-              className="text-lg font-extrabold text-yellow-300 
-              hidden lg:block
-              mx-auto ml-2 hover:text-subtleWhite"
+              className="text-center gap-2 text-lg font-extrabold text-yellow-300 
+             hidden lg:flex mx-auto ml-2 hover:text-subtleWhite"
               href="/"
               text="HomewardTails"
-              classForDiv="flex gap-1 justify-center"
               icon={
                 <Image
                   src="/icon.png"
@@ -82,7 +80,6 @@ export default function NavLayoutwithSettingsMenu() {
                   height="28"
                   priority
                   unoptimized
-                  className=""
                   style={{ objectPosition: "center", objectFit: "scale-down" }}
                   alt=""
                 />
@@ -124,7 +121,7 @@ export default function NavLayoutwithSettingsMenu() {
                       {({ focus }) => (
                         <Link
                           href="/dashboard"
-                          className={`flex items-center px-4 py-2 text-xs text-subtleWhite ${
+                          className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
                             focus ? "bg-white/10 text-subtleWhite" : ""
                           }`}
                         >
@@ -140,7 +137,7 @@ export default function NavLayoutwithSettingsMenu() {
                             href={`${
                               process.env.NEXT_PUBLIC_BASE_FETCH_URL
                             }profile/${session.user.profileName.toLowerCase()}`}
-                            className={`flex items-center px-4 py-2 text-xs text-subtleWhite ${
+                            className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
                               focus ? "bg-white/10 text-subtleWhite" : ""
                             }`}
                           >
@@ -154,7 +151,7 @@ export default function NavLayoutwithSettingsMenu() {
                       {({ focus }) => (
                         <Link
                           href={`/editsettings`}
-                          className={`flex items-center px-4 py-2 text-xs text-subtleWhite ${
+                          className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
                             focus ? "bg-white/10 text-subtleWhite" : ""
                           }`}
                         >
@@ -167,7 +164,7 @@ export default function NavLayoutwithSettingsMenu() {
                       {({ focus }) => (
                         <Link
                           href={`/contact`}
-                          className={`flex items-center px-4 py-2 text-xs text-subtleWhite ${
+                          className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
                             focus ? "bg-white/10 text-subtleWhite" : ""
                           }`}
                         >
@@ -196,13 +193,13 @@ export default function NavLayoutwithSettingsMenu() {
                     basic
                     href="/login"
                     text="login"
-                    className="text-xs"
+                    className="text-sm"
                   />
                   <LinkButton
                     defaultStyle
                     href="/register"
                     text="register"
-                    className="text-xs"
+                    className="text-sm"
                   />
                 </div>
               )}

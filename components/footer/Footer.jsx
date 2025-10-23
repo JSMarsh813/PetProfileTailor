@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import LinkButton from "../ReusableSmallComponents/buttons/LinkButton";
 import FooterLink from "./FooterLink";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -11,27 +12,29 @@ export default function Footer() {
       <section className="max-w-7xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 items-center mx-auto justify-items-center ">
         <div className="text-left ml-8 mt-2 w-64">
           <div className="text-center w-32">
-            <Image
-              src="/icon.png"
-              width="40"
-              height="40"
-              priority
-              unoptimized
-              className="mx-auto"
-              style={{
-                objectPosition: "center",
-                objectFit: "scale-down",
-              }}
-              alt=""
-            />
-            <LinkButton
-              className="text-lg font-extrabold text-yellow-300 
-                                   hidden lg:block
+            <Link href="/">
+              <Image
+                src="/icon.png"
+                width="40"
+                height="40"
+                priority
+                unoptimized
+                className="mx-auto"
+                style={{
+                  objectPosition: "center",
+                  objectFit: "scale-down",
+                }}
+                alt=""
+              />
+              <span
+                className="text-lg font-extrabold text-yellow-300 
+                                    
                                      hover:text-subtleWhite text-center"
-              href="/"
-              text="HomewardTails"
-              classForDiv="flex gap-1 justify-center align-center text-center"
-            />
+              >
+                {" "}
+                HomewardTails
+              </span>
+            </Link>
           </div>
           <p className="max-w-56 text-sm">
             {" "}
