@@ -26,7 +26,7 @@ export const ContactNotification = ({
   return (
     <Html>
       <Head />
-      <Preview> Reset your password</Preview>
+      <Preview> Contact Submission</Preview>
       <Body style={main}>
         <EmailHeaderTemplate headerText="Contact"></EmailHeaderTemplate>
 

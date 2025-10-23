@@ -37,25 +37,35 @@ export async function sendContactEmail(prevState, formData) {
       email,
     };
   }
-
   try {
-    // confirmation copy to the user
-    await resend.emails.send({
-      from: process.env.RESEND_EMAIL_FROM,
-      to: email,
-      replyTo: process.env.RESEND_FROM_GMAIL,
-      subject: `Thanks for your message ${name}`,
-      react: ContactEmailCopy({ name, email, message }),
-    });
+    const from = process.env.RESEND_EMAIL_FROM;
+    const adminEmail = process.env.RESEND_FROM_GMAIL;
 
-    // Send to my gmail
-    await resend.emails.send({
-      from: process.env.RESEND_EMAIL_FROM,
-      to: process.env.RESEND_FROM_GMAIL,
-      reply_to: email,
-      subject: `New message from ${name}`,
-      react: ContactNotification({ name, email, message }),
-    });
+    const [userRes, adminRes] = await Promise.all([
+      resend.emails.send({
+        from,
+        to: email,
+        replyTo: adminEmail,
+        subject: `Thanks for your message, ${name}`,
+        react: ContactEmailCopy({ name, email, message }),
+      }),
+      resend.emails.send({
+        from,
+        to: adminEmail,
+        replyTo: email,
+        subject: `New message from ${name}`,
+        react: ContactNotification({ name, email, message }),
+      }),
+    ]);
+
+    if (userRes.error || adminRes.error) {
+      console.error("Resend errors:", userRes.error, adminRes.error);
+      return {
+        success: false,
+        error: "One or more emails failed to send.",
+        email,
+      };
+    }
 
     return { success: true, error: null, email };
   } catch (error) {
