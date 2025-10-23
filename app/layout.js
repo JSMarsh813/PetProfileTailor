@@ -13,6 +13,8 @@ import NavLayoutwithSettingsMenu from "@/components/NavBar/NavLayoutwithSettings
 import CategTagsWrapper from "@/wrappers/CategTagsWrapper";
 import { Suspense } from "react";
 import LoadingSkeleton from "@/components/LoadingScreen";
+import LinkButton from "@/components/ReusableSmallComponents/buttons/LinkButton";
+import Image from "next/image";
 
 // empty wrappers are needed for the providers, since providers need to be inside a client component to safely run hooks even with having "use client" at the top of the provider
 
@@ -32,6 +34,7 @@ import db from "@/utils/db";
 import NameCategory from "@/models/NameCategory";
 import DescriptionCategory from "@/models/DescriptionCategory";
 import { leanWithStrings } from "@/utils/mongoDataCleanup";
+import Footer from "@/components/footer/Footer";
 
 export const metadata = {
   metadataBase: new URL("https://homewardtails.com"),
@@ -119,28 +122,7 @@ export default async function RootLayout({ children }) {
                     <Analytics />
                     <ToastProvider />
 
-                    <footer className="text-white text-sm py-4 px-4 bg-secondary border-t-2 border-violet-400 flex">
-                      <div className="flex flex-col gap-2">
-                        <h6 className="font-semibold">Credits:</h6>
-                        <small>
-                          <a
-                            className="text-xs block"
-                            href="https://www.freepik.com/author/freepik/icons/kawaii-flat_45#from_element=resource_detail"
-                          >
-                            Default user icons created by freepik, Kawaii Flat
-                            family
-                          </a>
-                        </small>
-                        <small>
-                          <a
-                            className="text-xs block"
-                            href="https://thenounproject.com/browse/icons/term/thank-you/"
-                          >
-                            Thank you icon by Arfan Haq from Noun Project
-                          </a>
-                        </small>
-                      </div>
-                    </footer>
+                    <Footer />
                   </SuggestionsWrapper>
                 </ReportsWrapper>
               </NotificationsWrapper>

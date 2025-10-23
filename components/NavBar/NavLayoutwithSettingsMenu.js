@@ -165,6 +165,19 @@ export default function NavLayoutwithSettingsMenu() {
 
                     <MenuItem>
                       {({ focus }) => (
+                        <Link
+                          href={`/contact`}
+                          className={`flex items-center px-4 py-2 text-xs text-subtleWhite ${
+                            focus ? "bg-white/10 text-subtleWhite" : ""
+                          }`}
+                        >
+                          Contact
+                        </Link>
+                      )}
+                    </MenuItem>
+
+                    <MenuItem>
+                      {({ focus }) => (
                         <button
                           onClick={logoutClickHandler}
                           className={`${menuItemStyling(
