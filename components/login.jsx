@@ -251,6 +251,7 @@ export default function Login() {
                     }
                     trigger(); // will start cooldown
                   } catch (error) {
+                    console.log("error in login", error);
                     toast.error("Something went wrong. Please try again.");
                   } finally {
                     setLoadingMagicLink(false);
