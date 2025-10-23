@@ -26,9 +26,9 @@ export const ContactEmailCopy = ({
   return (
     <Html>
       <Head />
-      <Preview> Reset your password</Preview>
+      <Preview> Contact Submission</Preview>
       <Body style={main}>
-        <EmailHeaderTemplate headerText="Contact"></EmailHeaderTemplate>
+        <EmailHeaderTemplate headerText="Contact" />
 
         <Container style={container}>
           {/* needs to be in a container, so the text does not spill out to the left and right */}
@@ -39,16 +39,13 @@ export const ContactEmailCopy = ({
               We’ve received your message and will get back to you soon.
             </Text>
             <Text style={paragraph}>Here is a copy of your submission.</Text>
-            <p>
-              <strong>Name:</strong> {name}
-            </p>
-            <p>
-              <strong>Email:</strong> {email}
-            </p>
-            <p>
+            <Text style={paragraph}>
+              <strong>From:</strong> {name} ({email})
+            </Text>
+            <Text style={paragraph}>
               <strong>Message:</strong>
-            </p>
-            <p> {message}</p>
+            </Text>
+            <Text style={paragraph}>{message}</Text>
           </Section>
         </Container>
         <EmailFooterTemplate></EmailFooterTemplate>
