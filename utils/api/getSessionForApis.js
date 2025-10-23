@@ -2,8 +2,8 @@
 import { getServerSession } from "next-auth/next";
 import { serverAuthOptions } from "@/lib/auth";
 
-export async function getSessionForApis({ req, res }) {
-  const session = await getServerSession(req, res, serverAuthOptions);
+export async function getSessionForApis() {
+  const session = await getServerSession(serverAuthOptions);
 
   if (!session) {
     return { ok: false };
