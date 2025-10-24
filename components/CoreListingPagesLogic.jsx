@@ -195,7 +195,7 @@ export default function CoreListingPageLogic({
               know.
             </p>
 
-            <p className="mt-4">I'll need to know:</p>
+            <p className="mt-4">I&apos;ll need to know:</p>
             <ol className="my-4 list-decimal list-inside">
               <li className="mb-2">
                 It happened on the dashboard page for
@@ -204,7 +204,7 @@ export default function CoreListingPageLogic({
                 } ${dataType} `}
               </li>
               <li className="mb-2">
-                The email associated with your account, I'll{" "}
+                The email associated with your account, I&apos;ll{" "}
                 <strong className="underline">never</strong> ask for your
                 password
               </li>
