@@ -155,7 +155,7 @@ export default function CoreListingPageLogic({
         </section>
       )}
 
-      {content?.length === 0 ? (
+      {content?.length === 0 && !isLoading ? (
         <div className="text-center my-6">
           <p className="mb-4">
             {`We dug deep but there's no ${
