@@ -110,6 +110,7 @@ function NewDescriptionWithTagsData() {
           disabled={disabled}
           contentType="descriptions"
           resetTrigger={resetCheckContent}
+          addNamesPage={true}
         />
 
         <form onSubmit={handleDescriptionSubmission}>

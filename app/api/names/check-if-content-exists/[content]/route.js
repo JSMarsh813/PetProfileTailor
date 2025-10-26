@@ -33,15 +33,14 @@ export async function GET(req, { params }) {
 
   try {
     const normalizedString = normalizeString(content);
-    const existingNameCheck = await Names.find({
+    const existingNameCheck = await Names.findOne({
       normalizedContent: { $regex: new RegExp(`^${normalizedString}$`, "i") },
-    }).populate({
-      path: "createdBy",
-      select: ["name", "profileName", "profileImage"],
-    });
+    })
+      .populate({ path: "createdBy", select: "name profileName profileImage" })
+      .populate({ path: "tags", select: "tag" });
 
     // find returns an array
-    if (existingNameCheck.length > 0) {
+    if (existingNameCheck) {
       return Response.json({
         type: "duplicate",
         data: existingNameCheck,

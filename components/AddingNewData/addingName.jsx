@@ -181,6 +181,7 @@ function NewNameWithTagsData() {
           disabled={disabled}
           contentType="names"
           resetTrigger={resetCheckContent}
+          addNamesPage={true}
         />
         <hr className="mt-4" />
         <form

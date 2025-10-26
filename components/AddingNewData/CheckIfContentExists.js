@@ -9,19 +9,25 @@ import WarningMessage from "@components/ReusableSmallComponents/buttons/WarningM
 import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
 import StyledTextarea from "../FormComponents/StyledTextarea";
 import LoadingSpinner from "../ui/LoadingSpinner";
+import ContentListing from "../ShowingListOfContent/ContentListing";
 
 export default function CheckIfContentExists({
   apiString,
   disabled,
   contentType,
   resetTrigger,
+  showFullContent = false,
+  addNamesPage = false,
 }) {
   const [checkContentMessage, setCheckContentMessage] = useState("");
   const [contentCheckFunctionRun, setContentCheckFunctionRun] = useState(false);
-  const [existingContent, setExistingContent] = useState([]);
+  const [existingContent, setExistingContent] = useState("");
   const [nameCheckInvalidInput, setContentCheckInvalidInput] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [contentCheck, setContentCheck] = useState("");
+  //showExistingContent is for the addNames page
+  const [showExistingContent, setShowExistingContent] =
+    useState(showFullContent);
   const maxContentLength = contentType === "names" ? 40 : 4000;
 
   //client side validation for "check if name already exists" section
@@ -36,12 +42,7 @@ export default function CheckIfContentExists({
     resetData("");
   }, [resetTrigger]);
 
-  const existingContentHref =
-    contentType === "names"
-      ? `${
-          process.env.NEXT_PUBLIC_BASE_FETCH_URL
-        }name/${existingContent[0]?.content.toLowerCase()}`
-      : `${process.env.NEXT_PUBLIC_BASE_FETCH_URL}description/${existingContent[0]?._id}`;
+  console.log("existingContent", existingContent);
 
   function resetData(value) {
     // const value = e.target.value;
@@ -49,7 +50,7 @@ export default function CheckIfContentExists({
     // needed for when .trimStart() doesn't recognize the space
     setContentCheck(value.toLowerCase());
     setContentCheckFunctionRun(false);
-    setExistingContent([]);
+    setExistingContent("");
     // [] instead of null so it won't break when we check .length later
   }
 
@@ -68,7 +69,7 @@ export default function CheckIfContentExists({
         setCheckContentMessage(
           data.message || "Unexpected response from server",
         );
-        setExistingContent(data.data || []);
+        setExistingContent(data.data || "");
         return;
       }
 
@@ -82,18 +83,18 @@ export default function CheckIfContentExists({
 
         case "success":
           setCheckContentMessage(data.message); // "Success! That name is not in the database"
-          setExistingContent([]);
+          setExistingContent("");
           break;
 
         default:
           setCheckContentMessage("Unexpected response");
-          setExistingContent([]);
+          setExistingContent("");
       }
       setIsProcessing(false);
     } catch (err) {
       setIsProcessing(false);
       setCheckContentMessage("Error checking name: " + err.message);
-      setExistingContent([]);
+      setExistingContent("");
     }
   }
   return (
@@ -102,11 +103,9 @@ export default function CheckIfContentExists({
         {" "}
         {`Check if ${contentType === "names" ? "name" : "description"} exists:`}
       </h4>
-
       {contentType === "descriptions" && (
         <p className="mb-2"> Submit up to the first 400 characters</p>
       )}
-
       {contentType === "names" ? (
         <div>
           <input
@@ -148,7 +147,6 @@ export default function CheckIfContentExists({
           </span>
         </div>
       )}
-
       <button
         className="inline-block bg-subtleBackground  mt-4 md:mt-0 p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor rounded-2xl disabled:border-errorBorderColor disabled:cursor-not-allowed"
         onClick={() => contentExistsCheck()}
@@ -171,35 +169,39 @@ export default function CheckIfContentExists({
           Search
         </span>
       </button>
-
       {isProcessing && <LoadingSpinner />}
-      {contentCheckFunctionRun && (
+      {contentCheckFunctionRun && addNamesPage && (
         <div className="mx-auto max-w-[90%] mt-4">
           {checkContentMessage && (
             <p className="text-sm">{checkContentMessage}</p>
           )}
 
-          {/* {existingContent} */}
-          {existingContent.length > 0 && (
+          {/* for add a name page */}
+          {existingContent && addNamesPage && (
             <p
               className="mt-2 
                                             text-yellow-200 font-bold
                                             bg-red-900
                                              border-2 border-yellow-200 rounded-2xl"
             >
-              <Link href={existingContentHref}>
-                <GeneralButton
-                  className=" my-4 "
-                  text={`Link to ${existingContent[0].content.slice(0, 15)} ${
-                    existingContent[0].content.length > 15 ? "..." : ""
-                  }`}
-                ></GeneralButton>
-              </Link>
+              <GeneralButton
+                className=" my-4 "
+                text="show existing content"
+                onClick={() => setShowExistingContent(!showExistingContent)}
+              />
             </p>
           )}
         </div>
       )}
 
+      {existingContent !== "" && showExistingContent && (
+        <ContentListing
+          singleContent={existingContent}
+          dataType="names"
+          mode="local"
+          className="mt-4"
+        />
+      )}
       {nameCheckInvalidInput !== null && (
         <WarningMessage
           message={`${nameCheckInvalidInput} is not a valid character`}
