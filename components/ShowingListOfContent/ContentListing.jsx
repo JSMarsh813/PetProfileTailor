@@ -299,7 +299,13 @@ export default function ContentListing({
                 onClose={closeDelete}
                 signedInUsersId={signedInUsersId}
                 onConfirm={
-                  () => confirmDelete(apiEndPoint, signedInUsersId, mutate) // passing mutate from useSwrPagination
+                  () =>
+                    confirmDelete(
+                      apiEndPoint,
+                      signedInUsersId,
+                      mode === "swr" ? mutate : undefined,
+                      mode === "local" ? setLocalContent : undefined,
+                    ) // passing mutate from useSwrPagination
                 }
               />
             )}
