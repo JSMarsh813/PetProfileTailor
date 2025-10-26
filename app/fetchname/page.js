@@ -16,7 +16,7 @@ function AddNewNameWithTags() {
         title2="Name"
       />
 
-      <div className="mx-auto mt-4 flex justify-center text-center flex-col">
+      <div className="mx-auto my-4 flex justify-center text-center flex-col">
         <CheckIfContentExists
           apiString="/api/names/check-if-content-exists/"
           disabled={false}

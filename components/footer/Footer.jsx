@@ -47,6 +47,7 @@ export default function Footer() {
           <h7 className="font-extrabold text-base"> Find </h7>
           <ul>
             <FooterLink href="/fetchnames">Names </FooterLink>
+            <FooterLink href="/fetchname">A Name </FooterLink>
             <FooterLink href="/fetchdescriptions">Descriptions </FooterLink>
           </ul>
         </div>

@@ -63,6 +63,18 @@ export default function MobileNavBar() {
           <MenuItem>
             {({ focus }) => (
               <Link
+                href="/fetchname"
+                className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
+                  focus ? "bg-white/10 text-subtleWhite" : ""
+                }`}
+              >
+                A Name
+              </Link>
+            )}
+          </MenuItem>
+          <MenuItem>
+            {({ focus }) => (
+              <Link
                 href="/fetchdescriptions"
                 className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
                   focus ? "bg-white/10 text-subtleWhite" : ""

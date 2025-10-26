@@ -28,7 +28,7 @@ export default function CheckIfContentExists({
   //showExistingContent is for the addNames page
   const [showExistingContent, setShowExistingContent] =
     useState(showFullContent);
-  const maxContentLength = contentType === "names" ? 40 : 4000;
+  const maxContentLength = contentType === "names" ? 50 : 4000;
 
   //client side validation for "check if name already exists" section
   useEffect(() => {
