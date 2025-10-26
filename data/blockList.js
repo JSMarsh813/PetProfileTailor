@@ -34,7 +34,7 @@ export const exactWordsBlocked = [
   "crotch",
 
   "damn",
-
+  "genital",
   "muff",
 
   "piss",
@@ -125,7 +125,7 @@ export const blocklistSubstrings = [
   "fag",
   "fuck",
 
-  "genital",
+  "genitals", //since congential would be blocked with genital
 
   "jizz",
 
