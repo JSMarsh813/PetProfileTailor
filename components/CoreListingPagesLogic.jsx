@@ -53,7 +53,7 @@ export default function CoreListingPageLogic({
   const [itemsPerUiPage, setItemsPerUiPage] = useState(10);
 
   const [sortingValue, setSortingValue] = useState(-1);
-  const [sortingProperty, setSortingProperty] = useState("_id");
+  const [sortingProperty, setSortingProperty] = useState("likedByCount");
   const [triggerApplyFilters, setTriggerApplyFilters] = useState([]);
 
   const toggleDrawer = (newOpen) => {

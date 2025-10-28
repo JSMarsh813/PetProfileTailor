@@ -164,8 +164,8 @@ export default function Pagination({
             >
               <option value="_id,-1">Newest</option>
               <option value="_id,1">Oldest</option>
-              <option value="likedbycount,-1">Most Liked</option>
-              <option value="likedbycount,1">Least Liked</option>
+              <option value="likedByCount,-1">Most Liked</option>
+              <option value="likedByCount,1">Least Liked</option>
             </select>
           )}
 
