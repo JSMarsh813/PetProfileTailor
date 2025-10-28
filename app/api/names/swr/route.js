@@ -83,15 +83,6 @@ async function handleRequest(req) {
   let sortLogic = {};
   sortLogic[sortingProperty] = sortingValue;
 
-  console.log(
-    "names swr sortingProperty",
-    sortingProperty,
-    "sorting value",
-    sortingValue,
-    "sortLogic[sortingProperty]",
-    sortLogic[sortingProperty],
-  );
-
   let filter = {};
 
   if (tags?.length) {
