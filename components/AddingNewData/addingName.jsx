@@ -176,13 +176,6 @@ function NewNameWithTagsData() {
           <li className="my-2">somewhat negative or slightly controversial </li>
           <li>slightly suggestive </li>
         </ul>{" "}
-        <CheckIfContentExists
-          apiString="/api/names/check-if-content-exists/"
-          disabled={disabled}
-          contentType="names"
-          resetTrigger={resetCheckContent}
-          addNamesPage={true}
-        />
         <hr className="mt-4" />
         <form
           onSubmit={handleNameSubmission}
@@ -214,6 +207,7 @@ function NewNameWithTagsData() {
             maxLength="50"
             disabled={disabled}
           ></input>
+
           {newNameInvalidInput !== null && (
             <WarningMessage
               message={`${newNameInvalidInput} is not a valid character`}
@@ -222,6 +216,16 @@ function NewNameWithTagsData() {
           <span className="block my-3">
             {`${50 - newName.length}/50 characters left`}
           </span>
+
+          <CheckIfContentExists
+            apiString="/api/names/check-if-content-exists/"
+            disabled={disabled}
+            contentType="names"
+            resetTrigger={resetCheckContent}
+            addNamesPage={true}
+            value={newName}
+          />
+
           {/* setNote */}
           <label
             className="font-bold block mt-4 mb-2 text-xl "

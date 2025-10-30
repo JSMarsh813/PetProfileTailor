@@ -18,16 +18,23 @@ export default function CheckIfContentExists({
   resetTrigger,
   showFullContent = false,
   addNamesPage = false,
+  value: externalValue,
+  onChange: externalOnChange,
 }) {
+  const [internalContent, setInternalContent] = useState("");
   const [checkContentMessage, setCheckContentMessage] = useState("");
   const [contentCheckFunctionRun, setContentCheckFunctionRun] = useState(false);
   const [existingContent, setExistingContent] = useState("");
   const [nameCheckInvalidInput, setContentCheckInvalidInput] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [contentCheck, setContentCheck] = useState("");
+
   //showExistingContent is for the addNames page
   const [showExistingContent, setShowExistingContent] =
     useState(showFullContent);
+
+  const contentCheck = externalValue ?? internalContent;
+  const setContentCheck = externalOnChange ?? setInternalContent;
+
   const maxContentLength = contentType === "names" ? 50 : 4000;
 
   //client side validation for "check if name already exists" section
@@ -106,6 +113,10 @@ export default function CheckIfContentExists({
       {contentType === "descriptions" && (
         <p className="mb-2"> Submit up to the first 400 characters</p>
       )}
+
+      {/* 
+       {showInput && (
+       <>
       {contentType === "names" ? (
         <div>
           <input
@@ -118,7 +129,20 @@ export default function CheckIfContentExists({
             id="checkExists"
             disabled={disabled}
             maxLength={maxContentLength}
-            onChange={(e) => resetData(e.target.value.trimStart())}
+            onChange={(e) => {
+              const trimmedValue = e.target.value.trimStart();
+
+              // If parent provided onChange, call it like a real input would
+              if (externalOnChange) {
+                externalOnChange({
+                  ...e,
+                  target: { ...e.target, value: trimmedValue },
+                });
+              } else {
+                // Otherwise manage internal state
+                resetData(trimmedValue);
+              }
+            }}
           />
           <span className="block my-3">
             {`${
@@ -138,7 +162,20 @@ export default function CheckIfContentExists({
             id="checkExists"
             disabled={disabled}
             maxLength={maxContentLength}
-            onChange={(e) => resetData(e.target.value.trimStart())}
+            onChange={(e) => {
+              const trimmedValue = e.target.value.trimStart();
+
+              // If parent provided onChange, call it like a real input would
+              if (externalOnChange) {
+                externalOnChange({
+                  ...e,
+                  target: { ...e.target, value: trimmedValue },
+                });
+              } else {
+                // Otherwise manage internal state
+                resetData(trimmedValue);
+              }
+            }}
           />
           <span className="block my-3">
             {`${
@@ -147,6 +184,7 @@ export default function CheckIfContentExists({
           </span>
         </div>
       )}
+      </> )} */}
       <button
         className="inline-block bg-subtleBackground  mt-4 md:mt-0 p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor rounded-2xl disabled:border-errorBorderColor disabled:cursor-not-allowed"
         onClick={() => contentExistsCheck()}
