@@ -237,13 +237,6 @@ function NewNameWithTagsData() {
             Note (optional)
           </label>
 
-          <p className="block mb-2">
-            {" "}
-            If you found it on a shelter/rescue&apos;s listing for a pet please
-            mention the organization&apos;s name so people can send some love
-            their way 😉
-          </p>
-
           <StyledTextarea
             type="text"
             id="nameNote"
@@ -268,6 +261,12 @@ function NewNameWithTagsData() {
             <p>
               Examples: the name&apos;s meaning, popular fictional or historical
               figures with this name.
+            </p>
+            <p className="block mb-2">
+              {" "}
+              If you found it on a shelter/rescue&apos;s listing for a pet
+              please mention the organization&apos;s name so people can send
+              some love their way 😉
             </p>
           </div>
           <TagsSelectAndCheatSheet
