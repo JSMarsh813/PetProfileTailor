@@ -132,7 +132,7 @@ export default function EditContent({
         <div className="mt-6 flex justify-evenly px-8">
           <GeneralButton
             text="Cancel"
-            warning
+            secondary
             onClick={onClose}
             className="w-44"
           />
