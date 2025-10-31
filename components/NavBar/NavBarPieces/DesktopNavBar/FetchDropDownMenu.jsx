@@ -53,7 +53,7 @@ export default function FetchDropDownMenu() {
               //<a> is a real DOM element, so Headless UI can attach refs for keyboard focus.
 
               <Link
-                href="/fetchescriptions"
+                href="/fetchdescriptions"
                 className={`flex items-center px-4 py-2 text-sm text-subtleWhite ${
                   focus ? "bg-white/10 text-subtleWhite" : ""
                 }`}

@@ -20,19 +20,24 @@ export default function CheckIfContentExists({
   addNamesPage = false,
   value: externalValue,
   onChange: externalOnChange,
+
+  checkIsProcessing,
+  setCheckIsProcessing,
+  // for input for the fetchname page
 }) {
   const [internalContent, setInternalContent] = useState("");
   const [checkContentMessage, setCheckContentMessage] = useState("");
   const [contentCheckFunctionRun, setContentCheckFunctionRun] = useState(false);
   const [existingContent, setExistingContent] = useState("");
   const [nameCheckInvalidInput, setContentCheckInvalidInput] = useState(null);
-  const [isProcessing, setIsProcessing] = useState(false);
 
   //showExistingContent is for the addNames page
   const [showExistingContent, setShowExistingContent] =
     useState(showFullContent);
 
-  const contentCheck = externalValue ?? internalContent;
+  // slice(0,400) since the description check has a max of the first 400 characters
+  const contentCheck = externalValue.slice(0, 400) ?? internalContent;
+
   const setContentCheck = externalOnChange ?? setInternalContent;
 
   const maxContentLength = contentType === "names" ? 50 : 4000;
@@ -63,8 +68,9 @@ export default function CheckIfContentExists({
 
   async function contentExistsCheck() {
     try {
-      if (isProcessing) return;
-      setIsProcessing(true);
+      if (checkIsProcessing) return;
+      setCheckIsProcessing(true);
+
       //"/api/names/check-if-content-exists/"
       let response = await fetch(apiString + contentCheck);
       let data = await response.json();
@@ -97,9 +103,10 @@ export default function CheckIfContentExists({
           setCheckContentMessage("Unexpected response");
           setExistingContent("");
       }
-      setIsProcessing(false);
+      setCheckIsProcessing(false);
     } catch (err) {
-      setIsProcessing(false);
+      setCheckIsProcessing(false);
+
       setCheckContentMessage("Error checking name: " + err.message);
       setExistingContent("");
     }
@@ -110,9 +117,6 @@ export default function CheckIfContentExists({
         {" "}
         {`Check if ${contentType === "names" ? "name" : "description"} exists:`}
       </h4>
-      {contentType === "descriptions" && (
-        <p className="mb-2"> Submit up to the first 400 characters</p>
-      )}
 
       {/* 
        {showInput && (
@@ -191,7 +195,7 @@ export default function CheckIfContentExists({
         disabled={
           nameCheckInvalidInput !== null ||
           contentCheck.length < 2 ||
-          isProcessing
+          checkIsProcessing
         }
       >
         <FontAwesomeIcon
@@ -207,7 +211,7 @@ export default function CheckIfContentExists({
           Search
         </span>
       </button>
-      {isProcessing && <LoadingSpinner />}
+      {checkIsProcessing && <LoadingSpinner />}
       {contentCheckFunctionRun && addNamesPage && (
         <div className="mx-auto max-w-[90%] mt-4">
           {checkContentMessage && (
@@ -224,7 +228,7 @@ export default function CheckIfContentExists({
             >
               <GeneralButton
                 className=" my-4 "
-                text="show existing content"
+                text={showExistingContent ? "hide content" : "show content"}
                 onClick={() => setShowExistingContent(!showExistingContent)}
               />
             </p>

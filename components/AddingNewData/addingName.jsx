@@ -29,6 +29,7 @@ function NewNameWithTagsData() {
   const [resetCheckContent, setResetCheckContent] = useState(false);
 
   const [newNameInvalidInput, setNewNameInvalidInput] = useState(null);
+  const [checkIsProcessing, setCheckIsProcessing] = useState(false);
 
   const { data: session, status } = useSession();
 
@@ -224,6 +225,8 @@ function NewNameWithTagsData() {
             resetTrigger={resetCheckContent}
             addNamesPage={true}
             value={newName}
+            checkIsProcessing={checkIsProcessing}
+            setCheckIsProcessing={setCheckIsProcessing}
           />
 
           {/* setNote */}
@@ -233,6 +236,13 @@ function NewNameWithTagsData() {
           >
             Note (optional)
           </label>
+
+          <p className="block mb-2">
+            {" "}
+            If you found it on a shelter/rescue's listing for a pet please
+            mention the organization's name so people can send some love their
+            way 😉
+          </p>
 
           <StyledTextarea
             type="text"
