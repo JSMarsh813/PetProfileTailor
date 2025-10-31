@@ -239,9 +239,9 @@ function NewNameWithTagsData() {
 
           <p className="block mb-2">
             {" "}
-            If you found it on a shelter/rescue's listing for a pet please
-            mention the organization's name so people can send some love their
-            way 😉
+            If you found it on a shelter/rescue&apos;s listing for a pet please
+            mention the organization&apos;s name so people can send some love
+            their way 😉
           </p>
 
           <StyledTextarea
