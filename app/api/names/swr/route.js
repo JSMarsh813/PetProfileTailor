@@ -196,7 +196,7 @@ async function handleRequest(req) {
 
 //################ NOTES FOR TIEBREAKER LOGIC ###########################
 
-// tldr: each time the swr request is made the sort can randomly change the order. So two items both with likedByCount = 0, can be returned in different orders
+// each time the swr request is made, when items both have likedByCount = 0, the sort can return the items in different orders
 // by adding _id, its telling them to sort the items by _id too. This avoids duplicates entirely because it ensures the items on page 2, page 3 aren't sorted in a different order when they have the same likedByCount number.
 
 // The Problem Without a Tiebreaker
