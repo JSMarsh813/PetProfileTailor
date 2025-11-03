@@ -41,11 +41,11 @@ async function runAggregation({ req, source }) {
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const sortingvalue = parseInt(searchParams.get("sortingvalue") || "-1", 10);
-  const sortingproperty = searchParams.get("sortingproperty") || "createdAt";
+  const sortingProperty = searchParams.get("sortingproperty") || "likedByCount";
 
   const limit = LIMIT;
   const sortLogic = {};
-  sortLogic[sortingproperty] = sortingvalue;
+  sortLogic[sortingProperty] = sortingvalue;
 
   // If no source provided (POST with empty body or GET), build it from search params
   if (!source || Object.keys(source).length === 0) {
@@ -80,7 +80,12 @@ async function runAggregation({ req, source }) {
     { $match: filter },
 
     // Pagination + sort
-    { $sort: sortLogic },
+    {
+      $sort:
+        sortingProperty === "_id"
+          ? sortLogic // If sorting by _id, don't add tiebreaker
+          : { ...sortLogic, _id: 1 }, // Otherwise, add _id as tiebreaker
+    }, // _id in ascending order  *** notes below for tiebreaker
     { $skip: (page - 1) * parseInt(limit, 10) },
     { $limit: parseInt(limit, 10) },
 

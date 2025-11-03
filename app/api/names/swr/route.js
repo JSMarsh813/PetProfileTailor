@@ -75,7 +75,7 @@ async function handleRequest(req) {
 
   const page = parseInt(source.page) || 1;
   const sortingValue = parseInt(source.sortingvalue) || -1;
-  const sortingProperty = source.sortingproperty || "createdAt";
+  const sortingProperty = source.sortingproperty || "likedByCount";
   const tags = source.tags;
   const profileUserId = source.profileUserId;
   const likedIds = source.likedIds;
@@ -119,7 +119,12 @@ async function handleRequest(req) {
 
     const names = await Names.aggregate([
       { $match: filter },
-      { $sort: { ...sortLogic, _id: 1 } }, // _id in ascending order  *** notes below for tiebreaker
+      {
+        $sort:
+          sortingProperty === "_id"
+            ? sortLogic // If sorting by _id, don't add tiebreaker
+            : { ...sortLogic, _id: 1 }, // Otherwise, add _id as tiebreaker
+      }, // _id in ascending order  *** notes below for tiebreaker
       { $skip: (page - 1) * limit },
       { $limit: limit },
 
