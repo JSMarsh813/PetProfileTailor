@@ -20,6 +20,7 @@ export default function CheckIfContentExists({
   addNamesPage = false,
   value: externalValue,
   onChange: externalOnChange,
+  invalidInput,
 
   checkIsProcessing,
   setCheckIsProcessing,
@@ -29,7 +30,6 @@ export default function CheckIfContentExists({
   const [checkContentMessage, setCheckContentMessage] = useState("");
   const [contentCheckFunctionRun, setContentCheckFunctionRun] = useState(false);
   const [existingContent, setExistingContent] = useState("");
-  const [nameCheckInvalidInput, setContentCheckInvalidInput] = useState(null);
 
   //showExistingContent is for the addNames page
   const [showExistingContent, setShowExistingContent] =
@@ -41,14 +41,6 @@ export default function CheckIfContentExists({
   const setContentCheck = externalOnChange ?? setInternalContent;
 
   const maxContentLength = contentType === "names" ? 50 : 4000;
-
-  //client side validation for "check if name already exists" section
-  useEffect(() => {
-    if (contentType === "names") {
-      const invalidCharacters = regexInvalidInput(contentCheck);
-      setContentCheckInvalidInput(invalidCharacters);
-    }
-  }, [contentCheck]);
 
   useEffect(() => {
     resetData("");
@@ -79,6 +71,7 @@ export default function CheckIfContentExists({
       if (!response.ok) {
         // Handles 400, 409, and other error statuses
         // so this shows the invalid error message
+        setCheckIsProcessing(false);
         setCheckContentMessage(
           data.message || "Unexpected response from server",
         );
@@ -118,85 +111,10 @@ export default function CheckIfContentExists({
         {`Check if ${contentType === "names" ? "name" : "description"} exists:`}
       </h4>
 
-      {/* 
-       {showInput && (
-       <>
-      {contentType === "names" ? (
-        <div>
-          <input
-            type="text"
-            className={`bg-secondary border-subtleWhite rounded-2xl mr-2 ${
-              disabled &&
-              "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
-            }`}
-            value={contentCheck}
-            id="checkExists"
-            disabled={disabled}
-            maxLength={maxContentLength}
-            onChange={(e) => {
-              const trimmedValue = e.target.value.trimStart();
-
-              // If parent provided onChange, call it like a real input would
-              if (externalOnChange) {
-                externalOnChange({
-                  ...e,
-                  target: { ...e.target, value: trimmedValue },
-                });
-              } else {
-                // Otherwise manage internal state
-                resetData(trimmedValue);
-              }
-            }}
-          />
-          <span className="block my-3">
-            {`${
-              maxContentLength - contentCheck.length
-            }/${maxContentLength} characters left`}{" "}
-          </span>
-        </div>
-      ) : (
-        <div>
-          <StyledTextarea
-            className={`bg-secondary border-subtleWhite rounded-2xl mr-2 mb-4 ${
-              disabled &&
-              "disabled:bg-errorBackgroundColor   disabled:text-errorTextColor disabled:border-errorBorderColor disabled:cursor-not-allowed"
-            }`}
-            value={contentCheck}
-            ariaLabel="check if content exists"
-            id="checkExists"
-            disabled={disabled}
-            maxLength={maxContentLength}
-            onChange={(e) => {
-              const trimmedValue = e.target.value.trimStart();
-
-              // If parent provided onChange, call it like a real input would
-              if (externalOnChange) {
-                externalOnChange({
-                  ...e,
-                  target: { ...e.target, value: trimmedValue },
-                });
-              } else {
-                // Otherwise manage internal state
-                resetData(trimmedValue);
-              }
-            }}
-          />
-          <span className="block my-3">
-            {`${
-              maxContentLength - contentCheck.length
-            }/${maxContentLength} characters left`}{" "}
-          </span>
-        </div>
-      )}
-      </> )} */}
       <button
         className="inline-block bg-subtleBackground  mt-4 md:mt-0 p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor rounded-2xl disabled:border-errorBorderColor disabled:cursor-not-allowed"
         onClick={() => contentExistsCheck()}
-        disabled={
-          nameCheckInvalidInput !== null ||
-          contentCheck.length < 2 ||
-          checkIsProcessing
-        }
+        disabled={contentCheck.length < 2 || checkIsProcessing || invalidInput}
       >
         <FontAwesomeIcon
           icon={faSearch}
@@ -242,11 +160,6 @@ export default function CheckIfContentExists({
           dataType="names"
           mode="local"
           className="mt-4"
-        />
-      )}
-      {nameCheckInvalidInput !== null && (
-        <WarningMessage
-          message={`${nameCheckInvalidInput} is not a valid character`}
         />
       )}
     </section>

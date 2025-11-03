@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import NewNameWithTagsData from "@components/AddingNewData/addingName";
 import PageTitleWithImages from "@components/ReusableSmallComponents/TitlesOrHeadings/PageTitleWithImages";
 import { useSession } from "next-auth/react";
 import CheckIfContentExists from "@/components/AddingNewData/CheckIfContentExists";
+import regexInvalidInput from "@/utils/stringManipulation/check-for-valid-content";
+import WarningMessage from "@/components/ReusableSmallComponents/buttons/WarningMessage";
 
 function AddNewNameWithTags() {
   const { data: session } = useSession();
@@ -13,8 +15,13 @@ function AddNewNameWithTags() {
   const [nameSubmissionMessage, setNameSubmissionMessage] = useState("");
   const [resetCheckContent, setResetCheckContent] = useState(false);
   const [checkIsProcessing, setCheckIsProcessing] = useState(false);
+  const [nameInvalidInput, setNameInvalidInput] = useState(null);
 
   const maxContentLength = 50;
+
+  useEffect(() => {
+    setNameInvalidInput(regexInvalidInput(nameCheck));
+  }, [nameCheck]);
 
   return (
     <div className="min-h-fit  overflow-hidden text-white w-full">
@@ -51,6 +58,12 @@ function AddNewNameWithTags() {
           </span>
         </div>
 
+        {nameInvalidInput !== null && (
+          <WarningMessage
+            message={`${nameInvalidInput} is not a valid character`}
+          />
+        )}
+
         <CheckIfContentExists
           apiString="/api/names/check-if-content-exists/"
           disabled={false}
@@ -61,6 +74,7 @@ function AddNewNameWithTags() {
           value={nameCheck}
           checkIsProcessing={checkIsProcessing}
           setCheckIsProcessing={setCheckIsProcessing}
+          invalidInput={nameInvalidInput}
         />
       </div>
     </div>

@@ -14,8 +14,6 @@ import StyledTextarea from "@components/FormComponents/StyledTextarea";
 import { useSession } from "next-auth/react";
 
 import CheckIfContentExists from "./CheckIfContentExists";
-import CheckboxWithLabelAndDescription from "../FormComponents/CheckboxWithLabelAndDescription";
-import StyledCheckbox from "../FormComponents/StyledCheckbox";
 import PreserveTextAfterSubmission from "./preserveTextAfterSubmission";
 import ToggeableAlert from "../ReusableMediumComponents/ToggeableAlert";
 
@@ -46,7 +44,6 @@ function NewNameWithTagsData() {
   const { tagsToSubmit, handleSelectChange, handleCheckboxChange, clearTags } =
     useTags();
 
-  //   try {
   //     let nameResponse = await fetch("/api/names/check-if-content-exists/" + nameCheck);
   //     let nameData = await nameResponse.json();
   //     setNameCheckFunctionRun(true);
@@ -227,6 +224,7 @@ function NewNameWithTagsData() {
             value={newName}
             checkIsProcessing={checkIsProcessing}
             setCheckIsProcessing={setCheckIsProcessing}
+            invalidInput={newNameInvalidInput}
           />
 
           {/* setNote */}
