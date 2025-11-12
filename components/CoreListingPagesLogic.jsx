@@ -156,7 +156,7 @@ export default function CoreListingPageLogic({
       )}
 
       {content?.length === 0 && !isLoading ? (
-        <div className="text-center my-6">
+        <div className="text-center my-6 text-subtleWhite">
           <p className="mb-4">
             {`We dug deep but there's no ${
               restrictSwrToLikedNames
