@@ -154,9 +154,46 @@ export default function CoreListingPageLogic({
           />
         </section>
       )}
+      {/* *****************  Drawer for filtering options *****************  */}
+      <Drawer
+        open={isOpen}
+        onClose={(event, reason) => {
+          if (reason === "backdropClick") {
+            // prevent closing when clicking on backdrop
+            return;
+          }
+          toggleDrawer(false);
+        }}
+        anchor="left"
+        // gets rid of white background of mui drawer
+        sx={{
+          "& .MuiDrawer-paper": {
+            backgroundColor: "transparent",
+            boxShadow: "none",
+          },
+        }}
+      >
+        <div className="w-full max-w-[451px] h-full  flex flex-col overflow-x-clip">
+          <FilteringSidebar
+            dataType={dataType}
+            handleFilterChange={handleFilterChange}
+            handleApplyFilters={handleApplyFilters}
+            filterTagsIds={filterTagsIds}
+            toggleDrawer={toggleDrawer}
+            isLoading={isLoading}
+            remainingFilterCooldown={remainingFilterCooldown}
+            filterCooldownRef={filterCooldownRef}
+            startCooldown={startCooldown}
+          />
+        </div>
+      </Drawer>
 
       {content?.length === 0 && !isLoading ? (
         <div className="text-center my-6 text-subtleWhite">
+          <GeneralButton
+            text={`${isOpen ? "Close Filters" : "Open Filters"}`}
+            onClick={() => setIsOpen(!isOpen)}
+          />
           <p className="mb-4">
             {`We dug deep but there's no ${
               restrictSwrToLikedNames
@@ -220,38 +257,6 @@ export default function CoreListingPageLogic({
         </div>
       ) : (
         <div className="flex sm:px-2  mx-auto ">
-          <Drawer
-            open={isOpen}
-            onClose={(event, reason) => {
-              if (reason === "backdropClick") {
-                // prevent closing when clicking on backdrop
-                return;
-              }
-              toggleDrawer(false);
-            }}
-            anchor="left"
-            // gets rid of white background of mui drawer
-            sx={{
-              "& .MuiDrawer-paper": {
-                backgroundColor: "transparent",
-                boxShadow: "none",
-              },
-            }}
-          >
-            <div className="w-full max-w-[451px] h-full  flex flex-col overflow-x-clip">
-              <FilteringSidebar
-                dataType={dataType}
-                handleFilterChange={handleFilterChange}
-                handleApplyFilters={handleApplyFilters}
-                filterTagsIds={filterTagsIds}
-                toggleDrawer={toggleDrawer}
-                isLoading={isLoading}
-                remainingFilterCooldown={remainingFilterCooldown}
-                filterCooldownRef={filterCooldownRef}
-                startCooldown={startCooldown}
-              />
-            </div>
-          </Drawer>
           {/*################# CONTENT DIV ################### */}
 
           <div className="grow max-w-5xl mx-auto bg-primary rounded-box place-items-center  ">
