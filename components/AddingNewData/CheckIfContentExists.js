@@ -105,8 +105,8 @@ export default function CheckIfContentExists({
     }
   }
   return (
-    <section className="text-center mt-4">
-      <h4 className="font-bold block mt-4 mb-2 text-xl ">
+    <section className="text-center  pb-4 m-6">
+      <h4 className="font-bold block pt-4 m-4 text-xl ">
         {" "}
         {`Check if ${contentType === "names" ? "name" : "description"} exists:`}
       </h4>
@@ -114,6 +114,7 @@ export default function CheckIfContentExists({
       <button
         className="inline-block bg-subtleBackground  mt-4 md:mt-0 p-2 border-2  hover:text-subtleWhite hover:border-blue-700 hover:bg-blue-500 border-subtleWhite  disabled:bg-errorBackgroundColor disabled:text-errorTextColor rounded-2xl disabled:border-errorBorderColor disabled:cursor-not-allowed"
         onClick={() => contentExistsCheck()}
+        type="button"
         disabled={contentCheck.length < 2 || checkIsProcessing || invalidInput}
       >
         <FontAwesomeIcon
@@ -129,38 +130,40 @@ export default function CheckIfContentExists({
           Search
         </span>
       </button>
+
       {checkIsProcessing && <LoadingSpinner />}
+
       {contentCheckFunctionRun && addNamesPage && (
-        <div className="mx-auto max-w-[90%] mt-4">
+        <div className="mx-auto max-w-[90%] mt-4 ">
           {checkContentMessage && (
-            <p className="text-sm">{checkContentMessage}</p>
+            <p className="text-sm py-3">{checkContentMessage}</p>
           )}
 
           {/* for add a name page */}
           {existingContent && addNamesPage && (
-            <p
+            <div
               className="mt-2 
                                             text-yellow-200 font-bold
-                                            bg-red-900
-                                             border-2 border-yellow-200 rounded-2xl"
+                                            bg-red-900 py-2 
+                                             border-b-2 border-subtleWhite rounded-2xl"
             >
               <GeneralButton
                 className=" my-4 "
                 text={showExistingContent ? "hide content" : "show content"}
                 onClick={() => setShowExistingContent(!showExistingContent)}
+                type="button"
               />
-            </p>
+              {existingContent !== "" && showExistingContent && (
+                <ContentListing
+                  singleContent={existingContent}
+                  dataType="names"
+                  mode="local"
+                  className="mt-4"
+                />
+              )}
+            </div>
           )}
         </div>
-      )}
-
-      {existingContent !== "" && showExistingContent && (
-        <ContentListing
-          singleContent={existingContent}
-          dataType="names"
-          mode="local"
-          className="mt-4"
-        />
       )}
     </section>
   );

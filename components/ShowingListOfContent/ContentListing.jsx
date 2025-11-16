@@ -151,7 +151,7 @@ export default function ContentListing({
 
   return (
     <div
-      className={`text-base flex border-t border-subtleWhite mb-4 ${className}`}
+      className={`text-base flex border-t border-subtleWhite mb-4 ${className}   bg-primary`}
     >
       <ProfileImage
         divStyling="min-h-10 max-w-12 mr-4 mt-3 min-w-10 max-h-12"
@@ -169,7 +169,6 @@ export default function ContentListing({
                 
            
          
-            bg-primary
                     text-subtleWhite sm:p-2 
                   justify-items-center "
           //  items-center

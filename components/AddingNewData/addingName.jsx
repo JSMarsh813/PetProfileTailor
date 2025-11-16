@@ -185,7 +185,7 @@ function NewNameWithTagsData() {
           {/* needs label and value for Select to work  */}
 
           <label
-            className="font-bold block mt-4 mb-2 text-xl "
+            className="font-bold block mt-8 mb-4 text-xl "
             htmlFor="nameInput"
           >
             New Name
@@ -229,7 +229,7 @@ function NewNameWithTagsData() {
 
           {/* setNote */}
           <label
-            className="font-bold block mt-4 mb-2 text-xl "
+            className="font-bold block mb-4 text-xl "
             htmlFor="nameNote"
           >
             Note (optional)
